@@ -1,0 +1,1 @@
+bişeyler deniyorummmm
