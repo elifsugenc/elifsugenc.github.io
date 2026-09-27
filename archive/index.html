@@ -1,12 +1,168 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Archive · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg.</span></a><nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/" data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About" data-tr="Hakkımda">About</a></nav><div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div></header><article class="archive-story">
- <header class="story-opening"><p>This website remembers you!</p><span>This website is actually another project!</span><h1>How to code a Website?</h1><ul><li>Visual Studio Code</li><li>JavaScript</li><li>Git · GitHub</li></ul></header>
- <section class="story-section"><h2><span>01</span>The Idea</h2><div class="story-copy"><p>Websites are usually designed to be looked at. You enter, scroll, click, and leave.</p><p><strong><em>But what if visiting a website could leave something behind?</em></strong></p><p>This project treats interaction as material. Every movement, click, pause, and decision becomes part of a temporary digital trace: a record of how someone moved through the website.</p><p>The website observes each session as something unique. These traces are collected, translated and eventually turned into an <strong><em>artifact.</em></strong></p><p>The visitor is no longer only viewing the website.</p><p>They are contributing to its archive. And that is what makes every trace valuable.<br/><strong><u>You make the archive different simply by being yourself.</u></strong><br/>No one moves, pauses, clicks, or explores in exactly the same way you do. Your presence changes the archive, even if all you do is be yourself.</p></div><img class="story-diagram" src="/assets/archive-idea-diagram.png" alt="Diagram of two visitors whose distinct traces become artifacts in one shared archive"/></section>
- <section class="story-section"><h2><span>02</span>Cool, but how to make it work?</h2><div class="story-copy"><p>The system did not appear fully formed. It was built through a series of experiments, failed attempts, small discoveries and many revisions.</p><p>The first challenge was simple: <strong><em>how can a website remember the way someone moves through it?</em></strong></p></div></section>
- <section class="story-section story-step"><h2><span>02a</span>Capturing The Movement</h2><div class="story-copy"><h3>THE GOAL</h3><p>The first step was to understand how a visitor moves through the website. The mouse normally disappears without leaving any evidence behind. I wanted to turn that temporary movement into something the website could remember.</p><p>x → horizontal position<br/>y → vertical position<br/>t → time</p><p class="story-formula">[x, y, t] → [x, y, t] → [x, y, t] → …</p><p>SUCCESS 01 — movement could become data.</p></div></section>
- <section class="story-section story-step"><h2><span>02b</span>But Whose Data Is This?</h2><div class="story-copy"><h3>THE PROBLEM</h3><p>Recording coordinates was not enough. If ten people visited the website, I needed to know which coordinates belonged to which visit.</p><p>The solution was to create a unique session ID for every visit.</p><p>Conceptually, the data now looked like:<br/><code>{ sessionId: "unique-session-id", points: […] }</code><br/>The session ID acts like a temporary label. I do not need to know who the visitor is. I only need the system to understand: these points belong to this visit.</p><p><strong><em>The archive is not about identifying people. It is about distinguishing one interaction from another.</em></strong></p><p>SUCCESS 02 — each visit could become its own trace.</p></div></section>
- <section class="story-section story-step"><h2><span>02c</span>Sending The Data</h2><div class="story-copy"><h3>THE PROBLEM</h3><p>Mouse movement happens constantly. That means the website can generate many coordinates in a short time. Sending every point individually would mean repeatedly communicating with the backend.</p><p>Instead, I grouped points into batches. Rather than sending every point separately, a group of points travels together. Each group has its position in the session.</p><p>SUCCESS 03 — large amounts of movement data could be transferred in manageable pieces.</p></div></section>
- <section class="story-section story-step"><h2><span>02d</span>Frontend to Backend</h2><div class="story-copy"><p>The browser is responsible for observing the interaction. The collected data then travels to the backend, where each request is checked and organized by visit, points and completion state.</p><p>Each part answers a different question: which visit, what happened, and has the visit ended?</p><p>SUCCESS 04 — the website could send structured interaction data to its backend.</p></div></section>
- <section class="story-section story-step"><h2><span>02e</span>Knowing When It’s Over</h2><div class="story-copy"><p><strong><em>One of the more difficult questions was surprisingly simple: when is a visit finished?</em></strong></p><p>The website could collect information while someone was there, but it also needed to recognize the final part of that visit.</p><p>At first the final session was not appearing where expected. The interaction worked, but the artifact did not appear immediately. A later revision connected the final interaction directly to the archive.</p></div></section>
- <section class="story-section story-step"><h2><span>02f</span>From Data To Artifact!</h2><div class="story-copy"><p>At this point the system could identify a visit, record its movement, group the data and understand when it had finished.</p><p>But raw coordinates were never meant to be the final result. <strong><em>The next step was translation.</em></strong></p><p>The collected session data is passed to the backend, where it is transformed into a PDF. <strong><em>The PDF becomes a visual record of that particular visit.</em></strong></p></div></section>
- <section class="story-section story-step"><h2><span>02g</span>Building The Archive</h2><div class="story-copy"><p>Generating the document was not enough. It also needed somewhere to live. Each completed session is connected to its PDF and stored so individual visits become part of a larger collection.</p><p class="story-formula">VISITOR → INTERACTION → DATA → SESSION → PDF → ARCHIVE</p><p><strong><em>The archive therefore does not contain documents I designed individually. It contains documents generated by the people who visited the website.</em></strong></p></div></section>
- </article><section class="archive archive-list" id="all-traces"><div class="individual-head"><h1>All traces</h1><span id="archive-count">00 TRACES</span></div><div class="grid" id="all-traces-grid"></div><button class="archive-more" id="more-traces" type="button" hidden>See more <span>↓</span></button><p class="site-note">These traces live only in this browser. The shared archive on the original hosted site needs a server.</p></section><footer><span>© 2026 elifsu genç</span><span>A portfolio by Elifsu Genç.</span><a href="/">↑ MAIN</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember your gestures?</h2><p id="consent-copy">If you agree, cursor positions, pauses and clicks are saved only in this browser during your visit. This GitHub Pages edition cannot add them to the shared public archive. Reload or close the page to end this visit.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>↗</span></button><button class="decline" id="decline" type="button">No, just explore</button></div></div></div><div class="live" id="live" hidden>● RECORDING · <span id="point-count">0</span> POINTS</div><script src="/assets/app.js" defer></script></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Archive · elifsu genç</title>
+    <link rel="icon" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/assets/style.css" defer>
+</head>
+
+<body>
+    <main>
+        <header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span
+                    class="header-mark">eg.</span></a>
+            <nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/"
+                    data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About"
+                    data-tr="Hakkımda">About</a></nav>
+            <div class="lang-switch" aria-label="Language"><button type="button"
+                    data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div>
+        </header>
+        <article class="archive-story">
+            <header class="story-opening">
+                <p>This website remembers you!</p><span>This website is actually another project!</span>
+                <h1>How to code a Website?</h1>
+                <ul>
+                    <li>Visual Studio Code</li>
+                    <li>JavaScript</li>
+                    <li>Git · GitHub</li>
+                </ul>
+            </header>
+            <section class="story-section">
+                <h2><span>01</span>The Idea</h2>
+                <div class="story-copy">
+                    <p>Websites are usually designed to be looked at. You enter, scroll, click, and leave.</p>
+                    <p><strong><em>But what if visiting a website could leave something behind?</em></strong></p>
+                    <p>This project treats interaction as material. Every movement, click, pause, and decision becomes
+                        part of a temporary digital trace: a record of how someone moved through the website.</p>
+                    <p>The website observes each session as something unique. These traces are collected, translated and
+                        eventually turned into an <strong><em>artifact.</em></strong></p>
+                    <p>The visitor is no longer only viewing the website.</p>
+                    <p>They are contributing to its archive. And that is what makes every trace
+                        valuable.<br /><strong><u>You make the archive different simply by being
+                                yourself.</u></strong><br />No one moves, pauses, clicks, or explores in exactly the
+                        same way you do. Your presence changes the archive, even if all you do is be yourself.</p>
+                </div><img class="story-diagram" src="/assets/archive-idea-diagram.png"
+                    alt="Diagram of two visitors whose distinct traces become artifacts in one shared archive" />
+            </section>
+            <section class="story-section">
+                <h2><span>02</span>Cool, but how to make it work?</h2>
+                <div class="story-copy">
+                    <p>The system did not appear fully formed. It was built through a series of experiments, failed
+                        attempts, small discoveries and many revisions.</p>
+                    <p>The first challenge was simple: <strong><em>how can a website remember the way someone moves
+                                through it?</em></strong></p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02a</span>Capturing The Movement</h2>
+                <div class="story-copy">
+                    <h3>THE GOAL</h3>
+                    <p>The first step was to understand how a visitor moves through the website. The mouse normally
+                        disappears without leaving any evidence behind. I wanted to turn that temporary movement into
+                        something the website could remember.</p>
+                    <p>x → horizontal position<br />y → vertical position<br />t → time</p>
+                    <p class="story-formula">[x, y, t] → [x, y, t] → [x, y, t] → …</p>
+                    <p>SUCCESS 01 — movement could become data.</p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02b</span>But Whose Data Is This?</h2>
+                <div class="story-copy">
+                    <h3>THE PROBLEM</h3>
+                    <p>Recording coordinates was not enough. If ten people visited the website, I needed to know which
+                        coordinates belonged to which visit.</p>
+                    <p>The solution was to create a unique session ID for every visit.</p>
+                    <p>Conceptually, the data now looked
+                        like:<br /><code>{ sessionId: "unique-session-id", points: […] }</code><br />The session ID acts
+                        like a temporary label. I do not need to know who the visitor is. I only need the system to
+                        understand: these points belong to this visit.</p>
+                    <p><strong><em>The archive is not about identifying people. It is about distinguishing one
+                                interaction from another.</em></strong></p>
+                    <p>SUCCESS 02 — each visit could become its own trace.</p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02c</span>Sending The Data</h2>
+                <div class="story-copy">
+                    <h3>THE PROBLEM</h3>
+                    <p>Mouse movement happens constantly. That means the website can generate many coordinates in a
+                        short time. Sending every point individually would mean repeatedly communicating with the
+                        backend.</p>
+                    <p>Instead, I grouped points into batches. Rather than sending every point separately, a group of
+                        points travels together. Each group has its position in the session.</p>
+                    <p>SUCCESS 03 — large amounts of movement data could be transferred in manageable pieces.</p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02d</span>Frontend to Backend</h2>
+                <div class="story-copy">
+                    <p>The browser is responsible for observing the interaction. The collected data then travels to the
+                        backend, where each request is checked and organized by visit, points and completion state.</p>
+                    <p>Each part answers a different question: which visit, what happened, and has the visit ended?</p>
+                    <p>SUCCESS 04 — the website could send structured interaction data to its backend.</p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02e</span>Knowing When It’s Over</h2>
+                <div class="story-copy">
+                    <p><strong><em>One of the more difficult questions was surprisingly simple: when is a visit
+                                finished?</em></strong></p>
+                    <p>The website could collect information while someone was there, but it also needed to recognize
+                        the final part of that visit.</p>
+                    <p>At first the final session was not appearing where expected. The interaction worked, but the
+                        artifact did not appear immediately. A later revision connected the final interaction directly
+                        to the archive.</p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02f</span>From Data To Artifact!</h2>
+                <div class="story-copy">
+                    <p>At this point the system could identify a visit, record its movement, group the data and
+                        understand when it had finished.</p>
+                    <p>But raw coordinates were never meant to be the final result. <strong><em>The next step was
+                                translation.</em></strong></p>
+                    <p>The collected session data is passed to the backend, where it is transformed into a PDF.
+                        <strong><em>The PDF becomes a visual record of that particular visit.</em></strong></p>
+                </div>
+            </section>
+            <section class="story-section story-step">
+                <h2><span>02g</span>Building The Archive</h2>
+                <div class="story-copy">
+                    <p>Generating the document was not enough. It also needed somewhere to live. Each completed session
+                        is connected to its PDF and stored so individual visits become part of a larger collection.</p>
+                    <p class="story-formula">VISITOR → INTERACTION → DATA → SESSION → PDF → ARCHIVE</p>
+                    <p><strong><em>The archive therefore does not contain documents I designed individually. It contains
+                                documents generated by the people who visited the website.</em></strong></p>
+                </div>
+            </section>
+        </article>
+        <section class="archive archive-list" id="all-traces">
+            <div class="individual-head">
+                <h1>All traces</h1><span id="archive-count">00 TRACES</span>
+            </div>
+            <div class="grid" id="all-traces-grid"></div><button class="archive-more" id="more-traces" type="button"
+                hidden>See more <span>↓</span></button>
+            <p class="site-note">These traces live only in this browser. The shared archive on the original hosted site
+                needs a server.</p>
+        </section>
+        <footer><span>© 2026 elifsu genç</span><span>A portfolio by Elifsu Genç.</span><a href="/">↑ MAIN</a></footer>
+    </main>
+    <div class="consent-backdrop" id="consent" hidden>
+        <div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A
+                CHOICE / 01</span>
+            <h2 id="consent-title">May this site remember your gestures?</h2>
+            <p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular
+                intervals and added to a collective archive of website interactions. The data will be recorded
+                anonymously; only your cursor activity on this website will be collected.</p>
+            <div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace
+                    <span>↗</span></button><button class="decline" id="decline" type="button">No, just here to explore</button>
+            </div>
+        </div>
+    </div>
+    <div class="live" id="live" hidden>● RECORDING · <span id="point-count">0</span> POINTS</div>
+    <script src="/assets/app.js" defer></script>
+</body>
+
+</html>
