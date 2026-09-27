@@ -1,0 +1,105 @@
+(() => {
+  const STORE = 'elifsu-local-traces';
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  const path = location.pathname.replace(/\/+$/, '') || '/';
+  const marker = sessionStorage.getItem('elifsu-next-page');
+  const nav = performance.getEntriesByType('navigation')[0];
+  sessionStorage.removeItem('elifsu-next-page');
+  if (marker !== path || nav?.type === 'reload') {
+    sessionStorage.removeItem('elifsu-choice');
+    sessionStorage.removeItem('elifsu-current-trace');
+  }
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href]');
+    if (!link || link.target === '_blank') return;
+    const url = new URL(link.href);
+    if (url.origin === location.origin && url.pathname !== location.pathname)
+      sessionStorage.setItem('elifsu-next-page', url.pathname.replace(/\/+$/, '') || '/');
+  }, true);
+  const choice = sessionStorage.getItem('elifsu-choice');
+  const modal = document.getElementById('consent');
+  const live = document.getElementById('live');
+  let trace;
+  try { trace = JSON.parse(sessionStorage.getItem('elifsu-current-trace') || 'null'); } catch {}
+  if (!trace || !trace.id) trace = {id: crypto.randomUUID(), started: Date.now(), points: [], dwells: [], clicks: []};
+  const read = () => { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; } };
+  const save = () => {
+    if (sessionStorage.getItem('elifsu-choice') !== 'yes') return;
+    sessionStorage.setItem('elifsu-current-trace', JSON.stringify(trace));
+    if (trace.points.length < 2 && !trace.clicks.length) return;
+    const entries = read().filter(entry => entry.id !== trace.id);
+    entries.push({id: trace.id, date: new Date().toISOString(), points: trace.points, dwells: trace.dwells, clicks: trace.clicks, duration: Date.now() - trace.started});
+    try { localStorage.setItem(STORE, JSON.stringify(entries.slice(-100))); } catch {}
+  };
+  const begin = value => { sessionStorage.setItem('elifsu-choice', value); modal.hidden = true; if (value === 'yes') {live.hidden = false; activate();} };
+  document.getElementById('allow').addEventListener('click', () => begin('yes'));
+  document.getElementById('decline').addEventListener('click', () => begin('no'));
+  if (!choice) modal.hidden = false;
+  else if (choice === 'yes') { live.hidden = false; activate(); }
+  let last = 0, anchor = null, anchorAt = 0;
+  function activate() {
+    document.getElementById('point-count').textContent = trace.points.length;
+    window.addEventListener('pointermove', event => {
+      if (event.pointerType === 'touch' || Date.now() - last < 80 || trace.points.length >= 3000) return;
+      last = Date.now();
+      const p = {x: clamp(Math.round(event.clientX / innerWidth * 1000), 0, 1000), y: clamp(Math.round(event.clientY / innerHeight * 1000), 0, 1000), t: Date.now() - trace.started};
+      trace.points.push(p); document.getElementById('point-count').textContent = trace.points.length;
+      if (!anchor || Math.hypot(p.x - anchor.x, p.y - anchor.y) > 8) {anchor = p; anchorAt = Date.now();}
+    });
+    window.addEventListener('click', event => {
+      const p = {x: clamp(Math.round(event.clientX / innerWidth * 1000), 0, 1000), y: clamp(Math.round(event.clientY / innerHeight * 1000), 0, 1000), t: Date.now() - trace.started};
+      trace.clicks.push(p);
+    });
+    setInterval(() => { if (!anchor || Date.now() - anchorAt < 420) return; const d = { ...anchor, duration: Date.now() - anchorAt }; const prev = trace.dwells.at(-1); if (prev?.t === d.t) prev.duration = d.duration; else trace.dwells.push(d); }, 160);
+    setInterval(save, 12000);
+  }
+  window.addEventListener('pagehide', save);
+  const esc = s => String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const rays = [[-9,-7,-13,-10],[-3,-11,-4,-16],[5,-9,10,-14],[11,-2,16,-3],[8,8,14,11],[-2,11,-2,16],[-11,5,-16,8]];
+  function drawing(e) {
+    const lines = e.points.slice(1).map((p,i) => { const a=e.points[i]; const speed=Math.hypot(p.x-a.x,p.y-a.y)/Math.max(40,p.t-a.t)*1000; return `<line x1="${a.x}" y1="${a.y}" x2="${p.x}" y2="${p.y}" stroke="currentColor" stroke-opacity=".42" stroke-width="${clamp(9-speed*.045,1.1,9)}" stroke-linecap="round"/>`; }).join('');
+    const dwells = e.dwells.map(d => `<circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/160,7,45)}" fill="currentColor" opacity=".04"/><circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/300,3,24)}" fill="currentColor" opacity=".12"/>`).join('');
+    const clicks = e.clicks.map(c => `<g transform="translate(${c.x} ${c.y})" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">${rays.map(([x,y,x2,y2])=>`<path d="M${x} ${y} L${x2} ${y2}"/>`).join('')}</g>`).join('');
+    return lines+dwells+clicks;
+  }
+  function pdf(entry) {
+    const pts = entry.points || [], cmds = ['0.12 0.12 0.12 RG 1 w'];
+    pts.slice(1).forEach((p,i) => { const a=pts[i]; cmds.push(`${(a.x*.52+35).toFixed(1)} ${(770-a.y*.66).toFixed(1)} m ${(p.x*.52+35).toFixed(1)} ${(770-p.y*.66).toFixed(1)} l S`); });
+    const stream=cmds.join('\n')+'\n';
+    const objects=['<< /Type /Catalog /Pages 2 0 R >>','<< /Type /Pages /Kids [3 0 R] /Count 1 >>','<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R >>',`<< /Length ${stream.length} >>\nstream\n${stream}endstream`];
+    let out='%PDF-1.4\n';const offsets=[0];objects.forEach((obj,i)=>{offsets.push(out.length);out+=`${i+1} 0 obj\n${obj}\nendobj\n`});const x=out.length;out+=`xref\n0 5\n0000000000 65535 f \n`;offsets.slice(1).forEach(n=>out+=`${String(n).padStart(10,'0')} 00000 n \n`);out+=`trailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n${x}\n%%EOF`;const blob=new Blob([out],{type:'application/pdf'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`trace-${entry.id.slice(0,8)}.pdf`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }
+  function card(entry,index) {
+    const div=document.createElement('div'); div.className='entry';
+    const stamp=new Date(entry.date);
+    div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span>TRACE / ${String(index+1).padStart(3,'0')}</span><button type="button">DOWNLOAD PDF ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span>${entry.points.length} points</span></div>`;
+    div.querySelector('button').addEventListener('click',()=>pdf(entry));return div;
+  }
+  const entries=read();
+  const collective=document.getElementById('collective');
+  if (collective) {
+    if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.12,.9*Math.pow(.82,entries.length-1-i))}">${drawing(e)}</g>`).join('')}</svg>`;
+    document.getElementById('trace-count').textContent=`${String(entries.length).padStart(2,'0')} TRACES`;
+    document.getElementById('individual-count').textContent=`${String(entries.length).padStart(2,'0')} / TRACES`;
+    entries.slice(-3).reverse().forEach((e,i)=>document.getElementById('recent-traces').appendChild(card(e,entries.length-i-1)));
+  }
+  const grid=document.getElementById('all-traces-grid');
+  if (grid) {
+    const list=entries.slice().reverse();let shown=0;
+    const more=document.getElementById('more-traces');
+    document.getElementById('archive-count').textContent=`${String(entries.length).padStart(2,'0')} TRACES`;
+    const reveal=()=>{list.slice(shown,shown+12).forEach((e,i)=>grid.appendChild(card(e,entries.length-shown-i-1)));shown+=12;more.hidden=shown>=list.length;};
+    more.addEventListener('click',reveal);reveal();
+    if (!entries.length) grid.innerHTML='<p>The first trace has yet to arrive.</p>';
+  }
+  const network=document.getElementById('eye-network');
+  if (network) {
+    const bases=[[175,172],[820,174],[190,545],[810,540]];
+    const nodes=[...network.querySelectorAll('[data-node]')];const lines=document.getElementById('network-lines');
+    let start=performance.now(),frame=0;
+    const animate=now=>{const t=(now-start)/1000;const coords=bases.map(([x,y],i)=>[x+Math.sin(t*.42+i*1.8)*23,y+Math.cos(t*.35+i*2.2)*17]);lines.innerHTML=coords.map(([x,y],i)=>`<line x1="500" y1="350" x2="${x}" y2="${y}" class="spoke"/><circle cx="${x}" cy="${y}" r="4" class="node-dot"/><line x1="${x}" y1="${y}" x2="${coords[(i+1)%4][0]}" y2="${coords[(i+1)%4][1]}" class="mesh"/>`).join('');nodes.forEach((el,i)=>{el.style.left=coords[i][0]/10+'%';el.style.top=coords[i][1]/7+'%'});if (!matchMedia('(prefers-reduced-motion: reduce)').matches) frame=requestAnimationFrame(animate)};
+    frame=requestAnimationFrame(animate);
+  }
+  document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
+  document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.dataset[button.dataset.lang]});document.documentElement.lang=button.dataset.lang;}));
+})();

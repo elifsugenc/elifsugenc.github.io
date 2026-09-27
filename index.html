@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main · elifsu genç</title>
+    <link rel="icon" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/assets/style.css" defer>
+</head>
+
+<body>
+    <main>
+        <header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span
+                    class="header-mark">eg.</span></a>
+            <nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/"
+                    data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About"
+                    data-tr="Hakkımda">About</a></nav>
+            <div class="lang-switch" aria-label="Language"><button type="button"
+                    data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div>
+        </header>
+        <section id="main" class="hero">
+            <div class="hero-copy"><span class="logo-slot logo-large"><img src="/assets/logo.gif"
+                        alt="Elifsu Genç logo"></span>
+                <h1>elifsu genç</h1>
+                <p>A place for my work, ideas, and experiments — shaped by the people who move through it.</p><a
+                    class="pill" href="#selected-works">Explore projects <span>↓</span></a>
+            </div>
+        </section>
+        <section id="selected-works" class="projects">
+            <div class="section-head"><span class="eyebrow">01 / SELECTED WORK</span>
+                <h2>Selected works<span class="accent">.</span></h2>
+            </div>
+            <div class="project-grid"><a class="project" href="/projects/stray/">
+                    <div class="project-image"><span>01</span></div>
+                    <div class="project-meta"><span>PROJECT</span><span>01</span></div>
+                    <h3>STRAY <span>↗</span></h3>
+                </a><a class="project" href="/projects/bio-decay/">
+                    <div class="project-image"><span>02</span></div>
+                    <div class="project-meta"><span>PROJECT</span><span>02</span></div>
+                    <h3>Bio-Decay <span>↗</span></h3>
+                </a><a class="project" href="/projects/the-earthen/">
+                    <div class="project-image"><span>03</span></div>
+                    <div class="project-meta"><span>PROJECT</span><span>03</span></div>
+                    <h3>The Earthen <span>↗</span></h3>
+                </a><a class="project" href="/projects/emek-museum/">
+                    <div class="project-image"><span>04</span></div>
+                    <div class="project-meta"><span>PROJECT</span><span>04</span></div>
+                    <h3>Emek Museum <span>↗</span></h3>
+                </a></div>
+        </section>
+        <section id="archive" class="archive">
+            <div class="archive-heading"><span class="eyebrow">02 / COLLECTIVE ARCHIVE</span>
+                <h2>Traces, together.</h2>
+                <div class="archive-caption">
+                    <p>Each visit adds to a visual surface. Quick movements make fine lines; slow movements grow
+                        heavier. Stillness pools like ink.</p><span id="trace-count">00 TRACES</span>
+                </div>
+            </div>
+            <div class="collective" id="collective">
+                <div class="empty">The first trace has yet to arrive.</div>
+            </div>
+            <div class="individual-head">
+                <h3>Individual traces</h3><span id="individual-count">00 / TRACES</span>
+            </div>
+            <div class="grid" id="recent-traces"></div><a class="archive-more" href="/archive/">See more <span
+                    aria-hidden="true">↗</span></a>
+            <p class="site-note">On this GitHub Pages edition, traces are stored on your device. A shared archive
+                requires separate server hosting.</p>
+        </section>
+        <footer><span>© 2026 elifsu genç</span><span>A portfolio by Elifsu Genç.</span><a href="/">↑ MAIN</a></footer>
+    </main>
+    <div class="consent-backdrop" id="consent" hidden>
+        <div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A
+                CHOICE / 01</span>
+            <h2 id="consent-title">May this site remember your gestures?</h2>
+            <p id="consent-copy">If you agree, cursor positions, pauses and clicks are saved only in this browser during
+                your visit. This GitHub Pages edition cannot add them to the shared public archive. Reload or close the
+                page to end this visit.</p>
+            <div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace
+                    <span>↗</span></button><button class="decline" id="decline" type="button">No, just explore</button>
+            </div>
+        </div>
+    </div>
+    <div class="live" id="live" hidden>● RECORDING · <span id="point-count">0</span> POINTS</div>
+    <script src="/assets/app.js" defer></script>
+</body>
+
+</html>
