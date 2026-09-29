@@ -41,8 +41,8 @@
     doc_fn = doc;
     setDoc_fn = setDoc;
     
-    // Canlı olarak verileri dinle
-    const q = query(collection(db, "traces"), orderBy("date", "desc"), limit(100));
+    // Canlı olarak verileri dinle (Geriye dönük 300 trace)
+    const q = query(collection(db, "traces"), orderBy("date", "desc"), limit(300));
     onSnapshot(q, (snapshot) => {
       const fbEntries = [];
       snapshot.forEach(d => { fbEntries.push(d.data()); });
@@ -55,6 +55,18 @@
   }
 
   const read = () => { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; } };
+  
+  // Eğer eski yerel izler varsa onları otomatik olarak Firebase'e yükle ve yereli temizle (Göç)
+  if (db && setDoc_fn && doc_fn) {
+    const localTraces = read();
+    if (localTraces.length > 0) {
+      localTraces.forEach(async t => {
+        try { await setDoc_fn(doc_fn(db, "traces", t.id), t); } catch(e){}
+      });
+      localStorage.removeItem(STORE);
+    }
+  }
+
   const save = async () => {
     if (sessionStorage.getItem('elifsu-choice') !== 'yes') return;
     sessionStorage.setItem('elifsu-current-trace', JSON.stringify(trace));
@@ -131,7 +143,7 @@
   function renderTraces(entries) {
     const collective=document.getElementById('collective');
     if (collective) {
-      if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.12,.9*Math.pow(.82,entries.length-1-i))}">${drawing(e)}</g>`).join('')}</svg>`;
+      if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.05,.9*Math.pow(.94,entries.length-1-i))}">${drawing(e)}</g>`).join('')}</svg>`;
       else collective.innerHTML='<div class="empty">The first trace has yet to arrive.</div>';
       
       const tc = document.getElementById('trace-count');
