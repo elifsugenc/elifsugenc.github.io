@@ -6,7 +6,9 @@
     --card: #f5f5f3;
     --card-foreground: #171717;
     --border: #dedede;
-    --radius: 0
+    --radius: 0;
+    --site-max-width: 1200px;
+    --site-gutter: max(clamp(24px, 5.5vw, 72px), calc((100% - var(--site-max-width)) / 2));
 }
 
 * {
@@ -14,7 +16,8 @@
 }
 
 html {
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable
 }
 
 body {
@@ -47,7 +50,7 @@ section {
 
 .top {
     height: 86px;
-    padding: 0 4.5vw;
+    padding: 0 var(--site-gutter);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -140,7 +143,7 @@ footer,
 }
 
 .hero-copy {
-    padding: 6vw 4.5vw;
+    padding: 6vw var(--site-gutter);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -220,12 +223,12 @@ footer,
 
 .projects,
 .archive {
-    padding: 8vw 4.5vw
+    padding: 8vw var(--site-gutter)
 }
 
 .section-head h2,
 .archive h2 {
-    font-size: clamp(4rem, 9vw, 9rem);
+    font-size: clamp(3.2rem, 6.5vw, 6.5rem);
     line-height: .95;
     letter-spacing: -.09em;
     margin-top: 30px
@@ -309,7 +312,7 @@ footer,
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 5vw;
-    padding: 9vw 4.5vw
+    padding: 9vw var(--site-gutter)
 }
 
 .about h2 {
@@ -428,7 +431,7 @@ footer,
 
 footer {
     border-top: 1px solid #ddd;
-    padding: 32px 4.5vw;
+    padding: 32px var(--site-gutter);
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -654,7 +657,7 @@ a:focus-visible {
 .hero-copy {
     width: 100%;
     min-height: calc(100svh - 86px);
-    padding: 7vw 24px 8vw;
+    padding: 7vw var(--site-gutter) 8vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -673,11 +676,11 @@ a:focus-visible {
 }
 
 .hero h1 {
-    font: 400 clamp(4rem, 10vw, 10rem)/1.05 Georgia, serif;
+    font: 400 clamp(3.2rem, 7.5vw, 7.5rem)/1.05 Georgia, serif;
     letter-spacing: -.09em;
     margin: 0 0 33px;
     text-transform: lowercase;
-    max-width: 100%
+    max-width: 900px
 }
 
 .hero-copy p {
@@ -689,7 +692,7 @@ a:focus-visible {
 }
 
 .inner-intro {
-    padding: 9vw 4.5vw 6vw;
+    padding: 9vw var(--site-gutter) 6vw;
     min-height: 360px;
     display: flex;
     flex-direction: column;
@@ -699,7 +702,7 @@ a:focus-visible {
 }
 
 .inner-intro h1 {
-    font: 400 clamp(5rem, 11vw, 12rem)/1 Georgia, serif;
+    font: 400 clamp(3.8rem, 8vw, 8rem)/1 Georgia, serif;
     letter-spacing: -.09em;
     margin: 26px 0
 }
@@ -727,7 +730,7 @@ a:focus-visible {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 5vw;
-    padding: 9vw 4.5vw;
+    padding: 9vw var(--site-gutter);
     min-height: 500px
 }
 
@@ -745,7 +748,7 @@ a:focus-visible {
 }
 
 .detail {
-    padding: 5vw 4.5vw 10vw;
+    padding: 5vw var(--site-gutter) 10vw;
     min-height: 80svh
 }
 
@@ -846,7 +849,7 @@ a:focus-visible {
     position: relative;
     overflow: hidden;
     background: #fff;
-    padding: 3vw 4.5vw 45px
+    padding: 3vw var(--site-gutter) 45px
 }
 
 .eye-heading {
@@ -1180,8 +1183,8 @@ a:focus-visible {
     align-items: start;
     column-gap: clamp(32px, 5vw, 90px);
     row-gap: 65px;
-    padding: clamp(55px, 7vw, 110px) 4.5vw 8vw;
-    max-width: 1600px;
+    padding: clamp(55px, 7vw, 110px) var(--site-gutter) 8vw;
+    max-width: 100%;
     margin: 0 auto
 }
 
@@ -1334,7 +1337,7 @@ a:focus-visible {
 .archive-story {
     background: #fff;
     color: #171717;
-    padding: 0 4.5vw
+    padding: 0 var(--site-gutter)
 }
 
 .story-opening {
@@ -1508,7 +1511,7 @@ a:focus-visible {
 }
 
 .page-header {
-    padding: 8vw 4.5vw 4vw
+    padding: 8vw var(--site-gutter) 4vw
 }
 
 .page-header h1 {
