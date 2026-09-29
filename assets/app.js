@@ -228,6 +228,15 @@
     let start=performance.now(),frame=0;
     const animate=now=>{const t=(now-start)/1000;const coords=bases.map(([x,y],i)=>[x+Math.sin(t*.42+i*1.8)*23,y+Math.cos(t*.35+i*2.2)*17]);lines.innerHTML=coords.map(([x,y],i)=>`<line x1="500" y1="350" x2="${x}" y2="${y}" class="spoke"/><circle cx="${x}" cy="${y}" r="4" class="node-dot"/><line x1="${x}" y1="${y}" x2="${coords[(i+1)%bases.length][0]}" y2="${coords[(i+1)%bases.length][1]}" class="mesh"/>`).join('');nodes.forEach((el,i)=>{if(coords[i]){el.style.left=coords[i][0]/10+'%';el.style.top=coords[i][1]/7+'%'}});if (!matchMedia('(prefers-reduced-motion: reduce)').matches) frame=requestAnimationFrame(animate)};
     frame=requestAnimationFrame(animate);
+
+    const pupil = document.getElementById('eye-pupil');
+    if (pupil) {
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 2;
+        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+        pupil.style.transform = `translate(${x * 40}px, ${y * 25}px)`;
+      });
+    }
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
   document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.dataset[button.dataset.lang]});document.documentElement.lang=button.dataset.lang;}));
