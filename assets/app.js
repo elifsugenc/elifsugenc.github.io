@@ -271,12 +271,16 @@
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
 
-  // Interactive peeling skin grid effect following cursor
+  // Interactive peeling skin grid effect following cursor with text sampling
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !('ontouchstart' in window)) {
     const canvas = document.createElement('canvas');
     canvas.id = 'skin-grid-canvas';
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
+
+    // Offscreen canvas for sampling underlying text/content
+    const textCanvas = document.createElement('canvas');
+    const tCtx = textCanvas.getContext('2d');
 
     let width = 0, height = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
     function resize() {
@@ -284,17 +288,91 @@
       height = window.innerHeight;
       canvas.width = width * dpr;
       canvas.height = height * dpr;
+      textCanvas.width = width * dpr;
+      textCanvas.height = height * dpr;
+      lastSampleTarget = null;
     }
     resize();
     window.addEventListener('resize', resize);
 
-    const CELL = 26;
-    const RADIUS = 145;
+    const CELL = 17;
+    const RADIUS = 85;
     let mx = -9999, my = -9999;
     let curX = -9999, curY = -9999;
     let active = false;
     let globalOpacity = 0;
     let rafId = null;
+
+    let lastSampleTarget = null;
+    let hasSampleContent = false;
+
+    function sampleContent(x, y) {
+      if (x < 0 || y < 0 || x > width || y > height) return;
+      const el = document.elementFromPoint(x, y);
+      if (!el || el === document.body || el === document.documentElement || el.id === 'skin-grid-canvas') {
+        if (lastSampleTarget) {
+          lastSampleTarget = null;
+          tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+          hasSampleContent = false;
+        }
+        return;
+      }
+
+      const target = el.closest('h1, h2, h3, p, a, button, span, img, li, time') || el;
+      if (target === lastSampleTarget) return;
+      lastSampleTarget = target;
+
+      tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+      hasSampleContent = false;
+
+      tCtx.save();
+      tCtx.scale(dpr, dpr);
+
+      // Check if image
+      if (target.tagName === 'IMG' && target.complete && target.naturalWidth > 0) {
+        const r = target.getBoundingClientRect();
+        tCtx.drawImage(target, r.left, r.top, r.width, r.height);
+        hasSampleContent = true;
+        tCtx.restore();
+        return;
+      }
+
+      // Sample text nodes
+      const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while ((node = walker.nextNode())) {
+        const val = node.nodeValue;
+        if (!val || !val.trim()) continue;
+        const parent = node.parentElement;
+        if (!parent) continue;
+
+        const comp = window.getComputedStyle(parent);
+        tCtx.font = `${comp.fontStyle || 'normal'} ${comp.fontWeight || '400'} ${comp.fontSize} ${comp.fontFamily}`;
+        tCtx.fillStyle = comp.color || '#171717';
+        tCtx.textBaseline = 'top';
+
+        // Measure individual words for exact placement
+        const words = val.split(/(\s+)/);
+        let charIndex = 0;
+        for (let i = 0; i < words.length; i++) {
+          const w = words[i];
+          if (w.trim().length > 0) {
+            try {
+              const range = document.createRange();
+              range.setStart(node, charIndex);
+              range.setEnd(node, charIndex + w.length);
+              const rect = range.getBoundingClientRect();
+              if (rect.width > 0 && rect.height > 0) {
+                tCtx.fillText(w, rect.left, rect.top);
+                hasSampleContent = true;
+              }
+            } catch (err) {}
+          }
+          charIndex += w.length;
+        }
+      }
+      tCtx.restore();
+    }
 
     document.addEventListener('mousemove', e => {
       mx = e.clientX;
@@ -308,17 +386,19 @@
 
     document.addEventListener('mouseleave', () => {
       active = false;
+      lastSampleTarget = null;
     });
 
     function render() {
       // Lerp cursor for elastic skin feel
-      curX += (mx - curX) * 0.16;
-      curY += (my - curY) * 0.16;
+      curX += (mx - curX) * 0.18;
+      curY += (my - curY) * 0.18;
 
       if (active) {
-        globalOpacity = Math.min(1, globalOpacity + 0.08);
+        globalOpacity = Math.min(1, globalOpacity + 0.1);
+        sampleContent(curX, curY);
       } else {
-        globalOpacity = Math.max(0, globalOpacity - 0.04);
+        globalOpacity = Math.max(0, globalOpacity - 0.05);
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -349,42 +429,61 @@
 
             // 1. UNDERNEATH: Exposed electric blue layer where skin lifts
             ctx.fillStyle = '#3157d7';
-            ctx.globalAlpha = tileAlpha * 0.85;
-            ctx.fillRect(bx + 1, by + 1, CELL - 2, CELL - 2);
+            ctx.globalAlpha = tileAlpha * 0.92;
+            ctx.fillRect(bx + 0.5, by + 0.5, CELL - 1, CELL - 1);
 
-            // 2. SURROUNDING MESH: subtle grid lines around the active field
-            ctx.strokeStyle = `rgba(49, 87, 215, ${tileAlpha * 0.25})`;
-            ctx.lineWidth = 1;
+            // 2. SURROUNDING MESH: subtle grid lines around the field
+            ctx.strokeStyle = `rgba(49, 87, 215, ${tileAlpha * 0.3})`;
+            ctx.lineWidth = 0.8;
             ctx.strokeRect(bx, by, CELL, CELL);
 
             // 3. LIFTED GRID TILE: pulls toward mouse, rotates slightly & rises
             const angleToMouse = Math.atan2(curY - cy, curX - cx);
-            const pull = factor * 14;
+            const pull = factor * 9;
             const dx = Math.cos(angleToMouse) * pull;
-            const dy = Math.sin(angleToMouse) * pull - factor * 3;
-            const rot = ((c + r) % 2 === 0 ? 1 : -1) * factor * 0.22 + angleToMouse * 0.05 * factor;
-            const s = Math.max(0.7, 1 - factor * 0.1);
+            const dy = Math.sin(angleToMouse) * pull - factor * 2.5;
+            const rot = ((c + r) % 2 === 0 ? 1 : -1) * factor * 0.18 + angleToMouse * 0.04 * factor;
+            const s = Math.max(0.78, 1 - factor * 0.08);
 
             ctx.save();
             ctx.translate(cx + dx, cy + dy);
             ctx.rotate(rot);
             ctx.scale(s, s);
 
-            // Subtle drop shadow off the blue ground
-            ctx.shadowColor = `rgba(0, 0, 0, ${tileAlpha * 0.22})`;
-            ctx.shadowBlur = 5 * factor;
+            // Drop shadow off the blue ground
+            ctx.shadowColor = `rgba(0, 0, 0, ${tileAlpha * 0.28})`;
+            ctx.shadowBlur = 4 * factor;
             ctx.shadowOffsetX = dx * 0.3;
-            ctx.shadowOffsetY = dy * 0.3 + 2 * factor;
+            ctx.shadowOffsetY = dy * 0.3 + 1.5 * factor;
 
             // Tile surface (paper white matching background)
             ctx.fillStyle = '#ffffff';
             ctx.globalAlpha = Math.min(1, tileAlpha * 1.3);
-            ctx.fillRect(-CELL / 2 + 1, -CELL / 2 + 1, CELL - 2, CELL - 2);
+            ctx.fillRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
 
-            // Tile border (sketchy dark grid outline)
+            // Reset shadow before drawing text and stroke
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            // 4. CONTENT ON TILE: If text or image is underneath, draw it on the lifted tile!
+            if (hasSampleContent) {
+              ctx.drawImage(
+                textCanvas,
+                bx * dpr,
+                by * dpr,
+                CELL * dpr,
+                CELL * dpr,
+                -CELL / 2 + 0.5,
+                -CELL / 2 + 0.5,
+                CELL - 1,
+                CELL - 1
+              );
+            }
+
+            // Tile border (crisp sketchy dark grid outline)
             ctx.strokeStyle = `rgba(23, 23, 23, ${Math.min(0.85, 0.25 + factor * 0.65)})`;
-            ctx.lineWidth = 1.1;
-            ctx.strokeRect(-CELL / 2 + 1, -CELL / 2 + 1, CELL - 2, CELL - 2);
+            ctx.lineWidth = 1;
+            ctx.strokeRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
 
             ctx.restore();
           }
