@@ -1676,19 +1676,13 @@ a:focus-visible {
   margin-inline: auto;
 }
 
-/* Magnetic cursor distortion */
-.cursor-distort {
+/* Interactive skin grid canvas */
+#skin-grid-canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  z-index: 10000;
-  backdrop-filter: url(#magnet-filter);
-  -webkit-backdrop-filter: url(#magnet-filter);
-  will-change: transform;
-  transition: opacity 0.35s ease;
-  opacity: 0;
+  z-index: 9999;
 }

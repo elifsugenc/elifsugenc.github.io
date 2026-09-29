@@ -271,37 +271,130 @@
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
 
-  // Magnetic pixel distortion effect
+  // Interactive peeling skin grid effect following cursor
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !('ontouchstart' in window)) {
-    const distort = document.createElement('div');
-    distort.className = 'cursor-distort';
-    document.body.appendChild(distort);
+    const canvas = document.createElement('canvas');
+    canvas.id = 'skin-grid-canvas';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
 
-    document.body.insertAdjacentHTML('beforeend', `<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;pointer-events:none">
-      <defs>
-        <filter id="magnet-filter" x="-50%" y="-50%" width="200%" height="200%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.025 0.025" numOctaves="3" result="noise" seed="1">
-            <animate attributeName="seed" from="1" to="80" dur="6s" repeatCount="indefinite"/>
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-      </defs>
-    </svg>`);
+    let width = 0, height = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-    let cx = -300, cy = -300, tx = -300, ty = -300, visible = false;
+    const CELL = 26;
+    const RADIUS = 145;
+    let mx = -9999, my = -9999;
+    let curX = -9999, curY = -9999;
+    let active = false;
+    let globalOpacity = 0;
+    let rafId = null;
 
     document.addEventListener('mousemove', e => {
-      tx = e.clientX; ty = e.clientY;
-      if (!visible) { visible = true; distort.style.opacity = '1'; }
+      mx = e.clientX;
+      my = e.clientY;
+      if (!active) {
+        if (curX < -5000) { curX = mx; curY = my; }
+        active = true;
+      }
+      if (!rafId) rafId = requestAnimationFrame(render);
     });
-    document.addEventListener('mouseleave', () => { visible = false; distort.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { visible = true; distort.style.opacity = '1'; });
 
-    (function magnetLoop() {
-      cx += (tx - cx) * 0.12;
-      cy += (ty - cy) * 0.12;
-      distort.style.transform = `translate(${cx - 20}px, ${cy - 20}px)`;
-      requestAnimationFrame(magnetLoop);
-    })();
+    document.addEventListener('mouseleave', () => {
+      active = false;
+    });
+
+    function render() {
+      // Lerp cursor for elastic skin feel
+      curX += (mx - curX) * 0.16;
+      curY += (my - curY) * 0.16;
+
+      if (active) {
+        globalOpacity = Math.min(1, globalOpacity + 0.08);
+      } else {
+        globalOpacity = Math.max(0, globalOpacity - 0.04);
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (globalOpacity > 0.001) {
+        ctx.save();
+        ctx.scale(dpr, dpr);
+
+        const minCol = Math.max(0, Math.floor((curX - RADIUS) / CELL));
+        const maxCol = Math.min(Math.ceil(width / CELL), Math.ceil((curX + RADIUS) / CELL));
+        const minRow = Math.max(0, Math.floor((curY - RADIUS) / CELL));
+        const maxRow = Math.min(Math.ceil(height / CELL), Math.ceil((curY + RADIUS) / CELL));
+
+        for (let c = minCol; c <= maxCol; c++) {
+          for (let r = minRow; r <= maxRow; r++) {
+            const bx = c * CELL;
+            const by = r * CELL;
+            const cx = bx + CELL / 2;
+            const cy = by + CELL / 2;
+            const dist = Math.hypot(curX - cx, curY - cy);
+
+            if (dist > RADIUS) continue;
+
+            const norm = dist / RADIUS;
+            const p = 1 - norm;
+            const factor = p * p * (3 - 2 * p);
+            const tileAlpha = factor * globalOpacity;
+
+            // 1. UNDERNEATH: Exposed electric blue layer where skin lifts
+            ctx.fillStyle = '#3157d7';
+            ctx.globalAlpha = tileAlpha * 0.85;
+            ctx.fillRect(bx + 1, by + 1, CELL - 2, CELL - 2);
+
+            // 2. SURROUNDING MESH: subtle grid lines around the active field
+            ctx.strokeStyle = `rgba(49, 87, 215, ${tileAlpha * 0.25})`;
+            ctx.lineWidth = 1;
+            ctx.strokeRect(bx, by, CELL, CELL);
+
+            // 3. LIFTED GRID TILE: pulls toward mouse, rotates slightly & rises
+            const angleToMouse = Math.atan2(curY - cy, curX - cx);
+            const pull = factor * 14;
+            const dx = Math.cos(angleToMouse) * pull;
+            const dy = Math.sin(angleToMouse) * pull - factor * 3;
+            const rot = ((c + r) % 2 === 0 ? 1 : -1) * factor * 0.22 + angleToMouse * 0.05 * factor;
+            const s = Math.max(0.7, 1 - factor * 0.1);
+
+            ctx.save();
+            ctx.translate(cx + dx, cy + dy);
+            ctx.rotate(rot);
+            ctx.scale(s, s);
+
+            // Subtle drop shadow off the blue ground
+            ctx.shadowColor = `rgba(0, 0, 0, ${tileAlpha * 0.22})`;
+            ctx.shadowBlur = 5 * factor;
+            ctx.shadowOffsetX = dx * 0.3;
+            ctx.shadowOffsetY = dy * 0.3 + 2 * factor;
+
+            // Tile surface (paper white matching background)
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = Math.min(1, tileAlpha * 1.3);
+            ctx.fillRect(-CELL / 2 + 1, -CELL / 2 + 1, CELL - 2, CELL - 2);
+
+            // Tile border (sketchy dark grid outline)
+            ctx.strokeStyle = `rgba(23, 23, 23, ${Math.min(0.85, 0.25 + factor * 0.65)})`;
+            ctx.lineWidth = 1.1;
+            ctx.strokeRect(-CELL / 2 + 1, -CELL / 2 + 1, CELL - 2, CELL - 2);
+
+            ctx.restore();
+          }
+        }
+
+        ctx.restore();
+        rafId = requestAnimationFrame(render);
+      } else {
+        rafId = null;
+      }
+    }
   }
 })();

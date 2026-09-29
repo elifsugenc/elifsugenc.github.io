@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 
 let content = fs.readFileSync('index.html', 'utf8');
 const replacements = [
@@ -11,6 +11,7 @@ const replacements = [
     ['<div class="project-meta"><span>PROJECT</span><span>02</span></div>', '<div class="project-meta"><span data-en="PROJECT" data-tr="PROJE">PROJECT</span><span>02</span></div>'],
     ['<div class="project-meta"><span>PROJECT</span><span>03</span></div>', '<div class="project-meta"><span data-en="PROJECT" data-tr="PROJE">PROJECT</span><span>03</span></div>'],
     ['<div class="project-meta"><span>PROJECT</span><span>04</span></div>', '<div class="project-meta"><span data-en="PROJECT" data-tr="PROJE">PROJECT</span><span>04</span></div>'],
+    ['<h3>Emek Museum<span class="accent">.</span> <span>↗</span></h3>', '<h3 data-en="Emek Museum<span class=\'accent\'>.</span> <span>↗</span>" data-tr="Emek Müzesi<span class=\'accent\'>.</span> <span>↗</span>">Emek Museum<span class="accent">.</span> <span>↗</span></h3>'],
     ['<span class="eyebrow">02 / COLLECTIVE ARCHIVE</span>', '<span class="eyebrow" data-en="02 / COLLECTIVE ARCHIVE" data-tr="02 / KOLEKTİF ARŞİV">02 / COLLECTIVE ARCHIVE</span>'],
     ['<h2>Traces, together<span class="accent">.</span></h2>', '<h2 data-en="Traces, together<span class=\'accent\'>.</span>" data-tr="İzler, birlikte<span class=\'accent\'>.</span>">Traces, together<span class="accent">.</span></h2>'],
     ['<p>Each visit adds to a visual surface. Quick movements make fine lines; slow movements grow heavier. Stillness pools like ink.</p>', '<p data-en="Each visit adds to a visual surface. Quick movements make fine lines; slow movements grow heavier. Stillness pools like ink." data-tr="Her ziyaret görsel bir yüzeye katkıda bulunur. Hızlı hareketler ince çizgiler çizer; yavaş hareketler kalınlaşır. Hareketsizlik mürekkep gibi birikir.">Each visit adds to a visual surface. Quick movements make fine lines; slow movements grow heavier. Stillness pools like ink.</p>'],
