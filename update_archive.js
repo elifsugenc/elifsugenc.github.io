@@ -1,10 +1,10 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 
 let content = fs.readFileSync('archive/index.html', 'utf-8');
 
 const replacements = [
     ['<p>This website remembers you!</p><span>This website is actually another project!</span>', '<p data-en="This website remembers you!" data-tr="Bu web sitesi sizi hatırlıyor!">This website remembers you!</p><span data-en="This website is actually another project!" data-tr="Bu web sitesi aslında başka bir proje!">This website is actually another project!</span>'],
-    ['<h1>How to code this Website? <button id="btn-see-traces-top"', '<h1 data-en="How to code this Website?" data-tr="Bu Web Sitesi nasıl kodlanır?">How to code this Website? <button id="btn-see-traces-top" data-en="See traces" data-tr="İzleri gör"'],
+    ['<h1>How to code this Website? <button id="btn-see-traces-top"', '<h1><span data-en="How to code this Website?" data-tr="Bu Web Sitesi nasıl kodlanır?">How to code this Website?</span> <button id="btn-see-traces-top" data-en="See traces" data-tr="İzleri gör"'],
     ['>See traces</button></h1>', '>See traces</button></h1>'], // handled above
     ['<h2><span>01</span>The Idea</h2>', '<h2><span>01</span><span data-en="The Idea" data-tr="Fikir">The Idea</span></h2>'],
     ['<p>Websites are usually designed to be looked at. You enter, scroll, click, and leave.</p>', '<p data-en="Websites are usually designed to be looked at. You enter, scroll, click, and leave." data-tr="Web siteleri genellikle bakılmak için tasarlanmıştır. Girer, kaydırır, tıklar ve ayrılırsınız.">Websites are usually designed to be looked at. You enter, scroll, click, and leave.</p>'],
