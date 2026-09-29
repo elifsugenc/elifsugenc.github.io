@@ -1338,7 +1338,7 @@ a:focus-visible {
 
 @media(min-width:761px) {
     .about-editorial .about-photo-wrap {
-        margin-top: clamp(115px, 14vw, 185px)
+        margin-top: 0;
     }
 }
 
