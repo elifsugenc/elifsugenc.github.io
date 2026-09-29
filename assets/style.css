@@ -152,11 +152,44 @@ footer,
     z-index: 1
 }
 
+.hero-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: clamp(45px, 8vw, 120px);
+    margin-bottom: 10px; /* Space between notice and h1 */
+}
+
+.learn-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 10px;
+    background: #f5f5f3;
+    border: 1px solid #dedede;
+    border-radius: 16px;
+    color: #171717;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.learn-more-btn:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+}
+
 .hero h1 {
     font-size: clamp(5rem, 11vw, 12rem);
     line-height: .79;
     letter-spacing: -.11em;
-    margin: clamp(45px, 8vw, 120px) 0 45px
+    margin: 0 0 45px
 }
 
 .hero h1 em {
@@ -641,7 +674,7 @@ a:focus-visible {
 
     .hero h1 {
         font-size: clamp(5.2rem, 16vw, 9rem);
-        margin: 85px 0 45px
+        margin: 0 0 45px
     }
 
     .hero-graphic {
