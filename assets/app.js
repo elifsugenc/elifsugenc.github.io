@@ -241,5 +241,25 @@
     }
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
-  document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=el.dataset[button.dataset.lang]});document.documentElement.lang=button.dataset.lang;}));
+    function setLanguage(lang) {
+    localStorage.setItem('elifsu-lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang]').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (el.dataset[lang]) {
+        el.innerHTML = el.dataset[lang];
+      }
+    });
+  }
+
+  const savedLang = localStorage.getItem('elifsu-lang') || 'en';
+  setLanguage(savedLang);
+
+  document.querySelectorAll('[data-lang]').forEach(button => {
+    button.addEventListener('click', () => {
+      setLanguage(button.dataset.lang);
+    });
+  });
 })();
