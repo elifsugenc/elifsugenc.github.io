@@ -22,7 +22,7 @@
         <section id="main" class="hero">
             <div class="hero-copy"><span class="logo-slot logo-large"><img src="/assets/logo.gif"
                         alt="Elifsu Genç logo"></span>
-                <h1>elifsu genç<span class="accent">.</span> <button id="btn-see-traces-top" style="font-size: clamp(1rem, 2vw, 1.5rem); border: 2px solid #171717; background: transparent; border-radius: 100px; padding: 5px 15px; cursor: pointer; vertical-align: middle; margin-left: 10px;">See traces 👀</button></h1>
+                <h1>elifsu genç<span class="accent">.</span></h1>
                 <p>living archive</p><a
                     class="pill" href="#selected-works">Explore projects <span>↓</span></a>
             </div>
@@ -64,29 +64,11 @@
                 <h3>Individual traces</h3><span id="individual-count">00 / TRACES</span>
             </div>
             <div class="grid" id="recent-traces"></div>
-            <button class="archive-more" id="btn-see-more-traces" style="background: none; border: none; font: inherit; cursor: pointer; padding: 15px 0; font-size: 1.2rem; margin-top: 2rem; display: none;">See more <span aria-hidden="true">↗</span></button>
+            <a class="archive-more" href="/archive/">See more <span aria-hidden="true">↗</span></a>
+            <p class="site-note">Traces are stored on your device. A shared archive is coming soon.</p>
         </section>
         <footer><span>© September 2026</span><span>A portfolio by Elifsu Genç.</span><a href="/">↑ MAIN</a></footer>
     </main>
-    
-    <div class="trace-modal-backdrop" id="trace-modal" hidden>
-        <div class="trace-modal-content">
-            <header class="trace-modal-header">
-                <h2>All Traces</h2>
-                <div class="trace-modal-controls">
-                    <select id="trace-sort-select">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                        <option value="points">Most Points</option>
-                    </select>
-                    <button id="btn-close-trace-modal" class="btn-close-modal">✕</button>
-                </div>
-            </header>
-            <div class="trace-modal-body">
-                <div class="grid" id="modal-traces-grid"></div>
-            </div>
-        </div>
-    </div>
 
     <div class="consent-backdrop" id="consent" hidden>
         <div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A
@@ -101,7 +83,7 @@
         </div>
     </div>
     <div class="live" id="live" hidden>● RECORDING · <span id="point-count">0</span> POINTS</div>
-    <script src="/assets/app.js?v=3" defer></script>
+    <script src="/assets/app.js?v=4" defer></script>
 </body>
 
 </html>

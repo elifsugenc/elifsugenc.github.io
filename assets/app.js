@@ -169,16 +169,11 @@
       if (ic) ic.textContent=`${String(entries.length).padStart(2,'0')} / TRACES`;
       
       const rt = document.getElementById('recent-traces');
-      const btnSeeMore = document.getElementById('btn-see-more-traces');
       
       if (rt) {
         rt.innerHTML='';
         const recent = entries.slice(-6).reverse();
         recent.forEach((e)=>rt.appendChild(card(e, entries.indexOf(e))));
-        
-        if (btnSeeMore) {
-          btnSeeMore.style.display = entries.length > 6 ? 'block' : 'none';
-        }
       }
     }
 
