@@ -8,6 +8,7 @@
   if (marker !== path || nav?.type === 'reload') {
     sessionStorage.removeItem('elifsu-choice');
     sessionStorage.removeItem('elifsu-current-trace');
+    sessionStorage.removeItem('elifsu-lang');
   }
   document.addEventListener('click', event => {
     const link = event.target.closest?.('a[href]');
@@ -119,14 +120,14 @@
   
   function drawing(e) {
     if (!e || !e.points) return '';
-    const lines = e.points.slice(1).map((p,i) => { const a=e.points[i]; const speed=Math.hypot(p.x-a.x,p.y-a.y)/Math.max(40,p.t-a.t)*1000; return `<line x1="${a.x}" y1="${a.y}" x2="${p.x}" y2="${p.y}" stroke="currentColor" stroke-opacity=".42" stroke-width="${clamp(9-speed*.045,1.1,9)}" stroke-linecap="round"/>`; }).join('');
-    const dwells = (e.dwells||[]).map(d => `<circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/160,7,45)}" fill="currentColor" opacity=".04"/><circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/300,3,24)}" fill="currentColor" opacity=".12"/>`).join('');
-    const clicks = (e.clicks||[]).map(c => `<g transform="translate(${c.x} ${c.y})" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">${rays.map(([x,y,x2,y2])=>`<path d="M${x} ${y} L${x2} ${y2}"/>`).join('')}</g>`).join('');
+    const lines = e.points.slice(1).map((p,i) => { const a=e.points[i]; const speed=Math.hypot(p.x-a.x,p.y-a.y)/Math.max(40,p.t-a.t)*1000; return `<line x1="${a.x}" y1="${a.y}" x2="${p.x}" y2="${p.y}" stroke="#3157d7" stroke-opacity=".42" stroke-width="${clamp(9-speed*.045,1.1,9)}" stroke-linecap="round"/>`; }).join('');
+    const dwells = (e.dwells||[]).map(d => `<circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/160,7,45)}" fill="#3157d7" opacity=".04"/><circle cx="${d.x}" cy="${d.y}" r="${clamp(d.duration/300,3,24)}" fill="#3157d7" opacity=".12"/>`).join('');
+    const clicks = (e.clicks||[]).map(c => `<g transform="translate(${c.x} ${c.y})" stroke="#3157d7" stroke-width="2.2" stroke-linecap="round">${rays.map(([x,y,x2,y2])=>`<path d="M${x} ${y} L${x2} ${y2}"/>`).join('')}</g>`).join('');
     return lines+dwells+clicks;
   }
   
   function pdf(entry) {
-    const pts = entry.points || [], cmds = ['0.12 0.12 0.12 RG 1 w'];
+    const pts = entry.points || [], cmds = ['0.192 0.341 0.843 RG 1 w'];
     pts.slice(1).forEach((p,i) => { const a=pts[i]; cmds.push(`${(a.x*.52+35).toFixed(1)} ${(770-a.y*.66).toFixed(1)} m ${(p.x*.52+35).toFixed(1)} ${(770-p.y*.66).toFixed(1)} l S`); });
     const stream=cmds.join('\n')+'\n';
     const objects=['<< /Type /Catalog /Pages 2 0 R >>','<< /Type /Pages /Kids [3 0 R] /Count 1 >>','<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R >>',`<< /Length ${stream.length} >>\nstream\n${stream}endstream`];
@@ -242,7 +243,7 @@
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
     function setLanguage(lang) {
-    try { localStorage.setItem('elifsu-lang', lang); } catch (e) {}
+    try { sessionStorage.setItem('elifsu-lang', lang); } catch (e) {}
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-lang]').forEach(b => {
       b.classList.toggle('active', b.dataset.lang === lang);
@@ -255,7 +256,7 @@
   }
 
   let savedLang = 'en';
-  try { savedLang = localStorage.getItem('elifsu-lang') || 'en'; } catch (e) {}
+  try { savedLang = sessionStorage.getItem('elifsu-lang') || 'en'; } catch (e) {}
   setLanguage(savedLang);
 
   document.querySelectorAll('[data-lang]').forEach(button => {
