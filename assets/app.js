@@ -190,7 +190,7 @@
     const isTr = document.documentElement.lang === 'tr';
     const collective=document.getElementById('collective');
     if (collective) {
-      if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.005,.9*Math.pow(.85,entries.length-1-i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
+      if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.07 * (entries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
       else collective.innerHTML=`<div class="empty" data-en="The first trace has yet to arrive." data-tr="İlk iz henüz ulaşmadı.">${isTr ? 'İlk iz henüz ulaşmadı.' : 'The first trace has yet to arrive.'}</div>`;
       
       const tc = document.getElementById('trace-count');
