@@ -134,9 +134,10 @@
   }
   
   function card(entry,index) {
+    const isTr = document.documentElement.lang === 'tr';
     const div=document.createElement('div'); div.className='entry';
     const stamp=new Date(entry.date);
-    div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span>TRACE / ${String(index+1).padStart(3,'0')}</span><button type="button">DOWNLOAD PDF ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span>${(entry.points||[]).length} points</span></div>`;
+    div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span data-en="TRACE / ${String(index+1).padStart(3,'0')}" data-tr="İZ / ${String(index+1).padStart(3,'0')}">${isTr ? 'İZ' : 'TRACE'} / ${String(index+1).padStart(3,'0')}</span><button type="button" data-en="DOWNLOAD PDF ↗" data-tr="PDF İNDİR ↗">${isTr ? 'PDF İNDİR' : 'DOWNLOAD PDF'} ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span data-en="${(entry.points||[]).length} points" data-tr="${(entry.points||[]).length} nokta">${(entry.points||[]).length} ${isTr ? 'nokta' : 'points'}</span></div>`;
     div.querySelector('button').addEventListener('click',()=>pdf(entry));return div;
   }
   let currentSort = 'newest';
@@ -157,16 +158,17 @@
 
   function renderTraces(entries) {
     allEntries = entries;
+    const isTr = document.documentElement.lang === 'tr';
     const collective=document.getElementById('collective');
     if (collective) {
       if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.05,.9*Math.pow(.94,entries.length-1-i))}">${drawing(e)}</g>`).join('')}</svg>`;
-      else collective.innerHTML='<div class="empty">The first trace has yet to arrive.</div>';
+      else collective.innerHTML=`<div class="empty" data-en="The first trace has yet to arrive." data-tr="İlk iz henüz ulaşmadı.">${isTr ? 'İlk iz henüz ulaşmadı.' : 'The first trace has yet to arrive.'}</div>`;
       
       const tc = document.getElementById('trace-count');
-      if (tc) tc.textContent=`${String(entries.length).padStart(2,'0')} TRACES`;
+      if (tc) tc.innerHTML=`${String(entries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
       
       const ic = document.getElementById('individual-count');
-      if (ic) ic.textContent=`${String(entries.length).padStart(2,'0')} / TRACES`;
+      if (ic) ic.innerHTML=`${String(entries.length).padStart(2,'0')} / <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
       
       const rt = document.getElementById('recent-traces');
       
@@ -187,7 +189,7 @@
       let shown=0;
       const more=document.getElementById('more-traces');
       const ac = document.getElementById('archive-count');
-      if (ac) ac.textContent=`${String(entries.length).padStart(2,'0')} TRACES`;
+      if (ac) ac.innerHTML=`${String(entries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
       
       const reveal=()=>{
         list.slice(shown,shown+12).forEach((e,i)=>grid.appendChild(card(e,entries.length-shown-i-1)));
@@ -200,7 +202,7 @@
         newMore.addEventListener('click', reveal);
       }
       reveal();
-      if (!entries.length) grid.innerHTML='<p>The first trace has yet to arrive.</p>';
+      if (!entries.length) grid.innerHTML=`<p data-en="The first trace has yet to arrive." data-tr="İlk iz henüz ulaşmadı.">${isTr ? 'İlk iz henüz ulaşmadı.' : 'The first trace has yet to arrive.'}</p>`;
     }
   }
 
@@ -239,5 +241,5 @@
     }
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
-  document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.dataset[button.dataset.lang]});document.documentElement.lang=button.dataset.lang;}));
+  document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=el.dataset[button.dataset.lang]});document.documentElement.lang=button.dataset.lang;}));
 })();
