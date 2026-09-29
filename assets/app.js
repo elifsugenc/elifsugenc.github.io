@@ -139,8 +139,24 @@
     div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span>TRACE / ${String(index+1).padStart(3,'0')}</span><button type="button">DOWNLOAD PDF ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span>${(entry.points||[]).length} points</span></div>`;
     div.querySelector('button').addEventListener('click',()=>pdf(entry));return div;
   }
-  
+  let currentSort = 'newest';
+  let allEntries = [];
+
+  function renderModalTraces() {
+    const modalGrid = document.getElementById('modal-traces-grid');
+    if (!modalGrid) return;
+    modalGrid.innerHTML = '';
+    let sorted = allEntries.slice();
+    if (currentSort === 'newest') sorted.reverse();
+    else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
+
+    sorted.forEach(e => {
+        modalGrid.appendChild(card(e, allEntries.indexOf(e)));
+    });
+  }
+
   function renderTraces(entries) {
+    allEntries = entries;
     const collective=document.getElementById('collective');
     if (collective) {
       if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(.05,.9*Math.pow(.94,entries.length-1-i))}">${drawing(e)}</g>`).join('')}</svg>`;
@@ -153,11 +169,21 @@
       if (ic) ic.textContent=`${String(entries.length).padStart(2,'0')} / TRACES`;
       
       const rt = document.getElementById('recent-traces');
+      const btnSeeMore = document.getElementById('btn-see-more-traces');
+      
       if (rt) {
         rt.innerHTML='';
-        entries.slice(-3).reverse().forEach((e,i)=>rt.appendChild(card(e,entries.length-i-1)));
+        const recent = entries.slice(-6).reverse();
+        recent.forEach((e)=>rt.appendChild(card(e, entries.indexOf(e))));
+        
+        if (btnSeeMore) {
+          btnSeeMore.style.display = entries.length > 6 ? 'block' : 'none';
+        }
       }
     }
+
+    const traceModal = document.getElementById('trace-modal');
+    if (traceModal && !traceModal.hidden) renderModalTraces();
     
     const grid=document.getElementById('all-traces-grid');
     if (grid) {
@@ -181,6 +207,20 @@
       reveal();
       if (!entries.length) grid.innerHTML='<p>The first trace has yet to arrive.</p>';
     }
+  }
+
+  const traceModal = document.getElementById('trace-modal');
+  const btnSeeMore = document.getElementById('btn-see-more-traces');
+  const btnSeeTop = document.getElementById('btn-see-traces-top');
+  const btnCloseModal = document.getElementById('btn-close-trace-modal');
+  const sortSelect = document.getElementById('trace-sort-select');
+
+  if (traceModal) {
+      const openModal = (e) => { e.preventDefault(); traceModal.hidden = false; renderModalTraces(); };
+      if (btnSeeMore) btnSeeMore.addEventListener('click', openModal);
+      if (btnSeeTop) btnSeeTop.addEventListener('click', openModal);
+      if (btnCloseModal) btnCloseModal.addEventListener('click', () => traceModal.hidden = true);
+      if (sortSelect) sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; renderModalTraces(); });
   }
 
   // İlk render (veri Firebase'den gelene kadar ekranda boş kalmasın diye locali göster)
