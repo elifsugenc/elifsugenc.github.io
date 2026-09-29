@@ -1670,3 +1670,20 @@ a:focus-visible {
   aspect-ratio: 1 / 1;
   margin-inline: auto;
 }
+
+/* Magnetic cursor distortion */
+.cursor-distort {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  backdrop-filter: url(#magnet-filter) brightness(1.03);
+  -webkit-backdrop-filter: url(#magnet-filter) brightness(1.03);
+  will-change: transform;
+  transition: opacity 0.35s ease;
+  opacity: 0;
+}

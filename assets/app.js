@@ -5,10 +5,12 @@
   const marker = sessionStorage.getItem('elifsu-next-page');
   const nav = performance.getEntriesByType('navigation')[0];
   sessionStorage.removeItem('elifsu-next-page');
+  if (nav?.type === 'reload') {
+    sessionStorage.removeItem('elifsu-lang');
+  }
   if (marker !== path || nav?.type === 'reload') {
     sessionStorage.removeItem('elifsu-choice');
     sessionStorage.removeItem('elifsu-current-trace');
-    sessionStorage.removeItem('elifsu-lang');
   }
   document.addEventListener('click', event => {
     const link = event.target.closest?.('a[href]');
@@ -264,4 +266,38 @@
       setLanguage(button.dataset.lang);
     });
   });
+
+  // Magnetic pixel distortion effect
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !('ontouchstart' in window)) {
+    const distort = document.createElement('div');
+    distort.className = 'cursor-distort';
+    document.body.appendChild(distort);
+
+    document.body.insertAdjacentHTML('beforeend', `<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;pointer-events:none">
+      <defs>
+        <filter id="magnet-filter" x="-50%" y="-50%" width="200%" height="200%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.025 0.025" numOctaves="3" result="noise" seed="1">
+            <animate attributeName="seed" from="1" to="80" dur="6s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    </svg>`);
+
+    let cx = -300, cy = -300, tx = -300, ty = -300, visible = false;
+
+    document.addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      if (!visible) { visible = true; distort.style.opacity = '1'; }
+    });
+    document.addEventListener('mouseleave', () => { visible = false; distort.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { visible = true; distort.style.opacity = '1'; });
+
+    (function magnetLoop() {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      distort.style.transform = `translate(${cx - 90}px, ${cy - 90}px)`;
+      requestAnimationFrame(magnetLoop);
+    })();
+  }
 })();
