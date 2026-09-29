@@ -279,7 +279,7 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.025 0.025" numOctaves="3" result="noise" seed="1">
             <animate attributeName="seed" from="1" to="80" dur="6s" repeatCount="indefinite"/>
           </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
       </defs>
     </svg>`);
@@ -296,7 +296,7 @@
     (function magnetLoop() {
       cx += (tx - cx) * 0.12;
       cy += (ty - cy) * 0.12;
-      distort.style.transform = `translate(${cx - 90}px, ${cy - 90}px)`;
+      distort.style.transform = `translate(${cx - 30}px, ${cy - 30}px)`;
       requestAnimationFrame(magnetLoop);
     })();
   }

@@ -1676,13 +1676,13 @@ a:focus-visible {
   position: fixed;
   top: 0;
   left: 0;
-  width: 180px;
-  height: 180px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
-  backdrop-filter: url(#magnet-filter) brightness(1.03);
-  -webkit-backdrop-filter: url(#magnet-filter) brightness(1.03);
+  backdrop-filter: url(#magnet-filter);
+  -webkit-backdrop-filter: url(#magnet-filter);
   will-change: transform;
   transition: opacity 0.35s ease;
   opacity: 0;
