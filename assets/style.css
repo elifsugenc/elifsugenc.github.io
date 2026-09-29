@@ -155,7 +155,8 @@ footer,
 .hero-notice {
     position: absolute;
     top: clamp(20px, 3vw, 40px);
-    left: var(--site-gutter);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 12px;
