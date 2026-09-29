@@ -153,12 +153,14 @@ footer,
 }
 
 .hero-notice {
+    position: absolute;
+    top: clamp(20px, 3vw, 40px);
+    left: var(--site-gutter);
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 0.95rem;
     color: #666;
-    margin-bottom: clamp(30px, 6vw, 70px);
 }
 
 .hero .pill.pill-small {
