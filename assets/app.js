@@ -272,7 +272,7 @@
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
 
   // Interactive peeling skin grid effect following cursor with safe text sampling
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !('ontouchstart' in window)) {
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(hover: hover)').matches) {
     const canvas = document.createElement('canvas');
     canvas.id = 'skin-grid-canvas';
     document.body.appendChild(canvas);
