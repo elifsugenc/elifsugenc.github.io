@@ -271,7 +271,7 @@
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
 
-  // Interactive peeling skin grid effect following cursor with text sampling
+  // Interactive peeling skin grid effect following cursor with safe text sampling
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !('ontouchstart' in window)) {
     const canvas = document.createElement('canvas');
     canvas.id = 'skin-grid-canvas';
@@ -286,17 +286,17 @@
     function resize() {
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      textCanvas.width = width * dpr;
-      textCanvas.height = height * dpr;
+      canvas.width = Math.max(1, Math.floor(width * dpr));
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+      textCanvas.width = canvas.width;
+      textCanvas.height = canvas.height;
       lastSampleTarget = null;
     }
     resize();
     window.addEventListener('resize', resize);
 
-    const CELL = 17;
-    const RADIUS = 85;
+    const CELL = 15;
+    const RADIUS = 75;
     let mx = -9999, my = -9999;
     let curX = -9999, curY = -9999;
     let active = false;
@@ -307,71 +307,63 @@
     let hasSampleContent = false;
 
     function sampleContent(x, y) {
-      if (x < 0 || y < 0 || x > width || y > height) return;
-      const el = document.elementFromPoint(x, y);
-      if (!el || el === document.body || el === document.documentElement || el.id === 'skin-grid-canvas') {
-        if (lastSampleTarget) {
-          lastSampleTarget = null;
-          tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-          hasSampleContent = false;
+      try {
+        if (x < 0 || y < 0 || x > width || y > height) return;
+        const el = document.elementFromPoint(x, y);
+        if (!el || el === document.body || el === document.documentElement || el.id === 'skin-grid-canvas') {
+          if (lastSampleTarget) {
+            lastSampleTarget = null;
+            tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+            hasSampleContent = false;
+          }
+          return;
         }
-        return;
-      }
 
-      const target = el.closest('h1, h2, h3, p, a, button, span, img, li, time') || el;
-      if (target === lastSampleTarget) return;
-      lastSampleTarget = target;
+        const target = el.closest('h1, h2, h3, p, a, button, span, img, li, time') || el;
+        if (target === lastSampleTarget) return;
+        lastSampleTarget = target;
 
-      tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-      hasSampleContent = false;
+        tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+        hasSampleContent = false;
 
-      tCtx.save();
-      tCtx.scale(dpr, dpr);
-
-      // Check if image
-      if (target.tagName === 'IMG' && target.complete && target.naturalWidth > 0) {
         const r = target.getBoundingClientRect();
-        tCtx.drawImage(target, r.left, r.top, r.width, r.height);
-        hasSampleContent = true;
-        tCtx.restore();
-        return;
-      }
+        if (!r.width || !r.height) return;
 
-      // Sample text nodes
-      const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null, false);
-      let node;
-      while ((node = walker.nextNode())) {
-        const val = node.nodeValue;
-        if (!val || !val.trim()) continue;
-        const parent = node.parentElement;
-        if (!parent) continue;
+        tCtx.save();
+        tCtx.scale(dpr, dpr);
 
-        const comp = window.getComputedStyle(parent);
-        tCtx.font = `${comp.fontStyle || 'normal'} ${comp.fontWeight || '400'} ${comp.fontSize} ${comp.fontFamily}`;
-        tCtx.fillStyle = comp.color || '#171717';
-        tCtx.textBaseline = 'top';
+        if (target.tagName === 'IMG' && target.complete && target.naturalWidth > 0) {
+          tCtx.drawImage(target, r.left, r.top, r.width, r.height);
+          hasSampleContent = true;
+        } else {
+          const comp = window.getComputedStyle(target);
+          const text = (target.innerText || '').trim();
+          if (text) {
+            tCtx.font = `${comp.fontStyle || 'normal'} ${comp.fontWeight || '400'} ${comp.fontSize || '16px'} ${comp.fontFamily || 'sans-serif'}`;
+            tCtx.fillStyle = comp.color || '#171717';
+            tCtx.textBaseline = 'top';
+            const align = comp.textAlign || 'left';
+            tCtx.textAlign = align;
 
-        // Measure individual words for exact placement
-        const words = val.split(/(\s+)/);
-        let charIndex = 0;
-        for (let i = 0; i < words.length; i++) {
-          const w = words[i];
-          if (w.trim().length > 0) {
-            try {
-              const range = document.createRange();
-              range.setStart(node, charIndex);
-              range.setEnd(node, charIndex + w.length);
-              const rect = range.getBoundingClientRect();
-              if (rect.width > 0 && rect.height > 0) {
-                tCtx.fillText(w, rect.left, rect.top);
+            let drawX = r.left;
+            if (align === 'center') drawX = r.left + r.width / 2;
+            else if (align === 'right') drawX = r.right;
+
+            // Draw line by line if multi-line
+            const lines = text.split('\n');
+            const lineHeight = parseFloat(comp.lineHeight) || (parseFloat(comp.fontSize) * 1.3) || 20;
+            for (let i = 0; i < lines.length; i++) {
+              if (lines[i].trim()) {
+                tCtx.fillText(lines[i].trim(), drawX, r.top + i * lineHeight);
                 hasSampleContent = true;
               }
-            } catch (err) {}
+            }
           }
-          charIndex += w.length;
         }
+        tCtx.restore();
+      } catch (e) {
+        hasSampleContent = false;
       }
-      tCtx.restore();
     }
 
     document.addEventListener('mousemove', e => {
@@ -390,109 +382,118 @@
     });
 
     function render() {
-      // Lerp cursor for elastic skin feel
-      curX += (mx - curX) * 0.18;
-      curY += (my - curY) * 0.18;
+      try {
+        curX += (mx - curX) * 0.2;
+        curY += (my - curY) * 0.2;
 
-      if (active) {
-        globalOpacity = Math.min(1, globalOpacity + 0.1);
-        sampleContent(curX, curY);
-      } else {
-        globalOpacity = Math.max(0, globalOpacity - 0.05);
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (globalOpacity > 0.001) {
-        ctx.save();
-        ctx.scale(dpr, dpr);
-
-        const minCol = Math.max(0, Math.floor((curX - RADIUS) / CELL));
-        const maxCol = Math.min(Math.ceil(width / CELL), Math.ceil((curX + RADIUS) / CELL));
-        const minRow = Math.max(0, Math.floor((curY - RADIUS) / CELL));
-        const maxRow = Math.min(Math.ceil(height / CELL), Math.ceil((curY + RADIUS) / CELL));
-
-        for (let c = minCol; c <= maxCol; c++) {
-          for (let r = minRow; r <= maxRow; r++) {
-            const bx = c * CELL;
-            const by = r * CELL;
-            const cx = bx + CELL / 2;
-            const cy = by + CELL / 2;
-            const dist = Math.hypot(curX - cx, curY - cy);
-
-            if (dist > RADIUS) continue;
-
-            const norm = dist / RADIUS;
-            const p = 1 - norm;
-            const factor = p * p * (3 - 2 * p);
-            const tileAlpha = factor * globalOpacity;
-
-            // 1. UNDERNEATH: Exposed electric blue layer where skin lifts
-            ctx.fillStyle = '#3157d7';
-            ctx.globalAlpha = tileAlpha * 0.92;
-            ctx.fillRect(bx + 0.5, by + 0.5, CELL - 1, CELL - 1);
-
-            // 2. SURROUNDING MESH: subtle grid lines around the field
-            ctx.strokeStyle = `rgba(49, 87, 215, ${tileAlpha * 0.3})`;
-            ctx.lineWidth = 0.8;
-            ctx.strokeRect(bx, by, CELL, CELL);
-
-            // 3. LIFTED GRID TILE: pulls toward mouse, rotates slightly & rises
-            const angleToMouse = Math.atan2(curY - cy, curX - cx);
-            const pull = factor * 9;
-            const dx = Math.cos(angleToMouse) * pull;
-            const dy = Math.sin(angleToMouse) * pull - factor * 2.5;
-            const rot = ((c + r) % 2 === 0 ? 1 : -1) * factor * 0.18 + angleToMouse * 0.04 * factor;
-            const s = Math.max(0.78, 1 - factor * 0.08);
-
-            ctx.save();
-            ctx.translate(cx + dx, cy + dy);
-            ctx.rotate(rot);
-            ctx.scale(s, s);
-
-            // Drop shadow off the blue ground
-            ctx.shadowColor = `rgba(0, 0, 0, ${tileAlpha * 0.28})`;
-            ctx.shadowBlur = 4 * factor;
-            ctx.shadowOffsetX = dx * 0.3;
-            ctx.shadowOffsetY = dy * 0.3 + 1.5 * factor;
-
-            // Tile surface (paper white matching background)
-            ctx.fillStyle = '#ffffff';
-            ctx.globalAlpha = Math.min(1, tileAlpha * 1.3);
-            ctx.fillRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
-
-            // Reset shadow before drawing text and stroke
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-
-            // 4. CONTENT ON TILE: If text or image is underneath, draw it on the lifted tile!
-            if (hasSampleContent) {
-              ctx.drawImage(
-                textCanvas,
-                bx * dpr,
-                by * dpr,
-                CELL * dpr,
-                CELL * dpr,
-                -CELL / 2 + 0.5,
-                -CELL / 2 + 0.5,
-                CELL - 1,
-                CELL - 1
-              );
-            }
-
-            // Tile border (crisp sketchy dark grid outline)
-            ctx.strokeStyle = `rgba(23, 23, 23, ${Math.min(0.85, 0.25 + factor * 0.65)})`;
-            ctx.lineWidth = 1;
-            ctx.strokeRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
-
-            ctx.restore();
-          }
+        if (active) {
+          globalOpacity = Math.min(1, globalOpacity + 0.1);
+          sampleContent(curX, curY);
+        } else {
+          globalOpacity = Math.max(0, globalOpacity - 0.05);
         }
 
-        ctx.restore();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (globalOpacity > 0.001) {
+          ctx.save();
+          ctx.scale(dpr, dpr);
+
+          const minCol = Math.max(0, Math.floor((curX - RADIUS) / CELL));
+          const maxCol = Math.min(Math.ceil(width / CELL) - 1, Math.ceil((curX + RADIUS) / CELL));
+          const minRow = Math.max(0, Math.floor((curY - RADIUS) / CELL));
+          const maxRow = Math.min(Math.ceil(height / CELL) - 1, Math.ceil((curY + RADIUS) / CELL));
+
+          for (let c = minCol; c <= maxCol; c++) {
+            for (let r = minRow; r <= maxRow; r++) {
+              const bx = c * CELL;
+              const by = r * CELL;
+              const cx = bx + CELL / 2;
+              const cy = by + CELL / 2;
+              const dist = Math.hypot(curX - cx, curY - cy);
+
+              if (dist > RADIUS) continue;
+
+              const norm = dist / RADIUS;
+              const p = 1 - norm;
+              const factor = p * p * (3 - 2 * p);
+              const tileAlpha = factor * globalOpacity;
+
+              // 1. UNDERNEATH: Exposed electric blue layer where skin lifts
+              ctx.fillStyle = '#3157d7';
+              ctx.globalAlpha = tileAlpha * 0.92;
+              ctx.fillRect(bx + 0.5, by + 0.5, CELL - 1, CELL - 1);
+
+              // 2. SURROUNDING MESH: subtle grid lines around field
+              ctx.strokeStyle = `rgba(49, 87, 215, ${tileAlpha * 0.28})`;
+              ctx.lineWidth = 0.8;
+              ctx.strokeRect(bx, by, CELL, CELL);
+
+              // 3. LIFTED GRID TILE: pulls toward mouse, rotates slightly & rises
+              const angleToMouse = Math.atan2(curY - cy, curX - cx);
+              const pull = factor * 8;
+              const dx = Math.cos(angleToMouse) * pull;
+              const dy = Math.sin(angleToMouse) * pull - factor * 2;
+              const rot = ((c + r) % 2 === 0 ? 1 : -1) * factor * 0.16 + angleToMouse * 0.03 * factor;
+              const s = Math.max(0.78, 1 - factor * 0.08);
+
+              ctx.save();
+              ctx.translate(cx + dx, cy + dy);
+              ctx.rotate(rot);
+              ctx.scale(s, s);
+
+              // Shadow
+              ctx.shadowColor = `rgba(0, 0, 0, ${tileAlpha * 0.25})`;
+              ctx.shadowBlur = 3 * factor;
+              ctx.shadowOffsetX = dx * 0.25;
+              ctx.shadowOffsetY = dy * 0.25 + 1.2 * factor;
+
+              // Tile surface
+              ctx.fillStyle = '#ffffff';
+              ctx.globalAlpha = Math.min(1, tileAlpha * 1.3);
+              ctx.fillRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
+
+              ctx.shadowColor = 'transparent';
+              ctx.shadowBlur = 0;
+
+              // 4. CONTENT ON TILE: Draw underlying sampled text / image chunk
+              if (hasSampleContent) {
+                const sx = Math.floor(bx * dpr);
+                const sy = Math.floor(by * dpr);
+                const sw = Math.floor(CELL * dpr);
+                const sh = Math.floor(CELL * dpr);
+                if (sx >= 0 && sy >= 0 && sx + sw <= textCanvas.width && sy + sh <= textCanvas.height) {
+                  ctx.drawImage(
+                    textCanvas,
+                    sx,
+                    sy,
+                    sw,
+                    sh,
+                    -CELL / 2 + 0.5,
+                    -CELL / 2 + 0.5,
+                    CELL - 1,
+                    CELL - 1
+                  );
+                }
+              }
+
+              // Tile border
+              ctx.strokeStyle = `rgba(23, 23, 23, ${Math.min(0.85, 0.25 + factor * 0.65)})`;
+              ctx.lineWidth = 1;
+              ctx.strokeRect(-CELL / 2 + 0.5, -CELL / 2 + 0.5, CELL - 1, CELL - 1);
+
+              ctx.restore();
+            }
+          }
+
+          ctx.restore();
+          rafId = requestAnimationFrame(render);
+        } else {
+          rafId = null;
+        }
+      } catch (err) {
+        // Even if anything fails, continue rendering
         rafId = requestAnimationFrame(render);
-      } else {
-        rafId = null;
       }
     }
   }
