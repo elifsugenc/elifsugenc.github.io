@@ -1681,8 +1681,8 @@ a:focus-visible {
   position: fixed;
   top: 0;
   left: 0;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;

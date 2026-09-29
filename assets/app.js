@@ -300,7 +300,7 @@
     (function magnetLoop() {
       cx += (tx - cx) * 0.12;
       cy += (ty - cy) * 0.12;
-      distort.style.transform = `translate(${cx - 30}px, ${cy - 30}px)`;
+      distort.style.transform = `translate(${cx - 20}px, ${cy - 20}px)`;
       requestAnimationFrame(magnetLoop);
     })();
   }
