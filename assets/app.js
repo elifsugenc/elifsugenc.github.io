@@ -242,7 +242,7 @@
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
     function setLanguage(lang) {
-    localStorage.setItem('elifsu-lang', lang);
+    try { localStorage.setItem('elifsu-lang', lang); } catch (e) {}
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-lang]').forEach(b => {
       b.classList.toggle('active', b.dataset.lang === lang);
@@ -254,7 +254,8 @@
     });
   }
 
-  const savedLang = localStorage.getItem('elifsu-lang') || 'en';
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem('elifsu-lang') || 'en'; } catch (e) {}
   setLanguage(savedLang);
 
   document.querySelectorAll('[data-lang]').forEach(button => {
