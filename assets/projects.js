@@ -1,5 +1,28 @@
 const projectsData = [
   {
+    id: 'mode-mystery',
+    tabLabel: 'Questions',
+    themeColor: '#7a31d7', // purple/blue
+    eyeGraphic: `
+      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
+        <!-- Base pupil abstract shape -->
+        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+        <!-- Glowing blue question mark -->
+        <text x="160" y="132" font-family="monospace" font-size="40" font-weight="bold" fill="currentColor" text-anchor="middle">?</text>
+        <circle cx="160" cy="116" r="25" fill="currentColor" opacity="0.1" />
+      </g>
+    `,
+    projects: [
+      { id: 'stray', num: '01', title: 'What is Stray?', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'bio-decay', num: '02', title: 'How does biology decay?', url: '/projects/bio-decay/', baseIndex: 1 },
+      { id: 'the-earthen', num: '03', title: 'Who are the Earthen?', url: '/projects/the-earthen/', baseIndex: 2 },
+      { id: 'emek-museum', num: '04', title: 'What is Emek Museum?', url: '/projects/emek-museum/', baseIndex: 3 },
+      { id: 'traces', num: '05', title: 'Why trace together?', url: '/archive/', baseIndex: 4 },
+      { id: 'fire-escape', num: '06', title: 'Can you escape the fire?', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
+      { id: 'ara-sira', num: '07', title: 'What is ara-sıra?', url: '/projects/ara-sira/', baseIndex: 6 }
+    ]
+  },
+  {
     id: 'mode-arch',
     tabLabel: 'Architecture & Interior Design',
     themeColor: '#3157d7', // default site blue
@@ -18,23 +41,6 @@ const projectsData = [
       { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/', baseIndex: 0 },
       { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/', baseIndex: 1 },
       { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
-    ]
-  },
-  {
-    id: 'mode-mystery',
-    tabLabel: 'Questions',
-    themeColor: '#7a31d7', // purple/blue
-    eyeGraphic: `
-      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Base pupil abstract shape -->
-        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-        <!-- Glowing blue question mark -->
-        <text x="160" y="132" font-family="monospace" font-size="40" font-weight="bold" fill="currentColor" text-anchor="middle">?</text>
-        <circle cx="160" cy="116" r="25" fill="currentColor" opacity="0.1" />
-      </g>
-    `,
-    projects: [
-      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 }
     ]
   },
   {
