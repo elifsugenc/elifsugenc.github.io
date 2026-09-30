@@ -194,10 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isInitial) {
             isSwitching = true;
             
-            // Instantly hide the project buttons when switching
-            nodesContainer.style.transition = 'opacity 0.18s ease-out, transform 0.18s ease-out';
+            // Fade out the project buttons and lines when switching
+            nodesContainer.style.transition = 'opacity 0.18s ease-out';
             nodesContainer.style.opacity = '0';
-            nodesContainer.style.transform = 'scale(0.92)';
+            linesContainer.style.transition = 'opacity 0.18s ease-out';
+            linesContainer.style.opacity = '0';
 
             // Slide out ONLY the iris
             if (irisStage) {
@@ -253,9 +254,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isInitial) {
                 // Nodes wait 0.5s (500ms) after transition, then smoothly appear at their positions!
                 nodeTimer = setTimeout(() => {
-                    nodesContainer.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+                    nodesContainer.style.transition = 'opacity 0.35s ease-out';
                     nodesContainer.style.opacity = '1';
-                    nodesContainer.style.transform = 'scale(1)';
+                    linesContainer.style.transition = 'opacity 0.35s ease-out';
+                    linesContainer.style.opacity = '1';
                     isSwitching = false;
                 }, 500);
             } else {
