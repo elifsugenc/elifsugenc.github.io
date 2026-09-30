@@ -13,7 +13,11 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 }
+      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 },
+      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 },
+      { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/', baseIndex: 1 },
+      { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
     ]
   },
   {
