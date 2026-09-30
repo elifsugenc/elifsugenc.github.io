@@ -172,6 +172,18 @@
     <p class="detail-body">This left me with another question:</p>
     <p class="detail-body" style="font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; color: var(--primary); margin-top: 30px; line-height: 1.2;">Can we design an action without designing what the action will be?</p>
 </div>
+
+<div class="detail-section" style="margin-bottom: 80px;">
+    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MORE MEDIA</span>
+    <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+        <div class="media-thumb" data-index="0" style="background-image: url('/assets/stray-project.png');"></div>
+        <div class="media-thumb" data-index="1" style="background-image: url('/assets/stray-perspective-section.png');"></div>
+        <div class="media-thumb" data-index="2" style="background-image: url('/assets/stray-board-1.jpg');"></div>
+        <div class="media-thumb more-media" data-index="3" style="background: rgba(52, 122, 89, 0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--primary); font-size: 2rem; font-weight: bold;">
+            +2
+        </div>
+    </div>
+</div>
 </article><footer><span data-en="© 2026 elifsu genç" data-tr="© 2026 elifsu genç">© 2026 elifsu genç</span><span data-en="A portfolio by Elifsu Genç." data-tr="Elifsu Genç portfolyosu.">A portfolio by Elifsu Genç.</span><a href="/" data-en="↑ MAIN" data-tr="↑ ANA SAYFA">↑ MAIN</a></footer></main><div class="consent-backdrop" id="consent" hidden>
         <div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><div class="dialog-language lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div><span class="eyebrow" data-en="A CHOICE / 01" data-tr="BİR SEÇİM / 01">A CHOICE / 01</span>
             <h2 id="consent-title" data-en="May this site remember you?" data-tr="Bu site sizi hatırlayabilir mi?">May this site remember you?</h2>
@@ -228,5 +240,58 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// Gallery & Lightbox Logic
+const galleryImages = [
+    '/assets/stray-project.png',
+    '/assets/stray-perspective-section.png',
+    '/assets/stray-board-1.jpg',
+    '/assets/stray-board-2.png',
+    '/assets/stray-board-3.png'
+];
+let currentImageIndex = 0;
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const counter = document.querySelector('.lightbox-counter');
+
+document.querySelectorAll('.media-thumb').forEach(thumb => {
+    thumb.addEventListener('click', (e) => {
+        currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
+        showImage(currentImageIndex);
+        lightbox.hidden = false;
+    });
+});
+
+function showImage(index) {
+    if (index < 0) index = galleryImages.length - 1;
+    if (index >= galleryImages.length) index = 0;
+    currentImageIndex = index;
+    lightboxImg.src = galleryImages[currentImageIndex];
+    counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+}
+
+document.querySelector('.lightbox-close').addEventListener('click', () => {
+    lightbox.hidden = true;
+});
+document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(currentImageIndex - 1);
+});
+document.querySelector('.lightbox-next').addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(currentImageIndex + 1);
+});
+// Close on background click
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === lightboxImg) lightbox.hidden = true;
+});
 </script>
+
+<div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox-close">×</button>
+    <button class="lightbox-prev">❮</button>
+    <img id="lightbox-img" src="" alt="Gallery Image">
+    <button class="lightbox-next">❯</button>
+    <div class="lightbox-counter">1 / 5</div>
+</div>
 </body></html>
