@@ -1005,11 +1005,12 @@ a:focus-visible {
     top: 50%;
     width: clamp(190px, 23vw, 350px);
     aspect-ratio: 1.5;
-    transform: translate(-50%, -50%);
+    transform: translate(-52.2%, -55.2%);
     display: grid;
     place-items: center;
     z-index: 2;
-    pointer-events: none
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .eye-center img {
@@ -1249,6 +1250,16 @@ a:focus-visible {
     90% {
         opacity: 1
     }
+}
+
+.sketch-eye.is-blinking .sketch-eye-open {
+    opacity: 0 !important;
+    animation: none !important;
+}
+.sketch-eye.is-blinking .sketch-eye-shut {
+    opacity: 1 !important;
+    animation: none !important;
+    display: block !important;
 }
 
 @media(prefers-reduced-motion:reduce) {

@@ -147,6 +147,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    const eyeCenter = document.querySelector('.eye-center');
+    const sketchEye = document.querySelector('.sketch-eye');
+    if (eyeCenter && sketchEye) {
+        eyeCenter.addEventListener('click', () => {
+            sketchEye.classList.add('is-blinking');
+            setTimeout(() => sketchEye.classList.remove('is-blinking'), 150);
+        });
+    }
+
     const bases=[[200,230],[800,230],[190,545],[810,540],[500,150],[500,610],[120,370], [880,370]];
     let start = performance.now();
     let activeNodes = [];
