@@ -1490,7 +1490,7 @@ a:focus-visible {
     max-width: 900px
 }
 
-.story-section h2 span:first-child {
+.story-section h2 > span:first-child {
     position: absolute;
     z-index: 0;
     left: 50%;
@@ -1507,11 +1507,11 @@ a:focus-visible {
     isolation: isolate
 }
 
-.story-section h2 span:first-child {
+.story-section h2 > span:first-child {
     z-index: -1
 }
 
-.story-section h2 span:last-child {
+.story-section h2 > span:last-child {
     position: relative;
     z-index: 1;
 }
@@ -1582,7 +1582,7 @@ a:focus-visible {
         margin-bottom: 65px
     }
 
-    .story-section h2 span:first-child {
+    .story-section h2 > span:first-child {
         top: -.65em
     }
 
