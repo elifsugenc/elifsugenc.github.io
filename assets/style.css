@@ -965,7 +965,7 @@ a:focus-visible {
     max-width: 1450px;
     height: min(68vw, 700px);
     min-height: 560px;
-    margin: -35px auto 0
+    margin: 40px auto 0
 }
 
 .network-lines {
@@ -1116,7 +1116,7 @@ a:focus-visible {
     .eye-network {
         height: 650px;
         min-height: 0;
-        margin: 10px auto 0
+        margin: 30px auto 0
     }
 
     .eye-center {
