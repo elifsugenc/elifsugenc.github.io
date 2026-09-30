@@ -110,33 +110,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Inject Tabs
-    const heading = document.querySelector('.eye-heading');
-    const tabsContainer = document.createElement('div');
-    tabsContainer.className = 'category-tabs';
-    projectsData.forEach((mode, idx) => {
-        const btn = document.createElement('button');
-        btn.textContent = mode.tabLabel;
-        btn.className = 'category-tab-btn';
-        btn.onclick = () => switchMode(idx);
-        tabsContainer.appendChild(btn);
-    });
-    heading.appendChild(tabsContainer);
-
-    // Inject Arrows
+    // Inject Mode Carousel (Arrows + Label)
+    const carouselContainer = document.createElement('div');
+    carouselContainer.className = 'mode-carousel';
+    
     const leftArrow = document.createElement('button');
-    leftArrow.className = 'nav-arrow nav-arrow-left';
+    leftArrow.className = 'carousel-arrow carousel-arrow-left';
     leftArrow.innerHTML = '&lt;';
     leftArrow.setAttribute('aria-label', 'Previous Category');
     leftArrow.onclick = () => switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length);
     
+    const modeLabelWrapper = document.createElement('div');
+    modeLabelWrapper.className = 'carousel-label-wrapper';
+    
+    const modeLabel = document.createElement('span');
+    modeLabel.className = 'carousel-label';
+    modeLabelWrapper.appendChild(modeLabel);
+    
     const rightArrow = document.createElement('button');
-    rightArrow.className = 'nav-arrow nav-arrow-right';
+    rightArrow.className = 'carousel-arrow carousel-arrow-right';
     rightArrow.innerHTML = '&gt;';
     rightArrow.setAttribute('aria-label', 'Next Category');
     rightArrow.onclick = () => switchMode((currentModeIndex + 1) % projectsData.length);
     
-    network.appendChild(leftArrow);
-    network.appendChild(rightArrow);
+    carouselContainer.appendChild(leftArrow);
+    carouselContainer.appendChild(modeLabelWrapper);
+    carouselContainer.appendChild(rightArrow);
+    
+    network.appendChild(carouselContainer);
 
     // Node container - starts with initial-load to appear smoothly 0.5s after connection lines
     const nodesContainer = document.createElement('div');
@@ -223,6 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
             linesContainer.style.transition = 'opacity 0.18s ease-out';
             linesContainer.style.opacity = '0';
 
+            // Slide out the mode label
+            modeLabel.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+            modeLabel.style.opacity = '0';
+            modeLabel.style.transform = `translateX(${direction * -20}px)`;
+
             // Slide out ONLY the iris
             if (irisStage) {
                 irisStage.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
@@ -235,10 +241,16 @@ document.addEventListener("DOMContentLoaded", () => {
             currentModeIndex = idx;
             const mode = projectsData[idx];
 
-            // Update tabs
-            Array.from(tabsContainer.children).forEach((btn, i) => {
-                btn.classList.toggle('active', i === idx);
-            });
+            // Update Label
+            modeLabel.textContent = mode.tabLabel;
+            if (!isInitial) {
+                modeLabel.style.transition = 'none';
+                modeLabel.style.transform = `translateX(${direction * 20}px)`;
+                void modeLabel.offsetWidth; // Force reflow
+                modeLabel.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+                modeLabel.style.opacity = '1';
+                modeLabel.style.transform = 'translateX(0)';
+            }
 
             // Update Theme Color dynamically
             document.documentElement.style.setProperty('--primary', mode.themeColor);
