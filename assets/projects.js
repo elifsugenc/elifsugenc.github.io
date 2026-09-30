@@ -17,9 +17,9 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/' },
-      { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/' },
-      { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation', url: '/projects/fire-escape-simulation/' }
+      { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/', baseIndex: 1 },
+      { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation', url: '/projects/fire-escape-simulation/', baseIndex: 5 }
     ]
   },
   {
@@ -36,7 +36,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/' }
+      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 }
     ]
   },
   {
@@ -52,7 +52,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/' }
+      { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
     ]
   },
   {
@@ -69,7 +69,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/' }
+      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 }
     ]
   }
 ];
@@ -155,15 +155,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const t = (now - start) / 1000;
         const count = activeNodes.length;
         if (count > 0) {
-            const coords = bases.slice(0, count).map(([x,y], i) => [
-                x + Math.sin(t * 0.42 + i * 1.8) * 23,
-                y + Math.cos(t * 0.35 + i * 2.2) * 17
-            ]);
+            const coords = activeNodes.map((el, i) => {
+                const bIdx = parseInt(el.dataset.baseIndex !== undefined ? el.dataset.baseIndex : i);
+                const [x, y] = bases[bIdx];
+                return [
+                    x + Math.sin(t * 0.42 + i * 1.8) * 23,
+                    y + Math.cos(t * 0.35 + i * 2.2) * 17
+                ];
+            });
             
             linesContainer.innerHTML = coords.map(([x,y], i) => 
                 `<line x1="500" y1="350" x2="${x}" y2="${y}" class="spoke"/>
                  <circle cx="${x}" cy="${y}" r="4" class="node-dot"/>
-                 <line x1="${x}" y1="${y}" x2="${coords[(i+1)%count][0]}" y2="${coords[(i+1)%count][1]}" class="mesh"/>`
+                 ${count > 1 ? `<line x1="${x}" y1="${y}" x2="${coords[(i+1)%count][0]}" y2="${coords[(i+1)%count][1]}" class="mesh"/>` : ''}`
             ).join('');
 
             activeNodes.forEach((el, i) => {
@@ -238,11 +242,13 @@ document.addEventListener("DOMContentLoaded", () => {
             nodesContainer.innerHTML = '';
             activeNodes = mode.projects.map((proj, i) => {
                 const a = document.createElement('a');
-                a.className = `network-project network-project-${i + 1}`;
+                const bIdx = proj.baseIndex !== undefined ? proj.baseIndex : i;
+                a.className = `network-project network-project-${bIdx + 1}`;
                 a.href = proj.url;
-                if (bases[i]) {
-                    a.style.left = bases[i][0] / 10 + '%';
-                    a.style.top = bases[i][1] / 7 + '%';
+                a.dataset.baseIndex = bIdx;
+                if (bases[bIdx]) {
+                    a.style.left = bases[bIdx][0] / 10 + '%';
+                    a.style.top = bases[bIdx][1] / 7 + '%';
                 }
                 a.innerHTML = `<span class="network-number">${proj.num}</span><span>${proj.title}<span class="accent">.</span></span><span class="network-arrow">&#x2197;</span>`;
                 nodesContainer.appendChild(a);
