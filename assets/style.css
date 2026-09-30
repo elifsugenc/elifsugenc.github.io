@@ -1013,7 +1013,7 @@ a:focus-visible {
     top: 50%;
     width: clamp(190px, 23vw, 350px);
     aspect-ratio: 1.5;
-    transform: translate(-52.2%, -55.2%);
+    transform: translate(-48.5%, -55.2%);
     display: grid;
     place-items: center;
     z-index: 2;
