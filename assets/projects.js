@@ -13,7 +13,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'stray', num: '01', title: 'Is doing nothing doing nothing<span class="q-mark">?</span>', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'stray', num: '01', title: 'Is doing nothing doing something<span class="q-mark">?</span>', url: '/projects/stray/', baseIndex: 0 },
       { id: 'bio-decay', num: '02', title: 'How many microplastics can we eat in a day<span class="q-mark">?</span>', url: '/projects/bio-decay/', baseIndex: 1 },
       { id: 'the-earthen', num: '03', title: 'Does death exist because life exists,<br>or does life exist because death exists<span class="q-mark">?</span>', url: '/projects/the-earthen/', baseIndex: 2 },
       { id: 'emek-museum', num: '04', title: 'How to make invisible labor visible<span class="q-mark">?</span>', url: '/projects/emek-museum/', baseIndex: 3 },
