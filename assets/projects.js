@@ -215,6 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isInitial) {
             isSwitching = true;
             
+            const sketchEye = document.querySelector('.sketch-eye');
+            if (sketchEye) {
+                sketchEye.classList.add('is-blinking');
+                setTimeout(() => sketchEye.classList.remove('is-blinking'), 150);
+            }
+            
             // Fade out the project buttons and lines when switching
             nodesContainer.style.transition = 'opacity 0.18s ease-out';
             nodesContainer.style.opacity = '0';
