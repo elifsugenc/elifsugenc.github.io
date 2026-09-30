@@ -2,7 +2,7 @@ const projectsData = [
   {
     id: 'mode-arch',
     tabLabel: 'Architecture & Interior Design',
-    themeColor: '#0f295e', // blueprint navy
+    themeColor: '#3157d7', // default site blue
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
         <!-- Technical drafting motif -->
