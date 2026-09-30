@@ -1754,9 +1754,9 @@ a:focus-visible {
 }
 
 @keyframes arrow-pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.5; color: var(--primary); }
-  100% { transform: scale(1); opacity: 1; }
+  0% { transform: scale(1); color: #a0a0a0; text-shadow: 0 0 0 transparent; }
+  50% { transform: scale(1.25); color: var(--primary); text-shadow: 0 0 8px var(--primary), 0 0 15px var(--primary); }
+  100% { transform: scale(1); color: #a0a0a0; text-shadow: 0 0 0 transparent; }
 }
 
 .carousel-arrow.needs-attention {
