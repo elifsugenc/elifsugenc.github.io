@@ -7,7 +7,8 @@
     font-weight: normal;
     letter-spacing: normal;
     white-space: nowrap;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
     z-index: 10;
 }
 .stray-title-wrapper {
@@ -145,6 +146,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const words = document.querySelectorAll('.scatter-word');
     let isScattered = false;
     
+    // Make individual words disappear on click
+    words.forEach(w => {
+        w.addEventListener('click', (e) => {
+            e.stopPropagation();
+            w.style.transition = 'opacity 0.5s ease';
+            w.style.opacity = '0';
+        });
+    });
+
     const scatter = () => {
         if (isScattered) return;
         isScattered = true;
@@ -162,18 +172,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const rot = (Math.random() - 0.5) * 30;
             
             // Fast start, slow glide (billiard ball effect)
-            w.style.transition = 'transform 10s cubic-bezier(0.1, 1, 0.2, 1), opacity 2s ease';
+            w.style.transition = 'transform 10s cubic-bezier(0.1, 1, 0.2, 1)';
             
             // Apply transformation
             w.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(1.1)`;
         });
-
-        // Fade out slowly after 8 seconds (completes by 10s)
-        setTimeout(() => {
-            words.forEach(w => {
-                w.style.opacity = '0';
-            });
-        }, 8000);
     };
 
     wrapper.addEventListener('click', scatter);
