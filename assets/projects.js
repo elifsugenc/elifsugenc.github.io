@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (eyeCenter && sketchEye) {
         eyeCenter.addEventListener('click', () => {
             sketchEye.classList.add('is-blinking');
-            setTimeout(() => sketchEye.classList.remove('is-blinking'), 150);
+            setTimeout(() => sketchEye.classList.remove('is-blinking'), 80);
         });
     }
 
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const sketchEye = document.querySelector('.sketch-eye');
             if (sketchEye) {
                 sketchEye.classList.add('is-blinking');
-                setTimeout(() => sketchEye.classList.remove('is-blinking'), 150);
+                setTimeout(() => sketchEye.classList.remove('is-blinking'), 80);
             }
             
             // Fade out the project buttons and lines when switching
