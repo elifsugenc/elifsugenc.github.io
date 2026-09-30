@@ -256,7 +256,15 @@ footer,
 }
 
 .accent {
-    color: var(--primary)
+    color: var(--primary);
+    transition: color 0.5s;
+}
+
+.q-mark {
+    background: linear-gradient(to bottom, currentColor 75%, var(--primary) 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background 0.5s;
 }
 
 .projects-empty {

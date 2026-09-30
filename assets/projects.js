@@ -13,13 +13,13 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'stray', num: '01', title: 'What is Stray?', url: '/projects/stray/', baseIndex: 0 },
-      { id: 'bio-decay', num: '02', title: 'How does biology decay?', url: '/projects/bio-decay/', baseIndex: 1 },
-      { id: 'the-earthen', num: '03', title: 'Who are the Earthen?', url: '/projects/the-earthen/', baseIndex: 2 },
-      { id: 'emek-museum', num: '04', title: 'What is Emek Museum?', url: '/projects/emek-museum/', baseIndex: 3 },
-      { id: 'traces', num: '05', title: 'Why trace together?', url: '/archive/', baseIndex: 4 },
-      { id: 'fire-escape', num: '06', title: 'Can you escape the fire?', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
-      { id: 'ara-sira', num: '07', title: 'What is ara-sıra?', url: '/projects/ara-sira/', baseIndex: 6 }
+      { id: 'stray', num: '01', title: 'Is doing nothing doing nothing<span class="q-mark">?</span>', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'bio-decay', num: '02', title: 'How many microplastics can we eat in a day<span class="q-mark">?</span>', url: '/projects/bio-decay/', baseIndex: 1 },
+      { id: 'the-earthen', num: '03', title: 'Does death exist because life exists, or does life exist because death exists<span class="q-mark">?</span>', url: '/projects/the-earthen/', baseIndex: 2 },
+      { id: 'emek-museum', num: '04', title: 'How to make invisible labor visible<span class="q-mark">?</span>', url: '/projects/emek-museum/', baseIndex: 3 },
+      { id: 'traces', num: '05', title: 'Why trace matters<span class="q-mark">?</span>', url: '/archive/', baseIndex: 4 },
+      { id: 'fire-escape', num: '06', title: 'Can you escape the fire<span class="q-mark">?</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
+      { id: 'ara-sira', num: '07', title: 'What do kids want<span class="q-mark">?</span>', url: '/projects/ara-sira/', baseIndex: 6 }
     ]
   },
   {
@@ -36,11 +36,11 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 },
-      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 },
-      { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/', baseIndex: 0 },
-      { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/', baseIndex: 1 },
-      { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
+      { id: 'emek-museum', num: '06', title: 'Emek Museum<span class="accent">.</span>', url: '/projects/emek-museum/', baseIndex: 3 },
+      { id: 'ara-sira', num: '04', title: 'ara-sira<span class="accent">.</span>', url: '/projects/ara-sira/', baseIndex: 6 },
+      { id: 'stray', num: '01', title: 'STRAY<span class="accent">.</span>', url: '/projects/stray/', baseIndex: 0 },
+      { id: 'bio-decay', num: '02', title: 'Bio-Decay<span class="accent">.</span>', url: '/projects/bio-decay/', baseIndex: 1 },
+      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 }
     ]
   },
   {
@@ -61,7 +61,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation', url: '/projects/fire-escape-simulation/', baseIndex: 5 }
+      { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation<span class="accent">.</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 }
     ]
   },
   {
@@ -77,7 +77,7 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
+      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 }
     ]
   }
 ];
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     a.style.left = bases[bIdx][0] / 10 + '%';
                     a.style.top = bases[bIdx][1] / 7 + '%';
                 }
-                a.innerHTML = `<span class="network-number">${proj.num}</span><span>${proj.title}<span class="accent">.</span></span><span class="network-arrow">&#x2197;</span>`;
+                a.innerHTML = `<span class="network-number">${proj.num}</span><span>${proj.title}</span><span class="network-arrow">&#x2197;</span>`;
                 nodesContainer.appendChild(a);
                 return a;
             });
