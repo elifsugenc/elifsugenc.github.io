@@ -55,8 +55,6 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'stray', num: '01', title: 'STRAY', url: '/projects/stray/', baseIndex: 0 },
-      { id: 'bio-decay', num: '02', title: 'Bio-Decay', url: '/projects/bio-decay/', baseIndex: 1 },
       { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation', url: '/projects/fire-escape-simulation/', baseIndex: 5 }
     ]
   },
