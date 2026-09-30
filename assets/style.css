@@ -963,7 +963,7 @@ a:focus-visible {
     margin: 12px 0
 }
 
-.eye-heading h1 span {
+.eye-heading h1 span.accent {
     color: var(--primary)
 }
 
