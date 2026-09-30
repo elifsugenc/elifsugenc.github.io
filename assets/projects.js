@@ -77,7 +77,10 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 }
+      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 },
+      { id: 'traditional', num: '08', title: 'Traditional<span class="accent">.</span>', url: '#', baseIndex: 0 },
+      { id: 'digital', num: '09', title: 'Digital<span class="accent">.</span>', url: '#', baseIndex: 1 },
+      { id: '3d', num: '10', title: '3D<span class="accent">.</span>', url: '#', baseIndex: 5 }
     ]
   }
 ];
@@ -214,12 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (!isInitial) {
             isSwitching = true;
-            
-            const sketchEye = document.querySelector('.sketch-eye');
-            if (sketchEye) {
-                sketchEye.classList.add('is-blinking');
-                setTimeout(() => sketchEye.classList.remove('is-blinking'), 80);
-            }
             
             // Fade out the project buttons and lines when switching
             nodesContainer.style.transition = 'opacity 0.18s ease-out';
