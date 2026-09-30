@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const bases=[[175,172],[820,174],[190,545],[810,540],[500,90],[500,610],[120,350], [880,350]];
+    const bases=[[200,230],[800,230],[190,545],[810,540],[500,150],[500,610],[120,370], [880,370]];
     let start = performance.now();
     let activeNodes = [];
     
