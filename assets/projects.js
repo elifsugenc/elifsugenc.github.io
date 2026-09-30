@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     a.style.left = bases[bIdx][0] / 10 + '%';
                     a.style.top = bases[bIdx][1] / 7 + '%';
                 }
-                a.innerHTML = `<span class="network-number">${proj.num}</span><span>${proj.title}</span><span class="network-arrow">&#x2197;</span>`;
+                a.innerHTML = `<span>${proj.title}</span><span class="network-arrow">&#x2197;</span>`;
                 nodesContainer.appendChild(a);
                 return a;
             });
