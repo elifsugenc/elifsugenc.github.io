@@ -115,7 +115,7 @@
     </div>
 </div>
 <div class="detail-image" style="margin-bottom: 140px;">
-    <img src="/assets/stray-project.png" alt="Stray Project - The Ramp View Q" style="width: 100%; height: auto; display: block;">
+    <img src="/assets/stray-project.png" class="lightbox-trigger" data-index="4" alt="Stray Project - The Ramp View Q" style="width: 100%; height: auto; display: block; cursor: pointer;">
 </div>
 
 <div class="detail-section" style="margin-bottom: 140px;">
@@ -157,7 +157,7 @@
     <p class="detail-body">Spaces such as <em>The Ramp</em>, <em>The Dark Room</em>, and <em>The Workshop Area</em> act as physical catalysts. They do not tell people where to go or what to do; instead, they introduce spatial disruptions that provoke curiosity, slowing down movement to encourage spontaneous physical and social interaction.</p>
 
     <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/stray-perspective-section.png" alt="Stray Project - Perspective Section" style="width: 100%; height: auto; display: block;">
+        <img src="/assets/stray-perspective-section.png" class="lightbox-trigger" data-index="3" alt="Stray Project - Perspective Section" style="width: 100%; height: auto; display: block; cursor: pointer;">
     </div>
     
     <div style="display: flex; flex-direction: column; align-items: center; text-align: center; font-family: monospace; font-size: 1.2rem; gap: 15px; color: #666;">
@@ -180,13 +180,14 @@
 </div>
 
 <div class="detail-section" style="margin-bottom: 80px;">
-    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MORE MEDIA</span>
+    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MORE MEDIA — BOARDS & DRAWINGS</span>
     <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-        <div class="media-thumb" data-index="0" style="background-image: url('/assets/stray-project.png');"></div>
-        <div class="media-thumb" data-index="1" style="background-image: url('/assets/stray-perspective-section.png');"></div>
-        <div class="media-thumb" data-index="2" style="background-image: url('/assets/stray-board-1.jpg');"></div>
-        <div class="media-thumb more-media" data-index="3" style="background: rgba(52, 122, 89, 0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--primary); font-size: 2rem; font-weight: bold;">
-            +2
+        <div class="media-thumb" data-index="0" title="Board 01" style="background-image: url('/assets/stray-board-1.jpg');"></div>
+        <div class="media-thumb" data-index="1" title="Board 02" style="background-image: url('/assets/stray-board-2.jpg');"></div>
+        <div class="media-thumb" data-index="2" title="Board 03" style="background-image: url('/assets/stray-board-3.jpg');"></div>
+        <div class="media-thumb more-media" data-index="3" title="More media" style="background: rgba(52, 122, 89, 0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: var(--primary); font-size: 1.8rem; font-weight: bold; border-radius: 4px; border: 1px dashed rgba(52, 122, 89, 0.4); text-decoration: none;">
+            <span>+2</span>
+            <span style="font-size: 0.75rem; letter-spacing: 1px; font-weight: normal; color: #666; margin-top: 4px;">MORE</span>
         </div>
     </div>
 </div>
@@ -249,12 +250,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Gallery & Lightbox Logic
 document.addEventListener("DOMContentLoaded", () => {
-    const galleryImages = [
-        '/assets/stray-project.png',
-        '/assets/stray-perspective-section.png',
-        '/assets/stray-board-1.jpg',
-        '/assets/stray-board-2.jpg',
-        '/assets/stray-board-3.jpg'
+    const galleryItems = [
+        { src: '/assets/stray-board-1.jpg', label: 'Board 01 — Concept & Urban Analysis' },
+        { src: '/assets/stray-board-2.jpg', label: 'Board 02 — Plans & Responsive Interfaces' },
+        { src: '/assets/stray-board-3.jpg', label: 'Board 03 — Perspective Section & Spatial Proposals' },
+        { src: '/assets/stray-perspective-section.png', label: 'Perspective Section' },
+        { src: '/assets/stray-project.png', label: 'The Ramp / View Q Render' }
     ];
     let currentImageIndex = 0;
     let isZoomed = false;
@@ -262,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightboxImg = document.getElementById('lightbox-img');
     const counter = document.querySelector('.lightbox-counter');
 
-    document.querySelectorAll('.media-thumb').forEach(thumb => {
+    document.querySelectorAll('.media-thumb, .lightbox-trigger').forEach(thumb => {
         thumb.addEventListener('click', (e) => {
             currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
             showImage(currentImageIndex);
@@ -271,16 +272,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function showImage(index) {
-        if (index < 0) index = galleryImages.length - 1;
-        if (index >= galleryImages.length) index = 0;
+        if (index < 0) index = galleryItems.length - 1;
+        if (index >= galleryItems.length) index = 0;
         currentImageIndex = index;
         
         isZoomed = false;
         lightboxImg.classList.remove('zoomed');
         lightboxImg.style.transformOrigin = 'center center';
         
-        lightboxImg.src = galleryImages[currentImageIndex];
-        counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        lightboxImg.src = galleryItems[currentImageIndex].src;
+        counter.textContent = `${currentImageIndex + 1} / ${galleryItems.length} — ${galleryItems[currentImageIndex].label}`;
     }
     
     function panImage(e) {
