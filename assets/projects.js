@@ -1,7 +1,41 @@
 const projectsData = [
   {
+    id: 'mode-arch',
+    tabLabel: 'Architecture & Interior Design',
+    themeColor: '#0f295e', // blueprint navy
+    eyeGraphic: `
+      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
+        <!-- Technical drafting motif -->
+        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="1" />
+        <line x1="145" y1="116" x2="175" y2="116" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
+        <line x1="160" y1="101" x2="160" y2="131" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
+        <path d="M160 90 L145 130 h30 Z" fill="none" stroke="currentColor" stroke-width="2" />
+      </g>
+    `,
+    projects: [
+      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 }
+    ]
+  },
+  {
+    id: 'mode-mystery',
+    tabLabel: 'Questions',
+    themeColor: '#7a31d7', // purple/blue
+    eyeGraphic: `
+      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
+        <!-- Base pupil abstract shape -->
+        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+        <!-- Glowing blue question mark -->
+        <text x="160" y="132" font-family="monospace" font-size="40" font-weight="bold" fill="currentColor" text-anchor="middle">?</text>
+        <circle cx="160" cy="116" r="25" fill="currentColor" opacity="0.1" />
+      </g>
+    `,
+    projects: [
+      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 }
+    ]
+  },
+  {
     id: 'mode-tech',
-    tabLabel: 'Games / Creative Tech',
+    tabLabel: 'Game Design',
     themeColor: '#1bb5d2', // cyan/blue
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
@@ -23,25 +57,8 @@ const projectsData = [
     ]
   },
   {
-    id: 'mode-mystery',
-    tabLabel: 'The Mystery / Q&A',
-    themeColor: '#7a31d7', // purple/blue
-    eyeGraphic: `
-      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Base pupil abstract shape -->
-        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-        <!-- Glowing blue question mark -->
-        <text x="160" y="132" font-family="monospace" font-size="40" font-weight="bold" fill="currentColor" text-anchor="middle">?</text>
-        <circle cx="160" cy="116" r="25" fill="currentColor" opacity="0.1" />
-      </g>
-    `,
-    projects: [
-      { id: 'ara-sira', num: '04', title: 'ara-sira', url: '/projects/ara-sira/', baseIndex: 6 }
-    ]
-  },
-  {
     id: 'mode-art',
-    tabLabel: 'Traditional Art & Sketches',
+    tabLabel: 'Art',
     themeColor: '#4a4a4a', // charcoal/gray
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
@@ -53,23 +70,6 @@ const projectsData = [
     `,
     projects: [
       { id: 'the-earthen', num: '05', title: 'The Earthen', url: '/projects/the-earthen/', baseIndex: 2 }
-    ]
-  },
-  {
-    id: 'mode-arch',
-    tabLabel: 'Architecture & Spatial',
-    themeColor: '#0f295e', // blueprint navy
-    eyeGraphic: `
-      <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Technical drafting motif -->
-        <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="1" />
-        <line x1="145" y1="116" x2="175" y2="116" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
-        <line x1="160" y1="101" x2="160" y2="131" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
-        <path d="M160 90 L145 130 h30 Z" fill="none" stroke="currentColor" stroke-width="2" />
-      </g>
-    `,
-    projects: [
-      { id: 'emek-museum', num: '06', title: 'Emek Museum', url: '/projects/emek-museum/', baseIndex: 3 }
     ]
   }
 ];
