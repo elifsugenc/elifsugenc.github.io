@@ -81,9 +81,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!network) return;
 
     let currentModeIndex = -1;
+    let isSwitching = false;
     
     // UI Elements
     const linesContainer = document.getElementById('network-lines');
+    const eyeSvg = document.querySelector('.sketch-eye-open');
+    
+    // Create dedicated iris stage inside eye SVG so ONLY iris slides
+    let irisStage = document.getElementById('iris-stage');
+    if (!irisStage && eyeSvg) {
+        // Clean up old static HTML pupil
+        const oldPupil = document.getElementById('eye-pupil');
+        if (oldPupil) oldPupil.remove();
+
+        irisStage = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        irisStage.id = 'iris-stage';
+        eyeSvg.appendChild(irisStage);
+    }
     
     // Inject Tabs
     const heading = document.querySelector('.eye-heading');
@@ -102,29 +116,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const leftArrow = document.createElement('button');
     leftArrow.className = 'nav-arrow nav-arrow-left';
     leftArrow.innerHTML = '&lt;';
+    leftArrow.setAttribute('aria-label', 'Previous Category');
     leftArrow.onclick = () => switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length);
     
     const rightArrow = document.createElement('button');
     rightArrow.className = 'nav-arrow nav-arrow-right';
     rightArrow.innerHTML = '&gt;';
+    rightArrow.setAttribute('aria-label', 'Next Category');
     rightArrow.onclick = () => switchMode((currentModeIndex + 1) % projectsData.length);
     
     network.appendChild(leftArrow);
     network.appendChild(rightArrow);
 
-    // Node container
+    // Node container - starts with initial-load to appear together with connection lines
     const nodesContainer = document.createElement('div');
-    nodesContainer.className = 'nodes-container';
+    nodesContainer.className = 'nodes-container initial-load';
     network.appendChild(nodesContainer);
 
-    // Original mouse move tracking
-    let pupilEl = null;
+    setTimeout(() => {
+        nodesContainer.classList.remove('initial-load');
+    }, 3200);
+
+    // Mouse tracking ONLY applies to dynamic-pupil inside irisStage
     document.addEventListener('mousemove', (e) => {
-        if (!pupilEl) pupilEl = document.getElementById('dynamic-pupil');
+        const pupilEl = document.getElementById('dynamic-pupil');
         if (pupilEl) {
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
             const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            pupilEl.style.transform = `translate(${x * 40}px, ${y * 25}px)`;
+            pupilEl.style.transform = `translate(${x * 35}px, ${y * 22}px)`;
         }
     });
 
@@ -164,14 +183,27 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
 
     function switchMode(idx) {
-        if (idx === currentModeIndex) return;
+        if (idx === currentModeIndex || isSwitching) return;
         
-        const direction = (currentModeIndex !== -1 && idx > currentModeIndex) ? -1 : 1;
+        nodesContainer.classList.remove('initial-load');
+
+        const isInitial = (currentModeIndex === -1);
+        const direction = (!isInitial && idx > currentModeIndex) ? -1 : 1;
         
-        // Slide out effect
-        network.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
-        network.style.opacity = '0';
-        network.style.transform = `translateX(${direction * -30}px)`;
+        if (!isInitial) {
+            isSwitching = true;
+            
+            // Slide out ONLY the iris and project buttons
+            if (irisStage) {
+                irisStage.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+                irisStage.style.opacity = '0';
+                irisStage.style.transform = `translateX(${direction * -40}px)`;
+            }
+
+            nodesContainer.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+            nodesContainer.style.opacity = '0';
+            nodesContainer.style.transform = `translateX(${direction * -25}px)`;
+        }
         
         setTimeout(() => {
             currentModeIndex = idx;
@@ -185,20 +217,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // Update Theme Color dynamically
             document.documentElement.style.setProperty('--primary', mode.themeColor);
 
-            // Update Pupil
-            const eyeSvg = document.querySelector('.sketch-eye-open');
-            const oldPupil = document.getElementById('dynamic-pupil') || document.getElementById('eye-pupil');
-            if (oldPupil) oldPupil.remove();
+            // Update Pupil inside irisStage
+            if (irisStage) {
+                irisStage.innerHTML = mode.eyeGraphic;
+            }
 
-            // Insert new pupil content
-            // We use insertAdjacentHTML to parse the SVG string properly
-            eyeSvg.insertAdjacentHTML('beforeend', mode.eyeGraphic);
-            pupilEl = document.getElementById('dynamic-pupil');
-
-            // Remove existing nodes
+            // Update project nodes
             nodesContainer.innerHTML = '';
-            
-            // Add new nodes
             activeNodes = mode.projects.map((proj, i) => {
                 const a = document.createElement('a');
                 a.className = `network-project network-project-${i + 1}`;
@@ -208,27 +233,42 @@ document.addEventListener("DOMContentLoaded", () => {
                 return a;
             });
 
-            // Reset animation timer so they don't jump
             start = performance.now();
             
-            // Slide in effect
-            network.style.transition = 'none';
-            network.style.transform = `translateX(${direction * 30}px)`;
+            if (!isInitial) {
+                // Slide in from opposite side
+                if (irisStage) {
+                    irisStage.style.transition = 'none';
+                    irisStage.style.transform = `translateX(${direction * 40}px)`;
+                    irisStage.style.opacity = '0';
+                }
+
+                nodesContainer.style.transition = 'none';
+                nodesContainer.style.transform = `translateX(${direction * 25}px)`;
+                nodesContainer.style.opacity = '0';
+
+                if (irisStage) void irisStage.offsetWidth; // Force reflow
+                void nodesContainer.offsetWidth;
+
+                if (irisStage) {
+                    irisStage.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+                    irisStage.style.opacity = '1';
+                    irisStage.style.transform = 'translateX(0)';
+                }
+
+                nodesContainer.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+                nodesContainer.style.opacity = '1';
+                nodesContainer.style.transform = 'translateX(0)';
+
+                setTimeout(() => {
+                    isSwitching = false;
+                }, 260);
+            }
             
-            // Force reflow
-            void network.offsetWidth;
-            
-            network.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
-            network.style.opacity = '1';
-            network.style.transform = 'translateX(0)';
-            
-        }, currentModeIndex === -1 ? 0 : 250); // No delay on first load
+        }, isInitial ? 0 : 200);
     }
 
-    // Clean up old static HTML pupil and nodes
-    const oldPupil = document.getElementById('eye-pupil');
-    if (oldPupil) oldPupil.remove();
-    
+    // Clean up old static HTML nodes
     Array.from(network.querySelectorAll('.network-project')).forEach(el => el.remove());
 
     // Initialize first mode

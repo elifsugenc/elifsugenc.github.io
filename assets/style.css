@@ -1045,8 +1045,7 @@ a:focus-visible {
     border: 1px solid #d7dce9;
     box-shadow: 0 8px 30px #3034540d;
     font: 500 clamp(1rem, 1.8vw, 1.55rem) Georgia, serif;
-    opacity: 0;
-    animation: network-appear 1.5s ease 2.25s forwards;
+    opacity: 1;
     transition: border-color .25s, background .25s, box-shadow .25s
 }
 
@@ -1644,8 +1643,9 @@ a:focus-visible {
     white-space: nowrap
 }
 
-.network-project {
-    animation: network-appear 1.5s ease 2.25s forwards
+.nodes-container.initial-load {
+    opacity: 0;
+    animation: network-appear 1.4s ease 1.8s forwards;
 }
 
 @media(max-width:760px) {
