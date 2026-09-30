@@ -253,21 +253,8 @@
   renderTraces(read());
 
   const network=document.getElementById('eye-network');
-  if (network) {
-    const bases=[[175,172],[820,174],[190,545],[810,540],[500,90],[500,610],[120,350]];
-    const nodes=[...network.querySelectorAll('[data-node]')];const lines=document.getElementById('network-lines');
-    let start=performance.now(),frame=0;
-    const animate=now=>{const t=(now-start)/1000;const coords=bases.map(([x,y],i)=>[x+Math.sin(t*.42+i*1.8)*23,y+Math.cos(t*.35+i*2.2)*17]);lines.innerHTML=coords.map(([x,y],i)=>`<line x1="500" y1="350" x2="${x}" y2="${y}" class="spoke"/><circle cx="${x}" cy="${y}" r="4" class="node-dot"/><line x1="${x}" y1="${y}" x2="${coords[(i+1)%bases.length][0]}" y2="${coords[(i+1)%bases.length][1]}" class="mesh"/>`).join('');nodes.forEach((el,i)=>{if(coords[i]){el.style.left=coords[i][0]/10+'%';el.style.top=coords[i][1]/7+'%'}});if (!matchMedia('(prefers-reduced-motion: reduce)').matches) frame=requestAnimationFrame(animate)};
-    frame=requestAnimationFrame(animate);
-
-    const pupil = document.getElementById('eye-pupil');
-    if (pupil) {
-      document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 2;
-        const y = (e.clientY / window.innerHeight - 0.5) * 2;
-        pupil.style.transform = `translate(${x * 40}px, ${y * 25}px)`;
-      });
-    }
+  if (network && !window.projectsJsLoaded) {
+    // Moved to projects.js for dynamic category modes
   }
   document.querySelectorAll('.top nav a').forEach(a=>{if ((new URL(a.href).pathname.replace(/\/+$/,'')||'/')===path) a.setAttribute('aria-current','page')});
 

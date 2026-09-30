@@ -92,7 +92,7 @@ section {
 
 .top nav a:hover,
 .text-link:hover {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .lang-switch,
@@ -113,7 +113,7 @@ section {
 
 .lang-switch button.active,
 .dialog-language button[aria-pressed=true] {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .eyebrow,
@@ -131,7 +131,7 @@ footer,
 }
 
 .eyebrow {
-    color: #3157d7;
+    color: var(--primary);
     font-weight: 700
 }
 
@@ -204,7 +204,7 @@ footer,
 }
 
 .pill:hover {
-    background: #3157d7
+    background: var(--primary)
 }
 
 .hero-graphic {
@@ -221,7 +221,7 @@ footer,
     left: -7%;
     top: 0;
     fill: none;
-    stroke: #3157d7;
+    stroke: var(--primary);
     stroke-width: 1.4
 }
 
@@ -256,7 +256,7 @@ footer,
 }
 
 .accent {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .projects-empty {
@@ -272,7 +272,7 @@ footer,
 
 .asterisk {
     font-size: 5rem;
-    color: #3157d7
+    color: var(--primary)
 }
 
 .projects-empty p {
@@ -319,7 +319,7 @@ footer,
 }
 
 .project h3 a:hover {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .project p {
@@ -476,7 +476,7 @@ footer {
     background: #fff;
     color: #171717;
     padding: clamp(28px, 5vw, 58px);
-    box-shadow: 15px 15px 0 #3157d7;
+    box-shadow: 15px 15px 0 var(--primary);
     max-height: 94svh;
     overflow: auto
 }
@@ -527,7 +527,7 @@ footer {
 
 .actions button:focus-visible,
 a:focus-visible {
-    outline: 3px solid #3157d7;
+    outline: 3px solid var(--primary);
     outline-offset: 3px
 }
 
@@ -535,7 +535,7 @@ a:focus-visible {
     position: fixed;
     right: 18px;
     bottom: 18px;
-    background: #3157d7;
+    background: var(--primary);
     color: #fff;
     padding: 12px 15px;
     z-index: 5
@@ -583,7 +583,7 @@ a:focus-visible {
     height: 90vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 15px 15px 0 #3157d7;
+    box-shadow: 15px 15px 0 var(--primary);
     overflow: hidden;
 }
 
@@ -720,7 +720,7 @@ a:focus-visible {
     }
 
     .consent {
-        box-shadow: 7px 7px 0 #3157d7
+        box-shadow: 7px 7px 0 var(--primary)
     }
 
     .consent h2 {
@@ -890,7 +890,7 @@ a:focus-visible {
 }
 
 .project:hover h3 {
-    color: #3157d7
+    color: var(--primary)
 }
 
 @media(max-width:760px) {
@@ -956,7 +956,7 @@ a:focus-visible {
 }
 
 .eye-heading h1 span {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .eye-network {
@@ -982,20 +982,20 @@ a:focus-visible {
 }
 
 .spoke {
-    stroke: #3157d7;
+    stroke: var(--primary);
     stroke-width: 1.3;
     stroke-opacity: .27;
     stroke-dasharray: 5 7
 }
 
 .mesh {
-    stroke: #3157d7;
+    stroke: var(--primary);
     stroke-width: .65;
     stroke-opacity: .12
 }
 
 .node-dot {
-    fill: #3157d7;
+    fill: var(--primary);
     opacity: .48
 }
 
@@ -1052,18 +1052,18 @@ a:focus-visible {
 
 .network-project:hover,
 .network-project:focus-visible {
-    border-color: #3157d7;
+    border-color: var(--primary);
     background: #edf1ff;
-    box-shadow: 0 12px 32px #3157d726
+    box-shadow: 0 12px 32px rgba(49, 87, 215, 0.15);
 }
 
 .network-number {
     font: 700 .65rem monospace;
-    color: #3157d7
+    color: var(--primary)
 }
 
 .network-arrow {
-    color: #3157d7;
+    color: var(--primary);
     font: 1rem Arial, sans-serif
 }
 
@@ -1176,12 +1176,7 @@ a:focus-visible {
     }
 }
 
-.sketch-eye {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    color: #232323
-}
+.sketch-eye { position: relative; width: 100%; height: 100%; color: var(--primary); transition: color 0.3s ease-out; }
 
 .sketch-eye svg {
     position: absolute;
@@ -1590,7 +1585,7 @@ a:focus-visible {
 }
 
 .top nav a[aria-current="page"] {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .eye-center .sketch-eye {
@@ -1682,7 +1677,7 @@ a:focus-visible {
 }
 
 .entry-meta button:hover {
-    color: #3157d7
+    color: var(--primary)
 }
 
 .archive-more[hidden] {
@@ -1707,3 +1702,91 @@ a:focus-visible {
   pointer-events: none;
   z-index: 9999;
 }
+/* Dynamic Projects Categories */
+.category-tabs {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.category-tab-btn {
+  background: none;
+  border: none;
+  font: 600 0.95rem Arial, sans-serif;
+  color: #a0a0a0;
+  padding: 0 0 4px 0;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.category-tab-btn:hover {
+  color: #171717;
+}
+
+.category-tab-btn.active {
+  color: var(--primary);
+}
+
+.category-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #171717;
+  opacity: 0.3;
+  z-index: 10;
+  transition: opacity 0.3s, transform 0.2s, color 0.3s;
+}
+
+.nav-arrow:hover {
+  opacity: 1;
+  color: var(--primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow-left {
+  left: 5%;
+}
+
+.nav-arrow-right {
+  right: 5%;
+}
+
+.eye-network {
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.eye-network.swiping {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+@media(max-width:760px) {
+  .category-tabs {
+    gap: 0.8rem;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+  .category-tab-btn {
+    font-size: 0.85rem;
+  }
+  .nav-arrow {
+    display: none; /* Already handling via swipes or hidden on small screens */
+  }
+}
+
