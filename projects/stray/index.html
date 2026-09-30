@@ -60,6 +60,12 @@
     max-height: 90vh;
     object-fit: contain;
     user-select: none;
+    transition: transform 0.2s ease;
+    cursor: zoom-in;
+}
+.lightbox img.zoomed {
+    transform: scale(2.5);
+    cursor: zoom-out;
 }
 .lightbox-close {
     position: absolute;
@@ -251,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
         '/assets/stray-board-3.png'
     ];
     let currentImageIndex = 0;
+    let isZoomed = false;
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const counter = document.querySelector('.lightbox-counter');
@@ -267,9 +274,40 @@ document.addEventListener("DOMContentLoaded", () => {
         if (index < 0) index = galleryImages.length - 1;
         if (index >= galleryImages.length) index = 0;
         currentImageIndex = index;
+        
+        isZoomed = false;
+        lightboxImg.classList.remove('zoomed');
+        lightboxImg.style.transformOrigin = 'center center';
+        
         lightboxImg.src = galleryImages[currentImageIndex];
         counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
     }
+    
+    function panImage(e) {
+        if (!isZoomed) return;
+        const rect = lightboxImg.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+        lightboxImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    }
+
+    lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            lightboxImg.classList.add('zoomed');
+            panImage(e);
+        } else {
+            lightboxImg.classList.remove('zoomed');
+            lightboxImg.style.transformOrigin = 'center center';
+        }
+    });
+
+    lightboxImg.addEventListener('mousemove', (e) => {
+        if (isZoomed) panImage(e);
+    });
 
     document.querySelector('.lightbox-close').addEventListener('click', () => {
         lightbox.hidden = true;
@@ -282,9 +320,9 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
         showImage(currentImageIndex + 1);
     });
-    // Close on background click
+    // Close only on background click, not on image
     lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox || e.target === lightboxImg) lightbox.hidden = true;
+        if (e.target === lightbox) lightbox.hidden = true;
     });
 });
 </script>
