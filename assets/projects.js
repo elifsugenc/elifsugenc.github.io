@@ -115,10 +115,30 @@ document.addEventListener("DOMContentLoaded", () => {
     carouselContainer.className = 'mode-carousel';
     
     const leftArrow = document.createElement('button');
-    leftArrow.className = 'carousel-arrow carousel-arrow-left';
+    leftArrow.className = 'carousel-arrow carousel-arrow-left needs-attention';
     leftArrow.innerHTML = '&lt;';
     leftArrow.setAttribute('aria-label', 'Previous Category');
-    leftArrow.onclick = () => switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length);
+    
+    const rightArrow = document.createElement('button');
+    rightArrow.className = 'carousel-arrow carousel-arrow-right needs-attention';
+    rightArrow.innerHTML = '&gt;';
+    rightArrow.setAttribute('aria-label', 'Next Category');
+    
+    let arrowAttentionTimer = setTimeout(() => {}, 0);
+    function resetArrowAttention() {
+        leftArrow.classList.remove('needs-attention');
+        rightArrow.classList.remove('needs-attention');
+        clearTimeout(arrowAttentionTimer);
+        arrowAttentionTimer = setTimeout(() => {
+            leftArrow.classList.add('needs-attention');
+            rightArrow.classList.add('needs-attention');
+        }, 4000);
+    }
+    
+    leftArrow.onclick = () => {
+        resetArrowAttention();
+        switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length);
+    };
     
     const modeLabelWrapper = document.createElement('div');
     modeLabelWrapper.className = 'carousel-label-wrapper';
@@ -127,11 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
     modeLabel.className = 'carousel-label';
     modeLabelWrapper.appendChild(modeLabel);
     
-    const rightArrow = document.createElement('button');
-    rightArrow.className = 'carousel-arrow carousel-arrow-right';
-    rightArrow.innerHTML = '&gt;';
-    rightArrow.setAttribute('aria-label', 'Next Category');
-    rightArrow.onclick = () => switchMode((currentModeIndex + 1) % projectsData.length);
+    rightArrow.onclick = () => {
+        resetArrowAttention();
+        switchMode((currentModeIndex + 1) % projectsData.length);
+    };
     
     carouselContainer.appendChild(leftArrow);
     carouselContainer.appendChild(modeLabelWrapper);
