@@ -47,7 +47,11 @@
         el.innerHTML = el.dataset[lang];
       }
     });
-    document.querySelectorAll('h1, h2, h3').forEach(el => colorizeDots(el));
+    document.querySelectorAll('h1, h2, h3').forEach(el => {
+      if (!el.closest('.project')) {
+        colorizeDots(el);
+      }
+    });
   }
 
   let savedLang = 'en';
