@@ -1813,6 +1813,7 @@ a:focus-visible {
     background: linear-gradient(to bottom, var(--primary) 28%, currentColor 28%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: inherit !important;
 }
 .dot-blue::selection {
     background: transparent;

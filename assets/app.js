@@ -29,9 +29,9 @@
       if (node.parentNode.classList.contains('dot-blue')) return;
       const text = node.nodeValue;
       if (/[ijİ]/g.test(text)) {
-        const span = document.createElement('span');
-        span.innerHTML = text.replace(/([ijİ])/g, '<span class="dot-blue">$1</span>');
-        node.parentNode.replaceChild(span, node);
+        const template = document.createElement('template');
+        template.innerHTML = text.replace(/([ijİ])/g, '<span class="dot-blue">$1</span>');
+        node.parentNode.replaceChild(template.content, node);
       }
     });
   }
