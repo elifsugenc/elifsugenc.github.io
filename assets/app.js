@@ -21,6 +21,21 @@
   }, true);
 
   // ── Language switching (runs first, before Firebase) ──
+  function colorizeDots(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      if (node.parentNode.classList.contains('dot-blue')) return;
+      const text = node.nodeValue;
+      if (/[ijİ]/g.test(text)) {
+        const span = document.createElement('span');
+        span.innerHTML = text.replace(/([ijİ])/g, '<span class="dot-blue">$1</span>');
+        node.parentNode.replaceChild(span, node);
+      }
+    });
+  }
+
   function setLanguage(lang) {
     try { sessionStorage.setItem('elifsu-lang', lang); } catch (e) {}
     document.documentElement.lang = lang;
@@ -32,6 +47,7 @@
         el.innerHTML = el.dataset[lang];
       }
     });
+    document.querySelectorAll('h1, h2, h3').forEach(el => colorizeDots(el));
   }
 
   let savedLang = 'en';
