@@ -5,6 +5,7 @@
     color: #666;
     font-family: inherit;
     font-weight: normal;
+    letter-spacing: normal;
     white-space: nowrap;
     pointer-events: none;
     z-index: 10;
@@ -32,44 +33,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const scatter = () => {
         if (isScattered) return;
         isScattered = true;
-        let startTime = Date.now();
         
         words.forEach(w => {
-            // Save initial transform (so they jump from current rotation if any)
-            w.dataset.initTransform = w.style.transform;
-            w.style.transition = 'transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease';
+            // Random direction outwards
+            const angle = Math.random() * Math.PI * 2;
+            
+            // Random distance to scatter
+            const distance = 150 + Math.random() * 250;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+            
+            // Very slight rotation so it stays readable (-15 to 15 degrees)
+            const rot = (Math.random() - 0.5) * 30;
+            
+            // Fast start, slow glide (billiard ball effect)
+            w.style.transition = 'transform 5s cubic-bezier(0.1, 1, 0.2, 1), opacity 1s ease';
+            
+            // Apply transformation
+            w.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(1.1)`;
         });
 
-        const moveWords = () => {
-            let elapsed = Date.now() - startTime;
-            if (elapsed > 5000) {
-                words.forEach(w => {
-                    w.style.opacity = '0';
-                });
-                return;
-            }
-            
+        // Fade out slowly after 4 seconds (completes by 5s)
+        setTimeout(() => {
             words.forEach(w => {
-                if (!w.dataset.lastMove || elapsed - w.dataset.lastMove > 800) {
-                    w.dataset.lastMove = elapsed;
-                    const x = (Math.random() - 0.5) * window.innerWidth * 0.8;
-                    const y = (Math.random() - 0.5) * window.innerHeight * 0.8;
-                    const rot = (Math.random() - 0.5) * 360;
-                    w.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${0.8 + Math.random()*0.5})`;
-                }
+                w.style.opacity = '0';
             });
-            
-            requestAnimationFrame(moveWords);
-        };
-        
-        moveWords();
+        }, 4000);
     };
 
     wrapper.addEventListener('click', scatter);
 
     window.addEventListener('scroll', () => {
         const rect = wrapper.getBoundingClientRect();
-        if (rect.top <= 86) { // header is around 86px
+        if (rect.top <= 86) { // header height
             scatter();
         }
     });
