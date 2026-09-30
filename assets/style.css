@@ -1645,7 +1645,7 @@ a:focus-visible {
 
 .nodes-container.initial-load {
     opacity: 0;
-    animation: network-appear 1.4s ease 1.8s forwards;
+    animation: network-appear 1.2s ease 2.5s forwards;
 }
 
 @media(max-width:760px) {

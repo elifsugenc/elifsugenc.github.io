@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentModeIndex = -1;
     let isSwitching = false;
+    let nodeTimer = null;
     
     // UI Elements
     const linesContainer = document.getElementById('network-lines');
@@ -90,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create dedicated iris stage inside eye SVG so ONLY iris slides
     let irisStage = document.getElementById('iris-stage');
     if (!irisStage && eyeSvg) {
-        // Clean up old static HTML pupil
         const oldPupil = document.getElementById('eye-pupil');
         if (oldPupil) oldPupil.remove();
 
@@ -128,14 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
     network.appendChild(leftArrow);
     network.appendChild(rightArrow);
 
-    // Node container - starts with initial-load to appear together with connection lines
+    // Node container - starts with initial-load to appear smoothly 0.5s after connection lines
     const nodesContainer = document.createElement('div');
     nodesContainer.className = 'nodes-container initial-load';
     network.appendChild(nodesContainer);
 
     setTimeout(() => {
         nodesContainer.classList.remove('initial-load');
-    }, 3200);
+    }, 4000);
 
     // Mouse tracking ONLY applies to dynamic-pupil inside irisStage
     document.addEventListener('mousemove', (e) => {
@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function switchMode(idx) {
         if (idx === currentModeIndex || isSwitching) return;
         
+        if (nodeTimer) clearTimeout(nodeTimer);
         nodesContainer.classList.remove('initial-load');
 
         const isInitial = (currentModeIndex === -1);
@@ -193,16 +194,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isInitial) {
             isSwitching = true;
             
-            // Slide out ONLY the iris and project buttons
+            // Instantly hide the project buttons when switching
+            nodesContainer.style.transition = 'opacity 0.18s ease-out, transform 0.18s ease-out';
+            nodesContainer.style.opacity = '0';
+            nodesContainer.style.transform = 'scale(0.92)';
+
+            // Slide out ONLY the iris
             if (irisStage) {
                 irisStage.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
                 irisStage.style.opacity = '0';
                 irisStage.style.transform = `translateX(${direction * -40}px)`;
             }
-
-            nodesContainer.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
-            nodesContainer.style.opacity = '0';
-            nodesContainer.style.transform = `translateX(${direction * -25}px)`;
         }
         
         setTimeout(() => {
@@ -217,17 +219,30 @@ document.addEventListener("DOMContentLoaded", () => {
             // Update Theme Color dynamically
             document.documentElement.style.setProperty('--primary', mode.themeColor);
 
-            // Update Pupil inside irisStage
+            // Update Pupil inside irisStage and slide it in
             if (irisStage) {
                 irisStage.innerHTML = mode.eyeGraphic;
+                if (!isInitial) {
+                    irisStage.style.transition = 'none';
+                    irisStage.style.transform = `translateX(${direction * 40}px)`;
+                    irisStage.style.opacity = '0';
+                    void irisStage.offsetWidth; // Force reflow
+                    irisStage.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+                    irisStage.style.opacity = '1';
+                    irisStage.style.transform = 'translateX(0)';
+                }
             }
 
-            // Update project nodes
+            // Create new project nodes with initial coordinates pre-set to prevent sticking at top!
             nodesContainer.innerHTML = '';
             activeNodes = mode.projects.map((proj, i) => {
                 const a = document.createElement('a');
                 a.className = `network-project network-project-${i + 1}`;
                 a.href = proj.url;
+                if (bases[i]) {
+                    a.style.left = bases[i][0] / 10 + '%';
+                    a.style.top = bases[i][1] / 7 + '%';
+                }
                 a.innerHTML = `<span class="network-number">${proj.num}</span><span>${proj.title}<span class="accent">.</span></span><span class="network-arrow">&#x2197;</span>`;
                 nodesContainer.appendChild(a);
                 return a;
@@ -236,33 +251,15 @@ document.addEventListener("DOMContentLoaded", () => {
             start = performance.now();
             
             if (!isInitial) {
-                // Slide in from opposite side
-                if (irisStage) {
-                    irisStage.style.transition = 'none';
-                    irisStage.style.transform = `translateX(${direction * 40}px)`;
-                    irisStage.style.opacity = '0';
-                }
-
-                nodesContainer.style.transition = 'none';
-                nodesContainer.style.transform = `translateX(${direction * 25}px)`;
-                nodesContainer.style.opacity = '0';
-
-                if (irisStage) void irisStage.offsetWidth; // Force reflow
-                void nodesContainer.offsetWidth;
-
-                if (irisStage) {
-                    irisStage.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
-                    irisStage.style.opacity = '1';
-                    irisStage.style.transform = 'translateX(0)';
-                }
-
-                nodesContainer.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
-                nodesContainer.style.opacity = '1';
-                nodesContainer.style.transform = 'translateX(0)';
-
-                setTimeout(() => {
+                // Nodes wait 0.5s (500ms) after transition, then smoothly appear at their positions!
+                nodeTimer = setTimeout(() => {
+                    nodesContainer.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+                    nodesContainer.style.opacity = '1';
+                    nodesContainer.style.transform = 'scale(1)';
                     isSwitching = false;
-                }, 260);
+                }, 500);
+            } else {
+                isSwitching = false;
             }
             
         }, isInitial ? 0 : 200);
