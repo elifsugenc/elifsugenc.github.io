@@ -1725,7 +1725,7 @@ a:focus-visible {
 /* Dynamic Mode Carousel */
 .mode-carousel {
   position: absolute;
-  top: 14%;
+  top: 4%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1778,7 +1778,7 @@ a:focus-visible {
 
 @media(max-width:760px) {
   .mode-carousel {
-    top: 5%;
+    top: -1%;
     gap: 0.2rem;
   }
   .carousel-label-wrapper {
