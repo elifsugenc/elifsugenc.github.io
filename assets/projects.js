@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     leftArrow.onclick = () => {
         resetArrowAttention();
-        switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length);
+        switchMode((currentModeIndex - 1 + projectsData.length) % projectsData.length, 'left');
     };
     
     const modeLabelWrapper = document.createElement('div');
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     rightArrow.onclick = () => {
         resetArrowAttention();
-        switchMode((currentModeIndex + 1) % projectsData.length);
+        switchMode((currentModeIndex + 1) % projectsData.length, 'right');
     };
     
     carouselContainer.appendChild(leftArrow);
@@ -225,14 +225,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     requestAnimationFrame(animate);
 
-    function switchMode(idx) {
+    function switchMode(idx, explicitDirection) {
         if (idx === currentModeIndex || isSwitching) return;
         
         if (nodeTimer) clearTimeout(nodeTimer);
         nodesContainer.classList.remove('initial-load');
 
         const isInitial = (currentModeIndex === -1);
-        const direction = (!isInitial && idx > currentModeIndex) ? -1 : 1;
+        
+        // If left arrow clicked, text slides towards left (1)
+        // If right arrow clicked, text slides towards right (-1)
+        let direction = 1;
+        if (explicitDirection === 'left') direction = 1;
+        else if (explicitDirection === 'right') direction = -1;
+        else if (!isInitial && idx < currentModeIndex) direction = 1;
+        else direction = -1;
         
         if (!isInitial) {
             isSwitching = true;
