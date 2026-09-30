@@ -77,7 +77,6 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 },
       { id: 'traditional', num: '08', title: 'Traditional<span class="accent">.</span>', url: '#', baseIndex: 0 },
       { id: 'digital', num: '09', title: 'Digital<span class="accent">.</span>', url: '#', baseIndex: 1 },
       { id: '3d', num: '10', title: '3D<span class="accent">.</span>', url: '#', baseIndex: 5 }
