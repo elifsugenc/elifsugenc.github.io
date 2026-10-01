@@ -17,7 +17,7 @@ const projectsData = [
       { id: 'bio-decay', num: '02', title: 'How many microplastics can we eat in a day<span class="q-mark">?</span>', url: '/projects/bio-decay/', baseIndex: 1 },
       { id: 'the-earthen', num: '03', title: 'Does death exist because life exists,<br>or does life exist because death exists<span class="q-mark">?</span>', url: '/projects/the-earthen/', baseIndex: 2 },
       { id: 'emek-museum', num: '04', title: 'How to make invisible labor visible<span class="q-mark">?</span>', url: '/projects/emek-museum/', baseIndex: 3 },
-      { id: 'traces', num: '05', title: 'Why trace matters<span class="q-mark">?</span>', url: '/archive/', baseIndex: 4 },
+      { id: 'traces', num: '05', title: 'Why trace matters<span class="q-mark">?</span>', url: '/projects/traces-together/', baseIndex: 4 },
       { id: 'fire-escape', num: '06', title: 'Can you escape the fire<span class="q-mark">?</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
       { id: 'ara-sira', num: '07', title: 'What do kids want<span class="q-mark">?</span>', url: '/projects/ara-sira/', baseIndex: 6 }
     ]
