@@ -35,16 +35,16 @@ export const NARRATIVE = {
     figureRevealTexts: [
       // Each figure in the room can reveal one of these on focus
       "He was there.",
-      "She saw.",
-      "They all saw.",
-      "No one moved.",
-      "She was right there.",
-      "This person stood close.",
+      "He saw.",
+      "He saw it too.",
+      "He didn't move.",
+      "He was right there.",
+      "He stood close.",
       "He didn't look away.",
-      "She was watching.",
-      "They chose not to speak.",
+      "He was watching.",
+      "He chose not to speak.",
       "He remembers it differently.",
-      "She didn't imagine it.",
+      "He didn't imagine it.",
     ],
     narratorPhase2: [
       "A room full of people.",
@@ -68,14 +68,14 @@ export const NARRATIVE = {
     contradictions: [
       // Revealed when player focuses on figures the narrator dismisses
       { label: "He said the space was empty.", reveal: "It was not empty." },
-      { label: "He said she was far away.", reveal: "She was close." },
+      { label: "He said he was far away.", reveal: "He was close." },
       {
         label: "He said no one noticed.",
-        reveal: "This person was watching the whole time.",
+        reveal: "He was watching the whole time.",
       },
       {
         label: "He described this corner as vacant.",
-        reveal: "Someone was standing here.",
+        reveal: "He was standing here.",
       },
       {
         label: "He said the crowd approved.",
@@ -141,8 +141,8 @@ export const SETTINGS = {
   },
 
   room: {
-    figureCount: 18,          // total silhouettes in the room
-    distinctFigures: 4,       // figures that stand apart from background
+    figureCount: 50,          // total silhouettes in the room
+    distinctFigures: 50,      // make all figures interactable
     contradictionFigures: 5,  // figures that carry contradiction reveals
   },
 

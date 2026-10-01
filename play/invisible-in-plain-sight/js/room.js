@@ -97,6 +97,7 @@ export class Room {
     this._pointerX = null;
     this._pointerY = null;
     this._keyboardIndex = 0;
+    this.traces = [];
     this._generateFigures();
     this._generateGrain();
   }
@@ -262,7 +263,10 @@ export class Room {
   onPointerMove(cx, cy) {
     this._pointerX = cx;
     this._pointerY = cy;
-    const fig = this.getFigureAtPoint(cx, cy);
+    let fig = this.getFigureAtPoint(cx, cy);
+    if (fig && fig.revealed) {
+      fig = null; // Cannot interact with already revealed figures
+    }
     if (fig !== this.focusTarget) {
       this.focusTimer = 0;
       this.focusTarget = fig;
@@ -283,7 +287,7 @@ export class Room {
 
   onKeyboardSelect() {
     // Cycle through interactive figures
-    const interactable = this.figures.filter((f) => f.isDistinct || f.isContradiction);
+    const interactable = this.figures.filter((f) => (f.isDistinct || f.isContradiction) && !f.revealed);
     if (interactable.length === 0) return;
     this._keyboardIndex = (this._keyboardIndex + 1) % interactable.length;
     const fig = interactable[this._keyboardIndex];
@@ -303,6 +307,9 @@ export class Room {
       const textPool = NARRATIVE.phase2.figureRevealTexts;
       const revealText = textPool[fig.id % textPool.length];
       this.onReveal(fig, revealText);
+      
+      // Critical Matter: Material trace
+      this.traces.push({ fx: fig.fx, fy: fig.fy, scale: fig.scale, alpha: 0 });
     }
 
     // Contradiction triggers in phase 3+, independently of basic reveal
@@ -323,15 +330,16 @@ export class Room {
   }
 
   _checkPhaseProgress() {
-    if (this.phase === 2 && this._figureRevealCount >= 3 && !this._phaseCompleteEmitted.has(2)) {
+    const total = this.figures.length;
+    if (this.phase === 2 && this._figureRevealCount >= Math.floor(total * 0.2) && !this._phaseCompleteEmitted.has(2)) {
       this._phaseCompleteEmitted.add(2);
       this.onPhaseComplete(2);
     }
-    if (this.phase === 3 && this._contradictionCount >= 2 && !this._phaseCompleteEmitted.has(3)) {
+    if (this.phase === 3 && this._figureRevealCount >= Math.floor(total * 0.6) && !this._phaseCompleteEmitted.has(3)) {
       this._phaseCompleteEmitted.add(3);
       this.onPhaseComplete(3);
     }
-    if (this.phase === 4 && this.compression >= 0.85 && !this._phaseCompleteEmitted.has(4)) {
+    if (this.phase === 4 && this.compression >= 0.85 && this._figureRevealCount >= total && !this._phaseCompleteEmitted.has(4)) {
       this._phaseCompleteEmitted.add(4);
       this.onPhaseComplete(4);
     }
@@ -366,6 +374,40 @@ export class Room {
     ctx.fillStyle = floorGrad;
     ctx.fillRect(0, H * 0.45, W, H * 0.55);
 
+    // Forensic Perspective Grid (Critical Matter vibe)
+    ctx.save();
+    // Grid becomes more intense and distorted as compression increases
+    ctx.strokeStyle = `rgba(139,115,85,${0.03 + comp * 0.08})`; 
+    ctx.lineWidth = 1;
+    const gridCols = 24;
+    const gridRows = 12;
+    const vanishY = H * 0.45;
+    const floorH = H * 0.55;
+    
+    // Vertical lines
+    for (let i = 0; i <= gridCols; i++) {
+      // The vanishing point shifts slightly during compression to create unease
+      const xTop = W * 0.5 + (comp * W * 0.1 * Math.sin(this.lastTime * 0.001));
+      const spread = (i / gridCols) - 0.5;
+      const xBot = W * 0.5 + (spread * W * (2.5 - comp * 1.2));
+      
+      ctx.beginPath();
+      ctx.moveTo(xTop, vanishY);
+      ctx.lineTo(xBot, H);
+      ctx.stroke();
+    }
+    
+    // Horizontal lines
+    for (let j = 1; j <= gridRows; j++) {
+      const factor = Math.pow(j / gridRows, 1.8 - comp * 0.5);
+      const yLine = vanishY + factor * floorH;
+      ctx.beginPath();
+      ctx.moveTo(0, yLine);
+      ctx.lineTo(W, yLine);
+      ctx.stroke();
+    }
+    ctx.restore();
+
     // Wall — with subtle vignette compression
     const wallGrad = ctx.createLinearGradient(0, 0, 0, H * 0.5);
     wallGrad.addColorStop(0, "#111110");
@@ -391,6 +433,27 @@ export class Room {
     ctx.lineTo(W, H * 0.45);
     ctx.stroke();
     ctx.restore();
+    
+    // Permanent Material Traces (Burn-in for revealed figures)
+    if (this.traces) {
+      ctx.save();
+      for (const trace of this.traces) {
+        // Fade in trace
+        trace.alpha = Math.min(0.15, trace.alpha + 0.005);
+        const { x, y } = this._figureCoords({ fx: trace.fx, fy: trace.fy, isContradiction: false });
+        
+        ctx.fillStyle = `rgba(196,168,130,${trace.alpha})`;
+        ctx.beginPath();
+        // Draw a distorted shadow/burn mark on the grid
+        ctx.ellipse(x, y, 25 * trace.scale, 8 * trace.scale, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Data node mark
+        ctx.fillStyle = `rgba(196,168,130,${trace.alpha * 2})`;
+        ctx.fillRect(x - 2, y - 2, 4, 4);
+      }
+      ctx.restore();
+    }
 
     // Exit marker — dims and blurs with compression (phase 4)
     if (this.phase >= 3) {
@@ -443,24 +506,44 @@ export class Room {
         ctx.restore();
       }
 
-      // Silhouette fill — revealed figures get brighter
+      // Silhouette fill — revealed figures get distinctly visible
       let fillAlpha = fig.alpha;
-      if (fig.revealed) fillAlpha = Math.min(0.85, fillAlpha + 0.35);
-      if (fig.hovered) fillAlpha = Math.min(0.9, fillAlpha + 0.2);
-      if (this.phase === 5) fillAlpha = Math.max(fillAlpha, 0.55);
+      if (fig.revealed) fillAlpha = 0.85;
+      else if (fig.hovered) fillAlpha = Math.min(0.9, fillAlpha + 0.2);
+      if (this.phase === 5) fillAlpha = Math.max(fillAlpha, 0.65);
 
-      const fillColor = fig.isDistinct
-        ? P.midgray
-        : fig.isContradiction && fig.contradictionRevealed
-        ? P.accentLight
-        : P.charcoal;
+      const fillColor = fig.revealed 
+        ? P.lightgray 
+        : (fig.isDistinct ? P.midgray : P.charcoal);
 
       ctx.fillStyle = fillColor;
       drawSilhouette(ctx, x, y, scale, fillAlpha, fig.variant);
 
-      // Reveal text label (brief, fades in then holds)
-      if (fig.revealed && fig.revealAlpha < 1 && this.phase >= 2) {
-        fig.revealAlpha = Math.min(1, fig.revealAlpha + (dt / 800));
+      // Reveal text label
+      if (fig.revealed && this.phase >= 2) {
+        fig.revealTimer = (fig.revealTimer !== undefined) ? fig.revealTimer : 3200;
+        
+        if (fig.hovered || fig.focusProgress > 0) {
+          fig.revealTimer = 3200;
+          fig.revealAlpha = Math.min(1, fig.revealAlpha + (dt / 200));
+        } else {
+          if (fig.revealTimer > 0) {
+            fig.revealTimer -= dt;
+          } else {
+            fig.revealAlpha = Math.max(0, fig.revealAlpha - (dt / 800));
+          }
+        }
+
+        if (fig.revealAlpha > 0) {
+          ctx.save();
+          ctx.globalAlpha = fig.revealAlpha;
+          ctx.fillStyle = P.lightgray;
+          ctx.font = `14px ${SETTINGS.typography.bodyFont}`;
+          ctx.textAlign = "center";
+          const text = NARRATIVE.phase2.figureRevealTexts[fig.revealIndex];
+          ctx.fillText(text, x, y - 60 * scale - 15);
+          ctx.restore();
+        }
       }
     }
   }

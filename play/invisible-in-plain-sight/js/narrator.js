@@ -65,10 +65,32 @@ export class Narrator {
 
   _setVisible(text) {
     this._current = text;
-    this._el.textContent = text;
     this._el.classList.remove("narrator--hidden");
     void this._el.offsetHeight; // force reflow for transition
     this._el.classList.add("narrator--visible");
+    
+    // Scramble effect
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+    let iteration = 0;
+    const maxIterations = 12;
+    
+    clearInterval(this._scrambleInterval);
+    this._scrambleInterval = setInterval(() => {
+      this._el.textContent = text
+        .split("")
+        .map((letter, index) => {
+          if (index < iteration || letter === " ") {
+            return text[index];
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join("");
+        
+      if (iteration >= text.length) {
+        clearInterval(this._scrambleInterval);
+      }
+      iteration += text.length / maxIterations;
+    }, 40);
   }
 
   _fadeOut() {
