@@ -25,17 +25,17 @@ function drawSilhouette(ctx, x, y, scale, alpha, variant = 0) {
   ctx.translate(x, y);
   ctx.scale(scale, scale);
 
-  // Red sketch style: tall, thin, continuous curved line
+  // Unstretched, natural proportions
   ctx.beginPath();
-  const h = 80 + variant * 10;
-  const w = 12 + variant * 4;
+  const h = 55 + variant * 5; // Less extreme variation
+  const w = 16 + variant * 3;
   
   ctx.moveTo(-w/2, 0);
   ctx.quadraticCurveTo(-w/2, -h*0.7, -w*0.3, -h + 10);
   
   // Head loop
-  ctx.bezierCurveTo(-w*0.8, -h - 10, -w*0.5, -h - 30, 0, -h - 30);
-  ctx.bezierCurveTo(w*0.5, -h - 30, w*0.8, -h - 10, w*0.3, -h + 10);
+  ctx.bezierCurveTo(-w*0.7, -h - 5, -w*0.5, -h - 22, 0, -h - 22);
+  ctx.bezierCurveTo(w*0.5, -h - 22, w*0.7, -h - 5, w*0.3, -h + 10);
   
   ctx.quadraticCurveTo(w/2, -h*0.7, w/2, 0);
   ctx.closePath();
@@ -92,33 +92,34 @@ export class Room {
       const isDistinct = i < cfg.distinctFigures;
       const isContradiction = i >= cfg.distinctFigures && i < cfg.distinctFigures + cfg.contradictionFigures;
 
-      const depthZone = rand(); // 0 = back, 1 = front
-      const baseScale = 0.5 + depthZone * 0.8;
-      const baseAlpha = isDistinct
-        ? 0.55 + rand() * 0.2
-        : 0.08 + depthZone * 0.22;
-
       let fx, fy, valid = false;
       let attempts = 0;
+      
+      // Calculate depth zone for alpha and scale sizing
+      const depthZone = rand(); 
+      const baseScale = 0.5 + depthZone * 0.8;
+      const baseAlpha = isDistinct ? 0.55 + rand() * 0.2 : 0.08 + depthZone * 0.22;
+
       while (!valid && attempts < 100) {
-        if (i < 15) {
-          fx = 0.1 + rand() * 0.8;
-          fy = 0.35 + rand() * 0.15;
-        } else if (i < 35) {
-          fx = 0.05 + rand() * 0.9;
-          fy = 0.5 + rand() * 0.2;
-        } else {
-          // Front wave formation
-          const px = rand();
-          fx = 0.05 + px * 0.9;
-          fy = 0.75 + 0.1 * Math.sin(px * Math.PI * 2) + rand() * 0.05;
-        }
-        
+        // Arrange in a circle around the viewer
+        // theta 0 to PI (front semi-circle)
+        const theta = 0.05 + rand() * (Math.PI - 0.1); 
+        // multiple rings/distances from viewer
+        const radius = 0.3 + rand() * 0.7; 
+
+        // Top down view conversion
+        const X = radius * Math.cos(theta); // left to right (-1 to 1)
+        const Z = radius * Math.sin(theta); // depth (0 to 1)
+
+        fx = 0.5 + X * 0.85; // Center X on screen
+        fy = 0.85 - Z * 0.6; // Large Z is far (smaller fy)
+
         valid = true;
         for (let j = 0; j < i; j++) {
            const dx = this.figures[j].fx - fx;
            const dy = this.figures[j].fy - fy;
-           if (dx*dx + dy*dy < 0.003) {
+           // ensure they don't overlap too much
+           if (dx*dx + dy*dy < 0.0035) {
              valid = false;
              break;
            }
