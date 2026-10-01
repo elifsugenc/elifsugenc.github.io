@@ -513,7 +513,7 @@ export class Room {
       if (this.phase === 5) fillAlpha = Math.max(fillAlpha, 0.65);
 
       const fillColor = fig.revealed 
-        ? P.lightgray 
+        ? "#e67e22" // Orange
         : (fig.isDistinct ? P.midgray : P.charcoal);
 
       ctx.fillStyle = fillColor;
@@ -537,10 +537,11 @@ export class Room {
         if (fig.revealAlpha > 0) {
           ctx.save();
           ctx.globalAlpha = fig.revealAlpha;
-          ctx.fillStyle = P.lightgray;
-          ctx.font = `14px ${SETTINGS.typography.bodyFont}`;
+          ctx.fillStyle = "#e67e22"; // Orange text
+          ctx.font = `15px ${SETTINGS.typography.bodyFont}`;
           ctx.textAlign = "center";
-          const text = NARRATIVE.phase2.figureRevealTexts[fig.revealIndex];
+          const textPool = NARRATIVE.phase2.figureRevealTexts;
+          const text = textPool[fig.id % textPool.length];
           ctx.fillText(text, x, y - 60 * scale - 15);
           ctx.restore();
         }
