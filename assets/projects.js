@@ -40,7 +40,11 @@ const projectsData = [
       { id: 'ara-sira', num: '04', title: 'ara-sira<span class="accent">.</span>', url: '/projects/ara-sira/', baseIndex: 6 },
       { id: 'stray', num: '01', title: 'STRAY<span class="accent">.</span>', url: '/projects/stray/', baseIndex: 0 },
       { id: 'bio-decay', num: '02', title: 'Bio-Decay<span class="accent">.</span>', url: '/projects/bio-decay/', baseIndex: 1 },
-      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 }
+      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 },
+      { id: 'millieu', num: '07', title: 'Millieu<span class="accent">.</span>', url: '/projects/millieu/', baseIndex: 4 },
+      { id: 'chronoclines', num: '08', title: 'ChronoClines<span class="accent">.</span>', url: '/projects/chronoclines/', baseIndex: 5 },
+      { id: 'sprouting-garden', num: '09', title: 'Sprouting Garden<span class="accent">.</span>', url: '/projects/sprouting-garden/', baseIndex: 7 },
+      { id: 'wood-weave', num: '10', title: 'Wood Weave<span class="accent">.</span>', url: '/projects/wood-weave/', baseIndex: 2 }
     ]
   },
   {
