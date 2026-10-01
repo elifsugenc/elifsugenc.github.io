@@ -175,24 +175,30 @@ function triggerIntrusiveText(message) {
   if (!el) {
     el = document.createElement("p");
     el.id = "intrusive-text";
-    el.className = "overlay-text";
-    el.style.position = "fixed";
-    el.style.top = "40vh";
-    el.style.left = "0";
-    el.style.width = "100%";
-    el.style.textAlign = "center";
-    el.style.color = "#ffffff";
-    el.style.fontSize = "2.5rem";
-    el.style.fontWeight = "bold";
-    el.style.opacity = "0";
-    el.style.pointerEvents = "none";
-    el.style.padding = "0 20px";
-    el.style.zIndex = "9999";
-    document.querySelector(".hud-bottom").appendChild(el);
+    document.body.appendChild(el);
   }
   
+  // Force all styles to ensure it cannot be hidden by external CSS/layout
+  el.style.position = "fixed";
+  el.style.top = "40vh";
+  el.style.left = "0";
+  el.style.width = "100%";
+  el.style.textAlign = "center";
+  el.style.color = "#ffffff";
+  el.style.fontSize = "3rem";
+  el.style.fontWeight = "bold";
+  el.style.pointerEvents = "none";
+  el.style.padding = "0 20px";
+  el.style.zIndex = "999999";
+  el.style.transition = "opacity 0.3s ease";
+  
   el.textContent = message;
-  el.style.opacity = 1;
+  el.style.display = "block";
+  
+  // Small delay before setting opacity to trigger CSS transition properly
+  setTimeout(() => {
+    el.style.opacity = "1";
+  }, 50);
   
   // Glitch sequence at 2, 4, 6, 8 seconds
   let glitches = 0;
@@ -200,7 +206,8 @@ function triggerIntrusiveText(message) {
     glitches++;
     if (glitches >= 5) {
       clearInterval(glitchInterval);
-      el.style.opacity = 0;
+      el.style.opacity = "0";
+      setTimeout(() => { el.style.display = "none"; }, 500);
       return;
     }
     
