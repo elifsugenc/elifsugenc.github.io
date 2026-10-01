@@ -171,34 +171,36 @@ async function runPhase2() {
 // ─── Intrusive Text Event ──────────────────────────────────────────────────────
 
 function triggerIntrusiveText(message) {
-  let el = document.getElementById("intrusive-text");
-  if (!el) {
-    el = document.createElement("p");
-    el.id = "intrusive-text";
-    document.body.appendChild(el);
-  }
+  const container = document.createElement("div");
+  container.style.position = "fixed";
+  container.style.top = "0";
+  container.style.left = "0";
+  container.style.width = "100vw";
+  container.style.height = "100vh";
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.justifyContent = "center";
+  container.style.pointerEvents = "none";
+  container.style.zIndex = "9999999"; // Guaranteed top
+  container.style.opacity = "0";
+  container.style.transition = "opacity 0.3s ease";
+  container.style.padding = "0 10vw";
+  container.style.boxSizing = "border-box";
   
-  // Force all styles to ensure it cannot be hidden by external CSS/layout
-  el.style.position = "fixed";
-  el.style.top = "40vh";
-  el.style.left = "0";
-  el.style.width = "100%";
-  el.style.textAlign = "center";
-  el.style.color = "#ffffff";
-  el.style.fontSize = "3rem";
-  el.style.fontWeight = "bold";
-  el.style.pointerEvents = "none";
-  el.style.padding = "0 20px";
-  el.style.zIndex = "999999";
-  el.style.transition = "opacity 0.3s ease";
+  const textNode = document.createElement("span");
+  textNode.textContent = message;
+  textNode.style.color = "#ffffff";
+  textNode.style.fontSize = "3.5rem"; // Very large
+  textNode.style.fontWeight = "bold";
+  textNode.style.textAlign = "center";
+  textNode.style.textShadow = "0px 4px 20px rgba(0,0,0,0.8)";
   
-  el.textContent = message;
-  el.style.display = "block";
+  container.appendChild(textNode);
+  document.body.appendChild(container);
   
-  // Small delay before setting opacity to trigger CSS transition properly
-  setTimeout(() => {
-    el.style.opacity = "1";
-  }, 50);
+  // Force reflow and fade in
+  container.getBoundingClientRect();
+  container.style.opacity = "1";
   
   // Glitch sequence at 2, 4, 6, 8 seconds
   let glitches = 0;
@@ -206,19 +208,19 @@ function triggerIntrusiveText(message) {
     glitches++;
     if (glitches >= 5) {
       clearInterval(glitchInterval);
-      el.style.opacity = "0";
-      setTimeout(() => { el.style.display = "none"; }, 500);
+      container.style.opacity = "0";
+      setTimeout(() => container.remove(), 500);
       return;
     }
     
     // Apply temporary glitch
-    el.style.transform = `translate(${Math.random()*40-20}px, ${Math.random()*40-20}px) scale(1.05)`;
-    el.style.textShadow = "4px 0 0 red, -4px 0 0 cyan";
+    textNode.style.transform = `translate(${Math.random()*40-20}px, ${Math.random()*40-20}px) scale(1.05)`;
+    textNode.style.textShadow = "4px 0 0 red, -4px 0 0 cyan, 0px 4px 20px rgba(0,0,0,0.8)";
     
     setTimeout(() => {
-      el.style.transform = "translate(0, 0) scale(1)";
-      el.style.textShadow = "none";
-    }, 200);
+      textNode.style.transform = "none";
+      textNode.style.textShadow = "0px 4px 20px rgba(0,0,0,0.8)";
+    }, 150);
     
   }, 2000);
 }
