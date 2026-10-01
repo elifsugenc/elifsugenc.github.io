@@ -20,7 +20,10 @@ const projectsData = [
       { id: 'traces', num: '05', title: 'Why trace matters<span class="q-mark">?</span>', url: '/projects/traces-together/', baseIndex: 4 },
       { id: 'fire-escape', num: '06', title: 'Can you escape the fire<span class="q-mark">?</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
       { id: 'ara-sira', num: '07', title: 'What do kids want<span class="q-mark">?</span>', url: '/projects/ara-sira/', baseIndex: 6 },
-      { id: 'millieu', num: '08', title: 'Where do we belong<span class="q-mark">?</span>', url: '/projects/millieu/', baseIndex: 7 }
+      { id: 'millieu', num: '08', title: 'Where do we belong<span class="q-mark">?</span>', url: '/projects/millieu/', baseIndex: 7 },
+      { id: 'chronoclines', num: '09', title: 'How does climate shape a place<span class="q-mark">?</span>', url: '/projects/chronoclines/', baseIndex: 3 },
+      { id: 'sprouting-garden', num: '10', title: 'What grows when you give space<span class="q-mark">?</span>', url: '/projects/sprouting-garden/', baseIndex: 5 },
+      { id: 'wood-weave', num: '11', title: 'What can materials tell us<span class="q-mark">?</span>', url: '/projects/wood-weave/', baseIndex: 1 }
     ]
   },
   {
