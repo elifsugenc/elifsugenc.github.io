@@ -1,1 +1,330 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Earthen · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/" data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About" data-tr="Hakkımda">About</a></nav><div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div></header><article class="detail"><a class="back-link" href="/projects/" data-en="← All projects" data-tr="← Tüm projeler">← All projects</a><div class="detail-heading"><span class="eyebrow" data-en="PROJECT" data-tr="PROJE">PROJECT</span><h1>The Earthen<span class="accent">.</span></h1></div><p class="detail-body detail-pending" data-en="More from this project soon." data-tr="Bu projeden daha fazlası yakında.">More from this project soon.</p></article><footer><span data-en="&copy; Last updated: October 2026" data-tr="&copy; Son g&uuml;ncelleme: Ekim 2026">&copy; Last updated: October 2026</span><span data-en="A portfolio by Elifsu Gen&ccedil;." data-tr="Elifsu Gen&ccedil; portfolyosu.">A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" data-en="&uarr; Go To Top" data-tr="&uarr; Ba&#351;a D&#246;n" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><div class="dialog-language lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div><span class="eyebrow" data-en="A CHOICE / 01" data-tr="BİR SEÇİM / 01">A CHOICE / 01</span><h2 id="consent-title" data-en="May this site remember you?" data-tr="Bu site sizi hatırlayabilir mi?">May this site remember you?</h2><p id="consent-copy" data-en="If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected." data-tr="Kabul ederseniz, imleç hareketleriniz düzenli aralıklarla arka planda kaydedilecek ve web sitesi etkileşimlerinin kolektif bir arşivine eklenecektir. Veriler anonim olarak kaydedilecek; yalnızca bu web sitesindeki imleç etkinliğiniz toplanacaktır.">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button" data-en="Yes, add my trace <span>&#x2197;</span>" data-tr="Evet, izimi ekle <span>&#x2197;</span>">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button" data-en="No, just here to explore" data-tr="Hayır, sadece keşfetmek için buradayim">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span data-en="RECORDING" data-tr="KAYDEDİLİYOR">RECORDING</span> · <span id="point-count">0</span> <span data-en="POINTS" data-tr="NOKTA">POINTS</span></div><script src="/assets/app.js?v=27" defer></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>THE EARTHEN · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer><style>
+.scatter-word {
+    position: absolute;
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    color: #666;
+    font-family: inherit;
+    font-weight: normal;
+    letter-spacing: normal;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 10;
+}
+.stray-title-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+.detail-heading {
+    min-height: auto !important;
+    margin-bottom: 30px !important;
+}
+.detail-section .eyebrow {
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+}
+.detail-section .detail-body {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Gallery & Lightbox Styles */
+.media-thumb {
+    aspect-ratio: 1;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.media-thumb:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+.lightbox {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lightbox[hidden] {
+    display: none !important;
+}
+.lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    user-select: none;
+    transition: transform 0.2s ease;
+    cursor: zoom-in;
+}
+.lightbox img.zoomed {
+    transform: scale(3);
+    cursor: zoom-out;
+}
+.lightbox-close {
+    position: absolute;
+    top: 20px; right: 30px;
+    background: none; border: none;
+    color: white; font-size: 3rem;
+    cursor: pointer;
+}
+.lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1); border: none;
+    color: white; font-size: 2rem;
+    padding: 20px; cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 5px;
+}
+.lightbox-prev:hover, .lightbox-next:hover {
+    background: rgba(255,255,255,0.3);
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-counter {
+    position: absolute;
+    bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: white; font-family: monospace; font-size: 1.2rem;
+}
+</style></head><body style="--primary: #9f5a3b;"><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/" data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About" data-tr="Hakkımda">About</a></nav><div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div></header><article class="detail"><a class="back-link" href="/projects/" data-en="← All projects" data-tr="← Tüm projeler">← All projects</a><div class="detail-heading"><span class="eyebrow" data-en="PROJECT" data-tr="PROJE">PROJECT</span><div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 15px;"><h1 class="stray-title-wrapper" style="margin: 20px 0; display: inline-block;">THE EARTHEN<span class="accent">.</span>
+<span class="scatter-word" style="top: -20%; left: 0%; transform: rotate(-90deg);">decay</span>
+<span class="scatter-word" style="top: 40%; left: -10%;">melt</span>
+<span class="scatter-word" style="bottom: -15%; left: 5%;">shape</span>
+<span class="scatter-word" style="bottom: -15%; left: 40%;">renew</span>
+<span class="scatter-word" style="top: 40%; left: 40%;">grow</span>
+<span class="scatter-word" style="top: -15%; left: 45%;">sprout</span>
+<span class="scatter-word" style="bottom: 10%; left: 75%;">cycle</span>
+<span class="scatter-word" style="top: 25%; right: -15%; transform: rotate(90deg);">birth</span>
+</h1><span style="font-size: clamp(1.2rem, 2vw, 1.65rem);">to decay is to begin again<span class="q-mark">.</span></span></div>
+    <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 40px; font-size: 0.9rem; color: #888; line-height: 1.5; letter-spacing: 0.02em;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; max-width: 800px;">
+            <div>
+                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">LOCATION</strong>
+                <span>Maslak, Istanbul</span>
+            </div>
+            <div>
+                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">PROGRAM</strong>
+                <span>Wellness & Material Cycle Center</span>
+            </div>
+        </div>
+        <div>
+            <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">OVERVIEW</strong>
+            <span>Does death exist because life exists,<br>or does life exist because death exists?</span>
+        </div>
+    </div>
+</div>
+<div class="detail-image" style="margin-bottom: 140px;">
+    <img src="/assets/the-earthen-hero.jpg" class="lightbox-trigger" data-index="0" alt="The Earthen - Perspective View" style="width: 100%; height: auto; display: block; cursor: pointer; background: rgba(159, 90, 59, 0.05); min-height: 300px;" onerror="this.src=''; this.alt='[ Please upload hero perspective to /assets/the-earthen-hero.jpg ]'; this.style.padding='100px 20px'; this.style.textAlign='center'; this.style.fontFamily='monospace'; this.style.color='var(--primary)'; this.style.border='1px dashed rgba(159,90,59,0.3)';">
+</div>
+
+<div class="detail-section" style="margin-bottom: 140px;">
+    <span class="eyebrow" style="margin-bottom: 15px; display: block;">01 / THE CYCLE OF EXISTENCE</span>
+    <p class="detail-body">Life and death are inseparable aspects of existence. Every living being experiences beginnings and endings, growth and decay, and through these processes, the natural cycles of life continue.</p>
+    <p class="detail-body" style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Death is not an ultimate end but a transformation that allows new life to emerge.</p>
+    <p class="detail-body">Understanding this cycle encourages us to accept impermanence, letting go of fear and attachment, and to see every moment as part of a larger continuum.</p>
+</div>
+
+<div class="detail-section" style="margin-bottom: 140px;">
+    <span class="eyebrow" style="margin-bottom: 15px; display: block;">02 / URBAN CONTEXT</span>
+    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">Maslak is dominated by business towers and plazas, filled with constant motion, deadlines, and repetition.</p>
+    <p class="detail-body">These structures represent the cycle of productivity and exhaustion, where life often feels mechanical and endless. The project seeks to interrupt this rhythm, offering a space to breathe, slow down, and reconnect with the body and earth.</p>
+    
+    <div style="margin-top: 40px; padding: 20px; background: rgba(159, 90, 59, 0.05); border-left: 3px solid var(--primary); font-family: monospace; font-size: 1rem; overflow-x: auto; white-space: nowrap;">
+        MAKING → TOUCHING → GROUNDING → OBSERVING → RETURNING
+    </div>
+
+    <div class="detail-image" style="background: rgba(159, 90, 59, 0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 40px 0; color: var(--primary); font-family: monospace; border: 1px dashed rgba(159, 90, 59, 0.3); text-align: center; padding: 20px; overflow: hidden;">
+        <img src="/assets/the-earthen-cycles.jpg" class="lightbox-trigger" data-index="1" alt="Site Analysis and Loops" style="width: 100%; height: auto; object-fit: contain; cursor: pointer; display: none;" onload="this.style.display='block'; this.parentElement.style.border='none'; this.parentElement.style.padding='0'; this.parentElement.innerHTML=''; this.parentElement.appendChild(this);">
+        <span style="font-size: 1.2rem; margin-bottom: 10px; font-weight: bold;">[ SITE & CYCLE DIAGRAMS ]</span>
+        <span style="color: #666; font-size: 0.9rem;">Please upload the Site Analysis & Loops diagram to /assets/the-earthen-cycles.jpg</span>
+    </div>
+</div>
+
+<div class="detail-section" style="margin-bottom: 140px;">
+    <span class="eyebrow" style="margin-bottom: 15px; display: block;">03 / PROGRAMMATIC LOOPS</span>
+    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">The program creates a calm, continuous loop of making, touching, grounding, observing, and returning—supporting both physical relaxation and mental renewal.</p>
+    <p class="detail-body">The cycle begins with <strong>Material Preparation</strong>. Clay, soil, water, and seeds are mixed through bodily gestures — pressing, walking, and kneading. The process reconnects the body with the earth, turning making into a sensory ritual where touch becomes a tool of creation.</p>
+    <p class="detail-body">From there, the material is molded in the <strong>Shaping & Formation Space</strong>, and placed outdoors on the <strong>Drying Terrace</strong>. Natural forces begin to alter their surface—cracking, fading, and reshaping them. The terrace becomes a living archive, documenting decay as a quiet continuation rather than an end.</p>
+
+    <div class="detail-image" style="margin: 40px 0;">
+        <img src="/assets/the-earthen-program.jpg" class="lightbox-trigger" data-index="2" alt="Programmatic Diagram" style="width: 100%; height: auto; display: block; cursor: pointer; background: rgba(159, 90, 59, 0.05); min-height: 200px;" onerror="this.src=''; this.alt='[ Please upload program diagram to /assets/the-earthen-program.jpg ]'; this.style.padding='100px 20px'; this.style.textAlign='center'; this.style.fontFamily='monospace'; this.style.color='var(--primary)'; this.style.border='1px dashed rgba(159,90,59,0.3)';">
+    </div>
+</div>
+
+<div class="detail-section" style="margin-bottom: 140px;">
+    <span class="eyebrow" style="margin-bottom: 15px; display: block;">04 / MATERIAL TRANSFORMATION</span>
+    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">The sectional organization of the project is based on a vertical cycle of material transformation, moving from wet to dry, from soft to solid, and from decay to growth.</p>
+    <p class="detail-body">At the lowest level, water-based activities such as soaking, stepping, and mixing take place, allowing the body to engage directly with liquid and semi-liquid matter. As users move upward, the material becomes denser and more stable.</p>
+    
+    <div class="detail-image" style="margin: 40px 0;">
+        <img src="/assets/the-earthen-section.jpg" class="lightbox-trigger" data-index="3" alt="The Earthen - Perspective Section" style="width: 100%; height: auto; display: block; cursor: pointer; background: rgba(159, 90, 59, 0.05); min-height: 300px;" onerror="this.src=''; this.alt='[ Please upload section drawing to /assets/the-earthen-section.jpg ]'; this.style.padding='100px 20px'; this.style.textAlign='center'; this.style.fontFamily='monospace'; this.style.color='var(--primary)'; this.style.border='1px dashed rgba(159,90,59,0.3)';">
+    </div>
+    
+    <p class="detail-body">A fiberglass layer wraps around the metal pipe structure and blurs the boundary between inside and outside. The pipes descend from above and create a cave-like space, making the interior–exterior relation even more ambiguous. Some of the tubes act not only as structural supports but also as channels for seeds, water, and clay, guiding materials between levels.</p>
+</div>
+
+<div class="detail-section" style="margin-bottom: 140px;">
+    <span class="eyebrow" style="margin-bottom: 15px; display: block;">05 / REBIRTH</span>
+    <p class="detail-body">As the organic produce in the garden undergoes natural decomposition, the seeds within begin to germinate. As the clay erodes, seeds sprout through its fragments. New life grows from what has decayed, turning the material into fertile soil.</p>
+    <p class="detail-body">These seeds are harvested and then collected in designated seedbins, which are connected via a tube system to the Material Creation Lab. Here, the biological matter is reintroduced into the production phase, creating a perpetual, closed-loop system.</p>
+    <p class="detail-body" style="font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; color: var(--primary); margin-top: 30px; line-height: 1.2;">Just as our lives carry the invisible traces of smaller cycles, the architecture embodies these accumulated layers of biological memory.</p>
+</div>
+
+<div class="detail-section" style="margin-bottom: 80px;">
+    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MORE MEDIA — BOARDS & DRAWINGS</span>
+    <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+        <div class="media-thumb" data-index="4" title="Board 01" style="background-image: url('/assets/the-earthen-board-1.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
+        <div class="media-thumb" data-index="5" title="Board 02" style="background-image: url('/assets/the-earthen-board-2.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
+        <div class="media-thumb" data-index="6" title="Board 03" style="background-image: url('/assets/the-earthen-board-3.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
+        <div class="media-thumb" data-index="7" title="Board 04" style="background-image: url('/assets/the-earthen-board-4.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
+    </div>
+    <p style="font-family: monospace; color: #888; font-size: 0.8rem; margin-top: 15px;">* Placeholders for original presentation boards</p>
+</div>
+</article><footer><span data-en="&copy; Last updated: October 2026" data-tr="&copy; Son g&uuml;ncelleme: Ekim 2026">&copy; Last updated: October 2026</span><span data-en="A portfolio by Elifsu Gen&ccedil;." data-tr="Elifsu Gen&ccedil; portfolyosu.">A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" data-en="&uarr; Go To Top" data-tr="&uarr; Ba&#351;a D&#246;n" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><div class="dialog-language lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div><span class="eyebrow" data-en="A CHOICE / 01" data-tr="BİR SEÇİM / 01">A CHOICE / 01</span><h2 id="consent-title" data-en="May this site remember you?" data-tr="Bu site sizi hatırlayabilir mi?">May this site remember you?</h2><p id="consent-copy" data-en="If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected." data-tr="Kabul ederseniz, imleç hareketleriniz düzenli aralıklarla arka planda kaydedilecek ve web sitesi etkileşimlerinin kolektif bir arşivine eklenecektir. Veriler anonim olarak kaydedilecek; yalnızca bu web sitesindeki imleç etkinliğiniz toplanacaktır.">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button" data-en="Yes, add my trace <span>&#x2197;</span>" data-tr="Evet, izimi ekle <span>&#x2197;</span>">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button" data-en="No, just here to explore" data-tr="Hayır, sadece keşfetmek için buradayim">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span data-en="RECORDING" data-tr="KAYDEDİLİYOR">RECORDING</span> · <span id="point-count">0</span> <span data-en="POINTS" data-tr="NOKTA">POINTS</span></div><script src="/assets/app.js?v=27" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.querySelector('.stray-title-wrapper');
+    const words = document.querySelectorAll('.scatter-word');
+    let isScattered = false;
+    
+    // Make individual words disappear on click
+    words.forEach(w => {
+        w.addEventListener('click', (e) => {
+            e.stopPropagation();
+            w.style.transition = 'opacity 0.5s ease';
+            w.style.opacity = '0';
+        });
+    });
+
+    const scatter = () => {
+        if (isScattered) return;
+        isScattered = true;
+        
+        words.forEach(w => {
+            // Random direction outwards
+            const angle = Math.random() * Math.PI * 2;
+            
+            // Random distance to scatter
+            const distance = 150 + Math.random() * 250;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+            
+            // Very slight rotation so it stays readable (-15 to 15 degrees)
+            const rot = (Math.random() - 0.5) * 30;
+            
+            // Fast start, slow glide (billiard ball effect)
+            w.style.transition = 'transform 10s cubic-bezier(0.1, 1, 0.2, 1)';
+            
+            // Apply transformation
+            w.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(1.1)`;
+        });
+    };
+
+    wrapper.addEventListener('click', scatter);
+
+    window.addEventListener('scroll', () => {
+        const rect = wrapper.getBoundingClientRect();
+        if (rect.top <= 86) { // header height
+            scatter();
+        }
+    });
+});
+
+// Gallery & Lightbox Logic
+document.addEventListener("DOMContentLoaded", () => {
+    const galleryItems = [
+        { src: '/assets/the-earthen-hero.jpg', label: 'The Earthen - Perspective View' },
+        { src: '/assets/the-earthen-cycles.jpg', label: 'Site & Cycle Diagrams' },
+        { src: '/assets/the-earthen-program.jpg', label: 'Programmatic Diagram' },
+        { src: '/assets/the-earthen-section.jpg', label: 'Perspective Section' },
+        { src: '/assets/the-earthen-board-1.jpg', label: 'Board 01' },
+        { src: '/assets/the-earthen-board-2.jpg', label: 'Board 02' },
+        { src: '/assets/the-earthen-board-3.jpg', label: 'Board 03' },
+        { src: '/assets/the-earthen-board-4.jpg', label: 'Board 04' }
+    ];
+    let currentImageIndex = 0;
+    let isZoomed = false;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const counter = document.querySelector('.lightbox-counter');
+
+    document.querySelectorAll('.media-thumb, .lightbox-trigger').forEach(thumb => {
+        thumb.addEventListener('click', (e) => {
+            currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
+            showImage(currentImageIndex);
+            lightbox.hidden = false;
+        });
+    });
+
+    function showImage(index) {
+        if (index < 0) index = galleryItems.length - 1;
+        if (index >= galleryItems.length) index = 0;
+        currentImageIndex = index;
+        
+        isZoomed = false;
+        lightboxImg.classList.remove('zoomed');
+        lightboxImg.style.transformOrigin = 'center center';
+        
+        lightboxImg.src = galleryItems[currentImageIndex].src;
+        counter.textContent = `${currentImageIndex + 1} / ${galleryItems.length} — ${galleryItems[currentImageIndex].label}`;
+    }
+    
+    function panImage(e) {
+        if (!isZoomed) return;
+        const rect = lightboxImg.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+        lightboxImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    }
+
+    lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            lightboxImg.classList.add('zoomed');
+            panImage(e);
+        } else {
+            lightboxImg.classList.remove('zoomed');
+            lightboxImg.style.transformOrigin = 'center center';
+        }
+    });
+
+    lightboxImg.addEventListener('mousemove', (e) => {
+        if (isZoomed) panImage(e);
+    });
+
+    document.querySelector('.lightbox-close').addEventListener('click', () => {
+        lightbox.hidden = true;
+    });
+    document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentImageIndex - 1);
+    });
+    document.querySelector('.lightbox-next').addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentImageIndex + 1);
+    });
+    // Close only on background click, not on image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) lightbox.hidden = true;
+    });
+});
+</script>
+
+<div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox-close">×</button>
+    <button class="lightbox-prev">❮</button>
+    <img id="lightbox-img" src="" alt="Gallery Image">
+    <button class="lightbox-next">❯</button>
+    <div class="lightbox-counter">1 / 5</div>
+</div>
+</body></html>
