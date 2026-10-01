@@ -112,40 +112,53 @@ export class AmbientAudio {
     );
   }
 
-  playWhisper(intensity) {
+  addContinuousWhisper() {
     if (!this._started || !this._ctx || !this._enabled) return;
     const ctx = this._ctx;
     
-    const bufSize = ctx.sampleRate * 2;
+    // Loop of noise
+    const bufSize = ctx.sampleRate * (1 + Math.random() * 2);
     const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufSize; i++) {
       data[i] = Math.random() * 2 - 1;
     }
     
-    // Number of voices based on how many bars/figures are filled
-    const numVoices = Math.min(15, Math.max(1, Math.floor(intensity / 4)));
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.loop = true;
     
-    for (let v = 0; v < numVoices; v++) {
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-      
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.value = 800 + Math.random() * 2500;
-      filter.Q.value = 6 + Math.random() * 6;
-      
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.02 + Math.random()*0.03, ctx.currentTime + 0.1 + Math.random()*0.4);
-      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8 + Math.random());
-      
-      source.connect(filter);
-      filter.connect(gain);
-      gain.connect(this._masterGain);
-      
-      source.start();
-    }
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 500 + Math.random() * 2000;
+    filter.Q.value = 4 + Math.random() * 6;
+    
+    // LFO for speech-like amplitude modulation (mumbling rhythm)
+    const lfo = ctx.createOscillator();
+    lfo.type = 'sine';
+    lfo.frequency.value = 3 + Math.random() * 4; 
+    
+    const modGain = ctx.createGain();
+    modGain.gain.value = 0.5; // Depth of modulation
+    
+    const voiceGain = ctx.createGain();
+    voiceGain.gain.setValueAtTime(0, ctx.currentTime);
+    
+    // Start silent, fade in
+    const targetVolume = 0.008 + Math.random() * 0.005;
+    voiceGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 2.0);
+    
+    // Wiring
+    lfo.connect(modGain.gain);
+    source.connect(filter);
+    filter.connect(modGain);
+    modGain.connect(voiceGain);
+    voiceGain.connect(this._masterGain);
+    
+    lfo.start();
+    source.start();
+    
+    this._nodes.push({ source, gain: voiceGain, lfo });
   }
 
   /** Transition audio state for each phase */

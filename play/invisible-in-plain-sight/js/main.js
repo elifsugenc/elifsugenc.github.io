@@ -223,8 +223,8 @@ function initRoom() {
     onReveal: (fig, text) => {
       if (state.phase >= 2) showRevealText(text);
     },
-    onWhisper: (intensity) => {
-      if (audio) audio.playWhisper(intensity);
+    onWhisper: () => {
+      if (audio) audio.addContinuousWhisper();
     },
     onContradiction: (fig, contraObj) => {
       if (state.phase >= 3) showContradictionText(contraObj);
