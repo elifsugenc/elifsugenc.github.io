@@ -320,11 +320,18 @@ export class Room {
 
   _checkPhaseProgress() {
     const total = this.figures.length;
-    if (this.phase === 2 && this._figureRevealCount >= Math.floor(total * 0.2) && !this._phaseCompleteEmitted.has(2)) {
+    
+    // 10-person special event
+    if (this._figureRevealCount >= 10 && !this._event10Emitted) {
+      this._event10Emitted = true;
+      if (this.onTenPersonEvent) this.onTenPersonEvent();
+    }
+    
+    if (this.phase === 2 && this._figureRevealCount >= 15 && !this._phaseCompleteEmitted.has(2)) {
       this._phaseCompleteEmitted.add(2);
       this.onPhaseComplete(2);
     }
-    if (this.phase === 3 && this._figureRevealCount >= Math.floor(total * 0.6) && !this._phaseCompleteEmitted.has(3)) {
+    if (this.phase === 3 && this._figureRevealCount >= 35 && !this._phaseCompleteEmitted.has(3)) {
       this._phaseCompleteEmitted.add(3);
       this.onPhaseComplete(3);
     }
@@ -375,8 +382,8 @@ export class Room {
     
     // Vertical lines
     for (let i = 0; i <= gridCols; i++) {
-      // The vanishing point shifts slightly during compression to create unease
-      const xTop = W * 0.5 + (comp * W * 0.1 * Math.sin(this.lastTime * 0.001));
+      // The vanishing point remains stable and centered
+      const xTop = W * 0.5;
       const spread = (i / gridCols) - 0.5;
       const xBot = W * 0.5 + (spread * W * (2.5 - comp * 1.2));
       

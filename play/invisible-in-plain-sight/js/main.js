@@ -168,22 +168,53 @@ async function runPhase2() {
   // That's wired in initRoom below
 }
 
+// ─── 10-person event ──────────────────────────────────────────────────────────
+
+function triggerTenPersonEvent() {
+  const el = document.getElementById("intrusive-text");
+  if (!el) return;
+  
+  el.style.opacity = 1;
+  
+  // Glitch sequence at 2, 4, 6, 8 seconds
+  let glitches = 0;
+  const glitchInterval = setInterval(() => {
+    glitches++;
+    if (glitches >= 5) {
+      clearInterval(glitchInterval);
+      el.style.opacity = 0;
+      return;
+    }
+    
+    // Apply temporary glitch
+    el.style.transform = `translate(${Math.random()*20-10}px, ${Math.random()*20-10}px) scale(1.05)`;
+    el.style.textShadow = "2px 0 0 red, -2px 0 0 blue";
+    
+    setTimeout(() => {
+      el.style.transform = "translate(0, 0) scale(1)";
+      el.style.textShadow = "none";
+    }, 200);
+    
+  }, 2000);
+}
+
 // Phase 3: THE ALIBI — narrator rationalizes
 async function runPhase3() {
   els.phaseLabel.textContent = "";
 
   narrator.setSequence(NARRATIVE.phase3.narratorFragments, () => {
     // Once narrator sequence ends, transition to phase 4 if not already
-    if (state.phase === 3) {
-      setTimeout(() => enterPhase(4), 1200);
-    }
+    // Wait, the trigger is now based on 35 people natively in room.js
   });
 }
 
-// Phase 4: THE WEIGHT — spatial compression
+// Phase 4: THE WEIGHT — spatial compression (35 people trigger)
 async function runPhase4() {
   // Narrator fragments continue
   narrator.setSequence(NARRATIVE.phase4.narratorFragments, null);
+  
+  // Play male laughter
+  if (audio) audio.playLaughter();
 
   // Room compression happens in the canvas loop (room.update)
   // When compression reaches threshold, room calls onPhaseComplete(4)
@@ -225,6 +256,9 @@ function initRoom() {
     },
     onWhisper: () => {
       if (audio) audio.addContinuousWhisper();
+    },
+    onTenPersonEvent: () => {
+      triggerTenPersonEvent();
     },
     onContradiction: (fig, contraObj) => {
       if (state.phase >= 3) showContradictionText(contraObj);
