@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1a18" />
+  <meta name="description" content="An abstract interactive experience about sexual violence, silence, and responsibility." />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:title" content="invisible in plain sight" />
+  <meta property="og:description" content="An abstract experience about sexual violence, silence, and responsibility." />
+  <meta property="og:type" content="website" />
+
+  <title>invisible in plain sight</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Preconnect for system fonts (no external font dependency) -->
+</head>
+<body>
+
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#btn-enter">Skip to enter button</a>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCREEN 0 — TITLE
+       ═══════════════════════════════════════════════════════ -->
+  <section
+    id="screen-title"
+    class="screen"
+    role="region"
+    aria-label="Title screen"
+    aria-hidden="true"
+  >
+    <p class="title__eyebrow" aria-hidden="true">—</p>
+
+    <h1 class="title__main" id="title-text">invisible in plain sight</h1>
+
+    <p class="title__content-note" id="content-note" role="note">
+      An abstract experience about sexual violence, silence, and responsibility.
+      No graphic imagery.
+    </p>
+
+    <div class="title__controls">
+      <button
+        id="btn-enter"
+        class="btn btn--primary"
+        aria-label="Enter the experience"
+      >
+        enter
+      </button>
+
+      <div class="title__controls-row">
+        <button
+          id="btn-sound"
+          class="btn btn--ghost btn-sound-toggle"
+          aria-pressed="true"
+          aria-label="Toggle sound"
+        >
+          sound on
+        </button>
+
+        <button
+          id="btn-reduced-motion"
+          class="btn btn--ghost btn-reduced-motion-toggle"
+          aria-pressed="false"
+          aria-label="Toggle reduced motion"
+        >
+          reduce motion
+        </button>
+
+        <button
+          id="btn-exit"
+          class="btn btn--exit btn-exit"
+          aria-label="Leave the experience"
+        >
+          leave
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCREEN 1 — EXPERIENCE
+       ═══════════════════════════════════════════════════════ -->
+  <section
+    id="screen-experience"
+    class="screen"
+    role="region"
+    aria-label="Interactive room"
+    aria-hidden="true"
+  >
+    <!-- Canvas — room drawn here -->
+    <canvas
+      id="room-canvas"
+      role="img"
+      aria-label="An abstract room with human silhouettes. Use Tab or arrow keys to focus on figures, or move your pointer to explore."
+    ></canvas>
+
+    <!-- Persistent HUD — always accessible -->
+    <div class="experience-hud" aria-live="off">
+      <div class="hud-top" role="toolbar" aria-label="Experience controls">
+        <button
+          class="btn btn--ghost btn-sound-toggle"
+          aria-pressed="true"
+          aria-label="Toggle sound"
+        >
+          sound on
+        </button>
+        <button
+          class="btn btn--ghost btn-reduced-motion-toggle"
+          aria-pressed="false"
+          aria-label="Toggle reduced motion"
+        >
+          reduce motion
+        </button>
+        <button
+          class="btn btn--exit btn-exit"
+          aria-label="Leave the experience and return to title"
+        >
+          leave
+        </button>
+      </div>
+
+      <div class="hud-bottom">
+        <!-- Instruction (phase 1) -->
+        <p
+          id="instruction"
+          class="overlay-text"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+
+        <!-- Narrator voice -->
+        <p
+          id="narrator-text"
+          class="narrator--hidden"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+
+        <!-- Figure reveal text -->
+        <p
+          id="reveal-text"
+          class="overlay-text"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+
+        <!-- Contradiction reveal -->
+        <div
+          id="contradiction-text"
+          class="overlay-text"
+          role="status"
+          aria-live="assertive"
+          aria-atomic="true"
+        ></div>
+
+        <!-- Phase label (minimal, decorative) -->
+        <p id="phase-label" aria-hidden="true"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCREEN 2 — ENDING
+       ═══════════════════════════════════════════════════════ -->
+  <section
+    id="screen-ending"
+    class="screen"
+    role="region"
+    aria-label="Ending"
+    aria-hidden="true"
+  >
+    <blockquote
+      id="ending-question"
+      class="overlay-text"
+      cite="invisible in plain sight"
+    >
+      What did their silence allow him to tell himself?
+    </blockquote>
+
+    <p
+      id="ending-subtext"
+      class="overlay-text"
+    >
+      Their silence was not permission. It was only silence.
+    </p>
+
+    <div class="ending-controls">
+      <div class="ending-controls-row">
+        <button
+          id="btn-restart"
+          class="btn btn--primary"
+          aria-label="Revisit the room from the beginning"
+        >
+          revisit the room
+        </button>
+
+        <button
+          id="btn-return"
+          class="btn btn--ghost"
+          aria-label="Return to the title screen"
+        >
+          return to start
+        </button>
+      </div>
+
+      <div class="ending-controls-row">
+        <button
+          class="btn btn--ghost btn-sound-toggle"
+          aria-pressed="true"
+          aria-label="Toggle sound"
+        >
+          sound on
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       Scripts — ES modules, no bundler required
+       ═══════════════════════════════════════════════════════ -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

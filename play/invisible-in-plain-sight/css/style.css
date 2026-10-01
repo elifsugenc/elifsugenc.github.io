@@ -1,0 +1,429 @@
+/* ============================================================
+   style.css — "invisible in plain sight"
+   Restrained, atmospheric visual language.
+   ============================================================ */
+
+/* ── Custom properties ──────────────────────────────────────── */
+:root {
+  --bg:           #1a1a18;
+  --bg-light:     #252520;
+  --charcoal:     #2c2c28;
+  --midgray:      #5a5a52;
+  --lightgray:    #b0b0a0;
+  --offwhite:     #e8e6dc;
+  --accent:       #8b7355;
+  --accent-light: #c4a882;
+  --text:         #d4d2c8;
+  --text-faint:   #6a6860;
+
+  --font-serif:   'Georgia', 'Times New Roman', serif;
+  --font-mono:    'Courier New', monospace;
+
+  --fade:         600ms ease;
+  --slow-fade:    1800ms ease;
+
+  /* Reduced-motion color animation replacement */
+  --in-oklab: ;
+}
+
+@supports (linear-gradient(in oklab, white, black)) {
+  :root { --in-oklab: in oklab; }
+}
+
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  min-height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  /* Prevent iOS bounce */
+  overscroll-behavior: none;
+}
+
+/* ── Focus styles ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 1.5px solid var(--accent-light);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Screens ─────────────────────────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--slow-fade);
+  z-index: 10;
+}
+
+.screen--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Title screen ────────────────────────────────────────────── */
+#screen-title {
+  background: var(--bg);
+  gap: 0;
+  padding: clamp(2rem, 8vw, 6rem);
+  text-align: center;
+}
+
+.title__eyebrow {
+  font-size: clamp(0.625rem, 1.5vw, 0.75rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2.5rem;
+}
+
+.title__main {
+  font-size: clamp(1.6rem, 5vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: var(--offwhite);
+  margin-bottom: 3rem;
+}
+
+.title__content-note {
+  font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  color: var(--text-faint);
+  max-width: 38ch;
+  line-height: 1.65;
+  margin-bottom: 3.5rem;
+  font-style: italic;
+}
+
+.title__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.title__controls-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  background: transparent;
+  border: 1px solid var(--midgray);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  letter-spacing: 0.08em;
+  padding: 0.65em 1.5em;
+  cursor: pointer;
+  transition: border-color 300ms ease, color 300ms ease, background 300ms ease;
+  position: relative;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--accent-light);
+  color: var(--offwhite);
+}
+
+.btn--primary {
+  border-color: var(--lightgray);
+  color: var(--offwhite);
+  padding: 0.75em 2.5em;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: rgba(139,115,85,0.12);
+  border-color: var(--accent-light);
+}
+
+.btn--ghost {
+  border-color: transparent;
+  color: var(--text-faint);
+  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  color: var(--text);
+  border-color: var(--midgray);
+}
+
+.btn--exit {
+  border-color: transparent;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  padding: 0.4em 0.8em;
+}
+
+.btn--exit:hover,
+.btn--exit:focus-visible {
+  color: var(--lightgray);
+}
+
+/* ── Experience screen ───────────────────────────────────────── */
+#screen-experience {
+  background: transparent;
+  z-index: 5;
+  pointer-events: none; /* canvas handles pointer events */
+}
+
+#screen-experience.screen--visible {
+  pointer-events: auto;
+}
+
+/* The canvas sits behind everything */
+#room-canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+  z-index: 1;
+  touch-action: none;
+}
+
+/* ── HUD (persistent controls during experience) ─────────────── */
+.experience-hud {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.hud-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.hud-bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+/* ── Narrator text ───────────────────────────────────────────── */
+#narrator-text {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-style: italic;
+  color: var(--offwhite);
+  letter-spacing: 0.03em;
+  line-height: 1.55;
+  text-align: center;
+  max-width: 42ch;
+  opacity: 0;
+  transition: opacity var(--fade);
+  pointer-events: none;
+}
+
+.narrator--visible {
+  opacity: 1 !important;
+}
+
+.narrator--hidden {
+  opacity: 0 !important;
+}
+
+/* ── Instruction text ────────────────────────────────────────── */
+#instruction {
+  font-size: clamp(0.75rem, 1.6vw, 0.875rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--fade);
+  pointer-events: none;
+}
+
+/* ── Overlay reveal texts ────────────────────────────────────── */
+.overlay-text {
+  opacity: 0;
+  transition: opacity var(--fade);
+  pointer-events: none;
+}
+
+.overlay-text--visible {
+  opacity: 1;
+}
+
+#reveal-text {
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: var(--lightgray);
+  letter-spacing: 0.06em;
+  text-align: center;
+  max-width: 36ch;
+  line-height: 1.6;
+}
+
+#contradiction-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: center;
+  max-width: 46ch;
+}
+
+.contradiction__label {
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  color: var(--text-faint);
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-decoration: line-through;
+  text-decoration-color: var(--midgray);
+}
+
+.contradiction__reveal {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: var(--accent-light);
+  letter-spacing: 0.05em;
+}
+
+/* ── Phase label (minimal) ───────────────────────────────────── */
+#phase-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  opacity: 0.5;
+}
+
+/* ── Ending screen ───────────────────────────────────────────── */
+#screen-ending {
+  background: linear-gradient(to bottom var(--in-oklab), var(--bg) 60%, #0e0e0c);
+  gap: 0;
+  padding: clamp(2rem, 8vw, 6rem);
+  text-align: center;
+}
+
+#ending-question {
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 400;
+  color: var(--offwhite);
+  max-width: 36ch;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 1400ms ease;
+  margin-bottom: 1.8rem;
+}
+
+#ending-subtext {
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: var(--text-faint);
+  max-width: 40ch;
+  line-height: 1.7;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+  margin-bottom: 4rem;
+}
+
+.ending-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ending-controls-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Reduced motion overrides ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  #narrator-text,
+  #instruction,
+  .overlay-text,
+  #ending-question,
+  #ending-subtext,
+  .btn {
+    transition-duration: 100ms !important;
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .title__main {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+  .title__controls-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  #ending-question {
+    font-size: clamp(1rem, 5vw, 1.4rem);
+  }
+  .ending-controls-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ── Skip link for keyboard users ───────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  background: var(--charcoal);
+  color: var(--offwhite);
+  padding: 0.5em 1em;
+  font-size: 0.875rem;
+  z-index: 100;
+  transition: top 200ms ease;
+  border: 1px solid var(--midgray);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ── Utility ─────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
