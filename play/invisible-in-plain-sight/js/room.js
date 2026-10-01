@@ -94,38 +94,42 @@ export class Room {
 
       let fx, fy, valid = false;
       let attempts = 0;
+      let distanceOffset = 0;
+      let fxNorm = 0;
       
-      // Calculate depth zone for alpha and scale sizing
-      const depthZone = rand(); 
-      const baseScale = 0.5 + depthZone * 0.8;
-      const baseAlpha = isDistinct ? 0.55 + rand() * 0.2 : 0.08 + depthZone * 0.22;
-
-      while (!valid && attempts < 100) {
-        // Arrange in a circle around the viewer
-        // theta 0 to PI (front semi-circle)
-        const theta = 0.05 + rand() * (Math.PI - 0.1); 
-        // multiple rings/distances from viewer
-        const radius = 0.3 + rand() * 0.7; 
-
-        // Top down view conversion
-        const X = radius * Math.cos(theta); // left to right (-1 to 1)
-        const Z = radius * Math.sin(theta); // depth (0 to 1)
-
-        fx = 0.5 + X * 0.85; // Center X on screen
-        fy = 0.85 - Z * 0.6; // Large Z is far (smaller fy)
+      while (!valid && attempts < 150) {
+        // Distribute evenly around 360-degree viewing circle (0-1 screen width)
+        const angleNorm = rand(); // 0 to 1
+        distanceOffset = rand() * 0.4; // depth variation
+        
+        fxNorm = angleNorm;
+        fx = angleNorm;
+        
+        // Fisheye depth curve: Center (0.5) is close, edges (0, 1) curve away
+        const distFromCenter = Math.abs(fx - 0.5) * 2.0; 
+        const curveDepth = distFromCenter * distFromCenter; 
+        
+        // fy: 0.85 (bottom, close) up to 0.45 (top, far)
+        fy = 0.85 - (curveDepth * 0.25) - (distanceOffset * 0.15);
 
         valid = true;
         for (let j = 0; j < i; j++) {
            const dx = this.figures[j].fx - fx;
            const dy = this.figures[j].fy - fy;
-           // ensure they don't overlap too much
-           if (dx*dx + dy*dy < 0.0035) {
+           // Prevent harsh overlap
+           if (dx*dx + dy*dy < 0.001) {
              valid = false;
              break;
            }
         }
         attempts++;
       }
+      
+      const distFromCenter = Math.abs(fx - 0.5) * 2.0;
+      const fisheyeScale = 1.0 - (distFromCenter * 0.3); // Edges look smaller/farther
+      const baseScale = (0.55 + (1.0 - distanceOffset) * 0.45) * fisheyeScale;
+      const baseAlpha = isDistinct ? 0.6 + rand() * 0.3 : 0.15 + (1.0 - distanceOffset) * 0.25;
+      const rotation = (fxNorm - 0.5) * 0.25; // max rotation ~ 0.12 radians
 
       const contradictionIndex = isContradiction
         ? (i - cfg.distinctFigures) % contradictionTexts.length
@@ -140,6 +144,7 @@ export class Room {
         scale: baseScale,
         baseAlpha,
         alpha: baseAlpha,
+        rotation,
         variant: Math.floor(rand() * 3),
         isDistinct,
         isContradiction,
@@ -166,6 +171,9 @@ export class Room {
         f.narrated_fy = f.fy + seededRand(f.id * 13)() * 0.05;
       }
     });
+    
+    // Sort by depth (fy) so closer figures render on top
+    this.figures.sort((a, b) => a.fy - b.fy);
   }
 
   _generateGrain() {
@@ -319,23 +327,29 @@ export class Room {
   }
 
   _checkPhaseProgress() {
+    const totalInteracted = this._figureRevealCount;
     const total = this.figures.length;
     
     // 10-person special event
-    if (this._figureRevealCount >= 10 && !this._event10Emitted) {
+    if (totalInteracted >= 10 && !this._event10Emitted) {
       this._event10Emitted = true;
       if (this.onTenPersonEvent) this.onTenPersonEvent();
     }
     
-    if (this.phase === 2 && this._figureRevealCount >= 15 && !this._phaseCompleteEmitted.has(2)) {
+    // Phase 2 to 3 transition
+    if (this.phase === 2 && totalInteracted >= 15 && !this._phaseCompleteEmitted.has(2)) {
       this._phaseCompleteEmitted.add(2);
       this.onPhaseComplete(2);
     }
-    if (this.phase === 3 && this._figureRevealCount >= 35 && !this._phaseCompleteEmitted.has(3)) {
+
+    // 35-person special event (Phase 3 to 4 transition)
+    if (this.phase === 3 && totalInteracted >= 35 && !this._phaseCompleteEmitted.has(3)) {
       this._phaseCompleteEmitted.add(3);
+      if (this.onThirtyFivePersonEvent) this.onThirtyFivePersonEvent();
       this.onPhaseComplete(3);
     }
-    if (this.phase === 4 && this.compression >= 0.85 && this._figureRevealCount >= total && !this._phaseCompleteEmitted.has(4)) {
+
+    if (this.phase === 4 && this.compression >= 0.85 && totalInteracted >= total && !this._phaseCompleteEmitted.has(4)) {
       this._phaseCompleteEmitted.add(4);
       this.onPhaseComplete(4);
     }

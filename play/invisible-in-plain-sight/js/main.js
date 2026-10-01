@@ -168,12 +168,30 @@ async function runPhase2() {
   // That's wired in initRoom below
 }
 
-// ─── 10-person event ──────────────────────────────────────────────────────────
+// ─── Intrusive Text Event ──────────────────────────────────────────────────────
 
-function triggerTenPersonEvent() {
-  const el = document.getElementById("intrusive-text");
-  if (!el) return;
+function triggerIntrusiveText(message) {
+  let el = document.getElementById("intrusive-text");
+  if (!el) {
+    el = document.createElement("p");
+    el.id = "intrusive-text";
+    el.className = "overlay-text";
+    el.style.position = "fixed";
+    el.style.top = "40vh";
+    el.style.left = "0";
+    el.style.width = "100%";
+    el.style.textAlign = "center";
+    el.style.color = "#ffffff";
+    el.style.fontSize = "2.5rem";
+    el.style.fontWeight = "bold";
+    el.style.opacity = "0";
+    el.style.pointerEvents = "none";
+    el.style.padding = "0 20px";
+    el.style.zIndex = "9999";
+    document.querySelector(".hud-bottom").appendChild(el);
+  }
   
+  el.textContent = message;
   el.style.opacity = 1;
   
   // Glitch sequence at 2, 4, 6, 8 seconds
@@ -187,8 +205,8 @@ function triggerTenPersonEvent() {
     }
     
     // Apply temporary glitch
-    el.style.transform = `translate(${Math.random()*20-10}px, ${Math.random()*20-10}px) scale(1.05)`;
-    el.style.textShadow = "2px 0 0 red, -2px 0 0 blue";
+    el.style.transform = `translate(${Math.random()*40-20}px, ${Math.random()*40-20}px) scale(1.05)`;
+    el.style.textShadow = "4px 0 0 red, -4px 0 0 cyan";
     
     setTimeout(() => {
       el.style.transform = "translate(0, 0) scale(1)";
@@ -203,8 +221,7 @@ async function runPhase3() {
   els.phaseLabel.textContent = "";
 
   narrator.setSequence(NARRATIVE.phase3.narratorFragments, () => {
-    // Once narrator sequence ends, transition to phase 4 if not already
-    // Wait, the trigger is now based on 35 people natively in room.js
+    // Phase 4 triggered at 35 people natively in room.js
   });
 }
 
@@ -258,7 +275,10 @@ function initRoom() {
       if (audio) audio.addContinuousWhisper();
     },
     onTenPersonEvent: () => {
-      triggerTenPersonEvent();
+      triggerIntrusiveText("The voices were getting louder, but no one was opening their mouth.");
+    },
+    onThirtyFivePersonEvent: () => {
+      triggerIntrusiveText("There were so many of them now.");
     },
     onContradiction: (fig, contraObj) => {
       if (state.phase >= 3) showContradictionText(contraObj);
