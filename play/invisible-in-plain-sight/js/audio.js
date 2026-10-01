@@ -112,117 +112,147 @@ export class AmbientAudio {
     );
   }
 
+  _generateSpeechBuffer() {
+    const ctx = this._ctx;
+    const duration = 5 + Math.random() * 3; // 5-8 seconds loop
+    const sampleRate = ctx.sampleRate;
+    const bufSize = Math.floor(sampleRate * duration);
+    const buffer = ctx.createBuffer(1, bufSize, sampleRate);
+    const data = buffer.getChannelData(0);
+    
+    const isMale = Math.random() > 0.4; 
+    let baseFreq = isMale ? (100 + Math.random()*30) : (180 + Math.random()*40);
+    
+    let pos = 0;
+    while (pos < bufSize) {
+      // Sentence structure: 2-7 syllables, then a pause
+      const syllablesInPhrase = 2 + Math.floor(Math.random() * 6);
+      
+      for (let s = 0; s < syllablesInPhrase; s++) {
+        const sylLen = Math.floor(sampleRate * (0.12 + Math.random() * 0.18));
+        const pauseLen = Math.floor(sampleRate * (0.01 + Math.random() * 0.05)); // tiny pause between syllables
+        
+        const freqTarget = baseFreq * (0.85 + Math.random() * 0.3);
+        let currentFreq = baseFreq;
+        
+        let phase = 0;
+        for(let i=0; i<sylLen && pos < bufSize; i++) {
+          currentFreq += (freqTarget - currentFreq) * 0.002; 
+          phase += currentFreq / sampleRate;
+          
+          // Mixed oscillator: mostly sawtooth for vocal cords, slight sine for smoothness
+          let val = (phase % 1) * 2 - 1; 
+          val = val * 0.7 + Math.sin(phase * Math.PI * 2) * 0.3;
+          
+          // ADSR Envelope
+          let env = 1;
+          const attack = Math.floor(sampleRate * 0.04);
+          const release = Math.floor(sampleRate * 0.08);
+          if (i < attack) env = i / attack;
+          else if (i > sylLen - release) env = (sylLen - i) / release;
+          
+          data[pos++] = val * env;
+        }
+        
+        // Syllable pause
+        for(let i=0; i<pauseLen && pos < bufSize; i++) data[pos++] = 0;
+      }
+      
+      // Phrase pause (breathing/listening)
+      const phrasePauseLen = Math.floor(sampleRate * (0.5 + Math.random() * 1.5));
+      for(let i=0; i<phrasePauseLen && pos < bufSize; i++) data[pos++] = 0;
+    }
+    return buffer;
+  }
+
   addContinuousWhisper() {
     if (!this._started || !this._ctx || !this._enabled) return;
     const ctx = this._ctx;
     
-    // Base noise for whisper
-    const bufSize = ctx.sampleRate * 2;
-    const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufSize; i++) {
-      data[i] = Math.random() * 2 - 1;
-    }
-    
+    const buffer = this._generateSpeechBuffer();
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     source.loop = true;
     
-    // Male formant-like frequencies (rough approximation for mumbling)
-    const baseF1 = 400 + Math.random() * 200;
-    const baseF2 = 1000 + Math.random() * 500;
-    const baseF3 = 2200 + Math.random() * 600;
+    // Formant filter to muffle it and make it sound like a vowel ('uh' / 'ah' sound)
+    const formant = ctx.createBiquadFilter();
+    formant.type = 'bandpass';
+    formant.frequency.value = 400 + Math.random() * 300; 
+    formant.Q.value = 1.5 + Math.random() * 1.5;
     
-    const filter1 = ctx.createBiquadFilter(); filter1.type = 'bandpass'; filter1.frequency.value = baseF1; filter1.Q.value = 5;
-    const filter2 = ctx.createBiquadFilter(); filter2.type = 'bandpass'; filter2.frequency.value = baseF2; filter2.Q.value = 6;
-    const filter3 = ctx.createBiquadFilter(); filter3.type = 'bandpass'; filter3.frequency.value = baseF3; filter3.Q.value = 6;
-    
-    // Irregular amplitude modulation (2 LFOs)
-    const lfo1 = ctx.createOscillator(); lfo1.type = 'sine'; lfo1.frequency.value = 2 + Math.random() * 2;
-    const lfo2 = ctx.createOscillator(); lfo2.type = 'sine'; lfo2.frequency.value = 4 + Math.random() * 3;
-    
-    const lfoGain1 = ctx.createGain(); lfoGain1.gain.value = 0.4; lfo1.connect(lfoGain1);
-    const lfoGain2 = ctx.createGain(); lfoGain2.gain.value = 0.3; lfo2.connect(lfoGain2);
-    
-    const modGain = ctx.createGain();
-    modGain.gain.value = 0.2; // base volume
-    lfoGain1.connect(modGain.gain);
-    lfoGain2.connect(modGain.gain);
+    // Lowpass to push it into the distance (wall of sound)
+    const lowpass = ctx.createBiquadFilter();
+    lowpass.type = 'lowpass';
+    lowpass.frequency.value = 900 + Math.random() * 400;
     
     const voiceGain = ctx.createGain();
     voiceGain.gain.setValueAtTime(0, ctx.currentTime);
-    const targetVolume = 0.015 + Math.random() * 0.01;
-    voiceGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 2.0);
     
-    const muffleFilter = ctx.createBiquadFilter();
-    muffleFilter.type = 'lowpass';
-    muffleFilter.frequency.value = 1500; // cuts out the high-pitch static/crackle
+    // Fade in gently
+    const targetVolume = 0.05 + Math.random() * 0.02; 
+    voiceGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 3.0);
     
-    source.connect(filter1); source.connect(filter2); source.connect(filter3);
-    filter1.connect(modGain); filter2.connect(modGain); filter3.connect(modGain);
+    source.connect(formant);
+    formant.connect(lowpass);
+    lowpass.connect(voiceGain);
+    voiceGain.connect(this._masterGain);
     
-    modGain.connect(voiceGain);
-    voiceGain.connect(muffleFilter);
-    muffleFilter.connect(this._masterGain);
-    
-    lfo1.start(); lfo2.start(); source.start();
+    // Start at a random offset so they don't all align
+    source.start(0, Math.random() * buffer.duration);
   }
 
   playLaughter() {
     if (!this._started || !this._ctx || !this._enabled) return;
     const ctx = this._ctx;
-    const now = ctx.currentTime;
     
-    // Pitched oscillator for vocal cord (male = ~120Hz)
-    const osc = ctx.createOscillator();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(120, now);
-    osc.frequency.exponentialRampToValueAtTime(80, now + 2.5);
+    const sampleRate = ctx.sampleRate;
+    const bufSize = Math.floor(sampleRate * 3.0);
+    const buffer = ctx.createBuffer(1, bufSize, sampleRate);
+    const data = buffer.getChannelData(0);
     
-    // Formant filters for "Ha ha ha"
-    const filter1 = ctx.createBiquadFilter(); filter1.type = 'bandpass'; filter1.frequency.value = 700; filter1.Q.value = 3;
-    const filter2 = ctx.createBiquadFilter(); filter2.type = 'bandpass'; filter2.frequency.value = 1200; filter2.Q.value = 3;
+    let pos = 0;
+    let baseFreq = 140; // Male pitch
+    // "Ha ha ha ha ha"
+    for (let ha = 0; ha < 6; ha++) { 
+      const sylLen = Math.floor(sampleRate * 0.12);
+      const pauseLen = Math.floor(sampleRate * 0.15);
+      
+      let phase = 0;
+      for (let i=0; i<sylLen && pos < bufSize; i++) {
+        phase += baseFreq / sampleRate;
+        let val = (phase % 1) * 2 - 1; 
+        
+        let env = 1;
+        if (i < 200) env = i/200;
+        else if (i > sylLen - 1000) env = (sylLen - i)/1000;
+        
+        data[pos++] = val * env;
+      }
+      for(let i=0; i<pauseLen && pos < bufSize; i++) data[pos++] = 0;
+      baseFreq *= 0.92; // Pitch drops with each laugh
+    }
     
-    // Amplitude modulation for the laugh pulses
-    const lfo = ctx.createOscillator();
-    lfo.type = 'square';
-    lfo.frequency.setValueAtTime(5, now);
-    lfo.frequency.linearRampToValueAtTime(3.5, now + 2);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
     
-    // Smooth the pulses slightly
-    const lfoFilter = ctx.createBiquadFilter();
-    lfoFilter.type = 'lowpass';
-    lfoFilter.frequency.value = 15;
+    const formant = ctx.createBiquadFilter();
+    formant.type = 'bandpass';
+    formant.frequency.value = 800;
+    formant.Q.value = 3.0;
     
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 1;
-    lfo.connect(lfoFilter);
-    lfoFilter.connect(lfoGain.gain);
-    
-    const voiceGain = ctx.createGain();
-    voiceGain.gain.setValueAtTime(0, now);
-    voiceGain.gain.linearRampToValueAtTime(0.0, now);
-    voiceGain.gain.linearRampToValueAtTime(0.4, now + 0.1); // Attack
-    voiceGain.gain.exponentialRampToValueAtTime(0.01, now + 2.5); // Decay
-    
-    // Distant/muffled effect
     const distFilter = ctx.createBiquadFilter();
     distFilter.type = 'lowpass';
-    distFilter.frequency.value = 900;
+    distFilter.frequency.value = 1000;
     
-    osc.connect(filter1); osc.connect(filter2);
-    filter1.connect(voiceGain); filter2.connect(voiceGain);
+    const gain = ctx.createGain();
+    gain.gain.value = 0.5;
     
-    const amNode = ctx.createGain();
-    amNode.gain.value = 0;
-    lfoGain.connect(amNode.gain);
-    
-    voiceGain.connect(amNode);
-    amNode.connect(distFilter);
+    source.connect(formant);
+    formant.connect(gain);
+    gain.connect(distFilter);
     distFilter.connect(this._masterGain);
     
-    osc.start(now); lfo.start(now);
-    osc.stop(now + 3); lfo.stop(now + 3);
+    source.start();
   }
 
   /** Transition audio state for each phase */
