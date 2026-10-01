@@ -102,8 +102,8 @@ export class AmbientAudio {
     this._createDrone(220, 0.008, 8);
     this._createDrone(165, 0.006, -12);
 
-    // Very soft room noise
-    this._noiseNode = this._createNoise(0.015, 80, 300);
+    // Very soft room noise (lowered per request)
+    this._noiseNode = this._createNoise(0.003, 80, 300);
 
     // Fade in slowly
     this._masterGain.gain.linearRampToValueAtTime(
@@ -154,11 +154,16 @@ export class AmbientAudio {
     const targetVolume = 0.015 + Math.random() * 0.01;
     voiceGain.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 2.0);
     
+    const muffleFilter = ctx.createBiquadFilter();
+    muffleFilter.type = 'lowpass';
+    muffleFilter.frequency.value = 1500; // cuts out the high-pitch static/crackle
+    
     source.connect(filter1); source.connect(filter2); source.connect(filter3);
     filter1.connect(modGain); filter2.connect(modGain); filter3.connect(modGain);
     
     modGain.connect(voiceGain);
-    voiceGain.connect(this._masterGain);
+    voiceGain.connect(muffleFilter);
+    muffleFilter.connect(this._masterGain);
     
     lfo1.start(); lfo2.start(); source.start();
   }
