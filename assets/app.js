@@ -192,67 +192,120 @@
   let currentSort = 'newest';
   let allEntries = [];
 
-  function renderModalTraces() {
-    const modalGrid = document.getElementById('modal-traces-grid');
-    if (!modalGrid) return;
-    modalGrid.innerHTML = '';
-    let sorted = allEntries.slice();
-    if (currentSort === 'newest') sorted.reverse();
-    else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
-
-    sorted.forEach(e => {
-        modalGrid.appendChild(card(e, allEntries.indexOf(e)));
-    });
-  }
-
+  
   function renderTraces(entries) {
     allEntries = entries;
     const isTr = document.documentElement.lang === 'tr';
-    const collective=document.getElementById('collective');
-    if (collective) {
-      if (entries.length) collective.innerHTML=`<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${entries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.07 * (entries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
-      else collective.innerHTML=`<div class="empty" data-en="The first trace has yet to arrive." data-tr="İlk iz henüz ulaşmadı.">${isTr ? 'İlk iz henüz ulaşmadı.' : 'The first trace has yet to arrive.'}</div>`;
-      
-      const tc = document.getElementById('trace-count');
-      if (tc) tc.innerHTML=`${String(entries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
-      
-      const ic = document.getElementById('individual-count');
-      if (ic) ic.innerHTML=`${String(entries.length).padStart(2,'0')} / <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
-      
-      const rt = document.getElementById('recent-traces');
-      
-      if (rt) {
-        rt.innerHTML='';
-        const recent = entries.slice(-6).reverse();
-        recent.forEach((e)=>rt.appendChild(card(e, entries.indexOf(e))));
+    const collective = document.getElementById('collective');
+    const isArchivePage = !!document.getElementById('all-traces-grid');
+
+    let filteredEntries = entries;
+    let selectedYear = 'all';
+    let selectedMonth = 'all';
+
+    if (!isArchivePage) {
+      const now = new Date();
+      selectedYear = String(now.getFullYear());
+      selectedMonth = String(now.getMonth());
+      filteredEntries = entries.filter(e => {
+        const d = new Date(e.date);
+        return String(d.getFullYear()) === selectedYear && String(d.getMonth()) === selectedMonth;
+      });
+    } else {
+      const yearSelect = document.getElementById('archive-filter-year');
+      const monthSelect = document.getElementById('archive-filter-month');
+
+      if (yearSelect && yearSelect.options.length === 1 && entries.length > 0) {
+        const years = [...new Set(entries.map(e => new Date(e.date).getFullYear()))].sort((a,b)=>a-b);
+        years.forEach(y => {
+          const opt = document.createElement('option');
+          opt.value = y;
+          opt.textContent = y;
+          yearSelect.appendChild(opt);
+        });
+      }
+
+      if (yearSelect) selectedYear = yearSelect.value;
+      if (monthSelect) selectedMonth = monthSelect.value;
+
+      if (selectedYear !== 'all') {
+        filteredEntries = filteredEntries.filter(e => String(new Date(e.date).getFullYear()) === selectedYear);
+      }
+      if (selectedMonth !== 'all') {
+        filteredEntries = filteredEntries.filter(e => String(new Date(e.date).getMonth()) === selectedMonth);
       }
     }
 
-    const traceModal = document.getElementById('trace-modal');
-    if (traceModal && !traceModal.hidden) renderModalTraces();
-    
-    const grid=document.getElementById('all-traces-grid');
-    if (grid) {
-      grid.innerHTML='';
-      const list=entries.slice().reverse();
-      let shown=0;
-      const more=document.getElementById('more-traces');
-      const ac = document.getElementById('archive-count');
-      if (ac) ac.innerHTML=`${String(entries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+    if (collective) {
+      if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * (filteredEntries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
+      else collective.innerHTML = `<div class="empty" data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</div>`;
       
-      const reveal=()=>{
-        list.slice(shown,shown+12).forEach((e,i)=>grid.appendChild(card(e,entries.length-shown-i-1)));
-        shown+=12;
-        if (more) more.hidden=shown>=list.length;
+      const tc = document.getElementById('trace-count');
+      if (tc) tc.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      
+      const ic = document.getElementById('individual-count');
+      if (ic) ic.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} / <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      
+      const rt = document.getElementById('recent-traces');
+      if (rt) {
+        rt.innerHTML = '';
+        const recent = filteredEntries.slice(-6).reverse();
+        recent.forEach((e) => rt.appendChild(card(e, filteredEntries.indexOf(e))));
+      }
+    }
+
+    const traceModalBody = document.getElementById('modal-traces-grid');
+    if (traceModalBody && !document.getElementById('trace-modal').hidden) {
+       traceModalBody.innerHTML = '';
+       let sorted = filteredEntries.slice();
+       if (currentSort === 'newest') sorted.reverse();
+       else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
+       sorted.forEach(e => {
+           traceModalBody.appendChild(card(e, filteredEntries.indexOf(e)));
+       });
+    }
+
+    const grid = document.getElementById('all-traces-grid');
+    if (grid) {
+      grid.innerHTML = '';
+      const list = filteredEntries.slice().reverse();
+      let shown = 0;
+      const more = document.getElementById('more-traces');
+      const ac = document.getElementById('archive-count');
+      if (ac) ac.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      
+      const reveal = () => {
+        list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, filteredEntries.length - shown - i - 1)));
+        shown += 12;
+        if (more) more.hidden = shown >= list.length;
       };
+      
       if (more) {
         const newMore = more.cloneNode(true);
         more.replaceWith(newMore);
         newMore.addEventListener('click', reveal);
       }
       reveal();
-      if (!entries.length) grid.innerHTML=`<p data-en="The first trace has yet to arrive." data-tr="İlk iz henüz ulaşmadı.">${isTr ? 'İlk iz henüz ulaşmadı.' : 'The first trace has yet to arrive.'}</p>`;
+      if (!filteredEntries.length) grid.innerHTML = `<p data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</p>`;
     }
+  }
+
+  const setupArchiveFilters = () => {
+    const yearSelect = document.getElementById('archive-filter-year');
+    const monthSelect = document.getElementById('archive-filter-month');
+    if (yearSelect && !yearSelect.hasListener) {
+      yearSelect.addEventListener('change', () => renderTraces(allEntries));
+      yearSelect.hasListener = true;
+    }
+    if (monthSelect && !monthSelect.hasListener) {
+      monthSelect.addEventListener('change', () => renderTraces(allEntries));
+      monthSelect.hasListener = true;
+    }
+  };
+  setupArchiveFilters();
+
+  function renderModalTraces() {
+    renderTraces(allEntries);
   }
 
   const traceModal = document.getElementById('trace-modal');

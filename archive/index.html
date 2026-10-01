@@ -166,6 +166,32 @@
                 </div>
             </section>
         <section class="archive archive-list" id="all-traces">
+            <div class="archive-heading" style="margin-bottom: 20px;">
+                <h1 data-en="Collective Archive" data-tr="Kolektif Arşiv">Collective Archive</h1>
+                <div class="archive-filters" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <select id="archive-filter-year" style="padding: 5px; font-size: clamp(0.9rem, 1.2vw, 1.1rem); background: transparent; border: 1px solid var(--foreground); color: var(--foreground); border-radius: 100px; padding: 5px 15px; cursor: pointer;">
+                        <option value="all" data-en="ALL TRACES" data-tr="TÜM İZLER">ALL TRACES</option>
+                    </select>
+                    <select id="archive-filter-month" style="padding: 5px; font-size: clamp(0.9rem, 1.2vw, 1.1rem); background: transparent; border: 1px solid var(--foreground); color: var(--foreground); border-radius: 100px; padding: 5px 15px; cursor: pointer;">
+                        <option value="all" data-en="ALL MONTHS" data-tr="TÜM AYLAR">ALL MONTHS</option>
+                        <option value="0" data-en="January" data-tr="Ocak">January</option>
+                        <option value="1" data-en="February" data-tr="Şubat">February</option>
+                        <option value="2" data-en="March" data-tr="Mart">March</option>
+                        <option value="3" data-en="April" data-tr="Nisan">April</option>
+                        <option value="4" data-en="May" data-tr="Mayıs">May</option>
+                        <option value="5" data-en="June" data-tr="Haziran">June</option>
+                        <option value="6" data-en="July" data-tr="Temmuz">July</option>
+                        <option value="7" data-en="August" data-tr="Ağustos">August</option>
+                        <option value="8" data-en="September" data-tr="Eylül">September</option>
+                        <option value="9" data-en="October" data-tr="Ekim">October</option>
+                        <option value="10" data-en="November" data-tr="Kasım">November</option>
+                        <option value="11" data-en="December" data-tr="Aralık">December</option>
+                    </select>
+                </div>
+            </div>
+            <div class="collective" id="collective" style="margin-bottom: 50px;">
+                <div class="empty">The first trace has yet to arrive.</div>
+            </div>
             <div class="individual-head">
                 <h1 data-en="All traces" data-tr="Tüm izler">All traces</h1><span id="archive-count">00 TRACES</span>
             </div>
