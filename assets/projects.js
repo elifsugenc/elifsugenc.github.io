@@ -2,12 +2,10 @@ const projectsData = [
   {
     id: 'mode-mystery',
     tabLabel: 'Questions',
-    themeColor: '#7a31d7', // purple/blue
+    themeColor: '#7a31d7',
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Base pupil abstract shape -->
         <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-        <!-- Glowing blue question mark -->
         <text x="160" y="132" font-family="monospace" font-size="40" font-weight="bold" fill="currentColor" text-anchor="middle">?</text>
         <circle cx="160" cy="116" r="25" fill="currentColor" opacity="0.1" />
       </g>
@@ -21,18 +19,17 @@ const projectsData = [
       { id: 'fire-escape', num: '06', title: 'Can you escape the fire<span class="q-mark">?</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 },
       { id: 'ara-sira', num: '07', title: 'What do kids want<span class="q-mark">?</span>', url: '/projects/ara-sira/', baseIndex: 6 },
       { id: 'millieu', num: '08', title: 'Where do we belong<span class="q-mark">?</span>', url: '/projects/millieu/', baseIndex: 7 },
-      { id: 'chronoclines', num: '09', title: 'How does climate shape a place<span class="q-mark">?</span>', url: '/projects/chronoclines/', baseIndex: 3 },
-      { id: 'sprouting-garden', num: '10', title: 'What grows when you give space<span class="q-mark">?</span>', url: '/projects/sprouting-garden/', baseIndex: 5 },
-      { id: 'wood-weave', num: '11', title: 'What can materials tell us<span class="q-mark">?</span>', url: '/projects/wood-weave/', baseIndex: 1 }
+      { id: 'chronoclines', num: '09', title: 'How does climate shape a place<span class="q-mark">?</span>', url: '/projects/chronoclines/', baseIndex: 8 },
+      { id: 'sprouting-garden', num: '10', title: 'What grows when you give space<span class="q-mark">?</span>', url: '/projects/sprouting-garden/', baseIndex: 9 },
+      { id: 'wood-weave', num: '11', title: 'What can materials tell us<span class="q-mark">?</span>', url: '/projects/wood-weave/', baseIndex: 10 }
     ]
   },
   {
     id: 'mode-arch',
     tabLabel: 'Architecture & Interior Design',
-    themeColor: '#3157d7', // default site blue
+    themeColor: '#3157d7',
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Technical drafting motif -->
         <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="1" />
         <line x1="145" y1="116" x2="175" y2="116" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
         <line x1="160" y1="101" x2="160" y2="131" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
@@ -40,59 +37,53 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'emek-museum', num: '06', title: 'Emek Museum<span class="accent">.</span>', url: '/projects/emek-museum/', baseIndex: 3 },
-      { id: 'ara-sira', num: '04', title: 'ara-sira<span class="accent">.</span>', url: '/projects/ara-sira/', baseIndex: 6 },
       { id: 'stray', num: '01', title: 'STRAY<span class="accent">.</span>', url: '/projects/stray/', baseIndex: 0 },
       { id: 'bio-decay', num: '02', title: 'Bio-Decay<span class="accent">.</span>', url: '/projects/bio-decay/', baseIndex: 1 },
-      { id: 'the-earthen', num: '05', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 },
-      { id: 'millieu', num: '07', title: 'Millieu<span class="accent">.</span>', url: '/projects/millieu/', baseIndex: 4 },
-      { id: 'chronoclines', num: '08', title: 'ChronoClines<span class="accent">.</span>', url: '/projects/chronoclines/', baseIndex: 5 },
-      { id: 'sprouting-garden', num: '09', title: 'Sprouting Garden<span class="accent">.</span>', url: '/projects/sprouting-garden/', baseIndex: 7 },
-      { id: 'wood-weave', num: '10', title: 'Wood Weave<span class="accent">.</span>', url: '/projects/wood-weave/', baseIndex: 2 }
+      { id: 'the-earthen', num: '03', title: 'The Earthen<span class="accent">.</span>', url: '/projects/the-earthen/', baseIndex: 2 },
+      { id: 'emek-museum', num: '04', title: 'Emek Museum<span class="accent">.</span>', url: '/projects/emek-museum/', baseIndex: 3 },
+      { id: 'millieu', num: '05', title: 'Millieu<span class="accent">.</span>', url: '/projects/millieu/', baseIndex: 4 },
+      { id: 'ara-sira', num: '06', title: 'ara-sira<span class="accent">.</span>', url: '/projects/ara-sira/', baseIndex: 5 },
+      { id: 'chronoclines', num: '07', title: 'ChronoClines<span class="accent">.</span>', url: '/projects/chronoclines/', baseIndex: 6 },
+      { id: 'sprouting-garden', num: '08', title: 'Sprouting Garden<span class="accent">.</span>', url: '/projects/sprouting-garden/', baseIndex: 7 },
+      { id: 'wood-weave', num: '09', title: 'Wood Weave<span class="accent">.</span>', url: '/projects/wood-weave/', baseIndex: 8 }
     ]
   },
   {
     id: 'mode-tech',
     tabLabel: 'Game Design',
-    themeColor: '#1bb5d2', // cyan/blue
+    themeColor: '#1bb5d2',
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Base pupil outline -->
         <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="none" stroke="currentColor" stroke-width="2" />
-        <!-- Pixelated console motif -->
         <path d="M145 98 h30 v30 h-30 z" fill="currentColor"/>
         <path d="M150 103 h20 v12 h-20 z" fill="#fff"/>
         <path d="M152 120 h6 v6 h-6 z" fill="#fff"/>
         <path d="M164 122 h4 v4 h-4 z" fill="#fff"/>
-        <!-- CRT scanlines (glitch) -->
         <path d="M130 110 h60 M132 115 h55" stroke="currentColor" stroke-width="1" opacity="0.5" />
       </g>
     `,
     projects: [
-      { id: 'fire-escape', num: '03', title: 'Fire Escape Simulation<span class="accent">.</span>', url: '/projects/fire-escape-simulation/', baseIndex: 5 }
+      { id: 'fire-escape', num: '01', title: 'Fire Escape Simulation<span class="accent">.</span>', url: '/projects/fire-escape-simulation/', baseIndex: 4 }
     ]
   },
   {
     id: 'mode-art',
     tabLabel: 'Art',
-    themeColor: '#4a4a4a', // charcoal/gray
+    themeColor: '#4a4a4a',
     eyeGraphic: `
       <g id="dynamic-pupil" style="transition: transform 0.1s ease-out;">
-        <!-- Charcoal hatching motif -->
         <path d="M136 108 C136 89 154 83 165 92 C178 88 188 101 185 120 C183 141 168 149 153 145 C141 141 135 128 136 108Z" fill="#f4f4f4" stroke="currentColor" stroke-width="1.5" />
         <path d="M145 95 l15 30 M150 95 l15 30 M155 95 l15 30 M140 100 l15 30" stroke="currentColor" stroke-width="1.5" opacity="0.6" />
         <path d="M140 120 l25 -20 M145 125 l25 -20 M150 130 l20 -15" stroke="currentColor" stroke-width="1.5" opacity="0.6" />
       </g>
     `,
     projects: [
-      { id: 'traditional', num: '08', title: 'Traditional<span class="accent">.</span>', url: '#', baseIndex: 0 },
-      { id: 'digital', num: '09', title: 'Digital<span class="accent">.</span>', url: '#', baseIndex: 1 },
-      { id: '3d', num: '10', title: '3D<span class="accent">.</span>', url: '#', baseIndex: 5 }
+      { id: 'traditional', num: '01', title: 'Traditional<span class="accent">.</span>', url: '#', baseIndex: 0 },
+      { id: 'digital', num: '02', title: 'Digital<span class="accent">.</span>', url: '#', baseIndex: 1 },
+      { id: '3d', num: '03', title: '3D<span class="accent">.</span>', url: '#', baseIndex: 5 }
     ]
   }
-];
-
-window.projectsJsLoaded = true;
+];window.projectsJsLoaded = true;
 
 document.addEventListener("DOMContentLoaded", () => {
     const network = document.getElementById('eye-network');
@@ -194,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const bases=[[200,230],[800,230],[190,545],[810,540],[500,150],[500,610],[120,370], [880,370]];
+    const bases=[[200,230],[800,230],[190,545],[810,540],[500,150],[500,610],[120,370],[880,370],[350,120],[650,120],[500,440]];
     let start = performance.now();
     let activeNodes = [];
     
