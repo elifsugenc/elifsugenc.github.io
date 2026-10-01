@@ -142,11 +142,27 @@ async function runPhase1() {
 }
 
 // Phase 2: THE BACKGROUND — look around, figures become people
+let glitchInterval = null;
 async function runPhase2() {
   els.instruction.textContent = "";
   els.instruction.classList.remove("overlay-text--visible");
 
   narrator.setSequence(NARRATIVE.phase2.narratorPhase2, null);
+  
+  // Show the glitch text
+  const gt = document.getElementById("glitch-title");
+  if (gt) {
+    gt.style.opacity = 1;
+    clearInterval(glitchInterval);
+    glitchInterval = setInterval(() => {
+      gt.style.transform = `translate(${Math.random()*6-3}px, ${Math.random()*6-3}px)`;
+      gt.style.opacity = 0.4 + Math.random()*0.5;
+      setTimeout(() => {
+        gt.style.transform = "translate(0,0)";
+        gt.style.opacity = 1;
+      }, 150);
+    }, 3000);
+  }
 
   // Room will call onPhaseComplete(2) once enough figures are revealed
   // That's wired in initRoom below
@@ -184,6 +200,9 @@ async function runPhase5() {
 
 async function showEnding() {
   state.ended = true;
+  clearInterval(glitchInterval);
+  const gt = document.getElementById("glitch-title");
+  if (gt) gt.style.opacity = 0;
   if (room) room.stop();
   if (audio) audio.stop();
 
@@ -203,6 +222,9 @@ function initRoom() {
     reducedMotion: state.reducedMotion,
     onReveal: (fig, text) => {
       if (state.phase >= 2) showRevealText(text);
+    },
+    onWhisper: (intensity) => {
+      if (audio) audio.playWhisper(intensity);
     },
     onContradiction: (fig, contraObj) => {
       if (state.phase >= 3) showContradictionText(contraObj);

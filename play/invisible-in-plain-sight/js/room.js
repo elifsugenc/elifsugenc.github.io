@@ -25,46 +25,21 @@ function drawSilhouette(ctx, x, y, scale, alpha, variant = 0) {
   ctx.translate(x, y);
   ctx.scale(scale, scale);
 
-  const headR = 10;
-  const bodyH = 55;
-  const bodyW = 24;
-  const shoulderW = 30;
-
-  // Head
+  // Red sketch style: tall, thin, continuous curved line
   ctx.beginPath();
-  ctx.ellipse(0, -bodyH - headR, headR * (0.85 + variant * 0.1), headR, 0, 0, Math.PI * 2);
+  const h = 80 + variant * 10;
+  const w = 12 + variant * 4;
+  
+  ctx.moveTo(-w/2, 0);
+  ctx.quadraticCurveTo(-w/2, -h*0.7, -w*0.3, -h + 10);
+  
+  // Head loop
+  ctx.bezierCurveTo(-w*0.8, -h - 10, -w*0.5, -h - 30, 0, -h - 30);
+  ctx.bezierCurveTo(w*0.5, -h - 30, w*0.8, -h - 10, w*0.3, -h + 10);
+  
+  ctx.quadraticCurveTo(w/2, -h*0.7, w/2, 0);
+  ctx.closePath();
   ctx.fill();
-
-  // Neck
-  ctx.beginPath();
-  ctx.fillRect(-4, -bodyH - 2, 8, 14);
-
-  // Body (varied silhouettes)
-  ctx.beginPath();
-  if (variant % 3 === 0) {
-    // Upright
-    ctx.moveTo(-shoulderW / 2, -bodyH);
-    ctx.quadraticCurveTo(-bodyW / 2 - 4, -bodyH / 2, -bodyW / 2, 0);
-    ctx.lineTo(bodyW / 2, 0);
-    ctx.quadraticCurveTo(bodyW / 2 + 4, -bodyH / 2, shoulderW / 2, -bodyH);
-    ctx.closePath();
-  } else if (variant % 3 === 1) {
-    // Slightly leaning
-    ctx.moveTo(-shoulderW / 2 - 2, -bodyH);
-    ctx.quadraticCurveTo(-bodyW / 2 - 2, -bodyH / 2, -bodyW / 2 + 4, 0);
-    ctx.lineTo(bodyW / 2 + 2, 0);
-    ctx.quadraticCurveTo(bodyW / 2 + 6, -bodyH / 2, shoulderW / 2 + 2, -bodyH);
-    ctx.closePath();
-  } else {
-    // Taller, narrower
-    ctx.moveTo(-shoulderW / 2 + 4, -bodyH);
-    ctx.quadraticCurveTo(-bodyW / 2 + 2, -bodyH / 2, -bodyW / 2 + 4, 0);
-    ctx.lineTo(bodyW / 2 - 4, 0);
-    ctx.quadraticCurveTo(bodyW / 2 - 2, -bodyH / 2, shoulderW / 2 - 4, -bodyH);
-    ctx.closePath();
-  }
-  ctx.fill();
-
   ctx.restore();
 }
 
@@ -90,6 +65,7 @@ export class Room {
     this.onReveal = options.onReveal || (() => {});
     this.onContradiction = options.onContradiction || (() => {});
     this.onPhaseComplete = options.onPhaseComplete || (() => {});
+    this.onWhisper = options.onWhisper || (() => {});
     this._phaseCompleteEmitted = new Set();
     this._figureRevealCount = 0;
     this._contradictionCount = 0;
@@ -116,27 +92,38 @@ export class Room {
       const isDistinct = i < cfg.distinctFigures;
       const isContradiction = i >= cfg.distinctFigures && i < cfg.distinctFigures + cfg.contradictionFigures;
 
-      // Distribute figures across the room with depth layers
       const depthZone = rand(); // 0 = back, 1 = front
       const baseScale = 0.5 + depthZone * 0.8;
       const baseAlpha = isDistinct
         ? 0.55 + rand() * 0.2
         : 0.08 + depthZone * 0.22;
 
-      // Arrange in rough groups — clustered around walls and center-back
-      let fx, fy;
-      if (i < 6) {
-        // Back wall — very faint
-        fx = 0.1 + rand() * 0.8;
-        fy = 0.35 + rand() * 0.2;
-      } else if (i < 12) {
-        // Mid-ground clusters
-        fx = 0.05 + rand() * 0.9;
-        fy = 0.5 + rand() * 0.22;
-      } else {
-        // Near ground
-        fx = rand() * 0.85;
-        fy = 0.68 + rand() * 0.15;
+      let fx, fy, valid = false;
+      let attempts = 0;
+      while (!valid && attempts < 100) {
+        if (i < 15) {
+          fx = 0.1 + rand() * 0.8;
+          fy = 0.35 + rand() * 0.15;
+        } else if (i < 35) {
+          fx = 0.05 + rand() * 0.9;
+          fy = 0.5 + rand() * 0.2;
+        } else {
+          // Front wave formation
+          const px = rand();
+          fx = 0.05 + px * 0.9;
+          fy = 0.75 + 0.1 * Math.sin(px * Math.PI * 2) + rand() * 0.05;
+        }
+        
+        valid = true;
+        for (let j = 0; j < i; j++) {
+           const dx = this.figures[j].fx - fx;
+           const dy = this.figures[j].fy - fy;
+           if (dx*dx + dy*dy < 0.003) {
+             valid = false;
+             break;
+           }
+        }
+        attempts++;
       }
 
       const contradictionIndex = isContradiction
@@ -307,6 +294,7 @@ export class Room {
       const textPool = NARRATIVE.phase2.figureRevealTexts;
       const revealText = textPool[fig.id % textPool.length];
       this.onReveal(fig, revealText);
+      this.onWhisper(this._figureRevealCount);
       
       // Critical Matter: Material trace
       this.traces.push({ fx: fig.fx, fy: fig.fy, scale: fig.scale, alpha: 0 });

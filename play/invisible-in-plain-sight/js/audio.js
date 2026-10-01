@@ -112,6 +112,42 @@ export class AmbientAudio {
     );
   }
 
+  playWhisper(intensity) {
+    if (!this._started || !this._ctx || !this._enabled) return;
+    const ctx = this._ctx;
+    
+    const bufSize = ctx.sampleRate * 2;
+    const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    
+    // Number of voices based on how many bars/figures are filled
+    const numVoices = Math.min(15, Math.max(1, Math.floor(intensity / 4)));
+    
+    for (let v = 0; v < numVoices; v++) {
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 800 + Math.random() * 2500;
+      filter.Q.value = 6 + Math.random() * 6;
+      
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.02 + Math.random()*0.03, ctx.currentTime + 0.1 + Math.random()*0.4);
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8 + Math.random());
+      
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(this._masterGain);
+      
+      source.start();
+    }
+  }
+
   /** Transition audio state for each phase */
   setPhase(phase) {
     this._phase = phase;

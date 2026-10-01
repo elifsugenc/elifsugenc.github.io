@@ -122,15 +122,20 @@
         </button>
       </div>
 
-      <div class="hud-bottom">
-        <!-- Instruction (phase 1) -->
-        <p
-          id="instruction"
-          class="overlay-text"
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-        ></p>
+        <div class="hud-bottom">
+          <!-- Top glitching text -->
+          <p id="glitch-title" class="overlay-text" style="position:fixed; top: 10vh; left:0; width: 100%; text-align: center; color: #6a6860; font-style: italic; opacity: 0; pointer-events: none;">
+            they were 50 of them but there were actually noone.
+          </p>
+
+          <!-- Instruction (phase 1) -->
+          <p
+            id="instruction"
+            class="overlay-text"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
 
         <!-- Narrator voice -->
         <p
