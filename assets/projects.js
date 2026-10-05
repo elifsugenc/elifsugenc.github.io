@@ -74,9 +74,9 @@ const projectsData = [
       </g>
     `,
     projects: [
-      { id: 'traditional', num: '01', title: 'Traditional<span class="accent">.</span>', url: '#', baseIndex: 0 },
-      { id: 'digital', num: '02', title: 'Digital<span class="accent">.</span>', url: '#', baseIndex: 1 },
-      { id: '3d', num: '03', title: '3D<span class="accent">.</span>', url: '#', baseIndex: 5 }
+      { id: 'traditional', num: '01', title: 'Traditional<span class="accent">.</span>', url: '/projects/traditional/', baseIndex: 0 },
+      { id: 'digital', num: '02', title: 'Digital<span class="accent">.</span>', url: '/projects/digital/', baseIndex: 1 },
+      { id: '3d', num: '03', title: '3D<span class="accent">.</span>', url: '/projects/3d/', baseIndex: 5 }
     ]
   }
 ];window.projectsJsLoaded = true;
