@@ -2578,38 +2578,84 @@ a:focus-visible {
 .lists-wrapper > .by-year-section { padding-left: 0; padding-right: 0; flex: 1; min-width: 300px; }
 .lists-wrapper .by-year-grid { margin: 0; }
 
-/* Tag Legend Styles */
-.tag-legend-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    padding-bottom: 40px;
+
+/* Project Filter Bar */
+.project-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
 }
-.tag-item {
+
+.filter-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 80px;
     text-align: center;
 }
-.tag-item img {
-    width: 120px;
-    height: auto;
-    margin-bottom: 15px;
+
+.filter-item:hover {
+    transform: translateY(-3px);
 }
-.tag-item span {
-    font-size: 0.9rem;
+
+.filter-item.active {
+    opacity: 1;
+}
+
+.filter-item:not(.active) {
+    opacity: 0.4;
+}
+
+.filter-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    border-radius: 50%;
+}
+
+.filter-item .all-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #d8d8d8;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 5px; /* balance height with images */
+}
+
+.filter-item span {
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.05em;
     color: var(--fg);
+    line-height: 1.1;
 }
-@media (max-width: 600px) {
-    .tag-legend-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+
+@media (max-width: 768px) {
+    .filter-item {
+        width: 60px;
     }
-    .tag-item img {
-        width: 90px;
+    .filter-item img {
+        width: 45px;
+        height: 45px;
+    }
+    .filter-item .all-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 0.7rem;
+    }
+    .filter-item span {
+        font-size: 0.65rem;
     }
 }

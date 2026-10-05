@@ -342,3 +342,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize first mode
     switchMode(0);
 });
+
+
+// Tag Filtering Logic for Projects Page
+document.addEventListener("DOMContentLoaded", () => {
+    const filterItems = document.querySelectorAll('.filter-item');
+    const projectItems = document.querySelectorAll('.year-projects li');
+    const yearGroups = document.querySelectorAll('.year-group');
+    
+    if (!filterItems.length) return; // Only run on projects page
+
+    filterItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const selectedTag = item.getAttribute('data-tag');
+            
+            // Update active state
+            filterItems.forEach(f => f.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Filter projects
+            projectItems.forEach(li => {
+                const projectId = li.getAttribute('data-id');
+                if (selectedTag === 'all') {
+                    li.style.display = '';
+                } else {
+                    const proj = projectsData[projectId];
+                    // If project exists and has tags array containing the selected tag
+                    if (proj && proj.tags && proj.tags.includes(selectedTag)) {
+                        li.style.display = '';
+                    } else {
+                        li.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Hide empty year groups
+            yearGroups.forEach(group => {
+                const visibleItems = group.querySelectorAll('.year-projects li[style=""]');
+                const anyVisible = Array.from(group.querySelectorAll('.year-projects li')).some(li => li.style.display !== 'none');
+                
+                if (anyVisible) {
+                    group.style.display = '';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        });
+    });
+});
