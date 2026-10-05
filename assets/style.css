@@ -2573,3 +2573,7 @@ a:focus-visible {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.lists-wrapper { display: flex; justify-content: center; gap: 15vw; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
+.lists-wrapper > .by-year-section { padding-left: 0; padding-right: 0; flex: 1; min-width: 300px; }
+.lists-wrapper .by-year-grid { margin: 0; }
