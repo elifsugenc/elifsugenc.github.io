@@ -10,7 +10,7 @@ const tagsRegistry = {
   'interactive': { id: 'interactive', name: 'Interactive', asset: '/assets/tags/interactive.png' }
 };
 const projectTags = {
-    'bajo-la-fresca': ['architecture'],
+    'bajo-la-fresca': ['constructed'],
     'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental']
 };
 const projectsData = [
