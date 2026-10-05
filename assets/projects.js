@@ -9,6 +9,9 @@ const tagsRegistry = {
   'critical-inquiry': { id: 'critical-inquiry', name: 'Critical Inquiry', asset: '/assets/tags/critical-inquiry.png' },
   'interactive': { id: 'interactive', name: 'Interactive', asset: '/assets/tags/interactive.png' }
 };
+const projectTags = {
+    'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental']
+};
 const projectsData = [
   {
     id: 'mode-mystery',
@@ -389,9 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (selectedTag === 'all') {
                     li.style.display = '';
                 } else {
-                    const proj = projectsData[projectId];
+                    const pTags = projectTags[projectId];
                     // If project exists and has tags array containing the selected tag
-                    if (proj && proj.tags && proj.tags.includes(selectedTag)) {
+                    if (pTags && pTags.includes(selectedTag)) {
                         li.style.display = '';
                     } else {
                         li.style.display = 'none';
