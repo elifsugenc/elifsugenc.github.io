@@ -347,8 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // Tag Filtering Logic for Projects Page
 document.addEventListener("DOMContentLoaded", () => {
     const filterItems = document.querySelectorAll('.filter-item');
-    const projectItems = document.querySelectorAll('.year-projects li');
-    const yearGroups = document.querySelectorAll('.year-group');
+    const projectItems = document.querySelectorAll('.all-projects-section .year-projects li');
+    const yearGroups = document.querySelectorAll('.all-projects-section .year-group');
     
     if (!filterItems.length) return; // Only run on projects page
 
