@@ -2608,6 +2608,20 @@ a:focus-visible {
     opacity: 1;
 }
 
+.filter-item.active span {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.filter-item.active .all-circle {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.filter-item.active img {
+    filter: drop-shadow(0 0 6px var(--primary));
+}
+
 .filter-item:not(.active) {
     opacity: 0.4;
 }

@@ -1,3 +1,10 @@
+// Restore eye mode color from localStorage if available
+try {
+    const savedColor = localStorage.getItem('eyeModeColor');
+    if (savedColor) {
+        document.body.style.setProperty('--primary', savedColor);
+    }
+} catch (e) {}
 (async () => {
   const STORE = 'elifsu-local-traces';
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));

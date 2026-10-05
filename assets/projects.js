@@ -354,6 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Tag Filtering Logic for Projects Page
 document.addEventListener("DOMContentLoaded", () => {
+    // Restore saved eye mode color globally
+    const savedColor = localStorage.getItem('eyeModeColor');
+    if (savedColor) {
+        document.body.style.setProperty('--primary', savedColor);
+    }
+
     const filterItems = document.querySelectorAll('.filter-item');
     const projectItems = document.querySelectorAll('.all-projects-section .year-projects li');
     const yearGroups = document.querySelectorAll('.all-projects-section .year-group');
