@@ -360,6 +360,29 @@ document.addEventListener("DOMContentLoaded", () => {
             filterItems.forEach(f => f.classList.remove('active'));
             item.classList.add('active');
             
+            // Update heading text
+            const heading = document.querySelector('.all-projects-section .by-year-heading h2');
+            if (heading) {
+                let enText = 'ALL PROJECTS.';
+                let trText = 'TÜM PROJELER.';
+                
+                if (selectedTag !== 'all') {
+                    const tagSpan = item.querySelector('span:not(.all-circle)');
+                    const tagName = tagSpan ? tagSpan.innerText.toUpperCase() : selectedTag.toUpperCase();
+                    enText = tagName + '.';
+                    trText = tagName + '.';
+                }
+                
+                heading.setAttribute('data-en', enText);
+                heading.setAttribute('data-tr', trText);
+                
+                const currentLang = document.documentElement.lang || 'en';
+                const textToSet = currentLang === 'en' ? enText : trText;
+                
+                // Colorize i, j, and .
+                heading.innerHTML = textToSet.replace(/([ij\.])/g, '<span class="dot-blue">$1</span>');
+            }
+            
             // Filter projects
             projectItems.forEach(li => {
                 const projectId = li.getAttribute('data-id');
