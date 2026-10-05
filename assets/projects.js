@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (pupilEl) {
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
             const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            pupilEl.style.transform = `translate(${x * 35 - 27.5}px, ${y * 22 - 6}px)`;
+            pupilEl.style.transform = `translate(${x * 35 - 27.5}px, ${y * 22 - 3}px)`;
         }
     });
 
