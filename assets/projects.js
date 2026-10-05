@@ -11,7 +11,8 @@ const tagsRegistry = {
 };
 const projectTags = {
     'bajo-la-fresca': ['constructed'],
-    'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental']
+    'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental'],
+    'fire-escape-simulation': ['experimental', 'digital', 'interactive']
 };
 const projectsData = [
   {
