@@ -10,6 +10,7 @@ const tagsRegistry = {
   'interactive': { id: 'interactive', name: 'Interactive', asset: '/assets/tags/interactive.png' }
 };
 const projectTags = {
+    'bajo-la-fresca': ['architecture'],
     'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental']
 };
 const projectsData = [
@@ -55,7 +56,8 @@ const projectsData = [
       { id: 'ara-sira', num: '06', title: 'ara-sira<span class="accent">.</span>', url: '/projects/ara-sira/', baseIndex: 5 },
       { id: 'chronoclines', num: '07', title: 'ChronoClines<span class="accent">.</span>', url: '/projects/chronoclines/', baseIndex: 6 },
       { id: 'sprouting-garden', num: '08', title: 'Sprouting Garden<span class="accent">.</span>', url: '/projects/sprouting-garden/', baseIndex: 7 },
-      { id: 'wood-weave', num: '09', title: 'Wood Weave<span class="accent">.</span>', url: '/projects/wood-weave/', baseIndex: 8 }
+      { id: 'wood-weave', num: '09', title: 'Wood Weave<span class="accent">.</span>', url: '/projects/wood-weave/', baseIndex: 8 },
+      { id: 'bajo-la-fresca', num: '10', title: 'Bajo La Fresca<span class="accent">.</span>', url: '/projects/bajo-la-fresca/', baseIndex: 9 }
     ]
   },
   {
