@@ -13,7 +13,8 @@ const projectTags = {
     'bajo-la-fresca': ['constructed', 'ecological', 'experimental', 'material-agency', 'critical-inquiry'],
     'emek-museum': ['social-memory', 'critical-inquiry', 'interactive', 'experimental'],
     'fire-escape-simulation': ['experimental', 'digital', 'interactive'],
-    'the-earthen': ['ecological', 'speculative', 'experimental', 'social-memory', 'material-agency', 'critical-inquiry']
+    'the-earthen': ['ecological', 'speculative', 'experimental', 'social-memory', 'material-agency', 'critical-inquiry'],
+    'traces-together': ['interactive', 'digital', 'experimental']
 };
 const projectsData = [
   {
