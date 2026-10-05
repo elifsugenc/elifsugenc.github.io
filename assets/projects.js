@@ -1,3 +1,14 @@
+const tagsRegistry = {
+  'constructed': { id: 'constructed', name: 'Constructed', asset: '/assets/tags/constructed.png' },
+  'ecological': { id: 'ecological', name: 'Ecological', asset: '/assets/tags/ecological.png' },
+  'speculative': { id: 'speculative', name: 'Speculative', asset: '/assets/tags/speculative.png' },
+  'experimental': { id: 'experimental', name: 'Experimental', asset: '/assets/tags/experimental.png' },
+  'social-memory': { id: 'social-memory', name: 'Social Memory', asset: '/assets/tags/social-memory.png' },
+  'digital': { id: 'digital', name: 'Digital', asset: '/assets/tags/digital.png' },
+  'material-agency': { id: 'material-agency', name: 'Material Agency', asset: '/assets/tags/material-agency.png' },
+  'critical-inquiry': { id: 'critical-inquiry', name: 'Critical Inquiry', asset: '/assets/tags/critical-inquiry.png' },
+  'interactive': { id: 'interactive', name: 'Interactive', asset: '/assets/tags/interactive.png' }
+};
 const projectsData = [
   {
     id: 'mode-mystery',

@@ -2577,3 +2577,39 @@ a:focus-visible {
 .lists-wrapper { display: flex; justify-content: center; gap: 15vw; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
 .lists-wrapper > .by-year-section { padding-left: 0; padding-right: 0; flex: 1; min-width: 300px; }
 .lists-wrapper .by-year-grid { margin: 0; }
+
+/* Tag Legend Styles */
+.tag-legend-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding-bottom: 40px;
+}
+.tag-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.tag-item img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+}
+.tag-item span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--fg);
+}
+@media (max-width: 600px) {
+    .tag-legend-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    .tag-item img {
+        width: 90px;
+    }
+}
