@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #f1f1ee; font-family: sans-serif; padding: 50px; }
+  .project-bar {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    background: #e0e0e0;
+    margin-bottom: 20px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .question {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: 900;
+    color: #000;
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+  }
+  .curtain {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    color: #fff;
+    mix-blend-mode: multiply;
+    transform: translateY(-100%);
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .project-bar:hover .curtain {
+    transform: translateY(0);
+  }
+  .project-title-knockout {
+    font-size: 60px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="project-bar">
+    <div class="question">How to make invisible labor visible?</div>
+    <div class="curtain">
+      <div class="project-title-knockout">Emek Museum</div>
+    </div>
+  </div>
+</body>
+</html>
