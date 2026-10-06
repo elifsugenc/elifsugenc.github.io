@@ -2673,3 +2673,67 @@ a:focus-visible {
         font-size: 0.65rem;
     }
 }
+/* Project Tags Hover Effect */
+.project-tags {
+    gap: 20px !important; /* give a bit more breathing room for labels */
+    margin-bottom: 25px !important;
+}
+.tag-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+    width: 50px;
+    height: 50px;
+}
+.tag-wrapper img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 0.65;
+}
+.tag-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--primary);
+    -webkit-mask-image: var(--img-src);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: var(--img-src);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+.tag-wrapper:hover img {
+    transform: scale(1.15);
+    opacity: 0; 
+}
+.tag-wrapper:hover::before {
+    opacity: 1;
+    transform: scale(1.15);
+}
+.tag-wrapper::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-family: monospace;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    color: var(--primary);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    text-transform: uppercase;
+}
+.tag-wrapper:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(8px);
+}

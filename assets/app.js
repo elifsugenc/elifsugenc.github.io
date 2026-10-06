@@ -565,3 +565,17 @@ try {
     }
   }
 })();
+
+// Wrap project tags for hover effects
+document.querySelectorAll('.project-tags img').forEach(img => {
+    // Check if it's already wrapped
+    if (img.parentElement.classList.contains('tag-wrapper')) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'tag-wrapper';
+    wrapper.dataset.name = img.getAttribute('alt');
+    wrapper.style.setProperty('--img-src', \url(\)\);
+    
+    img.parentNode.insertBefore(wrapper, img);
+    wrapper.appendChild(img);
+});
