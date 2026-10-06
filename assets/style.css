@@ -2690,34 +2690,16 @@ a:focus-visible {
 .tag-wrapper img {
     width: 100%;
     height: 100%;
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
     opacity: 0.65;
 }
-.tag-wrapper::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--primary);
-    -webkit-mask-image: var(--img-src);
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-image: var(--img-src);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mix-blend-mode: multiply;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    pointer-events: none;
-    z-index: 2;
-}
+
 .tag-wrapper:hover img {
-    transform: scale(1.15);
+    transform: scale(1.15) translateY(-3px);
     opacity: 1; 
+    filter: drop-shadow(0 0 6px var(--primary));
 }
-.tag-wrapper:hover::before {
-    opacity: 1;
-    transform: scale(1.15);
-}
+
 .tag-wrapper::after {
     content: attr(data-name);
     position: absolute;
@@ -2736,5 +2718,5 @@ a:focus-visible {
 }
 .tag-wrapper:hover::after {
     opacity: 1;
-    transform: translateX(-50%) translateY(8px);
+    transform: translateX(-50%) translateY(5px);
 }
