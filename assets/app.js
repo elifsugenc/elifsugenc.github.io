@@ -579,3 +579,44 @@ document.querySelectorAll('.project-tags img').forEach(img => {
     img.parentNode.insertBefore(wrapper, img);
     wrapper.appendChild(img);
 });
+
+// Custom Cursor
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `
+    * { cursor: none !important; }
+    .custom-cursor {
+      width: 14px;
+      height: 14px;
+      background-color: var(--primary, #171717);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    }
+    .custom-cursor.hovering {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0.7;
+    }
+  `;
+  document.head.appendChild(style);
+  const cursor = document.createElement('div');
+  cursor.className = 'custom-cursor';
+  document.body.appendChild(cursor);
+  document.addEventListener('mousemove', function(e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    const target = e.target;
+    if (target && target.closest) {
+      if (target.closest('a, button, [role="button"], input, select, textarea, .project-bar')) {
+        cursor.classList.add('hovering');
+      } else {
+        cursor.classList.remove('hovering');
+      }
+    }
+  });
+  document.addEventListener('mouseleave', function() { cursor.style.display = 'none'; });
+  document.addEventListener('mouseenter', function() { cursor.style.display = 'block'; });
+})();
