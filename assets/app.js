@@ -574,7 +574,7 @@ document.querySelectorAll('.project-tags img').forEach(img => {
     const wrapper = document.createElement('div');
     wrapper.className = 'tag-wrapper';
     wrapper.dataset.name = img.getAttribute('alt');
-    wrapper.style.setProperty('--img-src', \url(\)\);
+    wrapper.style.setProperty('--img-src', `url(${img.src})`);
     
     img.parentNode.insertBefore(wrapper, img);
     wrapper.appendChild(img);
