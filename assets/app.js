@@ -599,8 +599,8 @@ document.querySelectorAll('.project-tags img').forEach(img => {
       align-items: center;
       justify-content: center;
       color: transparent;
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 22px;
+      font-weight: 900;
     }
     .custom-cursor.hovering {
       transform: translate(-50%, -50%) scale(1.5);
