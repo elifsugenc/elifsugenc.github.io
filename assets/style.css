@@ -2694,7 +2694,7 @@ a:focus-visible {
     opacity: 0.65;
 }
 .tag-wrapper::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     background-color: var(--primary);
@@ -2704,6 +2704,7 @@ a:focus-visible {
     mask-image: var(--img-src);
     mask-size: contain;
     mask-repeat: no-repeat;
+    mix-blend-mode: multiply;
     opacity: 0;
     transition: opacity 0.25s ease, transform 0.25s ease;
     pointer-events: none;
@@ -2711,7 +2712,7 @@ a:focus-visible {
 }
 .tag-wrapper:hover img {
     transform: scale(1.15);
-    opacity: 0; 
+    opacity: 1; 
 }
 .tag-wrapper:hover::before {
     opacity: 1;
