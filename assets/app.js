@@ -594,11 +594,26 @@ document.querySelectorAll('.project-tags img').forEach(img => {
       pointer-events: none;
       z-index: 9999999;
       transform: translate(-50%, -50%);
-      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out, background-color 0.15s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 20px;
+      font-weight: 500;
     }
     .custom-cursor.hovering {
       transform: translate(-50%, -50%) scale(1.5);
       opacity: 0.7;
+    }
+    .custom-cursor.question-mark {
+      background-color: transparent !important;
+      color: var(--primary, #171717);
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    .custom-cursor.question-mark::after {
+      content: "?";
     }
   `;
   document.head.appendChild(style);
@@ -610,10 +625,15 @@ document.querySelectorAll('.project-tags img').forEach(img => {
     cursor.style.top = e.clientY + 'px';
     const target = e.target;
     if (target && target.closest) {
-      if (target.closest('a, button, [role="button"], input, select, textarea, .project-bar')) {
+      if (target.closest('.network-project')) {
+        cursor.classList.add('question-mark');
+        cursor.classList.remove('hovering');
+      } else if (target.closest('a, button, [role="button"], input, select, textarea, .project-bar')) {
         cursor.classList.add('hovering');
+        cursor.classList.remove('question-mark');
       } else {
         cursor.classList.remove('hovering');
+        cursor.classList.remove('question-mark');
       }
     }
   });
