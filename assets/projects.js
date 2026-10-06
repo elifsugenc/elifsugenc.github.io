@@ -10,6 +10,7 @@ const tagsRegistry = {
   'interactive': { id: 'interactive', name: 'Interactive', asset: '/assets/tags/interactive.png' }
 };
 const projectTags = {
+    'sprouting-garden': ['ecological', 'critical-inquiry'],
     'ara-sira': ['constructed'],
     'chronoclines': ['social-memory', 'critical-inquiry'],
     'bio-decay': ['material-agency', 'ecological', 'experimental', 'critical-inquiry', 'social-memory', 'speculative'],
