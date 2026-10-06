@@ -1,10 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bajo La Fresca · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/" data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About" data-tr="Hakkımda">About</a></nav><div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div></header><article class="detail"><a class="back-link" href="/projects/" data-en="← All projects" data-tr="← Tüm projeler">← All projects</a><div class="detail-heading" style="margin-bottom: 10px; min-height: auto;"><span class="eyebrow" data-en="PROJECT" data-tr="PROJE">PROJECT</span><h1 data-en='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>' data-tr='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>'>Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span></h1><div class="project-tags" style="display: flex; gap: 12px; margin-top: 5px; align-items: center; flex-wrap: wrap;">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bajo La Fresca · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer>
+<style>
+/* Gallery & Lightbox Styles */
+.media-thumb {
+    aspect-ratio: 1;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.media-thumb:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+.lightbox {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lightbox[hidden] {
+    display: none !important;
+}
+.lightbox-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none; border: none;
+    color: white; font-size: 2rem; cursor: pointer;
+    z-index: 10000;
+}
+.lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: none; border: none;
+    color: white; font-size: 2rem; cursor: pointer;
+    z-index: 10000;
+    padding: 20px;
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+    cursor: zoom-in;
+}
+.lightbox img.zoomed {
+    cursor: grab;
+    transform: scale(2);
+}
+.lightbox img.zoomed:active {
+    cursor: grabbing;
+}
+.lightbox-counter {
+    position: absolute;
+    bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-family: monospace; font-size: 0.9rem;
+    pointer-events: none;
+}
+</style>
+</head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/" data-en="Main" data-tr="Ana Sayfa">Main</a><a href="/projects/" data-en="Projects" data-tr="Projeler">Projects</a><a href="/about/" data-en="About" data-tr="Hakkımda">About</a></nav><div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><span>/</span><button type="button" data-lang="tr">TR</button></div></header><article class="detail"><a class="back-link" href="/projects/" data-en="← All projects" data-tr="← Tüm projeler">← All projects</a><div class="detail-heading" style="margin-bottom: 10px; min-height: auto;"><span class="eyebrow" data-en="PROJECT" data-tr="PROJE">PROJECT</span><h1 data-en='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>' data-tr='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>'>Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span></h1><div class="project-tags" style="display: flex; gap: 12px; margin-top: 5px; align-items: center; flex-wrap: wrap;">
     <img src="/assets/tags/constructed.png" alt="Constructed" style="width: 50px; height: 50px;">
     <img src="/assets/tags/ecological.png" alt="Ecological" style="width: 50px; height: 50px;">
     <img src="/assets/tags/experimental.png" alt="Experimental" style="width: 50px; height: 50px;">
     <img src="/assets/tags/material-agency.png" alt="Material Agency" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;">
-</div></div><div class="detail-body">
+    <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;"></div></div><div class="detail-body">
         <p style="font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.4; color: var(--primary); margin-bottom: 30px; font-weight: 500;" data-en="<em style='color: var(--fg);'>bajo la fresca:</em><br>Derived from a combination of <i>'bajo'</i> (under) and <i>'a la fresca'</i> (in the cool air), it refers to the Spanish tradition of sitting outside in the evening to relax and socialize." data-tr="<em style='color: var(--fg);'>bajo la fresca:</em><br><i>'Bajo'</i> (altında) ve <i>'a la fresca'</i> (serin havada) kelimelerinin birleşiminden türeyen bu isim, İspanya'da akşamları serin havada rahatlamak ve sosyalleşmek için dışarıda oturma geleneğini ifade eder."><em style="color: var(--fg);">bajo la fresca:</em><br>Derived from a combination of <i>'bajo'</i> (under) and <i>'a la fresca'</i> (in the cool air), it refers to the Spanish tradition of sitting outside in the evening to relax and socialize.</p>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; font-size: 0.9rem; color: #888; line-height: 1.5; letter-spacing: 0.02em;">
@@ -38,7 +103,7 @@
 
     <p class="detail-body" data-en="To recreate the olfactory refuge of the patios, the cotton was infused with natural scents, including orange and lemon peels, as well as an anti-mosquito perfume, extending the functionality of the structure." data-tr="Avluların kokuya dayalı (olfaktif) sığınak hissini yeniden yaratmak için pamuğa portakal ve limon kabukları gibi doğal kokuların yanı sıra yapının işlevselliğini artıran sivrisinek kovucu bir parfüm emdirildi.">To recreate the olfactory refuge of the patios, the cotton was infused with natural scents, including orange and lemon peels, as well as an anti-mosquito perfume, extending the functionality of the structure.</p>
 
-    <p class="detail-body" data-en="The final installation acts as a floating, sensory canopy—a modern reinterpretation of the patio's role as a shaded, cooling, and socializing refuge." data-tr="Ortaya çıkan nihai enstalasyon, avlunun gölgelendirici, serinletici ve sosyalleştirici bir sığınak olma rolünün modern bir yeniden yorumu olan, havada asılı ve duyusal bir gölgelik işlevi görüyor.">The final installation acts as a floating, sensory canopy—a modern reinterpretation of the patio's role as a shaded, cooling, and socializing refuge.</p>\n
+    <p class="detail-body" data-en="The final installation acts as a floating, sensory canopy—a modern reinterpretation of the patio's role as a shaded, cooling, and socializing refuge." data-tr="Ortaya çıkan nihai enstalasyon, avlunun gölgelendirici, serinletici ve sosyalleştirici bir sığınak olma rolünün modern bir yeniden yorumu olan, havada asılı ve duyusal bir gölgelik işlevi görüyor.">The final installation acts as a floating, sensory canopy—a modern reinterpretation of the patio's role as a shaded, cooling, and socializing refuge.</p>
 </div>
 
 
@@ -138,4 +203,4 @@ document.addEventListener("DOMContentLoaded", () => {
     <button class="lightbox-next">→</button>
     <div class="lightbox-counter">1 / 2</div>
 </div>
-\n</body></html>
+</body></html>
