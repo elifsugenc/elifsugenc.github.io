@@ -264,7 +264,7 @@ try {
       if (rt) {
         rt.innerHTML = '';
         const recent = filteredEntries.slice(0, 6).reverse();
-        recent.forEach((e) => rt.appendChild(card(e, filteredEntries.length - filteredEntries.indexOf(e) - 1)));
+        recent.forEach((e) => rt.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1)));
       }
     }
 
@@ -275,7 +275,7 @@ try {
        if (currentSort === 'oldest') sorted.reverse();
        else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
        sorted.forEach(e => {
-           traceModalBody.appendChild(card(e, filteredEntries.length - filteredEntries.indexOf(e) - 1));
+           traceModalBody.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1));
        });
     }
 
@@ -289,7 +289,7 @@ try {
       if (ac) ac.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
       
       const reveal = () => {
-        list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, filteredEntries.length - shown - i - 1)));
+        list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1)));
         shown += 12;
         if (more) more.hidden = shown >= list.length;
       };
