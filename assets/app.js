@@ -251,7 +251,7 @@ try {
     }
 
     if (collective) {
-      if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * (filteredEntries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
+      if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * i).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
       else collective.innerHTML = `<div class="empty" data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</div>`;
       
       const tc = document.getElementById('trace-count');
