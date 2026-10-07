@@ -607,14 +607,21 @@ document.querySelectorAll('.project-tags img').forEach(img => {
       opacity: 0.7;
     }
     .custom-cursor.question-mark {
-      background-color: transparent !important;
-      color: var(--primary, #171717);
-      transform: translate(-50%, -50%) scale(1.2);
-      opacity: 1;
-    }
-    .custom-cursor.question-mark::after {
-      content: "?";
-    }
+        background-color: transparent !important;
+        color: var(--primary, #171717);
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+      }
+      @keyframes pulseQuestionMark {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+      }
+      .custom-cursor.question-mark::after {
+        content: "?";
+        display: inline-block;
+        animation: pulseQuestionMark 1.2s infinite ease-in-out;
+      }
   `;
   document.head.appendChild(style);
   const cursor = document.createElement('div');
