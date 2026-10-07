@@ -190,10 +190,10 @@ try {
   }
   
   function card(entry,index) {
-    const isTr = document.documentElement.lang === 'tr';
+    
     const div=document.createElement('div'); div.className='entry';
     const stamp=new Date(entry.date);
-    div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span data-en="TRACE / ${String(index+1).padStart(3,'0')}" data-tr="İZ / ${String(index+1).padStart(3,'0')}">${isTr ? 'İZ' : 'TRACE'} / ${String(index+1).padStart(3,'0')}</span><button type="button" data-en="DOWNLOAD PDF ↗" data-tr="PDF İNDİR ↗">${isTr ? 'PDF İNDİR' : 'DOWNLOAD PDF'} ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span data-en="${(entry.points||[]).length} points" data-tr="${(entry.points||[]).length} nokta">${(entry.points||[]).length} ${isTr ? 'nokta' : 'points'}</span></div>`;
+    div.innerHTML=`<div class="entry-canvas"><svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${drawing(entry)}</svg></div><div class="entry-meta"><span>TRACE / ${String(index+1).padStart(3,"0")}</span><button type="button">DOWNLOAD PDF ↗</button></div><div class="entry-details"><time>${esc(stamp.toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}))}</time><span>${(entry.points||[]).length} points</span></div>`;
     div.querySelector('button').addEventListener('click',()=>pdf(entry));return div;
   }
   let currentSort = 'newest';
@@ -202,7 +202,7 @@ try {
   
   function renderTraces(entries) {
     allEntries = entries;
-    const isTr = document.documentElement.lang === 'tr';
+    
     const collective = document.getElementById('collective');
     const isArchivePage = !!document.getElementById('all-traces-grid');
 
@@ -245,13 +245,13 @@ try {
 
     if (collective) {
       if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * (filteredEntries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
-      else collective.innerHTML = `<div class="empty" data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</div>`;
+      else collective.innerHTML = `<div class="empty">No traces found for this period.</div>`;
       
       const tc = document.getElementById('trace-count');
-      if (tc) tc.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      if (tc) tc.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span>TRACES</span>`;
       
       const ic = document.getElementById('individual-count');
-      if (ic) ic.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} / <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      if (ic) ic.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} / <span>TRACES</span>`;
       
       const rt = document.getElementById('recent-traces');
       if (rt) {
@@ -279,7 +279,7 @@ try {
       let shown = 0;
       const more = document.getElementById('more-traces');
       const ac = document.getElementById('archive-count');
-      if (ac) ac.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
+      if (ac) ac.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span>TRACES</span>`;
       
       const reveal = () => {
         list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, filteredEntries.length - shown - i - 1)));
@@ -293,7 +293,7 @@ try {
         newMore.addEventListener('click', reveal);
       }
       reveal();
-      if (!filteredEntries.length) grid.innerHTML = `<p data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</p>`;
+      if (!filteredEntries.length) grid.innerHTML = `<p>No traces found for this period.</p>`;
     }
   }
 
