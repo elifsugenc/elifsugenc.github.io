@@ -131,7 +131,7 @@ try {
     
     const entries = read().filter(entry => entry.id !== trace.id);
     entries.push(traceDoc);
-    try { localStorage.setItem(STORE, JSON.stringify(entries.slice(-100))); } catch {}
+    try { localStorage.setItem(STORE, JSON.stringify(entries.slice(-15))); } catch {}
 
     if (db && setDoc_fn && doc_fn) {
       try {
@@ -156,7 +156,7 @@ try {
   function activate() {
     document.getElementById('point-count').textContent = trace.points.length;
     window.addEventListener('pointermove', event => {
-      if (event.pointerType === 'touch' || Date.now() - last < 80 || trace.points.length >= 3000) return;
+      if (event.pointerType === 'touch' || Date.now() - last < 80 || trace.points.length >= 10000) return;
       last = Date.now();
       const p = {x: clamp(Math.round(event.clientX / innerWidth * 1000), 0, 1000), y: clamp(Math.round(event.clientY / innerHeight * 1000), 0, 1000), t: Date.now() - trace.started};
       trace.points.push(p); document.getElementById('point-count').textContent = trace.points.length;
