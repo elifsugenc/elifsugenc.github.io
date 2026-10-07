@@ -263,7 +263,7 @@ try {
       const rt = document.getElementById('recent-traces');
       if (rt) {
         rt.innerHTML = '';
-        const recent = filteredEntries.slice(0, 6);
+        const recent = filteredEntries.slice(-6).reverse();
         recent.forEach((e) => rt.appendChild(card(e, filteredEntries.length - filteredEntries.indexOf(e) - 1)));
       }
     }
