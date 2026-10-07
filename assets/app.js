@@ -263,8 +263,8 @@ try {
       const rt = document.getElementById('recent-traces');
       if (rt) {
         rt.innerHTML = '';
-        const recent = filteredEntries.slice(-6).reverse();
-        recent.forEach((e) => rt.appendChild(card(e, filteredEntries.indexOf(e))));
+        const recent = filteredEntries.slice(0, 6);
+        recent.forEach((e) => rt.appendChild(card(e, filteredEntries.length - filteredEntries.indexOf(e) - 1)));
       }
     }
 
@@ -272,17 +272,17 @@ try {
     if (traceModalBody && !document.getElementById('trace-modal').hidden) {
        traceModalBody.innerHTML = '';
        let sorted = filteredEntries.slice();
-       if (currentSort === 'newest') sorted.reverse();
+       if (currentSort === 'oldest') sorted.reverse();
        else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
        sorted.forEach(e => {
-           traceModalBody.appendChild(card(e, filteredEntries.indexOf(e)));
+           traceModalBody.appendChild(card(e, filteredEntries.length - filteredEntries.indexOf(e) - 1));
        });
     }
 
     const grid = document.getElementById('all-traces-grid');
     if (grid) {
       grid.innerHTML = '';
-      const list = filteredEntries.slice().reverse();
+      const list = filteredEntries.slice();
       let shown = 0;
       const more = document.getElementById('more-traces');
       const ac = document.getElementById('archive-count');
