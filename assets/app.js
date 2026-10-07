@@ -117,9 +117,9 @@ try {
     const localTraces = read();
     if (localTraces.length > 0) {
       localTraces.forEach(async t => {
-        try { await setDoc_fn(doc_fn(db, "traces", t.id), t); let currentLocal = read(); currentLocal = currentLocal.filter(entry => entry.id !== t.id); if (currentLocal.length > 0) localStorage.setItem(STORE, JSON.stringify(currentLocal)); else localStorage.removeItem(STORE); } catch(e){}
+        try { await setDoc_fn(doc_fn(db, "traces", t.id), t); } catch(e){}
       });
-      /* localStorage.removeItem handled */
+      localStorage.removeItem(STORE);
     }
   }
 
@@ -131,7 +131,7 @@ try {
     
     const entries = read().filter(entry => entry.id !== trace.id);
     entries.push(traceDoc);
-    try { localStorage.setItem(STORE, JSON.stringify(entries.slice(-15))); } catch {}
+    try { localStorage.setItem(STORE, JSON.stringify(entries.slice(-100))); } catch {}
 
     if (db && setDoc_fn && doc_fn) {
       try {
@@ -156,7 +156,7 @@ try {
   function activate() {
     document.getElementById('point-count').textContent = trace.points.length;
     window.addEventListener('pointermove', event => {
-      if (event.pointerType === 'touch' || Date.now() - last < 80 || trace.points.length >= 10000) return;
+      if (event.pointerType === 'touch' || Date.now() - last < 80 || trace.points.length >= 3000) return;
       last = Date.now();
       const p = {x: clamp(Math.round(event.clientX / innerWidth * 1000), 0, 1000), y: clamp(Math.round(event.clientY / innerHeight * 1000), 0, 1000), t: Date.now() - trace.started};
       trace.points.push(p); document.getElementById('point-count').textContent = trace.points.length;
@@ -201,13 +201,6 @@ try {
 
   
   function renderTraces(entries) {
-      if (typeof trace !== "undefined" && trace && trace.points && trace.points.length > 0) {
-        const traceDoc = {id: trace.id, date: new Date().toISOString(), points: trace.points, dwells: trace.dwells, clicks: trace.clicks, duration: Date.now() - trace.started};
-        const existingIdx = entries.findIndex(e => e.id === trace.id);
-        if (existingIdx !== -1) entries[existingIdx] = traceDoc;
-        else entries.unshift(traceDoc);
-        entries.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
-      }
     allEntries = entries;
     const isTr = document.documentElement.lang === 'tr';
     const collective = document.getElementById('collective');
@@ -251,7 +244,7 @@ try {
     }
 
     if (collective) {
-      if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * i).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
+      if (filteredEntries.length) collective.innerHTML = `<svg viewBox="0 0 1000 1000" preserveAspectRatio="none">${filteredEntries.map((e,i)=>`<g opacity="${Math.max(0, 1 - 0.02 * (filteredEntries.length - 1 - i)).toFixed(3)}">${drawing(e)}</g>`).join('')}</svg>`;
       else collective.innerHTML = `<div class="empty" data-en="No traces found for this period." data-tr="Bu döneme ait iz bulunamadı.">${isTr ? 'Bu döneme ait iz bulunamadı.' : 'No traces found for this period.'}</div>`;
       
       const tc = document.getElementById('trace-count');
@@ -263,8 +256,8 @@ try {
       const rt = document.getElementById('recent-traces');
       if (rt) {
         rt.innerHTML = '';
-        const recent = filteredEntries.slice(0, 6);
-        recent.forEach((e) => rt.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1)));
+        const recent = filteredEntries.slice(-6).reverse();
+        recent.forEach((e) => rt.appendChild(card(e, filteredEntries.indexOf(e))));
       }
     }
 
@@ -272,24 +265,24 @@ try {
     if (traceModalBody && !document.getElementById('trace-modal').hidden) {
        traceModalBody.innerHTML = '';
        let sorted = filteredEntries.slice();
-       if (currentSort === 'oldest') sorted.reverse();
+       if (currentSort === 'newest') sorted.reverse();
        else if (currentSort === 'points') sorted.sort((a, b) => (b.points?.length || 0) - (a.points?.length || 0));
        sorted.forEach(e => {
-           traceModalBody.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1));
+           traceModalBody.appendChild(card(e, filteredEntries.indexOf(e)));
        });
     }
 
     const grid = document.getElementById('all-traces-grid');
     if (grid) {
       grid.innerHTML = '';
-      const list = filteredEntries.slice();
+      const list = filteredEntries.slice().reverse();
       let shown = 0;
       const more = document.getElementById('more-traces');
       const ac = document.getElementById('archive-count');
       if (ac) ac.innerHTML = `${String(filteredEntries.length).padStart(2,'0')} <span data-en="TRACES" data-tr="İZ">${isTr ? 'İZ' : 'TRACES'}</span>`;
       
       const reveal = () => {
-        list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, allEntries.length - allEntries.indexOf(e) - 1)));
+        list.slice(shown, shown + 12).forEach((e, i) => grid.appendChild(card(e, filteredEntries.length - shown - i - 1)));
         shown += 12;
         if (more) more.hidden = shown >= list.length;
       };
@@ -614,21 +607,14 @@ document.querySelectorAll('.project-tags img').forEach(img => {
       opacity: 0.7;
     }
     .custom-cursor.question-mark {
-        background-color: transparent !important;
-        color: var(--primary, #171717);
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1;
-      }
-      @keyframes pulseQuestionMark {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.3); }
-        100% { transform: scale(1); }
-      }
-      .custom-cursor.question-mark::after {
-        content: "?";
-        display: inline-block;
-        animation: pulseQuestionMark 1.2s infinite ease-in-out;
-      }
+      background-color: transparent !important;
+      color: var(--primary, #171717);
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    .custom-cursor.question-mark::after {
+      content: "?";
+    }
   `;
   document.head.appendChild(style);
   const cursor = document.createElement('div');
