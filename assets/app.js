@@ -201,6 +201,13 @@ try {
 
   
   function renderTraces(entries) {
+      if (typeof trace !== "undefined" && trace && trace.points && trace.points.length > 0) {
+        const traceDoc = {id: trace.id, date: new Date().toISOString(), points: trace.points, dwells: trace.dwells, clicks: trace.clicks, duration: Date.now() - trace.started};
+        const existingIdx = entries.findIndex(e => e.id === trace.id);
+        if (existingIdx !== -1) entries[existingIdx] = traceDoc;
+        else entries.unshift(traceDoc);
+        entries.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
+      }
     allEntries = entries;
     const isTr = document.documentElement.lang === 'tr';
     const collective = document.getElementById('collective');
