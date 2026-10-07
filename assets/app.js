@@ -117,9 +117,9 @@ try {
     const localTraces = read();
     if (localTraces.length > 0) {
       localTraces.forEach(async t => {
-        try { await setDoc_fn(doc_fn(db, "traces", t.id), t); } catch(e){}
+        try { await setDoc_fn(doc_fn(db, "traces", t.id), t); let currentLocal = read(); currentLocal = currentLocal.filter(entry => entry.id !== t.id); if (currentLocal.length > 0) localStorage.setItem(STORE, JSON.stringify(currentLocal)); else localStorage.removeItem(STORE); } catch(e){}
       });
-      localStorage.removeItem(STORE);
+      /* localStorage.removeItem handled */
     }
   }
 
