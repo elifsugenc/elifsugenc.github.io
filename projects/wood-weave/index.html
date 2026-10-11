@@ -1,12 +1,507 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Wood Weave · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading"><span class="eyebrow">PROJECT</span><h1>Wood Weave<span class="accent">.</span></h1></div><p class="detail-body detail-pending">More from this project soon.</p>
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/sprouting-garden/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Sprouting Garden</span>
-      </a>
-      <a href="/projects/stray/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">STRAY</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Genç.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script></body></html>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 â€” WOOD WEAVE | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Architectural Grid & Registration Marks Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#project-wood-weave" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">08</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">WOOD WEAVE</span>
+                <span class="crumb-tag">BURSA BAZAAR</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT</a>
+                <a href="#cycle">BAZAAR CYCLE</a>
+                <a href="#tectonics">TECTONICS</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">SPATIAL DESIGN &bull; 2024</span>
+                    <span class="meta-item">WASTE ARCHITECTURE &amp; UPCYCLING</span>
+                    <span class="meta-item">BURSA, TÃœRKÄ°YE</span>
+                </div>
+                <h1 class="hero-title">08 &mdash; WOOD WEAVE</h1>
+                <p class="hero-core-question">"When does waste become a place?" &bull; "AtÄ±k ne zaman bir mekÃ¢na dÃ¶nÃ¼ÅŸÃ¼r?"</p>
+            </div>
+
+            <!-- Key Specs / Sheet Title Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">LOCATION</span>
+                    <span class="spec-val">Historic Bazaar District, Bursa / TÃ¼rkiye</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Community Upcycling Hub &amp; Covered Arcade</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PRIMARY MEDIUM</span>
+                    <span class="spec-val">Interlocking Timber Modular Beams (2-Meter Units)</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DRAWING SCALES</span>
+                    <span class="spec-val">1/100 Sections &amp; Plans &bull; 1/200 Axo &bull; 1/500 Site</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">CIRCULATION RHYTHM</span>
+                    <span class="spec-val">Wed Market &rarr; Thu Harvest &rarr; Fri&ndash;Tue Workshops</span>
+                </div>
+            </div>
+
+            <!-- Hero Dual Visuals: Logo & Axonometric View -->
+            <div class="hero-dual-visual-grid">
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/wood-weave-logo.png', 'WOOD WEAVE Identity â€” Hand-drawn isometric wooden block typography in terracotta and ochre with woven timber grains.')">
+                    <img src="./assets/wood-weave-logo.png" alt="Wood Weave Isometric Title" class="hero-visual-img" style="padding: 24px; max-height: 380px;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">STRUCTURAL IDENTITY</span>
+                        <span class="caption-text">Isometric timber block typography expressing the interlocking joinery concept and warm material palette.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_1.jpg', '1/200 Axonometric Overview â€” Modular timber structure weaving through the dense urban alleyway between historic buildings.')">
+                    <img src="./assets/sheet_detail_1.jpg" alt="1/200 Axonometric Overview" class="hero-visual-img" style="max-height: 380px; object-fit: contain;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">1/200 AXONOMETRIC OVERVIEW</span>
+                        <span class="caption-text">The wooden pavilion winds through the historic Bursa streetscape, bridging fragmented city elevations.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPT & MANIFESTO SECTION (BILINGUAL) -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; MANIFESTO &mdash;</span>
+            </div>
+
+            <!-- Manifesto Cards -->
+            <div class="manifesto-grid">
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>2-Meter Interlocking Logic</h3>
+                    <p>The entire structure is assembled from standardized wooden pieces, each two meters in length, interlocking without irreversible wet joints to generate flexible, evolving interstitial spaces.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Repurposing Market Waste</h3>
+                    <p>Located next to Bursaâ€™s bustling open-air market, the project transforms discarded wooden produce crates, surplus organic fruits, and vegetable waste into generative building and craft media.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Personalization by Inhabitants</h3>
+                    <p>Rather than an inflexible monument, the pavilion acts as an open scaffold. Local tradespeople and learners adapt their individual zones to exhibit, dry, and sell their upcycled creations.</p>
+                </div>
+            </div>
+
+            <!-- Bilingual Description Tabs -->
+            <div class="bilingual-container">
+                <div class="lang-tab-bar">
+                    <button class="lang-tab-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
+                    <button class="lang-tab-btn" onclick="switchLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                </div>
+                <div id="statement-en" class="statement-pane active">
+                    <p class="lead-text">
+                        The structure is formed by <strong>interlocking wooden pieces, each two meters in length</strong>, creating generative spatial intervals between them. This design allows users to establish an open communal environment where individuals can showcase and display their creations, while offering the people who frequent the bazaar the opportunity to personalize their own territories within the space.
+                    </p>
+                    <p>
+                        The educational and production hub is situated directly beside the traditional market in Bursa. Here, participants learn how to recycle and upcycle by collecting discarded packaging and surplus fruits from the bazaar area and surrounding alleys, discovering practical ways to live collectively with less waste.
+                    </p>
+                    <p>
+                        Students attend classes every day except Wednesdays (the weekly market day) and weekends. Every Thursday morning, they gather the bazaarâ€™s leftover waste and surplus produce, learning through hands-on experience how to repurpose materials throughout the week. This ritual keeps their neighborhood clean while teaching how to turn discarded matter into valuable new creations, gaining deep insight into material properties and structural behaviors.
+                    </p>
+                </div>
+                <div id="statement-tr" class="statement-pane">
+                    <p class="lead-text">
+                        YapÄ±, her biri <strong>iki metre uzunluÄŸunda birbirine kenetlenen ahÅŸap parÃ§alardan</strong> meydana gelmekte ve aralarÄ±nda dinamik mekÃ¢nsal boÅŸluklar Ã¼retmektedir. Bu kurgu, kullanÄ±cÄ±larÄ±n kendi Ã¼retimlerini sergileyebilecekleri ortak bir zemin saÄŸlarken, pazar alanÄ±nÄ± kullanan yerel halk ve esnafa da mekÃ¢n iÃ§inde kendi kiÅŸiselleÅŸtirilmiÅŸ alanlarÄ±nÄ± kurma Ã¶zgÃ¼rlÃ¼ÄŸÃ¼ tanÄ±r.
+                    </p>
+                    <p>
+                        EÄŸitim ve Ã¼retim merkezi Bursa'daki tarihi pazar alanÄ±nÄ±n hemen bitiÅŸiÄŸinde yer almaktadÄ±r. Burada Ã¶ÄŸrenciler ve mahalle sakinleri, pazar tezgahlarÄ±ndan ve Ã§evre sokaklardan toplanan ahÅŸap kasalarÄ±, atÄ±k sebze ve meyveleri ileri dÃ¶nÃ¼ÅŸtÃ¼rerek (upcycling) daha az atÄ±kla kolektif bir yaÅŸam kurmanÄ±n yollarÄ±nÄ± keÅŸfederler.
+                    </p>
+                    <p>
+                        Ã–ÄŸrenciler Ã‡arÅŸamba (pazarÄ±n kurulduÄŸu gÃ¼n) ve hafta sonlarÄ± hariÃ§ her gÃ¼n atÃ¶lye Ã§alÄ±ÅŸmalarÄ±na katÄ±lÄ±r. Her PerÅŸembe sabahÄ± pazarÄ±n ardÄ±ndan kalan atÄ±k ve fazlalÄ±klar toplanÄ±r; hafta boyunca dikiÅŸ, kurutma, ahÅŸap yontu ve biÃ§imlendirme teknikleriyle yeni mekÃ¢n ve kullanÄ±m nesnelerine dÃ¶nÃ¼ÅŸtÃ¼rÃ¼lÃ¼r. Bu dÃ¶ngÃ¼ hem sokaklarÄ± temiz tutar hem de malzemelerin fiziksel Ã¶zelliklerini yaparak yaÅŸayarak Ã¶ÄŸrenmeyi saÄŸlar.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE WEEKLY BAZAAR CYCLE & UPCYCLING RITUAL -->
+        <section id="cycle" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">THE WEEKLY BAZAAR CYCLE &bull; COMMUNITY RITUAL &mdash;</span>
+            </div>
+
+            <div class="feature-two-col">
+                <div class="feature-text-side">
+                    <span class="eyebrow-accent">COLLECTIVE TEMPORAL ECOLOGY</span>
+                    <h2 class="sub-headline">"Waste is not an end point; it is the raw seed of our next civic space."</h2>
+                    
+                    <div class="quote-highlight">
+                        <em>"Individuals in the education area gather waste and leftover fruits and vegetables from the bazaar and surrounding areas on Thursday following Wednesday's bazaar day. They utilize these collected items to create various products throughout the week, discovering how to repurpose leftover materials through hands-on experimentation."</em>
+                    </div>
+
+                    <div class="cycle-steps-list">
+                        <div class="step-card">
+                            <span class="step-badge">WEDNESDAY</span>
+                            <div class="step-info">
+                                <h4>Weekly Bursa Bazaar Day</h4>
+                                <p>The traditional marketplace pulses with commercial exchange, producing piles of surplus timber fruit crates, cardboard, and edible surplus.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">THURSDAY MORNING</span>
+                            <div class="step-info">
+                                <h4>Waste Gathering & Material Sorting</h4>
+                                <p>Students and local participants systematically harvest discarded fruit crates, botanicals, and textiles from the emptying market square.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">FRI &ndash; TUE</span>
+                            <div class="step-info">
+                                <h4>Experimental Upcycling Workshops</h4>
+                                <p>Wood joinery, textile sewing, botanical drying, and sculpting sessions turn refuse into craft artifacts, furniture elements, and hanging goods.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">CONTINUOUS</span>
+                            <div class="step-info">
+                                <h4>Suspension & Civic Exhibition</h4>
+                                <p>Finished objects and dried botanicals are hung directly from the 2-meter overhead timber ceiling beams, turning the covered passage into a living gallery.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-visual-side">
+                    <div class="visual-frame zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_5.jpg', 'Upcycling Storyboard â€” Hand-drawn vignettes showing market gathering on Thursday morning, collaborative workshop experimentation, and hanging finished creations.')">
+                        <img src="./assets/sheet_detail_5.jpg" alt="Upcycling Storyboard Vignettes" class="contain-img">
+                        <div class="frame-caption">
+                            <span>UPCYCLING STORYBOARD &bull; HAND-DRAWN VIGNETTES</span>
+                            <span class="zoom-btn">[ EXPAND â†— ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secondary Diagrams: Demographics & Bubble Spatial Layout -->
+            <div class="secondary-diagrams-grid">
+                <div class="diag-card zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_6.jpg', 'Age and Gender Chart of the Students â€” Demographic analysis showing strong participation of local women (peaking ages 40-50) and intergenerational craft sharing.')">
+                    <div class="diag-img-box">
+                        <img src="./assets/sheet_detail_6.jpg" alt="Student Demographics Chart">
+                    </div>
+                    <div class="diag-meta">
+                        <h3>AGE &amp; GENDER DEMOGRAPHIC ANALYSIS</h3>
+                        <p>Documenting how community workshops actively mobilize local women (peaking between ages 40â€“50), alongside retired craftsmen and youth, establishing vital intergenerational knowledge exchange.</p>
+                    </div>
+                </div>
+
+                <div class="diag-card zoomable-image-container" onclick="openLightbox('./assets/bubble-diagram.jpg', 'Bubble Diagram â€” Spatial flow connecting Semi-private study zone, garden area, canteen, toilet, and direct interface with bazaar studios.')">
+                    <div class="diag-img-box">
+                        <img src="./assets/bubble-diagram.jpg" alt="Spatial Bubble Diagram">
+                    </div>
+                    <div class="diag-meta">
+                        <h3>SPATIAL FLOW BUBBLE DIAGRAM</h3>
+                        <p>Mapping programmatic thresholds: semi-private study niches, internal garden retreat, communal canteen, and civic amenities seamlessly connected to the market studios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECTONICS & STRUCTURAL SYSTEM -->
+        <section id="tectonics" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">TECTONIC SYSTEM &bull; MODULAR WOOD WEAVE &mdash;</span>
+            </div>
+
+            <div class="tectonic-highlight-wrapper">
+                <div class="tectonic-image-panel zoomable-image-container" onclick="openLightbox('./assets/section-dd.jpg', '1/100 Section DD â€” Stepped hanging timber ceiling, overhead display beams with suspended goods, and pedestrian alleyway circulation.')">
+                    <img src="./assets/section-dd.jpg" alt="1/100 Section DD Detail" class="tectonic-img">
+                    <div class="panel-tag">[ CLICK TO ZOOM SECTION DD' 1/100 â†— ]</div>
+                </div>
+
+                <div class="tectonic-breakdown-panel">
+                    <div class="layer-item">
+                        <div class="layer-indicator">01</div>
+                        <div class="layer-content">
+                            <h4>Modular 2-Meter Timber Units</h4>
+                            <p>Standardized interlocking timber lengths minimize off-cuts and simplify repetitive assembly. They form both load-bearing uprights and overhead hanging ribs.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">02</div>
+                        <div class="layer-content">
+                            <h4>Stepped Hanging Ceiling Envelope</h4>
+                            <p>As seen in Section DD', ceiling beams descend at graduated vertical heights, creating tactile hanging zones for dried herbs, fruits, and handcrafted artifacts above passersby.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">03</div>
+                        <div class="layer-content">
+                            <h4>Diurnal Solar & Wind Modulation</h4>
+                            <p>Calibrated against the Bursa sun trajectory (Section B-B'), the slatted wooden lattice blocks harsh midday heat while allowing natural breezes and soft indirect daylight to penetrate workshop desks.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">04</div>
+                        <div class="layer-content">
+                            <h4>Urban Alley Permeability</h4>
+                            <p>Instead of an impenetrable building volume, the structure behaves like a breathable urban canopy, welcoming pedestrians wandering between the bazaar and surrounding residential lanes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURAL DRAWINGS & SECTIONS -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">ARCHITECTURAL DRAWINGS &bull; PLANS, SECTIONS &amp; ELEVATIONS &mdash;</span>
+            </div>
+
+            <div class="drawings-gallery">
+                <!-- 1/500 Site Plan -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_2.jpg', '1/500 Site Plan â€” Historical Bursa urban fabric, street grid, section cutting planes A-A and B-B, and the snake-like timber pavilion threading through.')">
+                    <img src="./assets/sheet_detail_2.jpg" alt="1/500 Site Plan">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/500</span>
+                        <span class="d-title">SITE PLAN &bull; BURSA BAZAAR URBAN FABRIC</span>
+                        <span class="d-sub">Depicting the pavilion's path weaving through historical masonry blocks with section lines A-A' and B-B'.</span>
+                    </div>
+                </div>
+
+                <!-- 1/200 Elevations 1 & 2 -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_3.jpg', '1/200 Elevations 1 & 2 â€” Relationship with historic bazaar arches and undulating stepped timber roofline.')">
+                    <img src="./assets/sheet_detail_3.jpg" alt="1/200 Elevations 1 and 2">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/200</span>
+                        <span class="d-title">ELEVATIONS 1 &amp; 2 &bull; CONTEXTUAL SILHOUETTE</span>
+                        <span class="d-sub">Harmonizing the rhythmic timber roof profile with the traditional vaulted domes of the historic commercial center.</span>
+                    </div>
+                </div>
+
+                <!-- 1/100 Section CC' -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/sheet_detail_4.jpg', '1/100 Section CC â€” Cross section through the vehicular road, pedestrian covered walkway, and adjacent building envelopes.')">
+                    <img src="./assets/sheet_detail_4.jpg" alt="1/100 Section CC'">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/100</span>
+                        <span class="d-title">SECTION CC' &bull; STREET ARTERY &amp; URBAN PASSAGE</span>
+                        <span class="d-sub">Balancing vehicular road clearance on one flank with an intimate, pedestrian-scale sheltered craft arcade on the other.</span>
+                    </div>
+                </div>
+
+                <!-- 1/100 Section DD' -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/section-dd.jpg', '1/100 Section DD â€” Detailed timber joinery, hanging stepped beam ceiling, and upper-level craft studio.')">
+                    <img src="./assets/section-dd.jpg" alt="1/100 Section DD'">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/100</span>
+                        <span class="d-title">SECTION DD' &bull; STEPPED TIMBER CEILING DETAIL</span>
+                        <span class="d-sub">Hanging modular beams create varying ceiling heights and specialized exhibition niches for dried goods and student work.</span>
+                    </div>
+                </div>
+
+                <!-- 1/500 Sections AA' & BB' -->
+                <div class="drawing-item span-full zoomable-image-container" onclick="openLightbox('./assets/sections-aa-bb.jpg', '1/500 Sections AA and BB â€” Long section showing historic bazaar arches and transversal section illustrating diurnal solar arc.')">
+                    <img src="./assets/sections-aa-bb.jpg" alt="1/500 Sections AA' & BB'">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/500</span>
+                        <span class="d-title">SECTIONS A'A &amp; B'B &bull; REGIONAL DIURNAL CONTEXT</span>
+                        <span class="d-sub">Section A'A captures the extended urban threshold alongside the historic han vaults. Section B'B demonstrates the sun-and-moon diurnal path across the stepped timber volume.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FULL JURY PRESENTATION BOARDS -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">FULL JURY PRESENTATION BOARDS &mdash;</span>
+            </div>
+
+            <p class="boards-intro">
+                High-resolution exhibition boards presented for review. Click either sheet to view the full presentation panels in high detail.
+            </p>
+
+            <div class="boards-grid">
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/wood-weave-board-1.jpg', 'Exhibition Sheet 01 â€” Full presentation board featuring Sections, Site Plan, Storyboard, Logo, Plans, Section CC, Section DD, Physical Models, and Elevations.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/wood-weave-board-1.jpg" alt="Wood Weave Presentation Sheet 01">
+                        <span class="board-pill">SHEET 01 &bull; FULL COMPILATION</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 01 &mdash; COMPLETE JURY BOARD</h3>
+                        <p>Comprehensive layout with 1/500 site plan, 1/100 plans &amp; sections, process storyboard, and physical model photos.</p>
+                    </div>
+                </div>
+
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/wood-weave-board-2.jpg', 'Exhibition Sheet 02 â€” High-resolution technical drawings sheet with architectural floor plans, sections, and tectonic details.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/wood-weave-board-2.jpg" alt="Wood Weave Presentation Sheet 02">
+                        <span class="board-pill">SHEET 02 &bull; TECHNICAL PLANS</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 02 &mdash; TECHNICAL DETAIL SHEET</h3>
+                        <p>Detailed floor plans, structural interlocking joinery diagrams, and circulation connections.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booklet-action-box">
+                <div class="booklet-text">
+                    <h4>ULTRA HIGH-RESOLUTION ARCHIVE</h4>
+                    <p>Access the master 9,933 &times; 18,000 px original presentation posters directly from the project archive.</p>
+                </div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="./assets/poster1.jpg" target="_blank" class="download-pdf-btn">
+                        <span>VIEW POSTER 1 (FULL-RES)</span>
+                        <span class="btn-arrow">&nearr;</span>
+                    </a>
+                    <a href="./assets/poster2.jpg" target="_blank" class="download-pdf-btn">
+                        <span>VIEW POSTER 2 (FULL-RES)</span>
+                        <span class="btn-arrow">&nearr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECT FOOTER / PREV-NEXT NAVIGATION -->
+        <footer class="project-bottom-nav">
+            <div class="bottom-nav-inner">
+                <a href="../bajo-la-fresca/" class="pnav-link pnav-prev">
+                    <span class="pnav-dir">&larr; PREVIOUS WORK</span>
+                    <span class="pnav-title">07 &mdash; BAJO LA FRESCA</span>
+                </a>
+                
+                <a href="../../index.html#project-wood-weave" class="pnav-center-btn">
+                    [ BACK TO EXPLORE ]
+                </a>
+                
+                <a href="../ara-sira/" class="pnav-link pnav-next">
+                    <span class="pnav-dir">NEXT WORK &rarr;</span>
+                    <span class="pnav-title">09 &mdash; ARA-SIRA</span>
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- FULLSCREEN LIGHTBOX MODAL -->
+    <div id="lightbox-modal" class="lightbox-modal hidden" onclick="closeLightbox()">
+        <button class="lightbox-close-btn" onclick="closeLightbox()">[ CLOSE &times; ]</button>
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zoomed Architectural Drawing">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        // Language Toggle
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.statement-pane').forEach(p => p.classList.remove('active'));
+            if (lang === 'tr') {
+                document.querySelectorAll('.lang-tab-btn')[1].classList.add('active');
+                document.getElementById('statement-tr').classList.add('active');
+            } else {
+                document.querySelectorAll('.lang-tab-btn')[0].classList.add('active');
+                document.getElementById('statement-en').classList.add('active');
+            }
+        }
+
+        // Lightbox Functions
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('lightbox-modal');
+            const img = document.getElementById('lightbox-img');
+            const cap = document.getElementById('lightbox-caption');
+            img.src = src;
+            cap.innerText = caption || '';
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Custom Cursor movement (Hardware 1:1 GPU Transform, matching main portfolio)
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const customCursor = document.getElementById('custom-cursor');
+        if (cursorWrapper && customCursor) {
+            let cursorX = 0, cursorY = 0, cursorTicking = false;
+            document.addEventListener('mousemove', (e) => {
+                cursorX = e.clientX;
+                cursorY = e.clientY;
+                if (!cursorTicking) {
+                    requestAnimationFrame(() => {
+                        cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                        cursorTicking = false;
+                    });
+                    cursorTicking = true;
+                }
+            }, { passive: true });
+
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .diag-card, .visual-frame')) {
+                    customCursor.classList.add('cursor-hover');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .diag-card, .visual-frame')) {
+                    customCursor.classList.remove('cursor-hover');
+                }
+            });
+        }
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

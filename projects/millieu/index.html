@@ -1,62 +1,601 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Millieu · elifsu genç</title>
-<link rel="icon" href="/assets/favicon.svg">
-<link rel="stylesheet" href="/assets/style.css?v=27" defer>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 â€” MILLIEU | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-<main>
-<header class="top">
-<a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a>
-<nav aria-label="Primary">
-<a href="/">Main</a>
-<a href="/projects/">Projects</a>
-<a href="/about/">About</a>
-</nav>
+<body class="project-detail-body">
+    <!-- Subtle Blueprint Grid Background -->
+    <div class="blueprint-bg"></div>
 
-</header>
-<article class="detail">
-<a class="back-link" href="/projects/">← All projects</a>
-<div class="detail-heading">
-<span class="eyebrow">PROJECT</span>
-<h1>Millieu<span class="accent">.</span></h1>
-</div>
-<p class="detail-body detail-pending">More from this project soon.</p>
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
 
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/bajo-la-fresca/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Bajo La Fresca</span>
-      </a>
-      <a href="/projects/chronoclines/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">ChronoClines</span>
-      </a>
-  </div>
-</article>
-<footer>
-<span>&copy; Last updated: October 2026</span>
-<span>A portfolio by Elifsu Genç.</span>
-<a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a>
-</footer>
-</main>
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-millieu" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">05</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">MILLIEU</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT</a>
+                <a href="#site">YELDEÄÄ°RMENÄ°</a>
+                <a href="#plans">PLANS</a>
+                <a href="#drawings">SECTIONS</a>
+                <a href="#renders">ATMOSPHERE</a>
+                <a href="#boards">BOARDS</a>
+                <a href="#statement">STATEMENT</a>
+            </nav>
+        </div>
+    </header>
 
-<div class="consent-backdrop" id="consent" hidden>
-<div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">SPATIAL DESIGN &bull; CULINARY INTERIOR &bull; 2026</span>
+                    <span class="meta-item">AUTHOR: ELÄ°FSU GENÃ‡</span>
+                    <span class="meta-item">LOCATION: KADIKÃ–Y - YELDEÄÄ°RMENÄ°, Ä°STANBUL</span>
+                    <span class="meta-item">TYPOLOGY: CULINARY SOCIAL HUB &bull; AMPHITHEATRE &bull; BRANDING</span>
+                </div>
+                <h1 class="hero-title">05 &mdash; MILLIEU</h1>
+                <p class="hero-sub-etymology">/mÉªl'ju:/ &mdash; milieu: A person's social environment or atmosphere.</p>
+                <p class="hero-core-question">&ldquo;How does a culinary ritual shape a social atmosphere?&rdquo;</p>
+            </div>
 
-<span class="eyebrow">A CHOICE / 01</span>
-<h2 id="consent-title">May this site remember you?</h2>
-<p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p>
-<div class="actions">
-<button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button>
-<button class="decline" id="decline" type="button">No, just here to explore</button>
-</div>
-</div>
-</div>
-<div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div>
-<script src="/assets/app.js?v=27" defer></script>
+            <!-- Project Highlights Banner -->
+            <div class="award-hero-banner">
+                <div class="award-box">
+                    <span class="award-title">WHEAT, FLOUR &amp; YELDEÄÄ°RMENÄ° HERITAGE</span>
+                    <span class="award-subtitle">Rooted in the historical windmill quarter of KadÄ±kÃ¶y, Millieu fuses the tactile transformation of grain into food with a dynamic public interior centered on the shared ritual of quiche.</span>
+                </div>
+                <div class="award-box" style="border-left: 1px solid var(--border-light); padding-left: 20px;">
+                    <span class="award-title">GEOMETRIC TECTONICS &amp; AMPHITHEATRE COMMONS</span>
+                    <span class="award-subtitle">Translating circular quiche geometry and windmill blade forms into custom burgundy steel scaffolds, stepped multi-level seating, arched lighting, and diagonal spatial circulation.</span>
+                </div>
+            </div>
+
+            <!-- Key Specs Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Culinary Interior &bull; Social Amphitheatre &bull; Spatial Branding</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">LOCATION &amp; SITE</span>
+                    <span class="spec-val">YeldeÄŸirmeni, KadÄ±kÃ¶y / Ä°stanbul (Tramway &amp; Pedestrian Axis)</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">AUTHOR</span>
+                    <span class="spec-val">Elifsu GenÃ§</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PRIMARY MATERIALS</span>
+                    <span class="spec-val">Burgundy Steel Frameworks &bull; White Veined Marble &bull; Oak Plywood &bull; Terrazzo</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">CULINARY PROGRAM</span>
+                    <span class="spec-val">Open Production Kitchen &bull; Quiche Tasting Bar &bull; Stepped Civic Seating &bull; Mobile Kiosk</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TECHNICAL DRAWINGS</span>
+                    <span class="spec-val">1/50 Plans &bull; 1/50 AA &amp; EE Sections &bull; 1/20 Detail &bull; 1/15 Bar Counter Detail</span>
+                </div>
+            </div>
+
+            <!-- Hero Showcase Image -->
+            <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet5-render-view-x-hall.jpg', 'Millieu â€” Main Dining Hall under exposed steel trusses and clerestory skylight (View X)')">
+                <img src="./assets/crop-sheet5-render-view-x-hall.jpg" alt="Millieu Main Dining Hall" class="hero-visual-img">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">MAIN COMMUNICATIVE DINING HALL (VIEW X)</span>
+                    <span class="caption-text">Double-height dining commons under clerestory natural daylight, framed by custom burgundy steel arch lighting and communal banquettes.</span>
+                    <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 01: CONCEPT & BRANDING -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPTUAL LOGIC // WHAT IS QUICHE?</span>
+            </div>
+
+            <p class="section-lead-text">
+                <strong>Millieu</strong> emerges from a culinary inquiry: <em>What is Quiche?</em> Originating as an open savory tart encased in pastry crust, quiche is intrinsically communalâ€”sliced and shared from a circular whole. In YeldeÄŸirmeni, where the historical landscape once transformed wheat into flour, the project establishes a modern civic ritual where local ingredients and architectural geometries merge:
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet1-quiche-culinary-timeline.jpg', 'Culinary Process Timeline â€” Dough preparation, baking, assembly and serving sequence')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet1-quiche-culinary-timeline.jpg" alt="Culinary Timeline Diagram" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">CULINARY TIME MAPPING</span>
+                        <h3 class="card-title">Production &amp; Service Chronology</h3>
+                        <p class="card-text">
+                            Mapping the culinary choreography from raw grain to table: large prep counters for dough kneading (15â€“20 min), vegetable and custard filling preparation (10â€“15 min), blind baking, cooling, and synchronized final baking upon customer order.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet1-logo-kiosk-logic.jpg', 'Design Logic & Logo Equation â€” M = mill + quiche + M')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet1-logo-kiosk-logic.jpg" alt="Logo Equation & Kiosk" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">GEOMETRIC FORMULA</span>
+                        <h3 class="card-title">Logo Equation: Mill + Quiche = M</h3>
+                        <p class="card-text">
+                            The visual and spatial identity is generated by the intersection of three archetypes: the rotating blades of the historical YeldeÄŸirmeni windmill, the triangular wedge of the circular quiche, and the arched letterform <em>M</em>. This geometry directly dictates custom furniture, lighting brackets, and spatial screens.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packaging & Kiosk Row -->
+            <div class="two-col-grid" style="margin-top: 28px;">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet1-branding-packaging-menu.jpg', 'Spatial Branding â€” Triangular quiche packaging, takeaway bag, and seasonal tart menu')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet1-branding-packaging-menu.jpg" alt="Branding & Packaging" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">PACKAGING &amp; IDENTITY</span>
+                        <h4 class="card-title">Tactile Packaging &amp; Printed Menu</h4>
+                        <p class="card-text">
+                            Custom triangular quiche boxes, branded cardboard sleeves, stamped takeaway kraft bags, and an editorial folding menu divided into savory and sweet tarts, reinforcing the tactile experience from street takeaway to dine-in gathering.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet3-material-mood-board.jpg', 'Material & Mood Board â€” Red veined marble, burgundy steel, plywood, and terrazzo')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet3-material-mood-board.jpg" alt="Material & Mood Board" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">MATERIAL TECTONICS</span>
+                        <h4 class="card-title">Tactile Mood Palette</h4>
+                        <p class="card-text">
+                            Polished white marble slabs with rich burgundy veins, warm natural oak plywood, dark bordeaux powder-coated steel profiles, cast terrazzo floor tiles, and warm glowing neon tubes create an inviting, sensory atmosphere.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 02: YELDEÄÄ°RMENÄ° SITE ANALYSIS -->
+        <section id="site" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">URBAN FORENSICS // KADIKÃ–Y - YELDEÄÄ°RMENÄ°</span>
+            </div>
+
+            <p class="section-lead-text">
+                Located in KadÄ±kÃ¶yâ€™s historic YeldeÄŸirmeni neighborhood, the site sits at a high-intensity urban crossroads between active tramway tracks, historic artisan bakeries, and pedestrian corridors. The architecture responds to this kinetic street energy by introducing a deployable mobile kiosk threshold that draws pedestrians into the deeper interior void:
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet1-yeldegirmeni-site.jpg', 'KadÄ±kÃ¶y - YeldeÄŸirmeni Site Analysis â€” Urban nodes, tramway approach, and user circulation pie chart')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet1-yeldegirmeni-site.jpg" alt="YeldeÄŸirmeni Site Analysis" class="content-card-img" style="height: 340px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">URBAN MAPPING</span>
+                        <h3 class="card-title">Pedestrian Flows &amp; Street Thresholds</h3>
+                        <p class="card-text">
+                            Detailed spatial analysis of YeldeÄŸirmeni's pedestrian densities, tramway lines, and commercial bakery traditions. A user activity diagram categorizes neighborhood demographics into morning commuters, afternoon remote workers, and evening social diners.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet4-circulation-flow-diagram.jpg', 'Circulation Diagram â€” Diagonal entrance axis and curved gathering loops')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet4-circulation-flow-diagram.jpg" alt="Circulation Flow Diagram" class="content-card-img" style="height: 340px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">SPATIAL CHOREOGRAPHY</span>
+                        <h3 class="card-title">Diagonal Axis &amp; Gathering Loops</h3>
+                        <p class="card-text">
+                            A strong diagonal vector slices across the floor plan, guiding visitors from the entrance corner past the service counter and directly onto the amphitheater steps, encouraging fluid movement between quiet booths and active social platforms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 03: ARCHITECTURAL PLANS -->
+        <section id="plans" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">ARCHITECTURAL PLANS // 1/50 SCALE</span>
+            </div>
+
+            <p class="section-lead-text">
+                The floor plans organize the culinary experience across two interconnected levels: an active ground floor with open bakery kitchens and a diagonal marble service bar, and a stepped mezzanine amphitheater providing panoramic views across the double-height volume:
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet3-plan-ground-floor.jpg', '1/50 Ground Floor Plan â€” Main entrance, diagonal service counter, kitchen, and dining zones')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet3-plan-ground-floor.jpg" alt="1/50 Ground Floor Plan" class="content-card-img" style="height: 320px; object-fit: contain; background: #fff;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">LEVEL &plusmn;0.00 &bull; 1/50 SCALE</span>
+                        <h4 class="card-title">Ground Floor Master Plan</h4>
+                        <p class="card-text">
+                            Features the angular service bar, linear tables, accessibility ramps, prep kitchen, and direct connection to the base of the amphitheater steps.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet2-plan-first-floor.jpg', '1/50 First Floor & Mezzanine Plan â€” Stepped amphitheater seating and upper dining tables')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet2-plan-first-floor.jpg" alt="1/50 First Floor Plan" class="content-card-img" style="height: 320px; object-fit: contain; background: #fff;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">LEVEL &plus;3.20 &bull; 1/50 SCALE</span>
+                        <h4 class="card-title">First Floor / Stepped Amphitheatre Plan</h4>
+                        <p class="card-text">
+                            Multi-tiered stepped seating equipped with integrated power outlets and cushions, flanked by private booths and restrooms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reflected Ceiling Plan -->
+            <div style="margin-top: 28px;">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet2-plan-reflected-ceiling.jpg', '1/50 Reflected Ceiling & Lighting Plan â€” Exposed steel trusses, track lighting, and acoustic baffles')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet2-plan-reflected-ceiling.jpg" alt="Reflected Ceiling Plan" class="content-card-img" style="height: 260px; object-fit: contain; background: #fff;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">CEILING &amp; LIGHTING TECTONICS &bull; 1/50 SCALE</span>
+                        <h4 class="card-title">Reflected Ceiling Plan</h4>
+                        <p class="card-text">
+                            Rhythmic overhead lighting layout combining longitudinal track lights, pendant globes illuminating dining tables, and linear LED strips accentuating the stepped seating.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04: SECTIONS & CONSTRUCTION DETAILS -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">BUILDING SECTIONS &amp; JOINERY DETAILS</span>
+            </div>
+
+            <p class="section-lead-text">
+                Technical sections demonstrate how the structural envelope accommodates the amphitheatre volume, kitchen exhaust systems, and precision counter joinery:
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet3-section-aa-transverse.jpg', '1/50 AA Transverse Section â€” Pitched roof volume, stepped amphitheater, and dining hall void')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet3-section-aa-transverse.jpg" alt="1/50 AA Section" class="content-card-img" style="height: 280px; object-fit: contain; background: #fff;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">TRANSVERSE SECTION AA &bull; 1/50</span>
+                        <h4 class="card-title">Spatial Section AA</h4>
+                        <p class="card-text">
+                            Captures the triple-height volume of the amphitheatre seating rising beneath the pitched industrial steel roof trusses, with the culinary counter on ground level.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet5-bar-counter-detail-section.jpg', '1/15 Bar Counter Detail Section â€” Marble overhang, steel support brackets, and utility cabinetry')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet5-bar-counter-detail-section.jpg" alt="1/15 Bar Counter Detail Section" class="content-card-img" style="height: 280px; object-fit: contain; background: #fff;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">JOINERY DETAIL &bull; 1/15 SCALE</span>
+                        <h4 class="card-title">Bar Counter Detail Section</h4>
+                        <p class="card-text">
+                            High-precision construction detail showing the 30mm bullnose marble countertop, concealed under-counter LED strip, stainless steel prep shelf, and terrazzo recessed toe-kick.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Axonometric Section Cutaway -->
+            <div class="two-col-grid" style="margin-top: 28px;">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet4-axonometric-section-cutaway.jpg', 'Isometric Cutaway â€” Multi-level amphitheater seating, red steel screen, and booths')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet4-axonometric-section-cutaway.jpg" alt="Axonometric Cutaway" class="content-card-img" style="height: 320px; object-fit: contain; background: #fdfaf7;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">AXONOMETRIC CUTAWAY</span>
+                        <h4 class="card-title">Stepped Seating Anatomy</h4>
+                        <p class="card-text">
+                            Cutaway axonometric showing how the stepped platforms form an inhabitable civic landscape within the interior, framed by burgundy steel shelving screens.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet5-axonometric-red-steel-structure.jpg', '3D Axonometric â€” Red tubular steel pergola and shelving frame structure')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet5-axonometric-red-steel-structure.jpg" alt="3D Steel Structure" class="content-card-img" style="height: 320px; object-fit: contain; background: #fdfaf7;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">STEEL PERGOLA TECTONICS</span>
+                        <h4 class="card-title">Burgundy Tubular Steel Framework</h4>
+                        <p class="card-text">
+                            Axonometric isolation of the curved tubular steel framework that arches over the amphitheater steps, integrating display shelving, acoustic baffles, and lighting conduits.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 05: INTERIOR ATMOSPHERE & RENDERS -->
+        <section id="renders" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">INTERIOR ATMOSPHERE // SPATIAL RENDERS</span>
+            </div>
+
+            <p class="section-lead-text">
+                High-fidelity perspective renders illustrating the shifting qualities of light, materiality, and social presence across day and evening hours:
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet2-render-view-l-amphitheater.jpg', 'View L â€” Amphitheater steps and exposed steel truss ceiling with under-step illumination')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet2-render-view-l-amphitheater.jpg" alt="View L Amphitheater" class="content-card-img" style="height: 280px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">PERSPECTIVE VIEW L</span>
+                        <h4 class="card-title">Amphitheatre Glow &amp; Steel Trusses</h4>
+                        <p class="card-text">Nighttime atmosphere highlighting under-step linear LED lighting, structural steel roof trusses, and the red tubular shelving matrix.</p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet2-render-view-k-dining-hall.jpg', 'View K â€” Central dining hall with arched neon linear light tubes and custom tables')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet2-render-view-k-dining-hall.jpg" alt="View K Dining Hall" class="content-card-img" style="height: 280px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">PERSPECTIVE VIEW K</span>
+                        <h4 class="card-title">Linear Dining Hall &amp; Neon Arches</h4>
+                        <p class="card-text">Central communal tables flanked by glowing linear wall conduits, custom wireframe chairs, and warm ambient ceiling pendants.</p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet3-render-view-w-communal-table.jpg', 'View W â€” Communal quiche dining table and open bakery service counter')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet3-render-view-w-communal-table.jpg" alt="View W Communal Table" class="content-card-img" style="height: 280px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">PERSPECTIVE VIEW W</span>
+                        <h4 class="card-title">Open Bakery &amp; Communal Table</h4>
+                        <p class="card-text">View from the service counter showing freshly baked quiches on display, customers gathered around the central table, and the double-height void.</p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/crop-sheet5-render-view-y-booths.jpg', 'View Y â€” Private booth seating framed by burgundy steel arch screens')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/crop-sheet5-render-view-y-booths.jpg" alt="View Y Booths" class="content-card-img" style="height: 280px;">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">PERSPECTIVE VIEW Y</span>
+                        <h4 class="card-title">Dining Booths &amp; Arch Sconces</h4>
+                        <p class="card-text">Intimate dining booths framed by custom burgundy arch profiles, globe pendants, and acoustic timber wall paneling.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 06: MASTER PRESENTATION BOARDS -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">COMPLETE JURY BOARDS // 5 MASTER SHEETS</span>
+            </div>
+
+            <p class="section-lead-text">
+                Browse all 5 full-scale presentation sheets containing comprehensive site analysis, culinary timelines, 1/50 plans, building sections, joinery details, and spatial renders:
+            </p>
+
+            <div class="boards-gallery-grid">
+                
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/millieu-sheet-01-concept-yeldegirmeni-branding.jpg', 'Sheet 01 â€” Millieu: KadÄ±kÃ¶y YeldeÄŸirmeni Site Analysis, Quiche Concept, Culinary Timeline, Logo & Packaging')">
+                    <img src="./assets/millieu-sheet-01-concept-yeldegirmeni-branding.jpg" alt="Sheet 01: Concept, Site & Branding" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 01 / 05</span>
+                            <span class="board-title">SITE ANALYSIS, CULINARY LOGIC &amp; BRANDING</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/millieu-sheet-02-plans-lighting-renders.jpg', 'Sheet 02 â€” 1/50 First Floor Plan, Reflected Ceiling & Lighting Plan, Views L & K')">
+                    <img src="./assets/millieu-sheet-02-plans-lighting-renders.jpg" alt="Sheet 02: Plans & Lighting" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 02 / 05</span>
+                            <span class="board-title">PLANS, REFLECTED CEILING &amp; NIGHT ATMOSPHERE</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/millieu-sheet-03-ground-plan-material-section.jpg', 'Sheet 03 â€” 1/50 Ground Floor Plan, View W, Material Mood Board & 1/50 AA Building Section')">
+                    <img src="./assets/millieu-sheet-03-ground-plan-material-section.jpg" alt="Sheet 03: Ground Plan & Section AA" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 03 / 05</span>
+                            <span class="board-title">GROUND PLAN, MATERIAL BOARD &amp; SECTION AA</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/millieu-sheet-04-axonometric-circulation-details.jpg', 'Sheet 04 â€” Isometric Cutaway, Circulation Diagrams, Custom Furniture & 1/50 EE Section')">
+                    <img src="./assets/millieu-sheet-04-axonometric-circulation-details.jpg" alt="Sheet 04: Axonometric & Details" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 04 / 05</span>
+                            <span class="board-title">AXONOMETRIC CUTAWAY, CIRCULATION &amp; SECTION EE</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/millieu-sheet-05-dining-renders-counter-details.jpg', 'Sheet 05 â€” Views X, Y, Z, 3D Red Steel Pergola & 1/15 Bar Counter Detail Section')">
+                    <img src="./assets/millieu-sheet-05-dining-renders-counter-details.jpg" alt="Sheet 05: Interior Views & Counter Detail" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 05 / 05</span>
+                            <span class="board-title">INTERIOR RENDERS, STEEL STRUCTURE &amp; 1/15 DETAIL</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 07: BILINGUAL STATEMENT -->
+        <section id="statement" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">07</span>
+                <span class="sec-title">CURATORIAL MANIFESTO // BILINGUAL STATEMENT</span>
+            </div>
+
+            <div class="statement-card">
+                <div class="lang-toggle-wrap">
+                    <button type="button" class="lang-pill active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
+                    <button type="button" class="lang-pill" onclick="switchDetailLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                </div>
+
+                <div id="statement-en" class="statement-panel active">
+                    <p>
+                        <strong>Millieu</strong> (/mÉªl'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in KadÄ±kÃ¶yâ€™s historic YeldeÄŸirmeni district. Defined etymologically as <em>a personâ€™s social environment or atmosphere</em>, the project reinterprets the historical heritage of YeldeÄŸirmeniâ€”where coastal breezes once powered windmills transforming grain into flourâ€”into a contemporary social hub dedicated to the craft of quiche.
+                    </p>
+                    <p>
+                        Quiche functions here not merely as a menu item, but as a circular architectural diagram of communal sharing. The geometric dialogue between the windmill blades, the sliced pastry wedge, and the letterform <em>M</em> generates the entire spatial language: from custom triangular table bases and arched lighting brackets to an expansive stepped amphitheater framed by burgundy tubular steel pergolas.
+                    </p>
+                    <p>
+                        The interior is organized along a dynamic diagonal axis that links street-level pedestrian flows directly into the double-height volume. White veined marble counters, exposed industrial roof trusses, warm oak plywood, and glowing linear lights establish a layered social landscape where baking, casual conversation, and collective gathering comfortably coexist.
+                    </p>
+                </div>
+
+                <div id="statement-tr" class="statement-panel">
+                    <p>
+                        <strong>Millieu</strong> (/mÉªl'ju:/), KadÄ±kÃ¶y YeldeÄŸirmeniâ€™nin kÃ¶klÃ¼ mahalle hafÄ±zasÄ± ile gastronomi ritÃ¼elini iÃ§ mimari bir deneyimde buluÅŸturan bir mekÃ¢nsal tasarÄ±mdÄ±r. Etimolojik olarak <em>kiÅŸinin iÃ§inde bulunduÄŸu toplumsal Ã§evre veya atmosfer</em> anlamÄ±na gelen "milieu" kavramÄ±; geÃ§miÅŸte yel deÄŸirmenleriyle buÄŸdayÄ±n una dÃ¶nÃ¼ÅŸtÃ¼ÄŸÃ¼ bu tarihi semtte, kiÅŸ (quiche) piÅŸirme ve paylaÅŸma eylemi etrafÄ±nda yeni bir kentsel buluÅŸma alanÄ±na dÃ¶nÃ¼ÅŸÃ¼r.
+                    </p>
+                    <p>
+                        KiÅŸ, yuvarlak bÃ¼tÃ¼nÃ¼nden dilimlenerek paylaÅŸÄ±lan formuyla projenin temel mekÃ¢nsal ÅŸemasÄ±na ilham verir. Yel deÄŸirmeni kanatlarÄ±, kiÅŸ dilimi ve "M" harfinin geometrik kesiÅŸimi; Ã¶zel tasarÄ±m Ã¼Ã§gen masa ayaklarÄ±ndan kemerli aydÄ±nlatmalara, bordo Ã§elik konstrÃ¼ksiyonlu amfi basamaklarÄ±ndan Ã¶zel ambalaj ve menÃ¼ tasarÄ±mÄ±na kadar tÃ¼m mekÃ¢n tektoniÄŸini ÅŸekillendirir.
+                    </p>
+                    <p>
+                        Ä°Ã§ mekÃ¢n kurgusu, sokaktan gelen yaya akÄ±ÅŸÄ±nÄ± iÃ§eriye davet eden gÃ¼Ã§lÃ¼ bir diyagonal aks Ã¼zerinde yÃ¼kselir. Bordo damarlÄ± beyaz mermer servis tezgahÄ±, Ã§atÄ± makaslarÄ±, sÄ±cak meÅŸe kaplamalar ve basamak altÄ± Ã§izgisel Ä±ÅŸÄ±klar; fÄ±rÄ±nlama sÃ¼recini izlenebilir kÄ±lan, Ã¼retimi ve sohbeti bir araya getiren canlÄ± bir sosyal atmosfer yaratÄ±r.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER NAVIGATION -->
+        <footer class="project-footer-nav">
+            <a href="../chronoclines/" class="foot-nav-item prev">
+                <span class="foot-nav-lbl">&larr; PREVIOUS WORK</span>
+                <span class="foot-nav-name">04 â€” CHRONOCLINES</span>
+            </a>
+            <a href="../bio-decay/" class="foot-nav-item next">
+                <span class="foot-nav-lbl">NEXT WORK &rarr;</span>
+                <span class="foot-nav-name">06 â€” BIO-DECAY</span>
+            </a>
+        </footer>
+
+    </main>
+
+    <!-- Interactive Lightbox Modal -->
+    <div id="image-lightbox" class="image-lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <button class="lightbox-close-btn" onclick="closeLightbox(event)">&times;</button>
+            <img id="lightbox-img" src="" alt="Enlarged Architectural Drawing" class="lightbox-img">
+            <p id="lightbox-caption" class="lightbox-caption-text"></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Custom Cursor Logic
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const cursor = document.getElementById('custom-cursor');
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorWrapper.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+
+        const hoverTargets = document.querySelectorAll('a, button, .zoomable-image-container, .content-card, .board-card');
+        hoverTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // Bilingual Toggle
+        function switchDetailLang(lang) {
+            document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.statement-panel').forEach(p => p.classList.remove('active'));
+
+            if (lang === 'tr') {
+                document.querySelectorAll('.lang-pill')[1].classList.add('active');
+                document.getElementById('statement-tr').classList.add('active');
+            } else {
+                document.querySelectorAll('.lang-pill')[0].classList.add('active');
+                document.getElementById('statement-en').classList.add('active');
+            }
+        }
+
+        // Lightbox Functions
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(src, caption) {
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption || '';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (e) e.preventDefault();
+            lightbox.classList.remove('active');
+            lightboxImg.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
 </body>
 </html>

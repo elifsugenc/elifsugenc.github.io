@@ -1,368 +1,662 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>STRAY · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer><style>
-.scatter-word {
-    position: absolute;
-    font-size: clamp(0.7rem, 2vw, 1rem);
-    color: #666;
-    font-family: inherit;
-    font-weight: normal;
-    letter-spacing: normal;
-    white-space: nowrap;
-    pointer-events: auto;
-    cursor: pointer;
-    z-index: 10;
-}
-.stray-title-wrapper {
-    position: relative;
-    cursor: pointer;
-}
-.detail-heading {
-    min-height: auto !important;
-    margin-bottom: 30px !important;
-}
-.detail-section .eyebrow {
-    font-size: 1.3rem;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-}
-.detail-section .detail-body {
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02 â€” STRAY | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Architectural Grid Background -->
+    <div class="blueprint-bg"></div>
 
-/* Gallery & Lightbox Styles */
-.media-thumb {
-    aspect-ratio: 1;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.media-thumb:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-.lightbox {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.95);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.lightbox[hidden] {
-    display: none !important;
-}
-.lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    user-select: none;
-    transition: transform 0.2s ease;
-    cursor: zoom-in;
-}
-.lightbox img.zoomed {
-    transform: scale(3);
-    cursor: zoom-out;
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px; right: 30px;
-    background: none; border: none;
-    color: white; font-size: 3rem;
-    cursor: pointer;
-}
-.lightbox-prev, .lightbox-next {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.1); border: none;
-    color: white; font-size: 2rem;
-    padding: 20px; cursor: pointer;
-    transition: background 0.2s;
-    border-radius: 5px;
-}
-.lightbox-prev:hover, .lightbox-next:hover {
-    background: rgba(255,255,255,0.3);
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.lightbox-counter {
-    position: absolute;
-    bottom: 20px; left: 50%; transform: translateX(-50%);
-    color: white; font-family: monospace; font-size: 1.2rem;
-}
-</style></head><body style="--primary: #347a59;"><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading"><span class="eyebrow">PROJECT</span><div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 15px;"><h1 class="stray-title-wrapper" style="margin: 20px 0; display: inline-block;">STRAY<span class="accent">.</span>
-<span class="scatter-word" style="top: -20%; left: 0%; transform: rotate(-90deg);">drift</span>
-<span class="scatter-word" style="top: 40%; left: -10%;">go astray</span>
-<span class="scatter-word" style="bottom: -15%; left: 5%;">wander off</span>
-<span class="scatter-word" style="bottom: -15%; left: 40%;">roam</span>
-<span class="scatter-word" style="top: 40%; left: 40%;">idly</span>
-<span class="scatter-word" style="top: -15%; left: 45%;">lose the thread</span>
-<span class="scatter-word" style="bottom: 10%; left: 75%;">waif</span>
-<span class="scatter-word" style="top: 25%; right: -15%; transform: rotate(90deg);">wander</span>
-</h1><span style="font-size: clamp(1.2rem, 2vw, 1.65rem);">is doing nothing doing something<span class="q-mark">?</span></span></div>
-<div style="font-size: clamp(1rem, 1.5vw, 1.2rem); color: #555; margin-top: -5px; margin-bottom: 20px;">a spatial system for productive wandering</div>
-<div class="project-tags" style="display: flex; gap: 12px; margin-top: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
-      <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/experimental.png" alt="Experimental" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/interactive.png" alt="Interactive" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/social-memory.png" alt="Social Memory" style="width: 50px; height: 50px;">
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 40px; font-size: 0.9rem; color: #888; line-height: 1.5; letter-spacing: 0.02em;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; max-width: 800px;">
-            <div>
-                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">AWARDS</strong>
-                <span>im2025 National Interior Design Student Awards<br><em>Honorary Mention</em></span>
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-stray" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">02</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">STRAY</span>
+                <span class="crumb-tag">AWARD WINNER</span>
             </div>
-            <div>
-                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">SOFTWARE</strong>
-                <span>V-Ray, Rhinoceros 3D, Adobe Photoshop, Adobe Illustrator</span>
-            </div></div><div>
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">OVERVIEW</strong>
-            <span>An exploration of behavioral design, interactive materiality,<br>and unpredictable spatial encounters.</span>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT &amp; FLÃ‚NEUR</a>
+                <a href="#psychogeography">PSYCHOGEOGRAPHY</a>
+                <a href="#tectonics">TECTONICS &amp; SURFACES</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#perspectives">PERSPECTIVES</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
         </div>
-    </div>
-</div>
-<div class="detail-image" style="margin-bottom: 140px;">
-    <img src="/assets/stray-project.png" class="lightbox-trigger" data-index="4" alt="Stray Project - The Ramp View Q" style="width: 100%; height: auto; display: block; cursor: pointer;">
-</div>
+    </header>
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">01 / QUESTIONING THE BRIEF</span>
-    <p class="detail-body">The project began with a brief: <em>the encounter of two actions.</em></p>
-    <p class="detail-body">But, wait... </p>
-    <p class="detail-body" style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">What is an action? When does movement become action, and does an action require intention?</p>
-</div>
+    <main class="project-page-container">
+        
+        <!-- =========================================================
+             HERO SECTION
+             ========================================================= -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">INTERACTIVE INSTALLATION &bull; 2025</span>
+                    <span class="badge-award">â˜… HONORARY MENTION &bull; im2025 NATIONAL AWARDS</span>
+                    <span class="meta-item">INT 201 STUDIO &bull; MEF UNIVERSITY</span>
+                    <span class="meta-item">MODA SEASIDE, KADIKÃ–Y, Ä°STANBUL</span>
+                </div>
+                <h1 class="hero-title">02 &mdash; STRAY</h1>
+                <p class="hero-core-question">"Is doing nothing doing something?" &bull; "Is it laziness to do (nothing)?" &bull; "Is not doing anything even possible?"</p>
+            </div>
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">02 / THE APPROACH: DESIGNING CONDITIONS</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">Rather than dictating behavior through rigid spatial programming, the project explores how design can create <em>conditions</em> for unpredictable actions.</p>
-    <p class="detail-body">Drawing from Situationism, Psychogeography, and the concept of the <em>Flâneur</em>, STRAY questions the expected urban interior. It shifts focus from prescribing actions (walking, running, passing) to enabling deviations (stopping, wandering, meeting).</p>
-    
-    <div style="margin-top: 40px; padding: 20px; background: rgba(52, 122, 89, 0.05); border-left: 3px solid var(--primary); font-family: monospace; font-size: 1rem; overflow-x: auto; white-space: nowrap;">
-        INTENTION → ACTION → DEVIATION → ENCOUNTER → REACTION → NEW ACTION
-    </div>
+            <!-- Award Highlights Banner -->
+            <div class="award-hero-banner">
+                <div class="award-box">
+                    <span class="award-title">NATIONAL COMPETITION RECOGNITION</span>
+                    <span class="award-subtitle">im2025 National Interior Design Students Awards &mdash; Honorary Mention Award (Mansiyon Ã–dÃ¼lÃ¼)</span>
+                </div>
+                <div class="award-box" style="border-left: 1px solid rgba(224,33,138,0.25); padding-left: 18px;">
+                    <span class="award-title">ACADEMIC STUDIO MENTORSHIP</span>
+                    <span class="award-subtitle">Studio Instructor: Ceren Ã‡elik &bull; INT 201 Interior Design Studio I &bull; MEF University</span>
+                </div>
+            </div>
 
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/stray-board-1.jpg" class="lightbox-trigger" data-index="0" alt="Stray Project - Isometric Diagrams" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-</div>
+            <!-- Key Specs Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">LOCATION</span>
+                    <span class="spec-val">Moda Seaside Promenade &amp; Tree Canopy, KadÄ±kÃ¶y / Ä°stanbul</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Urban Interior &bull; Psychogeographical Sanctuary &bull; Interactive Mark-Making Ramp</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DRAWING SCALES</span>
+                    <span class="spec-val">1/200 Site Context &bull; 1/100 Plans &amp; Sections &bull; 1/50 Details &bull; 3D Axonometrics</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">THEORETICAL PARADIGMS</span>
+                    <span class="spec-val">The FlÃ¢neur &bull; Situationist DÃ©rive &bull; Cat Psychogeography &bull; Slow City</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DIGITAL TOOLS</span>
+                    <span class="spec-val">Rhinoceros 3D, V-Ray, Enscape, Adobe Photoshop, Adobe Illustrator</span>
+                </div>
+            </div>
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">03 / INTERACTIVE SURFACES & MATERIALITY</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">Architecture as an active participant: transferring emotions, experiences, and senses through responsive materials.</p>
-    <p class="detail-body">In STRAY, boundaries are not fixed walls but <strong>moveable interfaces</strong> and <strong>fabric pages</strong>. These interactive surfaces allow the space to be shaped directly by the users, transforming passive visitors into active participants who record and leave physical traces of their encounters.</p>
+            <!-- Hero Dual Visuals: 3D Section Perspective & Exploded Axonometric -->
+            <div class="hero-dual-visual-grid">
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/axonometric_section_3d.jpg', '3D Perspective Section â€” Multi-level cutaway through continuous ramp, workshop void, and The Dark Room.')">
+                    <img src="./assets/axonometric_section_3d.jpg" alt="3D Perspective Section" class="hero-visual-img">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">3D PERSPECTIVE SECTION</span>
+                        <span class="caption-text">Cutaway spatial journey revealing the continuous diagonal ramp, communal workshop voids, rotating surface panels, and upper Dark Room.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
 
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/stray-board-2.jpg" class="lightbox-trigger" data-index="1" alt="Stray Project - Moveable Wall Diagrams and Material Interaction" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-</div>
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/b1_crop_exploded_axonometric.jpg', 'Exploded Axonometric Drawing â€” Structural frame, magenta mesh canopies, vertical circulation and coastal threshold.')">
+                    <img src="./assets/b1_crop_exploded_axonometric.jpg" alt="Exploded Axonometric Drawing" class="hero-visual-img">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">EXPLODED AXONOMETRIC DRAWING</span>
+                        <span class="caption-text">Deconstructed tectonic hierarchy showing ground level threshold, +3.00 workshop, +6.00 Dark Room, and the seaside tree barrier.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">04 / PROGRAMMATIC AMBIGUITY</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">Spatial typologies that blur the line between movement and dwelling.</p>
-    <p class="detail-body">Spaces such as <em>The Ramp</em>, <em>The Dark Room</em>, and <em>The Workshop Area</em> act as physical catalysts. They do not tell people where to go or what to do; instead, they introduce spatial disruptions that provoke curiosity, slowing down movement to encourage spontaneous physical and social interaction.</p>
+        <!-- =========================================================
+             SECTION 01: CONCEPT & PHILOSOPHICAL MANIFESTO
+             ========================================================= -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; PHILOSOPHICAL MANIFESTO &mdash;</span>
+            </div>
 
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/stray-perspective-section.png" class="lightbox-trigger" data-index="3" alt="Stray Project - Perspective Section" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-    
-    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; font-family: monospace; font-size: 1.2rem; gap: 15px; color: #666;">
-        <div>Designed condition</div>
-        <div style="color: var(--primary);">↓</div>
-        <div>Unpredictable behavior</div>
-        <div style="color: var(--primary);">↓</div>
-        <div>Chance encounter</div>
-        <div style="color: var(--primary);">↓</div>
-        <div style="font-weight: bold; color: var(--foreground);">Emergent action</div>
-    </div>
-</div>
+            <!-- Manifesto Cards -->
+            <div class="manifesto-grid">
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>To Stray /streÉª/</h3>
+                    <p>To wander off the usual path. In a hyper-efficient city governed by productivity, straying invites us to be open to unexpected moments, highlighting the immense richness of unplanned encounters.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>The FlÃ¢neur &amp; Aimless Observation</h3>
+                    <p>The flÃ¢neur watches the city closely without a destination, uncovering latent nuances through relaxed observation. Aimless wandering acts as an active form of spatial mindfulness.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Is Doing Nothing Doing Something?</h3>
+                    <p>Challenging the moral guilt of idleness. In modern rhythms, deliberate inactivity becomes a radical catalyst for personal contemplation, sensory awareness, and creative renewal.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Cats as Spatial Guides</h3>
+                    <p>Cats roam the seaside with complete sensory presence, devoid of agendas. They demonstrate that doing nothing is never a void, but a state of heightened perceptual attunement.</p>
+                </div>
+            </div>
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">05 / ANOTHER QUESTION</span>
-    <p class="detail-body">STRAY began by asking what an action is.</p>
-    <p class="detail-body">Instead of defining the actions that should take place, the project evolved into an exploration of how material systems and spatial ambiguity can create conditions for behaviors that cannot be predicted in advance.</p>
-    <p class="detail-body">This left me with another question:</p>
-    <p class="detail-body" style="font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; color: var(--primary); margin-top: 30px; line-height: 1.2;">Can we design an action without designing what the action will be?</p>
-</div>
+            <!-- Bilingual Description Tabs -->
+            <div class="statement-wrapper">
+                <div class="lang-switch-row">
+                    <button type="button" class="lang-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
+                    <button type="button" class="lang-btn" onclick="switchLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                </div>
 
-<div class="detail-section" style="margin-bottom: 80px;">
-    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MORE MEDIA — BOARDS & DRAWINGS</span>
-    <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-        <div class="media-thumb" data-index="0" title="Board 01" style="background-image: url('/assets/stray-board-1.jpg');"></div>
-        <div class="media-thumb" data-index="1" title="Board 02" style="background-image: url('/assets/stray-board-2.jpg');"></div>
-        <div class="media-thumb" data-index="2" title="Board 03" style="background-image: url('/assets/stray-board-3.jpg');"></div>
-        <div class="media-thumb more-media" data-index="3" title="More media" style="background: rgba(52, 122, 89, 0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: var(--primary); font-size: 1.8rem; font-weight: bold; border-radius: 4px; border: 1px dashed rgba(52, 122, 89, 0.4); text-decoration: none;">
-            <span>+11</span>
-            <span style="font-size: 0.75rem; letter-spacing: 1px; font-weight: normal; color: #666; margin-top: 4px;">MORE</span>
+                <div id="pane-en" class="lang-pane active">
+                    <p><strong>STRAY</strong> investigates the boundaries between purposelessness and presence in contemporary urban life. Grounded in 19th-century theories of the <em>FlÃ¢neur</em> (Baudelaire, Walter Benjamin), Situationist <em>dÃ©rive</em> (Guy Debordâ€™s psychogeography), and the <em>Slow City</em> philosophy, the project questions the utilitarian tyranny of efficiency: <em>â€œIs doing nothing doing something?â€</em> and <em>â€œIs it laziness to do (nothing)?â€</em></p>
+                    <p>Situated behind the coastal tree canopy of Moda, KadÄ±kÃ¶y, the building acts as an open urban interior where pedestrians naturally drift inward from the seaside promenade. Rather than prescribing circulation, a continuous multi-level ramp weaves through a series of transformative spatial zones. Visitors encounter semi-outdoor frontyards filtered through vibrant magenta mesh lattices, active mark-making surfaces where they leave physical traces and drawings, flexible moveable-wall workshops, culminating in the contemplative sensory silence of <em>The Dark Room</em>.</p>
+                    <p>By treating wandering as an essential spatial methodology rather than a detour, <strong>STRAY</strong> demonstrates how interior architecture can cultivate moments of collective mindfulness, serendipity, and emotional connection to the city.</p>
+                </div>
+
+                <div id="pane-tr" class="lang-pane">
+                    <p><strong>STRAY</strong>, Ã§aÄŸdaÅŸ kent yaÅŸamÄ±nda amaÃ§sÄ±zlÄ±k ile varoluÅŸ arasÄ±ndaki sÄ±nÄ±rlarÄ± araÅŸtÄ±ran bir mekÃ¢nsal sorgulamadÄ±r. 19. yÃ¼zyÄ±lÄ±n <em>FlÃ¢neur</em> kavramÄ±ndan (Baudelaire, Walter Benjamin), SitÃ¼asyonist <em>dÃ©rive</em> (Guy Debordâ€™un psikocoÄŸrafyasÄ±) pratiklerinden ve <em>Sakin Åehir (Slow City)</em> felsefesinden beslenen proje, faydacÄ± Ã¼retkenlik baskÄ±sÄ±nÄ± sorgular: <em>â€œHiÃ§bir ÅŸey yapmamak bir ÅŸey yapmak mÄ±dÄ±r?â€</em> ve <em>â€œAylaklÄ±k tembellik midir?â€</em></p>
+                    <p>KadÄ±kÃ¶y Moda Sahili boyunca uzanan aÄŸaÃ§ dokusunun arkasÄ±nda konumlanan yapÄ±, yayalarÄ±n sahil hattÄ±ndan iÃ§eriye kendiliÄŸinden sÃ¼rÃ¼klendiÄŸi (straying) bir kentsel iÃ§ mekan gibi kurgulanmÄ±ÅŸtÄ±r. Keskin koridorlar yerine, sÃ¼rekli bir rampa omurgasÄ± katlar arasÄ±nda diyagonal bir yolculuk yaratÄ±r. ZiyaretÃ§iler, pembe metal Ä±zgaralarla filtrelenen yarÄ± aÃ§Ä±k avlulardan, ziyaretÃ§ilerin Ã§izimler ve izler bÄ±raktÄ±ÄŸÄ± etkileÅŸimli yÃ¼zeylere, hareketli duvarlarla dÃ¶nÃ¼ÅŸen atÃ¶lyelere ve en Ã¼stte duyusal bir iÃ§e dÃ¶nÃ¼ÅŸ sunan <em>KaranlÄ±k Oda'ya (The Dark Room)</em> kadar uzanan kesintisiz bir deneyim yaÅŸar.</p>
+                    <p>AylaklÄ±ÄŸÄ± bir sapma deÄŸil, mekÃ¢nÄ± keÅŸfetmenin en derin yolu olarak kabul eden <strong>STRAY</strong>, iÃ§ mimarinin kentte nasÄ±l bir duraklama, tesadÃ¼f ve duygusal temas alanÄ± Ã¼retebileceÄŸini kanÄ±tlar.</p>
+                </div>
+            </div>
+
+            <!-- Conceptual Diagram Visual Card -->
+            <div class="hero-dual-visual-grid" style="margin-top: 24px;">
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/b1_crop_title_header.jpg', 'STRAY Theoretical Typography &amp; Urban Drift Diagram â€” Definitions of FlÃ¢neur, wander, idle, and the coastal urban interior.')">
+                    <img src="./assets/b1_crop_title_header.jpg" alt="STRAY Theoretical Typography" class="hero-visual-img" style="height: 380px;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">THEORETICAL TYPOGRAPHY &amp; VOCABULARY</span>
+                        <span class="caption-text">Deconstructing the terms: <em>wander off, go astray, lose the thread, idle, roam</em> &mdash; Observation &rarr; Reflection &rarr; Connection &rarr; Discovery.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/b1_crop_psychogeography_loop.jpg', 'Psychogeography, Situationism, and the Cat Concept Diagram.')">
+                    <img src="./assets/b1_crop_psychogeography_loop.jpg" alt="Psychogeography &amp; Cat Concept" class="hero-visual-img" style="height: 380px;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">PSYCHOGEOGRAPHY &amp; THE CAT CONCEPT</span>
+                        <span class="caption-text">Mapping the cat as a model of non-utilitarian presence: wandering without a destination, heightened sensory awareness, and spontaneous city appropriation.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 02: PSYCHOGEOGRAPHY & SITUATIONIST DRIFT
+             ========================================================= -->
+        <section id="psychogeography" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">PSYCHOGEOGRAPHY &amp; SITUATIONIST DRIFT &mdash;</span>
+            </div>
+
+            <!-- 4-Stage Behavioral Loop -->
+            <div class="drift-loop-grid">
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 01</span>
+                    <h4 class="drift-step-title">DISCONNECTION</h4>
+                    <p class="drift-step-desc">Detaching from the prescribed velocity, schedule, and linear paths of the city. Crossing the Moda tree threshold.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 02</span>
+                    <h4 class="drift-step-title">DRIFTING (DÃ‰RIVE)</h4>
+                    <p class="drift-step-desc">Allowing spatial curiosity and subtle light/shadow conditions to steer movement rather than functional destinations.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 03</span>
+                    <h4 class="drift-step-title">CURIOSITY &amp; TRACE</h4>
+                    <p class="drift-step-desc">Engaging with rotating tactile surfaces on the ramp, scribbling thoughts, creating physical records of passing presence.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 04</span>
+                    <h4 class="drift-step-title">DISCOVERY &amp; STILLNESS</h4>
+                    <p class="drift-step-desc">Arriving at The Dark Room; transitioning from outer spatial drift into deep internal mindfulness and sensory pause.</p>
+                </div>
+            </div>
+
+            <!-- Triad of Philosophical Frameworks -->
+            <div class="triad-grid">
+                <div class="triad-card">
+                    <h4>PSYCHOGEOGRAPHY</h4>
+                    <p>Exploring the urban landscape not just as physical matter, but as an affective, emotional terrain shaped by subjective feelings and collective memories.</p>
+                </div>
+                <div class="triad-card">
+                    <h4>SITUATIONISM</h4>
+                    <p>Urges urban dwellers to break from automated routine, constructing ephemeral situations that uncover hidden emotions and unexpected connections.</p>
+                </div>
+                <div class="triad-card">
+                    <h4>SLOW CITY (CITTASLOW)</h4>
+                    <p>Promotes a relaxed, contemplative tempo of life in the city, enabling people to notice overlooked details and foster authentic community belonging.</p>
+                </div>
+            </div>
+
+            <!-- Context Elevation Card -->
+            <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/b1_crop_facade_elevation.jpg', 'Facade Elevation in Historic Context â€” Dialogue between 19th-century KadÄ±kÃ¶y residential architecture and the contemporary mesh intervention.')">
+                <img src="./assets/b1_crop_facade_elevation.jpg" alt="Facade Elevation in Historic Context" class="hero-visual-img" style="height: 440px; object-fit: contain; background: #fafbfa;">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">FACADE ELEVATION &amp; HISTORIC CONTEXT</span>
+                    <span class="caption-text">Contextual dialogue: The contemporary intervention with perforated magenta screens, cumba/bay observation nooks, and a transparent circulation tower set against the historic masonry balconies of Moda.</span>
+                    <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 03: TECTONICS, SURFACES & MOVEABLE SCREENS
+             ========================================================= -->
+        <section id="tectonics" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">TECTONICS, SURFACES &amp; MOVEABLE SCREENS &mdash;</span>
+            </div>
+
+            <!-- Moveable Wall System Diagram -->
+            <div class="cases-diagram-card zoomable-image-container" onclick="openLightbox('./assets/diagram_moveable_walls.jpg', 'Moveable Wall System Diagrams â€” 4 operational configurations, ceiling track guide plan (1/50), and storage within structure.')">
+                <img src="./assets/diagram_moveable_walls.jpg" alt="Moveable Wall System Diagrams" class="cases-diagram-img">
+                <div class="cases-footer">
+                    <span class="caption-tag">THE 4-CASE MOVEABLE WALL SYSTEM</span>
+                    <p class="caption-text" style="margin-top: 4px;">Suspended from a modular 1/50 ceiling track system, sliding woven magenta wall panels allow the ground and workshop levels to metamorphose dynamically:</p>
+                    <div class="cases-grid-desc">
+                        <div class="case-item">
+                            <span class="case-tag">CASE 01</span>
+                            <div class="case-name">CONTINUOUS FLOW</div>
+                            <p class="case-p">Panels retracted to allow completely seamless, unobstructed circulation between the frontyard and research archive.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 02</span>
+                            <div class="case-name">PRIVATE ALCOVES</div>
+                            <p class="case-p">Partitions deployed diagonally to form intimate study alcoves and quiet reading pods for solitary visitors.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 03</span>
+                            <div class="case-name">WORKSHOP &amp; EXHIBIT</div>
+                            <p class="case-p">Panels arranged perpendicular to daylight to form exhibition pin-up surfaces and collaborative workshop zones.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 04</span>
+                            <div class="case-name">STRUCTURAL STORAGE</div>
+                            <p class="case-p">All 4 moveable plaques nest fully flush within the thickness of the structural column grid, completely disappearing.</p>
+                        </div>
+                    </div>
+                    <span class="zoom-hint" style="display: block; margin-top: 10px;">[ CLICK TO EXPAND DIAGRAM â†— ]</span>
+                </div>
+            </div>
+
+            <!-- Tactile Surfaces Dual Visual -->
+            <div class="surfaces-dual-grid">
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/diagram_interactive_surfaces.jpg', 'Interactive Mark-Making Surfaces &amp; Material Dispensers â€” Transferring emotions, experiences, and senses.')">
+                    <img src="./assets/diagram_interactive_surfaces.jpg" alt="Interactive Surfaces Diagram" class="hero-visual-img" style="height: 420px; object-fit: contain; background: #fafbfa;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">ROTATING MATERIAL DISPENSER</span>
+                        <span class="caption-text">Surfaces along the ramp are wrapped weekly in rotating materials (kraft paper, raw canvas, touch-sensitive sheets, chalk coatings) allowing visitors to leave tactile traces of their presence.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/perspective_ramp_interior.jpg', 'The Ramp Interior Journey (View Q) â€” Visitors scribbling and drawing upon rotating surface skins as they ascend.')">
+                    <img src="./assets/perspective_ramp_interior.jpg" alt="The Ramp Interior Mark-Making" class="hero-visual-img" style="height: 420px; object-fit: cover;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">THE RAMP EXPERIENCE (VIEW Q)</span>
+                        <span class="caption-text">Ascending through the vibrant magenta ramp volume; visitors stop spontaneously to draw, write ("i love scribbling!"), and engage in unscripted creative dialogues.</span>
+                        <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 04: ARCHITECTURAL DRAWINGS & SCALES
+             ========================================================= -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">ARCHITECTURAL DRAWINGS &amp; TECHNICAL SCALES &mdash;</span>
+            </div>
+
+            <div class="drawings-grid">
+                <!-- 1/100 Ground Floor Plan -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/plan_ground_floor_100.jpg', '1/100 Ground Floor Plan (Â±0.00) â€” Entrance threshold, frontyard, ramp arrival, kitchenette, and research archive.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/plan_ground_floor_100.jpg" alt="1/100 Ground Floor Plan" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/100 SCALE &bull; PLAN</span>
+                        <h4 class="drawing-title">Ground Floor Plan (Â±0.00)</h4>
+                        <p class="drawing-desc">Entrance courtyard, frontyard threshold, ramp starting point, kitchenette, and public research space surrounded by coastal trees.</p>
+                    </div>
+                </div>
+
+                <!-- 1/50 Ground Detailed Plan -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/plan_ground_floor_50.jpg', '1/50 Ground Detailed Plan (Â±0.00) â€” Precise joinery, sliding wall ceiling tracks, kitchenette millwork, and toilet.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/plan_ground_floor_50.jpg" alt="1/50 Ground Detailed Plan" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/50 SCALE &bull; DETAIL PLAN</span>
+                        <h4 class="drawing-title">Detailed Plan &amp; Kitchenette (Â±0.00)</h4>
+                        <p class="drawing-desc">Precision architectural layout of the kitchenette, mobile wall storage within the structural core, and ceiling track alignment.</p>
+                    </div>
+                </div>
+
+                <!-- 1/100 First Floor Plan -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/plan_first_floor_100.jpg', '1/100 First Floor Plan (+3.00) â€” Workshop area, central ramp void, and observation balcony.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/plan_first_floor_100.jpg" alt="1/100 First Floor Plan" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/100 SCALE &bull; PLAN</span>
+                        <h4 class="drawing-title">First Floor Workshop Plan (+3.00)</h4>
+                        <p class="drawing-desc">Double-height workshop volume, intermediate ramp mezzanine overlooking the central void, and observation balustrades.</p>
+                    </div>
+                </div>
+
+                <!-- 1/100 Second Floor Plan -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/plan_second_floor_100.jpg', '1/100 Second Floor Plan (+6.00) â€” The Dark Room, quiet contemplative pods, and upper ramp arrival.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/plan_second_floor_100.jpg" alt="1/100 Second Floor Plan" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/100 SCALE &bull; PLAN</span>
+                        <h4 class="drawing-title">Second Floor &amp; Dark Room (+6.00)</h4>
+                        <p class="drawing-desc">The sensory enclave of The Dark Room, surrounded by quiet sitting spots, daylight shadow slits, and rooftop overlook.</p>
+                    </div>
+                </div>
+
+                <!-- 1/100 Longitudinal Section AA' -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/section_aa_longitudinal_100.jpg', '1/100 AA\' Longitudinal Section â€” Continuous diagonal journey of the ramp across all 3 storeys.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/section_aa_longitudinal_100.jpg" alt="1/100 AA' Longitudinal Section" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/100 SCALE &bull; SECTION</span>
+                        <h4 class="drawing-title">Longitudinal Section AA'</h4>
+                        <p class="drawing-desc">Multi-story sectional journey showing the ramp's continuous ascent, spatial voids, sightlines between levels, and facade bay windows.</p>
+                    </div>
+                </div>
+
+                <!-- 1/100 Cross Section BB' -->
+                <div class="drawing-card zoomable-image-container" onclick="openLightbox('./assets/section_bb_cross_100.jpg', '1/100 BB\' Cross Section â€” Spatial relation between double-height voids and suspended ceiling lattice.')">
+                    <div class="drawing-img-box">
+                        <img src="./assets/section_bb_cross_100.jpg" alt="1/100 BB' Cross Section" class="drawing-img">
+                    </div>
+                    <div class="drawing-info">
+                        <span class="drawing-scale-tag">1/100 SCALE &bull; SECTION</span>
+                        <h4 class="drawing-title">Cross Section BB'</h4>
+                        <p class="drawing-desc">Transverse cut showing void relationships, suspended magenta ceiling canopies, and lighting baffle integration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 05: EXPERIENTIAL PERSPECTIVES & ATMOSPHERE
+             ========================================================= -->
+        <section id="perspectives" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">EXPERIENTIAL PERSPECTIVES &amp; ATMOSPHERE &mdash;</span>
+            </div>
+
+            <div class="perspectives-grid">
+                <!-- View A: The Ramp (Seaside Approach) -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_ramp.jpg', 'View A: The Ramp â€” Seaside approach through the Moda coastline tree canopy.')">
+                    <img src="./assets/render_the_ramp.jpg" alt="View A: The Ramp" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW A &bull; COASTAL THRESHOLD</span>
+                        <h4 class="persp-title">Seaside Approach &amp; Trees</h4>
+                        <p class="persp-desc">The surrounding mature trees create a natural visual barrier between Moda Seaside and the building; passersby discover the entrance serendipitously while wandering along the coast.</p>
+                    </div>
+                </div>
+
+                <!-- View B: The Frontyard Porch -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_frontyard_1.jpg', 'View B: The Frontyard â€” Semi-outdoor transitional porch with filtered magenta lattice screens.')">
+                    <img src="./assets/render_the_frontyard_1.jpg" alt="View B: The Frontyard" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW B &bull; SEMI-OUTDOOR PORCH</span>
+                        <h4 class="persp-title">The Frontyard Lattice Screens</h4>
+                        <p class="persp-desc">Perforated magenta steel mesh screens filter sunlight into dappled geometric patterns, softly buffering the transition from public street to inner sanctuary.</p>
+                    </div>
+                </div>
+
+                <!-- View C: The Frontyard Courtyard -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_frontyard_2.jpg', 'View C: The Frontyard Courtyard â€” Threshold looking toward the building entrance.')">
+                    <img src="./assets/render_the_frontyard_2.jpg" alt="View C: The Frontyard Courtyard" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW C &bull; COURTYARD THRESHOLD</span>
+                        <h4 class="persp-title">Courtyard Looking Inward</h4>
+                        <p class="persp-desc">Layered view through timber studs and pink mesh screens, teasing glimpses of interior activity and drawing curious wanderers into the ramp ascent.</p>
+                    </div>
+                </div>
+
+                <!-- View D: The Research Area -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_research_area.jpg', 'View D: The Research Area â€” Ground level interactive studio, timber counters, and vibrant magenta ceiling grid.')">
+                    <img src="./assets/render_the_research_area.jpg" alt="View D: The Research Area" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW D &bull; GROUND LEVEL STUDIO</span>
+                        <h4 class="persp-title">The Research Archive &amp; Kitchenette</h4>
+                        <p class="persp-desc">Ground floor communal hub where recorded mark-making surfaces are brought after each cycle to be studied, cataloged, and archived alongside informal coffee stations.</p>
+                    </div>
+                </div>
+
+                <!-- View E: The Dark Room -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_dark_room.jpg', 'View E: The Dark Room â€” Introspective silence illuminated solely by morning daylight and ascending silhouettes.')">
+                    <img src="./assets/render_the_dark_room.jpg" alt="View E: The Dark Room" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW E &bull; SENSORY ENCLAVE</span>
+                        <h4 class="persp-title">The Dark Room (+6.00)</h4>
+                        <p class="persp-desc">Free of artificial interior lighting; lit solely by natural morning daylight entering through floor-level slits, casting moving shadows of people ascending the ramp outside.</p>
+                    </div>
+                </div>
+
+                <!-- View F: The Workshop Area -->
+                <div class="perspective-card zoomable-image-container" onclick="openLightbox('./assets/render_the_workshop_area.jpg', 'View F: The Workshop Area â€” Vibrant double-height collaborative space with exposed magenta ceiling joists.')">
+                    <img src="./assets/render_the_workshop_area.jpg" alt="View F: The Workshop Area" class="perspective-img">
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW F &bull; FIRST FLOOR VOID</span>
+                        <h4 class="persp-title">The Workshop Area (+3.00)</h4>
+                        <p class="persp-desc">Dynamic double-height workshop and gathering space framed by moveable perforated wall screens, pink ceiling beams, and visual apertures connecting to the ramp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 06: MASTER JURY SHEETS & POSTERS (5000Ã—2857PX)
+             ========================================================= -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">MASTER JURY PRESENTATION SHEETS (5000&times;2857PX) &mdash;</span>
+            </div>
+
+            <div class="boards-showcase-grid">
+                <!-- Board 1 -->
+                <div class="board-card-full">
+                    <div class="board-header-bar">
+                        <div class="board-title-group">
+                            <span class="board-num">BOARD 01</span>
+                            <span class="board-name">THEORY, MANIFESTO, PSYCHOGEOGRAPHY &amp; EXPLODED AXONOMETRIC</span>
+                            <span class="board-specs">5000 &times; 2857 PX &bull; HIGH-RES VECTOR SHEET</span>
+                        </div>
+                        <div class="board-actions">
+                            <button type="button" class="board-btn board-btn-primary" onclick="openLightbox('./assets/stray_board_1_full.jpg', 'Master Board 01 â€” Full resolution jury presentation board')">EXPAND BOARD â†—</button>
+                            <a href="./assets/stray_board_1_full.jpg" download="STRAY_Board_01_Elifsu_Genc.jpg" class="board-btn board-btn-secondary">DOWNLOAD (2.2 MB) â†“</a>
+                        </div>
+                    </div>
+                    <div class="board-img-container" onclick="openLightbox('./assets/stray_board_1_full.jpg', 'Master Board 01 â€” Full resolution jury presentation board')">
+                        <img src="./assets/stray_board_1_full.jpg" alt="Master Board 01" class="board-img" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- Board 2 -->
+                <div class="board-card-full">
+                    <div class="board-header-bar">
+                        <div class="board-title-group">
+                            <span class="board-num">BOARD 02</span>
+                            <span class="board-name">GROUND LEVEL TECTONICS, 1/100 &amp; 1/50 PLANS, MOVEABLE WALLS &amp; RENDERS</span>
+                            <span class="board-specs">5000 &times; 2857 PX &bull; HIGH-RES VECTOR SHEET</span>
+                        </div>
+                        <div class="board-actions">
+                            <button type="button" class="board-btn board-btn-primary" onclick="openLightbox('./assets/stray_board_2_full.jpg', 'Master Board 02 â€” Full resolution jury presentation board')">EXPAND BOARD â†—</button>
+                            <a href="./assets/stray_board_2_full.jpg" download="STRAY_Board_02_Elifsu_Genc.jpg" class="board-btn board-btn-secondary">DOWNLOAD (2.1 MB) â†“</a>
+                        </div>
+                    </div>
+                    <div class="board-img-container" onclick="openLightbox('./assets/stray_board_2_full.jpg', 'Master Board 02 â€” Full resolution jury presentation board')">
+                        <img src="./assets/stray_board_2_full.jpg" alt="Master Board 02" class="board-img" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- Board 3 -->
+                <div class="board-card-full">
+                    <div class="board-header-bar">
+                        <div class="board-title-group">
+                            <span class="board-num">BOARD 03</span>
+                            <span class="board-name">UPPER LEVELS, 1/100 PLANS &amp; SECTIONS, 3D PERSPECTIVE SECTION &amp; DARK ROOM</span>
+                            <span class="board-specs">5000 &times; 2857 PX &bull; HIGH-RES VECTOR SHEET</span>
+                        </div>
+                        <div class="board-actions">
+                            <button type="button" class="board-btn board-btn-primary" onclick="openLightbox('./assets/stray_board_3_full.jpg', 'Master Board 03 â€” Full resolution jury presentation board')">EXPAND BOARD â†—</button>
+                            <a href="./assets/stray_board_3_full.jpg" download="STRAY_Board_03_Elifsu_Genc.jpg" class="board-btn board-btn-secondary">DOWNLOAD (2.3 MB) â†“</a>
+                        </div>
+                    </div>
+                    <div class="board-img-container" onclick="openLightbox('./assets/stray_board_3_full.jpg', 'Master Board 03 â€” Full resolution jury presentation board')">
+                        <img src="./assets/stray_board_3_full.jpg" alt="Master Board 03" class="board-img" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             BOTTOM NAVIGATION
+             ========================================================= -->
+        <footer class="project-footer-nav">
+            <a href="../sprouting-garden/" class="nav-bottom-link">
+                <span class="nav-dir-lbl">&larr; PREVIOUS PROJECT</span>
+                <span class="nav-dir-title">01 &mdash; SPROUTING GARDEN</span>
+            </a>
+            <a href="../../index.html#card-stray" class="back-link" style="padding: 10px 22px;">
+                <span>[ BACK TO MAIN DIRECTORY ]</span>
+            </a>
+            <a href="../wood-weave/" class="nav-bottom-link" style="text-align: right;">
+                <span class="nav-dir-lbl">NEXT PROJECT &rarr;</span>
+                <span class="nav-dir-title">04 &mdash; WOOD WEAVE</span>
+            </a>
+        </footer>
+
+    </main>
+
+    <!-- =========================================================
+         LIGHTBOX MODAL
+         ========================================================= -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox(event)">
+        <div class="lightbox-topbar">
+            <span id="lightbox-title" class="lightbox-title">IMAGE TITLE</span>
+            <button type="button" class="lightbox-close-btn" onclick="closeLightboxDirect()">[ CLOSE &times; ]</button>
         </div>
+        <div class="lightbox-content-area">
+            <img id="lightbox-img" src="" alt="Enlarged view" class="lightbox-full-img">
+        </div>
+        <div id="lightbox-caption" class="lightbox-caption-bottom">Caption text</div>
     </div>
-</div>
 
-<div style="border-top: 1px dashed rgba(52,122,89,0.3); padding-top: 40px; margin-bottom: 40px; font-size: 0.85rem; color: #888; font-family: monospace; line-height: 1.6;">
-    <strong style="color: var(--primary);">Individual Academic Project</strong><br>
-    Interior Architecture<br>
-    Role: Research, spatial design, system development, technical drawings, visualization
-</div>
+    <!-- Scripts -->
+    <script>
+        // Custom cursor tracking
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const customCursor = document.getElementById('custom-cursor');
 
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/wood-weave/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Wood Weave</span>
-      </a>
-      <a href="/projects/bio-decay/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Bio-Decay</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const wrapper = document.querySelector('.stray-title-wrapper');
-    const words = document.querySelectorAll('.scatter-word');
-    let isScattered = false;
-    
-    // Make individual words disappear on click
-    words.forEach(w => {
-        w.addEventListener('click', (e) => {
-            e.stopPropagation();
-            w.style.transition = 'opacity 0.5s ease';
-            w.style.opacity = '0';
-        });
-    });
+        if (cursorWrapper && customCursor) {
+            window.addEventListener('mousemove', (e) => {
+                cursorWrapper.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            });
 
-    const scatter = () => {
-        if (isScattered) return;
-        isScattered = true;
-        
-        words.forEach(w => {
-            // Random direction outwards
-            const angle = Math.random() * Math.PI * 2;
-            
-            // Random distance to scatter
-            const distance = 150 + Math.random() * 250;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
-            
-            // Very slight rotation so it stays readable (-15 to 15 degrees)
-            const rot = (Math.random() - 0.5) * 30;
-            
-            // Fast start, slow glide (billiard ball effect)
-            w.style.transition = 'transform 10s cubic-bezier(0.1, 1, 0.2, 1)';
-            
-            // Apply transformation
-            w.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(1.1)`;
-        });
-    };
-
-    wrapper.addEventListener('click', scatter);
-
-    window.addEventListener('scroll', () => {
-        const rect = wrapper.getBoundingClientRect();
-        if (rect.top <= 86) { // header height
-            scatter();
+            document.querySelectorAll('a, button, .zoomable-image-container, .board-img-container').forEach(el => {
+                el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-hover'));
+            });
         }
-    });
-});
 
-// Gallery & Lightbox Logic
-document.addEventListener("DOMContentLoaded", () => {
-    const galleryItems = [
-        { src: '/assets/stray-board-1.jpg', label: 'Board 01 — Concept & Urban Analysis' },
-        { src: '/assets/stray-board-2.jpg', label: 'Board 02 — Plans & Responsive Interfaces' },
-        { src: '/assets/stray-board-3.jpg', label: 'Board 03 — Perspective Section & Spatial Proposals' },
-        { src: '/assets/stray_crop_b2_1.jpg', label: 'Detail — Moveable Walls' },
-        { src: '/assets/stray_crop_b2_2.jpg', label: 'Detail — Door Diagram' },
-        { src: '/assets/stray_crop_b2_3.jpg', label: 'Detail — Ceiling Plan' },
-        { src: '/assets/stray_crop_b2_4.jpg', label: 'Detail — Storage' },
-        { src: '/assets/stray_crop_b2_5.jpg', label: 'Detail — Interactive Surfaces' },
-        { src: '/assets/stray_crop_b2_6.jpg', label: 'Detail — Movable Plaques' },
-        { src: '/assets/stray_crop_b3_1.jpg', label: 'Detail — Sketches' },
-        { src: '/assets/stray_crop_b3_2.jpg', label: 'Detail — Section AA\'' },
-        { src: '/assets/stray_crop_b3_3.jpg', label: 'Detail — Views' },
-        { src: '/assets/stray_crop_b3_4.jpg', label: 'Detail — The Dark Room' },
-        { src: '/assets/stray_crop_b3_5.jpg', label: 'Detail — The Workshop Area' }
-    ];
-    let currentImageIndex = 0;
-    let isZoomed = false;
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const counter = document.querySelector('.lightbox-counter');
-
-    document.querySelectorAll('.media-thumb, .lightbox-trigger').forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-            currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
-            showImage(currentImageIndex);
-            lightbox.hidden = false;
-        });
-    });
-
-    function showImage(index) {
-        if (index < 0) index = galleryItems.length - 1;
-        if (index >= galleryItems.length) index = 0;
-        currentImageIndex = index;
-        
-        isZoomed = false;
-        lightboxImg.classList.remove('zoomed');
-        lightboxImg.style.transformOrigin = 'center center';
-        
-        lightboxImg.src = galleryItems[currentImageIndex].src;
-        counter.textContent = `${currentImageIndex + 1} / ${galleryItems.length} — ${galleryItems[currentImageIndex].label}`;
-    }
-    
-    function panImage(e) {
-        if (!isZoomed) return;
-        const rect = lightboxImg.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-        lightboxImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-    }
-
-    lightboxImg.addEventListener('click', (e) => {
-        e.stopPropagation();
-        isZoomed = !isZoomed;
-        if (isZoomed) {
-            lightboxImg.classList.add('zoomed');
-            panImage(e);
-        } else {
-            lightboxImg.classList.remove('zoomed');
-            lightboxImg.style.transformOrigin = 'center center';
+        // Bilingual toggle
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.lang-pane').forEach(p => p.classList.remove('active'));
+            
+            if (lang === 'tr') {
+                document.querySelector('.lang-btn:nth-child(2)').classList.add('active');
+                document.getElementById('pane-tr').classList.add('active');
+            } else {
+                document.querySelector('.lang-btn:nth-child(1)').classList.add('active');
+                document.getElementById('pane-en').classList.add('active');
+            }
         }
-    });
 
-    lightboxImg.addEventListener('mousemove', (e) => {
-        if (isZoomed) panImage(e);
-    });
+        // Lightbox Functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxCaption = document.getElementById('lightbox-caption');
 
-    document.querySelector('.lightbox-close').addEventListener('click', () => {
-        lightbox.hidden = true;
-    });
-    document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex - 1);
-    });
-    document.querySelector('.lightbox-next').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex + 1);
-    });
-    // Close only on background click, not on image
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) lightbox.hidden = true;
-    });
-});
-</script>
+        function openLightbox(src, caption) {
+            if (!lightbox || !lightboxImg) return;
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption || '';
+            lightboxTitle.textContent = caption ? caption.split('â€”')[0].trim() : 'FULL ARCHITECTURAL VIEW';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-<div id="lightbox" class="lightbox" hidden>
-    <button class="lightbox-close">×</button>
-    <button class="lightbox-prev">❮</button>
-    <img id="lightbox-img" src="" alt="Gallery Image">
-    <button class="lightbox-next">❯</button>
-    <div class="lightbox-counter">1 / 5</div>
-</div>
-</body></html>
+        function closeLightboxDirect() {
+            if (!lightbox) return;
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
+        function closeLightbox(e) {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content-area')) {
+                closeLightboxDirect();
+            }
+        }
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+                closeLightboxDirect();
+            }
+        });
+
+        // Quicklinks active observer on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.section-quicklinks a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(sec => {
+                const secTop = sec.offsetTop - 120;
+                if (window.pageYOffset >= secTop) {
+                    current = sec.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, { passive: true });
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

@@ -1,217 +1,568 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bajo La Fresca · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer>
-<style>
-/* Gallery & Lightbox Styles */
-.media-thumb {
-    aspect-ratio: 1;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.media-thumb:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-.lightbox {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.95);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.lightbox[hidden] {
-    display: none !important;
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px; right: 20px;
-    background: none; border: none;
-    color: white; font-size: 2rem; cursor: pointer;
-    z-index: 10000;
-}
-.lightbox-prev, .lightbox-next {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: none; border: none;
-    color: white; font-size: 2rem; cursor: pointer;
-    z-index: 10000;
-    padding: 20px;
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
-    cursor: zoom-in;
-}
-.lightbox img.zoomed {
-    cursor: grab;
-    transform: scale(2);
-}
-.lightbox img.zoomed:active {
-    cursor: grabbing;
-}
-.lightbox-counter {
-    position: absolute;
-    bottom: 20px; left: 50%; transform: translateX(-50%);
-    color: rgba(255,255,255,0.7);
-    font-family: monospace; font-size: 0.9rem;
-    pointer-events: none;
-}
-</style>
-</head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading" style="margin-bottom: 10px; min-height: auto;"><span class="eyebrow">PROJECT</span><h1 data-en='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>' data-tr='Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span>'>Bajo La <span style="white-space: nowrap;">Fresca<span class="accent">.</span> <span style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; color: var(--primary); font-style: italic; letter-spacing: 0.05em; vertical-align: middle; margin-left: 10px;">/ˈbaxo la ˈfɾeska/</span></span></h1><div class="project-tags" style="display: flex; gap: 12px; margin-top: 5px; align-items: center; flex-wrap: wrap;">
-    <img src="/assets/tags/constructed.png" alt="Constructed" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/ecological.png" alt="Ecological" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/experimental.png" alt="Experimental" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/material-agency.png" alt="Material Agency" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;"></div></div><div class="detail-body">
-        <p style="font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.4; color: var(--primary); margin-bottom: 30px; font-weight: 500;"><em style="color: var(--fg);">bajo la fresca:</em><br>Derived from a combination of <i>'bajo'</i> (under) and <i>'a la fresca'</i> (in the cool air), it refers to the Spanish tradition of sitting outside in the evening to relax and socialize.</p>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07 â€” BAJO LA FRESCA | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Subtle Architectural Blueprint Grid Background -->
+    <div class="blueprint-bg"></div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; font-size: 0.9rem; color: #888; line-height: 1.5; letter-spacing: 0.02em;">
-        <div>
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">TEAM</strong>
-            <span>Sara Serés Béjar<br>Özgün Ege Bilgiç<br>Elifsu Genç</span>
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-bajo-la-fresca" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">07</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">BAJO LA FRESCA</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#context">CONTEXT</a>
+                <a href="#refuge">REFUGE</a>
+                <a href="#site">SITE</a>
+                <a href="#intervention">INTERVENTION</a>
+                <a href="#process">PROCESS</a>
+                <a href="#scent">SCENT</a>
+                <a href="#gallery">GALLERY</a>
+                <a href="#statement">STATEMENT</a>
+            </nav>
         </div>
-        <div>
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">SITE</strong>
-            <span>Patio San Basilio 44<br>Córdoba, Spain<br><a href="https://maps.app.goo.gl/e17ZMPvRNaurZm6VA" target="_blank" style="display: inline-block; margin-top: 8px; color: var(--primary); text-decoration: underline; font-weight: 500;">Map / Installation Sites ↗</a></span>
-        </div>
-        <div>
-            <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">CONTEXT</strong>
-            <span>Festival Efímera<br><a href="https://instagram.com/efimera_fest" target="_blank" style="display: inline-block; margin-top: 8px; color: var(--primary); text-decoration: underline; font-weight: 500;">Festival: @efimera_fest ↗</a></span>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">CONTEXTUAL RESEARCH &amp; SPATIAL INSTALLATION &bull; 2026</span>
+                    <span class="meta-item">PATIO SAN BASILIO 44 &bull; CÃ“RDOBA, SPAIN</span>
+                    <span class="meta-item">COLLABORATORS: SARA SERÃ‰S BÃ‰JAR, Ã–ZGÃœN EGE BÄ°LGÄ°Ã‡, ELÄ°FSU GENÃ‡</span>
+                </div>
+                <h1 class="hero-title">07 &mdash; BAJO LA FRESCA</h1>
+                <p class="hero-sub-etymology">/Ëˆbaxo la ËˆfÉ¾eska/ &mdash; Under the Cool Air: Coexistence &bull; Atmosphere &bull; Refuge</p>
+                <p class="hero-core-question">&ldquo;How do you highlight beauty without stealing its spotlight?&rdquo;</p>
+            </div>
+
+            <!-- Project Highlights Banner -->
+            <div class="award-hero-banner">
+                <div class="award-box">
+                    <span class="award-title">THE &ldquo;TOMAR EL FRESCO&rdquo; TRADITION</span>
+                    <span class="award-subtitle">Deeply rooted in the Andalusian ritual of moving outdoors into courtyards and alleys as dusk falls, gathering to socialise, unwind, and inhale the restorative evening cool.</span>
+                </div>
+                <div class="award-box" style="border-left: 1px solid var(--border-light); padding-left: 20px;">
+                    <span class="award-title">MICROCLIMATIC REFUGE &amp; SENSORY AERIAL GARDEN</span>
+                    <span class="award-subtitle">Reinterpreting the UNESCO-recognized Cordoban courtyard through an undulating, scent-diffusing textile canopy carrying gradient-dyed citrus cotton petals to expand limited vertical planting space.</span>
+                </div>
+            </div>
+
+            <!-- Key Specs Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Ephemeral Spatial Installation &bull; Microclimate Pavilion &bull; Olfactory Canopy</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">LOCATION &amp; SITE</span>
+                    <span class="spec-val">Patio San Basilio 44 &bull; Barrio San Basilio, CÃ³rdoba, Spain</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DESIGN TEAM</span>
+                    <span class="spec-val">Elifsu GenÃ§ &bull; Sara SerÃ©s BÃ©jar &bull; Ã–zgÃ¼n Ege BilgiÃ§</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PRIMARY MEDIUM</span>
+                    <span class="spec-val">Pleated Lightweight Textile &bull; Gradient Dyed Cotton &bull; Citrus Essences &bull; Suspension Ropes</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">CLIMATIC FUNCTION</span>
+                    <span class="spec-val">Passive Shading &bull; Evaporative Air Cooling &bull; Botanical Mosquito Repellent Diffusion</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">INITIATIVE &amp; WORKSHOP</span>
+                    <span class="spec-val">AA (Architectural Association) Visiting School CÃ³rdoba &bull; MuDD Architects</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">HERITAGE CONTEXT</span>
+                    <span class="spec-val">UNESCO Intangible Cultural Heritage of Humanity &bull; Fiesta de los Patios</span>
+                </div>
+            </div>
+
+            <!-- Hero Showcase Image -->
+            <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/bajo-la-fresca-courtyard-wide.jpg', 'Bajo La Fresca â€” Installation suspended across Patio San Basilio 44, CÃ³rdoba, Spain')">
+                <img src="./assets/bajo-la-fresca-courtyard-wide.jpg" alt="Bajo La Fresca Installation in Patio San Basilio 44" class="hero-visual-img">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">PATIO SAN BASILIO 44</span>
+                    <span class="caption-text">The lightweight pleated canopy spanning the whitewashed courtyard between bougainvillea canopies, clay-tiled roofs, and hanging scent pouches.</span>
+                    <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 01: CONTEXT & HISTORICAL LINCHPINS -->
+        <section id="context" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">HISTORICAL LINEAGE // PATIOS DE CÃ“RDOBA</span>
+            </div>
+
+            <p class="section-lead-text">
+                The courtyards of CÃ³rdoba are far more than private domestic voids; they represent a communal, century-old architectural technology of survival and celebration against the scorching Andalusian climate. Originating in Roman domus and Islamic riad typologies, the patio evolved into a collective courtyard surrounded by family dwellings:
+            </p>
+
+            <div class="timeline-grid">
+                <div class="timeline-card">
+                    <span class="timeline-year">1918</span>
+                    <span class="timeline-label">Patios Opened to Public</span>
+                    <p class="card-text">Courtyard doors were first formally opened to neighbors and townspeople for communal gatherings.</p>
+                </div>
+                <div class="timeline-card">
+                    <span class="timeline-year">1921</span>
+                    <span class="timeline-label">First Patio Competition</span>
+                    <p class="card-text">The CÃ³rdoba City Council established the official *Concurso de Patios*, celebrating architectural and floral care.</p>
+                </div>
+                <div class="timeline-card">
+                    <span class="timeline-year">1956</span>
+                    <span class="timeline-label">Festival de los Patios</span>
+                    <p class="card-text">The annual spring celebration became institutionalized as a premier Andalusian cultural festival.</p>
+                </div>
+                <div class="timeline-card">
+                    <span class="timeline-year">2012</span>
+                    <span class="timeline-label">UNESCO Inscription</span>
+                    <p class="card-text">Officially inscribed onto the UNESCO Representative List of the Intangible Cultural Heritage of Humanity.</p>
+                </div>
+            </div>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/slide-02-historic-patio-1923.jpg', 'Patios de CÃ³rdoba, 1923 â€” Archivo Municipal de CÃ³rdoba / Photograph by Rafael GarzÃ³n Herranz')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/slide-02-historic-patio-1923.jpg" alt="Historic Patio 1923" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">ARCHIVAL FOOTAGE &bull; 1923</span>
+                        <h3 class="card-title">Intergenerational Living Memory</h3>
+                        <p class="card-text">
+                            Rafael GarzÃ³n Herranz's iconic 1923 photograph in the Municipal Archives of CÃ³rdoba captures families gathered under climbing ivy and courtyard window shutters. The patio has always functioned as an outdoor domestic living room where child-rearing, domestic work, and neighborly storytelling coexist.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/slide-04-tomar-el-fresco-community.jpg', 'Tomar el Fresco â€” Community gathering under courtyard awnings and climbing plants')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/slide-04-tomar-el-fresco-community.jpg" alt="Tomar El Fresco Community" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">SOCIOLOGY &bull; TOMAR EL FRESCO</span>
+                        <h3 class="card-title">The Ritual of Evening Cool</h3>
+                        <p class="card-text">
+                            <em>Tomar el fresco</em> describes the Spanish custom of dragging chairs outside into courtyards or street thresholds after sunset. As daytime thermal mass dissipates, residents sit together to relax and socialize in the cool air, reaffirming neighborhood bonds through shared atmospheric comfort.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 02: MICROCLIMATE & REFUGE -->
+        <section id="refuge" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">THERMODYNAMIC SANCTUARY // PATIO AS REFUGE</span>
+            </div>
+
+            <p class="section-lead-text">
+                Situated in the Guadalquivir river basin, CÃ³rdoba experiences extreme summer temperatures frequently exceeding 40Â°C to 45Â°C. With hot, dry Mediterranean heat and scarce rainfall, the traditional patio acts as an organic thermal buffer: whitewashed walls reflect fierce solar radiation, while climbing vegetation, fabric awnings, and water sources create a localized microclimate up to 10Â°C cooler than the open streets.
+            </p>
+
+            <div class="triad-refuge-grid">
+                <div class="refuge-item-card zoomable-image-container" onclick="openLightbox('./assets/slide-05-grandfather-children.jpg', 'Patio as Refuge â€” People: Shelter and intergenerational life')">
+                    <div class="refuge-img-frame">
+                        <img src="./assets/slide-05-grandfather-children.jpg" alt="People in the Patio" class="refuge-img">
+                    </div>
+                    <h4 class="refuge-card-title">PEOPLE</h4>
+                    <p class="refuge-card-desc">Social refuge; a protected sanctuary where children play and elders find relief from suffocating urban heat.</p>
+                </div>
+
+                <div class="refuge-item-card zoomable-image-container" onclick="openLightbox('./assets/slide-05-potted-geraniums-wall.jpg', 'Patio as Refuge â€” Plants: Evapotranspirative green insulation')">
+                    <div class="refuge-img-frame">
+                        <img src="./assets/slide-05-potted-geraniums-wall.jpg" alt="Potted Geraniums on Whitewashed Wall" class="refuge-img">
+                    </div>
+                    <h4 class="refuge-card-title">PLANTS</h4>
+                    <p class="refuge-card-desc">Cascading ferns, bougainvilleas, and geraniums constantly cool surrounding air through evaporative transpiration.</p>
+                </div>
+
+                <div class="refuge-item-card zoomable-image-container" onclick="openLightbox('./assets/slide-05-antique-water-pump.jpg', 'Patio as Refuge â€” Water: Moisture, evaporation and living wells')">
+                    <div class="refuge-img-frame">
+                        <img src="./assets/slide-05-antique-water-pump.jpg" alt="Antique Water Pump" class="refuge-img">
+                    </div>
+                    <h4 class="refuge-card-title">WATER</h4>
+                    <p class="refuge-card-desc">Cast-iron hand pumps, central cisterns, and wet stone paving maintain vital ambient humidity throughout hot afternoons.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 03: THE SITE â€” PATIO SAN BASILIO 44 -->
+        <section id="site" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">THE SITE // PATIO SAN BASILIO 44</span>
+            </div>
+
+            <p class="section-lead-text">
+                Patio San Basilio 44, located in the heart of CÃ³rdoba's historic AlcÃ¡zar Viejo neighborhood, is one of the most emblematic communal courtyards of the festival. Its spatial layout features a traditional cobblestone pavement (*empedrado cordobÃ©s*), an open whitewashed staircase connecting to the upper gallery, and over 600 hand-painted ceramic pots lining the walls.
+            </p>
+
+            <div class="three-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/site-san-basilio-courtyard-view.jpg', 'Patio San Basilio 44 â€” Central courtyard staircase, stone floor and climbing vegetation')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/site-san-basilio-courtyard-view.jpg" alt="Patio San Basilio 44 Central View" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">SPATIAL SECTION &bull; GROUND</span>
+                        <h4 class="card-title">Courtyard Core &amp; Stairway</h4>
+                        <p class="card-text">The central axis of San Basilio 44 with its central climbing staircase framed by terracotta-tile risers, bougainvillea clusters, and hanging lanterns.</p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/site-san-basilio-upper-terrace.jpg', 'Patio San Basilio 44 â€” Upper terrace awning, clay roof tiles, and lush plant clusters')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/site-san-basilio-upper-terrace.jpg" alt="Upper Terrace Awning" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">SOLAR CONTROL &bull; ROOFSCAPE</span>
+                        <h4 class="card-title">Shade Awnings &amp; Tiles</h4>
+                        <p class="card-text">Horizontal fabric awnings stretched over ancient clay-tiled eaves provide top-down shade, creating an overhead threshold where convective air currents circulate.</p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/site-san-basilio-blue-pots-wall.jpg', 'Patio San Basilio 44 â€” Whitewashed wall with iconic indigo blue ceramic pots')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/site-san-basilio-blue-pots-wall.jpg" alt="Blue Pots on Wall" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">FOLK TECTONICS &bull; COLOR</span>
+                        <h4 class="card-title">The Blue Pots of San Basilio</h4>
+                        <p class="card-text">Hundreds of vibrant cobalt-blue ceramic pots mounted in vertical arrays against pure white lime plaster, providing individual root pockets for cascading flora.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04: THE INTERVENTION -->
+        <section id="intervention" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">THE INTERVENTION // A SUSPENDED CONTINUOUS LANDSCAPE</span>
+            </div>
+
+            <p class="section-lead-text">
+                The central spatial paradox of Patio San Basilio 44: while the desire for vegetative cooling is immense, physical floor and wall space is strictly finite. Our intervention, <strong>Bajo La Fresca</strong>, resolves this constraint by activating the unused vertical airspace above the courtyard. Rather than competing with existing plants, it suspends an undulating, lightweight textile landscape that extends the garden upwards.
+            </p>
+
+            <div class="two-col-grid">
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/concept-gradient-dot-matrix.jpg', 'Chromatic Matrix â€” Dot gradient mapping the existing patio colors')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/concept-gradient-dot-matrix.jpg" alt="Chromatic Dot Matrix" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">CHROMATIC MAPPING</span>
+                        <h4 class="card-title">Gradient Colorful Landscape</h4>
+                        <p class="card-text">
+                            A parametric color matrix sampled directly from the living ecology of the patioâ€”translating bougainvillea magenta, lemon peel yellow, leaf green, and pot blue into concentric bands of hue that mirror the surrounding botanical canopy.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card zoomable-image-container" onclick="openLightbox('./assets/concept-suspended-landscape-photomontage.jpg', 'Photomontage â€” Suspended continuous aerial garden solving limited patio space')">
+                    <div class="content-card-img-wrap">
+                        <img src="./assets/concept-suspended-landscape-photomontage.jpg" alt="Suspended Landscape Photomontage" class="content-card-img">
+                    </div>
+                    <div class="content-card-body">
+                        <span class="card-tag">AERIAL METABOLISM</span>
+                        <h4 class="card-title">Airspace as Garden Frontier</h4>
+                        <p class="card-text">
+                            By cantilevering and suspending fabric canopies across the courtyard volume, the project introduces a secondary microclimatic layer that filters harsh Andalusian sunlight while releasing natural botanical scents.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 05: PROTOTYPING & MATERIAL PROCESS -->
+        <section id="process" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">MATERIAL TECTONICS // PROTOTYPING &amp; FABRICATION</span>
+            </div>
+
+            <p class="section-lead-text">
+                The journey from conceptual drawing to physical installation involved testing fabric behavior, structural tension, and pocket construction under real atmospheric conditions:
+            </p>
+
+            <!-- Step 1: First Prototype -->
+            <div class="process-step-banner">
+                <div class="step-info">
+                    <span class="step-badge">ITERATION 01 &bull; SEWN POCKETS</span>
+                    <h3 class="step-title">The First Prototype: Identifying Fragility</h3>
+                    <p class="step-desc">
+                        Initial tests involved hand-sewing individual flat pockets directly into sheer white textile. While visually promising, this technique proved overly fragile: the pockets lacked dimensional volume, sagged under their own weight, and created an unpolished, unfinished aesthetic when suspended outdoors against the fern wall.
+                    </p>
+                </div>
+                <div class="two-col-grid" style="gap: 12px;">
+                    <img src="./assets/process-prototype-sewing-pockets.jpg" alt="Sewing Pockets Prototype" class="step-img-preview zoomable-image-container" onclick="openLightbox('./assets/process-prototype-sewing-pockets.jpg', 'Prototype 01: Sewing pockets into sheer fabric in the studio')">
+                    <img src="./assets/process-prototype-fern-test.jpg" alt="Testing against fern foliage" class="step-img-preview zoomable-image-container" onclick="openLightbox('./assets/process-prototype-fern-test.jpg', 'Prototype 01: Outdoor hanging test against patio fern wall')">
+                </div>
+            </div>
+
+            <!-- Step 2: Parametric Wave Tectonics -->
+            <div class="process-step-banner">
+                <div class="step-info">
+                    <span class="step-badge">ITERATION 02 &bull; PLEATED WAVES</span>
+                    <h3 class="step-title">Crafting Waves: Stamped Fabric Pleats</h3>
+                    <p class="step-desc">
+                        To achieve structural resilience and rhythmic dynamic shadows, we transitioned to a folded pleating logic: stamping and bonding continuous strips of fabric into undulating sinusoidal waves using precision hot adhesive joinery. This gave the canopy architectural rigidity while creating open channels for natural breezes to flow through.
+                    </p>
+                </div>
+                <div class="two-col-grid" style="gap: 12px;">
+                    <img src="./assets/process-hot-glue-pleating.jpg" alt="Hot glue pleating process" class="step-img-preview zoomable-image-container" onclick="openLightbox('./assets/process-hot-glue-pleating.jpg', 'Process: Creating waves by bonding stamped strip fabric')">
+                    <img src="./assets/process-workshop-canopy-table.jpg" alt="Canopy on Studio Table" class="step-img-preview zoomable-image-container" onclick="openLightbox('./assets/process-workshop-canopy-table.jpg', 'Process: Assembling the full pleated canopy on the studio workbench')">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 06: SCENT & THE OLFACTORY LAYER -->
+        <section id="scent" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">OLFACTORY ATMOSPHERE // CARRYING SCENT</span>
+            </div>
+
+            <p class="section-lead-text">
+                Architecture often prioritizes the visual, but the experience of *tomar el fresco* is fundamentally olfactoryâ€”the scent of night-blooming jasmine, damp terracotta, citrus trees, and bougainvillea. We developed an artisanal infusing technique to embed scent directly into the canopy:
+            </p>
+
+            <div class="scent-grid">
+                <div class="scent-card zoomable-image-container" onclick="openLightbox('./assets/process-textile-paint-jars.jpg', 'Textile pigment jars in magenta, orange, yellow, green and blue')">
+                    <span class="scent-pill pill-cotton">BOTANICAL PIGMENTS</span>
+                    <h4 class="card-title">Gradient Textile Dyeing</h4>
+                    <p class="card-text">Specialized fabric pigments mixed in vibrant tones of magenta, orange, citron yellow, olive green, and sky blue to replicate the living flowers of the patio.</p>
+                </div>
+
+                <div class="scent-card zoomable-image-container" onclick="openLightbox('./assets/process-dyed-cotton-bags.jpg', 'Dyed pastel cotton bundles ready for petal fraying')">
+                    <span class="scent-pill pill-citrus">TACTILE MEDIUM</span>
+                    <h4 class="card-title">Frayed Cotton Petals</h4>
+                    <p class="card-text">Raw cotton was dyed and manually frayed to produce soft, tactile, petal-like textures that absorb and slowly release aromatic essential oils over days.</p>
+                </div>
+
+                <div class="scent-card zoomable-image-container" onclick="openLightbox('./assets/process-frayed-cotton-petals-tray.jpg', 'Frayed dyed cotton petals infused with real orange and lemon peels')">
+                    <span class="scent-pill pill-repellent">NATURAL CITRUS &amp; DEFENSE</span>
+                    <h4 class="card-title">Citrus Peels &amp; Citronella</h4>
+                    <p class="card-text">Infused with real fresh orange and lemon peels alongside natural mosquito-repelling citronella essence, providing pleasant aromatic relief from evening insects.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 07: ON-SITE PHOTOGRAPHIC ARCHIVE -->
+        <section id="gallery" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">07</span>
+                <span class="sec-title">ON-SITE PHOTOGRAPHIC ARCHIVE // PATIO SAN BASILIO 44</span>
+            </div>
+
+            <p class="section-lead-text">
+                The finalized installation in Patio San Basilio 44: suspended between whitewashed balcony balustrades, framing the southern sky, and floating over cobblestones as visitors gather below:
+            </p>
+
+            <div class="photo-gallery-masonry">
+                <div class="gallery-card zoomable-image-container" onclick="openLightbox('./assets/bajo-la-fresca-canopy-vertical.jpg', 'Bajo La Fresca â€” Looking up into the canopy with bougainvillea vines and hanging pouches against the clear blue sky')">
+                    <img src="./assets/bajo-la-fresca-canopy-vertical.jpg" alt="Looking up through the canopy and bougainvillea" class="gallery-card-img" style="height: 480px; object-fit: cover;">
+                    <div class="gallery-card-footer">
+                        <span class="gal-meta-title">SKYWARD PERSPECTIVE &bull; BOUGAINVILLEA THRESHOLD</span>
+                        <span class="gal-zoom-btn">VIEW FULL â†—</span>
+                    </div>
+                </div>
+
+                <div class="gallery-card zoomable-image-container" onclick="openLightbox('./assets/installation-hanging-scent-canopy.jpg', 'Bajo La Fresca â€” Suspended undulating canopy with hanging scent pouches in Patio San Basilio 44')">
+                    <img src="./assets/installation-hanging-scent-canopy.jpg" alt="Hanging Scent Canopy in Courtyard" class="gallery-card-img" style="height: 480px; object-fit: cover;">
+                    <div class="gallery-card-footer">
+                        <span class="gal-meta-title">COURTYARD AIRSPACE &bull; SCENT POUCHES</span>
+                        <span class="gal-zoom-btn">VIEW FULL â†—</span>
+                    </div>
+                </div>
+
+                <div class="gallery-card zoomable-image-container" onclick="openLightbox('./assets/installation-patio-wide-team.jpg', 'Bajo La Fresca â€” Installation team testing and tensioning canopy lines in the courtyard')">
+                    <img src="./assets/installation-patio-wide-team.jpg" alt="Team on site in Patio San Basilio 44" class="gallery-card-img" style="height: 380px; object-fit: cover;">
+                    <div class="gallery-card-footer">
+                        <span class="gal-meta-title">ON-SITE TENSIONING &bull; SAN BASILIO 44</span>
+                        <span class="gal-zoom-btn">VIEW FULL â†—</span>
+                    </div>
+                </div>
+
+                <div class="gallery-card zoomable-image-container" onclick="openLightbox('./assets/bajo-la-fresca-courtyard-wide.jpg', 'Bajo La Fresca â€” Full wide view of the installation spanning across Patio San Basilio 44')">
+                    <img src="./assets/bajo-la-fresca-courtyard-wide.jpg" alt="Full Wide View in Courtyard" class="gallery-card-img" style="height: 380px; object-fit: cover;">
+                    <div class="gallery-card-footer">
+                        <span class="gal-meta-title">COMPLETE COURTYARD PERSPECTIVE</span>
+                        <span class="gal-zoom-btn">VIEW FULL â†—</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 08: BILINGUAL CURATORIAL STATEMENTS -->
+        <section id="statement" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">08</span>
+                <span class="sec-title">CURATORIAL MANIFESTO // BILINGUAL STATEMENT</span>
+            </div>
+
+            <div class="statement-card">
+                <div class="lang-toggle-wrap">
+                    <button type="button" class="lang-pill active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
+                    <button type="button" class="lang-pill" onclick="switchDetailLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                </div>
+
+                <div id="statement-en" class="statement-panel active">
+                    <p>
+                        <strong>Bajo la Fresca</strong> is a contextual research and spatial installation realized in Patio San Basilio 44 during the traditional courtyard festivities of CÃ³rdoba, Spain. The work explores the socio-climatic tradition of <em>tomar el fresco</em>â€”an Andalusian custom where neighbors migrate into shaded courtyards and open thresholds at sunset to relax, converse, and bathe in the restorative evening breeze.
+                    </p>
+                    <p>
+                        In a city where summer temperatures regularly cross 40Â°C, the courtyard acts as an ecological sanctuary of coexistence: thick whitewashed masonry, evaporative foliage, and shared water wells form a microclimatic oasis. Yet, in these tightly conserved historic spaces, floor and wall surfaces are already saturated with centuries of domestic life. <em>Bajo la Fresca</em> addresses this paradox by activating the courtyard's overhead airspace through a suspended, pleated textile canopy that expands the garden upward without occupying scarce ground.
+                    </p>
+                    <p>
+                        Crafted from undulating fabric waves bonded with parametric pleats and laden with gradient-dyed cotton petals, the canopy is infused with fresh orange, lemon peels, and natural citronella essences. As hot daytime air gives way to evening breezes, the suspended pouches gently sway, diffusing refreshing citrus notes and natural insect-repelling aromas into the gathered community below. It poses an essential ecological and architectural question: <em>How do you highlight beauty without stealing its spotlight?</em>
+                    </p>
+                </div>
+
+                <div id="statement-tr" class="statement-panel">
+                    <p>
+                        <strong>Bajo la Fresca</strong>, Ä°spanya'nÄ±n CÃ³rdoba kentinde yer alan tarihi Patio San Basilio 44 avlusunda, kentin geleneksel avlu ÅŸenlikleri baÄŸlamÄ±nda gerÃ§ekleÅŸtirilmiÅŸ bir mekÃ¢nsal yerleÅŸtirme ve baÄŸlamsal araÅŸtÄ±rmadÄ±r. Proje, EndÃ¼lÃ¼s kÃ¼ltÃ¼rÃ¼nÃ¼n kÃ¶klÃ¼ bir geleneÄŸi olan <em>tomar el fresco</em> (akÅŸam serinliÄŸinde dÄ±ÅŸarÄ± Ã§Ä±kÄ±p sohbet etme ve dinlenme) ritÃ¼elini mekÃ¢nsal bir deneyime dÃ¶nÃ¼ÅŸtÃ¼rÃ¼r.
+                    </p>
+                    <p>
+                        Yaz aylarÄ±nda sÄ±caklÄ±ÄŸÄ±n 40Â°C'yi aÅŸtÄ±ÄŸÄ± CÃ³rdoba'da tarihi avlular; kireÃ§ badanalÄ± kalÄ±n taÅŸ duvarlarÄ±, yoÄŸun sarmaÅŸÄ±klarÄ± ve kuyularÄ±yla kentin boÄŸucu sÄ±caÄŸÄ±na karÅŸÄ± birer mikroklimatik sÄ±ÄŸÄ±nak ve komÅŸuluk vahasÄ± iÅŸlevi gÃ¶rÃ¼r. Ancak bu tarihi avlularda saksÄ± ve oturma alanlarÄ±nÄ±n yoÄŸunluÄŸu nedeniyle yeni bitkilendirme iÃ§in zemin alanÄ± son derece kÄ±sÄ±tlÄ±dÄ±r. <em>Bajo la Fresca</em>, bu mekÃ¢nsal kÄ±sÄ±tÄ± aÅŸmak iÃ§in avlunun kullanÄ±lmayan hava sahasÄ±nÄ± askÄ±ya alÄ±nmÄ±ÅŸ bir kumaÅŸ gÃ¶lgelikle etkinleÅŸtirir; bahÃ§eyi zemini iÅŸgal etmeden yukarÄ±ya doÄŸru geniÅŸletir.
+                    </p>
+                    <p>
+                        DalgalÄ± kÄ±vrÄ±mlarla iÅŸlenmiÅŸ hafif kumaÅŸ ÅŸeritlerinden Ã¼retilen yerleÅŸtirme; avlunun begonvil, narenciye ve seramik renk tonlarÄ±nÄ± taÅŸÄ±yan degrade boyalÄ± pamuk yapraklarÄ±yla donatÄ±lmÄ±ÅŸtÄ±r. Pamuk liflerine emdirilen taze portakal ve limon kabuklarÄ± ile doÄŸal sivrisinek kovucu esanslar, akÅŸam esintisiyle birlikte avluya yayÄ±larak aÅŸaÄŸÄ±da toplanan insanlara ferahlatÄ±cÄ± bir koku peyzajÄ± sunar. Proje, tarihi bir miras dokusu iÃ§inde ÅŸu temel soruyu araÅŸtÄ±rÄ±r: <em>GÃ¼zelliÄŸin rolÃ¼nÃ¼ Ã§almadan onun altÄ±nÄ± nasÄ±l Ã§izebilirsiniz?</em>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 09: PRESENTATION ARCHIVE -->
+        <section id="presentation" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">09</span>
+                <span class="sec-title">RESEARCH BOOKLET &amp; PRESENTATION ARCHIVE</span>
+            </div>
+
+            <div class="document-dl-banner">
+                <div class="doc-info">
+                    <span class="doc-title">Bajo La Fresca â€” Complete Presentation Document (12 Slides)</span>
+                    <span class="doc-desc">Access the original presentation slides covering historical CÃ³rdoba patio competition timelines, climate vs. microclimate diagrams, prototyping stages, and scent extraction.</span>
+                </div>
+                <a href="./assets/bajo-la-fresca-presentation.pdf" target="_blank" class="doc-action-btn">
+                    <span>DOWNLOAD PRESENTATION PDF â†—</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER NAVIGATION -->
+        <footer class="project-footer-nav">
+            <a href="../chronoclines/" class="foot-nav-item prev">
+                <span class="foot-nav-lbl">&larr; PREVIOUS WORK</span>
+                <span class="foot-nav-name">06 â€” CHRONOCLINES</span>
+            </a>
+            <a href="../sprouting-garden/" class="foot-nav-item next">
+                <span class="foot-nav-lbl">NEXT WORK &rarr;</span>
+                <span class="foot-nav-name">08 â€” SPROUTING GARDEN</span>
+            </a>
+        </footer>
+
+    </main>
+
+    <!-- Interactive Lightbox Modal -->
+    <div id="image-lightbox" class="image-lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <button class="lightbox-close-btn" onclick="closeLightbox(event)">&times;</button>
+            <img id="lightbox-img" src="" alt="Enlarged Architectural Drawing" class="lightbox-img">
+            <p id="lightbox-caption" class="lightbox-caption-text"></p>
         </div>
     </div>
 
-    <img src="/assets/bajo-la-fresca-hero-2.jpg" class="lightbox-trigger" data-index="1" alt="Bajo La Fresca - Installation View" style="width: 100%; height: auto; display: block; margin-bottom: 40px; border-radius: 4px; cursor: pointer;">
+    <!-- Scripts -->
+    <script>
+        // Custom Cursor Logic
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const cursor = document.getElementById('custom-cursor');
 
-    <p class="detail-body" style="font-style: italic; color: var(--primary); margin-bottom: 30px;">“Bajo la fresca” nace de la observación de la comunidad que se genera en los patios cordobeses: espacios de encuentro y convivencia que funcionan como pequeños refugios dentro de la ciudad.</p>
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
 
-    <p class="detail-body">“Bajo la fresca” stems from observing the sense of community that emerges in Córdoba’s traditional courtyards: spaces for gathering and coexistence that function as small refuges within the city. The installation seeks to make visible those aspects that, although they are an essential part of the courtyard, can easily go unnoticed: the diversity of forms of life that inhabit it, the microclimate that develops within it, and the sense of shelter and coolness it provides.</p>
-    
-    <p class="detail-body">Through colour, scent, and the presence of living elements, the intervention creates an experience that invites visitors to pause, observe, and feel the space.</p>
-
-    <p class="detail-body" style="font-size: clamp(1.2rem, 3vw, 1.5rem); line-height: 1.4; margin-top: 40px; margin-bottom: 20px; font-weight: bold;">Making a continuous landscape to solve the limited gardening space.</p>
-    
-    <p class="detail-body">Our intervention aimed to mimic the gradient, colorful landscape of the existing patio (Patio San Basilio 44) while addressing the lack of horizontal gardening space. By mapping the colors of the existing flora, we designed a suspended fabric landscape.</p>
-
-    <p class="detail-body">The sensory experience of the patio was translated through a multi-layered material process. We sewed pockets into a translucent fabric and stamped it to create organic waves. Inside these pockets, we placed raw cotton that we dyed and frayed to mimic a petal-like texture.</p>
-
-    <p class="detail-body">To recreate the olfactory refuge of the patios, the cotton was infused with natural scents, including orange and lemon peels, as well as an anti-mosquito perfume, extending the functionality of the structure.</p>
-
-    <p class="detail-body">The final installation acts as a floating, sensory canopy—a modern reinterpretation of the patio's role as a shaded, cooling, and socializing refuge.</p>
-</div>
-
-
-<div class="detail-section" style="margin-bottom: 80px;">
-    <span class="eyebrow" style="margin-bottom: 20px; display: block;">MEDIA</span>
-    <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-        <div class="media-thumb" data-index="0" title="Installation Detail 1" style="background-image: url('/assets/bajo-la-fresca-hero.jpg');"></div>
-        <div class="media-thumb" data-index="1" title="Installation Detail 2" style="background-image: url('/assets/bajo-la-fresca-hero-2.jpg');"></div>
-    </div>
-</div>
-
-
-
-
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/ara-sira/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">ara-sıra</span>
-      </a>
-      <a href="/projects/millieu/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Millieu</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const galleryItems = [
-        { src: '/assets/bajo-la-fresca-hero.jpg', label: 'Installation Detail 1' },
-        { src: '/assets/bajo-la-fresca-hero-2.jpg', label: 'Installation Detail 2' }
-    ];
-    let currentImageIndex = 0;
-    let isZoomed = false;
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const counter = document.querySelector('.lightbox-counter');
-
-    document.querySelectorAll('.media-thumb, .lightbox-trigger').forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-            currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
-            showImage(currentImageIndex);
-            lightbox.hidden = false;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorWrapper.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
         });
-    });
 
-    function showImage(index) {
-        if (index < 0) index = galleryItems.length - 1;
-        if (index >= galleryItems.length) index = 0;
-        currentImageIndex = index;
-        
-        isZoomed = false;
-        lightboxImg.classList.remove('zoomed');
-        lightboxImg.style.transformOrigin = 'center center';
-        
-        lightboxImg.src = galleryItems[currentImageIndex].src;
-        if(counter) {
-            counter.textContent = `${currentImageIndex + 1} / ${galleryItems.length} — ${galleryItems[currentImageIndex].label}`;
+        const hoverTargets = document.querySelectorAll('a, button, .zoomable-image-container, .content-card, .refuge-item-card, .gallery-card');
+        hoverTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // Bilingual Toggle
+        function switchDetailLang(lang) {
+            document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.statement-panel').forEach(p => p.classList.remove('active'));
+
+            if (lang === 'tr') {
+                document.querySelectorAll('.lang-pill')[1].classList.add('active');
+                document.getElementById('statement-tr').classList.add('active');
+            } else {
+                document.querySelectorAll('.lang-pill')[0].classList.add('active');
+                document.getElementById('statement-en').classList.add('active');
+            }
         }
-    }
-    
-    function panImage(e) {
-        if (!isZoomed) return;
-        const rect = lightboxImg.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-        lightboxImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-    }
 
-    lightboxImg.addEventListener('click', (e) => {
-        e.stopPropagation();
-        isZoomed = !isZoomed;
-        if (isZoomed) {
-            lightboxImg.classList.add('zoomed');
-            panImage(e);
-        } else {
-            lightboxImg.classList.remove('zoomed');
-            lightboxImg.style.transformOrigin = 'center center';
+        // Lightbox Functions
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(src, caption) {
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption || '';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-    });
 
-    lightboxImg.addEventListener('mousemove', (e) => {
-        if (isZoomed) panImage(e);
-    });
+        function closeLightbox(e) {
+            if (e) e.preventDefault();
+            lightbox.classList.remove('active');
+            lightboxImg.src = '';
+            document.body.style.overflow = '';
+        }
 
-    document.querySelector('.lightbox-close').addEventListener('click', () => {
-        lightbox.hidden = true;
-    });
-    document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex - 1);
-    });
-    document.querySelector('.lightbox-next').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex + 1);
-    });
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) lightbox.hidden = true;
-    });
-});
-</script>
-
-<div id="lightbox" class="lightbox" hidden>
-    <button class="lightbox-close">×</button>
-    <button class="lightbox-prev">←</button>
-    <img id="lightbox-img" src="" alt="Gallery Image">
-    <button class="lightbox-next">→</button>
-    <div class="lightbox-counter">1 / 2</div>
-</div>
-</body></html>
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

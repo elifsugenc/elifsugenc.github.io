@@ -1,16 +1,514 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sprouting Garden · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading"><span class="eyebrow">PROJECT</span><h1>Sprouting Garden<span class="accent">.</span></h1>
-<div class="project-tags" style="display: flex; gap: 12px; margin-top: 5px; align-items: center; flex-wrap: wrap;">
-      <img src="/assets/tags/ecological.png" alt="Ecological" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;">
-    </div></div><p class="detail-body detail-pending">More from this project soon.</p>
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/chronoclines/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">ChronoClines</span>
-      </a>
-      <a href="/projects/wood-weave/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Wood Weave</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Genç.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script></body></html>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 â€” SPROUTING GARDEN | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Architectural Grid & Registration Marks Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#project-sprouting-garden" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">06</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">SPROUTING GARDEN</span>
+                <span class="crumb-tag">AWARD WINNER</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT</a>
+                <a href="#ritual">RITUAL</a>
+                <a href="#axonometric">STRUCTURE</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">ACADEMIC STUDIO &bull; 2024</span>
+                    <span class="badge-award">â˜… MEF UNIVERSITY DEAN'S AWARD &bull; 1ST YEAR BEST PROJECTS</span>
+                    <span class="meta-item">RITUALS OF OTHERWORLDLY</span>
+                    <span class="meta-item">INSTRUCTOR: Ä°REM KORKMAZ</span>
+                    <span class="meta-item">KUZGUNCUK BOSTANI, Ä°STANBUL</span>
+                </div>
+                <h1 class="hero-title">06 &mdash; SPROUTING GARDEN</h1>
+                <p class="hero-core-question">"Can we build without displacing life?"</p>
+            </div>
+
+            <!-- Award Highlights Banner -->
+            <div class="award-hero-banner">
+                <div class="award-box">
+                    <span class="award-title">ACADEMIC HONORS &amp; RECOGNITION</span>
+                    <span class="award-subtitle">MEF University Dean's Awards &mdash; 1st Year Category (Best Projects)</span>
+                </div>
+                <div class="award-box" style="border-left: 1px solid rgba(217,119,6,0.3); padding-left: 16px;">
+                    <span class="award-title">DESIGN STUDIO MENTORSHIP</span>
+                    <span class="award-subtitle">ARC 101 Design Studio I &bull; Rituals of Otherworldly &bull; Instructor: Ä°rem Korkmaz</span>
+                </div>
+            </div>
+
+            <!-- Key Specs / Sheet Title Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">LOCATION</span>
+                    <span class="spec-val">Kuzguncuk BostanÄ±, ÃœskÃ¼dar / Ä°stanbul</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">AWARDS</span>
+                    <span class="spec-val">â˜… MEF Dean's Award (1st Year Best Projects)</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Public Food Architecture & Organic Trellis</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PRIMARY MEDIUM</span>
+                    <span class="spec-val">Bio-Materials & Perforated Timber Waffle</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DRAWING SCALES</span>
+                    <span class="spec-val">1/100 Plans & Sections &bull; 1/200 Site Plan</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TOPOGRAPHY</span>
+                    <span class="spec-val">+18.00m to +22.50m (Dual Street Link)</span>
+                </div>
+            </div>
+
+            <!-- Hero Showcase Image -->
+            <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/atmosphere-collage.png', 'Atmosphere Collage â€” Waffle structure, yellow pedestrian flow, trees and human-nonhuman coexistence.')">
+                <img src="./assets/atmosphere-collage.png" alt="Sprouting Garden Atmosphere Collage" class="hero-visual-img">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">ATMOSPHERE COLLAGE</span>
+                    <span class="caption-text">Cardboard structural framework, perforated foliage, and continuous pedestrian path through Kuzguncuk BostanÄ±.</span>
+                    <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPT & MANIFESTO SECTION (BILINGUAL) -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT & MANIFESTO &mdash;</span>
+            </div>
+
+            <!-- Manifesto Quotes Carousel / Cards -->
+            <div class="manifesto-grid">
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>The user is not only human.</h3>
+                    <p>Architecture that recognizes trees, soil, climbing legumes, and seasonal organisms as equal inhabitants of the public realm.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>How to settle down without chopping the trees down?</h3>
+                    <p>The timber waffle envelope curves organically around existing canopies, preserving every single trunk and root bed in the park.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Hide everything, but don't hide anything.</h3>
+                    <p>Services (kitchen storage, preparation, public restroom) do not form intrusive opaque volumes; they dissolve directly into the structural geometry.</p>
+                </div>
+            </div>
+
+            <!-- Bilingual Description Tabs -->
+            <div class="bilingual-container">
+                <div class="lang-tab-bar">
+                    <button class="lang-tab-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
+                    <button class="lang-tab-btn" onclick="switchLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                </div>
+                <div id="statement-en" class="statement-pane active">
+                    <p class="lead-text">
+                        This project is situated in a public park right beside the historical <strong>Kuzguncuk BostanÄ±</strong> in ÃœskÃ¼dar, Istanbul. Its primary objective is to forge a shared-use community pavilion dedicated to cultivating, preparing, and serving a specialty culinary dish crafted from native bean varieties specifically adapted to Kuzguncukâ€™s microclimate.
+                    </p>
+                    <p>
+                        Designed to weave gracefully into the park without severing the historical foot-traffic between the upper and lower street frontages, the pavilion is constructed entirely of wood with an open, perforated waffle structure. This porous skin provides climbing beans with an organic trellis while honoring the height and spread of mature park trees.
+                    </p>
+                    <p>
+                        The communal kitchen borrows its geometric rhythm directly from the structural ribs, embedding cooktops, drying racks, prep counters, and seed archives into a continuous sequence. Similarly, the public restrooms are woven into the thickest curve of the waffle envelope, serving civic needs without imposing an aggressive, out-of-place volume onto the serene green landscape.
+                    </p>
+                </div>
+                <div id="statement-tr" class="statement-pane">
+                    <p class="lead-text">
+                        Bu proje, Ä°stanbul'un ÃœskÃ¼dar ilÃ§esinde, tarihi <strong>Kuzguncuk BostanÄ±</strong>'na komÅŸu bir park alanÄ±nda yer almaktadÄ±r. Projenin ana konusu, Kuzguncuk BostanÄ±'nda yetiÅŸen ve bÃ¶lgenin iklimine uygun yerel fasulye Ã§eÅŸitlerinden yapÄ±lan Ã¶zel bir ritÃ¼el yemeÄŸinin hazÄ±rlanmasÄ±, piÅŸirilmesi, servis edilmesi ve yetiÅŸtirilmesi sÃ¼reÃ§lerini destekleyen ortak bir kamusal yapÄ± tasarlamaktÄ±r.
+                    </p>
+                    <p>
+                        YapÄ±, parkÄ±n mevcut dokusunu ve iki sokak arasÄ±ndaki yaya geÃ§irgenliÄŸini koparmamak adÄ±na ahÅŸaptan, boÅŸluklu bir waffle (kaset) strÃ¼ktÃ¼r olarak kurgulanmÄ±ÅŸtÄ±r. Bu aÃ§Ä±k ve gÃ¶zenekli yapÄ± hem fasulye sarmaÅŸÄ±klarÄ±nÄ±n tÄ±rmanarak yaÅŸayabileceÄŸi dikey bir yaÅŸam alanÄ± sunar hem de alandaki mevcut aÄŸaÃ§larÄ±n gÃ¶vdelerine ve taÃ§larÄ±na saygÄ± duyarak etraflarÄ±ndan kÄ±vrÄ±lÄ±r.
+                    </p>
+                    <p>
+                        Mutfak alanÄ±, yapÄ±nÄ±n taÅŸÄ±yÄ±cÄ± kurgusundan ÅŸekil alarak piÅŸirme, kurutma, servis ve depolama birimlerini tek bir dilde Ã§Ã¶zer. Tuvalet kÃ¼tlesi de parkÄ±n ortasÄ±nda yabancÄ± bir kutu gibi durmak yerine strÃ¼ktÃ¼rÃ¼n en yoÄŸun kÄ±vrÄ±mÄ±nÄ±n iÃ§ine gizlenerek doÄŸal Ã§evreye kusursuzca entegre olur.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE CULINARY RITUAL SECTION -->
+        <section id="ritual" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">THE CULINARY RITUAL &bull; SPROUTING PLATE &mdash;</span>
+            </div>
+
+            <div class="feature-two-col">
+                <div class="feature-text-side">
+                    <span class="eyebrow-accent">SEED TO DISH LIFECYCLE</span>
+                    <h2 class="sub-headline">"Sustainability is about understanding what we eat and where it comes from."</h2>
+                    <p class="quote-dan-barber">
+                        <em>"It doesn't matter how good your technique is... By producing our own seeds and understanding their use, we pave the way to 'good' ingredients... Good food comes from deep respect for the land."</em>
+                        <span class="quote-author">&mdash; Inspired by Dan Barber's Third Plate Philosophy</span>
+                    </p>
+                    
+                    <div class="ritual-steps-list">
+                        <div class="step-card">
+                            <span class="step-badge">DAY 0 &ndash; 2</span>
+                            <div class="step-info">
+                                <h4>Germination & Soaking</h4>
+                                <p>Native bean seeds are hydrated in soaking basins integrated into the lower moisture-retaining ribs.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">DAY 2 &ndash; 7</span>
+                            <div class="step-info">
+                                <h4>Sprouting & Waffle Vine Climbing</h4>
+                                <p>Young sprouts emerge and begin threading along the diagonal timber mesh, nurtured by sunlight filtered through the tree canopies.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">DAY 7 &ndash; 9</span>
+                            <div class="step-info">
+                                <h4>Harvesting & Sun-Drying</h4>
+                                <p>Pod maturity allows communal harvesting directly from the walkable timber ramp. Extra beans are air-dried in specialized slatted niches.</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">DAY 9 &ndash; 11</span>
+                            <div class="step-info">
+                                <h4>Cooking Sprout Fries & Bean Mousse</h4>
+                                <p>Preparation of crisp sprout fries over built-in sunken stoves and serving the layered "Sprouting Plate" to passing pedestrians.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-visual-side">
+                    <div class="visual-frame zoomable-image-container" onclick="openLightbox('./assets/diagram-culinary-ritual.jpg', 'Sprouting Plate Preparation Diagram â€” The 11-day cyclical transformation from seed watering to community meal.')">
+                        <img src="./assets/diagram-culinary-ritual.jpg" alt="Sprouting Plate Preparation Diagram" class="contain-img">
+                        <div class="frame-caption">
+                            <span>'SPROUTING PLATE' PREPARING DIAGRAM</span>
+                            <span class="zoom-btn">[ EXPAND â†— ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPLODED AXONOMETRIC & STRUCTURAL SYSTEM -->
+        <section id="axonometric" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">STRUCTURAL MORPHOLOGY & EXPLO-AXO &mdash;</span>
+            </div>
+
+            <div class="axo-highlight-wrapper">
+                <div class="axo-image-panel zoomable-image-container" onclick="openLightbox('./assets/diagram-exploded-axonometric.jpg', 'Exploded Axonometric â€” Waffle canopy trellis, topographical ramp bridge, and nested service modules.')">
+                    <img src="./assets/diagram-exploded-axonometric.jpg" alt="Exploded Axonometric Diagram" class="axo-img">
+                    <div class="panel-tag">[ CLICK TO ZOOM EXPLODED AXONOMETRIC â†— ]</div>
+                </div>
+
+                <div class="axo-breakdown-panel">
+                    <div class="layer-item">
+                        <div class="layer-indicator">01</div>
+                        <div class="layer-content">
+                            <h4>Upper Porous Waffle Canopy</h4>
+                            <p>An interlocking curved timber grid structure that filters direct southern sunlight, supports lush bean vines, and creates dynamic shadow play on the ground.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">+</div>
+                        <div class="layer-content">
+                            <h4>Topographical Walkway & Ramp Plate</h4>
+                            <p>A continuous gentle slope bridging the elevation change between the lower street (+18.00m) and upper residential street (+22.50m).</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">+</div>
+                        <div class="layer-content">
+                            <h4>Sub-Structure Lattice & Ribbed Columns</h4>
+                            <p>Vertical wooden slats anchored to low-impact footings, deliberately shaped to weave around existing tree trunks without cutting roots.</p>
+                        </div>
+                    </div>
+
+                    <div class="layer-item">
+                        <div class="layer-indicator">&darr;</div>
+                        <div class="layer-content">
+                            <h4>Nested Functional Chambers</h4>
+                            <p><strong>Zone A&ndash;B&ndash;C Kitchen:</strong> Prep counter, recessed stoves, and street-facing tasting ledge.<br><strong>Camouflaged Restroom:</strong> Folded into the interior spine to avoid foreign visual volume in the public garden.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Programmatic Diagram Cards -->
+            <div class="programs-dual-grid">
+                <div class="prog-card zoomable-image-container" onclick="openLightbox('./assets/diagram-kitchen-program.jpg', 'Kitchen Program Diagram â€” Bean storage, drying shelves, stove niche, and public serving counter.')">
+                    <div class="prog-img-box">
+                        <img src="./assets/diagram-kitchen-program.jpg" alt="Kitchen Program Diagram">
+                    </div>
+                    <div class="prog-meta">
+                        <h3>KITCHEN PROGRAM DIAGRAM</h3>
+                        <p><strong>A:</strong> Bean drying niches &bull; <strong>B:</strong> Cooking sprout fries on recessed burners &bull; <strong>C:</strong> Public tasting counter for visitors.</p>
+                    </div>
+                </div>
+
+                <div class="prog-card zoomable-image-container" onclick="openLightbox('./assets/diagram-toilet-system.jpg', 'Restroom Integration Diagram â€” Volume hidden within the curvature of the timber waffle wall.')">
+                    <div class="prog-img-box">
+                        <img src="./assets/diagram-toilet-system.jpg" alt="Toilet Integration Diagram">
+                    </div>
+                    <div class="prog-meta">
+                        <h3>RESTROOM INTEGRATION</h3>
+                        <p>The sanitary facilities conform to the building's organic curvature, eliminating the jarring image of a stand-alone toilet booth in a neighborhood park.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURAL DRAWINGS & SECTIONS -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">ARCHITECTURAL DRAWINGS &bull; SECTIONS & PLANS &mdash;</span>
+            </div>
+
+            <div class="drawings-gallery">
+                <!-- 1/200 Site Plan -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/drawing-site-plan.jpg', '1/200 Site Plan â€” Kuzguncuk BostanÄ± layout, street connections, and preserved tree canopy positions.')">
+                    <img src="./assets/drawing-site-plan.jpg" alt="1/200 Site Plan">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/200</span>
+                        <span class="d-title">SITE PLAN &bull; KUZGUNCUK BOSTANI CONTEXT</span>
+                        <span class="d-sub">Maintaining continuous pedestrian permeability between adjacent urban streets.</span>
+                    </div>
+                </div>
+
+                <!-- 1/100 Floor Plans -->
+                <div class="drawing-item zoomable-image-container" onclick="openLightbox('./assets/drawing-floor-plans.jpg', '1/100 Floor Plans â€” Level +18.00m lower entry & Level +22.50m upper bridge plate.')">
+                    <img src="./assets/drawing-floor-plans.jpg" alt="1/100 Floor Plans">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/100</span>
+                        <span class="d-title">LEVEL PLANS (+18.00m & +22.50m)</span>
+                        <span class="d-sub">Dual-level circulation wrapping around existing mature trees.</span>
+                    </div>
+                </div>
+
+                <!-- Architectural Sections AA' & BB' -->
+                <div class="drawing-item span-full zoomable-image-container" onclick="openLightbox('./assets/drawing-sections.jpg', '1/100 Sections AA and BB â€” Topographic slope, canopy heights, and human-plant scale.')">
+                    <img src="./assets/drawing-sections.jpg" alt="Architectural Sections AA' and BB'">
+                    <div class="drawing-caption">
+                        <span class="scale-badge">1/100</span>
+                        <span class="d-title">SECTIONS AA' & BB'</span>
+                        <span class="d-sub">Longitudinal and transversal cross-sections demonstrating the relationship between human eye level, tree canopies, and bean vines.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHYSICAL STUDY MODELS & MATERIAL EXPLORATION -->
+        <section class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">MATERIALITY & PHYSICAL STUDY MODELS &mdash;</span>
+            </div>
+
+            <div class="models-grid">
+                <div class="model-card zoomable-image-container" onclick="openLightbox('./assets/photo-physical-models.jpg', 'Physical Scale Models â€” Laser-cut timber waffle mockups, context massing blocks, and topographic contour study.')">
+                    <img src="./assets/photo-physical-models.jpg" alt="Physical Scale Model Study">
+                    <div class="model-caption">
+                        <h4>1/100 PHYSICAL TIMBER MOCKUPS</h4>
+                        <p>Constructed with laser-cut basswood waffle ribs and contextual massing blocks to evaluate organic shadows and vine climbing clearances.</p>
+                    </div>
+                </div>
+
+                <div class="model-card zoomable-image-container" onclick="openLightbox('./assets/photo-atmosphere-model.jpg', 'Atmospheric Material Collages â€” Shredded paper foliage, corrugated cardboard contours, and natural daylight tests.')">
+                    <img src="./assets/photo-atmosphere-model.jpg" alt="Atmospheric Material Model">
+                    <div class="model-caption">
+                        <h4>ATMOSPHERE & TACTILITY STUDIES</h4>
+                        <p>Exploring tactile material agencies using corrugated cardboard, shredded paper foliage, and natural daylight penetration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ORIGINAL PRESENTATION BOARDS & BOOKLET -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">FULL JURY PRESENTATION BOARDS & BOOKLET &mdash;</span>
+            </div>
+
+            <p class="boards-intro">
+                High-resolution exhibition boards presented during the Final Review for <em>Rituals of Otherworldly</em> studio and selected for the <strong>MEF University Dean's Awards &mdash; 1st Year Category (Best Projects)</strong>. Click either sheet to view the full presentation in high detail.
+            </p>
+
+            <div class="boards-grid">
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sprouting-garden-sheet-1.jpg', 'Exhibition Sheet 01 â€” Site Plan 1/200, Sprouting Plate Preparation Cycle, Level Plans 1/100, and Project Manifestos.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sprouting-garden-sheet-1.jpg" alt="Sprouting Garden Sheet 01">
+                        <span class="board-pill">SHEET 01 &bull; SITE & RITUAL</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 01 &mdash; SITE, RITUAL & PLANS</h3>
+                        <p>Site plan 1/200, 11-day sprout cycle, +18.00/+22.50 floor plans, and model photographs.</p>
+                    </div>
+                </div>
+
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sprouting-garden-sheet-2.jpg', 'Exhibition Sheet 02 â€” Atmosphere Collages, Exploded Axonometric, Kitchen Program, Restroom Integration, and 1/100 Sections.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sprouting-garden-sheet-2.jpg" alt="Sprouting Garden Sheet 02">
+                        <span class="board-pill">SHEET 02 &bull; SECTIONS & AXO</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 02 &mdash; AXONOMETRIC & SECTIONS</h3>
+                        <p>Exploded timber structure, kitchen & toilet integration diagrams, and 1/100 architectural sections.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booklet-action-box">
+                <div class="booklet-text">
+                    <h4>COMPLETE PROJECT SKETCHBOOK & BOOKLET</h4>
+                    <p>Includes site discovery, early conceptual iterations, tree-preservation sketches, and instructor review notes.</p>
+                </div>
+                <a href="./assets/sprouting-garden-booklet.pdf" target="_blank" class="download-pdf-btn">
+                    <span>VIEW PROCESS BOOKLET (PDF)</span>
+                    <span class="btn-arrow">&nearr;</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJECT FOOTER / PREV-NEXT NAVIGATION -->
+        <footer class="project-bottom-nav">
+            <div class="bottom-nav-inner">
+                <a href="../millieu/" class="pnav-link pnav-prev">
+                    <span class="pnav-dir">&larr; PREVIOUS WORK</span>
+                    <span class="pnav-title">05 &mdash; MILLIEU</span>
+                </a>
+                
+                <a href="../../index.html#project-sprouting-garden" class="pnav-center-btn">
+                    [ BACK TO EXPLORE ]
+                </a>
+                
+                <a href="../bajo-la-fresca/" class="pnav-link pnav-next">
+                    <span class="pnav-dir">NEXT WORK &rarr;</span>
+                    <span class="pnav-title">07 &mdash; BAJO LA FRESCA</span>
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- FULLSCREEN LIGHTBOX MODAL -->
+    <div id="lightbox-modal" class="lightbox-modal hidden" onclick="closeLightbox()">
+        <button class="lightbox-close-btn" onclick="closeLightbox()">[ CLOSE &times; ]</button>
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zoomed Architectural Drawing">
+            <div id="lightbox-caption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        // Language Toggle
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.statement-pane').forEach(p => p.classList.remove('active'));
+            if (lang === 'tr') {
+                document.querySelectorAll('.lang-tab-btn')[1].classList.add('active');
+                document.getElementById('statement-tr').classList.add('active');
+            } else {
+                document.querySelectorAll('.lang-tab-btn')[0].classList.add('active');
+                document.getElementById('statement-en').classList.add('active');
+            }
+        }
+
+        // Lightbox Functions
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('lightbox-modal');
+            const img = document.getElementById('lightbox-img');
+            const cap = document.getElementById('lightbox-caption');
+            img.src = src;
+            cap.innerText = caption || '';
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Custom Cursor movement (Hardware 1:1 GPU Transform, matching main portfolio)
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const customCursor = document.getElementById('custom-cursor');
+        if (cursorWrapper && customCursor) {
+            let cursorX = 0, cursorY = 0, cursorTicking = false;
+            document.addEventListener('mousemove', (e) => {
+                cursorX = e.clientX;
+                cursorY = e.clientY;
+                if (!cursorTicking) {
+                    requestAnimationFrame(() => {
+                        cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                        cursorTicking = false;
+                    });
+                    cursorTicking = true;
+                }
+            }, { passive: true });
+
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .step-card, .model-card')) {
+                    customCursor.classList.add('cursor-hover');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .step-card, .model-card')) {
+                    customCursor.classList.remove('cursor-hover');
+                }
+            });
+        }
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

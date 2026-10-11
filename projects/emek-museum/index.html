@@ -1,18 +1,261 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Emek Museum · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer></head><body><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading" style="margin-bottom: 10px; min-height: auto;"><span class="eyebrow">PROJECT</span><span style="font-family: Georgia, serif; font-style: italic; display: block; margin-top: 10px; font-size: 1.1rem; color: #555;">-ongoing project-</span><h1>Emek Museum<span class="accent">.</span></h1><div class="project-tags" style="display: flex; gap: 12px; margin-top: 5px; align-items: center; flex-wrap: wrap;">
-    <img src="/assets/tags/social-memory.png" alt="Social Memory" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/interactive.png" alt="Interactive" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/experimental.png" alt="Experimental" style="width: 50px; height: 50px;">
-    <img src="/assets/tags/speculative.png" alt="Speculative" style="width: 50px; height: 50px;">
-</div></div><div class="detail-body"><p style="margin-bottom: 1.5em;">Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself—their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p><p style="margin-bottom: 3em;">Emek Museum asks: how can we make this labour visible again?</p></div><p class="detail-body detail-pending">More from this project soon.</p>
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/the-earthen/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">The Earthen</span>
-      </a>
-      <a href="/projects/traces-together/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">you were here.</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script></body></html>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 â€” EMEK MUSEUM | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Architectural Blueprint Grid Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Hardware-Accelerated Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-emek-museum" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">01</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">EMEK MUSEUM</span>
+                <span class="crumb-tag">RESEARCH IN PROGRESS</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#statement">STATEMENT</a>
+                <a href="#framework">FRAMEWORK</a>
+                <a href="#blueprint">BLUEPRINT</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">SPATIAL DESIGN &bull; 2027</span>
+                    <span class="badge-ongoing">RESEARCH &amp; CONCEPTUAL DESIGN (ONGOING)</span>
+                    <span class="meta-item">CRITICAL MEMORIAL &bull; LIVING ARCHIVE</span>
+                    <span class="meta-item">TÃœRKÄ°YE</span>
+                </div>
+                <h1 class="hero-title">01 &mdash; EMEK MUSEUM</h1>
+                <p class="hero-core-question">â€œEmek Museum asks: how can we make this labour visible again?â€</p>
+            </div>
+
+            <!-- Key Specs / Sheet Title Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Spatial Design &bull; Counter-Monument &bull; Living Labor Archive</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TIMELINE</span>
+                    <span class="spec-val">2027 (Ongoing Research &amp; Concept Development)</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">GEOGRAPHY</span>
+                    <span class="spec-val">TÃ¼rkiye</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">CORE INQUIRY</span>
+                    <span class="spec-val">Visibility of Labour &bull; Spatial Justice &bull; Collective Memory</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">THEORETICAL PARADIGMS</span>
+                    <span class="spec-val">Counter-Monuments &bull; Necropolitics of Labour &bull; Spatial Testimony</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PROJECT STATUS</span>
+                    <span class="spec-val">In Active Conceptual Development</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANIFESTO & STATEMENT SECTION -->
+        <section id="statement" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">01</span>
+                <h2 class="section-title">Curatorial Statement &amp; Inquiry</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="manifesto-monument-card">
+                <div class="manifesto-badge-row">
+                    <span class="manifesto-badge">PROJECT MANIFESTO &bull; 2027</span>
+                    <div class="lang-toggle-bar">
+                        <button type="button" class="lang-btn active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
+                        <button type="button" class="lang-btn" onclick="switchDetailLang('tr')">TÃœRKÃ‡E AÃ‡IKLAMA</button>
+                    </div>
+                </div>
+
+                <!-- English Pane (Exact User Provided Statement) -->
+                <div id="pane-en" class="lang-pane active">
+                    <div class="manifesto-lead-quote">
+                        Work-related accidents remain a persistent reality, particularly in TÃ¼rkiye. Yet when workers lose their lives, the public narrative often ends with the accident itselfâ€”their labour, the time they gave, and the lives shaped through their work gradually disappear from view.
+                    </div>
+
+                    <div class="manifesto-inquiry-box">
+                        <span class="inquiry-prefix">Emek Museum asks:</span>
+                        <div class="inquiry-statement">â€œHow can we make this labour visible again?â€</div>
+                    </div>
+
+                    <div class="status-soon-strip">
+                        <span class="pulse-beacon"></span>
+                        <span class="status-soon-text">More from this project soon.</span>
+                    </div>
+                </div>
+
+                <!-- Turkish Pane -->
+                <div id="pane-tr" class="lang-pane">
+                    <div class="manifesto-lead-quote">
+                        Ä°ÅŸ cinayetleri ve iÅŸ kazalarÄ±, Ã¶zellikle TÃ¼rkiye'de sÃ¼regelen yakÄ±cÄ± bir gerÃ§eklik olmaya devam ediyor. Ancak emekÃ§iler yaÅŸamlarÄ±nÄ± yitirdiÄŸinde, kamusal anlatÄ± Ã§oÄŸunlukla kazanÄ±n kendisiyle son buluyorâ€”onlarÄ±n emeÄŸi, verdikleri zaman ve emekleriyle biÃ§imlenen yaÅŸamlar ise zamanla gÃ¶rÃ¼nmezleÅŸiyor.
+                    </div>
+
+                    <div class="manifesto-inquiry-box">
+                        <span class="inquiry-prefix">Emek Museum soruyor:</span>
+                        <div class="inquiry-statement">â€œBu emeÄŸi yeniden nasÄ±l gÃ¶rÃ¼nÃ¼r kÄ±labiliriz?â€</div>
+                    </div>
+
+                    <div class="status-soon-strip">
+                        <span class="pulse-beacon"></span>
+                        <span class="status-soon-text">Ã‡ok yakÄ±nda bu projeden daha fazlasÄ±.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPTUAL FRAMEWORK SECTION -->
+        <section id="framework" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">02</span>
+                <h2 class="section-title">Research Strands</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <span class="pillar-index">STRAND 01</span>
+                    <h3 class="pillar-title">Labour Over Accident</h3>
+                    <p class="pillar-desc">
+                        Reframing the societal memory of work. Instead of reducing human life to the moment of trauma or the cold statistics of an industrial catastrophe, the museum interrogates how spatial design can honor a lifetime of bodily craftsmanship and dedication.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <span class="pillar-index">STRAND 02</span>
+                    <h3 class="pillar-title">Spatializing Invisible Time</h3>
+                    <p class="pillar-desc">
+                        Every building, bridge, and infrastructure in our cities exists through hundreds of thousands of hours of unseen physical labor. Emek Museum investigates spatial devices that make these invisible temporal layers and bodily costs tangible.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <span class="pillar-index">STRAND 03</span>
+                    <h3 class="pillar-title">Counter-Monument &amp; Living Archive</h3>
+                    <p class="pillar-desc">
+                        Moving decisively away from traditional heroic, inaccessible monuments. Emek Museum operates as a participatory, living civic archive where collective testimony, memory, and spatial justice coalesce into an evolving public threshold.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLUEPRINT & WORK IN PROGRESS SHEET -->
+        <section id="blueprint" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Architectural Drafting Canvas</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="blueprint-sheet-container">
+                <div class="blueprint-sheet-header">
+                    <span>PROJECT ID: 01 &mdash; EMEK MUSEUM</span>
+                    <span>STUDIO: SPATIAL DESIGN &bull; CONCEPT DRAFTING</span>
+                    <span>SCALE: CONCEPTUAL</span>
+                </div>
+                <div class="blueprint-canvas-box">
+                    <img src="../../assets/emek-museum-wip.svg" alt="Emek Museum Architectural Drafting Blueprint">
+                </div>
+                <div class="blueprint-sheet-footer">
+                    <span>STATUS: CONCEPTUAL RESEARCH &amp; DESIGN IN PROGRESS (2027)</span>
+                    <span>CURATED BY ELIFSU GENÃ‡ &bull; PORTFOLIO ARCHIVE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER NAVIGATION -->
+        <nav class="project-footer-nav">
+            <a href="../../index.html#projects" class="footer-nav-btn">
+                <span>&larr; BACK TO SELECTED WORKS</span>
+            </a>
+            <a href="../stray/" class="footer-nav-btn primary">
+                <span>NEXT: 02 &mdash; STRAY &rarr;</span>
+            </a>
+        </nav>
+
+    </main>
+
+    <!-- Custom Cursor & Interaction Scripts -->
+    <script>
+        // Language Toggle
+        function switchDetailLang(lang) {
+            const btns = document.querySelectorAll('.lang-btn');
+            const panes = document.querySelectorAll('.lang-pane');
+            btns.forEach(b => b.classList.remove('active'));
+            panes.forEach(p => p.classList.remove('active'));
+            if (lang === 'tr') {
+                if (btns[1]) btns[1].classList.add('active');
+                const pTr = document.getElementById('pane-tr');
+                if (pTr) pTr.classList.add('active');
+            } else {
+                if (btns[0]) btns[0].classList.add('active');
+                const pEn = document.getElementById('pane-en');
+                if (pEn) pEn.classList.add('active');
+            }
+        }
+
+        // Custom Cursor movement (Hardware 1:1 GPU Transform, matching main portfolio)
+        const cursorWrapper = document.getElementById('cursor-wrapper');
+        const customCursor = document.getElementById('custom-cursor');
+        if (cursorWrapper && customCursor) {
+            let cursorX = 0, cursorY = 0, cursorTicking = false;
+            document.addEventListener('mousemove', (e) => {
+                cursorX = e.clientX;
+                cursorY = e.clientY;
+                if (!cursorTicking) {
+                    requestAnimationFrame(() => {
+                        cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                        cursorTicking = false;
+                    });
+                    cursorTicking = true;
+                }
+            }, { passive: true });
+
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest('a, button, .lang-btn, .pillar-card, .blueprint-sheet-container')) {
+                    customCursor.classList.add('cursor-hover');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest('a, button, .lang-btn, .pillar-card, .blueprint-sheet-container')) {
+                    customCursor.classList.remove('cursor-hover');
+                }
+            });
+        }
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 — YOU WERE HERE. | Elifsu Genç</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Blueprint Grid Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Hardware-Accelerated Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-you-were-here" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">03</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">YOU WERE HERE.</span>
+                <span class="crumb-tag">LIVE ARCHIVE</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#manifesto">MANIFESTO</a>
+                <a href="#pillars">RESEARCH</a>
+                <a href="#collective-archive">COLLECTIVE STAGE</a>
+                <a href="#all-traces">TRACE DIRECTORY</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="project-page-container">
+
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">DIGITAL ARCHIVE &bull; 2026</span>
+                    <span class="meta-item">AUTHOR: ELİFSU GENÇ</span>
+                    <span class="meta-item">INTERACTIVE EPHEMERA</span>
+                    <span class="meta-item">REAL-TIME TELEMETRY</span>
+                </div>
+                <h1 class="hero-title">03 &mdash; YOU WERE HERE.</h1>
+                <p class="hero-core-question">&ldquo;What remains of the movements we forget? Digital presence as an ephemeral, irreversible spatial memory.&rdquo;</p>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Ephemeral Telemetry / Participatory Cartography</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">SCALE</span>
+                    <span class="spec-val">Website-Wide Global Coordinate Space</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">DATABASE</span>
+                    <span class="spec-val">Cloud Firebase Firestore (Preserved Historical Traces)</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">ARTIFACT ENGINE</span>
+                    <span class="spec-val">Lightweight HTML5 Canvas PNG Renderings (1:1 Square)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANIFESTO SECTION -->
+        <section id="manifesto" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">01</span>
+                <h2 class="section-title">CONCEPTUAL THESIS &amp; MANIFESTO</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="manifesto-monument-card">
+                <div class="manifesto-badge-row">
+                    <span class="manifesto-badge">// THE ANATOMY OF INVISIBLE GESTURES</span>
+                    <div class="lang-toggle-bar">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="tr">TR</button>
+                    </div>
+                </div>
+
+                <!-- English Thesis -->
+                <div class="lang-pane active" id="pane-en">
+                    <p class="manifesto-lead-quote">
+                        In an era dominated by intentional outputs &mdash; text submitted, buttons clicked, forms confirmed &mdash; the vast majority of our digital life transpires in the margins: the micro-hesitations of a cursor over a headline, the sweeping arches between links, the involuntary pauses where thought precedes action.
+                    </p>
+                    <div class="manifesto-inquiry-box">
+                        <span class="inquiry-prefix">CORE SPECULATION:</span>
+                        <div class="inquiry-statement">
+                            &ldquo;Can an anonymous trace possess the weight of physical presence? Can a cursor line become an architectural memory?&rdquo;
+                        </div>
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65;">
+                        <strong>YOU WERE HERE.</strong> transforms the entire portfolio into an active topological sensorium. When a visitor grants consent, their involuntary kinetic gestures are translated into a normalized coordinate sequence. Every visit is assigned an atomic sequential registry number (<code>TRACE_0001</code>, <code>TRACE_0002</code>...) and etched into a permanent cloud archive. Rather than ephemeral surveillance, it is treated as a participatory monument &mdash; an honest digital palimpsest where individual presence intertwines into a collective memory cloud.
+                    </p>
+                </div>
+
+                <!-- Turkish Thesis -->
+                <div class="lang-pane" id="pane-tr">
+                    <p class="manifesto-lead-quote">
+                        Yalnızca kasti eylemlerin &mdash; tıklanan butonların, gönderilen formların &mdash; kaydedildiği dijital dünyada, varlığımızın asıl ağırlığı satır aralarında gizlidir: bir başlığın üzerinde duraksayan imleç, sayfalar arasındaki kararsız yaylar ve düşüncenin eyleme dönüştüğü o mikro anlar.
+                    </p>
+                    <div class="manifesto-inquiry-box">
+                        <span class="inquiry-prefix">TEMEL SORUŞTURMA:</span>
+                        <div class="inquiry-statement">
+                            &ldquo;Anonim bir imleç çizgisi, fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?&rdquo;
+                        </div>
+                    </div>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65;">
+                        <strong>YOU WERE HERE.</strong> bütün web sitesini duyarlı bir mekânsal yüzeye dönüştürür. Ziyaretçi onay verdiğinde, ekran üzerindeki tüm istemsiz kinetik hareketleri normalize edilmiş bir koordinat dizisi olarak kaydedilir. Her ziyaret tekil ve ardışık bir numara ile (<code>TRACE_0001</code>, <code>TRACE_0002</code>...) kalıcı bulut arşivine işlenir. Bu sistem bir gözetleme mekanizması değil; bireysel varlığın kolektif bir dijital tortuya dönüştüğü katılımcı bir anıttır.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESEARCH PILLARS -->
+        <section id="pillars" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">02</span>
+                <h2 class="section-title">CARTOGRAPHIC PILLARS</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <span class="pillar-index">PILLAR 01 // KINETICS</span>
+                    <h3 class="pillar-title">Dwell Density &amp; Velocity</h3>
+                    <p class="pillar-desc">
+                        Cursor movements are modulated by inverse speed calculus. Rapid transitions yield feather-light strokes, while reading hesitations bloom into translucent concentric cerulean halos, measuring cognitive attention without invading privacy.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <span class="pillar-index">PILLAR 02 // PALIMPSEST</span>
+                    <h3 class="pillar-title">Collective Layering</h3>
+                    <p class="pillar-desc">
+                        No trace exists in isolation. Through the collective archive stage, hundreds of past visitor trajectories are superimposed in real-time, revealing unintended migratory corridors and collective spatial desires across the website.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <span class="pillar-index">PILLAR 03 // ARTIFACT</span>
+                    <h3 class="pillar-title">Vector-to-PNG Persistence</h3>
+                    <p class="pillar-desc">
+                        Replacing heavy multipage documents, every trace is synthesized into a standardized, lightweight 1:1 PNG artifact. Each entry preserves date, time, duration, and coordinate geometry &mdash; readily downloadable and permanently archived.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLLECTIVE TRACE ARCHIVE CANVAS -->
+        <section id="collective-archive" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">03</span>
+                <h2 class="section-title">COLLECTIVE MEMORY OVERLAY</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="collective-container">
+                <div class="collective-header-bar">
+                    <div class="collective-title-group">
+                        <span class="collective-tag">// SUPERIMPOSED VISITOR CARTOGRAPHY</span>
+                        <p class="collective-desc">All historical traces rendered concurrently as an emergent spatial topography.</p>
+                    </div>
+                    <div class="collective-stats-badge">
+                        <span class="live-pulse-dot"></span>
+                        <span id="collective-stats-text">CONNECTING TO ARCHIVE...</span>
+                    </div>
+                </div>
+
+                <!-- Temporal Palimpsest View Switcher -->
+                <div class="collective-era-switch-bar">
+                    <span class="era-switch-label">SELECT TEMPORAL PALIMPSEST:</span>
+                    <div class="era-switch-group">
+                        <button type="button" class="era-tab-btn active" data-era="ALL">
+                            <span>✦ ALL TIME SUPERIMPOSED</span>
+                        </button>
+                        <button type="button" class="era-tab-btn" data-era="LEGACY">
+                            <span>📁 PREVIOUS WEBSITE ARCHIVE (≤ 08.10.2026)</span>
+                        </button>
+                        <button type="button" class="era-tab-btn" data-era="CURRENT">
+                            <span>⚡ CURRENT WEBSITE ERA (09.10.2026+)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Collective Drawing Stage -->
+                <div class="collective-stage" id="collective-stage">
+                    <span class="stage-corner-mark scm-tl">+</span>
+                    <span class="stage-corner-mark scm-tr">+</span>
+                    <span class="stage-corner-mark scm-bl">+</span>
+                    <span class="stage-corner-mark scm-br">+</span>
+                    <span class="stage-watermark" id="stage-watermark-label">COLLECTIVE PALIMPSEST &bull; YOU WERE HERE.</span>
+                    <canvas id="collective-canvas-overlay" width="1200" height="520"></canvas>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; flex-wrap: wrap; gap: 12px;">
+                    <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-muted);">
+                        Tip: Hover and drag to observe the collective spatial density of prior visitors.
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="btn-re-render-collective" class="btn-trace-action">RE-RENDER COLLECTIVE</button>
+                        <button id="btn-download-collective" class="btn-trace-action btn-png-download">&darr; DOWNLOAD COMPOSITE PNG</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INDIVIDUAL REGISTERED TRACES DIRECTORY -->
+        <section id="all-traces" class="manifesto-section">
+            <div class="section-head">
+                <span class="section-num">04</span>
+                <h2 class="section-title">REGISTERED TRACE DIRECTORY</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <!-- Filter & Sort Controls -->
+            <div class="archive-controls-row">
+                <div class="filter-group">
+                    <span class="filter-label">FILTER YEAR:</span>
+                    <select id="filter-year" class="archive-select">
+                        <option value="ALL">ALL YEARS</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                    </select>
+
+                    <span class="filter-label">MONTH:</span>
+                    <select id="filter-month" class="archive-select">
+                        <option value="ALL">ALL MONTHS</option>
+                        <option value="01">01 / JAN</option>
+                        <option value="02">02 / FEB</option>
+                        <option value="03">03 / MAR</option>
+                        <option value="04">04 / APR</option>
+                        <option value="05">05 / MAY</option>
+                        <option value="06">06 / JUN</option>
+                        <option value="07">07 / JUL</option>
+                        <option value="08">08 / AUG</option>
+                        <option value="09">09 / SEP</option>
+                        <option value="10">10 / OCT</option>
+                        <option value="11">11 / NOV</option>
+                        <option value="12">12 / DEC</option>
+                    </select>
+
+                    <span class="filter-label">SORT:</span>
+                    <select id="filter-sort" class="archive-select">
+                        <option value="OLDEST" selected>OLDEST FIRST (TRACE_0001 &rarr; NEWEST)</option>
+                        <option value="NEWEST">NEWEST FIRST (NEWEST &rarr; TRACE_0001)</option>
+                        <option value="MOST_POINTS">MOST POINTS</option>
+                    </select>
+                </div>
+
+                <div class="traces-count-total" id="traces-count-pill">
+                    RETRIEVING TRACES...
+                </div>
+            </div>
+
+            <!-- Current Website Participatory Sessions -->
+            <div class="traces-era-block" id="current-traces-block">
+                <div class="traces-era-header">
+                    <div class="era-header-left">
+                        <span class="live-pulse-dot"></span>
+                        <h3 class="era-block-title">CURRENT WEBSITE SESSIONS (09.10.2026 – PRESENT)</h3>
+                        <span class="era-block-tag">ACTIVE TELEMETRY ERA</span>
+                    </div>
+                    <span class="era-count-pill" id="current-traces-count-pill">0 SESSIONS</span>
+                </div>
+                <div class="traces-grid" id="current-traces-grid">
+                    <div class="current-empty-state">
+                        Loading current telemetry sessions...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legacy Website Archive Dossier Folder (<= 08.10.2026) -->
+            <div class="traces-archive-folder folder-collapsed" id="legacy-archive-folder">
+                <div class="folder-header" id="folder-toggle-btn" role="button" tabindex="0" aria-expanded="false">
+                    <div class="folder-header-left">
+                        <div class="folder-tab-badge">📁 ARCHIVE DOSSIER // ORIGIN REPOSITORY</div>
+                        <h3 class="folder-title">PREVIOUS WEBSITE TRACE ARCHIVE (≤ 08.10.2026)</h3>
+                        <p class="folder-subtitle">Traces recorded during the origin "Traces Together" era prior to 09.10.2026. Preserved in perpetuity.</p>
+                    </div>
+                    <div class="folder-header-right">
+                        <span class="folder-meta-pill" id="legacy-traces-count-pill">RETRIEVING...</span>
+                        <div class="folder-toggle-indicator">
+                            <span class="toggle-icon">+</span>
+                            <span class="toggle-text">OPEN FOLDER</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder-body" id="legacy-folder-body">
+                    <!-- Preserved Collective Palimpsest for Legacy Website Era ONLY -->
+                    <div class="legacy-palimpsest-card">
+                        <div class="legacy-palimpsest-header">
+                            <div class="l-info">
+                                <span class="l-badge">SEALED COLLECTIVE ARTIFACT</span>
+                                <h4 class="l-title">PREVIOUS WEBSITE ERA COLLECTIVE PALIMPSEST (≤ 08.10.2026)</h4>
+                                <p class="l-desc">Superimposed collective movements recorded exclusively on the previous website portfolio. Sealed origin memory archive.</p>
+                            </div>
+                            <div class="l-actions">
+                                <button id="btn-download-legacy-collective" class="btn-trace-action btn-png-download">&darr; DOWNLOAD LEGACY PALIMPSEST PNG (1920&times;1200)</button>
+                            </div>
+                        </div>
+                        <div class="legacy-canvas-stage">
+                            <span class="stage-corner-mark scm-tl">+</span>
+                            <span class="stage-corner-mark scm-tr">+</span>
+                            <span class="stage-corner-mark scm-bl">+</span>
+                            <span class="stage-corner-mark scm-br">+</span>
+                            <span class="stage-watermark">PREVIOUS WEBSITE ARCHIVE &bull; TRACES TOGETHER (≤ 08.10.2026)</span>
+                            <canvas id="legacy-collective-canvas" width="1200" height="460"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Legacy Individual Traces Grid inside the Folder -->
+                    <div class="folder-grid-header">
+                        <span class="folder-grid-label">INDIVIDUAL ARCHIVED TRACES &bull; PREVIOUS WEBSITE ITERATION</span>
+                    </div>
+                    <div class="traces-grid" id="legacy-traces-grid">
+                        <div class="traces-loading-state">
+                            Loading historical legacy trace records...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER NAVIGATION -->
+        <footer class="project-footer-nav">
+            <a href="../../index.html#card-you-were-here" class="footer-nav-btn">&larr; BACK TO EXPLORE</a>
+            <a href="../../index.html#projects" class="footer-nav-btn primary">ALL PROJECTS &rarr;</a>
+        </footer>
+    </main>
+
+    <!-- LIGHTBOX MODAL FOR TRACE INSPECTION -->
+    <div class="trace-modal-backdrop" id="trace-modal">
+        <div class="trace-modal-box">
+            <div class="trace-modal-header">
+                <div class="modal-trace-num" id="modal-trace-num">TRACE_0000</div>
+                <button class="btn-close-trace-modal" id="btn-close-modal" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="trace-modal-canvas-wrap">
+                <canvas id="modal-trace-canvas" width="700" height="700"></canvas>
+            </div>
+            <div class="trace-modal-foot">
+                <div class="modal-trace-meta-tags" id="modal-trace-meta">
+                    DATE: -- &bull; TIME: -- &bull; POINTS: --
+                </div>
+                <button id="modal-download-btn" class="btn-trace-action btn-png-download">
+                    &darr; DOWNLOAD PNG
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Scripts & Website-Wide Tracker Engine -->
+    <script src="../../script.js"></script>
+    <script src="../../assets/traces-tracker.js" defer></script>
+
+    <!-- Project Page Orchestration Script -->
+    <script>
+        (function() {
+            'use strict';
+
+            let allTraces = [];
+            let filteredTraces = [];
+            let selectedModalTrace = null;
+
+            // 0. Hardware-Accelerated Custom Cursor Tracking
+            const cursorWrapper = document.getElementById('cursor-wrapper');
+            const customCursor = document.getElementById('custom-cursor');
+            if (cursorWrapper && customCursor) {
+                let cursorX = 0, cursorY = 0, cursorTicking = false;
+                window.addEventListener('mousemove', (e) => {
+                    cursorX = e.clientX;
+                    cursorY = e.clientY;
+                    if (!cursorTicking) {
+                        requestAnimationFrame(() => {
+                            cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                            cursorTicking = false;
+                        });
+                        cursorTicking = true;
+                    }
+                }, { passive: true });
+
+                document.addEventListener('mouseover', (e) => {
+                    if (e.target.closest('.wwh-btn-learn, [data-cursor="question"]')) {
+                        customCursor.classList.remove('cursor-hover');
+                        customCursor.classList.add('cursor-project');
+                    } else if (e.target.closest('a, button, .btn-trace-action, .era-tab-btn, .archive-select, .folder-header, [role="button"]')) {
+                        customCursor.classList.add('cursor-hover');
+                    }
+                });
+
+                document.addEventListener('mouseout', (e) => {
+                    if (e.target.closest('.wwh-btn-learn, [data-cursor="question"]')) {
+                        customCursor.classList.remove('cursor-project');
+                    } else if (e.target.closest('a, button, .btn-trace-action, .era-tab-btn, .archive-select, .folder-header, [role="button"]')) {
+                        customCursor.classList.remove('cursor-hover');
+                    }
+                });
+            }
+
+            // 1. Language Toggle (EN / TR)
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const langPanes = {
+                en: document.getElementById('pane-en'),
+                tr: document.getElementById('pane-tr')
+            };
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    Object.keys(langPanes).forEach(k => {
+                        langPanes[k].classList.toggle('active', k === lang);
+                    });
+                });
+            });
+
+            window.collectiveEraMode = 'ALL';
+
+            // 2. Fetch All Traces from Cloud Firebase Firestore
+            async function loadTracesArchive() {
+                const currentGrid = document.getElementById('current-traces-grid');
+                const legacyGrid = document.getElementById('legacy-traces-grid');
+                const statsText = document.getElementById('collective-stats-text');
+
+                // Wait until YouWereHereTracker is available
+                let attempts = 0;
+                while (!window.YouWereHereTracker && !window.WeWereHereTracker && attempts < 30) {
+                    await new Promise(r => setTimeout(r, 100));
+                    attempts++;
+                }
+
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (!tracker) {
+                    if (currentGrid) currentGrid.innerHTML = '<div class="traces-empty-state">Unable to load tracker module. Please refresh.</div>';
+                    if (legacyGrid) legacyGrid.innerHTML = '<div class="traces-empty-state">Unable to load tracker module.</div>';
+                    return;
+                }
+
+                try {
+                    allTraces = await tracker.fetchAllTraces();
+                    
+                    applyFilters();
+                    renderCollectiveCanvas();
+                    renderLegacyCollectiveCanvas();
+                } catch (err) {
+                    console.error('Error loading traces archive:', err);
+                    if (currentGrid) currentGrid.innerHTML = '<div class="traces-empty-state">Unable to connect to traces archive.</div>';
+                    if (legacyGrid) legacyGrid.innerHTML = '<div class="traces-empty-state">Unable to connect to traces archive.</div>';
+                }
+            }
+
+            // 3. Filter & Sort Logic
+            const filterYear = document.getElementById('filter-year');
+            const filterMonth = document.getElementById('filter-month');
+            const filterSort = document.getElementById('filter-sort');
+
+            function applyFilters() {
+                const yearVal = filterYear.value;
+                const monthVal = filterMonth.value;
+                const sortVal = filterSort.value;
+
+                filteredTraces = allTraces.filter(t => {
+                    if (yearVal !== 'ALL') {
+                        if (!t.date || !t.date.includes(yearVal)) return false;
+                    }
+                    if (monthVal !== 'ALL') {
+                        if (!t.date) return false;
+                        const parts = t.date.split('.');
+                        if (parts.length >= 2) {
+                            if (parts[1] !== monthVal) return false;
+                        } else if (!t.date.includes('/' + monthVal + '/')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+
+                // Sorting
+                if (sortVal === 'NEWEST') {
+                    filteredTraces.sort((a, b) => (b.started || 0) - (a.started || 0));
+                } else if (sortVal === 'OLDEST') {
+                    filteredTraces.sort((a, b) => (a.started || 0) - (b.started || 0));
+                } else if (sortVal === 'MOST_POINTS') {
+                    filteredTraces.sort((a, b) => (b.pointCount || 0) - (a.pointCount || 0));
+                }
+
+                renderTracesGrid();
+            }
+
+            filterYear.addEventListener('change', applyFilters);
+            filterMonth.addEventListener('change', applyFilters);
+            filterSort.addEventListener('change', applyFilters);
+
+            // 4. Create Trace Card Element
+            function createTraceCardElement(trace) {
+                const card = document.createElement('div');
+                card.className = 'trace-card';
+
+                const thumbWrap = document.createElement('div');
+                thumbWrap.className = 'trace-card-thumb-wrap';
+
+                const canvas = document.createElement('canvas');
+                canvas.className = 'trace-card-canvas';
+                canvas.width = 400;
+                canvas.height = 400;
+                thumbWrap.appendChild(canvas);
+
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (tracker) {
+                    const temp = tracker.renderToCanvas(trace, 400, 400);
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(temp, 0, 0);
+                }
+
+                thumbWrap.addEventListener('click', () => openInspectModal(trace));
+
+                const body = document.createElement('div');
+                body.className = 'trace-card-body';
+                const ptsCount = trace.pointCount || (trace.points ? trace.points.length : 0);
+
+                body.innerHTML = `
+                    <div class="trace-card-topline">
+                        <span class="trace-card-id">${trace.traceNumber || 'TRACE'}</span>
+                        <span class="trace-card-pts">${ptsCount.toLocaleString()} pts</span>
+                    </div>
+                    <div class="trace-card-meta">
+                        <span>DATE: ${trace.date || '—'}</span>
+                        <span>TIME: ${trace.time || '—'}</span>
+                    </div>
+                    <div class="trace-card-foot">
+                        <button class="btn-trace-action btn-inspect">[ INSPECT ]</button>
+                        <button class="btn-trace-action btn-png-download btn-card-download">&darr; PNG</button>
+                    </div>
+                `;
+
+                body.querySelector('.btn-inspect').addEventListener('click', () => openInspectModal(trace));
+                body.querySelector('.btn-card-download').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const t = window.YouWereHereTracker || window.WeWereHereTracker;
+                    if (t) t.downloadAsPNG(trace);
+                });
+
+                card.appendChild(thumbWrap);
+                card.appendChild(body);
+                return card;
+            }
+
+            // 5. Render Trace Grids (Separated into Current Sessions & Legacy Dossier Folder)
+            function renderTracesGrid() {
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                const currentGrid = document.getElementById('current-traces-grid');
+                const legacyGrid = document.getElementById('legacy-traces-grid');
+                const countPill = document.getElementById('traces-count-pill');
+                const currentCountPill = document.getElementById('current-traces-count-pill');
+                const legacyCountPill = document.getElementById('legacy-traces-count-pill');
+
+                if (!tracker) return;
+
+                const currentList = filteredTraces.filter(t => !tracker.isLegacyTrace(t));
+                const legacyList = filteredTraces.filter(t => tracker.isLegacyTrace(t));
+
+                if (countPill) {
+                    countPill.textContent = `${filteredTraces.length} OF ${allTraces.length} TRACES (${currentList.length} CURRENT / ${legacyList.length} ARCHIVE FOLDER)`;
+                }
+
+                // A. Render Current Era Sessions
+                if (currentGrid) {
+                    currentGrid.innerHTML = '';
+                    if (currentList.length === 0) {
+                        currentGrid.innerHTML = `
+                            <div class="current-empty-state">
+                                No visitor sessions recorded in the current era yet (09.10.2026 – Present).<br>
+                                Move your cursor across the site to become part of the active living palimpsest!
+                            </div>
+                        `;
+                    } else {
+                        currentList.forEach(trace => currentGrid.appendChild(createTraceCardElement(trace)));
+                    }
+                }
+                if (currentCountPill) {
+                    currentCountPill.textContent = `${currentList.length} SESSIONS`;
+                }
+
+                // B. Render Legacy Archive Folder Traces (<= 08.10.2026)
+                if (legacyGrid) {
+                    legacyGrid.innerHTML = '';
+                    if (legacyList.length === 0) {
+                        legacyGrid.innerHTML = '<div class="traces-empty-state">No archived traces match the selected filters.</div>';
+                    } else {
+                        legacyList.forEach(trace => legacyGrid.appendChild(createTraceCardElement(trace)));
+                    }
+                }
+                if (legacyCountPill) {
+                    legacyCountPill.textContent = `${legacyList.length} ARCHIVED TRACES`;
+                }
+
+                // C. Render Legacy Collective Palimpsest inside the folder
+                renderLegacyCollectiveCanvas();
+            }
+
+            // 6. Legacy Collective Canvas Rendering (Preserved Historical Palimpsest)
+            function renderLegacyCollectiveCanvas() {
+                const canvas = document.getElementById('legacy-collective-canvas');
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (!canvas || !tracker) return;
+
+                const parent = canvas.parentElement;
+                const rect = parent ? parent.getBoundingClientRect() : canvas.getBoundingClientRect();
+                const displayW = Math.max(300, Math.round(rect.width || canvas.clientWidth || 1200));
+                const displayH = Math.max(200, Math.round(rect.height || canvas.clientHeight || 460));
+
+                const legacyTraces = tracker.getLegacyTraces(allTraces);
+                tracker.renderCollectivePalimpsest(canvas, legacyTraces, {
+                    width: displayW,
+                    height: displayH,
+                    dpr: Math.min(window.devicePixelRatio || 1, 2),
+                    title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                    excludeActive: true
+                });
+            }
+
+            // 7. Collective Overlay Canvas Rendering (Era-Aware Living Palimpsest)
+            function renderCollectiveCanvas() {
+                const canvas = document.getElementById('collective-canvas-overlay');
+                const statsText = document.getElementById('collective-stats-text');
+                const watermarkLabel = document.getElementById('stage-watermark-label');
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (!canvas || !tracker) return;
+
+                const parent = canvas.parentElement;
+                const rect = parent ? parent.getBoundingClientRect() : canvas.getBoundingClientRect();
+                const displayW = Math.max(300, Math.round(rect.width || canvas.clientWidth || 1200));
+                const displayH = Math.max(200, Math.round(rect.height || canvas.clientHeight || 520));
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+                if (window.collectiveEraMode === 'LEGACY') {
+                    const legacyList = tracker.getLegacyTraces(allTraces);
+                    const pts = legacyList.reduce((sum, t) => sum + (t.pointCount || (t.points ? t.points.length : 0)), 0);
+                    tracker.renderCollectivePalimpsest(canvas, legacyList, {
+                        width: displayW,
+                        height: displayH,
+                        dpr: dpr,
+                        title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                        excludeActive: true
+                    });
+                    if (statsText) statsText.textContent = `${legacyList.length} ARCHIVED TRACES // ${pts.toLocaleString()} PTS (PREVIOUS WEBSITE ERA)`;
+                    if (watermarkLabel) watermarkLabel.textContent = 'PREVIOUS WEBSITE ARCHIVE • TRACES TOGETHER (≤ 08.10.2026)';
+                } else if (window.collectiveEraMode === 'CURRENT') {
+                    const currentList = tracker.getCurrentTraces(allTraces);
+                    const pts = currentList.reduce((sum, t) => sum + (t.pointCount || (t.points ? t.points.length : 0)), 0);
+                    tracker.renderCollectivePalimpsest(canvas, currentList, {
+                        width: displayW,
+                        height: displayH,
+                        dpr: dpr,
+                        title: 'CURRENT WEBSITE SESSIONS (09.10.2026 – PRESENT)'
+                    });
+                    if (statsText) statsText.textContent = `${currentList.length} SESSIONS // ${pts.toLocaleString()} PTS (CURRENT WEBSITE ERA)`;
+                    if (watermarkLabel) watermarkLabel.textContent = 'CURRENT WEBSITE ERA • YOU WERE HERE.';
+                } else {
+                    const totalPoints = allTraces.reduce((sum, t) => sum + (t.pointCount || (t.points ? t.points.length : 0)), 0);
+                    tracker.renderCollectivePalimpsest(canvas, allTraces, {
+                        width: displayW,
+                        height: displayH,
+                        dpr: dpr,
+                        title: 'YOU WERE HERE. // LIVING COLLECTIVE PALIMPSEST'
+                    });
+                    if (statsText) statsText.textContent = `${allTraces.length} TRACES REGISTERED // ${totalPoints.toLocaleString()} PTS (ALL TIME)`;
+                    if (watermarkLabel) watermarkLabel.textContent = 'COLLECTIVE PALIMPSEST • YOU WERE HERE.';
+                }
+            }
+
+            // Window resize handler for crisp, stretch-free rendering
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    renderCollectiveCanvas();
+                    renderLegacyCollectiveCanvas();
+                }, 120);
+            });
+
+            // Re-render button
+            document.getElementById('btn-re-render-collective').addEventListener('click', renderCollectiveCanvas);
+
+            // Temporal Era Switcher Buttons
+            document.querySelectorAll('.era-tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.era-tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    window.collectiveEraMode = btn.getAttribute('data-era');
+                    renderCollectiveCanvas();
+                });
+            });
+
+            // Archive Folder Accordion Toggle
+            const folderToggleBtn = document.getElementById('folder-toggle-btn');
+            const archiveFolder = document.getElementById('legacy-archive-folder');
+            if (folderToggleBtn && archiveFolder) {
+                folderToggleBtn.addEventListener('click', () => {
+                    const isCollapsed = archiveFolder.classList.toggle('folder-collapsed');
+                    const iconEl = folderToggleBtn.querySelector('.toggle-icon');
+                    const textEl = folderToggleBtn.querySelector('.toggle-text');
+                    if (iconEl) iconEl.textContent = isCollapsed ? '+' : '−';
+                    if (textEl) textEl.textContent = isCollapsed ? 'OPEN FOLDER' : 'COLLAPSE FOLDER';
+                    folderToggleBtn.setAttribute('aria-expanded', !isCollapsed);
+                    if (!isCollapsed) {
+                        setTimeout(renderLegacyCollectiveCanvas, 40);
+                    }
+                });
+            }
+
+            // Download Main Stage Composite as High-Resolution PNG
+            document.getElementById('btn-download-collective').addEventListener('click', () => {
+                const offscreen = document.createElement('canvas');
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (!tracker) return;
+
+                let exportList = allTraces;
+                let exportOptions = { width: 1920, height: 1200, dpr: 1 };
+                let exportFilename = 'YOU_WERE_HERE_LIVING_PALIMPSEST_COMPOSITE.png';
+
+                if (window.collectiveEraMode === 'LEGACY') {
+                    exportList = tracker.getLegacyTraces(allTraces);
+                    exportOptions.title = 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)';
+                    exportOptions.excludeActive = true;
+                    exportFilename = 'YOU_WERE_HERE_PREVIOUS_WEBSITE_ARCHIVE_PALIMPSEST.png';
+                } else if (window.collectiveEraMode === 'CURRENT') {
+                    exportList = tracker.getCurrentTraces(allTraces);
+                    exportOptions.title = 'CURRENT WEBSITE SESSIONS (09.10.2026 – PRESENT)';
+                    exportFilename = 'YOU_WERE_HERE_CURRENT_WEBSITE_PALIMPSEST.png';
+                }
+
+                tracker.renderCollectivePalimpsest(offscreen, exportList, exportOptions);
+                offscreen.toBlob(blob => {
+                    if (!blob) return;
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = exportFilename;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        a.remove();
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                }, 'image/png');
+            });
+
+            // Download Legacy Website Palimpsest PNG from inside the folder
+            const btnDlLegacy = document.getElementById('btn-download-legacy-collective');
+            if (btnDlLegacy) {
+                btnDlLegacy.addEventListener('click', () => {
+                    const offscreen = document.createElement('canvas');
+                    const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                    if (!tracker) return;
+                    const legacyList = tracker.getLegacyTraces(allTraces);
+                    tracker.renderCollectivePalimpsest(offscreen, legacyList, {
+                        width: 1920,
+                        height: 1200,
+                        dpr: 1,
+                        title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                        excludeActive: true
+                    });
+                    offscreen.toBlob(blob => {
+                        if (!blob) return;
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `YOU_WERE_HERE_PREVIOUS_WEBSITE_ARCHIVE_PALIMPSEST.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        setTimeout(() => {
+                            a.remove();
+                            URL.revokeObjectURL(url);
+                        }, 1000);
+                    }, 'image/png');
+                });
+            }
+
+            // 6. Inspection Modal
+            const modal = document.getElementById('trace-modal');
+            const modalClose = document.getElementById('btn-close-modal');
+            const modalCanvas = document.getElementById('modal-trace-canvas');
+            const modalTitle = document.getElementById('modal-trace-num');
+            const modalMeta = document.getElementById('modal-trace-meta');
+            const modalDownloadBtn = document.getElementById('modal-download-btn');
+
+            function openInspectModal(trace) {
+                selectedModalTrace = trace;
+                modalTitle.textContent = trace.traceNumber || 'TRACE';
+                const ptsCount = trace.pointCount || (trace.points ? trace.points.length : 0);
+                modalMeta.textContent = `DATE: ${trace.date || '—'}  •  TIME: ${trace.time || '—'}  •  POINTS: ${ptsCount.toLocaleString()}`;
+
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (tracker) {
+                    const temp = tracker.renderToCanvas(trace, 700, 700);
+                    const ctx = modalCanvas.getContext('2d');
+                    ctx.clearRect(0, 0, 700, 700);
+                    ctx.drawImage(temp, 0, 0);
+                }
+
+                modal.classList.add('active');
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                selectedModalTrace = null;
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            modalDownloadBtn.addEventListener('click', () => {
+                const t = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (selectedModalTrace && t) {
+                    t.downloadAsPNG(selectedModalTrace);
+                }
+            });
+
+            // ESC key closes modal
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Start initialization once DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadTracesArchive);
+            } else {
+                loadTracesArchive();
+            }
+        })();
+    </script>
+</body>
+</html>

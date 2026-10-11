@@ -1,267 +1,546 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>THE EARTHEN · elifsu genç</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css?v=27" defer><style>
-.detail-heading {
-    min-height: auto !important;
-    margin-bottom: 30px !important;
-}
-.detail-section .eyebrow {
-    font-size: 1.3rem;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    color: var(--primary);
-}
-.detail-section .detail-body {
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 â€” THE EARTHEN | Elifsu GenÃ§</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="project-detail-body">
+    <!-- Architectural Grid & Registration Marks Background -->
+    <div class="blueprint-bg"></div>
 
-/* Gallery & Lightbox Styles */
-.media-thumb {
-    aspect-ratio: 1;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.media-thumb:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-.lightbox {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.95);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.lightbox[hidden] {
-    display: none !important;
-}
-.lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    user-select: none;
-    transition: transform 0.2s ease;
-    cursor: zoom-in;
-}
-.lightbox img.zoomed {
-    transform: scale(3);
-    cursor: zoom-out;
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px; right: 30px;
-    background: none; border: none;
-    color: white; font-size: 3rem;
-    cursor: pointer;
-}
-.lightbox-prev, .lightbox-next {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.1); border: none;
-    color: white; font-size: 2rem;
-    padding: 20px; cursor: pointer;
-    transition: background 0.2s;
-    border-radius: 5px;
-}
-.lightbox-prev:hover, .lightbox-next:hover {
-    background: rgba(255,255,255,0.3);
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.lightbox-counter {
-    position: absolute;
-    bottom: 20px; left: 50%; transform: translateX(-50%);
-    color: white; font-family: monospace; font-size: 1.2rem;
-}
-</style></head><body style="--primary: #9f5a3b;"><main><header class="top"><a href="/" class="logo-link" aria-label="Elifsu Genç — Main"><span class="header-mark">eg<span class="accent">.</span></span></a><nav aria-label="Primary"><a href="/">Main</a><a href="/projects/">Projects</a><a href="/about/">About</a></nav></header><article class="detail"><a class="back-link" href="/projects/">← All projects</a><div class="detail-heading"><span class="eyebrow">PROJECT</span><h1 style="margin: 20px 0 0 0; line-height: 1.1;">THE</h1><div style="display: flex; align-items: baseline; flex-wrap: nowrap; gap: 15px;"><h1 style="margin: 0; line-height: 1.1; flex-shrink: 0;">EARTHEN<span class="accent">.</span></h1><span style="font-size: clamp(1.2rem, 2vw, 1.65rem); white-space: nowrap;">is there death because there is life<span class="q-mark">?</span></span></div>
-<div class="project-tags" style="display: flex; gap: 12px; margin-top: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
-      <img src="/assets/tags/ecological.png" alt="Ecological" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/speculative.png" alt="Speculative" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/experimental.png" alt="Experimental" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/social-memory.png" alt="Social Memory" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/material-agency.png" alt="Material Agency" style="width: 50px; height: 50px;">
-      <img src="/assets/tags/critical-inquiry.png" alt="Critical Inquiry" style="width: 50px; height: 50px;">
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 40px; font-size: 0.9rem; color: #888; line-height: 1.5; letter-spacing: 0.02em;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; max-width: 800px;">
-            <div>
-                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">SOFTWARE</strong>
-                <span>V-Ray, Rhinoceros 3D, Adobe Photoshop, Adobe Illustrator</span>
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../index.html#card-the-earthen" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ BACK TO EXPLORE ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">10</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">THE EARTHEN</span>
             </div>
-            <div>
-                <strong style="color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.8rem; letter-spacing: 0.1em;">OVERVIEW</strong>
-                <span>Does death exist because life exists, or does life exist because death exists?</span>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#manifesto">MANIFESTO</a>
+                <a href="#metabolism">METABOLISM</a>
+                <a href="#program">PROGRAM</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">SPATIAL DESIGN &bull; 2026</span>
+                    <span class="meta-item">AUTHOR: ELÄ°FSU GENÃ‡</span>
+                    <span class="meta-item">SOIL &amp; CLAY TECTONICS</span>
+                    <span class="meta-item">LIVING BIO-ARCHIVE</span>
+                </div>
+                <h1 class="hero-title">10 &mdash; THE EARTHEN</h1>
+                <p class="hero-core-question">&ldquo;to decay is to begin again &mdash; Is there death because there is life?&rdquo;</p>
+            </div>
+
+            <!-- Project Highlights Banner -->
+            <div class="award-hero-banner" style="border-color: var(--border-light); background: var(--accent-blue-light);">
+                <div class="award-box">
+                    <span class="award-title" style="color: var(--accent-blue);">CORE ARCHITECTURAL THESIS</span>
+                    <span class="award-subtitle" style="color: var(--text-secondary);">Life and death as an inseparable continuum; welcoming fatigue, loss, and material decay as fertile ground for renewal through tactile soil and clay immersion.</span>
+                </div>
+                <div class="award-box" style="border-left: 1px solid var(--border-light); padding-left: 16px;">
+                    <span class="award-title" style="color: var(--accent-blue);">CLOSED-LOOP METABOLISM</span>
+                    <span class="award-subtitle" style="color: var(--text-secondary);">Continuous circulatory conduit tubes transport harvested seeds, clay slurry, and water between the rooftop terrace garden and subterranean creation labs.</span>
+                </div>
+            </div>
+
+            <!-- Key Specs / Sheet Title Block -->
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">STUDIO &amp; INITIATIVE</span>
+                    <span class="spec-val">Spatial Design Studio &bull; 2026</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Cyclical Earth Architecture &bull; Healing &amp; Material Creation Lab</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">PRIMARY MEDIUM</span>
+                    <span class="spec-val">Soil &amp; Clay Tectonics &bull; Translucent Fiberglass &bull; Metal Tubes</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TRANSFORMATION CYCLE</span>
+                    <span class="spec-val">Mud Bathing &rarr; Kneading &rarr; Shaping &rarr; Sun Curing &rarr; Composting</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TECHNICAL DRAWINGS</span>
+                    <span class="spec-val">1/50 Plans &bull; 1/20 Partial Section &bull; 1/5 Fiberglass &amp; Tube Details</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">MATERIAL METABOLISM</span>
+                    <span class="spec-val">Subterranean Liquid Slurry to +6.00m Living Garden</span>
+                </div>
+            </div>
+
+            <!-- Hero Showcase Image -->
+            <div class="hero-visual-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-04-mass-diagram-plan-renders.jpg', 'The Earthen â€” Ground Floor Plan, Central Radial Atrium & Rammed Earth Workshops')">
+                <img src="./assets/the-earthen-sheet-04-mass-diagram-plan-renders.jpg" alt="The Earthen Master Plan & Atrium Renders" class="hero-visual-img">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">CENTRAL ATRIUM &amp; LABS</span>
+                    <span class="caption-text">Double-height cylindrical core wrapped in translucent fiberglass, metal pipe conduits, and rammed earth seating.</span>
+                    <span class="zoom-hint">[ CLICK TO EXPAND â†— ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPT & MANIFESTO SECTION (BILINGUAL) -->
+        <section id="manifesto" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; MANIFESTO &mdash; TO DECAY IS TO BEGIN AGAIN</span>
+            </div>
+
+            <!-- Manifesto Quotes Carousel / Cards -->
+            <div class="manifesto-grid">
+                <div class="manifesto-card highlight-card">
+                    <div class="quote-mark">&ldquo;</div>
+                    <h3 class="manifesto-lead">Life and death are inseparable aspects of existence. Many living beings experience beginnings and endings, growth and decay, and through these processes, the natural cycles of the earth run.</h3>
+                    <p class="manifesto-body">
+                        Death is not an ultimate end, but a transformation that allows new life to emerge and dynamic interactions within nature to continue. Understanding this cycle encourages us to rethink experiences, letting go of fear and attachment, and to see every moment as part of a larger continuum.
+                    </p>
+                </div>
+
+                <div class="manifesto-card">
+                    <span class="sub-label">ETHOS OF FATIGUE &amp; RENEWAL</span>
+                    <h4 class="manifesto-sub-title">Embracing Losses Rather Than Removing Them</h4>
+                    <p class="manifesto-body">
+                        Everyday pursuits open to decay, mortality, failure. The urgent concerns and meaningless flux awaken to life's auspicious balance. Not losses are removed in daily life; faults and death allow the solemn side of the commodity: respect and temperance.
+                    </p>
+                    <p class="manifesto-body" style="margin-top: 10px;">
+                        We promote the fatigue, failures, and losses. By embracing the flow of experience cycles, bringing in each particular stage, one can achieve resilience, presence, and vitality. The energy of the seed captures this flexible, radiant heritage: from a cocoon providing nourishment, suspending, falling, and beginning again.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bilingual Curatorial Statements -->
+            <div class="bilingual-statement-container">
+                <div class="lang-selector-bar">
+                    <span class="lang-bar-label">CURATORIAL STATEMENT:</span>
+                    <div class="lang-pills">
+                        <button type="button" class="lang-pill active" onclick="switchDetailLang('en')">ENGLISH</button>
+                        <button type="button" class="lang-pill" onclick="switchDetailLang('tr')">TÃœRKÃ‡E</button>
+                    </div>
+                </div>
+
+                <div id="statement-en" class="statement-panel active">
+                    <div class="statement-grid">
+                        <div class="statement-col">
+                            <h4 class="col-heading">TACTILE RESISTANCE TO FAST-PACED URBAN FLUX</h4>
+                            <p>
+                                Situated at the intersection of religious sanctuaries, educational facilities, fitness centers, and bustling office plazas, <em>The Earthen</em> serves as an intentional sanctuary of slowness. In contemporary urban life, exhaustion, failure, and mortality are treated as dysfunctions to be hidden away behind commercial efficiency.
+                            </p>
+                            <p>
+                                <em>The Earthen</em> constructs an active counter-space where visitors physically re-engage with soil, clay, and decomposition. By touching raw mud, kneading clay with their hands, and bathing in mineral-rich subterranean pools, visitors surrender the anxiety of permanence and reconnect with natural cyclical time.
+                            </p>
+                        </div>
+                        <div class="statement-col">
+                            <h4 class="col-heading">MATERIAL MORTALITY AS AN ARCHITECTURAL INSTRUMENT</h4>
+                            <p>
+                                Rather than building static monuments that defy time, this architecture celebrates weathering, cracking, and erosion. Ceramic vessels shaped in the lower laboratories are placed on open sun terraces to crack, degrade, and reintegrate with organic soil.
+                            </p>
+                            <p>
+                                At the uppermost terrace garden, decayed organic matter forms fertile substrate for living plants. Ripe seeds are collected and channeled back down into subterranean workshops through functional tube conduits, generating a perpetual closed loop where every ending triggers a new beginning.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="statement-tr" class="statement-panel">
+                    <div class="statement-grid">
+                        <div class="statement-col">
+                            <h4 class="col-heading">HIZ ODAKLI KENTSEL AKIÅA KARÅI TOPRAKLA DOKUNSAL DÄ°RENÄ°Å</h4>
+                            <p>
+                                Ä°badethanelerin, okullarÄ±n, spor merkezlerinin ve yoÄŸun iÅŸ plazalarÄ±nÄ±n kesiÅŸiminde konumlanan <em>The Earthen</em>, bilinÃ§li bir yavaÅŸlama ve yÃ¼zleÅŸme tapÄ±naÄŸÄ± olarak kurgulanmÄ±ÅŸtÄ±r. Ã‡aÄŸdaÅŸ kent yaÅŸamÄ±nda yorgunluk, kayÄ±p ve fÃ¢nilik, ticari verimliliÄŸin ardÄ±na saklanmasÄ± gereken kusurlar gibi algÄ±lanÄ±r.
+                            </p>
+                            <p>
+                                <em>The Earthen</em>, ziyaretÃ§ilerin toprak, kil ve doÄŸal Ã§Ã¶zÃ¼nme sÃ¼reÃ§leriyle doÄŸrudan bedensel temas kurduÄŸu bir karÅŸÄ±-mekÃ¢n Ã¶nerir. Ham Ã§amuru yoÄŸurarak, zemin kattaki mineral Ã§amur havuzlarÄ±nda dinlenerek ve malzemenin tenlerinde kuruyup dÃ¶kÃ¼lmesine izin vererek kentliler, kalÄ±cÄ±lÄ±k kaygÄ±sÄ±ndan sÄ±yrÄ±lÄ±p dÃ¶ngÃ¼sel zamana dahil olurlar.
+                            </p>
+                        </div>
+                        <div class="statement-col">
+                            <h4 class="col-heading">BÄ°R MÄ°MARÄ° ENSTRÃœMAN OLARAK MADDENÄ°N FÃ‚NÄ°LÄ°ÄÄ°</h4>
+                            <p>
+                                Zamana meydan okuyan donuk anÄ±tlar inÅŸa etmek yerine bu proje; aÅŸÄ±nmayÄ±, Ã§atlamayÄ± ve erozyonu mekÃ¢nÄ±n kurucu unsurlarÄ± haline getirir. Laboratuvarlarda ÅŸekillendirilen ham formlar gÃ¼neÅŸ ve rÃ¼zgÃ¢r teraslarÄ±nda hava ÅŸartlarÄ±na maruz bÄ±rakÄ±lÄ±r, solar ve zamanla topraÄŸa karÄ±ÅŸÄ±r.
+                            </p>
+                            <p>
+                                En Ã¼stteki Ã§atÄ± bahÃ§esinde Ã§Ã¶zÃ¼nen organik maddeler yeni filizler iÃ§in verimli zemin oluÅŸturur; olgunlaÅŸan tohumlar toplanarak dÃ¼ÅŸey boru kanallarÄ± Ã¼zerinden aÅŸaÄŸÄ±daki Ã¼retim atÃ¶lyelerine geri iletilir. BÃ¶ylece her bitiÅŸin yeni bir doÄŸumu beslediÄŸi kapalÄ± devre bir metabolizma kurulur.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (Re)Birth Biological Cycle Diagram Cards -->
+            <div class="ritual-cards-row">
+                <div class="ritual-card">
+                    <span class="ritual-step">STAGE 01</span>
+                    <h5 class="ritual-name">SEARCH &amp; CRUSH</h5>
+                    <p class="ritual-desc">Extracting raw earth and dry clay minerals, crushing matter into fine powders ready for reconstitution.</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-step">STAGE 02</span>
+                    <h5 class="ritual-name">SOAK &amp; DOUGH</h5>
+                    <p class="ritual-desc">Water-based mixing in subterranean pools; bodily mud bathing, kneading with hands and feet.</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-step">STAGE 03</span>
+                    <h5 class="ritual-name">SHAPE &amp; FORM</h5>
+                    <p class="ritual-desc">Transforming pliable clay on potter wheels and radial workstations in the Material Creator Lab.</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-step">STAGE 04</span>
+                    <h5 class="ritual-name">DRY &amp; WEATHER</h5>
+                    <p class="ritual-desc">Exposing vessels to sunlight and wind; welcoming surface cracking, erosion, and material fragility.</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-step">STAGE 05</span>
+                    <h5 class="ritual-name">DECAY &amp; REGENERATE</h5>
+                    <p class="ritual-desc">Composting decayed matter on the +6.00m terrace garden; harvesting seeds to feed back into lower labs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 02: ARCHITECTURAL METABOLISM & CLOSED-LOOP SYSTEMS -->
+        <section id="metabolism" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">ARCHITECTURAL METABOLISM // CIRCULATORY TUBE SYSTEM</span>
+            </div>
+
+            <div class="systems-grid">
+                <div class="system-box">
+                    <span class="system-num">SYSTEM A</span>
+                    <h3 class="system-title">THE VERTICAL CYCLE OF MATTER</h3>
+                    <p class="system-text">
+                        The sectional organization of the project is structured upon a vertical cycle of material transformation, progressing from <strong>wet to dry</strong>, from <strong>soft to solid</strong>, and from <strong>decay to growth</strong>:
+                    </p>
+                    <ul class="system-bullets">
+                        <li><strong>Lower Subterranean Level:</strong> Water-based immersion, soaking, and clay bathing allowing direct bodily engagement with liquid and semi-liquid mineral matter.</li>
+                        <li><strong>Ground Level Labs:</strong> Matter becomes denser and more stable, enabling kneading, shaping, and forming on radial workstations.</li>
+                        <li><strong>Upper Sun Terraces:</strong> Weathering and drying under natural air currents, permitting objects to cure, crack, and slowly transform.</li>
+                        <li><strong>+6.00m Terrace Garden:</strong> Observation and cultivation where decomposed matter creates nutrient-rich soil for sprouting plants.</li>
+                    </ul>
+                </div>
+
+                <div class="system-box">
+                    <span class="system-num">SYSTEM B</span>
+                    <h3 class="system-title">HYBRID METAL TUBES: STRUCTURE &amp; CONDUIT</h3>
+                    <p class="system-text">
+                        The curved metal tubes extend throughout the volume, dissolving the boundary between structural architecture and interior furniture:
+                    </p>
+                    <ul class="system-bullets">
+                        <li><strong>Structural Frame:</strong> Vertical radial ring providing seismic and gravity support for the central atrium and rooftop garden.</li>
+                        <li><strong>Functional Furniture:</strong> Tubes bend to become seating, work tables, handrails, and spatial dividers.</li>
+                        <li><strong>Biological Conduits:</strong> Internal hollow chambers act as vertical pipelines carrying harvested seeds, water, and clay slurry between levels, allowing the building itself to actively participate in the cycle of mixing and regeneration.</li>
+                    </ul>
+                </div>
+
+                <div class="system-box">
+                    <span class="system-num">SYSTEM C</span>
+                    <h3 class="system-title">DIFFUSE TRANSLUCENT FIBERGLASS SKIN</h3>
+                    <p class="system-text">
+                        Wrapped around the external perimeter of the tube framework, a curved fiberglass envelope modulates light and views:
+                    </p>
+                    <ul class="system-bullets">
+                        <li>Filters direct urban sunlight into a warm, meditative amber glow.</li>
+                        <li>Blurs the visual threshold between the contemplative interior sanctuary and the urban context.</li>
+                        <li>Allows natural ventilation and thermal stack effect to ventilate drying zones while preserving humidity in bathing chambers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Drawings Dual Feature -->
+            <div class="drawings-dual-row" style="margin-top: 28px;">
+                <div class="dual-card zoomable-image-container" onclick="openLightbox('./assets/drawings-building-sections.jpg', 'Building Cross Sections â€” Double height atrium, mud immersion pool, vertical tube conduits & rooftop soil terrace')">
+                    <img src="./assets/drawings-building-sections.jpg" alt="The Earthen Architectural Cross Sections" class="dual-img">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">BUILDING SECTIONS</span>
+                        <span class="caption-text">Vertical stratification from subterranean mud bath pools to living rooftop terrace garden.</span>
+                        <span class="zoom-hint">[ EXPAND â†— ]</span>
+                    </div>
+                </div>
+
+                <div class="dual-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-03-partial-section-terrace-plan.jpg', '1/20 Partial Section & 1/5 Fiberglass Construction Details with Terrace Garden Plan')">
+                    <img src="./assets/the-earthen-sheet-03-partial-section-terrace-plan.jpg" alt="Partial Section and Detail Sheet" class="dual-img">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">1/20 PARTIAL SECTION &amp; 1/5 DETAILS</span>
+                        <span class="caption-text">Fiberglass envelope fixing, tube structural joinery, and seed collection conduits.</span>
+                        <span class="zoom-hint">[ EXPAND â†— ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 03: ARCHITECTURAL PROGRAM & SPATIAL EXPERIENCES -->
+        <section id="program" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">SPATIAL EXPERIENCES &amp; ATMOSPHERES</span>
+            </div>
+
+            <p class="section-lead-text">
+                The space offers a sequence of gentle physical activities that connect the human body with soil, clay, and planetary cycles. Visitors move through tactile encounters of kneading, grounding, and resting:
+            </p>
+
+            <div class="renders-quad-grid">
+                <div class="render-quad-card zoomable-image-container" onclick="openLightbox('./assets/render-atrium.jpg', 'Central Cylindrical Atrium â€” Glowing fiberglass envelope, radial staircase and rammed earth seating')">
+                    <img src="./assets/render-atrium.jpg" alt="Central Atrium with Fiberglass Envelope" class="quad-img">
+                    <div class="quad-meta">
+                        <span class="quad-title">CENTRAL MONUMENTAL ATRIUM</span>
+                        <span class="quad-desc">Diffuse daylight glowing through translucent fiberglass skin onto rammed earth circular benches.</span>
+                    </div>
+                </div>
+
+                <div class="render-quad-card zoomable-image-container" onclick="openLightbox('./assets/render-earth-workshop.jpg', 'Material Creator Lab & Earth Workshops â€” Circular kneading planters and collaborative shaping benches')">
+                    <img src="./assets/render-earth-workshop.jpg" alt="Rammed Earth Kneading Workshop" class="quad-img">
+                    <div class="quad-meta">
+                        <span class="quad-title">KNEADING &amp; SHAPING LAB</span>
+                        <span class="quad-desc">Earth-walled communal workshop with integrated clay bins and tactile forming stations.</span>
+                    </div>
+                </div>
+
+                <div class="render-quad-card zoomable-image-container" onclick="openLightbox('./assets/render-portal-bath.jpg', 'Rammed Earth Portal & Mineral Mud Bath â€” Blue pipe trellis draped with climbing vines and natural sunlight')">
+                    <img src="./assets/render-portal-bath.jpg" alt="Mud Bath and Rammed Earth Portal" class="quad-img">
+                    <div class="quad-meta">
+                        <span class="quad-title">RAMMED EARTH PORTAL &amp; MUD BATH</span>
+                        <span class="quad-desc">Mineral immersion pool framed by vertical blue pipe columns draped in lush ivy.</span>
+                    </div>
+                </div>
+
+                <div class="render-quad-card zoomable-image-container" onclick="openLightbox('./assets/render-terrace-canopy.jpg', 'Rooftop Terrace Garden & Pergola â€” Curved tubular trellis shaded by living vines, observation deck')">
+                    <img src="./assets/render-terrace-canopy.jpg" alt="Rooftop Terrace Pergola Canopy" class="quad-img">
+                    <div class="quad-meta">
+                        <span class="quad-title">+6.00M LIVING ROOF PERGOLA</span>
+                        <span class="quad-desc">Curved tube canopy nurturing climbing plants, harvesting seeds for biological recycling.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04: TECHNICAL DRAWINGS & AXONOMETRIC FORENSICS -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">TECHNICAL DRAWINGS &amp; AXONOMETRICS</span>
+            </div>
+
+            <div class="tech-drawings-grid">
+                
+                <!-- Exploded Axonometric -->
+                <div class="tech-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-05-axonometric-renders-roof-plan.jpg', 'Exploded Axonometric Assembly & +6.00 Terrace Garden Plan')">
+                    <div class="tech-card-header">
+                        <span class="tech-tag">EXPLODED AXONOMETRIC &amp; ROOF PLAN</span>
+                        <span class="tech-scale">AXONOMETRIC HIERARCHY</span>
+                    </div>
+                    <img src="./assets/the-earthen-sheet-05-axonometric-renders-roof-plan.jpg" alt="Exploded Axonometric & Roof Plan" class="tech-img">
+                    <div class="tech-card-body">
+                        <p class="tech-desc">
+                            <strong>Layers from Sky to Earth:</strong> Roof garden slab with circular skylight aperture &bull; Translucent fiberglass skin &bull; Structural tube ring &bull; Rammed earth walls and furniture &bull; Subterranean mud base.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ground Floor Plan -->
+                <div class="tech-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-02-sections-plans-details.jpg', 'Ground Floor Plan, Longitudinal Section & Tube Details')">
+                    <div class="tech-card-header">
+                        <span class="tech-tag">GROUND FLOOR PLAN &amp; SECTIONS</span>
+                        <span class="tech-scale">1/50 ARCHITECTURAL PLAN</span>
+                    </div>
+                    <img src="./assets/the-earthen-sheet-02-sections-plans-details.jpg" alt="Ground Floor Plan & Sections" class="tech-img">
+                    <div class="tech-card-body">
+                        <p class="tech-desc">
+                            <strong>Programmatic Organization:</strong> Central circular ramp encircling the Material Creator Core &bull; Kneading tables &bull; Treatment &amp; relaxation suites &bull; Lockers &amp; mineral baths &bull; Material mixing trays.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 05: COMPLETE MASTER JURY BOARDS -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">MASTER PRESENTATION SHEETS // COMPLETE ARCHIVE</span>
+            </div>
+
+            <p class="section-lead-text">
+                Browse all 5 full-scale presentation sheets containing comprehensive site analysis, cyclical diagrams, 1/50 plans, building sections, 1/20 partial sections, 1/5 joinery details, and spatial renders:
+            </p>
+
+            <div class="boards-gallery-grid">
+                
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-01-concept-site-material.jpg', 'Sheet 01 â€” The Earthen: To Decay Is To Begin Again, Loops & Cycles, Site Analysis, Mood Board & Atmosphere Collage')">
+                    <img src="./assets/the-earthen-sheet-01-concept-site-material.jpg" alt="Sheet 01: Concept, Loops & Cycles, Site Analysis" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 01 / 05</span>
+                            <span class="board-title">CONCEPT, CYCLES &amp; SITE FORENSICS</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-02-sections-plans-details.jpg', 'Sheet 02 â€” Sectional Organization, Tube Details, Corridor Render, Ground Floor Plan & Building Sections')">
+                    <img src="./assets/the-earthen-sheet-02-sections-plans-details.jpg" alt="Sheet 02: Building Sections, Tube Details, Floor Plan" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 02 / 05</span>
+                            <span class="board-title">SECTIONS, TUBE CONDUITS &amp; FLOOR PLAN</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-03-partial-section-terrace-plan.jpg', 'Sheet 03 â€” 1/20 Partial Section, 1/5 Fiberglass & Axonometric Details, +6.00 Terrace Garden Plan')">
+                    <img src="./assets/the-earthen-sheet-03-partial-section-terrace-plan.jpg" alt="Sheet 03: 1/20 Partial Section & 1/5 Details" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 03 / 05</span>
+                            <span class="board-title">1/20 PARTIAL SECTION &amp; 1/5 DETAILS</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-04-mass-diagram-plan-renders.jpg', 'Sheet 04 â€” Mass Diagrams, Circulation Flow, Floor Plan, Rammed Earth Workshops & Central Atrium Renders')">
+                    <img src="./assets/the-earthen-sheet-04-mass-diagram-plan-renders.jpg" alt="Sheet 04: Mass Diagrams, Floor Plan & Renders" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 04 / 05</span>
+                            <span class="board-title">MASS DIAGRAMS, LABS &amp; ATRIUM RENDERS</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+                <div class="board-card zoomable-image-container" onclick="openLightbox('./assets/the-earthen-sheet-05-axonometric-renders-roof-plan.jpg', 'Sheet 05 â€” Exploded Axonometric Assembly, Terrace Pergola Render, Rammed Earth Portal Bath & +6.00 Roof Plan')">
+                    <img src="./assets/the-earthen-sheet-05-axonometric-renders-roof-plan.jpg" alt="Sheet 05: Exploded Axonometric & Terrace Garden" class="board-img">
+                    <div class="board-footer">
+                        <div class="board-meta">
+                            <span class="board-num">SHEET 05 / 05</span>
+                            <span class="board-title">EXPLODED AXONOMETRIC &amp; ROOFTOP CANOPY</span>
+                        </div>
+                        <span class="board-expand-btn">FULL VIEW â†—</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER NAVIGATION -->
+        <footer class="project-bottom-nav">
+            <div class="bottom-nav-inner">
+                <a href="../ara-sira/" class="prev-proj-link">
+                    <span class="nav-dir">&larr; PREVIOUS PROJECT</span>
+                    <span class="proj-title">09 &mdash; ARA-SIRA</span>
+                </a>
+                <a href="../../index.html#card-the-earthen" class="center-directory-btn">
+                    <span>EXPLORE ALL PROJECTS</span>
+                </a>
+                <a href="../bio-decay/" class="next-proj-link">
+                    <span class="nav-dir">NEXT PROJECT &rarr;</span>
+                    <span class="proj-title">11 &mdash; BIO-DECAY</span>
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Interactive Lightbox Modal -->
+    <div id="image-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
+        <div class="lightbox-dialog" onclick="event.stopPropagation()">
+            <button type="button" class="lightbox-close-btn" onclick="closeLightbox(event)">&times;</button>
+            <div class="lightbox-img-wrapper">
+                <img id="lightbox-img" src="" alt="Enlarged view">
+            </div>
+            <div class="lightbox-caption-bar">
+                <span id="lightbox-caption"></span>
+                <span class="lightbox-hint">[ CLICK ANYWHERE TO CLOSE ]</span>
             </div>
         </div>
-    </div></div><div class="detail-image" style="margin-bottom: 140px;">
-    <img src="/assets/the-earthen-hero.jpg" class="lightbox-trigger" data-index="0" alt="The Earthen - Perspective View" style="width: 100%; height: auto; display: block; cursor: pointer;">
-</div>
-
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">01 / THE CYCLE OF EXISTENCE</span>
-    <p class="detail-body">Life and death are inseparable aspects of existence. Every living being experiences beginnings and endings, growth and decay, and through these processes, the natural cycles of life continue.</p>
-    <p class="detail-body" style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Death is not an ultimate end but a transformation that allows new life to emerge.</p>
-    <p class="detail-body">Understanding this cycle encourages us to accept impermanence, letting go of fear and attachment, and to see every moment as part of a larger continuum.</p>
-</div>
-
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">02 / URBAN CONTEXT</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">Maslak is dominated by business towers and plazas, filled with constant motion, deadlines, and repetition.</p>
-    <p class="detail-body">These structures represent the cycle of productivity and exhaustion, where life often feels mechanical and endless. The project seeks to interrupt this rhythm, offering a space to breathe, slow down, and reconnect with the body and earth.</p>
-    
-    <div style="margin-top: 40px; padding: 20px; background: rgba(159, 90, 59, 0.05); border-left: 3px solid var(--primary); font-family: monospace; font-size: 1rem; overflow-x: auto; white-space: nowrap;">
-        MAKING → TOUCHING → GROUNDING → OBSERVING → RETURNING
     </div>
 
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/the-earthen-cycles.jpg" class="lightbox-trigger" data-index="1" alt="Site Analysis and Loops" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-</div>
+    <!-- Page Scripts -->
+    <script>
+        // Custom Hardware-Accelerated Cursor Tracking
+        const cursor = document.getElementById('custom-cursor');
+        const cursorWrapper = document.getElementById('cursor-wrapper');
 
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">03 / PROGRAMMATIC LOOPS</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">The program creates a calm, continuous loop of making, touching, grounding, observing, and returning—supporting both physical relaxation and mental renewal.</p>
-    <p class="detail-body">The cycle begins with <strong>Material Preparation</strong>. Clay, soil, water, and seeds are mixed through bodily gestures — pressing, walking, and kneading. The process reconnects the body with the earth, turning making into a sensory ritual where touch becomes a tool of creation.</p>
-    <p class="detail-body">From there, the material is molded in the <strong>Shaping & Formation Space</strong>, and placed outdoors on the <strong>Drying Terrace</strong>. Natural forces begin to alter their surface—cracking, fading, and reshaping them. The terrace becomes a living archive, documenting decay as a quiet continuation rather than an end.</p>
-
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/the-earthen-program.jpg" class="lightbox-trigger" data-index="2" alt="Programmatic Diagram" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-</div>
-
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">04 / MATERIAL TRANSFORMATION</span>
-    <p class="detail-body" style="font-size: 1.5rem; line-height: 1.4;">The sectional organization of the project is based on a vertical cycle of material transformation, moving from wet to dry, from soft to solid, and from decay to growth.</p>
-    <p class="detail-body">At the lowest level, water-based activities such as soaking, stepping, and mixing take place, allowing the body to engage directly with liquid and semi-liquid matter. As users move upward, the material becomes denser and more stable.</p>
-    
-    <div class="detail-image" style="margin: 40px 0;">
-        <img src="/assets/the-earthen-section.jpg" class="lightbox-trigger" data-index="3" alt="The Earthen - Perspective Section" style="width: 100%; height: auto; display: block; cursor: pointer;">
-    </div>
-    
-    <p class="detail-body">A fiberglass layer wraps around the metal pipe structure and blurs the boundary between inside and outside. The pipes descend from above and create a cave-like space, making the interior–exterior relation even more ambiguous. Some of the tubes act not only as structural supports but also as channels for seeds, water, and clay, guiding materials between levels.</p>
-</div>
-
-<div class="detail-section" style="margin-bottom: 140px;">
-    <span class="eyebrow" style="margin-bottom: 15px; display: block;">05 / REBIRTH</span>
-    <p class="detail-body">As the organic produce in the garden undergoes natural decomposition, the seeds within begin to germinate. As the clay erodes, seeds sprout through its fragments. New life grows from what has decayed, turning the material into fertile soil.</p>
-    <p class="detail-body">These seeds are harvested and then collected in designated seedbins, which are connected via a tube system to the Material Creation Lab. Here, the biological matter is reintroduced into the production phase, creating a perpetual, closed-loop system.</p>
-    <p class="detail-body" style="font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; color: var(--primary); margin-top: 30px; line-height: 1.2;">Just as our lives carry the invisible traces of smaller cycles, the architecture embodies these accumulated layers of biological memory.</p>
-</div>
-
-<div class="detail-section" style="margin-bottom: 80px;">
-    <span class="eyebrow" style="margin-bottom: 20px; display: block;">BOARDS & DRAWINGS</span>
-    <div class="media-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-        <div class="media-thumb" data-index="4" title="Board 01" style="background-image: url('/assets/the-earthen-board-1.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
-        <div class="media-thumb" data-index="5" title="Board 02" style="background-image: url('/assets/the-earthen-board-2.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
-        <div class="media-thumb" data-index="6" title="Board 03" style="background-image: url('/assets/the-earthen-board-3.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
-        <div class="media-thumb" data-index="7" title="Board 04" style="background-image: url('/assets/the-earthen-board-4.jpg'); background-color: rgba(159, 90, 59, 0.1);"></div>
-    </div>
-</div>
-
-  <div class="project-navigation" style="display: flex; justify-content: space-between; align-items: center; margin-top: 80px; padding-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15);">
-      <a href="/projects/bio-decay/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-weight: bold; letter-spacing: 1px;">&larr; PREVIOUS</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Bio-Decay</span>
-      </a>
-      <a href="/projects/emek-museum/" style="text-decoration: none; color: var(--primary); font-family: monospace; display: flex; flex-direction: column; gap: 5px; text-align: right;">
-          <span style="font-weight: bold; letter-spacing: 1px;">NEXT &rarr;</span>
-          <span style="color: #666; font-size: 1rem; font-family: 'Times New Roman', serif; font-style: italic;">Emek Museum</span>
-      </a>
-  </div>
-</article><footer><span>&copy; Last updated: October 2026</span><span>A portfolio by Elifsu Gen&ccedil;.</span><a href="#" class="go-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">&uarr; Go To Top</a></footer></main><div class="consent-backdrop" id="consent" hidden><div class="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title"><span class="eyebrow">A CHOICE / 01</span><h2 id="consent-title">May this site remember you?</h2><p id="consent-copy">If you agree, your cursor movements will be recorded in the background at regular intervals and added to a collective archive of website interactions. The data will be recorded anonymously; only your cursor activity on this website will be collected.</p><div class="actions"><button class="allow" id="allow" type="button">Yes, add my trace <span>&#x2197;</span></button><button class="decline" id="decline" type="button">No, just here to explore</button></div></div></div><div class="live" id="live" hidden>● <span>RECORDING</span> · <span id="point-count">0</span> <span>POINTS</span></div><script src="/assets/app.js?v=27" defer></script>
-<script>
-// Gallery & Lightbox Logic
-document.addEventListener("DOMContentLoaded", () => {
-    const galleryItems = [
-        { src: '/assets/the-earthen-hero.jpg', label: 'The Earthen - Perspective View' },
-        { src: '/assets/the-earthen-cycles.jpg', label: 'Site & Cycle Diagrams' },
-        { src: '/assets/the-earthen-program.jpg', label: 'Programmatic Diagram' },
-        { src: '/assets/the-earthen-section.jpg', label: 'Perspective Section' },
-        { src: '/assets/the-earthen-board-1.jpg', label: 'Board 01' },
-        { src: '/assets/the-earthen-board-2.jpg', label: 'Board 02' },
-        { src: '/assets/the-earthen-board-3.jpg', label: 'Board 03' },
-        { src: '/assets/the-earthen-board-4.jpg', label: 'Board 04' }
-    ];
-    let currentImageIndex = 0;
-    let isZoomed = false;
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const counter = document.querySelector('.lightbox-counter');
-
-    document.querySelectorAll('.media-thumb, .lightbox-trigger').forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-            currentImageIndex = parseInt(e.currentTarget.getAttribute('data-index'));
-            showImage(currentImageIndex);
-            lightbox.hidden = false;
+        window.addEventListener('mousemove', (e) => {
+            cursorWrapper.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
         });
-    });
 
-    function showImage(index) {
-        if (index < 0) index = galleryItems.length - 1;
-        if (index >= galleryItems.length) index = 0;
-        currentImageIndex = index;
-        
-        isZoomed = false;
-        lightboxImg.classList.remove('zoomed');
-        lightboxImg.style.transformOrigin = 'center center';
-        
-        lightboxImg.src = galleryItems[currentImageIndex].src;
-        counter.textContent = `${currentImageIndex + 1} / ${galleryItems.length} — ${galleryItems[currentImageIndex].label}`;
-    }
-    
-    function panImage(e) {
-        if (!isZoomed) return;
-        const rect = lightboxImg.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
-        lightboxImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-    }
+        // Hover effect for interactive elements
+        const hoverTargets = document.querySelectorAll('a, button, .zoomable-image-container, .board-card');
+        hoverTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
 
-    lightboxImg.addEventListener('click', (e) => {
-        e.stopPropagation();
-        isZoomed = !isZoomed;
-        if (isZoomed) {
-            lightboxImg.classList.add('zoomed');
-            panImage(e);
-        } else {
-            lightboxImg.classList.remove('zoomed');
-            lightboxImg.style.transformOrigin = 'center center';
+        // Bilingual Toggle
+        function switchDetailLang(lang) {
+            document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.statement-panel').forEach(p => p.classList.remove('active'));
+
+            if (lang === 'tr') {
+                document.querySelectorAll('.lang-pill')[1].classList.add('active');
+                document.getElementById('statement-tr').classList.add('active');
+            } else {
+                document.querySelectorAll('.lang-pill')[0].classList.add('active');
+                document.getElementById('statement-en').classList.add('active');
+            }
         }
-    });
 
-    lightboxImg.addEventListener('mousemove', (e) => {
-        if (isZoomed) panImage(e);
-    });
+        // Lightbox Functions
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
 
-    document.querySelector('.lightbox-close').addEventListener('click', () => {
-        lightbox.hidden = true;
-    });
-    document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex - 1);
-    });
-    document.querySelector('.lightbox-next').addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentImageIndex + 1);
-    });
-    // Close only on background click, not on image
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) lightbox.hidden = true;
-    });
-});
-</script>
+        function openLightbox(src, caption) {
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption || '';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-<div id="lightbox" class="lightbox" hidden>
-    <button class="lightbox-close">×</button>
-    <button class="lightbox-prev">❮</button>
-    <img id="lightbox-img" src="" alt="Gallery Image">
-    <button class="lightbox-next">❯</button>
-    <div class="lightbox-counter">1 / 5</div>
-</div>
-</body></html>
+        function closeLightbox(e) {
+            if (e) e.preventDefault();
+            lightbox.classList.remove('active');
+            lightboxImg.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+    <script src=../../assets/traces-tracker.js defer></script>
+</body>
+</html>

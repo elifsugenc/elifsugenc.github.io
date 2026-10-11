@@ -1,0 +1,1017 @@
+/**
+ * YOU WERE HERE. — Website-Wide Mouse Trace Recording & Archive System
+ * Elifsu Genç Portfolio
+ * 
+ * Features:
+ * - Subtle bottom consent popup (YES / NO) with session persistence
+ * - Live fixed indicator in bottom-right: recording.xxx
+ * - Website-wide normalized mouse tracking with dwell & click sampling
+ * - Atomic sequential trace numbering (TRACE_0001, TRACE_0002...) via Cloud Firebase Firestore
+ * - Preserves existing Firestore database (traces-together) and historical traces
+ * - Lightweight HTML5 Canvas PNG trace generation (replacing heavyweight PDFs)
+ */
+
+(function () {
+    'use strict';
+
+    // Configuration & Storage Keys
+    const CONSENT_KEY = 'wwh_consent';
+    const SESSION_KEY = 'wwh_current_trace';
+    const FIREBASE_CONFIG = {
+        apiKey: "AIzaSyAfU5_2JMufKlGFa5WBDO_kpdp38jV6A5s",
+        authDomain: "traces-together.firebaseapp.com",
+        projectId: "traces-together",
+        storageBucket: "traces-together.firebasestorage.app",
+        messagingSenderId: "537119213522",
+        appId: "1:537119213522:web:35ab67f62add69968e6a0b"
+    };
+
+    // Global in-memory state
+    let db = null;
+    let docFn = null;
+    let setDocFn = null;
+    let runTransactionFn = null;
+
+    let activeTrace = null;
+    let isTracking = false;
+    let lastPointTime = 0;
+    let lastPointCoord = { x: 0, y: 0 };
+    let anchorPoint = null;
+    let anchorStartTime = 0;
+    let saveTimer = null;
+    let dwellTimer = null;
+
+    const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+
+    // Format Point Count to recording.xxx (at least 3 digits, no upper limit)
+    function formatCount(count) {
+        const numStr = count < 1000 ? String(count).padStart(3, '0') : String(count);
+        return 'recording.' + numStr;
+    }
+
+    // Initialize Firebase Firestore SDK modularly
+    async function initFirebase() {
+        try {
+            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
+            const { getFirestore, doc, setDoc, runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+            const app = initializeApp(FIREBASE_CONFIG);
+            db = getFirestore(app);
+            docFn = doc;
+            setDocFn = setDoc;
+            runTransactionFn = runTransaction;
+            return true;
+        } catch (err) {
+            console.warn('[YOU WERE HERE] Firebase initialization fallback to local session:', err);
+            return false;
+        }
+    }
+
+    // Allocate an atomic unique trace number (e.g. TRACE_0001, TRACE_0002)
+    async function allocateTraceNumber() {
+        if (!db || !runTransactionFn || !docFn) {
+            const fallbackNum = Math.floor(1000 + Math.random() * 9000);
+            return 'TRACE_' + fallbackNum;
+        }
+
+        try {
+            const metaRef = docFn(db, 'metadata', 'traces_counter');
+            let assignedNum = 1;
+            await runTransactionFn(db, async (transaction) => {
+                const metaDoc = await transaction.get(metaRef);
+                let currentTotal = 0;
+                if (metaDoc.exists()) {
+                    currentTotal = metaDoc.data().total || 0;
+                }
+                // Account for the 47 preserved historical traces
+                if (currentTotal < 47) {
+                    currentTotal = 47;
+                }
+                currentTotal += 1;
+                transaction.set(metaRef, { 
+                    total: currentTotal,
+                    lastUpdated: new Date().toISOString()
+                }, { merge: true });
+                assignedNum = currentTotal;
+            });
+            return 'TRACE_' + String(assignedNum).padStart(4, '0');
+        } catch (e) {
+            console.warn('[YOU WERE HERE] Counter transaction note, using fallback format:', e);
+            const tsSuffix = Date.now().toString().slice(-4);
+            return 'TRACE_' + tsSuffix;
+        }
+    }
+
+    // Load or initialize trace session
+    async function loadOrCreateTrace() {
+        let stored = null;
+        try {
+            stored = JSON.parse(sessionStorage.getItem(SESSION_KEY));
+        } catch (e) {}
+
+        if (stored && stored.id && Array.isArray(stored.points)) {
+            activeTrace = stored;
+            return activeTrace;
+        }
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+        const traceNumber = await allocateTraceNumber();
+
+        activeTrace = {
+            id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'trace_' + Date.now(),
+            traceNumber: traceNumber,
+            date: dateStr,
+            time: timeStr,
+            started: Date.now(),
+            points: [],
+            dwells: [],
+            clicks: [],
+            viewport: {
+                initialWidth: window.innerWidth,
+                initialHeight: window.innerHeight
+            }
+        };
+
+        saveTraceToSession();
+        return activeTrace;
+    }
+
+    function saveTraceToSession() {
+        if (!activeTrace) return;
+        try {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(activeTrace));
+        } catch (e) {}
+    }
+
+    // Incremental batch save to Firebase Firestore
+    async function saveTraceToCloud() {
+        if (!activeTrace || sessionStorage.getItem(CONSENT_KEY) !== 'yes') return;
+        saveTraceToSession();
+
+        // Require at least 2 points to avoid empty cloud records
+        if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
+
+        if (db && setDocFn && docFn) {
+            try {
+                const cloudPayload = {
+                    id: activeTrace.id,
+                    traceNumber: activeTrace.traceNumber,
+                    date: activeTrace.date,
+                    time: activeTrace.time,
+                    started: activeTrace.started,
+                    duration: Date.now() - activeTrace.started,
+                    pointCount: activeTrace.points.length,
+                    points: activeTrace.points,
+                    dwells: activeTrace.dwells,
+                    clicks: activeTrace.clicks,
+                    lastUpdated: new Date().toISOString()
+                };
+
+                await setDocFn(docFn(db, 'traces', activeTrace.id), cloudPayload, { merge: true });
+            } catch (err) {
+                console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
+            }
+        }
+    }
+
+    // Live Indicator UI
+    function ensureLiveIndicator() {
+        let el = document.getElementById('wwh-live-indicator');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'wwh-live-indicator';
+            el.className = 'wwh-live-indicator';
+            el.setAttribute('aria-live', 'polite');
+            el.innerHTML = `
+                <span class="wwh-live-dot" aria-hidden="true"></span>
+                <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
+            `;
+            document.body.appendChild(el);
+        }
+        return el;
+    }
+
+    function updateLiveCount() {
+        const countEl = document.getElementById('wwh-live-count');
+        if (countEl && activeTrace) {
+            countEl.textContent = formatCount(activeTrace.points.length);
+        }
+    }
+
+    function hideLiveIndicator() {
+        const el = document.getElementById('wwh-live-indicator');
+        if (el) el.remove();
+    }
+
+    // Floating "you are here." Reopen Circle on the Right Side
+    function showReopenCircle() {
+        if (document.getElementById('wwh-reopen-circle')) return;
+
+        const circle = document.createElement('button');
+        circle.type = 'button';
+        circle.id = 'wwh-reopen-circle';
+        circle.className = 'wwh-reopen-circle';
+        circle.setAttribute('aria-label', 'you are here. — Click to reconsider movement recording');
+        circle.setAttribute('title', 'you are here.');
+
+        circle.innerHTML = `
+            <span class="wwh-circle-dot" aria-hidden="true"></span>
+            <span class="wwh-circle-text">you are<br>here.</span>
+        `;
+
+        document.body.appendChild(circle);
+
+        circle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hideReopenCircle();
+            showConsentPopup();
+        });
+    }
+
+    function hideReopenCircle() {
+        const circle = document.getElementById('wwh-reopen-circle');
+        if (circle) {
+            circle.classList.add('wwh-circle-exit');
+            setTimeout(() => circle.remove(), 250);
+        }
+    }
+
+    // Helper to resolve the project URL relative to current location
+    function getLearnMoreUrl() {
+        const path = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
+        if (path.includes('/projects/you-were-here/')) {
+            return '#overview';
+        } else if (path.includes('/projects/')) {
+            return '../you-were-here/';
+        } else {
+            return 'projects/you-were-here/';
+        }
+    }
+
+    // Consent Popup UI
+    function showConsentPopup() {
+        hideReopenCircle();
+        if (document.getElementById('wwh-consent-popup')) return;
+
+        const popup = document.createElement('div');
+        popup.id = 'wwh-consent-popup';
+        popup.className = 'wwh-consent-popup';
+        popup.setAttribute('role', 'dialog');
+        popup.setAttribute('aria-modal', 'false');
+        popup.setAttribute('aria-labelledby', 'wwh-consent-title');
+
+        const learnUrl = getLearnMoreUrl();
+
+        popup.innerHTML = `
+            <div class="wwh-consent-inner">
+                <div class="wwh-consent-text-col">
+                    <span class="wwh-consent-tag">&#x2726; YOU WERE HERE. // DIGITAL TRACES</span>
+                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can we remember your movements?</h4>
+                    <p class="wwh-consent-desc">
+                        With your permission, your mouse movements will be recorded as an anonymous trace during this visit.
+                    </p>
+                </div>
+                <div class="wwh-consent-actions">
+                    <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question" title="Explore YOU WERE HERE. project">
+                        <span class="wwh-learn-icon">?</span>
+                        <span class="wwh-learn-text">LEARN MORE</span>
+                    </a>
+                    <div class="wwh-consent-choice-group">
+                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">YES</button>
+                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">NO</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+
+        // Gentle entrance animation trigger
+        requestAnimationFrame(() => {
+            popup.classList.add('wwh-visible');
+        });
+
+        // Event listeners
+        const btnYes = document.getElementById('wwh-btn-yes');
+        const btnNo = document.getElementById('wwh-btn-no');
+        const btnLearn = document.getElementById('wwh-btn-learn');
+
+        if (btnLearn) {
+            btnLearn.addEventListener('mouseenter', () => {
+                const cur = document.getElementById('custom-cursor');
+                if (cur) {
+                    cur.classList.remove('cursor-hover');
+                    cur.classList.add('cursor-project');
+                }
+            });
+            btnLearn.addEventListener('mouseleave', () => {
+                const cur = document.getElementById('custom-cursor');
+                if (cur) {
+                    cur.classList.remove('cursor-project');
+                }
+            });
+            btnLearn.addEventListener('click', (e) => {
+                const dest = getLearnMoreUrl();
+                if (dest === '#overview') {
+                    e.preventDefault();
+                    const ov = document.getElementById('overview');
+                    if (ov) {
+                        ov.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                } else {
+                    // Navigate directly to projects/you-were-here/
+                    e.preventDefault();
+                    window.location.href = dest;
+                }
+            });
+        }
+
+        if (btnYes) {
+            btnYes.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                sessionStorage.setItem(CONSENT_KEY, 'yes');
+                dismissPopup(popup);
+                hideReopenCircle();
+                await startRecording();
+            });
+        }
+
+        if (btnNo) {
+            btnNo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sessionStorage.setItem(CONSENT_KEY, 'no');
+                dismissPopup(popup);
+                stopRecording();
+                showReopenCircle();
+            });
+        }
+    }
+
+    function dismissPopup(popup) {
+        if (!popup) return;
+        popup.classList.remove('wwh-visible');
+        popup.classList.add('wwh-exit');
+        setTimeout(() => popup.remove(), 400);
+    }
+
+    // Mouse Tracking Logic
+    function handlePointerMove(e) {
+        if (!isTracking || !activeTrace) return;
+        if (e.pointerType === 'touch') return; // Mouse & stylus only
+
+        const now = Date.now();
+        // Sampling threshold: at least 70ms and max 5000 points
+        if (now - lastPointTime < 70 || activeTrace.points.length >= 5000) return;
+
+        // Privacy guard: ignore when interacting with form inputs
+        const targetTag = e.target ? e.target.tagName : '';
+        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+
+        // Normalized viewport coordinates (0 to 1000)
+        const nx = clamp(Math.round((e.clientX / window.innerWidth) * 1000), 0, 1000);
+        const ny = clamp(Math.round((e.clientY / window.innerHeight) * 1000), 0, 1000);
+
+        // Distance threshold to avoid jitter when mouse is stationary
+        if (Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y) < 4 && activeTrace.points.length > 0) {
+            return;
+        }
+
+        lastPointTime = now;
+        lastPointCoord = { x: nx, y: ny };
+
+        const point = {
+            x: nx,
+            y: ny,
+            t: now - activeTrace.started
+        };
+
+        activeTrace.points.push(point);
+        updateLiveCount();
+        if (activeTrace.points.length % 20 === 0) {
+            updateLivingPalimpsests();
+        }
+
+        // Dwell pause tracking
+        if (!anchorPoint || Math.hypot(point.x - anchorPoint.x, point.y - anchorPoint.y) > 10) {
+            anchorPoint = point;
+            anchorStartTime = now;
+        }
+    }
+
+    function handleClick(e) {
+        if (!isTracking || !activeTrace) return;
+        const targetTag = e.target ? e.target.tagName : '';
+        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') return;
+
+        const nx = clamp(Math.round((e.clientX / window.innerWidth) * 1000), 0, 1000);
+        const ny = clamp(Math.round((e.clientY / window.innerHeight) * 1000), 0, 1000);
+
+        activeTrace.clicks.push({
+            x: nx,
+            y: ny,
+            t: Date.now() - activeTrace.started
+        });
+    }
+
+    function checkDwellPauses() {
+        if (!isTracking || !activeTrace || !anchorPoint) return;
+        const now = Date.now();
+        const duration = now - anchorStartTime;
+        if (duration >= 420) {
+            const dwell = {
+                x: anchorPoint.x,
+                y: anchorPoint.y,
+                t: anchorPoint.t,
+                duration: duration
+            };
+            const lastDwell = activeTrace.dwells[activeTrace.dwells.length - 1];
+            if (lastDwell && lastDwell.t === dwell.t) {
+                lastDwell.duration = duration;
+            } else {
+                activeTrace.dwells.push(dwell);
+            }
+        }
+    }
+
+    // Start Recording Lifecycle
+    async function startRecording() {
+        if (isTracking) return;
+        await loadOrCreateTrace();
+
+        isTracking = true;
+        ensureLiveIndicator();
+        updateLiveCount();
+
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('click', handleClick, { passive: true });
+
+        dwellTimer = setInterval(checkDwellPauses, 180);
+        saveTimer = setInterval(saveTraceToCloud, 6000);
+    }
+
+    function stopRecording() {
+        isTracking = false;
+        hideLiveIndicator();
+
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('click', handleClick);
+
+        if (dwellTimer) clearInterval(dwellTimer);
+        if (saveTimer) clearInterval(saveTimer);
+    }
+
+    // Lightweight HTML5 Canvas PNG Generator (replaces PDF export for fast, compact size)
+    function renderTraceToCanvas(traceData, width = 800, height = 800) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        // Crisp white architectural background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+
+        // Subtle architectural grid
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 1;
+        const gridSize = width / 20;
+        for (let x = 0; x <= width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+
+        const pts = traceData.points || [];
+        const scaleX = width / 1000;
+        const scaleY = height / 1000;
+
+        // 1. Draw Dwell Pauses
+        (traceData.dwells || []).forEach(d => {
+            const r = clamp(d.duration / 120, 6, 40) * scaleX;
+            ctx.beginPath();
+            ctx.arc(d.x * scaleX, d.y * scaleY, r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(d.x * scaleX, d.y * scaleY, r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.18)';
+            ctx.fill();
+        });
+
+        // 2. Draw Movement Lines
+        if (pts.length > 1) {
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            for (let i = 1; i < pts.length; i++) {
+                const prev = pts[i - 1];
+                const curr = pts[i];
+                const dist = Math.hypot(curr.x - prev.x, curr.y - prev.y);
+                const dt = Math.max(30, curr.t - prev.t);
+                const speed = (dist / dt) * 1000;
+                const strokeWidth = clamp(7 - speed * 0.04, 1.2, 7) * scaleX;
+
+                ctx.beginPath();
+                ctx.moveTo(prev.x * scaleX, prev.y * scaleY);
+                ctx.lineTo(curr.x * scaleX, curr.y * scaleY);
+                ctx.strokeStyle = 'rgba(37, 99, 235, 0.55)';
+                ctx.lineWidth = strokeWidth;
+                ctx.stroke();
+            }
+        }
+
+        // 3. Draw Click Glyphs
+        (traceData.clicks || []).forEach(c => {
+            const cx = c.x * scaleX;
+            const cy = c.y * scaleY;
+            const starRadius = 6 * scaleX;
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 1.8;
+            for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + Math.cos(angle) * starRadius, cy + Math.sin(angle) * starRadius);
+                ctx.stroke();
+            }
+        });
+
+        // 4. Architectural Title Block Footer
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 14px monospace';
+        ctx.fillText(traceData.traceNumber || 'TRACE_0000', 28, height - 38);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px monospace';
+        ctx.fillText(`DATE: ${traceData.date || '—'}  TIME: ${traceData.time || '—'}  POINTS: ${pts.length}`, 28, height - 20);
+
+        return canvas;
+    }
+
+    // Export Trace as lightweight PNG file download
+    function downloadTraceAsPNG(traceData) {
+        const canvas = renderTraceToCanvas(traceData);
+        canvas.toBlob(blob => {
+            if (!blob) return;
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${traceData.traceNumber || 'trace'}.png`;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                a.remove();
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }, 'image/png');
+    }
+
+    // In-memory cache for historical and live traces
+    let cachedTracesList = [];
+    let lastPalimpsestRenderTime = 0;
+
+    /**
+     * Render the Living Collective Palimpsest (All historical traces + active live trace)
+     * with uniform 16:10 aspect-ratio mapping to eliminate all stretching and distortion.
+     */
+    function renderCollectivePalimpsest(targetCanvas, tracesList, options = {}) {
+        const traces = (tracesList && tracesList.length > 0) ? tracesList : (cachedTracesList || []);
+        const canvas = targetCanvas || document.createElement('canvas');
+
+        const width = options.width || (canvas.clientWidth > 0 ? canvas.clientWidth : (canvas.width || 1200));
+        const height = options.height || (canvas.clientHeight > 0 ? canvas.clientHeight : (canvas.height || 750));
+
+        const dpr = options.dpr || (targetCanvas ? Math.min(window.devicePixelRatio || 1, 2) : 1);
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        const ctx = canvas.getContext('2d');
+        if (dpr !== 1) {
+            ctx.scale(dpr, dpr);
+        }
+
+        // Crisp architectural off-white background
+        ctx.fillStyle = '#fafbfc';
+        ctx.fillRect(0, 0, width, height);
+
+        // Architectural drafting grid
+        ctx.strokeStyle = 'rgba(26, 54, 93, 0.04)';
+        ctx.lineWidth = 1;
+        const step = 40;
+        for (let x = 0; x <= width; x += step) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += step) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+
+        // UNIFORM 16:10 DESKTOP PROPORTIONS (Zero Distortion / Stretches eliminated)
+        const targetAspect = 16 / 10;
+        const padX = options.paddingX !== undefined ? options.paddingX : 28;
+        const padY = options.paddingY !== undefined ? options.paddingY : 24;
+        const availW = Math.max(100, width - padX * 2);
+        const availH = Math.max(100, height - padY * 2);
+
+        const virtualW = 1000;
+        const virtualH = 1000 / targetAspect; // 625
+
+        const scale = Math.min(availW / virtualW, availH / virtualH);
+        const sheetW = virtualW * scale;
+        const sheetH = virtualH * scale;
+
+        const originX = padX + (availW - sheetW) / 2;
+        const originY = padY + (availH - sheetH) / 2;
+
+        const toX = (nx) => originX + (nx / 1000) * sheetW;
+        const toY = (ny) => originY + (ny / 1000) * sheetH;
+
+        // Subtle architectural sheet boundary & corner marks
+        ctx.strokeStyle = 'rgba(37, 99, 235, 0.12)';
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1;
+        ctx.strokeRect(originX, originY, sheetW, sheetH);
+        ctx.setLineDash([]);
+
+        const drawCross = (cx, cy) => {
+            ctx.strokeStyle = 'rgba(26, 54, 93, 0.28)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(cx - 5, cy); ctx.lineTo(cx + 5, cy);
+            ctx.moveTo(cx, cy - 5); ctx.lineTo(cx, cy + 5);
+            ctx.stroke();
+        };
+        drawCross(originX, originY);
+        drawCross(originX + sheetW, originY);
+        drawCross(originX, originY + sheetH);
+        drawCross(originX + sheetW, originY + sheetH);
+
+        // 1. Layer 1: Render All Dwell Pauses Across All Visitors + Active Trace (Translucent Cerulean Halos)
+        const includeActive = !options.excludeActive;
+        const allDwellsList = [];
+        traces.forEach(tr => { if (tr.dwells) allDwellsList.push(...tr.dwells); });
+        if (includeActive && activeTrace && activeTrace.dwells) allDwellsList.push(...activeTrace.dwells);
+
+        allDwellsList.forEach(d => {
+            const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+            ctx.beginPath();
+            ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.04)';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
+            ctx.fill();
+        });
+
+        // 2. Layer 2: Render All Movement Trajectories
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        traces.forEach(tr => {
+            const pts = tr.points || [];
+            if (pts.length < 2) return;
+
+            ctx.beginPath();
+            ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
+            for (let i = 1; i < pts.length; i++) {
+                ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
+            }
+            ctx.strokeStyle = 'rgba(37, 99, 235, 0.17)';
+            ctx.lineWidth = 1.35 * Math.max(0.8, scale * 1.1);
+            ctx.stroke();
+        });
+
+        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse)
+        if (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1) {
+            const livePts = activeTrace.points;
+            ctx.beginPath();
+            ctx.moveTo(toX(livePts[0].x), toY(livePts[0].y));
+            for (let i = 1; i < livePts.length; i++) {
+                ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
+            }
+            ctx.strokeStyle = 'rgba(37, 99, 235, 0.75)';
+            ctx.lineWidth = 2.2 * Math.max(0.8, scale * 1.1);
+            ctx.stroke();
+
+            // Glowing cursor tip
+            const lastPt = livePts[livePts.length - 1];
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 4.5 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = '#22c55e';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 8 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+            ctx.fill();
+        }
+
+        // 4. Layer 4: Click Glyphs
+        traces.forEach(tr => {
+            (tr.clicks || []).forEach(c => {
+                const cx = toX(c.x);
+                const cy = toY(c.y);
+                const starRadius = 4 * scale;
+                ctx.strokeStyle = 'rgba(29, 78, 216, 0.38)';
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(cx - starRadius, cy);
+                ctx.lineTo(cx + starRadius, cy);
+                ctx.moveTo(cx, cy - starRadius);
+                ctx.lineTo(cx, cy + starRadius);
+                ctx.stroke();
+            });
+        });
+
+        // 5. Layer 5: Technical Title Block
+        const activeCount = (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 5) ? 1 : 0;
+        const totalTracesCount = traces.length + activeCount;
+        const totalPoints = traces.reduce((acc, t) => acc + (t.pointCount || (t.points ? t.points.length : 0)), 0) + (includeActive && activeTrace && activeTrace.points ? activeTrace.points.length : 0);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 11px monospace';
+        const titleText = options.title || 'YOU WERE HERE. // LIVING COLLECTIVE PALIMPSEST';
+        ctx.fillText(titleText, originX + 4, height - 12);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px monospace';
+        const rightText = options.rightText || `${totalTracesCount} TRACES SUPERIMPOSED • ${totalPoints.toLocaleString()} PTS`;
+        const textWidth = ctx.measureText(rightText).width;
+        ctx.fillText(rightText, Math.max(originX + 220, originX + sheetW - textWidth - 4), height - 12);
+
+        return canvas;
+    }
+
+    // Historical legacy classification (08.10.2026 and prior)
+    function isLegacyTrace(trace) {
+        if (!trace) return false;
+        if (trace.date && typeof trace.date === 'string') {
+            const parts = trace.date.split('.');
+            if (parts.length === 3) {
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+                if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+                    if (year < 2026) return true;
+                    if (year === 2026) {
+                        if (month < 10) return true;
+                        if (month === 10 && day <= 8) return true;
+                        return false;
+                    }
+                    return false;
+                }
+            }
+        }
+        if (trace.started && trace.started > 0) {
+            const cutoff = new Date('2026-10-08T23:59:59+03:00').getTime();
+            return trace.started <= cutoff;
+        }
+        return false;
+    }
+
+    function getLegacyTraces(list) {
+        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
+        return src.filter(isLegacyTrace);
+    }
+
+    function getCurrentTraces(list) {
+        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
+        return src.filter(t => !isLegacyTrace(t));
+    }
+
+    function getLivingPalimpsestDataURL(width = 1200, height = 750) {
+        const offscreen = document.createElement('canvas');
+        renderCollectivePalimpsest(offscreen, cachedTracesList, { width, height, dpr: 1 });
+        return offscreen.toDataURL('image/png');
+    }
+
+    // Automatically update living palimpsest image across the entire website
+    function updateLivingPalimpsests() {
+        if (!cachedTracesList || cachedTracesList.length === 0) return;
+        const now = Date.now();
+        if (now - lastPalimpsestRenderTime < 1000) return; // Throttle
+        lastPalimpsestRenderTime = now;
+
+        const dataURL = getLivingPalimpsestDataURL(1200, 750);
+        if (!dataURL) return;
+
+        // 1. Update Project Card image on main portfolio page
+        const projectCardImg = document.querySelector('#card-you-were-here .card-img');
+        if (projectCardImg) {
+            projectCardImg.style.backgroundImage = `url("${dataURL}")`;
+            projectCardImg.style.backgroundSize = 'cover';
+        }
+
+        // 2. Update Constellation Node visual circle
+        const constellationVisual = document.querySelector('.constellation-node[data-id="you-were-here"] .visual-img');
+        if (constellationVisual) {
+            constellationVisual.style.backgroundImage = `url("${dataURL}")`;
+        }
+
+        // 3. Update Modal Hero and Gallery image if Project Modal is open
+        const modalHero = document.getElementById('modal-hero');
+        if (modalHero && window.lastOpenedProjectSlug === 'you-were-here') {
+            modalHero.style.backgroundImage = `url("${dataURL}")`;
+            modalHero.style.backgroundSize = 'contain';
+            modalHero.style.backgroundRepeat = 'no-repeat';
+            modalHero.style.backgroundPosition = 'center';
+            modalHero.style.backgroundColor = '#fafbfc';
+            
+            let badge = modalHero.querySelector('.m-living-hero-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.className = 'm-living-hero-badge';
+                modalHero.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="live-pulse-dot"></span> LIVING PALIMPSEST &bull; ${cachedTracesList.length} TRACES OVERLAYED`;
+        }
+
+        const modalGalImg = document.getElementById('modal-palimpsest-img');
+        if (modalGalImg) {
+            modalGalImg.src = dataURL;
+        }
+
+        // 4. Update collective canvas on dedicated project page if open
+        const collectiveCanvas = document.getElementById('collective-canvas-overlay');
+        if (collectiveCanvas) {
+            if (window.collectiveEraMode === 'LEGACY') {
+                renderCollectivePalimpsest(collectiveCanvas, getLegacyTraces(), {
+                    title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                    excludeActive: true
+                });
+            } else if (window.collectiveEraMode === 'CURRENT') {
+                renderCollectivePalimpsest(collectiveCanvas, getCurrentTraces(), {
+                    title: 'CURRENT WEBSITE SESSIONS (09.10.2026 – PRESENT)'
+                });
+            } else {
+                renderCollectivePalimpsest(collectiveCanvas, cachedTracesList);
+            }
+        }
+
+        // 5. Update legacy canvas in folder if present
+        const legacyCanvas = document.getElementById('legacy-collective-canvas');
+        if (legacyCanvas) {
+            renderCollectivePalimpsest(legacyCanvas, getLegacyTraces(), {
+                title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                excludeActive: true
+            });
+        }
+    }
+
+    // Fetch all historical and new traces from Cloud Firebase Firestore
+    async function fetchAllTraces() {
+        if (!db) await initFirebase();
+        if (!db) return [];
+        try {
+            const { collection, getDocs, query, limit } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+            const q = query(collection(db, 'traces'), limit(500));
+            const snap = await getDocs(q);
+            const list = [];
+            let fallbackIdx = 1;
+
+            snap.forEach(docSnap => {
+                const data = docSnap.data();
+                const pts = data.points || [];
+                let dateStr = data.date;
+                let timeStr = data.time;
+
+                let startedTs = (typeof data.started === 'number' && data.started > 0) ? data.started : 0;
+
+                if (dateStr && dateStr.includes('T')) {
+                    const d = new Date(dateStr);
+                    if (!isNaN(d.getTime())) {
+                        if (!startedTs) startedTs = d.getTime();
+                        dateStr = d.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                        timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    }
+                } else if (dateStr && !startedTs) {
+                    const parts = String(dateStr).split('.');
+                    if (parts.length === 3) {
+                        const d = parseInt(parts[0], 10);
+                        const m = parseInt(parts[1], 10) - 1;
+                        const y = parseInt(parts[2], 10);
+                        let h = 0, min = 0, s = 0;
+                        if (timeStr) {
+                            const tp = String(timeStr).split(':');
+                            if (tp.length >= 2) {
+                                h = parseInt(tp[0], 10) || 0;
+                                min = parseInt(tp[1], 10) || 0;
+                                s = parseInt(tp[2], 10) || 0;
+                            }
+                        }
+                        const parsed = new Date(y, m, d, h, min, s).getTime();
+                        if (!isNaN(parsed)) startedTs = parsed;
+                    }
+                }
+
+                list.push({
+                    id: data.id || docSnap.id,
+                    savedTraceNumber: data.traceNumber || null,
+                    date: dateStr || '—',
+                    time: timeStr || '—',
+                    started: startedTs,
+                    duration: data.duration || 0,
+                    pointCount: data.pointCount || pts.length,
+                    points: pts,
+                    dwells: data.dwells || [],
+                    clicks: data.clicks || []
+                });
+            });
+
+            // En eski 0001, en yeniye kadar kronolojik artan sırada numaralandır
+            list.sort((a, b) => (a.started || 0) - (b.started || 0));
+
+            list.forEach((item, index) => {
+                item.traceNumber = 'TRACE_' + String(index + 1).padStart(4, '0');
+            });
+
+            cachedTracesList = list;
+            setTimeout(updateLivingPalimpsests, 30);
+            return list;
+        } catch (err) {
+            console.error('[YOU WERE HERE] Error fetching archive traces:', err);
+            return [];
+        }
+    }
+
+    // Public API exposed on window for YOU WERE HERE. archive views
+    window.YouWereHereTracker = {
+        getTrace: () => activeTrace,
+        saveNow: saveTraceToCloud,
+        renderToCanvas: renderTraceToCanvas,
+        renderCollectivePalimpsest: renderCollectivePalimpsest,
+        getLivingPalimpsestDataURL: getLivingPalimpsestDataURL,
+        updateLivingPalimpsests: updateLivingPalimpsests,
+        getCachedTraces: () => cachedTracesList,
+        isLegacyTrace: isLegacyTrace,
+        getLegacyTraces: getLegacyTraces,
+        getCurrentTraces: getCurrentTraces,
+        traceToPNGDataURL: (traceData, w = 400, h = 400) => renderTraceToCanvas(traceData, w, h).toDataURL('image/png'),
+        downloadAsPNG: downloadTraceAsPNG,
+        fetchAllTraces: fetchAllTraces,
+        formatCount: formatCount
+    };
+    window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
+
+    // Auto-save on page lifecycle events
+    window.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            saveTraceToCloud();
+        }
+    });
+    window.addEventListener('pagehide', saveTraceToCloud);
+
+    // Bootstrap on DOM Ready
+    async function init() {
+        await initFirebase();
+
+        // Proactively fetch historical archive traces in background to populate living palimpsest across portfolio
+        fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
+
+        // Her sayfaya yeniden girişte (yenileyince falan) popup yeniden sorulsun
+        try {
+            const navEntries = performance.getEntriesByType('navigation');
+            const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+            if (isReload) {
+                sessionStorage.removeItem(CONSENT_KEY);
+                sessionStorage.removeItem(SESSION_KEY);
+            }
+        } catch (e) {}
+
+        const consent = sessionStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+            hideReopenCircle();
+            await startRecording();
+        } else if (consent === 'no') {
+            // NO denmişse sağ taraftaki 'you are here.' yuvarlağı görünsün
+            showReopenCircle();
+        } else {
+            // İlk giriş veya sayfa yenileme: popup doğrudan sorulsun
+            showConsentPopup();
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
