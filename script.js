@@ -22,15 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add hover effect for clickable elements
         document.addEventListener('mouseover', (e) => {
-            // 0. If spatial map is locked in intro, keep cursor completely normal
-            if (typeof isSpatialIntroActive !== 'undefined' && isSpatialIntroActive && e.target.closest('.constellation-map')) {
-                cursorWrapper.classList.remove('cursor-spatial');
-                customCursor.classList.remove('cursor-hover', 'cursor-project');
-                return;
-            }
-
             // 1. Clickable elements inside Spatial Map (By Spatial Map view)
-            const spatialClickable = e.target.closest('.constellation-map:not(.spatial-intro-locked) a, .constellation-map:not(.spatial-intro-locked) button, .constellation-map:not(.spatial-intro-locked) .node-visual, .constellation-map:not(.spatial-intro-locked) .node-hover-card, .constellation-map:not(.spatial-intro-locked) .c-axis-link, .constellation-map:not(.spatial-intro-locked) .constellation-node, .constellation-map:not(.spatial-intro-locked) .constellation-center, .constellation-map:not(.spatial-intro-locked) .relation-theme-badge');
+            const spatialClickable = e.target.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge');
             if (spatialClickable) {
                 cursorWrapper.classList.add('cursor-spatial');
                 customCursor.classList.remove('cursor-hover', 'cursor-project');
@@ -346,44 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ]);
 
     let hasEgIntroPulsed = false;
-    let hasSpatialIntroCompleted = false;
-    try {
-        hasSpatialIntroCompleted = sessionStorage.getItem('spatial_intro_completed') === 'true';
-    } catch (e) {}
-    let isSpatialIntroActive = false;
-    let spatialIntroTimer = null;
-
-    function triggerSpatialMapFirstIntro() {
-        if (hasSpatialIntroCompleted || isSpatialIntroActive) return;
-
-        const container = document.querySelector('.constellation-map');
-        const watermark = document.getElementById('projects-watermark');
-        if (!container) return;
-
-        isSpatialIntroActive = true;
-        container.classList.add('spatial-intro-locked');
-        if (watermark) {
-            watermark.classList.add('watermark-intro-anim');
-        }
-
-        if (spatialIntroTimer) clearTimeout(spatialIntroTimer);
-        spatialIntroTimer = setTimeout(() => {
-            isSpatialIntroActive = false;
-            hasSpatialIntroCompleted = true;
-            try {
-                sessionStorage.setItem('spatial_intro_completed', 'true');
-            } catch (e) {}
-
-            const activeContainer = document.querySelector('.constellation-map');
-            if (activeContainer) {
-                activeContainer.classList.remove('spatial-intro-locked');
-            }
-            const activeWatermark = document.getElementById('projects-watermark');
-            if (activeWatermark) {
-                activeWatermark.classList.remove('watermark-intro-anim');
-            }
-        }, 3000);
-    }
 
     function renderConstellation() {
         const stageWidth = 1000;
@@ -392,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerY = 460;
 
         const container = document.createElement('div');
-        container.className = 'constellation-map' + (isSpatialIntroActive ? ' spatial-intro-locked' : '');
+        container.className = 'constellation-map';
 
         // Pre-build index of relations per project
         const relationsByProj = {};
@@ -668,7 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const relations = relationsByProj[projId] || [];
 
             node.addEventListener('mouseenter', () => {
-                if (isSpatialIntroActive) return;
                 container.classList.remove('eg-intro-pulsing');
                 container.classList.add('has-hover');
 
@@ -705,7 +659,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const hoverCard = node.querySelector('.node-hover-card');
             if (hoverCard) {
                 hoverCard.addEventListener('click', (e) => {
-                    if (isSpatialIntroActive) return;
                     if (!e.target.closest('.card-action-btn')) {
                         const link = node.querySelector('.card-action-btn');
                         if (link) link.click();
@@ -732,9 +685,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (projectsWrapper && projectsWrapper.getAttribute('data-view') === 'map') {
         projectsWrapper.innerHTML = '';
         renderConstellation();
-        if (currentTabId === 'projects' && !hasSpatialIntroCompleted) {
-            setTimeout(triggerSpatialMapFirstIntro, 40);
-        }
     }
 
     if (filterBtns.length > 0 && projectsWrapper) {
@@ -803,9 +753,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (showType === 'map') {
                         renderConstellation();
-                        if (!hasSpatialIntroCompleted) {
-                            setTimeout(triggerSpatialMapFirstIntro, 40);
-                        }
                     } else if (showType === 'question') {
                         // For map or question view, create a single grid
                         
@@ -980,10 +927,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetTabId === 'projects') {
             if (!hasProjectsIntroPlayed) {
                 playProjectsIntro();
-            }
-            const isMapView = projectsWrapper && projectsWrapper.getAttribute('data-view') === 'map';
-            if (isMapView && !hasSpatialIntroCompleted) {
-                setTimeout(triggerSpatialMapFirstIntro, 40);
             }
         }
     }

@@ -1459,61 +1459,6 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     z-index: 1; /* Sits calmly behind the constellation linework and nodes */
 }
 
-/* ASK A QUESTION First-Entrance Fade (Silikleşme) Animation - exactly 3.0s */
-@keyframes askQuestionSiliklesme {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.96);
-        color: rgba(26, 54, 93, 0.44);
-        letter-spacing: 0.03em;
-    }
-    18% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        color: rgba(26, 54, 93, 0.38);
-        letter-spacing: 0.015em;
-    }
-    45% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        color: rgba(26, 54, 93, 0.28);
-        letter-spacing: 0.005em;
-    }
-    75% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        color: rgba(26, 54, 93, 0.16);
-        letter-spacing: -0.005em;
-    }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        color: rgba(26, 54, 93, 0.08);
-        letter-spacing: -0.01em;
-    }
-}
-
-.constellation-watermark.watermark-intro-anim {
-    animation: askQuestionSiliklesme 3s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
-}
-
-/* Initial 3-Second Spatial Map Hover Lock */
-.constellation-map.spatial-intro-locked .constellation-node {
-    pointer-events: none !important;
-}
-
-.constellation-map.spatial-intro-locked .node-hover-card {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-}
-
-.constellation-map.spatial-intro-locked .radial-line,
-.constellation-map.spatial-intro-locked .secondary-line,
-.constellation-map.spatial-intro-locked .relation-theme-badge {
-    pointer-events: none !important;
-}
-
 /* --- CENTERED PAGE LAYOUT (About & Methodology matching Project Modal boundaries) --- */
 .page-centered-tab {
     padding: 0 !important;
