@@ -47,116 +47,229 @@
                         <!-- Welcoming Architectural Studio Header -->
                         <div class="hq-header">
                             <div class="hq-header-meta">
-                                <span class="hq-eyebrow">&#x2726; SELECTED INQUIRIES // 04 CURATED WORKS</span>
-                                <span class="hq-header-coords">EST. 2026 &bull; ARCHITECTURAL PRACTICE &amp; SPATIAL RESEARCH</span>
+                                <span class="hq-eyebrow">&#x2726; SELECTED INQUIRIES // 05 CURATED WORKS</span>
+                                <span class="hq-header-coords">EST. 2026 &bull; 5-STAR SPATIAL CONSTELLATION &bull; ARCHITECTURAL RESEARCH</span>
                             </div>
                             <div class="hq-header-row">
                                 <h2 class="hq-title">CURATED SPATIAL SHOWCASE</h2>
                                 <p class="hq-lead">
-                                    Four foundational investigations examining interspecies urban cohabitation, material mortality in unbaked soil, circular bioplastics, and the spatial justice of unseen labor.
+                                    Five foundational investigations configured as an architectural constellation &mdash; examining spatial justice, interspecies street sanctuaries, involuntary cursor palimpsests, material mortality in unbaked soil, and circular biopolymers.
                                 </p>
                             </div>
                             <div class="hq-header-divider"></div>
                         </div>
 
-                        <!-- 4-Card Architectural Photo Grid -->
-                        <div class="hq-grid">
+                        <!-- Architectural View Selector for Constellation vs Cards -->
+                        <div class="hq-view-controls">
+                            <div class="hq-view-tabs">
+                                <button class="hq-view-btn active" data-mode="both" aria-label="Show both constellation asterism and project cards">
+                                    <span class="view-btn-glyph">&#x2726;</span>
+                                    <span class="view-btn-label">CONSTELLATION &amp; CARDS</span>
+                                </button>
+                                <button class="hq-view-btn" data-mode="sky" aria-label="Focus on interactive constellation sky asterism">
+                                    <span class="view-btn-glyph">&#x2605;</span>
+                                    <span class="view-btn-label">TAKIM YILDIZI (SKY ASTERISM)</span>
+                                </button>
+                                <button class="hq-view-btn" data-mode="cards" aria-label="Focus on architectural photo cards">
+                                    <span class="view-btn-glyph">&#x2630;</span>
+                                    <span class="view-btn-label">PROJECT DIRECTORY (5 WORKS)</span>
+                                </button>
+                            </div>
+                            <div class="hq-constellation-legend">
+                                <span class="c-legend-item"><span class="c-dot gold"></span> 5 SELECTED STARS</span>
+                                <span class="c-legend-item"><span class="c-line dashed"></span> RELATIONAL VECTORS</span>
+                            </div>
+                        </div>
+
+                        <!-- 1. TAKIM YILDIZI: 5-STAR INTERACTIVE CELESTIAL ASTERISM STAGE -->
+                        <div class="hq-constellation-sky" id="hq-constellation-sky" aria-label="Interactive 5-star selected works constellation">
+                            <div class="hq-sky-watermark" aria-hidden="true">SELECTED CONSTELLATION &bull; 05 STARS</div>
+                            <div class="hq-sky-compass" aria-hidden="true">
+                                <span class="sky-cp-n">N &bull; CRITICAL INQUIRY</span>
+                                <span class="sky-cp-w">W &bull; CONTEXTUAL RESEARCH</span>
+                                <span class="sky-cp-e">E &bull; EXPERIMENTAL FUTURES</span>
+                                <span class="sky-cp-s">S &bull; MATERIAL REALIZATION</span>
+                            </div>
+
+                            <!-- Background SVG Linework & Relational Curves -->
+                            <svg class="hq-sky-svg" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+                                <defs>
+                                    <filter id="hq-star-glow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                                        <feMerge>
+                                            <feMergeNode in="blur" />
+                                            <feMergeNode in="SourceGraphic" />
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+
+                                <!-- Constellation Perimeter Lines (Asterism Contour) -->
+                                <!-- 01 -> 02 -->
+                                <path class="hq-constellation-line" data-from="emek-museum" data-to="stray"
+                                      d="M 180 130 Q 320 90 480 80" vector-effect="non-scaling-stroke" />
+                                <!-- 02 -> 03 -->
+                                <path class="hq-constellation-line" data-from="stray" data-to="you-were-here"
+                                      d="M 480 80 Q 660 90 820 135" vector-effect="non-scaling-stroke" />
+                                <!-- 03 -> 11 -->
+                                <path class="hq-constellation-line" data-from="you-were-here" data-to="bio-decay"
+                                      d="M 820 135 Q 780 240 700 345" vector-effect="non-scaling-stroke" />
+                                <!-- 11 -> 10 -->
+                                <path class="hq-constellation-line" data-from="bio-decay" data-to="the-earthen"
+                                      d="M 700 345 Q 510 365 310 350" vector-effect="non-scaling-stroke" />
+                                <!-- 10 -> 01 -->
+                                <path class="hq-constellation-line" data-from="the-earthen" data-to="emek-museum"
+                                      d="M 310 350 Q 220 240 180 130" vector-effect="non-scaling-stroke" />
+
+                                <!-- Constellation Internal Relational Chords -->
+                                <!-- 02 (STRAY) -> 10 (THE EARTHEN) -->
+                                <path class="hq-constellation-line hq-line-internal" data-from="stray" data-to="the-earthen"
+                                      d="M 480 80 Q 410 220 310 350" vector-effect="non-scaling-stroke" stroke-dasharray="3 4" />
+                                <!-- 01 (EMEK) -> 03 (YOU WERE HERE.) -->
+                                <path class="hq-constellation-line hq-line-internal" data-from="emek-museum" data-to="you-were-here"
+                                      d="M 180 130 Q 500 170 820 135" vector-effect="non-scaling-stroke" stroke-dasharray="3 4" />
+                                <!-- 03 (YOU WERE HERE.) -> 10 (THE EARTHEN) -->
+                                <path class="hq-constellation-line hq-line-internal" data-from="you-were-here" data-to="the-earthen"
+                                      d="M 820 135 Q 560 250 310 350" vector-effect="non-scaling-stroke" stroke-dasharray="2 4" />
+                            </svg>
+
+                            <!-- 5 Interactive Star Nodes positioned in the asterism -->
+                            <!-- STAR 01: EMEK MUSEUM -->
+                            <div class="hq-star-node star-left" data-id="emek-museum" data-num="01" data-title="EMEK MUSEUM" data-medium="Spatial Justice" data-question="How can we make this labour visible again?" style="left: 18%; top: 31%;">
+                                <div class="star-halo-rig">
+                                    <div class="star-orbit-ring ring-spin-slow"></div>
+                                    <div class="star-orbit-ring ring-dashed"></div>
+                                    <div class="star-core">
+                                        <span class="star-symbol">&#x2726;</span>
+                                    </div>
+                                </div>
+                                <div class="star-tag-pill">
+                                    <span class="star-greek">&alpha;</span>
+                                    <span class="star-num">01</span>
+                                    <span class="star-name">EMEK MUSEUM</span>
+                                </div>
+                                <div class="star-floating-card">
+                                    <div class="sfc-top">
+                                        <span class="sfc-num">01 &bull; SPATIAL JUSTICE</span>
+                                        <span class="sfc-year">2027</span>
+                                    </div>
+                                    <div class="sfc-title">EMEK MUSEUM</div>
+                                    <div class="sfc-question">&ldquo;How can we make this labour visible again?&rdquo;</div>
+                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
+                                </div>
+                            </div>
+
+                            <!-- STAR 02: STRAY -->
+                            <div class="hq-star-node star-top" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?" style="left: 48%; top: 19%;">
+                                <div class="star-halo-rig">
+                                    <div class="star-orbit-ring ring-spin-slow"></div>
+                                    <div class="star-orbit-ring ring-dashed"></div>
+                                    <div class="star-core">
+                                        <span class="star-symbol">&#x2726;</span>
+                                    </div>
+                                </div>
+                                <div class="star-tag-pill">
+                                    <span class="star-greek">&beta;</span>
+                                    <span class="star-num">02</span>
+                                    <span class="star-name">STRAY</span>
+                                </div>
+                                <div class="star-floating-card">
+                                    <div class="sfc-top">
+                                        <span class="sfc-num">02 &bull; INSTALLATION</span>
+                                        <span class="sfc-year">2025</span>
+                                    </div>
+                                    <div class="sfc-title">STRAY</div>
+                                    <div class="sfc-question">&ldquo;Is doing nothing doing something?&rdquo;</div>
+                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
+                                </div>
+                            </div>
+
+                            <!-- STAR 03: YOU WERE HERE. -->
+                            <div class="hq-star-node star-right" data-id="you-were-here" data-num="03" data-title="YOU WERE HERE." data-medium="Digital Archive" data-question="What remains of the movements we forget?" style="left: 82%; top: 32%;">
+                                <div class="star-halo-rig">
+                                    <div class="star-orbit-ring ring-spin-slow"></div>
+                                    <div class="star-orbit-ring ring-dashed"></div>
+                                    <div class="star-core">
+                                        <span class="star-symbol">&#x2726;</span>
+                                    </div>
+                                </div>
+                                <div class="star-tag-pill">
+                                    <span class="star-greek">&gamma;</span>
+                                    <span class="star-num">03</span>
+                                    <span class="star-name">YOU WERE HERE.</span>
+                                </div>
+                                <div class="star-floating-card">
+                                    <div class="sfc-top">
+                                        <span class="sfc-num">03 &bull; DIGITAL ARCHIVE</span>
+                                        <span class="sfc-year">2026</span>
+                                    </div>
+                                    <div class="sfc-title">YOU WERE HERE.</div>
+                                    <div class="sfc-question">&ldquo;What remains of the movements we forget?&rdquo;</div>
+                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
+                                </div>
+                            </div>
+
+                            <!-- STAR 10: THE EARTHEN -->
+                            <div class="hq-star-node star-bottom-left" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there death because there is life?" style="left: 31%; top: 82%;">
+                                <div class="star-halo-rig">
+                                    <div class="star-orbit-ring ring-spin-slow"></div>
+                                    <div class="star-orbit-ring ring-dashed"></div>
+                                    <div class="star-core">
+                                        <span class="star-symbol">&#x2726;</span>
+                                    </div>
+                                </div>
+                                <div class="star-tag-pill">
+                                    <span class="star-greek">&delta;</span>
+                                    <span class="star-num">10</span>
+                                    <span class="star-name">THE EARTHEN</span>
+                                </div>
+                                <div class="star-floating-card">
+                                    <div class="sfc-top">
+                                        <span class="sfc-num">10 &bull; SOIL &amp; CLAY</span>
+                                        <span class="sfc-year">2026</span>
+                                    </div>
+                                    <div class="sfc-title">THE EARTHEN</div>
+                                    <div class="sfc-question">&ldquo;Is there death because there is life?&rdquo;</div>
+                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
+                                </div>
+                            </div>
+
+                            <!-- STAR 11: BIO-DECAY -->
+                            <div class="hq-star-node star-bottom-right" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?" style="left: 70%; top: 81%;">
+                                <div class="star-halo-rig">
+                                    <div class="star-orbit-ring ring-spin-slow"></div>
+                                    <div class="star-orbit-ring ring-dashed"></div>
+                                    <div class="star-core">
+                                        <span class="star-symbol">&#x2726;</span>
+                                    </div>
+                                </div>
+                                <div class="star-tag-pill">
+                                    <span class="star-greek">&epsilon;</span>
+                                    <span class="star-num">11</span>
+                                    <span class="star-name">BIO-DECAY</span>
+                                </div>
+                                <div class="star-floating-card">
+                                    <div class="sfc-top">
+                                        <span class="sfc-num">11 &bull; BIO-MATERIALS</span>
+                                        <span class="sfc-year">2025</span>
+                                    </div>
+                                    <div class="sfc-title">BIO-DECAY</div>
+                                    <div class="sfc-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</div>
+                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. 5-Card Architectural Photo Grid (Configured as Constellation Elements) -->
+                        <div class="hq-grid" id="hq-grid">
                             
-                            <!-- CARD 01: STRAY -->
-                            <article class="hq-card" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?">
-                                <a href="./projects/stray/" class="hq-card-link" aria-label="Explore STRAY project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/stray-project.png" alt="STRAY — Interactive Installation" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; 02 &bull; INSTALLATION</span>
-                                            <span class="hq-pill hq-pill-award">&#x2605; AWARD WINNER</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">STRAY</h3>
-                                            <span class="hq-card-year">2025</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;Is doing nothing doing something?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            A responsive street-level sanctuary examining non-human feline agency, temporal pauses, and interspecies coexistence in urban Istanbul.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">INTERACTIVE &bull; URBAN SPATIAL</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 02: THE EARTHEN -->
-                            <article class="hq-card" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there death because there is life?">
-                                <a href="./projects/the-earthen/" class="hq-card-link" aria-label="Explore THE EARTHEN project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/the-earthen-cover.png" alt="THE EARTHEN — Soil &amp; Clay Burial Sanctuary" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; 10 &bull; SOIL &amp; CLAY</span>
-                                            <span class="hq-pill hq-pill-craft">UNBAKED EARTH</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">THE EARTHEN</h3>
-                                            <span class="hq-card-year">2026</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;Is there death because there is life?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            An unbaked clay burial vessel and stepped ceremonial terrace interrogating material impermanence and the return of human memory to soil cycles.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">SACRED TERRACE &bull; CRITICAL FUNERARY</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 03: BIO-DECAY -->
-                            <article class="hq-card" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?">
-                                <a href="./projects/bio-decay/" class="hq-card-link" aria-label="Explore BIO-DECAY project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/bio-decay-cover.png" alt="BIO-DECAY — Bio-Materials &amp; Compostable Plastics" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; 11 &bull; BIO-MATERIALS</span>
-                                            <span class="hq-pill hq-pill-award">&#x2605; DEAN&rsquo;S AWARD</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">BIO-DECAY</h3>
-                                            <span class="hq-card-year">2025</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            Fully biodegradable agar and starch bio-composite surfaces challenging petrochemical permanence and consumer packaging contamination.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">CIRCULAR MATERIAL &bull; SPECULATIVE LAB</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 04: EMEK MUSEUM -->
+                            <!-- CARD 01: EMEK MUSEUM -->
                             <article class="hq-card" data-id="emek-museum" data-num="01" data-title="EMEK MUSEUM" data-medium="Spatial Justice" data-question="How can we make this labour visible again?">
                                 <a href="./projects/emek-museum/" class="hq-card-link" aria-label="Explore EMEK MUSEUM project">
                                     <div class="hq-card-media">
                                         <img src="./assets/emek-museum-wip.svg" alt="EMEK MUSEUM — Spatial Justice Blueprint" class="hq-card-img hq-blueprint-visual" loading="eager">
                                         <div class="hq-media-overlay"></div>
                                         <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; 01 &bull; SPATIAL JUSTICE</span>
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &alpha; // 01</span>
                                             <span class="hq-pill hq-pill-status">RESEARCH &bull; 2027</span>
                                         </div>
                                         <span class="hq-zoom-hint">EXPLORE &rarr;</span>
@@ -178,13 +291,129 @@
                                 </a>
                             </article>
 
+                            <!-- CARD 02: STRAY -->
+                            <article class="hq-card" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?">
+                                <a href="./projects/stray/" class="hq-card-link" aria-label="Explore STRAY project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/stray-project.png" alt="STRAY — Interactive Installation" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &beta; // 02</span>
+                                            <span class="hq-pill hq-pill-award">&#x2605; AWARD WINNER</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">STRAY</h3>
+                                            <span class="hq-card-year">2025</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;Is doing nothing doing something?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            A responsive street-level sanctuary examining non-human feline agency, temporal pauses, and interspecies coexistence in urban Istanbul.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">INTERACTIVE &bull; URBAN SPATIAL</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 03: YOU WERE HERE. -->
+                            <article class="hq-card" data-id="you-were-here" data-num="03" data-title="YOU WERE HERE." data-medium="Digital Archive" data-question="What remains of the movements we forget?">
+                                <a href="./projects/you-were-here/" class="hq-card-link" aria-label="Explore YOU WERE HERE. project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/you-were-here-cover.png" alt="YOU WERE HERE. — Digital Archive &amp; Collective Palimpsest" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &gamma; // 03</span>
+                                            <span class="hq-pill hq-pill-status">LIVING PALIMPSEST</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">YOU WERE HERE.</h3>
+                                            <span class="hq-card-year">2026</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;What remains of the movements we forget?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            An anonymous participatory monument recording involuntary visitor cursor movements and pauses into a living digital surface and persistent spatial archive.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">DIGITAL PALIMPSEST &bull; COLLECTIVE TRACE</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 04: THE EARTHEN -->
+                            <article class="hq-card" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there death because there is life?">
+                                <a href="./projects/the-earthen/" class="hq-card-link" aria-label="Explore THE EARTHEN project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/the-earthen-cover.png" alt="THE EARTHEN — Soil &amp; Clay Burial Sanctuary" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &delta; // 10</span>
+                                            <span class="hq-pill hq-pill-craft">UNBAKED EARTH</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">THE EARTHEN</h3>
+                                            <span class="hq-card-year">2026</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;Is there death because there is life?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            An unbaked clay burial vessel and stepped ceremonial terrace interrogating material impermanence and the return of human memory to soil cycles.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">SACRED TERRACE &bull; CRITICAL FUNERARY</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 05: BIO-DECAY -->
+                            <article class="hq-card" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?">
+                                <a href="./projects/bio-decay/" class="hq-card-link" aria-label="Explore BIO-DECAY project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/bio-decay-cover.png" alt="BIO-DECAY — Bio-Materials &amp; Compostable Plastics" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &epsilon; // 11</span>
+                                            <span class="hq-pill hq-pill-award">&#x2605; DEAN&rsquo;S AWARD</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">BIO-DECAY</h3>
+                                            <span class="hq-card-year">2025</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            Fully biodegradable agar and starch bio-composite surfaces challenging petrochemical permanence and consumer packaging contamination.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">CIRCULAR MATERIAL &bull; SPECULATIVE LAB</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
                         </div>
 
                         <!-- Live Interactive Teletype Inquiry Bar -->
                         <div class="hq-inquiry-bar">
                             <div class="hq-inquiry-pulse"></div>
                             <span class="hq-inquiry-tag">ACTIVE INQUIRY //</span>
-                            <span class="hq-inquiry-text" id="home-inquiry-display">&ldquo;HOVER A PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;</span>
+                            <span class="hq-inquiry-text" id="home-inquiry-display">&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;</span>
                             <span id="matrix-project-name" style="display: none;">&mdash;</span>
                         </div>
 

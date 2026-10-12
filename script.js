@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 2. Elements outside spatial map
-            const projectItem = e.target.closest('.project-card, .radial-dot, .hq-card, .wwh-btn-learn, [data-cursor="question"]');
+            const projectItem = e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]');
             if (projectItem) {
                 customCursor.classList.remove('cursor-hover');
                 customCursor.classList.add('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
                 customCursor.classList.add('cursor-hover');
             }
         });
@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorWrapper.classList.remove('cursor-spatial');
             }
 
-            if (e.target.closest('.project-card, .radial-dot, .hq-card, .wwh-btn-learn, [data-cursor="question"]')) {
+            if (e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]')) {
                 customCursor.classList.remove('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
                 customCursor.classList.remove('cursor-hover');
             }
         });
@@ -515,6 +515,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <!-- Secondary Conceptual Curves -->
                     ${secondarySvgPaths}
+
+                    <!-- Selected 5-Star Constellation Asterism Polygon -->
+                    <polygon class="c-selected-asterism-polygon" points="380,250 560,160 690,380 750,500 605,435"
+                             vector-effect="non-scaling-stroke" />
 
                     <!-- Primary Radial Connectors from EG. -->
                     ${radialSvgPaths}
@@ -1041,13 +1045,100 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- HOME: CURATED SPATIAL SHOWCASE INTERACTION ---
+// --- HOME: CURATED SPATIAL SHOWCASE & CONSTELLATION INTERACTION ---
 document.addEventListener('DOMContentLoaded', () => {
-    const quadCards = document.querySelectorAll('.hq-card, .hc-celestial-node');
+    const quadContainer = document.getElementById('home-selected-quad');
+    const quadCards = document.querySelectorAll('.hq-card');
+    const starNodes = document.querySelectorAll('.hq-star-node');
+    const constellationLines = document.querySelectorAll('.hq-constellation-line');
+    const viewButtons = document.querySelectorAll('.hq-view-btn');
     const inquiryDisplay = document.getElementById('home-inquiry-display');
     const matrixDisplay = document.getElementById('matrix-project-name');
-    const defaultInquiry = '&ldquo;HOVER A PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;';
+    const defaultInquiry = '&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;';
 
+    // Helper to highlight a project across star node, lines, and cards
+    function highlightConstellationProject(id, title, question, medium) {
+        // 1. Highlight star node
+        starNodes.forEach(node => {
+            if (node.getAttribute('data-id') === id) {
+                node.classList.add('is-hovered');
+            } else {
+                node.classList.remove('is-hovered');
+            }
+        });
+
+        // 2. Highlight connected constellation lines
+        constellationLines.forEach(line => {
+            const from = line.getAttribute('data-from');
+            const to = line.getAttribute('data-to');
+            if (from === id || to === id) {
+                line.classList.add('is-active-line');
+            } else {
+                line.classList.remove('is-active-line');
+            }
+        });
+
+        // 3. Highlight corresponding card
+        quadCards.forEach(card => {
+            if (card.getAttribute('data-id') === id) {
+                card.classList.add('is-constellation-highlight');
+            } else {
+                card.classList.remove('is-constellation-highlight');
+            }
+        });
+
+        // 4. Update inquiry displays
+        if (inquiryDisplay) {
+            inquiryDisplay.innerHTML = question ? 
+                `&ldquo;${question}&rdquo; &bull; <span style="color: var(--accent-color); font-weight: 700; font-style: normal; font-family: monospace;">[${title}${medium ? ' // ' + medium : ''}]</span>` : 
+                title;
+        }
+        if (matrixDisplay) {
+            matrixDisplay.innerText = question ? `"${question}"` : title;
+        }
+    }
+
+    function resetConstellationHighlight() {
+        starNodes.forEach(n => n.classList.remove('is-hovered'));
+        constellationLines.forEach(l => l.classList.remove('is-active-line'));
+        quadCards.forEach(c => c.classList.remove('is-constellation-highlight'));
+        if (inquiryDisplay) {
+            inquiryDisplay.innerHTML = defaultInquiry;
+        }
+        if (matrixDisplay) {
+            matrixDisplay.innerText = '&mdash; &mdash; &mdash;';
+        }
+    }
+
+    // Star Nodes events
+    starNodes.forEach(node => {
+        const id = node.getAttribute('data-id');
+        const question = node.getAttribute('data-question');
+        const title = node.getAttribute('data-title');
+        const medium = node.getAttribute('data-medium') || '';
+
+        node.addEventListener('mouseenter', () => {
+            highlightConstellationProject(id, title, question, medium);
+        });
+
+        node.addEventListener('mouseleave', () => {
+            resetConstellationHighlight();
+        });
+
+        node.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (typeof window.openProjectModalBySlug === 'function') {
+                window.openProjectModalBySlug(id);
+            } else {
+                const targetCard = document.querySelector(`.hq-card[data-id="${id}"]`);
+                if (targetCard) {
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    });
+
+    // Cards events
     quadCards.forEach(card => {
         const id = card.getAttribute('data-id');
         const question = card.getAttribute('data-question');
@@ -1055,25 +1146,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const medium = card.getAttribute('data-medium') || '';
 
         card.addEventListener('mouseenter', () => {
-            if (inquiryDisplay) {
-                inquiryDisplay.innerHTML = question ? 
-                    `&ldquo;${question}&rdquo; &bull; <span style="color: var(--accent-color); font-weight: 700; font-style: normal; font-family: monospace;">[${title}${medium ? ' // ' + medium : ''}]</span>` : 
-                    title;
-            }
-            if (matrixDisplay) {
-                matrixDisplay.innerText = question ? `"${question}"` : title;
-            }
+            highlightConstellationProject(id, title, question, medium);
         });
 
         card.addEventListener('mouseleave', () => {
-            if (inquiryDisplay) {
-                inquiryDisplay.innerHTML = defaultInquiry;
-            }
-            if (matrixDisplay) {
-                matrixDisplay.innerText = '&mdash; &mdash; &mdash;';
-            }
+            resetConstellationHighlight();
         });
     });
+
+    // View mode tabs (Both, Sky, Cards)
+    if (viewButtons.length > 0 && quadContainer) {
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                viewButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const mode = btn.getAttribute('data-mode') || 'both';
+                quadContainer.setAttribute('data-active-mode', mode);
+            });
+        });
+    }
 
     // Fallback for m-hit if present
     const hits = document.querySelectorAll('.m-hit');

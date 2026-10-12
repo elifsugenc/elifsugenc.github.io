@@ -514,6 +514,15 @@
             function createTraceCardElement(trace) {
                 const card = document.createElement('div');
                 card.className = 'trace-card';
+                if (trace.id) card.setAttribute('data-trace-id', trace.id);
+
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                const active = tracker ? tracker.getTrace() : null;
+                const isActive = (active && active.id === trace.id) || trace.isActiveSession;
+
+                if (isActive) {
+                    card.classList.add('trace-card-active-session');
+                }
 
                 const thumbWrap = document.createElement('div');
                 thumbWrap.className = 'trace-card-thumb-wrap';
@@ -524,7 +533,6 @@
                 canvas.height = 400;
                 thumbWrap.appendChild(canvas);
 
-                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
                 if (tracker) {
                     const temp = tracker.renderToCanvas(trace, 400, 400);
                     const ctx = canvas.getContext('2d');
@@ -540,7 +548,10 @@
                 body.innerHTML = `
                     <div class="trace-card-topline">
                         <span class="trace-card-id">${trace.traceNumber || 'TRACE'}</span>
-                        <span class="trace-card-pts">${ptsCount.toLocaleString()} pts</span>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            ${isActive ? '<span class="trace-card-live-tag"><span class="live-pulse-dot"></span> LIVE</span>' : ''}
+                            <span class="trace-card-pts">${ptsCount.toLocaleString()} pts</span>
+                        </div>
                     </div>
                     <div class="trace-card-meta">
                         <span>DATE: ${trace.date || '—'}</span>
@@ -563,6 +574,78 @@
                 card.appendChild(body);
                 return card;
             }
+
+            // Real-Time Active Trace Synchronizer
+            let lastSyncLiveTime = 0;
+            function syncActiveTraceLive() {
+                const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
+                if (!tracker) return;
+                const active = tracker.getTrace();
+                if (!active || !active.id || !active.points) return;
+
+                const now = Date.now();
+                if (now - lastSyncLiveTime < 180) return; // Smooth throttle
+                lastSyncLiveTime = now;
+
+                // 1. Sync data in allTraces
+                let match = allTraces.find(t => t.id === active.id);
+                if (match) {
+                    match.points = active.points;
+                    match.pointCount = active.points.length;
+                    match.dwells = active.dwells;
+                    match.clicks = active.clicks;
+                } else if (active.points.length > 0) {
+                    // Active trace not yet in allTraces: insert it into current era!
+                    const activeItem = {
+                        id: active.id,
+                        traceNumber: active.traceNumber || ('TRACE_' + String(allTraces.length + 1).padStart(4, '0')),
+                        date: active.date,
+                        time: active.time,
+                        started: active.started,
+                        pointCount: active.points.length,
+                        points: active.points,
+                        dwells: active.dwells,
+                        clicks: active.clicks,
+                        isActiveSession: true
+                    };
+                    allTraces.push(activeItem);
+                    applyFilters();
+                    return;
+                }
+
+                // 2. Sync Card DOM
+                const activeCard = document.querySelector(`.trace-card[data-trace-id="${active.id}"]`);
+                if (activeCard) {
+                    const ptsEl = activeCard.querySelector('.trace-card-pts');
+                    if (ptsEl) ptsEl.textContent = `${active.points.length.toLocaleString()} pts`;
+
+                    const canvas = activeCard.querySelector('.trace-card-canvas');
+                    if (canvas) {
+                        const temp = tracker.renderToCanvas(active, 400, 400);
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, 400, 400);
+                        ctx.drawImage(temp, 0, 0);
+                    }
+                }
+
+                // 3. Sync Modal if open & inspecting active trace
+                if (selectedModalTrace && selectedModalTrace.id === active.id) {
+                    const modalMeta = document.getElementById('modal-trace-meta');
+                    const modalCanvas = document.getElementById('modal-trace-canvas');
+                    if (modalMeta) {
+                        modalMeta.textContent = `DATE: ${active.date || '—'}  •  TIME: ${active.time || '—'}  •  POINTS: ${active.points.length.toLocaleString()} (LIVE)`;
+                    }
+                    if (modalCanvas) {
+                        const temp = tracker.renderToCanvas(active, 700, 700);
+                        const ctx = modalCanvas.getContext('2d');
+                        ctx.clearRect(0, 0, 700, 700);
+                        ctx.drawImage(temp, 0, 0);
+                    }
+                }
+            }
+
+            window.addEventListener('traces:live_point', syncActiveTraceLive);
+            setInterval(syncActiveTraceLive, 1000);
 
             // 5. Render Trace Grids (Separated into Current Sessions & Legacy Dossier Folder)
             function renderTracesGrid() {

@@ -40,6 +40,8 @@
     let anchorStartTime = 0;
     let saveTimer = null;
     let dwellTimer = null;
+    let hasUnsavedChanges = false;
+    let isCloudSaving = false;
 
     const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
 
@@ -152,8 +154,11 @@
 
         // Require at least 2 points to avoid empty cloud records
         if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
+        if (!hasUnsavedChanges) return;
 
         if (db && setDocFn && docFn) {
+            if (isCloudSaving) return;
+            isCloudSaving = true;
             try {
                 const cloudPayload = {
                     id: activeTrace.id,
@@ -170,8 +175,11 @@
                 };
 
                 await setDocFn(docFn(db, 'traces', activeTrace.id), cloudPayload, { merge: true });
+                hasUnsavedChanges = false;
             } catch (err) {
                 console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
+            } finally {
+                isCloudSaving = false;
             }
         }
     }
@@ -364,8 +372,8 @@
         if (e.pointerType === 'touch') return; // Mouse & stylus only
 
         const now = Date.now();
-        // Sampling threshold: at least 70ms and max 5000 points
-        if (now - lastPointTime < 70 || activeTrace.points.length >= 5000) return;
+        // High-fidelity sampling: 40ms interval (~25 fps) with generous 30,000 points limit
+        if (now - lastPointTime < 40 || activeTrace.points.length >= 30000) return;
 
         // Privacy guard: ignore when interacting with form inputs
         const targetTag = e.target ? e.target.tagName : '';
@@ -375,8 +383,8 @@
         const nx = clamp(Math.round((e.clientX / window.innerWidth) * 1000), 0, 1000);
         const ny = clamp(Math.round((e.clientY / window.innerHeight) * 1000), 0, 1000);
 
-        // Distance threshold to avoid jitter when mouse is stationary
-        if (Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y) < 4 && activeTrace.points.length > 0) {
+        // Distance threshold to avoid 0px static jitter while capturing slow smooth movements (1.2 units ≈ 2px)
+        if (Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y) < 1.2 && activeTrace.points.length > 0) {
             return;
         }
 
@@ -390,9 +398,19 @@
         };
 
         activeTrace.points.push(point);
+        hasUnsavedChanges = true;
         updateLiveCount();
-        if (activeTrace.points.length % 20 === 0) {
+
+        // Frequently sync to sessionStorage (every 5 points) so page navigation never drops points
+        if (activeTrace.points.length % 5 === 0) {
+            saveTraceToSession();
+        }
+
+        if (activeTrace.points.length % 15 === 0) {
             updateLivingPalimpsests();
+            try {
+                window.dispatchEvent(new CustomEvent('traces:live_point', { detail: activeTrace }));
+            } catch (e) {}
         }
 
         // Dwell pause tracking
@@ -415,6 +433,8 @@
             y: ny,
             t: Date.now() - activeTrace.started
         });
+        hasUnsavedChanges = true;
+        saveTraceToSession();
     }
 
     function checkDwellPauses() {
@@ -433,6 +453,7 @@
                 lastDwell.duration = duration;
             } else {
                 activeTrace.dwells.push(dwell);
+                hasUnsavedChanges = true;
             }
         }
     }
@@ -450,7 +471,7 @@
         window.addEventListener('click', handleClick, { passive: true });
 
         dwellTimer = setInterval(checkDwellPauses, 180);
-        saveTimer = setInterval(saveTraceToCloud, 6000);
+        saveTimer = setInterval(saveTraceToCloud, 2500); // 2.5s rapid auto-sync
     }
 
     function stopRecording() {
@@ -935,6 +956,36 @@
                 });
             });
 
+            // Merge active live visitor session so it is never missing or truncated
+            const currentActive = activeTrace || (function() {
+                try {
+                    return JSON.parse(sessionStorage.getItem(SESSION_KEY));
+                } catch(e) { return null; }
+            })();
+
+            if (currentActive && currentActive.id) {
+                const existingIdx = list.findIndex(t => t.id === currentActive.id);
+                const activeItem = {
+                    id: currentActive.id,
+                    savedTraceNumber: currentActive.traceNumber || null,
+                    date: currentActive.date || '—',
+                    time: currentActive.time || '—',
+                    started: currentActive.started || Date.now(),
+                    duration: (Date.now() - (currentActive.started || Date.now())),
+                    pointCount: currentActive.points ? currentActive.points.length : 0,
+                    points: currentActive.points || [],
+                    dwells: currentActive.dwells || [],
+                    clicks: currentActive.clicks || [],
+                    isActiveSession: true
+                };
+
+                if (existingIdx >= 0) {
+                    list[existingIdx] = activeItem;
+                } else if (currentActive.points && currentActive.points.length > 0) {
+                    list.push(activeItem);
+                }
+            }
+
             // En eski 0001, en yeniye kadar kronolojik artan sırada numaralandır
             list.sort((a, b) => (a.started || 0) - (b.started || 0));
 
@@ -973,10 +1024,18 @@
     // Auto-save on page lifecycle events
     window.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
+            saveTraceToSession();
             saveTraceToCloud();
         }
     });
-    window.addEventListener('pagehide', saveTraceToCloud);
+    window.addEventListener('pagehide', () => {
+        saveTraceToSession();
+        saveTraceToCloud();
+    });
+    window.addEventListener('beforeunload', () => {
+        saveTraceToSession();
+        saveTraceToCloud();
+    });
 
     // Bootstrap on DOM Ready
     async function init() {
@@ -984,16 +1043,6 @@
 
         // Proactively fetch historical archive traces in background to populate living palimpsest across portfolio
         fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
-
-        // Her sayfaya yeniden girişte (yenileyince falan) popup yeniden sorulsun
-        try {
-            const navEntries = performance.getEntriesByType('navigation');
-            const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
-            if (isReload) {
-                sessionStorage.removeItem(CONSENT_KEY);
-                sessionStorage.removeItem(SESSION_KEY);
-            }
-        } catch (e) {}
 
         const consent = sessionStorage.getItem(CONSENT_KEY);
 
@@ -1004,7 +1053,7 @@
             // NO denmişse sağ taraftaki 'you are here.' yuvarlağı görünsün
             showReopenCircle();
         } else {
-            // İlk giriş veya sayfa yenileme: popup doğrudan sorulsun
+            // İlk giriş: popup doğrudan sorulsun
             showConsentPopup();
         }
     }

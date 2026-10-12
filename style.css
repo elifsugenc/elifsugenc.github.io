@@ -460,12 +460,446 @@ a:hover {
     margin-top: 12px;
 }
 
-/* 4-Card Responsive Grid */
+/* =========================================================
+   HOME: SELECTED CONSTELLATION (TAKIM YILDIZI) & CONTROLS
+   ========================================================= */
+
+/* View Controls Bar */
+.hq-view-controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.hq-view-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.hq-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hq-view-btn:hover {
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.hq-view-btn.active {
+    background: #ffffff;
+    color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.view-btn-glyph {
+    color: #f59e0b;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.hq-constellation-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: monospace;
+    font-size: 0.68rem;
+    color: #64748b;
+    letter-spacing: 0.06em;
+}
+
+.c-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.c-dot.gold {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #facc15;
+    box-shadow: 0 0 6px #facc15;
+}
+
+.c-line.dashed {
+    display: inline-block;
+    width: 16px;
+    height: 0;
+    border-top: 1.5px dashed var(--accent-color);
+}
+
+/* =========================================================
+   1. TAKIM YILDIZI: CELESTIAL SKY STAGE
+   ========================================================= */
+.hq-constellation-sky {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: radial-gradient(circle at 50% 30%, #0d1527 0%, #060913 100%);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 14px;
+    overflow: visible;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.18), inset 0 0 60px rgba(15, 23, 42, 0.8);
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+/* Fine architectural grid watermark on sky */
+.hq-constellation-sky::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    border-radius: 14px;
+}
+
+.hq-sky-watermark {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: rgba(148, 163, 184, 0.35);
+    pointer-events: none;
+    user-select: none;
+    text-transform: uppercase;
+}
+
+.hq-sky-compass {
+    position: absolute;
+    inset: 12px 18px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.hq-sky-compass span {
+    position: absolute;
+    font-family: monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: rgba(148, 163, 184, 0.3);
+    text-transform: uppercase;
+}
+
+.sky-cp-n { top: 4px; left: 50%; transform: translateX(-50%); }
+.sky-cp-s { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.sky-cp-w { top: 50%; left: 0; transform: translateY(-50%) rotate(-90deg); transform-origin: left top; }
+.sky-cp-e { top: 50%; right: 0; transform: translateY(-50%) rotate(90deg); transform-origin: right top; }
+
+/* SVG Background vectors */
+.hq-sky-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hq-constellation-line {
+    stroke: rgba(56, 189, 248, 0.35);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 6;
+    fill: none;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+    animation: hqLineDash 28s linear infinite;
+}
+
+.hq-line-internal {
+    stroke: rgba(250, 204, 21, 0.28);
+    stroke-width: 1.2;
+    stroke-dasharray: 2 5;
+}
+
+@keyframes hqLineDash {
+    to { stroke-dashoffset: -100; }
+}
+
+.hq-constellation-line.is-active-line {
+    stroke: #38bdf8 !important;
+    stroke-width: 2.4 !important;
+    stroke-dasharray: none !important;
+    filter: drop-shadow(0 0 6px #38bdf8);
+    opacity: 1 !important;
+}
+
+/* Star Nodes */
+.hq-star-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hq-star-node:hover,
+.hq-star-node.is-hovered {
+    transform: translate(-50%, -50%) scale(1.12);
+    z-index: 30;
+}
+
+.star-halo-rig {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.ring-spin-slow {
+    inset: -6px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    animation: hqSpinRing 20s linear infinite;
+}
+
+.ring-dashed {
+    inset: 1px;
+    border: 1px dashed rgba(250, 204, 21, 0.35);
+    animation: hqSpinRingRev 14s linear infinite;
+}
+
+@keyframes hqSpinRing {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes hqSpinRingRev {
+    to { transform: rotate(-360deg); }
+}
+
+.star-core {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0f172a;
+    border: 2px solid #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+    transition: all 0.25s ease;
+}
+
+.star-symbol {
+    color: #facc15;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.hq-star-node:hover .star-core,
+.hq-star-node.is-hovered .star-core {
+    background: var(--accent-color);
+    border-color: #facc15;
+    box-shadow: 0 0 22px rgba(250, 204, 21, 0.85);
+}
+
+.hq-star-node:hover .star-symbol,
+.hq-star-node.is-hovered .star-symbol {
+    transform: rotate(45deg) scale(1.25);
+    color: #ffffff;
+}
+
+/* Star Tag Pill */
+.star-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.star-greek {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #facc15;
+}
+
+.star-num {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #38bdf8;
+}
+
+.star-name {
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #f8fafc;
+}
+
+.hq-star-node:hover .star-tag-pill,
+.hq-star-node.is-hovered .star-tag-pill {
+    background: #0f172a;
+    border-color: #facc15;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.4);
+}
+
+/* Floating Card on Hover */
+.star-floating-card {
+    position: absolute;
+    top: calc(100% + 10px);
+    width: 250px;
+    background: #ffffff;
+    border: 1px solid rgba(26, 54, 93, 0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 40;
+    text-align: left;
+}
+
+.star-bottom-left .star-floating-card,
+.star-bottom-right .star-floating-card {
+    top: auto;
+    bottom: calc(100% + 10px);
+}
+
+.star-right .star-floating-card {
+    right: 0;
+}
+
+.star-left .star-floating-card {
+    left: 0;
+}
+
+.hq-star-node:hover .star-floating-card,
+.hq-star-node.is-hovered .star-floating-card {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.sfc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+}
+
+.sfc-year {
+    color: #64748b;
+}
+
+.sfc-title {
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.sfc-question {
+    font-family: 'Space Grotesk', serif;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: #475569;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}
+
+.sfc-cta {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+    display: inline-block;
+}
+
+/* =========================================================
+   2. 5-CARD RESPONSIVE SHOWCASE GRID (CONSTELLATION HARMONY)
+   ========================================================= */
 .hq-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 24px;
     width: 100%;
+}
+
+/* Row 1: 3 cards (01 EMEK, 02 STRAY, 03 YOU WERE HERE.) span 2 cols each = 6 cols */
+.hq-grid .hq-card:nth-child(1),
+.hq-grid .hq-card:nth-child(2),
+.hq-grid .hq-card:nth-child(3) {
+    grid-column: span 2;
+}
+
+/* Row 2: 2 cards (10 THE EARTHEN, 11 BIO-DECAY) span 3 cols each = 6 cols */
+.hq-grid .hq-card:nth-child(4),
+.hq-grid .hq-card:nth-child(5) {
+    grid-column: span 3;
+}
+
+/* Two-way Highlight Synchronized from Constellation */
+.hq-card.is-constellation-highlight {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 16px 38px rgba(37, 99, 235, 0.22), 0 0 0 3px rgba(56, 189, 248, 0.35) !important;
+    transform: translateY(-6px) !important;
+}
+
+/* View Mode Toggles */
+.home-selected-quad[data-active-mode="sky"] .hq-grid {
+    display: none !important;
+}
+
+.home-selected-quad[data-active-mode="cards"] .hq-constellation-sky {
+    display: none !important;
 }
 
 .hq-card {
@@ -798,10 +1232,34 @@ a:hover {
 }
 
 /* Responsive */
+@media (max-width: 1040px) {
+    .hq-constellation-sky {
+        height: 360px;
+    }
+    .hq-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hq-grid .hq-card:nth-child(1),
+    .hq-grid .hq-card:nth-child(2),
+    .hq-grid .hq-card:nth-child(3),
+    .hq-grid .hq-card:nth-child(4) {
+        grid-column: span 1;
+    }
+    .hq-grid .hq-card:nth-child(5) {
+        grid-column: span 2;
+    }
+}
+
 @media (max-width: 860px) {
+    .hq-constellation-sky {
+        height: 320px;
+    }
     .hq-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    .hq-grid .hq-card:nth-child(n) {
+        grid-column: span 1 !important;
     }
     .hq-card-media {
         height: 200px;
@@ -826,6 +1284,24 @@ a:hover {
         text-align: center;
         font-size: 0.8rem;
         padding: 14px 18px;
+    }
+    .hq-view-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .hq-view-tabs {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .hq-view-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 6px 8px;
+        font-size: 0.65rem;
+    }
+    .star-name {
+        display: none;
     }
 }
 
@@ -3655,6 +4131,19 @@ body {
     stroke-width: 1.2px;
     stroke-dasharray: 4 6;
     transition: stroke 0.28s ease, stroke-width 0.28s ease, fill 0.28s ease;
+}
+.c-selected-asterism-polygon {
+    fill: rgba(37, 99, 235, 0.02);
+    stroke: rgba(250, 204, 21, 0.35);
+    stroke-width: 1.2px;
+    stroke-dasharray: 4 6;
+    pointer-events: none;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, fill 0.3s ease;
+}
+.constellation-map:hover .c-selected-asterism-polygon {
+    stroke: rgba(250, 204, 21, 0.65);
+    stroke-width: 1.6px;
+    fill: rgba(250, 204, 21, 0.035);
 }
 .c-ternary-axis {
     stroke: rgba(26, 54, 93, 0.22);
