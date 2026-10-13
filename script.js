@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             x: 230,
             y: 600,
             labelPos: 'left',
-            cardDir: 'card-left',
+            cardDir: 'card-right',
             yearPos: 'year-top'
         }
     ];
@@ -1003,12 +1003,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const relations = relationsByProj[projId] || [];
 
             node.addEventListener('mouseenter', () => {
+                if (container.getAttribute('data-state') !== 'constellation') return;
                 container.classList.remove('eg-intro-pulsing');
                 container.classList.add('has-hover');
 
                 // 1. Highlight this node & radial line
                 node.classList.add('is-hovered');
-                if (radialLine && container.getAttribute('data-state') === 'constellation') {
+                if (radialLine) {
                     radialLine.classList.add('active');
                 }
 
@@ -1018,20 +1019,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // 3. Highlight connected relations in constellation state
-                if (container.getAttribute('data-state') === 'constellation') {
-                    relations.forEach(rel => {
-                        const secLine = container.querySelector(`.secondary-line[data-ridx="${rel.rIdx}"]`);
-                        const secBadge = container.querySelector(`.relation-theme-badge[data-ridx="${rel.rIdx}"]`);
-                        const relatedNode = container.querySelector(`.constellation-node[data-id="${rel.otherId}"]`);
+                relations.forEach(rel => {
+                    const secLine = container.querySelector(`.secondary-line[data-ridx="${rel.rIdx}"]`);
+                    const secBadge = container.querySelector(`.relation-theme-badge[data-ridx="${rel.rIdx}"]`);
+                    const relatedNode = container.querySelector(`.constellation-node[data-id="${rel.otherId}"]`);
 
-                        if (secLine) secLine.classList.add('active');
-                        if (secBadge) secBadge.classList.add('active');
-                        if (relatedNode) {
-                            relatedNode.classList.remove('is-dimmed');
-                            relatedNode.classList.add('is-related');
-                        }
-                    });
-                }
+                    if (secLine) secLine.classList.add('active');
+                    if (secBadge) secBadge.classList.add('active');
+                    if (relatedNode) {
+                        relatedNode.classList.remove('is-dimmed');
+                        relatedNode.classList.add('is-related');
+                    }
+                });
 
                 // 4. Update inquiry bar display & highlight card in #hq-grid
                 const inquiryDisplay = document.getElementById('home-inquiry-display');
@@ -1047,6 +1046,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             node.addEventListener('mouseleave', (e) => {
+                if (container.getAttribute('data-state') !== 'constellation') return;
                 if (e.relatedTarget && node.contains(e.relatedTarget)) return;
                 resetConstellation();
             });
