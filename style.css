@@ -7762,13 +7762,39 @@ body {
   transition: opacity 0.35s ease, stroke-width 0.35s ease !important;
 }
 
+/* Active relation theme badge: crisp white background with architectural blue text */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1.2px solid rgba(37, 99, 235, 0.55) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.35), 0 0 10px rgba(56, 189, 248, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge .theme-badge-line {
+  color: #1d4ed8 !important;
+  font-family: var(--font-primary, 'Space Grotesk', -apple-system, sans-serif) !important;
+  font-size: 0.64rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  line-height: 1.25 !important;
+  text-shadow: none !important;
+}
+
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge.active {
   opacity: 1 !important;
   transform: translate(-50%, -50%) scale(1.06) !important;
-  background: rgba(6, 14, 34, 0.98) !important;
-  border-color: #38bdf8 !important;
-  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6) !important;
+  background: #ffffff !important;
+  border: 1.3px solid #2563eb !important;
+  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.45), 0 0 16px rgba(56, 189, 248, 0.4) !important;
   transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge.active .theme-badge-line {
+  color: #1d4ed8 !important;
+  text-shadow: none !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .radial-line.active {
