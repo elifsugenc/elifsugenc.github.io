@@ -37,11 +37,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, { passive: true });
 
+        // Helper to check if a target is an active spatial interactive element based on current observatory state
+        function isSpatialInteractive(target) {
+            if (!target) return false;
+            const homeStage = document.getElementById('hq-constellation-sky');
+            const state = (homeStage && homeStage.getAttribute('data-state')) || 'cluster';
+
+            if (state === 'cluster') {
+                // In cluster state, ONLY the 7 Pleiades stars are spatial interactive targets:
+                // 1) 5 cluster project stars (.cluster-star-visual)
+                // 2) Merope 7th sister (.merope-star, #merope-star-node)
+                // 3) Alcyone center practice star (#constellation-center-btn)
+                return !!target.closest('.cluster-star-visual, .merope-star, #merope-star-node, #constellation-center-btn');
+            } else {
+                // In constellation state:
+                // All 12 constellation nodes, corner axis links, relation badges, and center
+                // But NOT hidden cluster-only stars
+                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node')) {
+                    return false;
+                }
+                return !!target.closest('.constellation-map .constellation-node, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge');
+            }
+        }
+
         // Add hover effect for clickable elements
         document.addEventListener('mouseover', (e) => {
-            // 1. Clickable elements inside Spatial Map (By Spatial Map view)
-            const spatialClickable = e.target.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge, .cluster-star-visual, .merope-star, .cluster-transition-btn, .hq-cluster-toggle-pill');
-            if (spatialClickable) {
+            // 1. Clickable elements inside Spatial Map (strictly state-segregated)
+            if (isSpatialInteractive(e.target)) {
                 cursorWrapper.classList.add('cursor-spatial');
                 customCursor.classList.remove('cursor-hover', 'cursor-project');
                 return;
@@ -49,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorWrapper.classList.remove('cursor-spatial');
             }
 
-            // 2. Elements outside spatial map
+            // 2. Elements outside spatial map or non-spatial controls
             const projectItem = e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]');
             if (projectItem) {
                 customCursor.classList.remove('cursor-hover');
@@ -61,8 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.addEventListener('mouseout', (e) => {
             // Check if leaving spatial map clickable element
-            const stillInSpatial = e.relatedTarget && e.relatedTarget.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge, .cluster-star-visual, .merope-star, .cluster-transition-btn, .hq-cluster-toggle-pill');
-            if (!stillInSpatial) {
+            if (!e.relatedTarget || !isSpatialInteractive(e.relatedTarget)) {
                 cursorWrapper.classList.remove('cursor-spatial');
             }
 
@@ -946,9 +967,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Clickable 3 Sector Headings -> Navigate to Methodology
+        // Clickable 3 Sector Headings -> Navigate to Methodology (ONLY in constellation state)
         axisLinks.forEach(link => {
             link.addEventListener('click', (e) => {
+                if (container.getAttribute('data-state') !== 'constellation') {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return;
+                }
                 e.preventDefault();
                 switchTab('design-approach');
             });
@@ -978,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             corner.addEventListener('mouseleave', () => {
+                if (container.getAttribute('data-state') !== 'constellation') return;
                 container.classList.remove('is-vertex-hovered');
                 allNodes.forEach(node => {
                     node.classList.remove('is-vertex-emphasized', 'is-dimmed');
@@ -985,10 +1012,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Merope Click -> Open Merope Story Modal
+        // Merope Click -> Open Merope Story Modal (ONLY in cluster state)
         if (meropeStar) {
             meropeStar.addEventListener('click', (e) => {
+                if (container.getAttribute('data-state') !== 'cluster') return;
                 e.preventDefault();
+                e.stopPropagation();
                 openMeropeStoryModal();
             });
         }
@@ -1051,8 +1080,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetConstellation();
             });
 
+            // Direct click on cluster star visual (cluster state)
+            const clusterStarVis = node.querySelector('.cluster-star-visual');
+            if (clusterStarVis) {
+                clusterStarVis.addEventListener('click', (e) => {
+                    const currentState = container.getAttribute('data-state');
+                    if (currentState === 'cluster') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (typeof window.openProjectModalBySlug === 'function') {
+                            window.openProjectModalBySlug(projId);
+                        }
+                    }
+                });
+            }
+
             // Card or node click -> open project preview modal
             node.addEventListener('click', (e) => {
+                const currentState = container.getAttribute('data-state');
+                if (currentState === 'cluster') {
+                    // In cluster mode, only allow clicks on actual .cluster-star-visual
+                    if (!node.classList.contains('is-cluster-star') || !e.target.closest('.cluster-star-visual')) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return;
+                    }
+                }
                 // If clicking an explicit dedicated link, let default handle it
                 if (e.target.closest('.card-btn-dedicated')) return;
                 e.preventDefault();
@@ -1111,10 +1164,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openMeropeStoryModal = openMeropeStoryModal;
     window.closeMeropeStoryModal = closeMeropeStoryModal;
 
-    // Direct event delegation for Merope clicks
+    // Direct event delegation for Merope clicks (ONLY in cluster state)
     document.addEventListener('click', (e) => {
+        const stage = document.getElementById('hq-constellation-sky');
+        const isCluster = !stage || stage.getAttribute('data-state') === 'cluster';
         const meropeTarget = e.target.closest('#merope-star-node, .merope-star, [data-id="merope"]');
-        if (meropeTarget) {
+        if (meropeTarget && isCluster) {
             e.preventDefault();
             e.stopPropagation();
             openMeropeStoryModal();
@@ -2622,6 +2677,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const link = e.target.closest('a[href*="./projects/"]');
             if (link) {
+                // If this link is inside the constellation stage while in cluster state,
+                // only allow it if the user directly clicked a valid cluster star visual
+                const stage = link.closest('#hq-constellation-sky, .pleiades-observatory-stage');
+                if (stage && stage.getAttribute('data-state') === 'cluster') {
+                    if (!e.target.closest('.cluster-star-visual')) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return;
+                    }
+                }
+
                 e.preventDefault();
                 const href = link.getAttribute('href');
                 const slug = href.split('/').filter(Boolean).pop();
