@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // In constellation state:
                 // ONLY the 66px circular project photo spheres (.node-visual), active cards, corner nodes, and relation badges
-                // Exclude labels, headers, keywords, orbit rigs, year capsules, and cluster elements
-                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .node-year-capsule, .center-ring')) {
+                // Exclude labels, headers, keywords, orbit rigs, and cluster elements
+                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
                     return false;
                 }
                 return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .center-core, .constellation-map .relation-theme-badge');
@@ -783,16 +783,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
 
-                    <!-- 2. Floating Year Capsule Pill Badge -->
-                    <div class="node-year-capsule ${p.yearPos || 'year-top'}">
-                        <span class="year-capsule-text">${p.year}</span>
-                        <span class="year-capsule-dot">&bull;</span>
-                    </div>
-
-                    <!-- 3. Floating Contextual Constellation Card -->
+                    <!-- 2. Floating Contextual Constellation Card -->
                     <div class="node-hover-card">
                         <div class="card-top-row">
                             <span class="card-title-text">${cardTitleHtml}</span>
+                            <span class="card-year-tag">${p.year}</span>
                             <span class="card-external-arrow">&#x2197;</span>
                         </div>
                         <div class="card-question-text">&ldquo;${p.question}&rdquo;</div>
