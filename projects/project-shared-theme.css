@@ -185,7 +185,7 @@ body.project-detail-body, body {
     color: #e2e8f0 !important;
 }
 
-/* Content Panels, Cards & Boxes */
+/* Content Panels, Cards & Boxes — Deep Space Cosmic Observatory Theme */
 .card,
 .concept-box,
 .block-container,
@@ -204,29 +204,303 @@ body.project-detail-body, body {
 .phase-card,
 .manifesto-box,
 .site-box,
-.spec-card {
-    background: rgba(10, 20, 44, 0.72) !important;
-    border: 1px solid rgba(56, 189, 248, 0.18) !important;
+.spec-card,
+.gallery-card,
+.gallery-card-footer,
+.statement-card,
+.statement-panel,
+.statement-wrapper,
+.statement-col,
+.statement-grid,
+.statement-pane,
+.bilingual-container,
+.bilingual-statement-container,
+.legacy-palimpsest-card,
+.folder-body,
+.folder-header,
+.folder-grid-header,
+.traces-archive-folder,
+.axo-breakdown-panel,
+.axo-highlight-wrapper,
+.axo-image-panel,
+.tectonics-hero-card,
+.tectonics-breakdown-panel,
+.tectonic-breakdown-panel,
+.tectonic-sub-card,
+.content-card,
+.content-card-body,
+.cases-diagram-card,
+.diag-card,
+.dual-card,
+.highlight-card,
+.opacity-stage-card,
+.pillar-card,
+.recipe-diagram-card,
+.recipe-type-card,
+.recipe-matrix-cards,
+.refuge-item-card,
+.render-gal-card,
+.render-quad-card,
+.ritual-card,
+.scent-card,
+.harvest-table-card,
+.system-box,
+.tech-card,
+.tech-card-body,
+.triad-card,
+.drift-step-card,
+.physical-specimen-card,
+.model-card,
+.prog-card,
+.timeline-card,
+.booklet-action-box,
+.document-dl-banner,
+.lightbox-dialog,
+.lightbox-content-box,
+.stage-info,
+.stage-desc,
+.cases-footer {
+    background: rgba(10, 20, 44, 0.75) !important;
+    border: 1px solid rgba(56, 189, 248, 0.2) !important;
     border-radius: 8px !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
-    box-shadow: 0 10px 32px rgba(2, 6, 23, 0.5) !important;
+    box-shadow: 0 10px 32px rgba(2, 6, 23, 0.6) !important;
     color: #cbd5e1 !important;
 }
 
-/* Section Headings */
-h1, h2, h3, h4, h5, h6 {
+/* Headings & Titles inside all Project Pages */
+h1, h2, h3, h4, h5, h6,
+.gal-meta-title,
+.folder-title,
+.l-title,
+.lead-text,
+.inquiry-statement,
+.manifesto-lead,
+.manifesto-lead-quote,
+.pillar-title,
+.case-name,
+.recipe-type-title,
+.system-title,
+.tech-tag,
+.render-gal-title,
+.quad-title,
+.refuge-card-title,
+.stage-title,
+.d-title,
+.sec-title,
+.board-title,
+.board-name,
+.hero-title,
+.project-title,
+.card-title,
+.step-title,
+.drift-step-title,
+.ritual-name,
+.harvest-restaurant {
     color: #f8fafc !important;
 }
 
-/* Paragraphs & Text */
-p, li {
+/* Paragraphs & Body Descriptions */
+p, li,
+.statement-panel,
+.statement-panel p,
+.statement-pane p,
+.statement-card p,
+.gal-caption,
+.folder-subtitle,
+.l-desc,
+.cases-grid-desc,
+.persp-desc,
+.diag-meta,
+.drawing-desc,
+.drawing-info,
+.drawing-caption,
+.render-gal-desc,
+.quad-desc,
+.refuge-card-desc,
+.ritual-desc,
+.system-text,
+.tech-desc,
+.caption-text,
+.frame-caption,
+.board-meta,
+.board-specs,
+.card-text,
+.case-p,
+.harvest-scraps,
+.step-desc,
+.drift-step-desc,
+.manifesto-body {
     color: #cbd5e1 !important;
 }
 
-/* Strong / Emphasis */
-strong, b {
+/* Strong / Highlight Text */
+strong, b, em {
     color: #f8fafc !important;
+}
+
+/* Labels, Indexes & Meta Indicators */
+.spec-label,
+.sec-index,
+.step-badge,
+.card-tag,
+.case-tag,
+.panel-tag,
+.tech-scale,
+.scale-badge,
+.caption-tag,
+.inquiry-prefix,
+.manifesto-num,
+.manifesto-badge,
+.manifesto-sub-title,
+.d-sub,
+.stage-week,
+.drift-step-num,
+.eyebrow-accent,
+.section-num,
+.spec-col,
+.timeline-label {
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+    letter-spacing: 0.08em !important;
+}
+
+/* Dynamic Interactive Controls & Buttons */
+.lang-pill,
+.lang-btn,
+.lang-tab-btn,
+.era-tab-btn {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(56, 189, 248, 0.28) !important;
+    color: #94a3b8 !important;
+    font-family: monospace !important;
+    transition: all 0.2s ease !important;
+}
+
+.lang-pill.active,
+.lang-pill:hover,
+.lang-btn.active,
+.lang-btn:hover,
+.lang-tab-btn.active,
+.lang-tab-btn:hover,
+.era-tab-btn.active,
+.era-tab-btn:hover {
+    background: rgba(56, 189, 248, 0.2) !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
+}
+
+.folder-meta-pill {
+    background: rgba(56, 189, 248, 0.15) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+}
+
+.folder-toggle-indicator {
+    background: rgba(15, 23, 42, 0.75) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+}
+
+.folder-header:hover .folder-toggle-indicator {
+    background: #38bdf8 !important;
+    color: #020617 !important;
+}
+
+.board-btn,
+.download-pdf-btn,
+.doc-action-btn,
+.btn-inspect,
+.btn-png-download,
+.btn-card-download,
+.btn-trace-action,
+.gal-zoom-btn,
+.board-expand-btn {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+    transition: all 0.2s ease !important;
+}
+
+.board-btn:hover,
+.download-pdf-btn:hover,
+.doc-action-btn:hover,
+.btn-inspect:hover,
+.btn-png-download:hover,
+.btn-card-download:hover,
+.btn-trace-action:hover {
+    background: #38bdf8 !important;
+    color: #020617 !important;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5) !important;
+}
+
+.board-btn-primary {
+    background: #0284c7 !important;
+    border: 1px solid #38bdf8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.35) !important;
+}
+
+.board-btn-primary:hover {
+    background: #38bdf8 !important;
+    color: #020617 !important;
+}
+
+/* Category & Scent Pills */
+.pill-citrus {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.35) !important;
+}
+
+.pill-repellent {
+    background: rgba(34, 197, 94, 0.15) !important;
+    color: #4ade80 !important;
+    border: 1px solid rgba(34, 197, 94, 0.35) !important;
+}
+
+.pill-cotton {
+    background: rgba(244, 63, 94, 0.15) !important;
+    color: #fb7185 !important;
+    border: 1px solid rgba(244, 63, 94, 0.35) !important;
+}
+
+.opacity-swatch {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Stage Watermarks & Drafting Accents */
+.stage-corner-mark,
+.stage-watermark {
+    color: rgba(56, 189, 248, 0.35) !important;
+}
+
+/* Tables (Harvest table, data grids) */
+table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    color: #cbd5e1 !important;
+}
+
+th {
+    background: rgba(15, 23, 42, 0.9) !important;
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    padding: 10px 14px !important;
+}
+
+td {
+    background: rgba(8, 16, 36, 0.8) !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(56, 189, 248, 0.15) !important;
+    padding: 10px 14px !important;
 }
 
 /* Drawing & Media Frames */
@@ -246,6 +520,44 @@ strong, b {
 /* Captions */
 figcaption, .img-caption, .caption-text, .drawing-meta {
     color: #94a3b8 !important;
+    font-family: monospace !important;
+}
+
+/* Lightbox Modal & Zoom Controls */
+.image-lightbox,
+.lightbox-overlay,
+.lightbox-modal {
+    background: rgba(4, 7, 18, 0.94) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+}
+
+.lightbox-content-box,
+.lightbox-dialog {
+    background: #080d1f !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15) !important;
+}
+
+.lightbox-close-btn {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.lightbox-close-btn:hover {
+    background: #38bdf8 !important;
+    color: #020617 !important;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5) !important;
+}
+
+.lightbox-caption,
+.lightbox-caption-text {
+    color: #cbd5e1 !important;
     font-family: monospace !important;
 }
 

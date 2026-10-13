@@ -3964,14 +3964,18 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 .modal-num {
     font-family: monospace;
-    opacity: 0.5;
+    color: #38bdf8;
+    font-weight: 700;
     font-size: 0.9rem;
+    letter-spacing: 0.1em;
 }
 .modal-title {
+    font-family: var(--font-primary, 'Space Grotesk', sans-serif);
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    color: #f8fafc;
 }
 .modal-tag {
     display: inline-flex;
@@ -3980,18 +3984,18 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #92400e;
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
     padding: 3px 9px;
-    border-radius: 3px;
+    border-radius: 4px;
     text-transform: uppercase;
     line-height: 1.2;
 }
 .modal-tag.tag-ongoing {
-    color: var(--accent-color);
-    background: rgba(37, 99, 235, 0.08);
-    border-color: rgba(37, 99, 235, 0.3);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.4);
 }
 .modal-tag.hidden {
     display: none !important;
@@ -4002,28 +4006,32 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #92400e;
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
     padding: 2px 6px;
-    border-radius: 2px;
+    border-radius: 3px;
     margin-left: auto;
     text-transform: uppercase;
     white-space: nowrap;
 }
 .modal-close {
-    background: none;
-    border: none;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 6px;
     font-family: monospace;
-    font-size: 0.9rem;
-    color: var(--text-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #38bdf8;
     cursor: pointer;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    padding: 6px 16px;
     letter-spacing: 0.1em;
+    transition: all 0.2s ease;
 }
 .modal-close:hover {
-    opacity: 1;
+    background: #38bdf8;
+    color: #020617;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
 }
 .modal-scroll-area {
     flex: 1;
@@ -4043,10 +4051,11 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     height: 480px;
     background-size: cover;
     background-position: center;
-    border: 1px dashed rgba(26, 54, 93, 0.25);
-    background-color: #f0f0f0;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    background-color: #080d1f;
     margin-bottom: 50px;
-    border-radius: 2px;
+    border-radius: 8px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.12);
 }
 .m-living-hero-badge {
     position: absolute;
@@ -4081,28 +4090,30 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 .modal-question {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 3rem;
-    font-weight: 500;
-    line-height: 1.1;
+    font-weight: 600;
+    line-height: 1.15;
     margin-bottom: 25px;
     letter-spacing: -0.02em;
+    color: #f8fafc;
 }
 .modal-meta-tags {
     display: flex;
     gap: 15px;
     font-family: monospace;
     font-size: 0.8rem;
-    opacity: 0.6;
+    color: #94a3b8;
     margin-bottom: 50px;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 .modal-text p {
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-size: 1.15rem;
+    line-height: 1.65;
     margin-bottom: 20px;
-    opacity: 0.8;
+    color: #cbd5e1;
 }
 
-/* Rich Modal Project Body Elements */
+/* Rich Modal Project Body Elements — Deep Space Cosmic Observatory Theme */
 .modal-project-body {
     display: flex;
     flex-direction: column;
@@ -4114,32 +4125,35 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1px;
-    background: rgba(26, 54, 93, 0.15);
-    border: 1px solid rgba(26, 54, 93, 0.15);
-    border-radius: 4px;
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .m-spec-item {
-    background: #ffffff;
-    padding: 12px 16px;
+    background: rgba(8, 16, 36, 0.92);
+    padding: 14px 18px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .m-lbl {
+    font-family: monospace;
     font-size: 0.68rem;
     font-weight: 700;
-    color: rgba(26, 54, 93, 0.5);
-    letter-spacing: 0.08em;
+    color: #38bdf8;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
 .m-val {
     font-size: 0.86rem;
     font-weight: 600;
-    color: var(--text-color);
+    color: #f8fafc;
+    letter-spacing: 0.02em;
 }
 
 .m-action-bar {
@@ -4152,37 +4166,43 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 22px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-family: monospace;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
 }
 
 .m-btn-primary {
-    background: var(--accent-color);
+    background: #0284c7;
     color: #ffffff !important;
-    border: 1px solid var(--accent-color);
+    border: 1px solid #38bdf8;
+    box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
 }
 
 .m-btn-primary:hover {
-    background: #1d4ed8;
+    background: #38bdf8;
+    color: #020617 !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 6px 24px rgba(56, 189, 248, 0.6);
 }
 
 .m-btn-secondary {
-    background: #ffffff;
-    color: var(--text-color) !important;
-    border: 1px solid rgba(26, 54, 93, 0.25);
+    background: rgba(15, 23, 42, 0.75);
+    color: #38bdf8 !important;
+    border: 1px solid rgba(56, 189, 248, 0.35);
 }
 
 .m-btn-secondary:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color) !important;
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
+    color: #ffffff !important;
     transform: translateY(-2px);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
 }
 
 .m-quotes-grid {
@@ -4192,68 +4212,82 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-quote-box {
-    background: #ffffff;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    border-left: 3px solid var(--accent-color);
-    padding: 18px;
-    border-radius: 4px;
+    background: rgba(10, 20, 44, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-left: 3px solid #38bdf8;
+    padding: 20px 22px;
+    border-radius: 8px;
     font-size: 0.88rem;
-    line-height: 1.5;
-    color: rgba(26, 54, 93, 0.85);
+    line-height: 1.55;
+    color: #cbd5e1;
+    backdrop-filter: blur(8px);
+}
+
+.m-quote-box strong {
+    color: #f8fafc;
 }
 
 .m-quote-mark {
     font-size: 1.8rem;
     line-height: 1;
-    color: var(--accent-color);
+    color: #38bdf8;
     font-family: serif;
     display: block;
     margin-bottom: 4px;
 }
 
 .m-statement-block {
-    background: #ffffff;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    border-radius: 6px;
-    padding: 24px;
+    background: rgba(10, 20, 44, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 8px;
+    padding: 26px 28px;
+    backdrop-filter: blur(8px);
 }
 
 .m-lang-toggle {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(26, 54, 93, 0.08);
-    padding-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+    padding-bottom: 14px;
 }
 
 .m-lang-btn {
-    background: none;
-    border: 1px solid rgba(26, 54, 93, 0.2);
-    border-radius: 14px;
-    padding: 4px 12px;
-    font-size: 0.75rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: monospace;
+    font-size: 0.74rem;
     font-weight: 700;
-    color: var(--text-color);
+    letter-spacing: 0.06em;
+    color: #94a3b8;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
 .m-lang-btn.active, .m-lang-btn:hover {
-    background: var(--text-color);
+    background: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
     color: #ffffff;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
 }
 
 .m-desc-pane {
     display: none;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: rgba(26, 54, 93, 0.8);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+}
+
+.m-desc-pane strong {
+    color: #f8fafc;
 }
 
 .m-desc-pane.active {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .m-gallery-section {
@@ -4263,48 +4297,57 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-sec-title {
-    font-size: 0.95rem;
+    font-family: monospace;
+    font-size: 0.88rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-color);
+    color: #38bdf8;
 }
 
 .m-gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 18px;
 }
 
 .m-gal-card {
-    background: #ffffff;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    border-radius: 6px;
+    background: rgba(8, 16, 36, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 8px;
     overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.m-gal-card:hover {
+    border-color: rgba(56, 189, 248, 0.45);
+    transform: translateY(-2px);
 }
 
 .m-gal-card img {
     width: 100%;
     height: 220px;
     object-fit: contain;
-    background: #ffffff;
+    background: #050b1d;
     display: block;
-    border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.15);
 }
 
 .m-gal-caption {
-    padding: 10px 14px;
-    font-size: 0.76rem;
+    padding: 12px 16px;
+    font-family: monospace;
+    font-size: 0.72rem;
     font-weight: 600;
-    color: rgba(26, 54, 93, 0.7);
-    line-height: 1.4;
+    color: #94a3b8;
+    line-height: 1.45;
+    letter-spacing: 0.04em;
 }
 
 .m-boards-strip {
-    background: rgba(37, 99, 235, 0.05);
-    border: 1px dashed var(--accent-color);
-    border-radius: 6px;
-    padding: 20px 24px;
+    background: rgba(10, 20, 44, 0.75);
+    border: 1px dashed rgba(56, 189, 248, 0.35);
+    border-radius: 8px;
+    padding: 22px 26px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -4315,29 +4358,34 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 .m-boards-text h4 {
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 2px;
+    color: #f8fafc;
+    margin-bottom: 3px;
 }
 
 .m-boards-text p {
     font-size: 0.82rem;
-    color: rgba(26, 54, 93, 0.7);
+    color: #94a3b8;
 }
 
 .m-btn-pill {
-    background: var(--text-color);
+    background: #0284c7;
+    border: 1px solid #38bdf8;
     color: #ffffff !important;
-    font-size: 0.78rem;
+    font-family: monospace;
+    font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    padding: 8px 18px;
-    border-radius: 20px;
+    letter-spacing: 0.08em;
+    padding: 8px 20px;
+    border-radius: 999px;
     text-decoration: none;
-    transition: background 0.2s;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+    transition: all 0.2s ease;
 }
 
 .m-btn-pill:hover {
-    background: var(--accent-color);
+    background: #38bdf8;
+    color: #020617 !important;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
 }
 
 
