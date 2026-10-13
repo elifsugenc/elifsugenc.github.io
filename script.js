@@ -1141,9 +1141,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetConstellation();
             });
 
-            // Direct click on cluster star visual (cluster state)
+            // Direct click & hover on cluster star visual (cluster state)
             const clusterStarVis = node.querySelector('.cluster-star-visual');
             if (clusterStarVis) {
+                const csCore = clusterStarVis.querySelector('.cs-core') || clusterStarVis;
+                csCore.addEventListener('mouseenter', () => {
+                    if (container.getAttribute('data-state') === 'cluster') {
+                        node.classList.add('is-hovered');
+                        const inquiryDisplay = document.getElementById('home-inquiry-display');
+                        if (inquiryDisplay) {
+                            inquiryDisplay.innerHTML = projQuestion ? 
+                                `&ldquo;${projQuestion}&rdquo; &bull; <span style="color: var(--accent-color); font-weight: 700; font-family: monospace;">[${projTitle}${projMedium ? ' // ' + projMedium : ''}]</span>` : 
+                                projTitle;
+                        }
+                    }
+                });
+                csCore.addEventListener('mouseleave', () => {
+                    if (container.getAttribute('data-state') === 'cluster') {
+                        node.classList.remove('is-hovered');
+                        const inquiryDisplay = document.getElementById('home-inquiry-display');
+                        if (inquiryDisplay) {
+                            inquiryDisplay.innerHTML = '&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;';
+                        }
+                    }
+                });
                 clusterStarVis.addEventListener('click', (e) => {
                     const currentState = container.getAttribute('data-state');
                     if (currentState === 'cluster') {

@@ -7579,11 +7579,46 @@ body {
   cursor: none !important;
 }
 
+/* -------------------------------------------------------------
+   CONSTELLATION HOVER & RELATIONSHIP HIGHLIGHTING SYSTEM
+   ------------------------------------------------------------- */
+
+/* 1. HOVERED PROJECT: 2X EXPANDED CIRCULAR ARCHITECTURAL LENS */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered {
-  z-index: 200 !important;
+  z-index: 350 !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.85)) !important;
+  pointer-events: auto !important;
 }
 
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual {
+  transform: translate(-50%, -50%) scale(2) !important;
+  border-color: #38bdf8 !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
+  opacity: 1 !important;
+  z-index: 100 !important;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .visual-img,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .visual-img {
+  filter: grayscale(0%) contrast(1.1) brightness(1.04) !important;
+  transform: scale(1.05) !important;
+  opacity: 1 !important;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease, opacity 0.4s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-orbit-rig,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-orbit-rig {
+  opacity: 1 !important;
+  transform: scale(1.18) rotate(0deg) !important;
+  transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 2. HOVERED PREVIEW CARD */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card *,
@@ -7598,7 +7633,109 @@ body {
   pointer-events: auto !important;
 }
 
-/* High Contrast & Enhanced Readability for Project Names in Constellation Mode */
+/* 3. CONNECTED / RELATED PROJECT NODES (STAY BRIGHT & HIGHLIGHTED) */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related {
+  opacity: 1 !important;
+  z-index: 180 !important;
+  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.65)) !important;
+  transition: opacity 0.35s ease, filter 0.35s ease !important;
+  pointer-events: auto !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-visual {
+  opacity: 1 !important;
+  border-color: #38bdf8 !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.5) !important;
+  transform: translate(-50%, -50%) scale(1.15) !important;
+  transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .visual-img {
+  opacity: 1 !important;
+  filter: grayscale(15%) contrast(1.05) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-label {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-title {
+  color: #7dd3fc !important;
+  text-shadow: 0 0 14px rgba(56, 189, 248, 0.85) !important;
+}
+
+/* 4. UNCONNECTED / UNRELATED NODES (DIMMED & SILİKLEŞTİRME) */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-dimmed {
+  opacity: 0.15 !important;
+  filter: grayscale(85%) contrast(85%) !important;
+  pointer-events: none !important;
+  transition: opacity 0.35s ease, filter 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-dimmed .node-visual {
+  opacity: 0.18 !important;
+  box-shadow: none !important;
+  transform: translate(-50%, -50%) scale(0.92) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-dimmed .node-label,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-dimmed .node-orbit-rig {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease !important;
+}
+
+/* 5. RELATIONSHIP LINES & THEME BADGES DURING HOVER */
+#tab-main .pleiades-observatory-stage[data-state="constellation"].has-hover .secondary-line:not(.active) {
+  opacity: 0.08 !important;
+  transition: opacity 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line.active {
+  stroke: #38bdf8 !important;
+  stroke-width: 2.5px !important;
+  stroke-dasharray: 4 4 !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95)) !important;
+  transition: opacity 0.35s ease, stroke-width 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge.active {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1.06) !important;
+  background: rgba(6, 14, 34, 0.98) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .radial-line.active {
+  opacity: 1 !important;
+  stroke: #38bdf8 !important;
+  stroke-width: 2.2px !important;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) !important;
+}
+
+/* 6. CLUSTER MODE STAR HOVER EXPANSION */
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .cs-core:hover,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star.is-hovered .cs-core {
+  transform: scale(1.28) !important;
+  background: #1e3a8a !important;
+  border-color: #facc15 !important;
+  box-shadow: 0 0 32px rgba(250, 204, 21, 0.95), 0 0 54px rgba(37, 99, 235, 0.8) !important;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .cs-core:hover .cs-symbol,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star.is-hovered .cs-symbol {
+  transform: rotate(45deg) scale(1.3) !important;
+  color: #ffffff !important;
+}
+
+/* 7. HIGH CONTRAST & ENHANCED READABILITY FOR PROJECT NAMES */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .node-title {
   color: #f8fafc !important;
   font-weight: 600 !important;
