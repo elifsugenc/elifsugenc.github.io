@@ -4896,6 +4896,73 @@ body {
 .constellation-map.eg-intro-pulsing .c-corner-text {
     color: var(--accent-color);
 }
+
+/* 3-Corner Intro Gentle Pulse Emphasis (Gently pulses 3-4 times on entering Constellation) */
+@keyframes cornerVertexIntroDisc {
+    0%, 100% {
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(8, 18, 42, 0.95);
+        box-shadow: 0 4px 20px rgba(2, 6, 23, 0.7), 0 0 15px rgba(56, 189, 248, 0.15);
+        transform: scale(1);
+    }
+    50% {
+        border-color: #38bdf8;
+        background: rgba(14, 34, 76, 0.98);
+        box-shadow: 0 0 28px rgba(56, 189, 248, 0.8), 0 0 48px rgba(37, 99, 235, 0.45);
+        transform: scale(1.055);
+    }
+}
+
+@keyframes cornerVertexIntroRing {
+    0%, 100% {
+        border-color: rgba(56, 189, 248, 0.35);
+        box-shadow: none;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        border-color: rgba(56, 189, 248, 0.85);
+        box-shadow: 0 0 18px rgba(56, 189, 248, 0.55), inset 0 0 10px rgba(56, 189, 248, 0.25);
+        transform: scale(1.07) rotate(15deg);
+    }
+}
+
+@keyframes cornerVertexIntroText {
+    0%, 100% {
+        color: #e2e8f0;
+        text-shadow: none;
+        letter-spacing: 0.12em;
+    }
+    50% {
+        color: #ffffff;
+        text-shadow: 0 0 12px rgba(56, 189, 248, 0.95), 0 0 20px rgba(56, 189, 248, 0.6);
+        letter-spacing: 0.16em;
+    }
+}
+
+.constellation-map.corners-intro-pulsing .c-corner-disc {
+    animation: cornerVertexIntroDisc 0.85s cubic-bezier(0.4, 0, 0.2, 1) 4;
+    animation-delay: 0.65s;
+}
+
+.constellation-map.corners-intro-pulsing .c-corner-ring-outer {
+    animation: cornerVertexIntroRing 0.85s cubic-bezier(0.4, 0, 0.2, 1) 4;
+    animation-delay: 0.65s;
+}
+
+.constellation-map.corners-intro-pulsing .c-corner-text {
+    animation: cornerVertexIntroText 0.85s cubic-bezier(0.4, 0, 0.2, 1) 4;
+    animation-delay: 0.65s;
+}
+
+.constellation-map.is-vertex-hovered .c-corner-disc,
+.c-axis-link:hover .c-corner-disc,
+.constellation-map.is-vertex-hovered .c-corner-ring-outer,
+.c-axis-link:hover .c-corner-ring-outer,
+.constellation-map.is-vertex-hovered .c-corner-text,
+.c-axis-link:hover .c-corner-text {
+    animation: none !important;
+}
+
 .constellation-map.has-hover .c-corner-node {
     opacity: 0.22;
     transition: opacity 0.35s ease;
