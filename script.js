@@ -755,6 +755,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
+            // Celestial star birth stagger delay
+            const starDelay = isClusterStar ? '0s' : ((0.06 + (idx % 7) * 0.08).toFixed(2) + 's');
+
             nodesHtml += `
                 <div class="constellation-node node-${p.labelPos} ${cardSideClass} ${selectedClass} ${clusterClass}" data-id="${p.id}" data-idx="${idx}"
                      data-num="${p.num}" data-title="${p.title}" data-question="${p.question}"
@@ -763,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      data-cluster-y="${isClusterStar ? pleiadesStar.clusterY : p.y}"
                      data-triangle-x="${p.x}"
                      data-triangle-y="${p.y}"
-                     style="left: ${leftPct}%; top: ${topPct}%; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s;">
+                     style="left: ${leftPct}%; top: ${topPct}%; --star-delay: ${starDelay}; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s;">
 
                     ${clusterStarVisualHtml}
 

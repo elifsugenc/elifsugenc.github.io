@@ -1062,31 +1062,158 @@ a:hover {
     animation: hqSpinRing 26s linear infinite;
 }
 
-/* In Constellation State */
-.pleiades-observatory-stage[data-state="constellation"] .cluster-star-visual {
-    opacity: 0 !important;
-    pointer-events: none !important;
+/* ============================================================
+   CELESTIAL STAR GRAIN -> PROJECT SPHERE MORPHING SYSTEM
+   Projects emerge slowly as tiny sparkling star grains (scale ~0.08),
+   gracefully expanding & blossoming into full 66px project spheres.
+   ============================================================ */
+
+/* 1. Base Star Particle Glow Pseudo-element on .node-visual */
+.node-visual::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 15%, rgba(56, 189, 248, 0.95) 45%, rgba(37, 99, 235, 0.6) 75%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.9s ease;
+    z-index: 5;
 }
 
+/* 2. In Cluster State:
+   - Non-cluster nodes are dormant star grains (scale 0.08, opacity 0)
+   - Their .node-visual is a tiny, intense, brilliant star seed
+   - Inner image, orbital rig, and labels are completely hidden */
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node:not(.is-cluster-star) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: scale(0.08) !important;
+    transition: opacity 0.8s ease 0.2s, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .node-visual {
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) scale(0.12) !important;
+    background: #e0f2fe !important;
+    border: 2px solid #38bdf8 !important;
+    box-shadow: 0 0 16px #38bdf8, 0 0 35px rgba(56, 189, 248, 0.95), 0 0 60px rgba(37, 99, 235, 0.7) !important;
+    transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.8s ease, box-shadow 0.8s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .node-visual::after {
+    opacity: 1 !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .visual-img {
+    opacity: 0 !important;
+    transition: opacity 0.6s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .node-orbit-rig {
+    opacity: 0 !important;
+    transform: scale(0.2) rotate(-35deg) !important;
+    transition: opacity 0.5s ease, transform 0.6s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .node-label {
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node .node-year-capsule {
+    opacity: 0 !important;
+    transform: scale(0.3) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease !important;
+}
+
+/* 3. In Constellation State:
+   A) Non-cluster nodes: Appear as tiny sparkling star grains (scale 0.08)
+      and grow smoothly over 2.4s into full project spheres (scale 1.0) */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star) {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    transition: opacity 0.45s ease var(--star-delay, 0.12s),
+                transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) var(--star-delay, 0.12s) !important;
+}
+
+/* B) The Project Sphere (.node-visual): Expands from tiny star grain to 66px sphere */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .node-visual {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    background: #090e1e !important;
+    border: 1.2px solid rgba(56, 189, 248, 0.35) !important;
+    box-shadow: 0 4px 20px rgba(2, 6, 23, 0.8), 0 0 16px rgba(56, 189, 248, 0.25) !important;
+    transition: opacity 0.45s ease var(--star-delay, 0.12s),
+                transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) var(--star-delay, 0.12s),
+                background 1.6s ease calc(var(--star-delay, 0.12s) + 0.6s),
+                border-color 1.6s ease calc(var(--star-delay, 0.12s) + 0.6s),
+                box-shadow 1.8s ease calc(var(--star-delay, 0.12s) + 0.5s) !important;
+}
+
+/* C) The Star Grain Flare (::after): Dissolves as sphere blossoms */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .node-visual::after {
+    opacity: 0 !important;
+    transition: opacity 1.2s ease calc(var(--star-delay, 0.12s) + 0.6s) !important;
+}
+
+/* D) The Project Photo (.visual-img): Dissolves in from the glowing star center */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .visual-img {
+    opacity: 1 !important;
+    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--star-delay, 0.12s) + 0.75s) !important;
+}
+
+/* E) Orbital Rings (.node-orbit-rig): Expands and unfurls as the sphere reaches maturity */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .node-orbit-rig {
+    opacity: 1 !important;
+    transform: scale(1) rotate(0deg) !important;
+    transition: opacity 1.2s ease calc(var(--star-delay, 0.12s) + 1.2s),
+                transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--star-delay, 0.12s) + 1.1s) !important;
+}
+
+/* F) Project Label & Year Pill: Fades in gently after sphere stabilizes */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .node-label {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: opacity 1.1s ease calc(var(--star-delay, 0.12s) + 1.4s),
+                transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--star-delay, 0.12s) + 1.4s) !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node .node-year-capsule {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    transition: opacity 1.0s ease calc(var(--star-delay, 0.12s) + 1.5s),
+                transform 1.0s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--star-delay, 0.12s) + 1.5s) !important;
+}
+
+/* G) The 5 Cluster Stars: Morph smoothly from Pleiades star symbols into project spheres */
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-cluster-star .cluster-star-visual {
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) scale(0.28) !important;
+    transition: opacity 0.8s ease 0.6s,
+                transform 1.0s cubic-bezier(0.22, 1, 0.36, 1) 0.6s !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .cluster-star-visual {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    transition: opacity 0.8s ease 0.3s,
+                transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s !important;
+}
+
+/* Merope fades gently with scale contraction */
 .pleiades-observatory-stage[data-state="constellation"] .merope-star {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate(-50%, -50%) scale(0.25) !important;
+    transition: opacity 0.8s ease, transform 1.0s ease !important;
 }
 
-.pleiades-observatory-stage .node-visual,
-.pleiades-observatory-stage .node-label,
-.pleiades-observatory-stage .node-orbit-rig,
-.pleiades-observatory-stage .node-year-capsule {
-    transition: opacity 0.8s ease;
-}
-
-.pleiades-observatory-stage[data-state="constellation"] .node-visual,
-.pleiades-observatory-stage[data-state="constellation"] .node-label,
-.pleiades-observatory-stage[data-state="constellation"] .node-orbit-rig,
-.pleiades-observatory-stage[data-state="constellation"] .node-year-capsule {
-    opacity: 1;
-    pointer-events: auto;
+.pleiades-observatory-stage[data-state="cluster"] .merope-star {
+    opacity: 0.62;
+    transform: translate(-50%, -50%) scale(1) !important;
+    transition: opacity 1.0s ease 0.4s, transform 1.2s ease 0.4s !important;
 }
 
 .pleiades-observatory-stage[data-state="constellation"] .cs-caption,
@@ -1106,22 +1233,6 @@ a:hover {
                 opacity 1.8s ease,
                 filter 0.6s ease;
     will-change: left, top, transform;
-}
-
-/* Non-cluster nodes in Cluster State */
-.pleiades-observatory-stage[data-state="cluster"] .constellation-node:not(.is-cluster-star) {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: scale(0.6);
-    transition: opacity 1.2s ease, transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Non-cluster nodes in Constellation State */
-.pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star) {
-    opacity: 1 !important;
-    transform: scale(1);
-    transition: opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s,
-                transform 2.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
 }
 
 /* Conceptual Corner Vertices in Cluster State */
@@ -7244,8 +7355,10 @@ body {
 #tab-main .cs-core { transition: transform .85s cubic-bezier(.2,.7,.2,1), background .85s ease, border-color .85s ease, box-shadow .85s ease !important; }
 #tab-main .cs-symbol { transition: transform .85s cubic-bezier(.2,.7,.2,1), color .85s ease !important; }
 #tab-main .cs-caption, #tab-main .cs-caption-block, #tab-main .cluster-star-pill { transition-duration: .75s !important; }
-#tab-main .constellation-node .node-visual { transition: transform .85s cubic-bezier(.2,.7,.2,1), border-color .75s ease, box-shadow .85s ease !important; }
-#tab-main .constellation-node .visual-img { transition: transform .85s cubic-bezier(.2,.7,.2,1), filter .85s ease !important; }
+#tab-main .constellation-node:hover .node-visual,
+#tab-main .constellation-node.is-hovered .node-visual { transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease !important; }
+#tab-main .constellation-node:hover .visual-img,
+#tab-main .constellation-node.is-hovered .visual-img { transition: transform .4s cubic-bezier(.2,.7,.2,1), filter .4s ease !important; }
 /* Preserve original relationship paths and make them readable on the dark sky. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line {
   stroke: rgba(165, 204, 255, .55) !important;
