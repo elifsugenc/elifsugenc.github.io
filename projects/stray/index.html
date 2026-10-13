@@ -574,22 +574,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../project-cursor.js"></script>
     <script>
-        // Custom cursor tracking
-        const cursorWrapper = document.getElementById('cursor-wrapper');
-        const customCursor = document.getElementById('custom-cursor');
-
-        if (cursorWrapper && customCursor) {
-            window.addEventListener('mousemove', (e) => {
-                cursorWrapper.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-            });
-
-            document.querySelectorAll('a, button, .zoomable-image-container, .board-img-container').forEach(el => {
-                el.addEventListener('mouseenter', () => customCursor.classList.add('cursor-hover'));
-                el.addEventListener('mouseleave', () => customCursor.classList.remove('cursor-hover'));
-            });
-        }
-
         // Bilingual toggle
         function switchLang(lang) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));

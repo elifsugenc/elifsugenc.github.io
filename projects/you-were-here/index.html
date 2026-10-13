@@ -368,7 +368,7 @@
     </div>
 
     <!-- Main Navigation Scripts & Website-Wide Tracker Engine -->
-    <script src="../../script.js"></script>
+    <script src="../project-cursor.js"></script>
     <script src="../../assets/traces-tracker.js" defer></script>
 
     <!-- Project Page Orchestration Script -->
@@ -379,41 +379,6 @@
             let allTraces = [];
             let filteredTraces = [];
             let selectedModalTrace = null;
-
-            // 0. Hardware-Accelerated Custom Cursor Tracking
-            const cursorWrapper = document.getElementById('cursor-wrapper');
-            const customCursor = document.getElementById('custom-cursor');
-            if (cursorWrapper && customCursor) {
-                let cursorX = 0, cursorY = 0, cursorTicking = false;
-                window.addEventListener('mousemove', (e) => {
-                    cursorX = e.clientX;
-                    cursorY = e.clientY;
-                    if (!cursorTicking) {
-                        requestAnimationFrame(() => {
-                            cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-                            cursorTicking = false;
-                        });
-                        cursorTicking = true;
-                    }
-                }, { passive: true });
-
-                document.addEventListener('mouseover', (e) => {
-                    if (e.target.closest('.wwh-btn-learn, [data-cursor="question"]')) {
-                        customCursor.classList.remove('cursor-hover');
-                        customCursor.classList.add('cursor-project');
-                    } else if (e.target.closest('a, button, .btn-trace-action, .era-tab-btn, .archive-select, .folder-header, [role="button"]')) {
-                        customCursor.classList.add('cursor-hover');
-                    }
-                });
-
-                document.addEventListener('mouseout', (e) => {
-                    if (e.target.closest('.wwh-btn-learn, [data-cursor="question"]')) {
-                        customCursor.classList.remove('cursor-project');
-                    } else if (e.target.closest('a, button, .btn-trace-action, .era-tab-btn, .archive-select, .folder-header, [role="button"]')) {
-                        customCursor.classList.remove('cursor-hover');
-                    }
-                });
-            }
 
             // 1. Language Toggle (EN / TR)
             const langBtns = document.querySelectorAll('.lang-btn');

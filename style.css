@@ -61,56 +61,30 @@
     transform: translate(-50%, -50%) scale(1.6);
 }
 
-/* Projelerin üzerine gelince (Grid görünümünde) */
+/* Projelerin üzerine gelince (Grid ve detay görünümünde) */
 #custom-cursor.cursor-project {
-    animation: blinkQuestion 0.8s infinite alternate ease-in-out;
+    transform: translate(-50%, -50%) scale(1.6);
 }
 #custom-cursor.cursor-project::after {
-    content: '?';
+    display: none !important;
+    content: '' !important;
 }
 
-@keyframes blinkQuestion {
-    0% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.6; }
-    100% { transform: translate(-50%, -50%) scale(2.0); opacity: 1; }
-}
-
-/* =========================================================
-   SPATIAL MAP CLICKABLE CURSOR
-   (Matching By Question blinkQuestion animation with EXPLORE ↗ underneath)
-   ========================================================= */
 #cursor-label {
-    position: absolute;
-    left: 0;
-    top: 20px;
-    transform: translate(-50%, 4px);
-    opacity: 0;
-    pointer-events: none;
-    background: rgba(8, 16, 36, 0.95);
-    border: 1px solid rgba(56, 189, 248, 0.45);
-    color: #38bdf8;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-family: var(--font-primary, 'Space Grotesk', sans-serif);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    box-shadow: 0 4px 14px rgba(2, 6, 23, 0.6), 0 0 10px rgba(56, 189, 248, 0.25);
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none !important;
 }
 
 #cursor-wrapper.cursor-spatial #custom-cursor {
-    animation: blinkQuestion 0.8s infinite alternate ease-in-out;
+    transform: translate(-50%, -50%) scale(1.6);
 }
 
 #cursor-wrapper.cursor-spatial #custom-cursor::after {
-    content: '?';
+    display: none !important;
+    content: '' !important;
 }
 
 #cursor-wrapper.cursor-spatial #cursor-label {
-    opacity: 1;
-    transform: translate(-50%, 0);
+    display: none !important;
 }
 
 body {
@@ -7468,7 +7442,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn * {
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: none !important;
 }
 
 /* Cluster mode: Disable ALL non-cluster nodes, labels, visuals, cards, hit bridges, vertices, and SVG linework */
@@ -7499,14 +7473,14 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .secondary-line,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .radial-line {
   pointer-events: none !important;
-  cursor: default !important;
+  cursor: none !important;
 }
 
 /* Cluster mode: Ensure .cluster-star-visual inside .is-cluster-star stays clickable */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual * {
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: none !important;
 }
 
 /* 2. CONSTELLATION MODE: All 12 project nodes, vertices, and badges active */
@@ -7521,6 +7495,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge * {
   pointer-events: auto !important;
+  cursor: none !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star,
@@ -7528,7 +7503,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual * {
   pointer-events: none !important;
-  cursor: default !important;
+  cursor: none !important;
   display: none !important;
 }
 

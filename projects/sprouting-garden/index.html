@@ -479,37 +479,8 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeLightbox();
         });
-
-        // Custom Cursor movement (Hardware 1:1 GPU Transform, matching main portfolio)
-        const cursorWrapper = document.getElementById('cursor-wrapper');
-        const customCursor = document.getElementById('custom-cursor');
-        if (cursorWrapper && customCursor) {
-            let cursorX = 0, cursorY = 0, cursorTicking = false;
-            document.addEventListener('mousemove', (e) => {
-                cursorX = e.clientX;
-                cursorY = e.clientY;
-                if (!cursorTicking) {
-                    requestAnimationFrame(() => {
-                        cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-                        cursorTicking = false;
-                    });
-                    cursorTicking = true;
-                }
-            }, { passive: true });
-
-            document.addEventListener('mouseover', (e) => {
-                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .step-card, .model-card')) {
-                    customCursor.classList.add('cursor-hover');
-                }
-            });
-
-            document.addEventListener('mouseout', (e) => {
-                if (e.target.closest('a, button, .zoomable-image-container, .lang-tab-btn, .board-item, .drawing-item, .step-card, .model-card')) {
-                    customCursor.classList.remove('cursor-hover');
-                }
-            });
-        }
     </script>
+    <script src="../project-cursor.js"></script>
     <script src=../../assets/traces-tracker.js defer></script>
 </body>
 </html>

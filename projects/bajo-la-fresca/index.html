@@ -505,26 +505,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../project-cursor.js"></script>
     <script>
-        // Custom Cursor Logic
-        const cursorWrapper = document.getElementById('cursor-wrapper');
-        const cursor = document.getElementById('custom-cursor');
-
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorWrapper.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-        });
-
-        const hoverTargets = document.querySelectorAll('a, button, .zoomable-image-container, .content-card, .refuge-item-card, .gallery-card');
-        hoverTargets.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
-        });
-
         // Bilingual Toggle
         function switchDetailLang(lang) {
             document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
