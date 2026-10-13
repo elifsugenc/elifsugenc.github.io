@@ -4,28 +4,28 @@
    ========================================================= */
 
 :root {
-    --bg-page: #fbfbf9;
-    --blueprint-grid: rgba(27, 67, 50, 0.04);
-    --text-primary: #152119;
-    --text-secondary: #2f3e35;
-    --text-muted: #5f7065;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
     
     /* Signature STRAY Colors */
-    --accent-green: #1b4332;
-    --accent-green-mid: #2d6a4f;
-    --accent-green-light: rgba(45, 106, 79, 0.08);
+    --accent-green: #34d399;
+    --accent-green-mid: #10b981;
+    --accent-green-light: rgba(16, 185, 129, 0.12);
     
-    --accent-magenta: #e0218a;
-    --accent-magenta-dark: #b8156c;
-    --accent-magenta-light: rgba(224, 33, 138, 0.08);
+    --accent-magenta: #f43f5e;
+    --accent-magenta-dark: #e11d48;
+    --accent-magenta-light: rgba(244, 63, 94, 0.12);
     
-    --accent-award: #b45309;
-    --accent-award-light: rgba(217, 119, 6, 0.08);
+    --accent-award: #fbbf24;
+    --accent-award-light: rgba(251, 191, 36, 0.12);
     
-    --border-light: rgba(27, 67, 50, 0.14);
-    --border-dashed: rgba(224, 33, 138, 0.35);
-    --card-bg: #ffffff;
-    --card-tint: rgba(245, 248, 246, 0.7);
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(244, 63, 94, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
+    --card-tint: rgba(15, 23, 42, 0.6);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }

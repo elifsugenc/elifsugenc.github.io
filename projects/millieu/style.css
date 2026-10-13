@@ -6,20 +6,20 @@
    ========================================================= */
 
 :root {
-    --bg-page: #faf7f4;
-    --blueprint-grid: rgba(107, 29, 47, 0.04);
-    --text-primary: #231815;
-    --text-secondary: #574540;
-    --text-muted: #8c7670;
-    --accent-color: #6b1d2f; /* Deep Burgundy / Bordeaux */
-    --accent-dark: #4a121f;
-    --accent-light: rgba(107, 29, 47, 0.08);
-    --accent-border: rgba(107, 29, 47, 0.22);
-    --accent-rose: #9f3148;
-    --accent-gold: #c2884a;
-    --border-light: rgba(140, 118, 112, 0.18);
-    --border-dashed: rgba(107, 29, 47, 0.28);
-    --card-bg: #ffffff;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-color: #f43f5e; /* Rose / Bordeaux accent */
+    --accent-dark: #be123c;
+    --accent-light: rgba(244, 63, 94, 0.12);
+    --accent-border: rgba(244, 63, 94, 0.3);
+    --accent-rose: #fb7185;
+    --accent-gold: #fbbf24;
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(244, 63, 94, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }

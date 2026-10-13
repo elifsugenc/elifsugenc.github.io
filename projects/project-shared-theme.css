@@ -1,0 +1,323 @@
+/* =========================================================
+   ELIFSU GENÇ PORTFOLIO — COSMIC OBSERVATORY PROJECT THEME
+   Unified Deep Space UI/UX for all Architectural Projects
+   Matches Pleiades Cluster & Constellation Map Experience
+   ========================================================= */
+
+:root {
+    --bg-universe: #030712;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(56, 189, 248, 0.32);
+    --card-bg: rgba(10, 20, 44, 0.75);
+    --card-tint: rgba(15, 23, 42, 0.6);
+}
+
+body.project-detail-body, body {
+    background-color: #030712 !important;
+    background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(30, 58, 138, 0.28) 0%, transparent 70%),
+        radial-gradient(circle at 85% 85%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.07) 0%, transparent 45%) !important;
+    background-attachment: fixed !important;
+    color: #e2e8f0 !important;
+    animation: projectPageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes projectPageFadeIn {
+    0% { opacity: 0; transform: scale(0.995); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Blueprint Grid - Cosmic Astronomical Drafting Lines */
+.blueprint-bg {
+    position: fixed !important;
+    inset: 0 !important;
+    background-image: 
+        linear-gradient(to right, rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.035) 1px, transparent 1px) !important;
+    background-size: 36px 36px !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+/* Sticky Architectural Navigation Bar */
+.project-nav {
+    background: rgba(6, 11, 25, 0.9) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.8) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+}
+
+.back-link, .back-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: rgba(15, 23, 42, 0.75) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    border-radius: 999px !important;
+    padding: 7px 18px !important;
+    color: #f1f5f9 !important;
+    font-family: monospace !important;
+    font-size: 0.76rem !important;
+    letter-spacing: 0.08em !important;
+    text-decoration: none !important;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.back-link:hover, .back-btn:hover {
+    background: rgba(30, 58, 138, 0.65) !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.45) !important;
+    color: #ffffff !important;
+    transform: translateX(-3px) !important;
+}
+
+.back-link .nav-arrow {
+    color: #38bdf8 !important;
+}
+
+/* Breadcrumb Styling */
+.project-crumb {
+    font-family: monospace !important;
+    color: #94a3b8 !important;
+}
+.project-crumb .crumb-num {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+}
+.project-crumb .crumb-sep {
+    color: rgba(56, 189, 248, 0.4) !important;
+}
+.project-crumb .crumb-title {
+    color: #f8fafc !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+}
+.project-crumb .crumb-tag {
+    background: rgba(56, 189, 248, 0.12) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    color: #38bdf8 !important;
+    border-radius: 4px !important;
+    padding: 2px 8px !important;
+    font-size: 0.68rem !important;
+}
+
+/* Section Quicklinks */
+.section-quicklinks a {
+    color: #94a3b8 !important;
+    font-family: monospace !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em !important;
+    padding: 5px 12px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    transition: all 0.25s ease !important;
+}
+.section-quicklinks a:hover,
+.section-quicklinks a.active {
+    color: #38bdf8 !important;
+    background: rgba(56, 189, 248, 0.12) !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Hero Section */
+.hero-title, .project-title {
+    color: #f8fafc !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 24px rgba(56, 189, 248, 0.25) !important;
+}
+.hero-core-question {
+    color: #93c5fd !important;
+    font-style: italic !important;
+    border-left: 2px solid rgba(56, 189, 248, 0.5) !important;
+    padding-left: 14px !important;
+}
+
+/* Badges */
+.badge-accent, .badge-award, .meta-item {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    color: #e2e8f0 !important;
+    border-radius: 999px !important;
+    font-family: monospace !important;
+    padding: 4px 14px !important;
+}
+
+/* Specs Grid */
+.specs-grid {
+    background: rgba(8, 16, 36, 0.72) !important;
+    border: 1px solid rgba(56, 189, 248, 0.2) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6) !important;
+}
+.spec-label {
+    color: #38bdf8 !important;
+    font-family: monospace !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.1em !important;
+}
+.spec-val {
+    color: #e2e8f0 !important;
+}
+
+/* Award Banner */
+.award-hero-banner, .award-box {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(217, 119, 6, 0.35) !important;
+    border-radius: 8px !important;
+    color: #fef3c7 !important;
+}
+.award-title {
+    color: #f59e0b !important;
+    font-family: monospace !important;
+}
+.award-subtitle {
+    color: #e2e8f0 !important;
+}
+
+/* Content Panels, Cards & Boxes */
+.card,
+.concept-box,
+.block-container,
+.detail-card,
+.program-item,
+.metabolism-box,
+.drawing-card,
+.board-card,
+.analysis-card,
+.palette-card,
+.tectonic-block,
+.narrative-block,
+.quote-card,
+.step-card,
+.project-content,
+.phase-card,
+.manifesto-box,
+.site-box,
+.spec-card {
+    background: rgba(10, 20, 44, 0.72) !important;
+    border: 1px solid rgba(56, 189, 248, 0.18) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    box-shadow: 0 10px 32px rgba(2, 6, 23, 0.5) !important;
+    color: #cbd5e1 !important;
+}
+
+/* Section Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #f8fafc !important;
+}
+
+/* Paragraphs & Text */
+p, li {
+    color: #cbd5e1 !important;
+}
+
+/* Strong / Emphasis */
+strong, b {
+    color: #f8fafc !important;
+}
+
+/* Drawing & Media Frames */
+.drawing-viewer,
+.slider-container,
+.hero-visual-frame,
+.perspective-card,
+.lightbox-trigger,
+.media-wrapper,
+.zoom-wrapper,
+.artifact-frame {
+    background: rgba(3, 7, 18, 0.95) !important;
+    border: 1px solid rgba(56, 189, 248, 0.22) !important;
+    border-radius: 8px !important;
+}
+
+/* Captions */
+figcaption, .img-caption, .caption-text, .drawing-meta {
+    color: #94a3b8 !important;
+    font-family: monospace !important;
+}
+
+/* Bottom Footer Return Section */
+.project-footer-nav, .project-detail-footer, .project-bottom-nav {
+    border-top: 1px solid rgba(56, 189, 248, 0.2) !important;
+    background: rgba(6, 11, 24, 0.92) !important;
+    padding: 32px 24px !important;
+    margin-top: 60px !important;
+}
+
+.bottom-nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.pnav-link, .prev-proj-link, .next-proj-link, .foot-nav-item, .nav-bottom-link {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-decoration: none !important;
+    padding: 12px 20px !important;
+    border: 1px solid rgba(56, 189, 248, 0.2) !important;
+    border-radius: 6px !important;
+    background: rgba(10, 20, 44, 0.6) !important;
+    transition: all 0.25s ease !important;
+}
+
+.pnav-link:hover, .prev-proj-link:hover, .next-proj-link:hover, .foot-nav-item:hover, .nav-bottom-link:hover {
+    border-color: #38bdf8 !important;
+    background: rgba(30, 58, 138, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+.pnav-dir, .nav-dir, .foot-nav-lbl {
+    font-size: 0.72rem !important;
+    font-family: monospace !important;
+    color: #38bdf8 !important;
+    letter-spacing: 0.08em !important;
+}
+
+.pnav-title, .proj-title, .foot-nav-name {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #f8fafc !important;
+}
+
+.footer-nav-btn, .pnav-center-btn, .center-directory-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    border-radius: 999px !important;
+    padding: 12px 28px !important;
+    color: #f1f5f9 !important;
+    font-family: monospace !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.08em !important;
+    text-decoration: none !important;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.footer-nav-btn:hover, .pnav-center-btn:hover, .center-directory-btn:hover {
+    background: rgba(30, 58, 138, 0.75) !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.5) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+}

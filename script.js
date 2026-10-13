@@ -5,6 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursorWrapper = document.getElementById('cursor-wrapper');
     const customCursor = document.getElementById('custom-cursor');
 
+    // Remove all native browser tooltips (black boxes) across entire document
+    function stripNativeTooltips() {
+        document.querySelectorAll('[title]').forEach(el => el.removeAttribute('title'));
+    }
+    stripNativeTooltips();
+    try {
+        new MutationObserver((mutations) => {
+            for (const m of mutations) {
+                if (m.type === 'attributes' && m.attributeName === 'title' && m.target.hasAttribute('title')) {
+                    m.target.removeAttribute('title');
+                } else if (m.type === 'childList') {
+                    m.target.querySelectorAll?.('[title]')?.forEach(el => el.removeAttribute('title'));
+                }
+            }
+        }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['title'] });
+    } catch (_) {}
+
     // Custom Cursor & Project Preview tracking
     if (cursorWrapper && customCursor) {
         let cursorX = 0, cursorY = 0, cursorTicking = false;
@@ -57,9 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Projects Directory Filter & Grouping Logic
-    const filterBtns = document.querySelectorAll('.dir-btn');
-    const projectsWrapper = document.getElementById('projects-wrapper');
+    // Architectural Project Cards Data Store
     const projectCards = Array.from(document.querySelectorAll('.project-card'));
 
     // =========================================================
@@ -384,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
             x: 750,
             y: 500,
             labelPos: 'right',
-            cardDir: 'card-right',
+            cardDir: 'card-left',
             yearPos: 'year-bottom'
         },
         {
@@ -556,10 +571,10 @@ document.addEventListener('DOMContentLoaded', () => {
             centerBtn.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
         }
 
-        // Unlock after transition duration (1500ms)
+        // Unlock after transition duration (2600ms)
         setTimeout(() => {
             isTransitioning = false;
-        }, 1500);
+        }, 2600);
     }
 
     function toggleConstellationState(container) {
@@ -577,7 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    function renderConstellation(targetContainer = projectsWrapper, initialState = 'constellation') {
+    function renderConstellation(targetContainer = document.getElementById('pleiades-stage-mount'), initialState = 'cluster') {
         if (!targetContainer) return null;
         targetContainer.innerHTML = '';
 
@@ -664,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardSideClass = p.cardDir || ((p.x > 700) ? 'card-left' : 'card-right');
 
             const numLabelHtml = isSelected
-                ? `<span class="node-star-badge" title="Selected Work ${p.num}">
+                ? `<span class="node-star-badge">
                         <svg class="node-star-svg" viewBox="0 0 24 24" aria-hidden="true">
                             <polygon points="12,1.5 15.2,8.5 22.8,9.5 17.2,14.8 18.8,22.5 12,18.6 5.2,22.5 6.8,14.8 1.2,9.5 8.8,8.5"/>
                         </svg>
@@ -736,10 +751,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-question-text">&ldquo;${p.question}&rdquo;</div>
                         <div class="card-concepts-text">${keywordsUpper}</div>
                         <div class="card-btn-row">
-                            <a href="${p.url}" class="card-action-btn card-btn-preview" title="Open Architectural Preview">
+                            <a href="${p.url}" class="card-action-btn card-btn-preview">
                                 PREVIEW&nbsp;&#x2197;
                             </a>
-                            <a href="${p.url}" class="card-action-btn modal-open-standalone-btn card-btn-dedicated" title="Open Dedicated Standalone Page">
+                            <a href="${p.url}" class="card-action-btn modal-open-standalone-btn card-btn-dedicated">
                                 DEDICATED PAGE&nbsp;&#x2197;
                             </a>
                         </div>
@@ -771,8 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  style="left: ${meropeLeftPct}%; top: ${meropeTopPct}%;"
                  tabindex="0"
                  role="button"
-                 aria-label="Merope: The Seventh Sister Story"
-                 title="Merope: The Hidden Sister — Click to read story">
+                 aria-label="Merope: The Seventh Sister Story">
                 <div class="cs-orbit-ring ring-dashed" style="width: 36px; height: 36px;"></div>
                 <div class="cs-core">
                     <span class="cs-symbol">&#x2726;</span>
@@ -828,7 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    data-cluster-y="${alcyoneConfig.clusterY}"
                    data-triangle-x="${alcyoneConfig.triangleX}"
                    data-triangle-y="${alcyoneConfig.triangleY}"
-                   style="left: ${egLeftPct}%; top: ${egTopPct}%;" title="Alcyone · About Elifsu Genç">
+                   style="left: ${egLeftPct}%; top: ${egTopPct}%;">
                     <div class="center-ring ring-outer"></div>
                     <div class="center-ring ring-mid"></div>
                     <div class="center-core">
@@ -877,15 +891,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         targetContainer.appendChild(container);
-
-        if (targetContainer === projectsWrapper) {
-            // Keep the full cards in the DOM (hidden) so the project modal can read their data
-            const hidden = document.createElement('div');
-            hidden.className = 'projects-grid';
-            hidden.style.display = 'none';
-            projectCards.forEach(card => hidden.appendChild(card));
-            targetContainer.appendChild(hidden);
-        }
 
         // --- Interaction Logic on Container ---
         const allNodes = container.querySelectorAll('.constellation-node');
@@ -1066,10 +1071,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Merope Story Modal Open & Close Functions
     function openMeropeStoryModal() {
+        // Ensure project preview modal is closed so modals never overlap
+        const pModal = document.getElementById('project-modal');
+        if (pModal && !pModal.classList.contains('hidden')) {
+            pModal.classList.add('hidden');
+        }
+
         const modal = document.getElementById('merope-story-modal');
         if (modal) {
             modal.classList.remove('hidden');
+            modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
+            const card = modal.querySelector('.merope-modal-card');
+            if (card) card.scrollTop = 0;
         }
     }
 
@@ -1077,9 +1091,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('merope-story-modal');
         if (modal) {
             modal.classList.add('hidden');
-            document.body.style.overflow = '';
+            modal.setAttribute('aria-hidden', 'true');
+            const pModal = document.getElementById('project-modal');
+            if (!pModal || pModal.classList.contains('hidden')) {
+                document.body.style.overflow = '';
+            }
         }
     }
+
+    window.openMeropeStoryModal = openMeropeStoryModal;
+    window.closeMeropeStoryModal = closeMeropeStoryModal;
+
+    // Direct event delegation for Merope clicks
+    document.addEventListener('click', (e) => {
+        const meropeTarget = e.target.closest('#merope-star-node, .merope-star, [data-id="merope"]');
+        if (meropeTarget) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMeropeStoryModal();
+        }
+    });
 
     const meropeCloseBtn = document.getElementById('merope-close-btn');
     if (meropeCloseBtn) meropeCloseBtn.addEventListener('click', closeMeropeStoryModal);
@@ -1104,6 +1135,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('merope-story-modal');
             if (modal && !modal.classList.contains('hidden')) {
                 closeMeropeStoryModal();
+            }
+        } else if (e.key === 'Enter' || e.key === ' ') {
+            const activeEl = document.activeElement;
+            if (activeEl && (activeEl.matches('#merope-star-node, .merope-star, [data-id="merope"]') || activeEl.closest('#merope-star-node, .merope-star, [data-id="merope"]'))) {
+                e.preventDefault();
+                openMeropeStoryModal();
             }
         }
     });
@@ -1137,22 +1174,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Delayed cursor-following blue nebula: atmosphere only, never project/star positions.
+    // Throttled to ~20 FPS (50ms) with cached stage dimensions to prevent forced layout recalculations.
     const atmosphericStage = document.getElementById('hq-constellation-sky');
     if (atmosphericStage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        let nebulaFrame = 0;
+        let lastNebulaTime = 0;
+        let nebulaBounds = null;
+        let pendingPointerEvent = null;
+        let nebulaRaf = 0;
+        const NEBULA_INTERVAL_MS = 50; // ~20 FPS throttle
+
+        function updateNebulaBounds() {
+            if (atmosphericStage) {
+                nebulaBounds = atmosphericStage.getBoundingClientRect();
+            }
+        }
+        window.addEventListener('resize', updateNebulaBounds, { passive: true });
+        updateNebulaBounds();
+
+        atmosphericStage.addEventListener('pointerenter', updateNebulaBounds, { passive: true });
+
         atmosphericStage.addEventListener('pointermove', (event) => {
             if (event.pointerType === 'touch') return;
-            if (nebulaFrame) return;
-            nebulaFrame = requestAnimationFrame(() => {
-                nebulaFrame = 0;
-                const bounds = atmosphericStage.getBoundingClientRect();
-                const x = ((event.clientX - bounds.left) / bounds.width - .5) * 55;
-                const y = ((event.clientY - bounds.top) / bounds.height - .5) * 42;
-                atmosphericStage.style.setProperty('--nebula-x', x.toFixed(1) + 'px');
-                atmosphericStage.style.setProperty('--nebula-y', y.toFixed(1) + 'px');
-            });
+            pendingPointerEvent = event;
+            const now = performance.now();
+            if (now - lastNebulaTime < NEBULA_INTERVAL_MS) return;
+            lastNebulaTime = now;
+
+            if (!nebulaRaf) {
+                nebulaRaf = requestAnimationFrame(() => {
+                    nebulaRaf = 0;
+                    if (!pendingPointerEvent) return;
+                    if (!nebulaBounds) updateNebulaBounds();
+                    const b = nebulaBounds;
+                    if (b && b.width && b.height) {
+                        const x = ((pendingPointerEvent.clientX - b.left) / b.width - 0.5) * 48;
+                        const y = ((pendingPointerEvent.clientY - b.top) / b.height - 0.5) * 36;
+                        atmosphericStage.style.setProperty('--nebula-x', x.toFixed(1) + 'px');
+                        atmosphericStage.style.setProperty('--nebula-y', y.toFixed(1) + 'px');
+                    }
+                });
+            }
         }, { passive: true });
+
         atmosphericStage.addEventListener('pointerleave', () => {
+            pendingPointerEvent = null;
             atmosphericStage.style.setProperty('--nebula-x', '0px');
             atmosphericStage.style.setProperty('--nebula-y', '0px');
         });
@@ -1164,214 +1229,8 @@ document.addEventListener('DOMContentLoaded', () => {
         renderConstellation(pleiadesMount, 'cluster');
     }
 
-    // Initial render of the directory map view in #tab-projects
-    if (projectsWrapper && projectsWrapper.getAttribute('data-view') === 'map') {
-        projectsWrapper.innerHTML = '';
-        renderConstellation(projectsWrapper, 'constellation');
-    }
-
-    if (filterBtns.length > 0 && projectsWrapper) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const showType = btn.getAttribute('data-show');
-                
-                // The faint architectural watermark is only rendered in Spatial Map view (inside constellation-stage)
-                const watermark = projectsWrapper.querySelector('.projects-watermark');
-                if (watermark) {
-                    watermark.style.display = (showType === 'map') ? '' : 'none';
-                }
-                
-                // Fade out wrapper for smooth transition
-                projectsWrapper.style.opacity = '0';
-                
-                setTimeout(() => {
-                    // Set data-view for CSS styling
-                    projectsWrapper.setAttribute('data-view', showType);
-                    
-                    // Clear the wrapper completely
-                    projectsWrapper.innerHTML = '';
-                    
-                    // Update texts and badges based on mode
-                    const starIconSvg = `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
-
-                    projectCards.forEach(card => {
-                        const title = card.getAttribute('data-title');
-                        const question = card.getAttribute('data-question');
-                        const medium = card.getAttribute('data-medium');
-                        const year = card.getAttribute('data-year');
-                        const isSelected = SELECTED_TITLES.has(title) || SELECTED_PROJECT_IDS.has(card.id.replace('card-', ''));
-                        
-                        const mainTextEl = card.querySelector('.card-main-text');
-                        const titleEl = card.querySelector('.card-title'); 
-                        
-                        if (showType === 'question' || showType === 'map') {
-                            mainTextEl.innerText = question;
-                            titleEl.innerText = title;
-                        } else if (showType === 'year') {
-                            mainTextEl.innerText = title;
-                            titleEl.innerText = medium; // Use medium in footer since year is in header
-                        } else if (showType === 'medium') {
-                            mainTextEl.innerText = title;
-                            titleEl.innerText = year; // Use year in footer since medium is in header
-                        }
-
-                        // Apply Selected Work highlight to card in grid views (question, year, medium)
-                        let badge = card.querySelector('.selected-badge');
-                        if (isSelected) {
-                            card.classList.add('is-selected');
-                            if (!badge) {
-                                badge = document.createElement('div');
-                                badge.className = 'selected-badge';
-                                badge.innerHTML = `${starIconSvg}<span>Selected</span>`;
-                                card.appendChild(badge);
-                            }
-                        } else {
-                            card.classList.remove('is-selected');
-                            if (badge) badge.remove();
-                        }
-                    });
-                    
-                    if (showType === 'map') {
-                        renderConstellation();
-                    } else if (showType === 'question') {
-                        // For map or question view, create a single grid
-                        
-                        if (showType === 'map') {
-                            // Recreate the map overlay since we cleared innerHTML
-                            let mapOverlay = document.createElement('div');
-                            mapOverlay.className = 'map-overlay';
-                            mapOverlay.innerHTML = `
-                                <div class="axis-x"><span class="ax-left">TANGIBLE</span><span class="ax-right">INTANGIBLE</span></div>
-                                <div class="axis-y"><span class="ax-top">SYSTEM</span><span class="ax-bottom">OBJECT</span></div>
-                            `;
-                            projectsWrapper.appendChild(mapOverlay);
-                        }
-
-                        let grid = document.createElement('div');
-                        grid.className = 'projects-grid';
-                        
-                        projectCards.sort((a, b) => {
-                            return a.getAttribute('data-num').localeCompare(b.getAttribute('data-num'));
-                        });
-                        
-                        projectCards.forEach(card => {
-                            if (showType === 'map') {
-                                // Just in case inline styles were lost, reapply them
-                                const title = card.getAttribute('data-title');
-                                const coords = {
-                                    "STRAY": {x: 20, y: 20},
-                                    "BIO-DECAY": {x: 80, y: 80},
-                                    "THE EARTHEN": {x: 10, y: 90},
-                                    "EMEK MUSEUM": {x: 65, y: 50},
-                                    "YOU WERE HERE.": {x: 85, y: 15},
-                                    "MILLIEU": {x: 60, y: 35},
-                                    "FIRE ESCAPE SIMULATION": {x: 75, y: 40},
-                                    "BAJO LA FRESCA": {x: 35, y: 60},
-                                    "CHRONOCLINES": {x: 90, y: 30},
-                                    "ARA-SIRA": {x: 25, y: 75},
-                                    "SPROUTING GARDEN": {x: 15, y: 80},
-                                    "WOOD WEAVE": {x: 30, y: 65}
-                                };
-                                if (coords[title]) {
-                                    card.style.setProperty('--x', coords[title].x + '%');
-                                    card.style.setProperty('--y', coords[title].y + '%');
-                                }
-                            } else {
-                                // Remove them so they don't interfere with grid
-                                card.style.removeProperty('--x');
-                                card.style.removeProperty('--y');
-                            }
-                            grid.appendChild(card);
-                        });
-                        projectsWrapper.appendChild(grid);
-                    } else if (showType === 'year') {
-                        // Group by year (descending)
-                        projectCards.sort((a, b) => {
-                            return b.getAttribute('data-year').localeCompare(a.getAttribute('data-year'));
-                        });
-                        
-                        let currentYear = '';
-                        let currentGrid = null;
-                        
-                        projectCards.forEach(card => {
-                            let year = card.getAttribute('data-year');
-                            if (year !== currentYear) {
-                                let h2 = document.createElement('h2');
-                                h2.className = 'group-header';
-                                h2.innerText = year;
-                                projectsWrapper.appendChild(h2);
-                                
-                                currentGrid = document.createElement('div');
-                                currentGrid.className = 'projects-grid';
-                                projectsWrapper.appendChild(currentGrid);
-                                
-                                currentYear = year;
-                            }
-                            currentGrid.appendChild(card);
-                        });
-                    } else if (showType === 'medium') {
-                        // Group by medium (alphabetical)
-                        projectCards.sort((a, b) => {
-                            return a.getAttribute('data-medium').localeCompare(b.getAttribute('data-medium'));
-                        });
-                        
-                        let currentMed = '';
-                        let currentGrid = null;
-                        
-                        projectCards.forEach(card => {
-                            let med = card.getAttribute('data-medium');
-                            if (med !== currentMed) {
-                                let h2 = document.createElement('h2');
-                                h2.className = 'group-header';
-                                h2.innerText = med;
-                                projectsWrapper.appendChild(h2);
-                                
-                                currentGrid = document.createElement('div');
-                                currentGrid.className = 'projects-grid';
-                                projectsWrapper.appendChild(currentGrid);
-                                
-                                currentMed = med;
-                            }
-                            currentGrid.appendChild(card);
-                        });
-                    }
-                    
-                    // Fade wrapper back in
-                    projectsWrapper.style.opacity = '1';
-                }, 300); // Wait for fade out
-            });
-        });
-    }
-
     // --- SINGLE PAGE NAVIGATION ---
-    let hasProjectsIntroPlayed = false;
     const navBar = document.querySelector('.folder-tabs');
-
-    function playProjectsIntro() {
-        if (hasProjectsIntroPlayed) return;
-        hasProjectsIntroPlayed = true;
-        const overlay = document.getElementById('projects-intro-overlay');
-        if (!overlay) return;
-
-        document.body.style.overflow = 'hidden';
-        overlay.style.transition = 'none';
-        const h1 = overlay.querySelector('h1');
-        if (h1) h1.style.transition = 'none';
-        overlay.classList.remove('hidden');
-        void overlay.offsetWidth;
-        overlay.style.transition = '';
-        if (h1) h1.style.transition = '';
-
-        setTimeout(() => {
-            overlay.classList.add('hidden');
-            setTimeout(() => { document.body.style.overflow = ''; }, 1500);
-        }, 1500);
-    }
-
-
 
     function setActive(tabId) {
         tabButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId));
@@ -1380,8 +1239,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTabId = 'main';
     let previousTabId = 'main';
 
+    // Helper to navigate to Constellation view on Main tab
+    function goToProjects() {
+        switchTab('main');
+        const homeSky = document.getElementById('hq-constellation-sky');
+        if (homeSky) {
+            const mapEl = homeSky.querySelector('.constellation-map');
+            if (mapEl) setConstellationState(mapEl, 'constellation');
+            homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    window.goToProjects = goToProjects;
+
     // --- PAGE NAVIGATION: each section is a separate full-screen page ---
     function switchTab(targetTabId, updateHash = true) {
+        // There is no separate #projects page: project exploration lives directly in #tab-main
+        if (targetTabId === 'projects') {
+            switchTab('main', updateHash);
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl) setConstellationState(mapEl, 'constellation');
+            }
+            return;
+        }
+
         const target = document.getElementById(`tab-${targetTabId}`);
         if (!target) return;
 
@@ -1400,17 +1282,15 @@ document.addEventListener('DOMContentLoaded', () => {
             history.pushState(null, '', targetTabId === 'main' ? window.location.pathname : `#${targetTabId}`);
         }
 
-        // Close project modal if it's open
+        // Close project modal or merope story modal if open
         const pModal = document.getElementById('project-modal');
         if (pModal && !pModal.classList.contains('hidden')) {
             pModal.classList.add('hidden');
             document.body.style.overflow = '';
         }
-
-        if (targetTabId === 'projects') {
-            if (!hasProjectsIntroPlayed) {
-                playProjectsIntro();
-            }
+        const mModal = document.getElementById('merope-story-modal');
+        if (mModal && !mModal.classList.contains('hidden')) {
+            closeMeropeStoryModal();
         }
     }
 
@@ -1470,21 +1350,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hash.startsWith('project-') || hash.startsWith('modal-') || hash.startsWith('card-') || (hash && document.getElementById(`card-${hash}`))) {
             const slug = hash.replace(/^(project-|modal-|card-)/, '');
             
-            // 1. Activate the Projects tab (with Constellation Map in the background)
-            switchTab('projects', false);
-            
-            // 2. Ensure Constellation Map view is active (so constellation is in the background)
-            const mapBtn = document.querySelector('.dir-btn[data-show="map"]');
-            if (mapBtn && !mapBtn.classList.contains('active')) {
-                mapBtn.click();
+            // 1. Activate Main tab and ensure Constellation state is active
+            switchTab('main', false);
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl) setConstellationState(mapEl, 'constellation');
             }
             
-            // 3. Open the project modal preview window with dedicated page button
+            // 2. Open the project modal preview window with dedicated page button
             setTimeout(() => {
                 if (typeof window.openProjectModalBySlug === 'function') {
                     window.openProjectModalBySlug(slug);
                 }
             }, 100);
+            return;
+        }
+
+        if (hash === 'projects') {
+            goToProjects();
             return;
         }
 
@@ -2702,6 +2586,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                     
+                    // Close Merope story modal if open to prevent any dual modal stacking
+                    const mModal = document.getElementById('merope-story-modal');
+                    if (mModal && !mModal.classList.contains('hidden')) {
+                        mModal.classList.add('hidden');
+                        mModal.setAttribute('aria-hidden', 'true');
+                    }
+
                     // Show modal
                     projectModal.classList.remove('hidden');
                     

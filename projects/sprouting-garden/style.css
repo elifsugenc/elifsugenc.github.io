@@ -4,17 +4,17 @@
    ========================================================= */
 
 :root {
-    --bg-page: #f8fafc;
-    --blueprint-grid: rgba(26, 54, 93, 0.04);
-    --text-primary: #1a365d;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --accent-blue: #2563eb;
-    --accent-blue-dark: #1d4ed8;
-    --accent-blue-light: rgba(37, 99, 235, 0.08);
-    --border-light: rgba(26, 54, 93, 0.12);
-    --border-dashed: rgba(26, 54, 93, 0.2);
-    --card-bg: #ffffff;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-blue: #34d399;
+    --accent-blue-dark: #10b981;
+    --accent-blue-light: rgba(52, 211, 153, 0.12);
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(52, 211, 153, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }

@@ -1,35 +1,60 @@
-﻿<!DOCTYPE html>
-<html lang=""en"">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset=""UTF-8"">
-    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
-    <title>FIRE ESCAPE SIMULATION — Elifsu Genç</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 — FIRE ESCAPE SIMULATION | Elifsu Genç</title>
     <link rel="icon" type="image/png" href="../../assets/favicon.png">
     <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
-    <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-    <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-    <link href=""https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"" rel=""stylesheet"">
-    <link rel=""stylesheet"" href=""../../style.css"">
-    <style>
-        body { padding: 40px; }
-        .project-header { margin-bottom: 60px; }
-        .project-title { font-size: 4rem; text-transform: uppercase; margin-bottom: 20px; }
-        .back-btn { display: inline-block; margin-bottom: 40px; text-decoration: none; font-weight: 500; color: var(--text-color); border: 1px solid var(--text-color); padding: 10px 20px; border-radius: 50px; }
-        .back-btn:hover { background: var(--text-color); color: #fff; }
-        .project-content { font-size: 1.2rem; line-height: 1.6; max-width: 800px; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../project-shared-theme.css">
 </head>
-<body>
-    <div id=""cursor-wrapper""><div id=""custom-cursor""></div></div>
-    
-    <a href=""../../index.html#projects"" class=""back-btn"">&larr; BACK TO FOLDER</a>
-    
-    <div class=""project-header"">
-        <h1 class=""project-title"">FIRE ESCAPE SIMULATION</h1>
-        <p>Coming soon...</p>
-    </div>
+<body class="project-detail-body">
+    <!-- Architectural Grid Background -->
+    <div class="blueprint-bg"></div>
 
-    <script src=""../../script.js""></script>
-    <script src=../../assets/traces-tracker.js defer></script>
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+    
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+            <a href="../../index.html#card-fire-escape-simulation" class="back-link">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">[ RETURN TO CONSTELLATION ]</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-num">12</span>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-title">FIRE ESCAPE SIMULATION</span>
+                <span class="crumb-tag">SIMULATION &bull; 2027</span>
+            </div>
+        </div>
+    </header>
+    
+    <main class="project-page-container" style="max-width: 1000px; margin: 60px auto; padding: 0 24px;">
+        <div class="project-header" style="margin-bottom: 40px;">
+            <div style="font-family: monospace; font-size: 0.8rem; color: #38bdf8; letter-spacing: 0.12em; margin-bottom: 12px;">CONSTELLATION NODE 12 // EGRESS DYNAMICS</div>
+            <h1 class="project-title" style="font-size: 3.5rem; text-transform: uppercase; margin-bottom: 16px; color: #f8fafc;">12 &mdash; FIRE ESCAPE SIMULATION</h1>
+            <p class="hero-core-question" style="font-size: 1.2rem; color: #93c5fd; font-style: italic; margin-bottom: 24px;">"Can you escape the fire?"</p>
+        </div>
+        <div class="detail-card" style="padding: 32px; border-radius: 8px;">
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 20px;">
+                Computational behavioral model and emergency spatial simulation analyzing crowd dynamics, spatial panic, bottlenecks, and exit trajectories under extreme conditions.
+            </p>
+            <div style="font-family: monospace; font-size: 0.78rem; color: #94a3b8; display: flex; gap: 20px; flex-wrap: wrap;">
+                <span>YEAR: 2027 (ongoing)</span> &bull; <span>TYPOLOGY: Computational Simulation</span> &bull; <span>KEYWORDS: Egress Dynamics &bull; Spatial Panic</span>
+            </div>
+        </div>
+        <div style="margin-top: 40px;">
+            <a href="../../index.html#card-fire-escape-simulation" class="footer-nav-btn">&larr; RETURN TO CONSTELLATION MAP</a>
+        </div>
+    </main>
+
+    <script src="../../script.js"></script>
+    <script src="../../assets/traces-tracker.js" defer></script>
 </body>
 </html>

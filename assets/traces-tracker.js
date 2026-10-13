@@ -282,7 +282,7 @@
                     </p>
                 </div>
                 <div class="wwh-consent-actions">
-                    <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question" title="Explore YOU WERE HERE. project">
+                    <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
                         <span class="wwh-learn-icon">?</span>
                         <span class="wwh-learn-text">LEARN MORE</span>
                     </a>

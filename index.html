@@ -32,9 +32,6 @@
             <span class="sheet-mark bl"></span><span class="sheet-mark br"></span>
         </nav>
 
-        <div id="projects-intro-overlay" class="hidden">
-            <h1>ASK A QUESTION</h1>
-        </div>
         <div class="folder-body">
             
             <!-- MAIN TAB -->
@@ -272,11 +269,11 @@
 
                         <!-- Prominent Architectural Call-To-Action to Explore Full Constellation Map -->
                         <div class="hq-cta-wrapper">
-                            <a href="#projects" class="hq-explore-all-btn" onclick="event.preventDefault(); goToPage('projects');">
+                            <button type="button" class="hq-explore-all-btn" id="hq-explore-bottom-cta">
                                 <span class="hq-btn-star">&#x2726;</span>
-                                <span class="hq-btn-text">MORE PROJECTS &mdash; EXPLORE FULL SPATIAL CONSTELLATION MAP</span>
+                                <span class="hq-btn-text">EXPLORE ALL PROJECTS &mdash; CONSTELLATION MAP</span>
                                 <span class="hq-btn-arrow">&rarr;</span>
-                            </a>
+                            </button>
                             <span class="hq-cta-sub">12 INTERCONNECTED RESEARCH WORKS &bull; 3 RELATIONAL POLES &bull; FULL SCREEN ATLAS</span>
                         </div>
                     </div>
@@ -310,31 +307,8 @@
                 </div>
             </section>
 
-            <!-- PROJECTS TAB -->
-            <section class="tab-content" id="tab-projects">
-                <div class="directory-header">
-                    <a href="#main" class="back-to-index-btn" onclick="event.preventDefault(); goToPage('main');">[ BACK TO INDEX ]</a>
-                    <div class="dir-nav-group">
-                        <div class="dir-title-box">
-                            <h2 class="dir-title">EXPLORE WORKS &mdash;</h2>
-                        </div>
-                        <div class="dir-filters">
-                            <button class="dir-btn active" data-show="map">BY SPATIAL MAP</button>
-                            <button class="dir-btn" data-show="question">BY QUESTION</button>
-                            <button class="dir-btn" data-show="medium">BY MEDIUM</button>
-                            <button class="dir-btn" data-show="year">BY YEAR</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="projects-wrapper" data-view="map" style="transition: opacity 0.3s ease;">
-                    
-                    <div class="map-overlay">
-                        <div class="axis-x"><span class="ax-left">CONTEXTUAL<br>RESEARCH</span><span class="ax-right">EXPERIMENTAL<br>THINKING</span></div>
-                        <div class="axis-y"><span class="ax-top">CRITICAL INQUIRY</span></div>
-                    </div>
-                    
-                    <div class="projects-grid">
+            <!-- PROJECT DATA ARCHIVE STORE (Preserves all 12 project card attributes for modal reading without rendering a separate projects tab) -->
+            <div id="project-cards-store" class="projects-grid" style="display: none;" aria-hidden="true">
                         
                         <a id="card-emek-museum" href="./projects/emek-museum/" class="project-card span-2x2" data-num="01" data-year="2027 (ongoing)" data-medium="Spatial Design" data-title="EMEK MUSEUM" data-question="How can we make this labour visible again?">
                             <div class="card-img" style="background-image: url('./assets/emek-museum-wip.svg');"></div>
@@ -470,9 +444,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
-                </div>
-            </section>
+            </div>
 
             <!-- DESIGN APPROACH / METHODOLOGY TAB -->
             <section class="tab-content page-centered-tab" id="tab-design-approach">
@@ -797,8 +769,8 @@
                                 </p>
                             </div>
                             <div class="nav-banner-actions">
-                                <a href="#projects" class="approach-action-btn approach-btn-primary" onclick="event.preventDefault(); goToPage('projects');">
-                                    <span>EXPLORE SPATIAL MAP</span>
+                                <a href="#main" class="approach-action-btn approach-btn-primary" onclick="event.preventDefault(); goToProjects();">
+                                    <span>EXPLORE CONSTELLATION MAP</span>
                                     <span class="btn-arrow">&#x2197;</span>
                                 </a>
                                 <a href="#about" class="approach-action-btn" onclick="event.preventDefault(); goToPage('about');">
@@ -908,15 +880,15 @@
 
                             <!-- Contact & Social Links -->
                             <div class="about-contact-strip">
-                                <a href="mailto:elifsugenc44@gmail.com" class="contact-chip" title="Send email to Elifsu Genç">
+                                <a href="mailto:elifsugenc44@gmail.com" class="contact-chip">
                                     <span class="chip-label">EMAIL</span>
                                     <span class="chip-val">elifsugenc44@gmail.com</span>
                                 </a>
-                                <a href="https://www.linkedin.com/in/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip" title="Visit LinkedIn Profile">
+                                <a href="https://www.linkedin.com/in/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip">
                                     <span class="chip-label">LINKEDIN</span>
                                     <span class="chip-val">linkedin.com/in/elifsugenc ↗</span>
                                 </a>
-                                <a href="https://github.com/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip" title="Visit GitHub Profile">
+                                <a href="https://github.com/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip">
                                     <span class="chip-label">GITHUB</span>
                                     <span class="chip-val">github.com/elifsugenc ↗</span>
                                 </a>
@@ -1420,6 +1392,8 @@
                 </div>
             </div>
         </div>
+    </div>
+
     <!-- MEROPE STORY INFORMATIONAL PANEL (MESSIER 45 / THE SEVENTH SISTER) -->
     <div id="merope-story-modal" class="merope-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="merope-modal-title">
         <div class="merope-modal-backdrop" id="merope-modal-backdrop"></div>

@@ -4,20 +4,20 @@
    ========================================================= */
 
 :root {
-    --bg-page: #fbfbf9;
-    --blueprint-grid: rgba(26, 54, 93, 0.035);
-    --text-primary: #1a365d;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --accent-wood: #b45309;
-    --accent-wood-dark: #8c3b04;
-    --accent-wood-light: rgba(180, 83, 9, 0.09);
-    --accent-ochre: #d97706;
-    --accent-blue: #2563eb;
-    --border-light: rgba(26, 54, 93, 0.12);
-    --border-dashed: rgba(180, 83, 9, 0.25);
-    --card-bg: #ffffff;
-    --card-wood-tint: rgba(254, 243, 199, 0.25);
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-wood: #f59e0b;
+    --accent-wood-dark: #d97706;
+    --accent-wood-light: rgba(245, 158, 11, 0.12);
+    --accent-ochre: #fbbf24;
+    --accent-blue: #38bdf8;
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(245, 158, 11, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
+    --card-wood-tint: rgba(15, 23, 42, 0.6);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }

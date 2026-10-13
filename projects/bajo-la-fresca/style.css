@@ -6,21 +6,21 @@
    ========================================================= */
 
 :root {
-    --bg-page: #faf8f5;
-    --blueprint-grid: rgba(194, 65, 12, 0.04);
-    --text-primary: #1c1917;
-    --text-secondary: #44403c;
-    --text-muted: #78716c;
-    --accent-color: #c2410c; /* Andalusian Terracotta */
-    --accent-dark: #9a3412;
-    --accent-rose: #be123c; /* Bougainvillea Crimson */
-    --accent-yellow: #d97706; /* Seville Citrus Ochre */
-    --accent-green: #15803d; /* Courtyard Foliage */
-    --accent-light: rgba(194, 65, 12, 0.08);
-    --accent-border: rgba(194, 65, 12, 0.22);
-    --border-light: rgba(120, 113, 108, 0.16);
-    --border-dashed: rgba(194, 65, 12, 0.28);
-    --card-bg: #ffffff;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-color: #ea580c; /* Andalusian Terracotta */
+    --accent-dark: #c2410c;
+    --accent-rose: #f43f5e; /* Bougainvillea Crimson */
+    --accent-yellow: #fbbf24; /* Seville Citrus Ochre */
+    --accent-green: #22c55e; /* Courtyard Foliage */
+    --accent-light: rgba(234, 88, 12, 0.12);
+    --accent-border: rgba(234, 88, 12, 0.35);
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(234, 88, 12, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }

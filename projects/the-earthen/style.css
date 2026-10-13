@@ -5,17 +5,17 @@
    ========================================================= */
 
 :root {
-    --bg-page: #fbf9f5;
-    --blueprint-grid: rgba(120, 75, 40, 0.05);
-    --text-primary: #2e1d10;
-    --text-secondary: #5c4330;
-    --text-muted: #886c57;
-    --accent-blue: #8a431c;
-    --accent-blue-dark: #6e3313;
-    --accent-blue-light: rgba(138, 67, 28, 0.08);
-    --border-light: rgba(120, 75, 40, 0.14);
-    --border-dashed: rgba(120, 75, 40, 0.24);
-    --card-bg: #ffffff;
+    --bg-page: #030712;
+    --blueprint-grid: rgba(56, 189, 248, 0.035);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-blue: #ea580c;
+    --accent-blue-dark: #c2410c;
+    --accent-blue-light: rgba(234, 88, 12, 0.12);
+    --border-light: rgba(56, 189, 248, 0.18);
+    --border-dashed: rgba(234, 88, 12, 0.35);
+    --card-bg: rgba(10, 20, 44, 0.75);
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-mono: 'Space Grotesk', monospace;
 }
