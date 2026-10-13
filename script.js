@@ -44,19 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = (homeStage && homeStage.getAttribute('data-state')) || 'cluster';
 
             if (state === 'cluster') {
-                // In cluster state, ONLY the 7 Pleiades stars are spatial interactive targets:
-                // 1) 5 cluster project stars (.cluster-star-visual)
-                // 2) Merope 7th sister (.merope-star, #merope-star-node)
-                // 3) Alcyone center practice star (#constellation-center-btn)
-                return !!target.closest('.cluster-star-visual, .merope-star, #merope-star-node, #constellation-center-btn');
-            } else {
-                // In constellation state:
-                // All 12 constellation nodes, corner axis links, relation badges, and center
-                // But NOT hidden cluster-only stars
-                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node')) {
+                // In cluster state, ONLY circular star cores and control buttons are spatial interactive targets:
+                // Star captions, orbit rings, and pills (when unhovered) must not trigger spatial hover
+                if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring')) {
                     return false;
                 }
-                return !!target.closest('.constellation-map .constellation-node, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge');
+                return !!target.closest('.cs-core, .center-core, #constellation-center-btn .center-core, .cluster-transition-btn, #hq-cluster-toggle-pill');
+            } else {
+                // In constellation state:
+                // ONLY the 66px circular project photo spheres (.node-visual), active cards, corner nodes, and relation badges
+                // Exclude labels, headers, keywords, orbit rigs, year capsules, and cluster elements
+                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .node-year-capsule, .center-ring')) {
+                    return false;
+                }
+                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .center-core, .constellation-map .relation-theme-badge');
             }
         }
 
@@ -971,11 +972,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Center EG. click: Navigate to About
         if (centerBtn) {
+            const centerCore = centerBtn.querySelector('.center-core');
             centerBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 switchTab('about');
             });
-            centerBtn.addEventListener('mouseenter', () => {
+            const handleCenterEnter = () => {
                 if (container.getAttribute('data-state') === 'constellation') {
                     container.classList.remove('eg-intro-pulsing');
                     if (container.classList.contains('has-hover')) {
@@ -983,10 +985,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     container.classList.add('is-center-hovered');
                 }
-            });
-            centerBtn.addEventListener('mouseleave', () => {
+            };
+            const handleCenterLeave = () => {
                 container.classList.remove('is-center-hovered');
-            });
+            };
+            if (centerCore) {
+                centerCore.addEventListener('mouseenter', handleCenterEnter);
+                centerCore.addEventListener('mouseleave', handleCenterLeave);
+            }
+            centerBtn.addEventListener('mouseenter', handleCenterEnter);
+            centerBtn.addEventListener('mouseleave', handleCenterLeave);
         }
 
         // Clickable 3 Sector Headings -> Navigate to Methodology (ONLY in constellation state)
@@ -1049,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Node hover & click interactions
+        // Node hover & click interactions (strictly triggered by project photo sphere .node-visual)
         allNodes.forEach(node => {
             const projId = node.getAttribute('data-id');
             const projTitle = node.getAttribute('data-title');
@@ -1057,8 +1065,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const projMedium = node.getAttribute('data-medium') || '';
             const radialLine = container.querySelector(`.radial-line[data-id="${projId}"]`);
             const relations = relationsByProj[projId] || [];
+            const nodeVisual = node.querySelector('.node-visual');
+            const hoverCard = node.querySelector('.node-hover-card');
 
-            node.addEventListener('mouseenter', () => {
+            function activateNodeHover() {
                 if (container.getAttribute('data-state') !== 'constellation') return;
                 container.classList.remove('eg-intro-pulsing');
                 container.classList.add('has-hover');
@@ -1099,8 +1109,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (correspondingCard) {
                     correspondingCard.classList.add('is-constellation-highlight');
                 }
-            });
+            }
 
+            // Only trigger hover when cursor enters the 66px project circle (.node-visual)
+            if (nodeVisual) {
+                nodeVisual.addEventListener('mouseenter', () => {
+                    activateNodeHover();
+                });
+
+                nodeVisual.addEventListener('mouseleave', (e) => {
+                    if (container.getAttribute('data-state') !== 'constellation') return;
+                    // If moving into the open preview card, keep hover active
+                    if (e.relatedTarget && hoverCard && (e.relatedTarget === hoverCard || hoverCard.contains(e.relatedTarget))) {
+                        return;
+                    }
+                    resetConstellation();
+                });
+            }
+
+            // Keep preview card interactive while hovering over it, reset when leaving both
+            if (hoverCard) {
+                hoverCard.addEventListener('mouseleave', (e) => {
+                    if (container.getAttribute('data-state') !== 'constellation') return;
+                    // If moving back to the visual circle, keep hover active
+                    if (e.relatedTarget && nodeVisual && (e.relatedTarget === nodeVisual || nodeVisual.contains(e.relatedTarget))) {
+                        return;
+                    }
+                    resetConstellation();
+                });
+            }
+
+            // Safety cleanup when mouse leaves the node hierarchy entirely
             node.addEventListener('mouseleave', (e) => {
                 if (container.getAttribute('data-state') !== 'constellation') return;
                 if (e.relatedTarget && node.contains(e.relatedTarget)) return;

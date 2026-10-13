@@ -7431,18 +7431,38 @@ body {
 #tab-main .pleiades-stage-mount .constellation-stage {
   pointer-events: none !important;
 }
-/* State-enforced pointer events to prevent cross-state interaction bleeding */
-/* 1. CLUSTER MODE: Only the 7 Pleiades stars and transition button are interactive */
+/* State-enforced pointer events to prevent cross-state interaction bleeding & phantom hover hits */
+/* 1. CLUSTER MODE: Strict circular hit-targets on star cores */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-visual,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-visual *,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .merope-star,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .merope-star *,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cs-caption-block,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cs-caption-block *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cs-caption,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-pill,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-pill *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cs-orbit-ring,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .center-ring {
+  pointer-events: none !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-visual .cs-core,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .cluster-star-visual .cs-core *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .merope-star .cs-core,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .merope-star .cs-core *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn .center-core,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn .center-core *,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn * {
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn *,
+#tab-main #hq-cluster-toggle-pill,
+#tab-main #hq-cluster-toggle-pill * {
   pointer-events: auto !important;
   cursor: none !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .cs-core,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .center-core {
+  clip-path: circle(50% at 50% 50%) !important;
 }
 
 /* Cluster mode: Disable ALL non-cluster nodes, labels, visuals, cards, hit bridges, vertices, and SVG linework */
@@ -7476,26 +7496,73 @@ body {
   cursor: none !important;
 }
 
-/* Cluster mode: Ensure .cluster-star-visual inside .is-cluster-star stays clickable */
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual * {
+/* Cluster mode: Ensure ONLY .cluster-star-visual .cs-core inside .is-cluster-star stays clickable */
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-core,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-core * {
   pointer-events: auto !important;
   cursor: none !important;
 }
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-caption-block,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-caption-block *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cluster-star-pill,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cluster-star-pill *,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-orbit-ring {
+  pointer-events: none !important;
+}
 
-/* 2. CONSTELLATION MODE: All 12 project nodes, vertices, and badges active */
+/* 2. CONSTELLATION MODE: Strict circular hit-targets (only 66px project circles trigger hover) */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .constellation-node,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .constellation-node *,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .constellation-center,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .constellation-center *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-label,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-label *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-header,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-header *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-title,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-keywords,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-keywords *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-orbit-rig,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-orbit-rig *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-year-capsule,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-year-capsule *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .center-ring {
+  pointer-events: none !important;
+}
+
+/* Default unhovered preview cards & hit bridges MUST NOT capture mouse */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-hover-card,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-hover-card *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-hover-card::before,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-hover-card::after {
+  pointer-events: none !important;
+}
+
+/* Enable pointer events strictly on:
+   - 66px project circle (.node-visual)
+   - 3 corner vertex nodes (.c-corner-node / .c-axis-link)
+   - Central practice core (.center-core)
+   - Relation theme badges (.relation-theme-badge)
+*/
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-visual * {
+  pointer-events: auto !important;
+  cursor: none !important;
+  clip-path: circle(50% at 50% 50%) !important;
+}
+
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-corner-node,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-corner-node *,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-axis-link,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-axis-link *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core *,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge * {
   pointer-events: auto !important;
   cursor: none !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core {
+  clip-path: circle(50% at 50% 50%) !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star,
@@ -7513,8 +7580,16 @@ body {
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card {
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card * {
   z-index: 500 !important;
+  pointer-events: auto !important;
+  cursor: none !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card::before,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card::before {
   pointer-events: auto !important;
 }
 
