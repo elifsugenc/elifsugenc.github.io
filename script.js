@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (projectItem) {
                 customCursor.classList.remove('cursor-hover');
                 customCursor.classList.add('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn, .merope-modal-backdrop')) {
                 customCursor.classList.add('cursor-hover');
             }
         });
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]')) {
                 customCursor.classList.remove('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn, .merope-modal-backdrop')) {
                 customCursor.classList.remove('cursor-hover');
             }
         });

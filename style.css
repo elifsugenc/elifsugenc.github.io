@@ -21,8 +21,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    pointer-events: none; /* So it doesn't block clicks */
-    z-index: 999999;
+    pointer-events: none !important; /* So it doesn't block clicks */
+    z-index: 2147483647 !important; /* Always render on top of every modal and overlay */
     transform: translate(-50%, -50%);
     width: 0;
     height: 0;
@@ -1178,7 +1178,7 @@ a:hover {
 .merope-modal {
     position: fixed;
     inset: 0;
-    z-index: 1000005 !important;
+    z-index: 90000 !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
