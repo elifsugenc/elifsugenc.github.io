@@ -47,28 +47,28 @@
                         <!-- Welcoming Architectural Studio Header -->
                         <div class="hq-header">
                             <div class="hq-header-meta">
-                                <span class="hq-eyebrow">&#x2726; SELECTED INQUIRIES // 05 CURATED WORKS</span>
-                                <span class="hq-header-coords">EST. 2026 &bull; 5-STAR SPATIAL CONSTELLATION &bull; ARCHITECTURAL RESEARCH</span>
+                                <span class="hq-eyebrow">&#x2726; MESSIER 45 // PLEIADES &rarr; ARCHITECTURAL CONSTELLATION</span>
+                                <span class="hq-header-coords">TAURUS &bull; RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY &bull; J2000.0</span>
                             </div>
                             <div class="hq-header-row">
                                 <h2 class="hq-title">CURATED SPATIAL SHOWCASE</h2>
                                 <p class="hq-lead">
-                                    Five foundational investigations configured as an architectural constellation &mdash; examining spatial justice, interspecies street sanctuaries, involuntary cursor palimpsests, material mortality in unbaked soil, and circular biopolymers.
+                                    An astronomical digital observatory configuring five foundational investigations, practice center EG, and the mythological story of the Pleiades (Messier 45)&mdash;smoothly unfolding into the complete 12-project triangular spatial map.
                                 </p>
                             </div>
                             <div class="hq-header-divider"></div>
                         </div>
 
-                        <!-- Architectural View Selector for Constellation vs Cards -->
+                        <!-- Architectural View Selector & State Controls -->
                         <div class="hq-view-controls">
                             <div class="hq-view-tabs">
-                                <button class="hq-view-btn active" data-mode="both" aria-label="Show both constellation asterism and project cards">
+                                <button class="hq-view-btn active" data-mode="both" aria-label="Show both constellation observatory and project cards">
                                     <span class="view-btn-glyph">&#x2726;</span>
-                                    <span class="view-btn-label">CONSTELLATION &amp; CARDS</span>
+                                    <span class="view-btn-label">OBSERVATORY &amp; CARDS</span>
                                 </button>
-                                <button class="hq-view-btn" data-mode="sky" aria-label="Focus on interactive constellation sky asterism">
+                                <button class="hq-view-btn" data-mode="sky" aria-label="Focus on interactive celestial observatory">
                                     <span class="view-btn-glyph">&#x2605;</span>
-                                    <span class="view-btn-label">TAKIM YILDIZI (SKY ASTERISM)</span>
+                                    <span class="view-btn-label">CELESTIAL OBSERVATORY (M45)</span>
                                 </button>
                                 <button class="hq-view-btn" data-mode="cards" aria-label="Focus on architectural photo cards">
                                     <span class="view-btn-glyph">&#x2630;</span>
@@ -76,187 +76,40 @@
                                 </button>
                             </div>
                             <div class="hq-constellation-legend">
-                                <span class="c-legend-item"><span class="c-dot gold"></span> 5 SELECTED STARS</span>
-                                <span class="c-legend-item"><span class="c-line dashed"></span> RELATIONAL VECTORS</span>
+                                <button type="button" class="hq-cluster-toggle-pill" id="hq-cluster-toggle-pill" aria-label="Toggle between Pleiades cluster and all projects constellation">
+                                    <span class="c-toggle-glyph">&#x2726;</span>
+                                    <span class="c-toggle-label">EXPLORE ALL PROJECTS &#x2197;</span>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- 1. TAKIM YILDIZI: 5-STAR INTERACTIVE CELESTIAL ASTERISM STAGE -->
-                        <div class="hq-constellation-sky" id="hq-constellation-sky" aria-label="Interactive 5-star selected works constellation">
-                            <div class="hq-sky-watermark" aria-hidden="true">SELECTED CONSTELLATION &bull; 05 STARS</div>
-                            <div class="hq-sky-compass" aria-hidden="true">
-                                <span class="sky-cp-n">N &bull; CRITICAL INQUIRY</span>
-                                <span class="sky-cp-w">W &bull; CONTEXTUAL RESEARCH</span>
-                                <span class="sky-cp-e">E &bull; EXPERIMENTAL FUTURES</span>
-                                <span class="sky-cp-s">S &bull; MATERIAL REALIZATION</span>
+                        <!-- 1. PLEIADES / M45 -> CONSTELLATION ASTRONOMICAL OBSERVATORY STAGE -->
+                        <div class="hq-constellation-sky pleiades-observatory-stage" id="hq-constellation-sky" data-state="cluster" aria-label="Interactive Pleiades M45 to Constellation Stage">
+                            <!-- Background Universe Atmosphere Layers -->
+                            <div class="pleiades-nebula-layer" aria-hidden="true"></div>
+                            <div class="pleiades-grid-layer" aria-hidden="true"></div>
+                            <div class="pleiades-grain-layer" aria-hidden="true"></div>
+
+                            <!-- Astronomical Coordinate References -->
+                            <div class="pleiades-coord-tag pct-tl" aria-hidden="true">MESSIER 45 // PLEIADES CLUSTER &bull; J2000.0</div>
+                            <div class="pleiades-coord-tag pct-tr" aria-hidden="true">RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY</div>
+                            <div class="pleiades-coord-tag pct-bl" aria-hidden="true">DIGITAL OBSERVATORY &bull; SPATIAL TOPOLOGY</div>
+                            <div class="pleiades-coord-tag pct-br" aria-hidden="true">ALCYONE (&eta; TAURI) &bull; 7 SISTERS ASTERISM</div>
+
+                            <!-- Observatory Top Bar Controls -->
+                            <div class="pleiades-top-bar">
+                                <div class="pleiades-status-pill">
+                                    <span class="psp-dot"></span>
+                                    <span class="psp-text" id="pleiades-status-label">CLUSTER STATE &bull; PLEIADES / M45 (7 STARS)</span>
+                                </div>
+                                <button type="button" class="cluster-transition-btn" id="cluster-transition-btn" aria-label="Toggle between Pleiades cluster and all projects constellation">
+                                    <span class="ctb-icon">&#x2726;</span>
+                                    <span class="ctb-text">EXPLORE ALL PROJECTS &#x2197;</span>
+                                </button>
                             </div>
 
-                            <!-- Background SVG Linework & Relational Curves -->
-                            <svg class="hq-sky-svg" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
-                                <defs>
-                                    <filter id="hq-star-glow" x="-50%" y="-50%" width="200%" height="200%">
-                                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-                                        <feMerge>
-                                            <feMergeNode in="blur" />
-                                            <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                    </filter>
-                                </defs>
-
-                                <!-- Constellation Perimeter Lines (Asterism Contour) -->
-                                <!-- 01 -> 02 -->
-                                <path class="hq-constellation-line" data-from="emek-museum" data-to="stray"
-                                      d="M 180 130 Q 320 90 480 80" vector-effect="non-scaling-stroke" />
-                                <!-- 02 -> 03 -->
-                                <path class="hq-constellation-line" data-from="stray" data-to="you-were-here"
-                                      d="M 480 80 Q 660 90 820 135" vector-effect="non-scaling-stroke" />
-                                <!-- 03 -> 11 -->
-                                <path class="hq-constellation-line" data-from="you-were-here" data-to="bio-decay"
-                                      d="M 820 135 Q 780 240 700 345" vector-effect="non-scaling-stroke" />
-                                <!-- 11 -> 10 -->
-                                <path class="hq-constellation-line" data-from="bio-decay" data-to="the-earthen"
-                                      d="M 700 345 Q 510 365 310 350" vector-effect="non-scaling-stroke" />
-                                <!-- 10 -> 01 -->
-                                <path class="hq-constellation-line" data-from="the-earthen" data-to="emek-museum"
-                                      d="M 310 350 Q 220 240 180 130" vector-effect="non-scaling-stroke" />
-
-                                <!-- Constellation Internal Relational Chords -->
-                                <!-- 02 (STRAY) -> 10 (THE EARTHEN) -->
-                                <path class="hq-constellation-line hq-line-internal" data-from="stray" data-to="the-earthen"
-                                      d="M 480 80 Q 410 220 310 350" vector-effect="non-scaling-stroke" stroke-dasharray="3 4" />
-                                <!-- 01 (EMEK) -> 03 (YOU WERE HERE.) -->
-                                <path class="hq-constellation-line hq-line-internal" data-from="emek-museum" data-to="you-were-here"
-                                      d="M 180 130 Q 500 170 820 135" vector-effect="non-scaling-stroke" stroke-dasharray="3 4" />
-                                <!-- 03 (YOU WERE HERE.) -> 10 (THE EARTHEN) -->
-                                <path class="hq-constellation-line hq-line-internal" data-from="you-were-here" data-to="the-earthen"
-                                      d="M 820 135 Q 560 250 310 350" vector-effect="non-scaling-stroke" stroke-dasharray="2 4" />
-                            </svg>
-
-                            <!-- 5 Interactive Star Nodes positioned in the asterism -->
-                            <!-- STAR 01: EMEK MUSEUM -->
-                            <div class="hq-star-node star-left" data-id="emek-museum" data-num="01" data-title="EMEK MUSEUM" data-medium="Spatial Justice" data-question="How can we make this labour visible again?" style="left: 18%; top: 31%;">
-                                <div class="star-halo-rig">
-                                    <div class="star-orbit-ring ring-spin-slow"></div>
-                                    <div class="star-orbit-ring ring-dashed"></div>
-                                    <div class="star-core">
-                                        <span class="star-symbol">&#x2726;</span>
-                                    </div>
-                                </div>
-                                <div class="star-tag-pill">
-                                    <span class="star-greek">&alpha;</span>
-                                    <span class="star-num">01</span>
-                                    <span class="star-name">EMEK MUSEUM</span>
-                                </div>
-                                <div class="star-floating-card">
-                                    <div class="sfc-top">
-                                        <span class="sfc-num">01 &bull; SPATIAL JUSTICE</span>
-                                        <span class="sfc-year">2027</span>
-                                    </div>
-                                    <div class="sfc-title">EMEK MUSEUM</div>
-                                    <div class="sfc-question">&ldquo;How can we make this labour visible again?&rdquo;</div>
-                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
-                                </div>
-                            </div>
-
-                            <!-- STAR 02: STRAY -->
-                            <div class="hq-star-node star-top" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?" style="left: 48%; top: 19%;">
-                                <div class="star-halo-rig">
-                                    <div class="star-orbit-ring ring-spin-slow"></div>
-                                    <div class="star-orbit-ring ring-dashed"></div>
-                                    <div class="star-core">
-                                        <span class="star-symbol">&#x2726;</span>
-                                    </div>
-                                </div>
-                                <div class="star-tag-pill">
-                                    <span class="star-greek">&beta;</span>
-                                    <span class="star-num">02</span>
-                                    <span class="star-name">STRAY</span>
-                                </div>
-                                <div class="star-floating-card">
-                                    <div class="sfc-top">
-                                        <span class="sfc-num">02 &bull; INSTALLATION</span>
-                                        <span class="sfc-year">2025</span>
-                                    </div>
-                                    <div class="sfc-title">STRAY</div>
-                                    <div class="sfc-question">&ldquo;Is doing nothing doing something?&rdquo;</div>
-                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
-                                </div>
-                            </div>
-
-                            <!-- STAR 03: YOU WERE HERE. -->
-                            <div class="hq-star-node star-right" data-id="you-were-here" data-num="03" data-title="YOU WERE HERE." data-medium="Digital Archive" data-question="What remains of the movements we forget?" style="left: 82%; top: 32%;">
-                                <div class="star-halo-rig">
-                                    <div class="star-orbit-ring ring-spin-slow"></div>
-                                    <div class="star-orbit-ring ring-dashed"></div>
-                                    <div class="star-core">
-                                        <span class="star-symbol">&#x2726;</span>
-                                    </div>
-                                </div>
-                                <div class="star-tag-pill">
-                                    <span class="star-greek">&gamma;</span>
-                                    <span class="star-num">03</span>
-                                    <span class="star-name">YOU WERE HERE.</span>
-                                </div>
-                                <div class="star-floating-card">
-                                    <div class="sfc-top">
-                                        <span class="sfc-num">03 &bull; DIGITAL ARCHIVE</span>
-                                        <span class="sfc-year">2026</span>
-                                    </div>
-                                    <div class="sfc-title">YOU WERE HERE.</div>
-                                    <div class="sfc-question">&ldquo;What remains of the movements we forget?&rdquo;</div>
-                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
-                                </div>
-                            </div>
-
-                            <!-- STAR 10: THE EARTHEN -->
-                            <div class="hq-star-node star-bottom-left" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there death because there is life?" style="left: 31%; top: 82%;">
-                                <div class="star-halo-rig">
-                                    <div class="star-orbit-ring ring-spin-slow"></div>
-                                    <div class="star-orbit-ring ring-dashed"></div>
-                                    <div class="star-core">
-                                        <span class="star-symbol">&#x2726;</span>
-                                    </div>
-                                </div>
-                                <div class="star-tag-pill">
-                                    <span class="star-greek">&delta;</span>
-                                    <span class="star-num">10</span>
-                                    <span class="star-name">THE EARTHEN</span>
-                                </div>
-                                <div class="star-floating-card">
-                                    <div class="sfc-top">
-                                        <span class="sfc-num">10 &bull; SOIL &amp; CLAY</span>
-                                        <span class="sfc-year">2026</span>
-                                    </div>
-                                    <div class="sfc-title">THE EARTHEN</div>
-                                    <div class="sfc-question">&ldquo;Is there death because there is life?&rdquo;</div>
-                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
-                                </div>
-                            </div>
-
-                            <!-- STAR 11: BIO-DECAY -->
-                            <div class="hq-star-node star-bottom-right" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?" style="left: 70%; top: 81%;">
-                                <div class="star-halo-rig">
-                                    <div class="star-orbit-ring ring-spin-slow"></div>
-                                    <div class="star-orbit-ring ring-dashed"></div>
-                                    <div class="star-core">
-                                        <span class="star-symbol">&#x2726;</span>
-                                    </div>
-                                </div>
-                                <div class="star-tag-pill">
-                                    <span class="star-greek">&epsilon;</span>
-                                    <span class="star-num">11</span>
-                                    <span class="star-name">BIO-DECAY</span>
-                                </div>
-                                <div class="star-floating-card">
-                                    <div class="sfc-top">
-                                        <span class="sfc-num">11 &bull; BIO-MATERIALS</span>
-                                        <span class="sfc-year">2025</span>
-                                    </div>
-                                    <div class="sfc-title">BIO-DECAY</div>
-                                    <div class="sfc-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</div>
-                                    <span class="sfc-cta">VIEW PROJECT &rarr;</span>
-                                </div>
-                            </div>
+                            <!-- Dynamic Stage Mount: renderConstellation() mounts here -->
+                            <div id="pleiades-stage-mount" class="pleiades-stage-mount"></div>
                         </div>
 
                         <!-- 2. 5-Card Architectural Photo Grid (Configured as Constellation Elements) -->
@@ -1564,6 +1417,70 @@
                 <div class="modal-text">
                     <p>Here you can dive deep into the details of the project. This is a full in-page preview that maintains the portfolio's architectural directory interface without navigating to a blank page.</p>
                     <p>Further images, texts, and diagrams can be dynamically loaded here in the future.</p>
+                </div>
+            </div>
+        </div>
+    <!-- MEROPE STORY INFORMATIONAL PANEL (MESSIER 45 / THE SEVENTH SISTER) -->
+    <div id="merope-story-modal" class="merope-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="merope-modal-title">
+        <div class="merope-modal-backdrop" id="merope-modal-backdrop"></div>
+        <div class="merope-modal-card">
+            <div class="merope-modal-header">
+                <div class="merope-header-meta">
+                    <span class="merope-tag">&#x2726; MESSIER 45 // PLEIADES CLUSTER</span>
+                    <span class="merope-coords">RA 03h 46m 19.6s &bull; DEC +23&deg; 56&prime; 54&Prime; &bull; 4.14 MAG &bull; TAURUS</span>
+                </div>
+                <button type="button" class="merope-close-btn" id="merope-close-btn" aria-label="Close story panel">[ CLOSE &times; ]</button>
+            </div>
+            <div class="merope-modal-body">
+                <div class="merope-title-block">
+                    <span class="merope-sub">THE SEVENTH SISTER &bull; AN ASTRONOMICAL &amp; SPATIAL ALLEGORY</span>
+                    <h3 class="merope-title" id="merope-modal-title">MEROPE &amp; THE CLUSTER</h3>
+                </div>
+                <div class="merope-sections-grid">
+                    <!-- 01: What is Pleiades / M45 -->
+                    <div class="merope-section">
+                        <span class="merope-sec-num">01</span>
+                        <h4 class="merope-sec-title">MESSIER 45 &bull; THE PLEIADES</h4>
+                        <p class="merope-sec-text">
+                            Messier 45 (the Pleiades) is an open star cluster situated in the constellation Taurus, approximately 444 light-years from Earth. Across cultures and millennia, it has served as an astronomical calendar marker, a maritime navigational anchor, and a poetic symbol of collective assembly bound by mutual gravitation.
+                        </p>
+                    </div>
+                    <!-- 02: Mythology of the Seven Sisters -->
+                    <div class="merope-section">
+                        <span class="merope-sec-num">02</span>
+                        <h4 class="merope-sec-title">THE SEVEN SISTERS</h4>
+                        <p class="merope-sec-text">
+                            In classical mythology, the Pleiades are the seven daughters of the Titan Atlas and the sea-nymph Pleione: Alcyone, Maia, Electra, Taygeta, Celaeno, Asterope, and Merope. Translated into the heavens, they retain their enduring spatial configuration across the night sky.
+                        </p>
+                    </div>
+                    <!-- 03: The Less Visible Seventh Star -->
+                    <div class="merope-section">
+                        <span class="merope-sec-num">03</span>
+                        <h4 class="merope-sec-title">THE LESS VISIBLE SISTER</h4>
+                        <p class="merope-sec-text">
+                            Mythology recounts Merope as the &ldquo;hidden&rdquo; or &ldquo;lost&rdquo; sister&mdash;the only one to bond with a mortal (Sisyphus), turning away or dimming her luminance in shame or grief. In observational astronomy, Merope sits upon the perceptual threshold of naked-eye seeing: an allegory for the quiet, the veiled, and the threshold conditions in spatial practice that often carry the deepest resonance.
+                        </p>
+                    </div>
+                    <!-- 04: Why the Five Works Form a Cluster -->
+                    <div class="merope-section">
+                        <span class="merope-sec-num">04</span>
+                        <h4 class="merope-sec-title">THE CURATED PRACTICE CLUSTER</h4>
+                        <p class="merope-sec-text">
+                            Rather than an undifferentiated linear archive, these five foundational investigations form a curated gravitational core. They converge around questions of invisibility, trace, and ethical responsibility: from non-human street sanctuaries (STRAY) and invisible civic labor (EMEK MUSEUM), to involuntary cursor palimpsests (YOU WERE HERE), unbaked soil mortality (THE EARTHEN), and circular biopolymer futures (BIO-DECAY).
+                        </p>
+                    </div>
+                    <!-- 05: Conceptual Relations -->
+                    <div class="merope-section full-span">
+                        <span class="merope-sec-num">05</span>
+                        <h4 class="merope-sec-title">FROM CLUSTER TO TRIANGULAR CONSTELLATION</h4>
+                        <p class="merope-sec-text">
+                            In the Pleiades cluster state, the seven stars reflect their real celestial arrangement&mdash;anchored by Alcyone (representing Elifsu Gen&ccedil;'s practice) and Merope (the unseen narrative). Expanding the cluster unfolds the stars into the complete twelve-project triangular constellation, mapping every inquiry across Critical Inquiry, Contextual Research, and Experimental Thinking.
+                        </p>
+                    </div>
+                </div>
+                <div class="merope-modal-footer">
+                    <span class="merope-foot-meta">CONFIGURATION: EDITABLE OBSERVATORY METADATA</span>
+                    <button type="button" class="merope-foot-cta" id="merope-explore-cta">EXPLORE FULL CONSTELLATION MAP &rarr;</button>
                 </div>
             </div>
         </div>

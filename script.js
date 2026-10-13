@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add hover effect for clickable elements
         document.addEventListener('mouseover', (e) => {
             // 1. Clickable elements inside Spatial Map (By Spatial Map view)
-            const spatialClickable = e.target.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge');
+            const spatialClickable = e.target.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge, .cluster-star-visual, .merope-star, .cluster-transition-btn, .hq-cluster-toggle-pill');
             if (spatialClickable) {
                 cursorWrapper.classList.add('cursor-spatial');
                 customCursor.classList.remove('cursor-hover', 'cursor-project');
@@ -37,21 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (projectItem) {
                 customCursor.classList.remove('cursor-hover');
                 customCursor.classList.add('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn')) {
                 customCursor.classList.add('cursor-hover');
             }
         });
 
         document.addEventListener('mouseout', (e) => {
             // Check if leaving spatial map clickable element
-            const stillInSpatial = e.relatedTarget && e.relatedTarget.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge');
+            const stillInSpatial = e.relatedTarget && e.relatedTarget.closest('.constellation-map a, .constellation-map button, .constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .constellation-node, .constellation-map .constellation-center, .constellation-map .relation-theme-badge, .cluster-star-visual, .merope-star, .cluster-transition-btn, .hq-cluster-toggle-pill');
             if (!stillInSpatial) {
                 cursorWrapper.classList.remove('cursor-spatial');
             }
 
             if (e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]')) {
                 customCursor.classList.remove('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"]')) {
+            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn')) {
                 customCursor.classList.remove('cursor-hover');
             }
         });
@@ -63,7 +63,152 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectCards = Array.from(document.querySelectorAll('.project-card'));
 
     // =========================================================
-    // INTERACTIVE SPATIAL CONSTELLATION — SELECTED WORKS
+    // PLEIADES / M45 & SPATIAL CONSTELLATION ASTRONOMICAL CONFIG
+    // =========================================================
+    const PLEIADES_CONFIG = {
+        clusterMeta: {
+            name: 'MESSIER 45 // PLEIADES CLUSTER',
+            catalog: 'M45 / NGC 1432',
+            constellation: 'TAURUS (THE BULL)',
+            coordinates: 'RA 03h 47m 24s · DEC +24° 07′ 00″',
+            distance: '444 LIGHT-YEARS (136 PC)',
+            epoch: 'J2000.0'
+        },
+        stars: [
+            {
+                starId: 'alcyone',
+                starName: 'Alcyone',
+                bayer: 'η Tauri',
+                mag: '2.87 mag',
+                targetId: 'eg-center',
+                title: 'ELIFSU GENÇ (EG.)',
+                role: 'Practice Center · Spatial Inquiry',
+                type: 'author',
+                url: '#about',
+                clusterX: 340,
+                clusterY: 443,
+                triangleX: 500,
+                triangleY: 460,
+                description: 'Practice nexus: Architectural research, critical spatial inquiry, and living archives.'
+            },
+            {
+                starId: 'maia',
+                starName: 'Maia',
+                bayer: '20 Tauri',
+                mag: '3.87 mag',
+                targetId: 'emek-museum',
+                projNum: '01',
+                title: 'EMEK MUSEUM',
+                type: 'project',
+                clusterX: 537,
+                clusterY: 330,
+                triangleX: 380,
+                triangleY: 250,
+                description: 'Spatial justice & counter-monument spatializing hidden civic labor.'
+            },
+            {
+                starId: 'electra',
+                starName: 'Electra',
+                bayer: '17 Tauri',
+                mag: '3.72 mag',
+                targetId: 'stray',
+                projNum: '02',
+                title: 'STRAY',
+                type: 'project',
+                clusterX: 651,
+                clusterY: 439,
+                triangleX: 560,
+                triangleY: 160,
+                description: 'Responsive urban feline sanctuary questioning non-human agency and temporal pauses.'
+            },
+            {
+                starId: 'asterope',
+                starName: 'Asterope',
+                bayer: '21 Tauri',
+                mag: '5.76 mag',
+                targetId: 'you-were-here',
+                projNum: '03',
+                title: 'YOU WERE HERE.',
+                type: 'project',
+                clusterX: 528,
+                clusterY: 250,
+                triangleX: 690,
+                triangleY: 380,
+                description: 'Living participatory monument recording involuntary visitor cursor movements.'
+            },
+            {
+                starId: 'taygeta',
+                starName: 'Taygeta',
+                bayer: '19 Tauri',
+                mag: '4.30 mag',
+                targetId: 'the-earthen',
+                projNum: '10',
+                title: 'THE EARTHEN',
+                type: 'project',
+                clusterX: 612,
+                clusterY: 287,
+                triangleX: 605,
+                triangleY: 435,
+                description: 'Unbaked soil burial vessel interrogating material impermanence and memory.'
+            },
+            {
+                starId: 'celaeno',
+                starName: 'Celaeno',
+                bayer: '16 Tauri',
+                mag: '5.45 mag',
+                targetId: 'bio-decay',
+                projNum: '11',
+                title: 'BIO-DECAY',
+                type: 'project',
+                clusterX: 660,
+                clusterY: 364,
+                triangleX: 750,
+                triangleY: 500,
+                description: 'Circular biopolymers confronting petrochemical permanence.'
+            },
+            {
+                starId: 'merope',
+                starName: 'Merope',
+                bayer: '23 Tauri',
+                mag: '4.14 mag',
+                targetId: 'merope-story',
+                title: 'THE HIDDEN SISTER',
+                role: 'Mythological & Practice Narrative',
+                type: 'story',
+                clusterX: 478,
+                clusterY: 510,
+                triangleX: 478,
+                triangleY: 510,
+                subtle: true,
+                description: 'The seventh sister: mythological reflection on invisibility, presence, and relational cosmology.'
+            }
+        ],
+        vertexAssociations: {
+            'critical-inquiry': {
+                name: 'CRITICAL INQUIRY',
+                badge: 'APEX // VERTEX 01',
+                projects: ['emek-museum', 'stray', 'you-were-here', 'fire-escape-simulation']
+            },
+            'contextual-research': {
+                name: 'CONTEXTUAL RESEARCH',
+                badge: 'BASE-LEFT // VERTEX 02',
+                projects: ['chronoclines', 'millieu', 'bajo-la-fresca', 'wood-weave', 'ara-sira']
+            },
+            'experimental-thinking': {
+                name: 'EXPERIMENTAL THINKING',
+                badge: 'BASE-RIGHT // VERTEX 03',
+                projects: ['sprouting-garden', 'the-earthen', 'bio-decay']
+            }
+        }
+    };
+
+    const PLEIADES_STARS_BY_TARGET = {};
+    PLEIADES_CONFIG.stars.forEach(s => {
+        PLEIADES_STARS_BY_TARGET[s.targetId] = s;
+    });
+
+    // =========================================================
+    // INTERACTIVE SPATIAL CONSTELLATION — ALL 12 PROJECTS
     // =========================================================
     const CONSTELLATION_PROJECTS = [
         {
@@ -320,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Selected works for special indicators if needed
+    // Selected works for special indicators
     const SELECTED_TITLES = new Set([
         "THE EARTHEN",
         "EMEK MUSEUM",
@@ -339,15 +484,113 @@ document.addEventListener('DOMContentLoaded', () => {
     ]);
 
     let hasEgIntroPulsed = false;
+    let isTransitioning = false;
 
-    function renderConstellation() {
+    // Transition between Cluster (Pleiades M45) and Constellation (All 12 Projects)
+    function setConstellationState(container, targetState) {
+        if (!container) return;
+        const stage = container.querySelector('.constellation-stage') || container;
+        const current = container.getAttribute('data-state');
+        if (current === targetState || isTransitioning) return;
+
+        isTransitioning = true;
+        const isTargetConstellation = (targetState === 'constellation');
+
+        // Update state attributes on container and stage
+        container.setAttribute('data-state', targetState);
+        stage.setAttribute('data-state', targetState);
+
+        const homeStage = document.getElementById('hq-constellation-sky');
+        if (homeStage) {
+            homeStage.setAttribute('data-state', targetState);
+        }
+
+        // Update all transition button texts and icons
+        document.querySelectorAll('.cluster-transition-btn, #hq-cluster-toggle-pill').forEach(btn => {
+            const icon = btn.querySelector('.ctb-icon, .c-toggle-glyph');
+            const label = btn.querySelector('.ctb-text, .c-toggle-label');
+            if (isTargetConstellation) {
+                if (icon) icon.innerHTML = '&#x2199;';
+                if (label) label.textContent = 'BACK TO CLUSTER ↙';
+            } else {
+                if (icon) icon.innerHTML = '&#x2726;';
+                if (label) label.textContent = 'EXPLORE ALL PROJECTS ↗';
+            }
+        });
+
+        // Update status label
+        const statusLabel = document.getElementById('pleiades-status-label');
+        if (statusLabel) {
+            statusLabel.textContent = isTargetConstellation
+                ? 'CONSTELLATION STATE • ALL 12 PROJECTS'
+                : 'CLUSTER STATE • PLEIADES / M45 (7 STARS)';
+        }
+
+        // 1. Smoothly glide the 5 selected project stars
+        const stageWidth = 1000;
+        const stageHeight = 750;
+
+        container.querySelectorAll('.constellation-node.is-cluster-star').forEach(node => {
+            const targetX = isTargetConstellation
+                ? parseFloat(node.getAttribute('data-triangle-x'))
+                : parseFloat(node.getAttribute('data-cluster-x'));
+            const targetY = isTargetConstellation
+                ? parseFloat(node.getAttribute('data-triangle-y'))
+                : parseFloat(node.getAttribute('data-cluster-y'));
+
+            node.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
+            node.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
+        });
+
+        // 2. Smoothly glide Alcyone / EG Center
+        const centerBtn = container.querySelector('#constellation-center-btn');
+        if (centerBtn) {
+            const targetX = isTargetConstellation
+                ? parseFloat(centerBtn.getAttribute('data-triangle-x'))
+                : parseFloat(centerBtn.getAttribute('data-cluster-x'));
+            const targetY = isTargetConstellation
+                ? parseFloat(centerBtn.getAttribute('data-triangle-y'))
+                : parseFloat(centerBtn.getAttribute('data-cluster-y'));
+
+            centerBtn.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
+            centerBtn.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
+        }
+
+        // Unlock after transition duration (1500ms)
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 1500);
+    }
+
+    function toggleConstellationState(container) {
+        if (!container) return;
+        const current = container.getAttribute('data-state') || 'cluster';
+        const target = (current === 'cluster') ? 'constellation' : 'cluster';
+        setConstellationState(container, target);
+    }
+
+    window.togglePortfolioConstellationState = function() {
+        const homeSky = document.getElementById('hq-constellation-sky');
+        if (homeSky) {
+            const mapEl = homeSky.querySelector('.constellation-map');
+            if (mapEl) toggleConstellationState(mapEl);
+        }
+    };
+
+    function renderConstellation(targetContainer = projectsWrapper, initialState = 'constellation') {
+        if (!targetContainer) return null;
+        targetContainer.innerHTML = '';
+
         const stageWidth = 1000;
         const stageHeight = 750;
         const centerX = 500;
         const centerY = 460;
 
+        const isClusterInitial = (initialState === 'cluster');
+
         const container = document.createElement('div');
         container.className = 'constellation-map';
+        container.setAttribute('data-state', initialState);
 
         // Pre-build index of relations per project
         const relationsByProj = {};
@@ -368,7 +611,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const my = (centerY + p.y) / 2;
             const nx = -dy / len;
             const ny = dx / len;
-            // Subtle architectural curve tangent
             let cx = mx + nx * 20;
             let cy = my + ny * 20;
             if (p.id === 'chronoclines') {
@@ -405,13 +647,21 @@ document.addEventListener('DOMContentLoaded', () => {
         let nodesHtml = '';
 
         CONSTELLATION_PROJECTS.forEach((p, idx) => {
-            const leftPct = (p.x / stageWidth * 100).toFixed(2);
-            const topPct = (p.y / stageHeight * 100).toFixed(2);
+            const pleiadesStar = PLEIADES_STARS_BY_TARGET[p.id];
+            const isClusterStar = !!pleiadesStar;
+            const isSelected = SELECTED_PROJECT_IDS.has(p.id) || SELECTED_TITLES.has(p.title);
+            const selectedClass = isSelected ? 'is-selected-work' : '';
+            const clusterClass = isClusterStar ? 'is-cluster-star' : '';
+
+            // Initial coordinates based on state
+            const initX = (isClusterInitial && isClusterStar) ? pleiadesStar.clusterX : p.x;
+            const initY = (isClusterInitial && isClusterStar) ? pleiadesStar.clusterY : p.y;
+            const leftPct = (initX / stageWidth * 100).toFixed(2);
+            const topPct = (initY / stageHeight * 100).toFixed(2);
+
             const keywordsHtml = p.keywords.join(' &middot; ');
             const keywordsUpper = p.keywords.join(' · ').toUpperCase();
             const cardSideClass = p.cardDir || ((p.x > 700) ? 'card-left' : 'card-right');
-            const isSelected = SELECTED_PROJECT_IDS.has(p.id) || SELECTED_TITLES.has(p.title);
-            const selectedClass = isSelected ? 'is-selected-work' : '';
 
             const numLabelHtml = isSelected
                 ? `<span class="node-star-badge" title="Selected Work ${p.num}">
@@ -426,29 +676,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? `<span class="card-star-badge">★</span> ${p.num} &mdash; ${p.title}`
                 : `${p.num} &mdash; ${p.title}`;
 
+            // Cluster star visual markup (if part of Pleiades M45)
+            // Cluster star visual markup (if part of Pleiades M45)
+            let clusterStarVisualHtml = '';
+            if (isClusterStar) {
+                clusterStarVisualHtml = `
+                    <div class="cluster-star-visual" data-star-id="${pleiadesStar.starId}">
+                        <div class="cs-orbit-ring ring-spin-slow"></div>
+                        <div class="cs-orbit-ring ring-dashed"></div>
+                        <div class="cs-core">
+                            <span class="cs-symbol">&#x2726;</span>
+                        </div>
+                        <span class="cs-caption">${pleiadesStar.starName}</span>
+                        <div class="cluster-star-pill">
+                            <div class="csp-star">${pleiadesStar.starName} <span class="csp-bayer">&bull; ${pleiadesStar.bayer}</span></div>
+                            <div class="csp-title">${p.num} ${p.title}</div>
+                            <div class="csp-meta">${pleiadesStar.mag} &bull; ${p.medium}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
             nodesHtml += `
-                <div class="constellation-node node-${p.labelPos} ${cardSideClass} ${selectedClass}" data-id="${p.id}" data-idx="${idx}"
+                <div class="constellation-node node-${p.labelPos} ${cardSideClass} ${selectedClass} ${clusterClass}" data-id="${p.id}" data-idx="${idx}"
                      data-num="${p.num}" data-title="${p.title}" data-question="${p.question}"
                      data-medium="${p.medium}" data-year="${p.year}" data-url="${p.url}"
+                     data-cluster-x="${isClusterStar ? pleiadesStar.clusterX : p.x}"
+                     data-cluster-y="${isClusterStar ? pleiadesStar.clusterY : p.y}"
+                     data-triangle-x="${p.x}"
+                     data-triangle-y="${p.y}"
                      style="left: ${leftPct}%; top: ${topPct}%; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s;">
 
-                    <!-- 1. Animated Orbital Constellation Rig (Dashed & Satellite Guides) -->
+                    ${clusterStarVisualHtml}
+
+                    <!-- 1. Animated Orbital Constellation Rig -->
                     <div class="node-orbit-rig" aria-hidden="true">
                         <div class="orbit-circle orbit-ring-inner"></div>
                         <div class="orbit-circle orbit-ring-dashed"></div>
                         <div class="orbit-circle orbit-ring-outer">
-                            <div class="orbit-sat sat-year-anchor">
-                                <span class="sat-point"></span>
-                            </div>
-                            <div class="orbit-sat sat-card-beacon">
-                                <span class="sat-point sat-glow"></span>
-                            </div>
-                            <div class="orbit-sat sat-bottom">
-                                <span class="sat-point"></span>
-                            </div>
-                            <div class="orbit-sat sat-top-tick">
-                                <span class="sat-point sat-tiny"></span>
-                            </div>
+                            <div class="orbit-sat sat-year-anchor"><span class="sat-point"></span></div>
+                            <div class="orbit-sat sat-card-beacon"><span class="sat-point sat-glow"></span></div>
+                            <div class="orbit-sat sat-bottom"><span class="sat-point"></span></div>
+                            <div class="orbit-sat sat-top-tick"><span class="sat-point sat-tiny"></span></div>
                         </div>
                     </div>
 
@@ -493,22 +762,52 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
+        // 4. Merope (The 7th Sister) Star element
+        const meropeConfig = PLEIADES_STARS_BY_TARGET['merope-story'];
+        const meropeLeftPct = (meropeConfig.clusterX / stageWidth * 100).toFixed(2);
+        const meropeTopPct = (meropeConfig.clusterY / stageHeight * 100).toFixed(2);
+        const meropeHtml = `
+            <div class="merope-star" id="merope-star-node" data-id="merope"
+                 style="left: ${meropeLeftPct}%; top: ${meropeTopPct}%;"
+                 tabindex="0"
+                 role="button"
+                 aria-label="Merope: The Seventh Sister Story"
+                 title="Merope: The Hidden Sister — Click to read story">
+                <div class="cs-orbit-ring ring-dashed" style="width: 36px; height: 36px;"></div>
+                <div class="cs-core">
+                    <span class="cs-symbol">&#x2726;</span>
+                </div>
+                <span class="cs-caption">Merope</span>
+                <div class="cluster-star-pill">
+                    <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
+                    <div class="csp-title">THE HIDDEN SISTER</div>
+                    <div class="csp-meta">4.14 mag &bull; Click to read the narrative panel &rarr;</div>
+                </div>
+            </div>
+        `;
+
+        // 5. Alcyone / EG Center coordinates based on state
+        const alcyoneConfig = PLEIADES_STARS_BY_TARGET['eg-center'];
+        const egInitX = isClusterInitial ? alcyoneConfig.clusterX : alcyoneConfig.triangleX;
+        const egInitY = isClusterInitial ? alcyoneConfig.clusterY : alcyoneConfig.triangleY;
+        const egLeftPct = (egInitX / stageWidth * 100).toFixed(2);
+        const egTopPct = (egInitY / stageHeight * 100).toFixed(2);
+
         container.innerHTML = `
-            <div class="constellation-stage">
-                <!-- Faint Architectural Background Watermark ("ASK A QUESTION") -->
+            <div class="constellation-stage" id="constellation-stage-core">
+                <!-- Faint Architectural Background Watermark -->
                 <div id="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
 
-                <!-- SVG Layer: Architectural Grid, Concentric Guides & Curves -->
+                <!-- SVG Layer: Outer Ternary Frame, 3 Axes, Curves -->
                 <svg class="constellation-svg" viewBox="0 0 ${stageWidth} ${stageHeight}" preserveAspectRatio="none">
-                    <!-- Ambient Glow Layer (Zero-lag GPU-rendered ambient strokes that illuminate on hover) -->
+                    <!-- Ambient Glow Layer -->
                     <polygon class="c-ternary-frame-glow" points="500,60 115,695 885,695" fill="none" vector-effect="non-scaling-stroke"/>
                     <line class="c-ternary-axis-glow" x1="500" y1="60" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
                     <line class="c-ternary-axis-glow" x1="115" y1="695" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
                     <line class="c-ternary-axis-glow" x1="885" y1="695" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
 
-                    <!-- Equilateral Ternary Outer Frame & 3 Corner-to-Center Lines (Axes) -->
+                    <!-- Equilateral Ternary Outer Frame & 3 Axes -->
                     <polygon class="c-ternary-frame" points="500,60 115,695 885,695" fill="none" vector-effect="non-scaling-stroke"/>
-
                     <line class="c-ternary-axis" x1="500" y1="60" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
                     <line class="c-ternary-axis" x1="115" y1="695" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
                     <line class="c-ternary-axis" x1="885" y1="695" x2="500" y2="460" vector-effect="non-scaling-stroke"/>
@@ -516,29 +815,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Secondary Conceptual Curves -->
                     ${secondarySvgPaths}
 
-                    <!-- Selected 5-Star Constellation Asterism Polygon -->
-                    <polygon class="c-selected-asterism-polygon" points="380,250 560,160 690,380 750,500 605,435"
-                             vector-effect="non-scaling-stroke" />
-
-                    <!-- Primary Radial Connectors from EG. -->
+                    <!-- Primary Radial Connectors from EG -->
                     ${radialSvgPaths}
                 </svg>
 
-                <!-- Conceptual Relationship Theme Badges (HTML layer prevents SVG non-uniform aspect distortion) -->
+                <!-- Conceptual Relationship Theme Badges -->
                 ${relationLabelsHtml}
 
-                <!-- Central EG. Element (Practice Center -> About, Equidistant to 3 Corners) -->
-                <a href="#about" class="constellation-center" id="constellation-center-btn" style="left: ${(centerX / stageWidth * 100).toFixed(2)}%; top: ${(centerY / stageHeight * 100).toFixed(2)}%;" title="About Elifsu Genç">
+                <!-- Central EG. Element (Alcyone / Practice Center) -->
+                <a href="#about" class="constellation-center" id="constellation-center-btn"
+                   data-cluster-x="${alcyoneConfig.clusterX}"
+                   data-cluster-y="${alcyoneConfig.clusterY}"
+                   data-triangle-x="${alcyoneConfig.triangleX}"
+                   data-triangle-y="${alcyoneConfig.triangleY}"
+                   style="left: ${egLeftPct}%; top: ${egTopPct}%;" title="Alcyone · About Elifsu Genç">
                     <div class="center-ring ring-outer"></div>
                     <div class="center-ring ring-mid"></div>
                     <div class="center-core">
                         <span class="center-eg">EG.</span>
                         <span class="center-sub">PRACTICE</span>
                     </div>
+                    <span class="cs-caption">Alcyone</span>
+                    <div class="cluster-star-pill">
+                        <div class="csp-star">${alcyoneConfig.starName} <span class="csp-bayer">&bull; ${alcyoneConfig.bayer}</span></div>
+                        <div class="csp-title">${alcyoneConfig.title}</div>
+                        <div class="csp-meta">${alcyoneConfig.mag} &bull; Practice Center &bull; Explore About &rarr;</div>
+                    </div>
                 </a>
 
-                <!-- 3 Clickable Sector Corner Theme Circles (HTML layer ensures 100% true circular geometry, preventing ellipse distortion) -->
-                <a href="#design-approach" class="c-axis-link c-corner-node" data-tab="design-approach" aria-label="Methodology: Critical Inquiry" style="left: 50.00%; top: 8.00%;">
+                <!-- 3 Sector Corner Nodes (Vertices with Hover Emphasis) -->
+                <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="critical-inquiry" data-tab="design-approach" aria-label="Methodology: Critical Inquiry" style="left: 50.00%; top: 8.00%;">
                     <div class="c-corner-ring-outer"></div>
                     <div class="c-corner-disc">
                         <span class="c-corner-text">CRITICAL</span>
@@ -546,7 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </a>
 
-                <a href="#design-approach" class="c-axis-link c-corner-node" data-tab="design-approach" aria-label="Methodology: Contextual Research" style="left: 11.50%; top: 92.67%;">
+                <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="contextual-research" data-tab="design-approach" aria-label="Methodology: Contextual Research" style="left: 11.50%; top: 92.67%;">
                     <div class="c-corner-ring-outer"></div>
                     <div class="c-corner-disc">
                         <span class="c-corner-text">CONTEXTUAL</span>
@@ -554,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </a>
 
-                <a href="#design-approach" class="c-axis-link c-corner-node" data-tab="design-approach" aria-label="Methodology: Experimental Thinking" style="left: 88.50%; top: 92.67%;">
+                <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="experimental-thinking" data-tab="design-approach" aria-label="Methodology: Experimental Thinking" style="left: 88.50%; top: 92.67%;">
                     <div class="c-corner-ring-outer"></div>
                     <div class="c-corner-disc">
                         <span class="c-corner-text">EXPERIMENTAL</span>
@@ -562,50 +868,64 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </a>
 
+                <!-- Merope 7th Sister Star -->
+                ${meropeHtml}
+
                 <!-- 12 Spatial Project Nodes -->
                 ${nodesHtml}
             </div>
         `;
 
-        projectsWrapper.appendChild(container);
+        targetContainer.appendChild(container);
 
-        // Keep the full cards in the DOM (hidden) so the project modal can read their data
-        const hidden = document.createElement('div');
-        hidden.className = 'projects-grid';
-        hidden.style.display = 'none';
-        projectCards.forEach(card => hidden.appendChild(card));
-        projectsWrapper.appendChild(hidden);
+        if (targetContainer === projectsWrapper) {
+            // Keep the full cards in the DOM (hidden) so the project modal can read their data
+            const hidden = document.createElement('div');
+            hidden.className = 'projects-grid';
+            hidden.style.display = 'none';
+            projectCards.forEach(card => hidden.appendChild(card));
+            targetContainer.appendChild(hidden);
+        }
 
-        // --- Interaction Logic ---
+        // --- Interaction Logic on Container ---
         const allNodes = container.querySelectorAll('.constellation-node');
         const allRadialLines = container.querySelectorAll('.radial-line');
         const allSecondaryLines = container.querySelectorAll('.secondary-line');
         const allRelationBadges = container.querySelectorAll('.relation-theme-badge');
         const centerBtn = container.querySelector('#constellation-center-btn');
         const axisLinks = container.querySelectorAll('.c-axis-link');
+        const meropeStar = container.querySelector('#merope-star-node');
 
         function resetConstellation() {
-            container.classList.remove('has-hover', 'is-center-hovered', 'eg-intro-pulsing');
+            container.classList.remove('has-hover', 'is-center-hovered', 'eg-intro-pulsing', 'is-vertex-hovered');
             allNodes.forEach(node => {
-                node.classList.remove('is-hovered', 'is-dimmed', 'is-related');
+                node.classList.remove('is-hovered', 'is-dimmed', 'is-related', 'is-vertex-emphasized');
             });
             allRadialLines.forEach(line => line.classList.remove('active'));
             allSecondaryLines.forEach(line => line.classList.remove('active'));
             allRelationBadges.forEach(badge => badge.classList.remove('active'));
+
+            const inquiryDisplay = document.getElementById('home-inquiry-display');
+            if (inquiryDisplay) {
+                inquiryDisplay.innerHTML = '&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;';
+            }
+            document.querySelectorAll('.hq-card').forEach(c => c.classList.remove('is-constellation-highlight'));
         }
 
-        // Center EG. click: Navigate to About; hover: illuminate ternary map & lines (high-performance)
+        // Center EG. click: Navigate to About
         if (centerBtn) {
             centerBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 switchTab('about');
             });
             centerBtn.addEventListener('mouseenter', () => {
-                container.classList.remove('eg-intro-pulsing');
-                if (container.classList.contains('has-hover')) {
-                    resetConstellation();
+                if (container.getAttribute('data-state') === 'constellation') {
+                    container.classList.remove('eg-intro-pulsing');
+                    if (container.classList.contains('has-hover')) {
+                        resetConstellation();
+                    }
+                    container.classList.add('is-center-hovered');
                 }
-                container.classList.add('is-center-hovered');
             });
             centerBtn.addEventListener('mouseleave', () => {
                 container.classList.remove('is-center-hovered');
@@ -620,9 +940,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // SECTION 06: Vertex Hover Emphasis Behavior
+        axisLinks.forEach(corner => {
+            const vKey = corner.getAttribute('data-vertex-key');
+            const assoc = PLEIADES_CONFIG.vertexAssociations[vKey];
+            if (!assoc) return;
+
+            corner.addEventListener('mouseenter', () => {
+                if (container.getAttribute('data-state') !== 'constellation') return;
+                container.classList.add('is-vertex-hovered');
+                const assocSet = new Set(assoc.projects);
+
+                allNodes.forEach(node => {
+                    const id = node.getAttribute('data-id');
+                    if (assocSet.has(id)) {
+                        node.classList.add('is-vertex-emphasized');
+                        node.classList.remove('is-dimmed');
+                    } else {
+                        node.classList.add('is-dimmed');
+                        node.classList.remove('is-vertex-emphasized');
+                    }
+                });
+            });
+
+            corner.addEventListener('mouseleave', () => {
+                container.classList.remove('is-vertex-hovered');
+                allNodes.forEach(node => {
+                    node.classList.remove('is-vertex-emphasized', 'is-dimmed');
+                });
+            });
+        });
+
+        // Merope Click -> Open Merope Story Modal
+        if (meropeStar) {
+            meropeStar.addEventListener('click', (e) => {
+                e.preventDefault();
+                openMeropeStoryModal();
+            });
+        }
+
         // Node hover & click interactions
         allNodes.forEach(node => {
             const projId = node.getAttribute('data-id');
+            const projTitle = node.getAttribute('data-title');
+            const projQuestion = node.getAttribute('data-question');
+            const projMedium = node.getAttribute('data-medium') || '';
             const radialLine = container.querySelector(`.radial-line[data-id="${projId}"]`);
             const relations = relationsByProj[projId] || [];
 
@@ -630,28 +992,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.classList.remove('eg-intro-pulsing');
                 container.classList.add('has-hover');
 
-                // 1. Highlight this node & radial line to EG.
+                // 1. Highlight this node & radial line
                 node.classList.add('is-hovered');
-                if (radialLine) radialLine.classList.add('active');
+                if (radialLine && container.getAttribute('data-state') === 'constellation') {
+                    radialLine.classList.add('active');
+                }
 
                 // 2. Dim other nodes
                 allNodes.forEach(other => {
                     if (other !== node) other.classList.add('is-dimmed');
                 });
 
-                // 3. Highlight connected relation lines & related nodes
-                relations.forEach(rel => {
-                    const secLine = container.querySelector(`.secondary-line[data-ridx="${rel.rIdx}"]`);
-                    const secBadge = container.querySelector(`.relation-theme-badge[data-ridx="${rel.rIdx}"]`);
-                    const relatedNode = container.querySelector(`.constellation-node[data-id="${rel.otherId}"]`);
+                // 3. Highlight connected relations in constellation state
+                if (container.getAttribute('data-state') === 'constellation') {
+                    relations.forEach(rel => {
+                        const secLine = container.querySelector(`.secondary-line[data-ridx="${rel.rIdx}"]`);
+                        const secBadge = container.querySelector(`.relation-theme-badge[data-ridx="${rel.rIdx}"]`);
+                        const relatedNode = container.querySelector(`.constellation-node[data-id="${rel.otherId}"]`);
 
-                    if (secLine) secLine.classList.add('active');
-                    if (secBadge) secBadge.classList.add('active');
-                    if (relatedNode) {
-                        relatedNode.classList.remove('is-dimmed');
-                        relatedNode.classList.add('is-related');
-                    }
-                });
+                        if (secLine) secLine.classList.add('active');
+                        if (secBadge) secBadge.classList.add('active');
+                        if (relatedNode) {
+                            relatedNode.classList.remove('is-dimmed');
+                            relatedNode.classList.add('is-related');
+                        }
+                    });
+                }
+
+                // 4. Update inquiry bar display & highlight card in #hq-grid
+                const inquiryDisplay = document.getElementById('home-inquiry-display');
+                if (inquiryDisplay) {
+                    inquiryDisplay.innerHTML = projQuestion ? 
+                        `&ldquo;${projQuestion}&rdquo; &bull; <span style="color: var(--accent-color); font-weight: 700; font-family: monospace;">[${projTitle}${projMedium ? ' // ' + projMedium : ''}]</span>` : 
+                        projTitle;
+                }
+                const correspondingCard = document.querySelector(`.hq-card[data-id="${projId}"]`);
+                if (correspondingCard) {
+                    correspondingCard.classList.add('is-constellation-highlight');
+                }
             });
 
             node.addEventListener('mouseleave', (e) => {
@@ -659,20 +1037,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetConstellation();
             });
 
-            // Make clicking anywhere on the card also open the project modal
-            const hoverCard = node.querySelector('.node-hover-card');
-            if (hoverCard) {
-                hoverCard.addEventListener('click', (e) => {
-                    if (!e.target.closest('.card-action-btn')) {
-                        const link = node.querySelector('.card-action-btn');
-                        if (link) link.click();
-                    }
-                });
-            }
+            // Card or node click -> open project preview modal
+            node.addEventListener('click', (e) => {
+                // If clicking an explicit dedicated link, let default handle it
+                if (e.target.closest('.card-btn-dedicated')) return;
+                e.preventDefault();
+                if (typeof window.openProjectModalBySlug === 'function') {
+                    window.openProjectModalBySlug(projId);
+                }
+            });
         });
 
-        // Initial gentle 3x pulse of EG center & lines on first entrance
-        if (!hasEgIntroPulsed) {
+        // Initial gentle pulse on first entrance if in constellation view
+        if (!hasEgIntroPulsed && !isClusterInitial) {
             hasEgIntroPulsed = true;
             setTimeout(() => {
                 if (container && !container.classList.contains('has-hover') && !container.classList.contains('is-center-hovered')) {
@@ -683,12 +1060,92 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, 600);
         }
+
+        return container;
     }
 
-    // Initial render of the map view
+    // Merope Story Modal Open & Close Functions
+    function openMeropeStoryModal() {
+        const modal = document.getElementById('merope-story-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeMeropeStoryModal() {
+        const modal = document.getElementById('merope-story-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    const meropeCloseBtn = document.getElementById('merope-close-btn');
+    if (meropeCloseBtn) meropeCloseBtn.addEventListener('click', closeMeropeStoryModal);
+
+    const meropeBackdrop = document.getElementById('merope-modal-backdrop');
+    if (meropeBackdrop) meropeBackdrop.addEventListener('click', closeMeropeStoryModal);
+
+    const meropeExploreCta = document.getElementById('merope-explore-cta');
+    if (meropeExploreCta) {
+        meropeExploreCta.addEventListener('click', () => {
+            closeMeropeStoryModal();
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl) setConstellationState(mapEl, 'constellation');
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('merope-story-modal');
+            if (modal && !modal.classList.contains('hidden')) {
+                closeMeropeStoryModal();
+            }
+        }
+    });
+
+    // Wire up Transition Affordance Buttons
+    const homeTransitionBtn = document.getElementById('cluster-transition-btn');
+    const homeTogglePill = document.getElementById('hq-cluster-toggle-pill');
+    const homeBottomCta = document.getElementById('hq-explore-bottom-cta');
+
+    function handleStageToggleClick(e) {
+        if (e) e.preventDefault();
+        const homeSky = document.getElementById('hq-constellation-sky');
+        if (homeSky) {
+            const mapEl = homeSky.querySelector('.constellation-map');
+            if (mapEl) toggleConstellationState(mapEl);
+        }
+    }
+
+    if (homeTransitionBtn) homeTransitionBtn.addEventListener('click', handleStageToggleClick);
+    if (homeTogglePill) homeTogglePill.addEventListener('click', handleStageToggleClick);
+    if (homeBottomCta) {
+        homeBottomCta.addEventListener('click', (e) => {
+            e.preventDefault();
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl) setConstellationState(mapEl, 'constellation');
+                homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+
+    // Mount Pleiades Observatory Stage in #tab-main (Cluster View on Entry)
+    const pleiadesMount = document.getElementById('pleiades-stage-mount');
+    if (pleiadesMount) {
+        renderConstellation(pleiadesMount, 'cluster');
+    }
+
+    // Initial render of the directory map view in #tab-projects
     if (projectsWrapper && projectsWrapper.getAttribute('data-view') === 'map') {
         projectsWrapper.innerHTML = '';
-        renderConstellation();
+        renderConstellation(projectsWrapper, 'constellation');
     }
 
     if (filterBtns.length > 0 && projectsWrapper) {
@@ -1058,8 +1515,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to highlight a project across star node, lines, and cards
     function highlightConstellationProject(id, title, question, medium) {
-        // 1. Highlight star node
-        starNodes.forEach(node => {
+        // 1. Highlight star nodes in both observatory stage and legacy nodes
+        const allNodes = document.querySelectorAll('.hq-star-node, .constellation-node');
+        allNodes.forEach(node => {
             if (node.getAttribute('data-id') === id) {
                 node.classList.add('is-hovered');
             } else {
@@ -1068,7 +1526,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 2. Highlight connected constellation lines
-        constellationLines.forEach(line => {
+        const allLines = document.querySelectorAll('.hq-constellation-line, .rel-line');
+        allLines.forEach(line => {
             const from = line.getAttribute('data-from');
             const to = line.getAttribute('data-to');
             if (from === id || to === id) {
@@ -1099,8 +1558,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetConstellationHighlight() {
-        starNodes.forEach(n => n.classList.remove('is-hovered'));
-        constellationLines.forEach(l => l.classList.remove('is-active-line'));
+        document.querySelectorAll('.hq-star-node, .constellation-node').forEach(n => n.classList.remove('is-hovered'));
+        document.querySelectorAll('.hq-constellation-line, .rel-line').forEach(l => l.classList.remove('is-active-line'));
         quadCards.forEach(c => c.classList.remove('is-constellation-highlight'));
         if (inquiryDisplay) {
             inquiryDisplay.innerHTML = defaultInquiry;
