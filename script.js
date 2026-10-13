@@ -543,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 2. Smoothly glide Alcyone / EG Center
-        const centerBtn = container.querySelector('[id="constellation-center-btn"]');
+        const centerBtn = container.querySelector('#constellation-center-btn');
         if (centerBtn) {
             const targetX = isTargetConstellation
                 ? parseFloat(centerBtn.getAttribute('data-triangle-x'))
@@ -794,9 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const egTopPct = (egInitY / stageHeight * 100).toFixed(2);
 
         container.innerHTML = `
-            <div class="constellation-stage" class="constellation-stage-core">
+            <div class="constellation-stage" id="constellation-stage-core">
                 <!-- Faint Architectural Background Watermark -->
-                <div class="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
+                <div id="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
 
                 <!-- SVG Layer: Outer Ternary Frame, 3 Axes, Curves -->
                 <svg class="constellation-svg" viewBox="0 0 ${stageWidth} ${stageHeight}" preserveAspectRatio="none">
@@ -892,9 +892,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const allRadialLines = container.querySelectorAll('.radial-line');
         const allSecondaryLines = container.querySelectorAll('.secondary-line');
         const allRelationBadges = container.querySelectorAll('.relation-theme-badge');
-        const centerBtn = container.querySelector('[id="constellation-center-btn"]');
+        const centerBtn = container.querySelector('#constellation-center-btn');
         const axisLinks = container.querySelectorAll('.c-axis-link');
-        const meropeStar = container.querySelector('[id="merope-star-node"]');
+        const meropeStar = container.querySelector('#merope-star-node');
 
         function resetConstellation() {
             container.classList.remove('has-hover', 'is-center-hovered', 'eg-intro-pulsing', 'is-vertex-hovered');
@@ -1136,28 +1136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Delayed cursor-following blue nebula: atmosphere only, never project/star positions.
-    const atmosphericStage = document.getElementById('hq-constellation-sky');
-    if (atmosphericStage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        let nebulaFrame = 0;
-        atmosphericStage.addEventListener('pointermove', (event) => {
-            if (event.pointerType === 'touch') return;
-            if (nebulaFrame) return;
-            nebulaFrame = requestAnimationFrame(() => {
-                nebulaFrame = 0;
-                const bounds = atmosphericStage.getBoundingClientRect();
-                const x = ((event.clientX - bounds.left) / bounds.width - .5) * 55;
-                const y = ((event.clientY - bounds.top) / bounds.height - .5) * 42;
-                atmosphericStage.style.setProperty('--nebula-x', x.toFixed(1) + 'px');
-                atmosphericStage.style.setProperty('--nebula-y', y.toFixed(1) + 'px');
-            });
-        }, { passive: true });
-        atmosphericStage.addEventListener('pointerleave', () => {
-            atmosphericStage.style.setProperty('--nebula-x', '0px');
-            atmosphericStage.style.setProperty('--nebula-y', '0px');
-        });
-    }
-
     // Mount Pleiades Observatory Stage in #tab-main (Cluster View on Entry)
     const pleiadesMount = document.getElementById('pleiades-stage-mount');
     if (pleiadesMount) {
@@ -1179,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const showType = btn.getAttribute('data-show');
                 
                 // The faint architectural watermark is only rendered in Spatial Map view (inside constellation-stage)
-                const watermark = projectsWrapper.querySelector('.projects-watermark');
+                const watermark = document.getElementById('projects-watermark');
                 if (watermark) {
                     watermark.style.display = (showType === 'map') ? '' : 'none';
                 }
