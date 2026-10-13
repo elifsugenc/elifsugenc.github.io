@@ -7590,6 +7590,7 @@ body {
   opacity: 1 !important;
   filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.85)) !important;
   pointer-events: auto !important;
+  transition-delay: 0s !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
@@ -7600,7 +7601,8 @@ body {
   box-shadow: 0 0 28px rgba(56, 189, 248, 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
   opacity: 1 !important;
   z-index: 100 !important;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+  transition-delay: 0s !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .visual-img,
@@ -7608,14 +7610,16 @@ body {
   filter: grayscale(0%) contrast(1.1) brightness(1.04) !important;
   transform: scale(1.05) !important;
   opacity: 1 !important;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease, opacity 0.4s ease !important;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s ease, opacity 0.3s ease !important;
+  transition-delay: 0s !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-orbit-rig,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-orbit-rig {
   opacity: 1 !important;
   transform: scale(1.18) rotate(0deg) !important;
-  transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition-delay: 0s !important;
 }
 
 /* 2. HOVERED PREVIEW CARD */
@@ -7626,11 +7630,66 @@ body {
   z-index: 500 !important;
   pointer-events: auto !important;
   cursor: none !important;
+  transition-delay: 0s !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-hover-card::before,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card::before {
   pointer-events: auto !important;
+}
+
+/* STEADY CONSTELLATION MODE (POST-ENTRANCE): ZERO TRANSITION DELAYS FOR INSTANT, SNAPPY HOVER RECOVERY */
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node,
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node *,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node * {
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-visual,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-visual {
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              opacity 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .visual-img,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .visual-img {
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+              filter 0.3s ease,
+              opacity 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-orbit-rig,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-orbit-rig {
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-label,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-label {
+  transition: opacity 0.3s ease,
+              transform 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node,
+#tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node {
+  transition: opacity 0.3s ease,
+              filter 0.3s ease,
+              transform 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .secondary-line,
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .radial-line,
+#tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .relation-theme-badge {
+  transition: opacity 0.3s ease, stroke-width 0.3s ease, transform 0.3s ease !important;
+  transition-delay: 0s !important;
 }
 
 /* 3. CONNECTED / RELATED PROJECT NODES (STAY BRIGHT & HIGHLIGHTED) */

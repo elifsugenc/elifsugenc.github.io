@@ -523,6 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasEgIntroPulsed = false;
     let isTransitioning = false;
     let cornersPulseTimeout = null;
+    let morphingEntranceTimeout = null;
 
     // Transition between Cluster (Pleiades M45) and Constellation (All 12 Projects)
     function setConstellationState(container, targetState) {
@@ -533,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         isTransitioning = true;
         const isTargetConstellation = (targetState === 'constellation');
+        const homeStage = document.getElementById('hq-constellation-sky');
 
         // Manage 3-corner gentle pulse emphasis (3-4 times on entering Constellation)
         if (cornersPulseTimeout) {
@@ -541,22 +543,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         container.classList.remove('corners-intro-pulsing');
 
+        // Manage morphing entrance state
+        if (morphingEntranceTimeout) {
+            clearTimeout(morphingEntranceTimeout);
+            morphingEntranceTimeout = null;
+        }
+        container.classList.remove('is-morphing-entrance');
+        if (stage) stage.classList.remove('is-morphing-entrance');
+        if (homeStage) homeStage.classList.remove('is-morphing-entrance');
+
         if (isTargetConstellation) {
             // Force a reflow to smoothly start the keyframe animation
             void container.offsetWidth;
-            container.classList.add('corners-intro-pulsing');
+            container.classList.add('corners-intro-pulsing', 'is-morphing-entrance');
+            if (stage) stage.classList.add('is-morphing-entrance');
+            if (homeStage) homeStage.classList.add('is-morphing-entrance');
+
             cornersPulseTimeout = setTimeout(() => {
                 if (container) {
                     container.classList.remove('corners-intro-pulsing');
                 }
             }, 4200);
+
+            morphingEntranceTimeout = setTimeout(() => {
+                if (container) container.classList.remove('is-morphing-entrance');
+                if (stage) stage.classList.remove('is-morphing-entrance');
+                if (homeStage) homeStage.classList.remove('is-morphing-entrance');
+                morphingEntranceTimeout = null;
+            }, 2700);
         }
 
         // Update state attributes on container and stage
         container.setAttribute('data-state', targetState);
         stage.setAttribute('data-state', targetState);
 
-        const homeStage = document.getElementById('hq-constellation-sky');
         if (homeStage) {
             homeStage.setAttribute('data-state', targetState);
         }
