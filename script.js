@@ -702,7 +702,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="cs-core">
                             <span class="cs-symbol">&#x2726;</span>
                         </div>
-                        <span class="cs-caption">${pleiadesStar.starName}</span>
+                        <div class="cs-caption-block">
+                            <span class="cs-project-name">${p.num} &mdash; ${p.title}</span>
+                            <span class="cs-star-astronomy">${pleiadesStar.starName} &bull; ${pleiadesStar.bayer}</span>
+                        </div>
                         <div class="cluster-star-pill">
                             <div class="csp-star">${pleiadesStar.starName} <span class="csp-bayer">&bull; ${pleiadesStar.bayer}</span></div>
                             <div class="csp-title">${p.num} ${p.title}</div>
@@ -787,11 +790,14 @@ document.addEventListener('DOMContentLoaded', () => {
                  tabindex="0"
                  role="button"
                  aria-label="Merope: The Seventh Sister Story">
-                <div class="cs-orbit-ring ring-dashed" style="width: 36px; height: 36px;"></div>
+                <div class="cs-orbit-ring ring-dashed" style="width: 56px; height: 56px;"></div>
                 <div class="cs-core">
                     <span class="cs-symbol">&#x2726;</span>
                 </div>
-                <span class="cs-caption">Merope</span>
+                <div class="cs-caption-block">
+                    <span class="cs-project-name">The Hidden Sister</span>
+                    <span class="cs-star-astronomy">Merope &bull; 23 Tauri</span>
+                </div>
                 <div class="cluster-star-pill">
                     <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
                     <div class="csp-title">THE HIDDEN SISTER</div>
@@ -849,7 +855,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="center-eg">EG.</span>
                         <span class="center-sub">PRACTICE</span>
                     </div>
-                    <span class="cs-caption">Alcyone</span>
+                    <div class="cs-caption-block">
+                        <span class="cs-project-name">Elifsu Genç (EG.)</span>
+                        <span class="cs-star-astronomy">${alcyoneConfig.starName} &bull; ${alcyoneConfig.bayer}</span>
+                    </div>
                     <div class="cluster-star-pill">
                         <div class="csp-star">${alcyoneConfig.starName} <span class="csp-bayer">&bull; ${alcyoneConfig.bayer}</span></div>
                         <div class="csp-title">${alcyoneConfig.title}</div>
