@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let morphingEntranceTimeout = null;
 
     // Transition between Cluster (Pleiades M45) and Constellation (All 12 Projects)
-    function setConstellationState(container, targetState) {
+    function setConstellationState(container, targetState, updateHash = true) {
         if (!container) return;
         const stage = container.querySelector('.constellation-stage') || container;
         const current = container.getAttribute('data-state');
@@ -535,6 +535,19 @@ document.addEventListener('DOMContentLoaded', () => {
         isTransitioning = true;
         const isTargetConstellation = (targetState === 'constellation');
         const homeStage = document.getElementById('hq-constellation-sky');
+
+        // Synchronize browser URL hash: clean root for cluster, #constellation for constellation
+        if (updateHash) {
+            if (isTargetConstellation) {
+                if (window.location.hash !== '#constellation') {
+                    history.pushState(null, '', '#constellation');
+                }
+            } else {
+                if (window.location.hash === '#constellation' || window.location.hash === '#projects') {
+                    history.pushState(null, '', window.location.pathname + window.location.search);
+                }
+            }
+        }
 
         // Manage 3-corner gentle pulse emphasis (3-4 times on entering Constellation)
         if (cornersPulseTimeout) {
@@ -873,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const egTopPct = (egInitY / stageHeight * 100).toFixed(2);
 
         container.innerHTML = `
-            <div class="constellation-stage" class="constellation-stage-core">
+            <div class="constellation-stage constellation-stage-core" data-state="${initialState}">
                 <!-- Faint Architectural Background Watermark -->
                 <div class="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
 
@@ -1217,6 +1230,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // Synchronize parent sky state, toggle buttons and status label if starting in constellation view
+        if (!isClusterInitial) {
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) homeSky.setAttribute('data-state', 'constellation');
+            document.querySelectorAll('.cluster-transition-btn, #hq-cluster-toggle-pill').forEach(btn => {
+                const icon = btn.querySelector('.ctb-icon, .c-toggle-glyph');
+                const label = btn.querySelector('.ctb-text, .c-toggle-label');
+                if (icon) icon.innerHTML = '&#x2199;';
+                if (label) label.textContent = 'BACK TO CLUSTER ↙';
+            });
+            const statusLabel = document.getElementById('pleiades-status-label');
+            if (statusLabel) {
+                statusLabel.textContent = 'CONSTELLATION STATE • ALL 12 PROJECTS';
+            }
+        }
+
         // Initial gentle pulse on first entrance if in constellation view
         if (!hasEgIntroPulsed && !isClusterInitial) {
             hasEgIntroPulsed = true;
@@ -1389,10 +1418,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mount Pleiades Observatory Stage in #tab-main (Cluster View on Entry)
+    // Mount Pleiades Observatory Stage in #tab-main (Cluster View on Entry, or Constellation if requested by hash)
     const pleiadesMount = document.getElementById('pleiades-stage-mount');
     if (pleiadesMount) {
-        renderConstellation(pleiadesMount, 'cluster');
+        const curHash = window.location.hash.replace('#', '').trim();
+        const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-'));
+        renderConstellation(pleiadesMount, startInConstellation ? 'constellation' : 'cluster');
     }
 
     // --- SINGLE PAGE NAVIGATION ---
@@ -1407,11 +1438,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to navigate to Constellation view on Main tab
     function goToProjects() {
-        switchTab('main');
+        switchTab('main', false);
         const homeSky = document.getElementById('hq-constellation-sky');
         if (homeSky) {
             const mapEl = homeSky.querySelector('.constellation-map');
-            if (mapEl) setConstellationState(mapEl, 'constellation');
+            if (mapEl) setConstellationState(mapEl, 'constellation', true);
             homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
@@ -1421,11 +1452,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchTab(targetTabId, updateHash = true) {
         // There is no separate #projects page: project exploration lives directly in #tab-main
         if (targetTabId === 'projects') {
-            switchTab('main', updateHash);
+            switchTab('main', false);
             const homeSky = document.getElementById('hq-constellation-sky');
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
-                if (mapEl) setConstellationState(mapEl, 'constellation');
+                if (mapEl) setConstellationState(mapEl, 'constellation', updateHash);
+            }
+            if (updateHash) {
+                history.replaceState(null, '', '#constellation');
             }
             return;
         }
@@ -1508,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectJumpBtn.addEventListener('click', () => switchTab(projectJumpBtn.getAttribute('data-target')));
     }
 
-    // Open the page matching the URL (e.g. index.html#archive, index.html#card-wood-weave) and support back/forward
+    // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#card-wood-weave) and support back/forward
     function openFromHash() {
         const hash = window.location.hash.replace('#', '').trim();
         
@@ -1521,7 +1555,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const homeSky = document.getElementById('hq-constellation-sky');
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
-                if (mapEl) setConstellationState(mapEl, 'constellation');
+                if (mapEl) setConstellationState(mapEl, 'constellation', false);
             }
             
             // 2. Open the project modal preview window with dedicated page button
@@ -1533,13 +1567,31 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (hash === 'projects') {
-            goToProjects();
+        if (hash === 'constellation' || hash === 'projects') {
+            switchTab('main', false);
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl) setConstellationState(mapEl, 'constellation', false);
+            }
+            if (hash === 'projects') {
+                history.replaceState(null, '', '#constellation');
+            }
             return;
         }
 
         const id = hash || 'main';
         switchTab(document.getElementById(`tab-${id}`) ? id : 'main', false);
+
+        if (id === 'main') {
+            const homeSky = document.getElementById('hq-constellation-sky');
+            if (homeSky) {
+                const mapEl = homeSky.querySelector('.constellation-map');
+                if (mapEl && mapEl.getAttribute('data-state') === 'constellation') {
+                    setConstellationState(mapEl, 'cluster', false);
+                }
+            }
+        }
     }
     window.addEventListener('popstate', openFromHash);
     openFromHash();
@@ -1937,8 +1989,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalClose.addEventListener('click', () => {
             projectModal.classList.add('hidden');
             document.body.style.overflow = '';
-            if (window.location.hash.startsWith('#project-') || window.location.hash.startsWith('#modal-') || window.location.hash.startsWith('#card-')) {
-                history.replaceState(null, '', '#projects');
+            if (window.location.hash.startsWith('#project-') || window.location.hash.startsWith('#modal-') || window.location.hash.startsWith('#card-') || window.location.hash === '#projects') {
+                history.replaceState(null, '', '#constellation');
             }
         });
 
