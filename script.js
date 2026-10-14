@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'EMEK MUSEUM',
             question: 'How can we make this labour visible again?',
             keywords: ['Collective Memory', 'Narratives', 'Spatial Justice'],
-            year: '2027 (ongoing)',
+            year: '2027',
             medium: 'Spatial Design',
             url: './projects/emek-museum/',
             img: './assets/emek-museum-wip.svg',
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             titleDisplay: '<span class="title-line">FIRE&nbsp;ESCAPE</span><span class="title-line">SIMULATION</span>',
             question: 'Can you escape the fire?',
             keywords: ['Egress Dynamics', 'Simulation', 'Spatial Panic'],
-            year: '2027 (ongoing)',
+            year: '2027',
             medium: 'Simulation',
             url: './projects/fire-escape-simulation/',
             img: './assets/work-in-progress.svg',
@@ -824,9 +824,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <!-- 2. Floating Contextual Constellation Card -->
                     <div class="node-hover-card">
+                        <span class="card-year-tag">${p.year}</span>
                         <div class="card-top-row">
                             <span class="card-title-text">${cardTitleHtml}</span>
-                            <span class="card-year-tag">${p.year}</span>
                             <span class="card-external-arrow">&#x2197;</span>
                         </div>
                         <div class="card-question-text">&ldquo;${p.question}&rdquo;</div>
