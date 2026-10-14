@@ -180,12 +180,13 @@ body.project-detail-body, body {
     letter-spacing: 0.06em !important;
 }
 .project-crumb .crumb-tag {
-    background: rgba(var(--proj-rgb, 56, 189, 248), 0.12) !important;
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35) !important;
-    color: var(--proj-color, #38bdf8) !important;
+    background: rgba(245, 158, 11, 0.15) !important;
+    border: 1px solid rgba(251, 191, 36, 0.55) !important;
+    color: #fbbf24 !important;
     border-radius: 4px !important;
     padding: 2px 8px !important;
     font-size: 0.68rem !important;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.2) !important;
 }
 
 /* Section Quicklinks */
@@ -219,13 +220,23 @@ body.project-detail-body, body {
 }
 
 /* Badges */
-.badge-accent, .badge-award, .meta-item {
+.badge-accent, .meta-item {
     background: rgba(15, 23, 42, 0.8) !important;
     border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.3) !important;
     color: #e2e8f0 !important;
     border-radius: 999px !important;
     font-family: monospace !important;
     padding: 4px 14px !important;
+}
+
+.badge-award {
+    background: rgba(245, 158, 11, 0.15) !important;
+    border: 1px solid rgba(251, 191, 36, 0.55) !important;
+    color: #fbbf24 !important;
+    border-radius: 999px !important;
+    font-family: monospace !important;
+    padding: 4px 14px !important;
+    box-shadow: 0 0 14px rgba(251, 191, 36, 0.22) !important;
 }
 
 /* Specs Grid */

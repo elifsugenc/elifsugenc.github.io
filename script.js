@@ -911,7 +911,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <!-- 2. Floating Contextual Constellation Card -->
                     <div class="node-hover-card" style="--proj-color: ${p.color}; --proj-rgb: ${p.colorRgb}; --proj-accent2: ${p.accent2 || p.color}; --proj-accent2-rgb: ${p.accent2Rgb || p.colorRgb}; --proj-bg-dark: ${p.darkBg || '#030712'}; --proj-bg-rgb: ${p.darkBgRgb || '3, 7, 18'};">
-                        <span class="card-year-tag">${p.year}</span>
+                        <div class="card-pill-row">
+                            <span class="card-year-tag">${p.year}</span>
+                            ${isAward ? '<span class="card-award-pill">&#x2605; AWARD WINNER</span>' : ''}
+                        </div>
                         <div class="card-top-row">
                             <span class="card-title-text">${cardTitleHtml}</span>
                             <span class="card-external-arrow">&#x2197;</span>
@@ -2147,9 +2150,20 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('modal-year').innerText = year || 'Year';
 
             const modalTag = document.getElementById('modal-tag');
+            const modalAwardPill = document.getElementById('modal-award-pill');
+            const awardProjects = new Set(['bio-decay', 'stray', 'sprouting-garden']);
+            const isAwardProject = awardProjects.has(slug) || (projectData && !!projectData.isAward);
+
+            if (modalAwardPill) {
+                if (isAwardProject) {
+                    modalAwardPill.classList.remove('hidden');
+                } else {
+                    modalAwardPill.classList.add('hidden');
+                }
+            }
+
             if (modalTag) {
-                const awardProjects = new Set(['bio-decay', 'stray', 'sprouting-garden']);
-                if (awardProjects.has(slug)) {
+                if (isAwardProject) {
                     modalTag.innerText = 'AWARD WINNER';
                     modalTag.className = 'modal-tag tag-award';
                 } else if (slug === 'emek-museum') {
