@@ -7667,19 +7667,19 @@ body {
   transform: translate(-50%, calc(-50% - 2px)) !important;
 }
 
-/* 2. CONSTELLATION STATE: "BACK TO CLUSTER ↙" placed in top-left closer to center without touching triangle */
+/* 2. CONSTELLATION STATE: "BACK TO CLUSTER" placed directly below EG. PRACTICE in center */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
-  top: 32px !important;
-  left: max(24px, calc(50% - 270px)) !important;
+  top: 70.5% !important;
+  left: 50% !important;
   right: auto !important;
   bottom: auto !important;
-  transform: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn:hover {
   background: rgba(30, 58, 138, 0.88);
   border-color: #38bdf8;
   box-shadow: 0 6px 24px rgba(2, 6, 23, 0.8), 0 0 24px rgba(56, 189, 248, 0.45);
-  transform: translateY(-2px) !important;
+  transform: translate(-50%, calc(-50% - 2px)) !important;
 }
 /* Methodology vertices form a readable, muted backbone with EG. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .c-ternary-axis {
@@ -8163,9 +8163,9 @@ body {
     padding: 9px 16px !important;
   }
   #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
-    top: 20px !important;
-    left: max(16px, calc(50% - 180px)) !important;
-    transform: none !important;
+    top: 72% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
     padding: 8px 14px !important;
     font-size: .62rem !important;
   }

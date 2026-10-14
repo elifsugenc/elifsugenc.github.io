@@ -689,8 +689,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const icon = btn.querySelector('.ctb-icon, .c-toggle-glyph');
             const label = btn.querySelector('.ctb-text, .c-toggle-label');
             if (isTargetConstellation) {
-                if (icon) icon.innerHTML = '&#x2199;';
-                if (label) label.textContent = 'BACK TO CLUSTER ↙';
+                if (icon) icon.innerHTML = '&#x2190;';
+                if (label) label.textContent = 'BACK TO CLUSTER';
             } else {
                 if (icon) icon.innerHTML = '&#x2726;';
                 if (label) label.textContent = 'EXPLORE ALL PROJECTS ↗';
@@ -1333,8 +1333,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.cluster-transition-btn, #hq-cluster-toggle-pill').forEach(btn => {
                 const icon = btn.querySelector('.ctb-icon, .c-toggle-glyph');
                 const label = btn.querySelector('.ctb-text, .c-toggle-label');
-                if (icon) icon.innerHTML = '&#x2199;';
-                if (label) label.textContent = 'BACK TO CLUSTER ↙';
+                if (icon) icon.innerHTML = '&#x2190;';
+                if (label) label.textContent = 'BACK TO CLUSTER';
             });
             const statusLabel = document.getElementById('pleiades-status-label');
             if (statusLabel) {
