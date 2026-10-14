@@ -4469,11 +4469,11 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     height: 480px;
     background-size: cover;
     background-position: center;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    background-color: #080d1f;
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35);
+    background-color: var(--proj-bg-dark, #080d1f);
     margin-bottom: 50px;
     border-radius: 8px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.12);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(var(--proj-rgb, 56, 189, 248), 0.16);
 }
 .m-living-hero-badge {
     position: absolute;
@@ -4551,7 +4551,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-spec-item {
-    background: rgba(8, 16, 36, 0.92);
+    background: rgba(var(--proj-bg-rgb, 8, 16, 36), 0.94);
     padding: 14px 18px;
     display: flex;
     flex-direction: column;
@@ -4603,21 +4603,22 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-btn-primary:hover {
-    background: var(--proj-color, #38bdf8);
+    background: var(--proj-accent2, var(--proj-color, #38bdf8));
+    border-color: var(--proj-accent2, var(--proj-color, #38bdf8));
     color: #020617 !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 24px rgba(var(--proj-rgb, 56, 189, 248), 0.6);
 }
 
 .m-btn-secondary {
-    background: rgba(15, 23, 42, 0.75);
-    color: var(--proj-color, #38bdf8) !important;
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35);
+    background: rgba(var(--proj-bg-rgb, 15, 23, 42), 0.8);
+    color: var(--proj-accent2, var(--proj-color, #38bdf8)) !important;
+    border: 1px solid rgba(var(--proj-accent2-rgb, var(--proj-rgb, 56, 189, 248)), 0.35);
 }
 
 .m-btn-secondary:hover {
-    background: rgba(var(--proj-rgb, 56, 189, 248), 0.15);
-    border-color: var(--proj-color, #38bdf8);
+    background: rgba(var(--proj-accent2-rgb, var(--proj-rgb, 56, 189, 248)), 0.18);
+    border-color: var(--proj-accent2, var(--proj-color, #38bdf8));
     color: #ffffff !important;
     transform: translateY(-2px);
     box-shadow: 0 0 16px rgba(var(--proj-rgb, 56, 189, 248), 0.3);
@@ -4630,9 +4631,9 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-quote-box {
-    background: rgba(10, 20, 44, 0.75);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
-    border-left: 3px solid var(--proj-color, #38bdf8);
+    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.85);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    border-left: 3px solid var(--proj-accent2, var(--proj-color, #38bdf8));
     padding: 20px 22px;
     border-radius: 8px;
     font-size: 0.88rem;
@@ -4648,15 +4649,15 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 .m-quote-mark {
     font-size: 1.8rem;
     line-height: 1;
-    color: var(--proj-color, #38bdf8);
+    color: var(--proj-accent2, var(--proj-color, #38bdf8));
     font-family: serif;
     display: block;
     margin-bottom: 4px;
 }
 
 .m-statement-block {
-    background: rgba(10, 20, 44, 0.75);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
+    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.85);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
     border-radius: 8px;
     padding: 26px 28px;
     backdrop-filter: blur(8px);
@@ -4666,12 +4667,12 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     display: flex;
     gap: 10px;
     margin-bottom: 18px;
-    border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
+    border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
     padding-bottom: 14px;
 }
 
 .m-lang-btn {
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(var(--proj-bg-rgb, 15, 23, 42), 0.75);
     border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
     border-radius: 20px;
     padding: 6px 16px;
@@ -4685,7 +4686,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-lang-btn.active, .m-lang-btn:hover {
-    background: rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.22);
     border-color: var(--proj-color, #38bdf8);
     color: #ffffff;
     box-shadow: 0 0 12px rgba(var(--proj-rgb, 56, 189, 248), 0.25);
@@ -4730,15 +4731,15 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-gal-card {
-    background: rgba(8, 16, 36, 0.85);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    background: rgba(var(--proj-bg-rgb, 8, 16, 36), 0.88);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.22);
     border-radius: 8px;
     overflow: hidden;
     transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .m-gal-card:hover {
-    border-color: rgba(var(--proj-rgb, 56, 189, 248), 0.45);
+    border-color: rgba(var(--proj-accent2-rgb, var(--proj-rgb, 56, 189, 248)), 0.55);
     transform: translateY(-2px);
 }
 
@@ -4746,7 +4747,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     width: 100%;
     height: 220px;
     object-fit: contain;
-    background: #050b1d;
+    background: var(--proj-bg-dark, #050b1d);
     display: block;
     border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.15);
 }
@@ -4762,7 +4763,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-boards-strip {
-    background: rgba(10, 20, 44, 0.75);
+    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.85);
     border: 1px dashed rgba(var(--proj-rgb, 56, 189, 248), 0.35);
     border-radius: 8px;
     padding: 22px 26px;
@@ -7834,7 +7835,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered {
   z-index: 350 !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 24px rgba(var(--proj-rgb, 56, 189, 248), 0.85)) !important;
+  filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.85)) !important;
   pointer-events: auto !important;
   transition-delay: 0s !important;
 }
@@ -7842,13 +7843,36 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual {
   transform: translate(-50%, -50%) scale(2) !important;
-  border-color: var(--proj-color, #38bdf8) !important;
+  border-color: #38bdf8 !important;
   border-width: 2px !important;
-  box-shadow: 0 0 28px rgba(var(--proj-rgb, 56, 189, 248), 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
   opacity: 1 !important;
   z-index: 100 !important;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
   transition-delay: 0s !important;
+}
+
+/* 1B. AWARD WINNER PROJECTS: RADIANT GOLDEN-YELLOW HOVER GLOW SYSTEM */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered {
+  filter: drop-shadow(0 0 32px rgba(250, 204, 21, 0.95)) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .node-visual {
+  border-color: #facc15 !important;
+  box-shadow: 0 0 34px rgba(250, 204, 21, 0.92), 0 0 16px rgba(250, 204, 21, 0.6), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .orbit-circle {
+  border-color: rgba(250, 204, 21, 0.45) !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .visual-img,
@@ -8509,25 +8533,30 @@ body {
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.9) !important;
 }
 
-/* PROJECT PREVIEW MODAL */
+/* PROJECT PREVIEW MODAL — DYNAMIC ATMOSPHERIC CHAMBER SYSTEM */
 .project-modal {
-    background-color: #030712 !important;
+    background-color: var(--proj-bg-dark, #030712) !important;
+    background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(var(--proj-rgb, 56, 189, 248), 0.22) 0%, transparent 70%),
+        radial-gradient(circle at 85% 85%, rgba(var(--proj-accent2-rgb, var(--proj-rgb, 56, 189, 248)), 0.14) 0%, transparent 50%),
+        radial-gradient(circle at 15% 45%, rgba(var(--proj-rgb, 56, 189, 248), 0.08) 0%, transparent 45%) !important;
     color: #f1f5f9 !important;
 }
 
 .modal-topbar {
-    background: rgba(6, 14, 34, 0.95) !important;
-    border-bottom: 1px dashed rgba(56, 189, 248, 0.25) !important;
+    background: rgba(var(--proj-bg-rgb, 6, 14, 34), 0.96) !important;
+    border-bottom: 1px dashed rgba(var(--proj-rgb, 56, 189, 248), 0.25) !important;
     backdrop-filter: blur(14px) !important;
 }
 
-.modal-close-btn, .modal-back-btn {
-    color: #38bdf8 !important;
-    border: 1px solid rgba(56, 189, 248, 0.35) !important;
-    background: rgba(15, 23, 42, 0.75) !important;
+.modal-close-btn, .modal-back-btn, .modal-close {
+    color: var(--proj-color, #38bdf8) !important;
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35) !important;
+    background: rgba(var(--proj-bg-rgb, 15, 23, 42), 0.8) !important;
 }
 
-.modal-close-btn:hover, .modal-back-btn:hover {
-    background: #38bdf8 !important;
+.modal-close-btn:hover, .modal-back-btn:hover, .modal-close:hover {
+    background: var(--proj-color, #38bdf8) !important;
     color: #020617 !important;
+    box-shadow: 0 0 16px rgba(var(--proj-rgb, 56, 189, 248), 0.5) !important;
 }

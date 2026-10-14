@@ -266,6 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/emek-museum-wip.svg',
             color: '#38bdf8',
             colorRgb: '56, 189, 248',
+            accent2: '#60a5fa',
+            accent2Rgb: '96, 165, 250',
+            darkBg: '#071524',
+            darkBgRgb: '7, 21, 36',
+            isAward: false,
             x: 380,
             y: 250,
             labelPos: 'left',
@@ -282,8 +287,13 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Interactive Installation',
             url: './projects/stray/',
             img: './assets/stray-project.png',
-            color: '#f59e0b',
-            colorRgb: '245, 158, 11',
+            color: '#10b981',
+            colorRgb: '16, 185, 129',
+            accent2: '#f43f5e',
+            accent2Rgb: '244, 63, 94',
+            darkBg: '#0a1812',
+            darkBgRgb: '10, 24, 18',
+            isAward: true,
             x: 560,
             y: 160,
             labelPos: 'right',
@@ -300,8 +310,13 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Digital Archive',
             url: './projects/you-were-here/',
             img: './assets/you-were-here-cover.png',
-            color: '#10b981',
-            colorRgb: '16, 185, 129',
+            color: '#22c55e',
+            colorRgb: '34, 197, 94',
+            accent2: '#38bdf8',
+            accent2Rgb: '56, 189, 248',
+            darkBg: '#07170e',
+            darkBgRgb: '7, 23, 14',
+            isAward: false,
             x: 690,
             y: 380,
             labelPos: 'right',
@@ -320,6 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/chronoclines-cover.jpg',
             color: '#ea580c',
             colorRgb: '234, 88, 12',
+            accent2: '#f59e0b',
+            accent2Rgb: '245, 158, 11',
+            darkBg: '#1a0e07',
+            darkBgRgb: '26, 14, 7',
+            isAward: false,
             x: 340,
             y: 405,
             labelPos: 'left',
@@ -338,6 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/millieu-cover.png',
             color: '#f43f5e',
             colorRgb: '244, 63, 94',
+            accent2: '#fbbf24',
+            accent2Rgb: '251, 191, 36',
+            darkBg: '#19060e',
+            darkBgRgb: '25, 6, 14',
+            isAward: false,
             x: 315,
             y: 490,
             labelPos: 'left',
@@ -356,6 +381,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/sprouting-garden-cover.png',
             color: '#22c55e',
             colorRgb: '34, 197, 94',
+            accent2: '#fbbf24',
+            accent2Rgb: '251, 191, 36',
+            darkBg: '#08170b',
+            darkBgRgb: '8, 23, 11',
+            isAward: true,
             x: 580,
             y: 270,
             labelPos: 'right',
@@ -372,8 +402,13 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Spatial Installation',
             url: './projects/bajo-la-fresca/',
             img: './assets/bajo-la-fresca-hero.jpg',
-            color: '#eab308',
-            colorRgb: '234, 179, 8',
+            color: '#ea580c',
+            colorRgb: '234, 88, 12',
+            accent2: '#fbbf24',
+            accent2Rgb: '251, 191, 36',
+            darkBg: '#1a0d06',
+            darkBgRgb: '26, 13, 6',
+            isAward: false,
             x: 410,
             y: 595,
             labelPos: 'right',
@@ -392,6 +427,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/wood-weave-cover.png',
             color: '#d97706',
             colorRgb: '217, 119, 6',
+            accent2: '#f59e0b',
+            accent2Rgb: '245, 158, 11',
+            darkBg: '#181006',
+            darkBgRgb: '24, 16, 6',
+            isAward: false,
             x: 595,
             y: 655,
             labelPos: 'right',
@@ -410,6 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/ara-sira-cover.jpg',
             color: '#818cf8',
             colorRgb: '129, 140, 248',
+            accent2: '#38bdf8',
+            accent2Rgb: '56, 189, 248',
+            darkBg: '#0f0f24',
+            darkBgRgb: '15, 15, 36',
+            isAward: false,
             x: 330,
             y: 655,
             labelPos: 'bottom',
@@ -428,6 +473,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/the-earthen-cover.png',
             color: '#c2410c',
             colorRgb: '194, 65, 12',
+            accent2: '#d97706',
+            accent2Rgb: '217, 119, 6',
+            darkBg: '#170a04',
+            darkBgRgb: '23, 10, 4',
+            isAward: false,
             x: 605,
             y: 435,
             labelPos: 'bottom',
@@ -446,6 +496,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/bio-decay-cover.png',
             color: '#84cc16',
             colorRgb: '132, 204, 22',
+            accent2: '#eab308',
+            accent2Rgb: '234, 179, 8',
+            darkBg: '#111804',
+            darkBgRgb: '17, 24, 4',
+            isAward: true,
             x: 750,
             y: 500,
             labelPos: 'right',
@@ -465,6 +520,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/work-in-progress.svg',
             color: '#ef4444',
             colorRgb: '239, 68, 68',
+            accent2: '#f97316',
+            accent2Rgb: '249, 115, 22',
+            darkBg: '#1a0606',
+            darkBgRgb: '26, 6, 6',
+            isAward: false,
             x: 230,
             y: 600,
             labelPos: 'left',
@@ -821,16 +881,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Celestial star birth stagger delay
             const starDelay = isClusterStar ? '0s' : ((0.06 + (idx % 7) * 0.08).toFixed(2) + 's');
+            const isAward = !!p.isAward;
+            const awardClass = isAward ? 'is-award-winner' : '';
 
             nodesHtml += `
-                <div class="constellation-node node-${p.labelPos} ${cardSideClass} ${selectedClass} ${clusterClass}" data-id="${p.id}" data-idx="${idx}"
+                <div class="constellation-node node-${p.labelPos} ${cardSideClass} ${selectedClass} ${clusterClass} ${awardClass}" data-id="${p.id}" data-idx="${idx}"
+                     data-award="${isAward ? 'true' : 'false'}"
                      data-num="${p.num}" data-title="${p.title}" data-question="${p.question}"
                      data-medium="${p.medium}" data-year="${p.year}" data-url="${p.url}"
                      data-cluster-x="${isClusterStar ? pleiadesStar.clusterX : p.x}"
                      data-cluster-y="${isClusterStar ? pleiadesStar.clusterY : p.y}"
                      data-triangle-x="${p.x}"
                      data-triangle-y="${p.y}"
-                     style="left: ${leftPct}%; top: ${topPct}%; --star-delay: ${starDelay}; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s; --proj-color: ${p.color}; --proj-rgb: ${p.colorRgb};">
+                     style="left: ${leftPct}%; top: ${topPct}%; --star-delay: ${starDelay}; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s; --proj-color: ${p.color}; --proj-rgb: ${p.colorRgb}; --proj-accent2: ${p.accent2 || p.color}; --proj-accent2-rgb: ${p.accent2Rgb || p.colorRgb}; --proj-bg-dark: ${p.darkBg || '#030712'}; --proj-bg-rgb: ${p.darkBgRgb || '3, 7, 18'};">
 
                     ${clusterStarVisualHtml}
 
@@ -847,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- 2. Floating Contextual Constellation Card -->
-                    <div class="node-hover-card" style="--proj-color: ${p.color}; --proj-rgb: ${p.colorRgb};">
+                    <div class="node-hover-card" style="--proj-color: ${p.color}; --proj-rgb: ${p.colorRgb}; --proj-accent2: ${p.accent2 || p.color}; --proj-accent2-rgb: ${p.accent2Rgb || p.colorRgb}; --proj-bg-dark: ${p.darkBg || '#030712'}; --proj-bg-rgb: ${p.darkBgRgb || '3, 7, 18'};">
                         <span class="card-year-tag">${p.year}</span>
                         <div class="card-top-row">
                             <span class="card-title-text">${cardTitleHtml}</span>
@@ -2048,12 +2111,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const medium = masterCard ? masterCard.getAttribute('data-medium') : (projectData ? projectData.medium : 'Medium');
             const year = masterCard ? masterCard.getAttribute('data-year') : (projectData ? projectData.year : 'Year');
 
-            if (projectData && projectData.color) {
-                projectModal.style.setProperty('--proj-color', projectData.color);
-                projectModal.style.setProperty('--proj-rgb', projectData.colorRgb);
+            if (projectData) {
+                if (projectData.color) {
+                    projectModal.style.setProperty('--proj-color', projectData.color);
+                    projectModal.style.setProperty('--proj-rgb', projectData.colorRgb);
+                }
+                if (projectData.accent2) {
+                    projectModal.style.setProperty('--proj-accent2', projectData.accent2);
+                    projectModal.style.setProperty('--proj-accent2-rgb', projectData.accent2Rgb);
+                } else {
+                    projectModal.style.setProperty('--proj-accent2', projectData.color || '#38bdf8');
+                    projectModal.style.setProperty('--proj-accent2-rgb', projectData.colorRgb || '56, 189, 248');
+                }
+                if (projectData.darkBg) {
+                    projectModal.style.setProperty('--proj-bg-dark', projectData.darkBg);
+                    projectModal.style.setProperty('--proj-bg-rgb', projectData.darkBgRgb);
+                }
+                projectModal.setAttribute('data-project', projectData.id);
+                projectModal.setAttribute('data-award', projectData.isAward ? 'true' : 'false');
             } else {
+                projectModal.removeAttribute('data-project');
+                projectModal.removeAttribute('data-award');
                 projectModal.style.removeProperty('--proj-color');
                 projectModal.style.removeProperty('--proj-rgb');
+                projectModal.style.removeProperty('--proj-accent2');
+                projectModal.style.removeProperty('--proj-accent2-rgb');
+                projectModal.style.removeProperty('--proj-bg-dark');
+                projectModal.style.removeProperty('--proj-bg-rgb');
             }
 
             document.getElementById('modal-num').innerText = num || '00';
@@ -2381,8 +2465,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </div>
 
                                     <div class="m-action-bar">
-                                        <a href="./projects/stray/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
+                                        <a href="./projects/stray/" class="m-action-btn m-btn-primary modal-open-standalone-btn" style="background: var(--proj-color, #10b981); border-color: var(--proj-color, #10b981);">
                                             <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
+                                        </a>
+                                        <a href="./projects/stray/#boards" class="m-action-btn m-btn-secondary modal-open-standalone-btn" style="color: var(--proj-accent2, #f43f5e); border-color: rgba(var(--proj-accent2-rgb, 244, 63, 94), 0.45); background: rgba(var(--proj-accent2-rgb, 244, 63, 94), 0.1);">
+                                            <span>VIEW COMPETITION JURY PANELS ↗</span>
                                         </a>
                                     </div>
 
