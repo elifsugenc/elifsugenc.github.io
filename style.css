@@ -3282,8 +3282,33 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .skill-cat-header .cat-icon {
-    font-size: 1.25rem;
-    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: rgba(var(--cat-rgb, 56, 189, 248), 0.12);
+    border: 1px solid rgba(var(--cat-rgb, 56, 189, 248), 0.32);
+    color: var(--cat-accent, #38bdf8);
+    flex-shrink: 0;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-category-card:hover .skill-cat-header .cat-icon {
+    background: rgba(var(--cat-rgb, 56, 189, 248), 0.24);
+    border-color: var(--cat-accent, #38bdf8);
+    box-shadow: 0 0 14px rgba(var(--cat-rgb, 56, 189, 248), 0.45);
+    transform: scale(1.08);
+}
+
+.skill-cat-header .cat-icon svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none;
+    display: block;
 }
 
 .skill-cat-header .cat-title {
