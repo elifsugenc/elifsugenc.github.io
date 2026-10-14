@@ -7564,13 +7564,13 @@ body {
 #tab-main .cluster-transition-btn {
   pointer-events: auto !important;
   position: absolute !important;
-  top: 32px !important;
-  left: 36px !important;
+  top: 82% !important;
+  left: 50% !important;
   right: auto !important;
   bottom: auto !important;
-  transform: none !important;
+  transform: translate(-50%, -50%) !important;
   white-space: nowrap;
-  padding: 11px 20px;
+  padding: 11px 22px;
   border-radius: 30px;
   background: rgba(8, 19, 42, 0.82);
   border: 1px solid rgba(165, 204, 255, 0.45);
@@ -7582,10 +7582,34 @@ body {
   box-shadow: 0 4px 20px rgba(2, 6, 23, 0.6), 0 0 15px rgba(56, 189, 248, 0.15);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  transition: background .35s ease, border-color .35s ease, box-shadow .35s ease, transform .25s ease !important;
+  transition: background .35s ease, border-color .35s ease, box-shadow .35s ease, transform .25s ease, top .35s ease, left .35s ease !important;
   z-index: 600 !important;
 }
-#tab-main .cluster-transition-btn:hover {
+
+/* 1. CLUSTER STATE: "EXPLORE ALL PROJECTS ↗" stays in original bottom-center pill position */
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
+  top: 82% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+}
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn:hover {
+  background: rgba(30, 58, 138, 0.88);
+  border-color: #38bdf8;
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.8), 0 0 24px rgba(56, 189, 248, 0.45);
+  transform: translate(-50%, calc(-50% - 2px)) !important;
+}
+
+/* 2. CONSTELLATION STATE: "BACK TO CLUSTER ↙" placed in top-left closer to center without touching triangle */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
+  top: 32px !important;
+  left: max(24px, calc(50% - 270px)) !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn:hover {
   background: rgba(30, 58, 138, 0.88);
   border-color: #38bdf8;
   box-shadow: 0 6px 24px rgba(2, 6, 23, 0.8), 0 0 24px rgba(56, 189, 248, 0.45);
@@ -8041,9 +8065,18 @@ body {
 }
 
 @media (max-width: 650px) {
-  #tab-main .cluster-transition-btn {
+  #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
+    top: 83% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-width: 90vw;
+    font-size: .65rem !important;
+    padding: 9px 16px !important;
+  }
+  #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
     top: 20px !important;
-    left: 18px !important;
+    left: max(16px, calc(50% - 180px)) !important;
+    transform: none !important;
     padding: 8px 14px !important;
     font-size: .62rem !important;
   }
