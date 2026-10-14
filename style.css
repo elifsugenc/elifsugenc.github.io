@@ -8223,24 +8223,28 @@ body {
     color: #cbd5e1 !important;
 }
 
-.wwh-consent-btn-accept {
+.wwh-consent-btn-accept,
+.wwh-btn-yes {
     background: #38bdf8 !important;
     color: #020617 !important;
-    border-color: #38bdf8 !important;
+    border: 1px solid #38bdf8 !important;
 }
 
-.wwh-consent-btn-accept:hover {
+.wwh-consent-btn-accept:hover,
+.wwh-btn-yes:hover {
     background: #7dd3fc !important;
     box-shadow: 0 0 16px rgba(56, 189, 248, 0.6) !important;
 }
 
-.wwh-consent-btn-decline {
+.wwh-consent-btn-decline,
+.wwh-btn-no {
     background: transparent !important;
     border: 1px solid rgba(148, 163, 184, 0.4) !important;
     color: #94a3b8 !important;
 }
 
-.wwh-consent-btn-decline:hover {
+.wwh-consent-btn-decline:hover,
+.wwh-btn-no:hover {
     border-color: #cbd5e1 !important;
     color: #f8fafc !important;
 }

@@ -296,10 +296,9 @@
 
         document.body.appendChild(popup);
 
-        // Gentle entrance animation trigger
-        requestAnimationFrame(() => {
-            popup.classList.add('wwh-visible');
-        });
+        // Immediate entrance animation trigger
+        void popup.offsetWidth;
+        popup.classList.add('wwh-visible');
 
         // Event listeners
         const btnYes = document.getElementById('wwh-btn-yes');
@@ -1039,23 +1038,25 @@
 
     // Bootstrap on DOM Ready
     async function init() {
-        await initFirebase();
-
-        // Proactively fetch historical archive traces in background to populate living palimpsest across portfolio
-        fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
-
+        const isMainPage = !window.location.pathname.includes('/projects/');
         const consent = sessionStorage.getItem(CONSENT_KEY);
 
-        if (consent === 'yes') {
-            hideReopenCircle();
-            await startRecording();
-        } else if (consent === 'no') {
-            // NO denmişse sağ taraftaki 'you are here.' yuvarlağı görünsün
-            showReopenCircle();
-        } else {
-            // İlk giriş: popup doğrudan sorulsun
+        // 1. Siteye girişte "you are here." popupı her zaman açık gelsin (kapalı kalmasın)
+        if (isMainPage || !consent) {
             showConsentPopup();
+        } else if (consent === 'no') {
+            showReopenCircle();
         }
+
+        // 2. Firebase SDK ve geçmiş izleri arka planda yükle (popup açılışını geciktirmez)
+        initFirebase().then(() => {
+            fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
+            if (consent === 'yes') {
+                startRecording();
+            }
+        }).catch(err => {
+            console.warn('[YOU WERE HERE] Firebase init:', err);
+        });
     }
 
     if (document.readyState === 'loading') {
