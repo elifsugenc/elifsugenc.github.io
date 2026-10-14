@@ -1414,9 +1414,11 @@ document.addEventListener('DOMContentLoaded', () => {
         meropeExploreCta.addEventListener('click', () => {
             closeMeropeStoryModal();
             const homeSky = document.getElementById('hq-constellation-sky');
-            if (homeSky) {
+            if (homeSky && homeSky.getAttribute('data-state') !== 'cluster') {
                 const mapEl = homeSky.querySelector('.constellation-map');
-                if (mapEl) setConstellationState(mapEl, 'constellation');
+                if (mapEl && typeof setConstellationState === 'function') {
+                    setConstellationState(mapEl, 'cluster');
+                }
             }
         });
     }
