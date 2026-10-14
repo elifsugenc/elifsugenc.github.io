@@ -1514,6 +1514,18 @@ a:hover {
     letter-spacing: -0.01em;
 }
 
+.merope-lead-quote {
+    font-family: var(--font-primary, 'Space Grotesk', sans-serif);
+    font-size: 1.02rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #93c5fd;
+    line-height: 1.5;
+    margin-top: 10px;
+    padding-left: 14px;
+    border-left: 2px solid rgba(56, 189, 248, 0.6);
+}
+
 .merope-sections-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1568,6 +1580,45 @@ a:hover {
     line-height: 1.55;
     color: #cbd5e1;
     font-weight: 400;
+}
+
+.merope-inquiries-pills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.merope-pill-item {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: all 0.25s ease;
+}
+
+.merope-pill-item:hover {
+    background: rgba(30, 27, 75, 0.75);
+    border-color: rgba(167, 139, 250, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(167, 139, 250, 0.2);
+}
+
+.mpi-tag {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    letter-spacing: 0.08em;
+}
+
+.mpi-text {
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    line-height: 1.4;
 }
 
 .merope-modal-footer {
