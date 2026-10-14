@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Strip trailing /index.html from URL bar so the URL is always clean (e.g. https://elifsugenc.github.io/ or /#constellation)
+    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('index.html')) {
+        const cleanPath = window.location.pathname.replace(/(^|\/)index\.html$/, '$1') || '/';
+        history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+    }
+
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     const projectJumpBtn = document.querySelector('.go-to-projects');
@@ -1573,6 +1579,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
                 if (mapEl) setConstellationState(mapEl, 'constellation', false);
+                setTimeout(() => {
+                    homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 60);
             }
             if (hash === 'projects') {
                 history.replaceState(null, '', '#constellation');
