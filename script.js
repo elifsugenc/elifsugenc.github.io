@@ -264,6 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Spatial Design',
             url: './projects/emek-museum/',
             img: './assets/emek-museum-wip.svg',
+            color: '#38bdf8',
+            colorRgb: '56, 189, 248',
             x: 380,
             y: 250,
             labelPos: 'left',
@@ -280,6 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Interactive Installation',
             url: './projects/stray/',
             img: './assets/stray-project.png',
+            color: '#f59e0b',
+            colorRgb: '245, 158, 11',
             x: 560,
             y: 160,
             labelPos: 'right',
@@ -296,6 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Digital Archive',
             url: './projects/you-were-here/',
             img: './assets/you-were-here-cover.png',
+            color: '#10b981',
+            colorRgb: '16, 185, 129',
             x: 690,
             y: 380,
             labelPos: 'right',
@@ -312,6 +318,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Generative Art',
             url: './projects/chronoclines/',
             img: './assets/chronoclines-cover.jpg',
+            color: '#ea580c',
+            colorRgb: '234, 88, 12',
             x: 340,
             y: 405,
             labelPos: 'left',
@@ -328,6 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Culinary Interior',
             url: './projects/millieu/',
             img: './assets/millieu-cover.png',
+            color: '#f43f5e',
+            colorRgb: '244, 63, 94',
             x: 315,
             y: 490,
             labelPos: 'left',
@@ -344,6 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Bio-Materials',
             url: './projects/sprouting-garden/',
             img: './assets/sprouting-garden-cover.png',
+            color: '#22c55e',
+            colorRgb: '34, 197, 94',
             x: 580,
             y: 270,
             labelPos: 'right',
@@ -360,6 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Spatial Installation',
             url: './projects/bajo-la-fresca/',
             img: './assets/bajo-la-fresca-hero.jpg',
+            color: '#eab308',
+            colorRgb: '234, 179, 8',
             x: 410,
             y: 595,
             labelPos: 'right',
@@ -376,6 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Spatial Design',
             url: './projects/wood-weave/',
             img: './assets/wood-weave-cover.png',
+            color: '#d97706',
+            colorRgb: '217, 119, 6',
             x: 595,
             y: 655,
             labelPos: 'right',
@@ -392,6 +408,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Editorial Design',
             url: './projects/ara-sira/',
             img: './assets/ara-sira-cover.jpg',
+            color: '#818cf8',
+            colorRgb: '129, 140, 248',
             x: 330,
             y: 655,
             labelPos: 'bottom',
@@ -408,6 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Soil & Clay',
             url: './projects/the-earthen/',
             img: './assets/the-earthen-cover.png',
+            color: '#c2410c',
+            colorRgb: '194, 65, 12',
             x: 605,
             y: 435,
             labelPos: 'bottom',
@@ -424,6 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Bio-Materials',
             url: './projects/bio-decay/',
             img: './assets/bio-decay-cover.png',
+            color: '#84cc16',
+            colorRgb: '132, 204, 22',
             x: 750,
             y: 500,
             labelPos: 'right',
@@ -441,6 +463,8 @@ document.addEventListener('DOMContentLoaded', () => {
             medium: 'Simulation',
             url: './projects/fire-escape-simulation/',
             img: './assets/work-in-progress.svg',
+            color: '#ef4444',
+            colorRgb: '239, 68, 68',
             x: 230,
             y: 600,
             labelPos: 'left',
@@ -806,7 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      data-cluster-y="${isClusterStar ? pleiadesStar.clusterY : p.y}"
                      data-triangle-x="${p.x}"
                      data-triangle-y="${p.y}"
-                     style="left: ${leftPct}%; top: ${topPct}%; --star-delay: ${starDelay}; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s;">
+                     style="left: ${leftPct}%; top: ${topPct}%; --star-delay: ${starDelay}; animation-delay: ${(0.15 + idx * 0.05).toFixed(2)}s; --proj-color: ${p.color}; --proj-rgb: ${p.colorRgb};">
 
                     ${clusterStarVisualHtml}
 
@@ -823,7 +847,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- 2. Floating Contextual Constellation Card -->
-                    <div class="node-hover-card">
+                    <div class="node-hover-card" style="--proj-color: ${p.color}; --proj-rgb: ${p.colorRgb};">
                         <span class="card-year-tag">${p.year}</span>
                         <div class="card-top-row">
                             <span class="card-title-text">${cardTitleHtml}</span>
@@ -2023,6 +2047,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const question = masterCard ? masterCard.getAttribute('data-question') : (projectData ? projectData.question : 'Question?');
             const medium = masterCard ? masterCard.getAttribute('data-medium') : (projectData ? projectData.medium : 'Medium');
             const year = masterCard ? masterCard.getAttribute('data-year') : (projectData ? projectData.year : 'Year');
+
+            if (projectData && projectData.color) {
+                projectModal.style.setProperty('--proj-color', projectData.color);
+                projectModal.style.setProperty('--proj-rgb', projectData.colorRgb);
+            } else {
+                projectModal.style.removeProperty('--proj-color');
+                projectModal.style.removeProperty('--proj-rgb');
+            }
 
             document.getElementById('modal-num').innerText = num || '00';
             document.getElementById('modal-title').innerText = title || 'TITLE';

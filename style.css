@@ -4173,7 +4173,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 .modal-num {
     font-family: monospace;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     font-weight: 700;
     font-size: 0.9rem;
     letter-spacing: 0.1em;
@@ -4202,9 +4202,9 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     line-height: 1.2;
 }
 .modal-tag.tag-ongoing {
-    color: #38bdf8;
-    background: rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.4);
+    color: var(--proj-color, #38bdf8);
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.15);
+    border-color: rgba(var(--proj-rgb, 56, 189, 248), 0.4);
 }
 .modal-tag.hidden {
     display: none !important;
@@ -4334,8 +4334,8 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1px;
-    background: rgba(56, 189, 248, 0.2);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -4353,7 +4353,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     font-family: monospace;
     font-size: 0.68rem;
     font-weight: 700;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -4387,31 +4387,31 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-btn-primary {
-    background: #0284c7;
+    background: var(--proj-color, #0284c7);
     color: #ffffff !important;
-    border: 1px solid #38bdf8;
-    box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
+    border: 1px solid var(--proj-color, #38bdf8);
+    box-shadow: 0 4px 18px rgba(var(--proj-rgb, 2, 132, 199), 0.4), 0 0 20px rgba(var(--proj-rgb, 56, 189, 248), 0.3);
 }
 
 .m-btn-primary:hover {
-    background: #38bdf8;
+    background: var(--proj-color, #38bdf8);
     color: #020617 !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(56, 189, 248, 0.6);
+    box-shadow: 0 6px 24px rgba(var(--proj-rgb, 56, 189, 248), 0.6);
 }
 
 .m-btn-secondary {
     background: rgba(15, 23, 42, 0.75);
-    color: #38bdf8 !important;
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: var(--proj-color, #38bdf8) !important;
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35);
 }
 
 .m-btn-secondary:hover {
-    background: rgba(56, 189, 248, 0.15);
-    border-color: #38bdf8;
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.15);
+    border-color: var(--proj-color, #38bdf8);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 16px rgba(var(--proj-rgb, 56, 189, 248), 0.3);
 }
 
 .m-quotes-grid {
@@ -4422,8 +4422,8 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 
 .m-quote-box {
     background: rgba(10, 20, 44, 0.75);
-    border: 1px solid rgba(56, 189, 248, 0.18);
-    border-left: 3px solid #38bdf8;
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
+    border-left: 3px solid var(--proj-color, #38bdf8);
     padding: 20px 22px;
     border-radius: 8px;
     font-size: 0.88rem;
@@ -4439,7 +4439,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 .m-quote-mark {
     font-size: 1.8rem;
     line-height: 1;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     font-family: serif;
     display: block;
     margin-bottom: 4px;
@@ -4447,7 +4447,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 
 .m-statement-block {
     background: rgba(10, 20, 44, 0.75);
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
     border-radius: 8px;
     padding: 26px 28px;
     backdrop-filter: blur(8px);
@@ -4457,13 +4457,13 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     display: flex;
     gap: 10px;
     margin-bottom: 18px;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+    border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.18);
     padding-bottom: 14px;
 }
 
 .m-lang-btn {
     background: rgba(15, 23, 42, 0.7);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
     border-radius: 20px;
     padding: 6px 16px;
     font-family: monospace;
@@ -4476,10 +4476,10 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-lang-btn.active, .m-lang-btn:hover {
-    background: rgba(56, 189, 248, 0.2);
-    border-color: #38bdf8;
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    border-color: var(--proj-color, #38bdf8);
     color: #ffffff;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+    box-shadow: 0 0 12px rgba(var(--proj-rgb, 56, 189, 248), 0.25);
 }
 
 .m-desc-pane {
@@ -4511,7 +4511,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
 }
 
 .m-gallery-grid {
@@ -4522,14 +4522,14 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 
 .m-gal-card {
     background: rgba(8, 16, 36, 0.85);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
     border-radius: 8px;
     overflow: hidden;
     transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .m-gal-card:hover {
-    border-color: rgba(56, 189, 248, 0.45);
+    border-color: rgba(var(--proj-rgb, 56, 189, 248), 0.45);
     transform: translateY(-2px);
 }
 
@@ -4539,7 +4539,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     object-fit: contain;
     background: #050b1d;
     display: block;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+    border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.15);
 }
 
 .m-gal-caption {
@@ -4554,7 +4554,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 
 .m-boards-strip {
     background: rgba(10, 20, 44, 0.75);
-    border: 1px dashed rgba(56, 189, 248, 0.35);
+    border: 1px dashed rgba(var(--proj-rgb, 56, 189, 248), 0.35);
     border-radius: 8px;
     padding: 22px 26px;
     display: flex;
@@ -4577,8 +4577,8 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-btn-pill {
-    background: #0284c7;
-    border: 1px solid #38bdf8;
+    background: var(--proj-color, #0284c7);
+    border: 1px solid var(--proj-color, #38bdf8);
     color: #ffffff !important;
     font-family: monospace;
     font-size: 0.76rem;
@@ -5976,10 +5976,10 @@ body {
     background: rgba(6, 14, 34, 0.96);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(56, 189, 248, 0.38);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.45);
     border-radius: 8px;
     padding: 14px 15px 14px;
-    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.85), 0 0 24px rgba(56, 189, 248, 0.2);
+    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.85), 0 0 24px rgba(var(--proj-rgb, 56, 189, 248), 0.22);
     color: #f8fafc;
     pointer-events: none;
     opacity: 0;
@@ -6094,7 +6094,7 @@ body {
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     text-transform: uppercase;
     flex: 1 1 auto;
     overflow: hidden;
@@ -6108,21 +6108,21 @@ body {
     font-family: monospace;
     font-size: 0.68rem;
     font-weight: 700;
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     background: rgba(6, 14, 34, 0.98);
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.5);
     border-radius: 20px;
     padding: 2px 10px;
     letter-spacing: 0.08em;
     flex-shrink: 0;
     line-height: 1.4;
     white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(2, 6, 23, 0.8), 0 0 10px rgba(56, 189, 248, 0.25);
+    box-shadow: 0 4px 12px rgba(2, 6, 23, 0.8), 0 0 10px rgba(var(--proj-rgb, 56, 189, 248), 0.25);
     z-index: 10;
     pointer-events: none;
 }
 .card-external-arrow {
-    color: #38bdf8;
+    color: var(--proj-color, #38bdf8);
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1;
@@ -6137,7 +6137,7 @@ body {
     letter-spacing: -0.015em;
     margin: 4px 0 10px 0;
     padding-bottom: 8px;
-    border-bottom: 1px dashed rgba(56, 189, 248, 0.25);
+    border-bottom: 1px dashed rgba(var(--proj-rgb, 56, 189, 248), 0.25);
 }
 .card-concepts-text {
     font-family: monospace;
@@ -6162,7 +6162,7 @@ body {
     justify-content: center;
     gap: 4px;
     padding: 6px 10px;
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.35);
     border-radius: 4px;
     background: rgba(15, 23, 42, 0.7);
     font-family: monospace;
@@ -6177,10 +6177,10 @@ body {
     white-space: nowrap !important;
 }
 .card-action-btn:hover {
-    background: #38bdf8;
+    background: var(--proj-color, #38bdf8);
     color: #020617;
-    border-color: #38bdf8;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+    border-color: var(--proj-color, #38bdf8);
+    box-shadow: 0 0 14px rgba(var(--proj-rgb, 56, 189, 248), 0.45);
 }
 .card-btn-preview {
     flex: 1;
@@ -6189,9 +6189,15 @@ body {
 .card-btn-dedicated {
     flex: 1.38;
     min-width: 0;
-    background: rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.5);
-    color: #38bdf8;
+    background: rgba(var(--proj-rgb, 56, 189, 248), 0.15);
+    border-color: rgba(var(--proj-rgb, 56, 189, 248), 0.5);
+    color: var(--proj-color, #38bdf8);
+}
+.card-btn-dedicated:hover {
+    background: var(--proj-color, #38bdf8);
+    color: #020617;
+    border-color: var(--proj-color, #38bdf8);
+    box-shadow: 0 0 16px rgba(var(--proj-rgb, 56, 189, 248), 0.55);
 }
 
 /* On hover, fade default label so the card & pill shine with zero text collision */
@@ -7595,7 +7601,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered {
   z-index: 350 !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.85)) !important;
+  filter: drop-shadow(0 0 24px rgba(var(--proj-rgb, 56, 189, 248), 0.85)) !important;
   pointer-events: auto !important;
   transition-delay: 0s !important;
 }
@@ -7603,9 +7609,9 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual {
   transform: translate(-50%, -50%) scale(2) !important;
-  border-color: #38bdf8 !important;
+  border-color: var(--proj-color, #38bdf8) !important;
   border-width: 2px !important;
-  box-shadow: 0 0 28px rgba(56, 189, 248, 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
+  box-shadow: 0 0 28px rgba(var(--proj-rgb, 56, 189, 248), 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
   opacity: 1 !important;
   z-index: 100 !important;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
@@ -7710,9 +7716,9 @@ body {
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-visual {
   opacity: 1 !important;
-  border-color: #38bdf8 !important;
+  border-color: var(--proj-color, #38bdf8) !important;
   border-width: 2px !important;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(var(--proj-rgb, 56, 189, 248), 0.4), 0 0 20px rgba(var(--proj-rgb, 56, 189, 248), 0.5) !important;
   transform: translate(-50%, -50%) scale(1.15) !important;
   transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
 }
