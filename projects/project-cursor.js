@@ -1,7 +1,7 @@
 // =========================================================
 // ELIFSU GENÇ PORTFOLIO — PROJECT PAGES UNIFIED CUSTOM CURSOR
 // Hardware-accelerated 60+ FPS smooth tracking with GPU layer
-// Complete suppression of native cursor and double-cursor glitching
+// Complete suppression of native cursor and scroll-glitch protection
 // =========================================================
 
 (function() {
@@ -18,7 +18,11 @@
         if (!cursorWrapper) {
             cursorWrapper = document.createElement('div');
             cursorWrapper.id = 'cursor-wrapper';
-            document.body.appendChild(cursorWrapper);
+            document.documentElement.appendChild(cursorWrapper);
+        } else if (cursorWrapper.parentElement !== document.documentElement) {
+            // Crucial: Mount directly to documentElement (<html>)
+            // This prevents ANY body transform or scroll offset from ever affecting the fixed position!
+            document.documentElement.appendChild(cursorWrapper);
         }
 
         if (!customCursor) {
@@ -31,24 +35,44 @@
         const strayLabels = cursorWrapper.querySelectorAll('#cursor-label, .cursor-label');
         strayLabels.forEach(el => el.remove());
 
-        let cursorX = window.innerWidth / 2;
-        let cursorY = window.innerHeight / 2;
+        // Start hidden until user moves mouse
+        cursorWrapper.style.opacity = '0';
+        cursorWrapper.style.transition = 'opacity 0.2s ease';
+
+        let cursorX = -100;
+        let cursorY = -100;
         let ticking = false;
 
         function updatePosition() {
-            cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            cursorWrapper.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
             ticking = false;
         }
 
         window.addEventListener('mousemove', (e) => {
             cursorX = e.clientX;
             cursorY = e.clientY;
-            if (cursorWrapper.style.opacity === '0') {
+            if (cursorWrapper.style.opacity !== '1') {
                 cursorWrapper.style.opacity = '1';
             }
             if (!ticking) {
                 requestAnimationFrame(updatePosition);
                 ticking = true;
+            }
+        }, { passive: true });
+
+        // On scroll: maintain exact viewport position and re-evaluate hover element
+        window.addEventListener('scroll', () => {
+            if (cursorX >= 0 && cursorY >= 0) {
+                if (!ticking) {
+                    requestAnimationFrame(updatePosition);
+                    ticking = true;
+                }
+                const el = document.elementFromPoint(cursorX, cursorY);
+                if (el && el.closest(interactiveSelector)) {
+                    customCursor.classList.add('cursor-hover');
+                } else {
+                    customCursor.classList.remove('cursor-hover');
+                }
             }
         }, { passive: true });
 
@@ -58,7 +82,9 @@
         });
 
         document.addEventListener('mouseenter', () => {
-            cursorWrapper.style.opacity = '1';
+            if (cursorX >= 0 && cursorY >= 0) {
+                cursorWrapper.style.opacity = '1';
+            }
         });
 
         // Interactive elements selector
@@ -104,13 +130,13 @@
 
         // Event delegation for rock-solid hover states across dynamic and static elements
         document.addEventListener('mouseover', (e) => {
-            if (e.target.closest(interactiveSelector)) {
+            if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
                 customCursor.classList.add('cursor-hover');
             }
         });
 
         document.addEventListener('mouseout', (e) => {
-            if (e.target.closest(interactiveSelector)) {
+            if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
                 customCursor.classList.remove('cursor-hover');
             }
         });

@@ -28,6 +28,10 @@
    Guarantees 100% hidden native cursor across all project pages.
    Prevents double-cursor glitching, blinking or disappearing.
    ========================================================= */
+html, body {
+    cursor: none !important;
+}
+
 *, *::before, *::after,
 a, button, input, select, textarea, [role="button"],
 .lightbox-close-btn, .zoomable-image-container, .board-card, .drawing-card {
@@ -42,7 +46,9 @@ a, button, input, select, textarea, [role="button"],
     z-index: 2147483647 !important;
     width: 0 !important;
     height: 0 !important;
-    transform: translate(-50%, -50%);
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     will-change: transform !important;
 }
 
@@ -82,6 +88,12 @@ a, button, input, select, textarea, [role="button"],
     display: none !important;
 }
 
+html, body.project-detail-body, body {
+    transform: none !important;
+    filter: none !important;
+    perspective: none !important;
+}
+
 body.project-detail-body, body {
     background-color: var(--proj-bg-dark, #030712) !important;
     background-image: 
@@ -90,12 +102,12 @@ body.project-detail-body, body {
         radial-gradient(circle at 15% 45%, rgba(var(--proj-rgb, 99, 102, 241), 0.08) 0%, transparent 45%) !important;
     background-attachment: fixed !important;
     color: #e2e8f0 !important;
-    animation: projectPageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: projectPageFadeIn 0.5s ease-out forwards;
 }
 
 @keyframes projectPageFadeIn {
-    0% { opacity: 0; transform: scale(0.995); }
-    100% { opacity: 1; transform: scale(1); }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 /* Blueprint Grid - Cosmic Astronomical Drafting Lines */
