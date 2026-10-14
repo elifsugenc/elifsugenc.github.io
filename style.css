@@ -3240,57 +3240,190 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 /* Skills Matrix */
 .skills-matrix-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px;
 }
+
 .skill-category-card {
-    border: 1px solid rgba(26, 54, 93, 0.15);
-    border-radius: 6px;
-    padding: 20px;
-    background: #ffffff;
+    border-radius: 10px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
+
+.skill-category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--cat-accent, #38bdf8);
+    opacity: 0.9;
+    box-shadow: 0 0 12px var(--cat-accent, #38bdf8);
+}
+
+.skill-category-card:hover {
+    transform: translateY(-3px);
+}
+
 .skill-cat-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding-bottom: 12px;
 }
+
 .skill-cat-header .cat-icon {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
+    line-height: 1;
 }
+
 .skill-cat-header .cat-title {
     font-family: monospace;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--text-color);
+    letter-spacing: 0.12em;
     margin: 0;
+    color: var(--cat-accent, #f8fafc) !important;
 }
+
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 8px;
 }
-.skill-pill {
+
+.skill-category-card .skill-pill {
     font-size: 0.84rem;
-    padding: 5px 11px;
-    border-radius: 4px;
-    border: 1px solid rgba(26, 54, 93, 0.12);
-    background: rgba(26, 54, 93, 0.02);
-    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.4;
+    cursor: default;
+    background: rgba(var(--cat-rgb, 56, 189, 248), 0.08) !important;
+    border: 1px solid rgba(var(--cat-rgb, 56, 189, 248), 0.3) !important;
+    color: #e2e8f0 !important;
 }
-.skill-pill.lang-pill {
+
+.skill-category-card .skill-pill:hover {
+    background: rgba(var(--cat-rgb, 56, 189, 248), 0.22) !important;
+    border-color: var(--cat-accent, #38bdf8) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(var(--cat-rgb, 56, 189, 248), 0.4);
+    transform: translateY(-1px);
+}
+
+.skill-category-card .skill-pill.lang-pill {
     font-family: monospace;
-    font-size: 0.78rem;
-    border-color: rgba(37, 99, 235, 0.25);
-    background: rgba(37, 99, 235, 0.04);
+    font-size: 0.8rem;
 }
-.skill-pill.lang-pill em {
+
+.skill-category-card .skill-pill.lang-pill em {
     font-style: normal;
-    opacity: 0.7;
-    margin-left: 3px;
+    color: var(--cat-accent, #facc15);
+    opacity: 0.95;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+/* Category 1: CAD & 3D Modeling (Cyan) */
+.skill-category-card.skill-cat-cad,
+.skill-category-card[data-cat="cad"] {
+    --cat-accent: #38bdf8;
+    --cat-rgb: 56, 189, 248;
+    background: linear-gradient(145deg, rgba(14, 30, 56, 0.82) 0%, rgba(8, 18, 38, 0.95) 100%) !important;
+    border: 1px solid rgba(56, 189, 248, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(56, 189, 248, 0.15);
+}
+.skill-category-card.skill-cat-cad:hover,
+.skill-category-card[data-cat="cad"]:hover {
+    border-color: rgba(56, 189, 248, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(56, 189, 248, 0.25);
+}
+
+/* Category 2: Parametric Modeling (Violet) */
+.skill-category-card.skill-cat-param,
+.skill-category-card[data-cat="param"] {
+    --cat-accent: #c084fc;
+    --cat-rgb: 192, 132, 252;
+    background: linear-gradient(145deg, rgba(32, 16, 56, 0.82) 0%, rgba(14, 10, 34, 0.95) 100%) !important;
+    border: 1px solid rgba(192, 132, 252, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(192, 132, 252, 0.15);
+}
+.skill-category-card.skill-cat-param:hover,
+.skill-category-card[data-cat="param"]:hover {
+    border-color: rgba(192, 132, 252, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(192, 132, 252, 0.25);
+}
+
+/* Category 3: Rendering & Visualization (Amber) */
+.skill-category-card.skill-cat-render,
+.skill-category-card[data-cat="render"] {
+    --cat-accent: #fbbf24;
+    --cat-rgb: 251, 191, 36;
+    background: linear-gradient(145deg, rgba(46, 32, 10, 0.82) 0%, rgba(24, 16, 6, 0.95) 100%) !important;
+    border: 1px solid rgba(251, 191, 36, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.15);
+}
+.skill-category-card.skill-cat-render:hover,
+.skill-category-card[data-cat="render"]:hover {
+    border-color: rgba(251, 191, 36, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(251, 191, 36, 0.25);
+}
+
+/* Category 4: Graphic Design & Editorial (Rose) */
+.skill-category-card.skill-cat-graphic,
+.skill-category-card[data-cat="graphic"] {
+    --cat-accent: #fb7185;
+    --cat-rgb: 251, 113, 133;
+    background: linear-gradient(145deg, rgba(46, 16, 28, 0.82) 0%, rgba(26, 8, 16, 0.95) 100%) !important;
+    border: 1px solid rgba(251, 113, 133, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(251, 113, 133, 0.15);
+}
+.skill-category-card.skill-cat-graphic:hover,
+.skill-category-card[data-cat="graphic"]:hover {
+    border-color: rgba(251, 113, 133, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(251, 113, 133, 0.25);
+}
+
+/* Category 5: Programming & Game Engines (Emerald) */
+.skill-category-card.skill-cat-prog,
+.skill-category-card[data-cat="prog"] {
+    --cat-accent: #34d399;
+    --cat-rgb: 52, 211, 153;
+    background: linear-gradient(145deg, rgba(12, 38, 28, 0.82) 0%, rgba(6, 22, 16, 0.95) 100%) !important;
+    border: 1px solid rgba(52, 211, 153, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(52, 211, 153, 0.15);
+}
+.skill-category-card.skill-cat-prog:hover,
+.skill-category-card[data-cat="prog"]:hover {
+    border-color: rgba(52, 211, 153, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(52, 211, 153, 0.25);
+}
+
+/* Category 6: Languages (Starlight Gold) */
+.skill-category-card.skill-cat-lang,
+.skill-category-card[data-cat="lang"] {
+    --cat-accent: #facc15;
+    --cat-rgb: 250, 204, 21;
+    background: linear-gradient(145deg, rgba(40, 36, 12, 0.82) 0%, rgba(22, 20, 6, 0.95) 100%) !important;
+    border: 1px solid rgba(250, 204, 21, 0.32) !important;
+    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(250, 204, 21, 0.15);
+}
+.skill-category-card.skill-cat-lang:hover,
+.skill-category-card[data-cat="lang"]:hover {
+    border-color: rgba(250, 204, 21, 0.7) !important;
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(250, 204, 21, 0.25);
 }
 
 /* Action Banner */
@@ -8118,7 +8251,7 @@ body {
     color: #cbd5e1 !important;
 }
 
-.entry-tag, .skill-pill, .award-badge {
+.entry-tag, .award-badge {
     background: rgba(15, 23, 42, 0.85) !important;
     border: 1px solid rgba(56, 189, 248, 0.25) !important;
     color: #e2e8f0 !important;
