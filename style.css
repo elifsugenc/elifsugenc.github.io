@@ -1,11 +1,11 @@
 :root {
-    --bg-color: #dce5ed; /* Soft architectural pastel blueprint background */
-    --folder-bg: #f8fafc; /* Crisp, luminous pale architectural paper */
-    --folder-border: 1.5px solid rgba(26, 54, 93, 0.16); /* Delicate architectural navy border */
-    --text-color: #1a365d; /* Refined architectural navy replacing harsh dark */
-    --text-muted: rgba(26, 54, 93, 0.65); /* Soft desaturated slate */
-    --accent-color: #2563eb; /* Sophisticated architectural cobalt / cerulean */
-    --accent-glow: rgba(37, 99, 235, 0.2);
+    --bg-color: #ffffff; /* Clean architectural white */
+    --folder-bg: #ffffff; /* Crisp white paper */
+    --folder-border: 1.5px solid rgba(37, 99, 235, 0.18); /* Architectural blue border */
+    --text-color: #0f172a; /* Deep charcoal navy - High Contrast */
+    --text-muted: #475569; /* Crisp readable slate */
+    --accent-color: #2563eb; /* Vibrant architectural blue */
+    --accent-glow: rgba(37, 99, 235, 0.25);
     --font-primary: 'Space Grotesk', sans-serif;
 }
 
@@ -535,29 +535,29 @@ a:hover {
     max-width: 1340px;
     height: clamp(580px, 76vh, 740px);
     min-height: 520px;
-    background: radial-gradient(ellipse 85% 65% at 50% 46%, #223249 0%, #192639 50%, #121c2b 100%);
-    border: 1px solid rgba(147, 197, 253, 0.28);
+    background: #ffffff;
+    border: 1.5px solid rgba(37, 99, 235, 0.2);
     border-radius: 14px;
     overflow: hidden;
     margin: 0 auto 28px;
-    box-shadow: 0 16px 50px rgba(26, 54, 93, 0.15), inset 0 0 80px rgba(18, 28, 43, 0.5);
+    box-shadow: 0 16px 50px rgba(37, 99, 235, 0.08), 0 0 30px rgba(37, 99, 235, 0.04);
     user-select: none;
     transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Background Universe Atmosphere: Nebula Bloom (Optimized Multi-Stop Radial Diffusion) */
+/* Background Universe Atmosphere: Subtle Luminous Blue Ambient Wash */
 .pleiades-nebula-layer {
     position: absolute;
     inset: -8%;
     width: 116%;
     height: 116%;
     background: 
-        radial-gradient(ellipse 55% 45% at 46% 42%, rgba(147, 197, 253, 0.28) 0%, rgba(147, 197, 253, 0.14) 28%, rgba(196, 181, 253, 0.08) 55%, transparent 72%),
-        radial-gradient(circle at 66% 38%, rgba(196, 181, 253, 0.22) 0%, rgba(196, 181, 253, 0.09) 32%, transparent 62%),
-        radial-gradient(circle at 34% 58%, rgba(251, 207, 232, 0.18) 0%, rgba(251, 207, 232, 0.07) 35%, transparent 60%);
+        radial-gradient(ellipse 60% 50% at 50% 45%, rgba(37, 99, 235, 0.08) 0%, rgba(59, 130, 246, 0.03) 45%, transparent 70%),
+        radial-gradient(circle at 75% 35%, rgba(147, 197, 253, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 25% 65%, rgba(191, 219, 254, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: 1;
-    opacity: 0.95;
+    opacity: 1;
     will-change: transform;
 }
 
@@ -571,19 +571,19 @@ a:hover {
 .pleiades-grain-layer {
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 2;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
-/* Fine Astronomical Drafting Grid */
+/* Fine Architectural Drafting Grid */
 .pleiades-grid-layer {
     position: absolute;
     inset: 0;
     background-image: 
-        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+        linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
     z-index: 2;
@@ -594,8 +594,8 @@ a:hover {
     position: absolute;
     font-family: monospace;
     font-size: 0.65rem;
-    font-weight: 600;
-    color: rgba(148, 163, 184, 0.38);
+    font-weight: 700;
+    color: #475569;
     letter-spacing: 0.14em;
     pointer-events: none;
     user-select: none;
@@ -625,19 +625,20 @@ a:hover {
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    background: rgba(15, 23, 42, 0.75);
-    border: 1px solid rgba(56, 189, 248, 0.28);
+    background: #ffffff;
+    border: 1px solid rgba(37, 99, 235, 0.28);
     border-radius: 999px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
 }
 
 .psp-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #38bdf8;
-    box-shadow: 0 0 8px #38bdf8;
+    background: #2563eb;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
     animation: pspPulse 2s infinite ease-in-out;
 }
 
@@ -651,7 +652,7 @@ a:hover {
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: #e2e8f0;
+    color: #0f172a;
     text-transform: uppercase;
 }
 
@@ -746,17 +747,17 @@ a:hover {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #090e1e;
-    border: 2px solid #38bdf8;
+    background: #ffffff;
+    border: 2px solid #2563eb;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.75), 0 0 40px rgba(37, 99, 235, 0.45);
+    box-shadow: 0 0 16px rgba(37, 99, 235, 0.35), 0 4px 12px rgba(15, 23, 42, 0.08);
     transition: all 0.3s ease;
 }
 
 .cs-symbol {
-    color: #facc15;
+    color: #2563eb;
     font-size: 1.25rem;
     line-height: 1;
     transition: transform 0.3s ease;
@@ -764,9 +765,9 @@ a:hover {
 
 .cluster-star-visual:hover .cs-core,
 .constellation-node.is-hovered .cs-core {
-    background: var(--accent-color, #1e3a8a);
-    border-color: #facc15;
-    box-shadow: 0 0 32px rgba(250, 204, 21, 0.95), 0 0 54px rgba(37, 99, 235, 0.8);
+    background: #2563eb;
+    border-color: #1d4ed8;
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.5), 0 4px 16px rgba(15, 23, 42, 0.12);
     transform: scale(1.22);
 }
 
@@ -796,22 +797,22 @@ a:hover {
 .cs-project-name {
     font-family: var(--font-primary, 'Space Grotesk', -apple-system, sans-serif);
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.05em;
-    color: #f8fafc; /* Crisp off-white */
+    color: #0f172a; /* Deep charcoal navy - Maximum High Contrast */
     text-transform: uppercase;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 16px rgba(56, 189, 248, 0.25);
+    text-shadow: none;
 }
 
 .cs-star-astronomy {
     font-family: monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 700;
     letter-spacing: 0.12em;
-    color: #7dd3fc; /* Soft celestial light blue */
-    opacity: 0.85;
+    color: #2563eb; /* Vibrant architectural blue */
+    opacity: 1;
     text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.45), 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: none;
 }
 
 /* Legacy .cs-caption fallback */
@@ -821,15 +822,15 @@ a:hover {
     left: 50%;
     transform: translateX(-50%);
     font-family: monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
-    color: #7dd3fc;
+    color: #2563eb;
     text-transform: uppercase;
     white-space: nowrap;
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: none;
 }
 
 .cluster-star-visual:hover .cs-caption-block,
@@ -7602,16 +7603,16 @@ body {
 #tab-main .constellation-node.is-hovered .node-visual { transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s ease, box-shadow .4s ease !important; }
 #tab-main .constellation-node:hover .visual-img,
 #tab-main .constellation-node.is-hovered .visual-img { transition: transform .4s cubic-bezier(.2,.7,.2,1), filter .4s ease !important; }
-/* Preserve original relationship paths and make them readable on the dark sky. */
+/* Preserve original relationship paths with crisp architectural blue ink on white canvas */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line {
-  stroke: rgba(165, 204, 255, .55) !important;
-  stroke-dasharray: 3 6 !important; stroke-width: 1.15px !important;
-  opacity: .78 !important;
+  stroke: rgba(37, 99, 235, 0.45) !important;
+  stroke-dasharray: 3 6 !important; stroke-width: 1.2px !important;
+  opacity: .85 !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line.active {
-  stroke: #c7e2ff !important; stroke-width: 2px !important;
+  stroke: #2563eb !important; stroke-width: 2.2px !important;
   stroke-dasharray: 4 4 !important; opacity: 1 !important;
-  filter: drop-shadow(0 0 5px rgba(114,176,255,.7));
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.6)) !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .secondary-line,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .radial-line { opacity: 0 !important; }
@@ -7681,36 +7682,37 @@ body {
   box-shadow: 0 6px 22px rgba(37, 99, 235, 0.45);
   transform: translate(-50%, calc(-50% - 2px)) !important;
 }
-/* Methodology vertices form a readable, muted backbone with EG. */
+/* Methodology vertices form a readable, architectural backbone with EG. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .c-ternary-axis {
-  opacity: .88 !important;
-  stroke: rgba(179, 211, 255, .76) !important;
+  opacity: .9 !important;
+  stroke: rgba(37, 99, 235, 0.55) !important;
   stroke-width: 1.55px !important;
   stroke-dasharray: 2 9 !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .c-ternary-frame {
-  opacity: .68 !important;
-  stroke: rgba(172, 205, 250, .57) !important;
+  opacity: .75 !important;
+  stroke: rgba(37, 99, 235, 0.4) !important;
   stroke-width: 1.3px !important;
   stroke-dasharray: 2 10 !important;
 }
 /* Every project has a permanent but subtle path back to EG. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .radial-line {
-  opacity: .78 !important;
-  stroke: rgba(151, 193, 252, .47) !important;
+  opacity: .75 !important;
+  stroke: rgba(37, 99, 235, 0.35) !important;
   stroke-width: 1.1px !important;
   stroke-dasharray: 2 7 !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .radial-line.active {
   opacity: 1 !important;
-  stroke: rgba(218, 235, 255, .95) !important;
-  stroke-width: 1.8px !important;
+  stroke: #2563eb !important;
+  stroke-width: 2px !important;
   stroke-dasharray: 2 5 !important;
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.5)) !important;
 }
 /* Project-to-project links are fainter than the methodology backbone. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line:not(.active) {
-  opacity: .42 !important;
-  stroke: rgba(145, 189, 250, .48) !important;
+  opacity: .45 !important;
+  stroke: rgba(37, 99, 235, 0.35) !important;
   stroke-width: .95px !important;
   stroke-dasharray: 2 8 !important;
 }
@@ -8006,16 +8008,16 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related {
   opacity: 1 !important;
   z-index: 180 !important;
-  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.65)) !important;
+  filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.35)) !important;
   transition: opacity 0.35s ease, filter 0.35s ease !important;
   pointer-events: auto !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-visual {
   opacity: 1 !important;
-  border-color: var(--proj-color, #38bdf8) !important;
+  border-color: var(--proj-color, #2563eb) !important;
   border-width: 2px !important;
-  box-shadow: 0 0 0 3px rgba(var(--proj-rgb, 56, 189, 248), 0.4), 0 0 20px rgba(var(--proj-rgb, 56, 189, 248), 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(var(--proj-rgb, 37, 99, 235), 0.25), 0 4px 20px rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
   transform: translate(-50%, -50%) scale(1.15) !important;
   transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
 }
@@ -8031,8 +8033,9 @@ body {
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-title {
-  color: #7dd3fc !important;
-  text-shadow: 0 0 14px rgba(56, 189, 248, 0.85) !important;
+  color: #1d4ed8 !important;
+  text-shadow: none !important;
+  font-weight: 700 !important;
 }
 
 /* 4. UNCONNECTED / UNRELATED NODES (DIMMED & SILİKLEŞTİRME) */
@@ -8064,20 +8067,20 @@ body {
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .secondary-line.active {
-  stroke: #38bdf8 !important;
-  stroke-width: 2.5px !important;
+  stroke: #2563eb !important;
+  stroke-width: 2.2px !important;
   stroke-dasharray: 4 4 !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95)) !important;
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.6)) !important;
   transition: opacity 0.35s ease, stroke-width 0.35s ease !important;
 }
 
 /* Active relation theme badge: crisp white background with architectural blue text */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .relation-theme-badge {
   background: rgba(255, 255, 255, 0.98) !important;
-  border: 1.2px solid rgba(37, 99, 235, 0.55) !important;
+  border: 1.2px solid rgba(37, 99, 235, 0.45) !important;
   border-radius: 6px !important;
-  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.35), 0 0 10px rgba(56, 189, 248, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), 0 0 10px rgba(37, 99, 235, 0.15) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
 }
@@ -8097,8 +8100,8 @@ body {
   opacity: 1 !important;
   transform: translate(-50%, -50%) scale(1.06) !important;
   background: #ffffff !important;
-  border: 1.3px solid #2563eb !important;
-  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.45), 0 0 16px rgba(56, 189, 248, 0.4) !important;
+  border: 1.5px solid #2563eb !important;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12), 0 0 16px rgba(37, 99, 235, 0.25) !important;
   transition: opacity 0.35s ease, transform 0.35s ease !important;
 }
 
@@ -8109,18 +8112,18 @@ body {
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .radial-line.active {
   opacity: 1 !important;
-  stroke: #38bdf8 !important;
-  stroke-width: 2.2px !important;
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) !important;
+  stroke: #2563eb !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.5)) !important;
 }
 
 /* 6. CLUSTER MODE STAR HOVER EXPANSION */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .cs-core:hover,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star.is-hovered .cs-core {
   transform: scale(1.28) !important;
-  background: #1e3a8a !important;
-  border-color: #facc15 !important;
-  box-shadow: 0 0 32px rgba(250, 204, 21, 0.95), 0 0 54px rgba(37, 99, 235, 0.8) !important;
+  background: #2563eb !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 0 24px rgba(37, 99, 235, 0.6) !important;
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease !important;
 }
 
@@ -8132,25 +8135,26 @@ body {
 
 /* 7. HIGH CONTRAST & ENHANCED READABILITY FOR PROJECT NAMES */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .node-title {
-  color: #f8fafc !important;
-  font-weight: 600 !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
   letter-spacing: 0.08em !important;
-  text-shadow: 0 1px 4px rgba(2, 6, 23, 0.95), 0 0 14px rgba(56, 189, 248, 0.4) !important;
+  text-shadow: none !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .node-num,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .node-num-dash {
-  color: #38bdf8 !important;
-  font-weight: 700 !important;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6) !important;
+  color: #2563eb !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .node-keywords {
-  color: rgba(226, 232, 240, 0.78) !important;
-  text-shadow: 0 1px 3px rgba(2, 6, 23, 0.9) !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-title,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-title {
-  color: #38bdf8 !important;
-  text-shadow: 0 0 18px rgba(56, 189, 248, 0.9) !important;
+  color: #2563eb !important;
+  text-shadow: 0 0 12px rgba(37, 99, 235, 0.3) !important;
 }
 
 @media (max-width: 650px) {
@@ -8172,23 +8176,24 @@ body {
 }
 
 /* ============================================================
-   COHESIVE ARCHITECTURAL PASTEL THEME ACROSS WEBSITE
+   COHESIVE ARCHITECTURAL WHITE THEME ACROSS WEBSITE
    Preserves 100% of existing content, text, data & functionality.
+   Pure #ffffff canvas with blue accents and glowing shadows.
    ============================================================ */
 
 /* Page shell & background */
 .folder-container,
 .folder-body {
-    background: var(--folder-bg, #f8fafc) !important;
-    border-color: rgba(26, 54, 93, 0.16) !important;
+    background: #ffffff !important;
+    border-color: rgba(37, 99, 235, 0.16) !important;
 }
 
 .page-centered-tab,
 #tab-about,
 #tab-design-approach,
 #tab-archive {
-    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(219, 234, 254, 0.45) 0%, rgba(248, 250, 252, 0.98) 70%), #f8fafc !important;
-    color: #1a365d !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
 }
 
 .sheet-mark {
@@ -8197,8 +8202,8 @@ body {
 
 /* Sticky Page Topbar */
 .page-topbar {
-    background: rgba(248, 250, 252, 0.94) !important;
-    border-bottom: 1px dashed rgba(26, 54, 93, 0.18) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-bottom: 1px dashed rgba(37, 99, 235, 0.2) !important;
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
 }
@@ -8211,8 +8216,8 @@ body {
 }
 
 .back-to-index-btn {
-    color: #1a365d !important;
-    border: 1px solid rgba(26, 54, 93, 0.2) !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(37, 99, 235, 0.25) !important;
     background: #ffffff !important;
     font-family: monospace !important;
     font-size: 0.75rem !important;
@@ -8224,7 +8229,7 @@ body {
     border-color: #2563eb !important;
     background: #eff6ff !important;
     color: #2563eb !important;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.18) !important;
 }
 
 .cv-download-topbar-btn {
@@ -8245,7 +8250,7 @@ body {
 
 /* ABOUT TAB */
 .about-header {
-    border-bottom: 1px dashed rgba(26, 54, 93, 0.18) !important;
+    border-bottom: 1px dashed rgba(37, 99, 235, 0.2) !important;
 }
 
 .about-name {
@@ -8265,7 +8270,7 @@ body {
 
 .role-badge {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.16) !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
     color: #334155 !important;
 }
 
@@ -8278,7 +8283,7 @@ body {
 
 .contact-chip {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.15) !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
     color: #1e293b !important;
 }
 
@@ -8331,10 +8336,10 @@ body {
 
 .about-quote-box {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
     border-left: 3px solid #2563eb !important;
     color: #334155 !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.05) !important;
 }
 
 .quote-symbol {
@@ -8346,20 +8351,20 @@ body {
 }
 
 .cv-entry {
-    border-bottom: 1px solid rgba(26, 54, 93, 0.1) !important;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.1) !important;
 }
 
 .date-badge {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.15) !important;
+    border: 1px solid rgba(37, 99, 235, 0.2) !important;
     color: #2563eb !important;
 }
 
 .date-badge.ongoing {
-    border-color: #d97706 !important;
-    color: #b45309 !important;
-    background: #fffbeb !important;
-    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.12) !important;
+    border-color: #2563eb !important;
+    color: #1d4ed8 !important;
+    background: #eff6ff !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12) !important;
 }
 
 .entry-title {
@@ -8376,7 +8381,7 @@ body {
 
 .entry-tag, .award-badge {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.14) !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
     color: #334155 !important;
 }
 
@@ -8396,9 +8401,9 @@ body {
 }
 
 .methodology-triangle-wrapper {
-    background: radial-gradient(ellipse 75% 75% at 50% 50%, rgba(219, 234, 254, 0.45) 0%, rgba(248, 250, 252, 0.98) 75%) !important;
-    border: 1px solid rgba(26, 54, 93, 0.15) !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05) !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.06) !important;
 }
 
 .methodology-triangle-wrapper::before {
@@ -8407,12 +8412,12 @@ body {
 }
 
 .m-tri-frame {
-    stroke: rgba(148, 163, 184, 0.6) !important;
+    stroke: rgba(37, 99, 235, 0.35) !important;
     stroke-dasharray: 4 6 !important;
 }
 
 .m-tri-axis {
-    stroke: rgba(37, 99, 235, 0.4) !important;
+    stroke: rgba(37, 99, 235, 0.55) !important;
     stroke-dasharray: 3 6 !important;
 }
 
@@ -8422,23 +8427,23 @@ body {
 }
 
 .m-tri-center-text {
-    fill: #d97706 !important;
+    fill: #2563eb !important;
 }
 
 .m-lens-card {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
     color: #334155 !important;
-    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.05) !important;
 }
 
 .m-lens-card:hover {
     border-color: #2563eb !important;
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12) !important;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15) !important;
 }
 
 .m-lens-header {
-    border-bottom: 1px dashed rgba(26, 54, 93, 0.12) !important;
+    border-bottom: 1px dashed rgba(37, 99, 235, 0.15) !important;
 }
 
 .m-lens-num {
@@ -8461,7 +8466,7 @@ body {
 }
 
 .m-lens-footer-row {
-    border-top: 1px dashed rgba(26, 54, 93, 0.12) !important;
+    border-top: 1px dashed rgba(37, 99, 235, 0.15) !important;
 }
 
 .m-lens-label {
@@ -8476,14 +8481,14 @@ body {
 /* ARCHIVE TAB */
 .archive-layout {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
     border-radius: 8px !important;
     padding: 24px 30px !important;
-    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.05) !important;
 }
 
 .archive-header {
-    border-bottom: 1px solid rgba(26, 54, 93, 0.14) !important;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.18) !important;
     color: #2563eb !important;
     font-family: monospace !important;
     font-size: 0.75rem !important;
@@ -8491,13 +8496,13 @@ body {
 }
 
 .archive-row {
-    border-bottom: 1px solid rgba(26, 54, 93, 0.08) !important;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.1) !important;
     color: #334155 !important;
     transition: background 0.25s ease !important;
 }
 
 .archive-row:hover {
-    background: #f1f5f9 !important;
+    background: #eff6ff !important;
 }
 
 .archive-row .col:first-child {
@@ -8521,10 +8526,10 @@ body {
 
 /* CONSTELLATION HOVER CARDS */
 .node-hover-card {
-    background: rgba(248, 250, 252, 0.96) !important;
-    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.15), 0 0 16px rgba(var(--proj-rgb, 37, 99, 235), 0.1) !important;
-    color: #1e293b !important;
+    background: #ffffff !important;
+    border: 1.5px solid rgba(var(--proj-rgb, 37, 99, 235), 0.4) !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12), 0 0 20px rgba(var(--proj-rgb, 37, 99, 235), 0.15) !important;
+    color: #0f172a !important;
 }
 
 .card-year-tag {
@@ -8536,7 +8541,7 @@ body {
 
 .card-question-text {
     color: #0f172a !important;
-    border-bottom: 1px dashed rgba(var(--proj-rgb, 37, 99, 235), 0.2) !important;
+    border-bottom: 1px dashed rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
 }
 
 .card-concepts-text {
@@ -8545,7 +8550,7 @@ body {
 
 .card-action-btn {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.18) !important;
+    border: 1px solid rgba(37, 99, 235, 0.25) !important;
     color: #334155 !important;
 }
 
@@ -8570,8 +8575,8 @@ body {
 /* TRACKER CONSENT POPUP & LIVE INDICATOR */
 .wwh-consent-popup {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.18) !important;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12), 0 0 20px rgba(37, 99, 235, 0.08) !important;
+    border: 1px solid rgba(37, 99, 235, 0.22) !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12), 0 0 24px rgba(37, 99, 235, 0.12) !important;
     color: #0f172a !important;
 }
 
@@ -8598,7 +8603,7 @@ body {
 
 .wwh-consent-btn-decline,
 .wwh-btn-no {
-    background: #f1f5f9 !important;
+    background: #f8fafc !important;
     border: 1px solid rgba(148, 163, 184, 0.4) !important;
     color: #475569 !important;
 }
@@ -8611,8 +8616,8 @@ body {
 
 .wwh-live-indicator {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.18) !important;
-    color: #1e293b !important;
+    border: 1px solid rgba(37, 99, 235, 0.25) !important;
+    color: #0f172a !important;
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08) !important;
 }
 
@@ -8632,15 +8637,15 @@ body {
 }
 
 .modal-topbar {
-    background: rgba(255, 255, 255, 0.96) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
     border-bottom: 1px dashed rgba(var(--proj-rgb, 37, 99, 235), 0.2) !important;
     backdrop-filter: blur(14px) !important;
 }
 
 .modal-hero {
     background-color: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(37, 99, 235, 0.15) !important;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.06) !important;
 }
 
 .modal-title, .modal-question {
@@ -8691,4 +8696,158 @@ body {
     background: var(--proj-color, #2563eb) !important;
     color: #ffffff !important;
     box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
+}
+
+/* OBSERVATORY CANVAS ELEMENTS OVERRIDE (Corners, Center Core, Stars & Pills) */
+.c-corner-disc {
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18), 0 0 12px rgba(37, 99, 235, 0.12) !important;
+}
+
+.c-corner-text {
+    color: #0f172a !important;
+}
+
+.c-axis-link:hover .c-corner-disc,
+.constellation-map.is-center-hovered .c-corner-disc {
+    background: #eff6ff !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 0 22px rgba(37, 99, 235, 0.35) !important;
+}
+
+.c-axis-link:hover .c-corner-text,
+.constellation-map.is-center-hovered .c-corner-text {
+    color: #1d4ed8 !important;
+}
+
+.center-core {
+    background: #ffffff !important;
+    border: 2px solid #2563eb !important;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.22), 0 0 16px rgba(37, 99, 235, 0.14) !important;
+}
+
+.center-eg {
+    color: #0f172a !important;
+}
+
+.center-sub {
+    color: #2563eb !important;
+}
+
+.constellation-center:hover .center-core {
+    background: #2563eb !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 0 28px rgba(37, 99, 235, 0.6) !important;
+}
+
+.constellation-center:hover .center-eg,
+.constellation-center:hover .center-sub {
+    color: #ffffff !important;
+}
+
+.cluster-star-pill {
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12), 0 0 20px rgba(37, 99, 235, 0.18) !important;
+}
+
+.csp-star {
+    color: #2563eb !important;
+}
+
+.csp-bayer {
+    color: #b45309 !important;
+}
+
+.csp-title {
+    color: #0f172a !important;
+    text-shadow: none !important;
+}
+
+.csp-meta {
+    color: #475569 !important;
+}
+
+.cluster-star-visual:hover .cluster-star-pill,
+.constellation-node.is-hovered .cluster-star-pill,
+.merope-star:hover .cluster-star-pill,
+.constellation-center:hover .cluster-star-pill {
+    background: #ffffff !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16), 0 0 24px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Merope modal architectural white styling */
+.merope-modal-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.25) !important;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.15), 0 0 40px rgba(37, 99, 235, 0.12) !important;
+    color: #0f172a !important;
+}
+
+.merope-modal-backdrop {
+    background: rgba(15, 23, 42, 0.45) !important;
+}
+
+.merope-title {
+    color: #0f172a !important;
+}
+
+.merope-sub, .merope-tag {
+    color: #2563eb !important;
+}
+
+.merope-coords {
+    color: #64748b !important;
+}
+
+.merope-close-btn {
+    border: 1px solid rgba(37, 99, 235, 0.25) !important;
+    color: #2563eb !important;
+    background: #ffffff !important;
+}
+
+.merope-close-btn:hover {
+    background: #eff6ff !important;
+    color: #1d4ed8 !important;
+    border-color: #2563eb !important;
+}
+
+.merope-lead-quote {
+    color: #1e3a8a !important;
+    border-left-color: #2563eb !important;
+}
+
+.merope-section {
+    background: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.16) !important;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.05) !important;
+}
+
+.merope-section.full-span {
+    background: #eff6ff !important;
+    border-color: rgba(37, 99, 235, 0.25) !important;
+}
+
+.merope-sec-num {
+    color: #2563eb !important;
+}
+
+.merope-sec-title {
+    color: #0f172a !important;
+}
+
+.merope-sec-text {
+    color: #334155 !important;
+}
+
+.merope-pill-item {
+    background: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
+}
+
+.merope-pill-item:hover {
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12) !important;
 }
