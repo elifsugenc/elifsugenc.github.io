@@ -1049,7 +1049,7 @@ a:hover {
     position: absolute;
     inset: -2px;
     border-radius: 50%;
-    background: radial-gradient(circle, #ffffff 15%, rgba(56, 189, 248, 0.95) 45%, rgba(37, 99, 235, 0.6) 75%, transparent 100%);
+    background: radial-gradient(circle, #ffffff 15%, rgba(37, 99, 235, 0.95) 45%, rgba(29, 78, 216, 0.6) 75%, transparent 100%);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.9s ease;
@@ -1103,9 +1103,9 @@ a:hover {
 .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .node-visual {
     opacity: 0 !important;
     transform: translate(-50%, -50%) scale(0.55) !important; /* 36px exact match to .cs-core */
-    background: #090e1e !important;
-    border: 2px solid #38bdf8 !important;
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.75), 0 0 40px rgba(37, 99, 235, 0.45) !important;
+    background: #ffffff !important;
+    border: 2px solid #2563eb !important;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6), 0 0 40px rgba(29, 78, 216, 0.35) !important;
     transition: opacity 0.5s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
@@ -1171,9 +1171,9 @@ a:hover {
 .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-cluster-star .node-visual {
     opacity: 1 !important;
     transform: translate(-50%, -50%) scale(1) !important;
-    background: #090e1e !important;
-    border: 1.2px solid rgba(56, 189, 248, 0.35) !important;
-    box-shadow: 0 4px 20px rgba(2, 6, 23, 0.8), 0 0 16px rgba(56, 189, 248, 0.25) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2), 0 2px 8px rgba(15, 23, 42, 0.08) !important;
     transition: opacity 0.55s ease 0.1s,
                 transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s,
                 border-color 1.4s ease 0.3s,
@@ -1217,9 +1217,9 @@ a:hover {
 .pleiades-observatory-stage[data-state="cluster"] .constellation-node:not(.is-cluster-star) .node-visual {
     opacity: 0 !important;
     transform: translate(-50%, -50%) scale(0.12) !important;
-    background: #e0f2fe !important;
-    border: 2px solid #38bdf8 !important;
-    box-shadow: 0 0 16px #38bdf8, 0 0 35px rgba(56, 189, 248, 0.95), 0 0 60px rgba(37, 99, 235, 0.7) !important;
+    background: #eff6ff !important;
+    border: 2px solid #2563eb !important;
+    box-shadow: 0 0 16px #2563eb, 0 0 35px rgba(37, 99, 235, 0.8), 0 0 60px rgba(29, 78, 216, 0.6) !important;
     transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.8s ease, box-shadow 0.8s ease !important;
 }
 
@@ -1255,9 +1255,9 @@ a:hover {
 .pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star) .node-visual {
     opacity: 1 !important;
     transform: translate(-50%, -50%) scale(1) !important;
-    background: #090e1e !important;
-    border: 1.2px solid rgba(56, 189, 248, 0.35) !important;
-    box-shadow: 0 4px 20px rgba(2, 6, 23, 0.8), 0 0 16px rgba(56, 189, 248, 0.25) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2), 0 2px 8px rgba(15, 23, 42, 0.08) !important;
     transition: opacity 0.45s ease var(--star-delay, 0.12s),
                 transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) var(--star-delay, 0.12s),
                 background 1.6s ease calc(var(--star-delay, 0.12s) + 0.6s),
@@ -7872,49 +7872,43 @@ body {
    CONSTELLATION HOVER & RELATIONSHIP HIGHLIGHTING SYSTEM
    ------------------------------------------------------------- */
 
-/* 1. HOVERED PROJECT: 2X EXPANDED CIRCULAR ARCHITECTURAL LENS */
+/* 1. HOVERED PROJECT: 2X EXPANDED CIRCULAR ARCHITECTURAL LENS (UNIFORM SITE DARK BLUE GLOW) */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered {
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered {
   z-index: 350 !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.85)) !important;
+  filter: drop-shadow(0 0 24px rgba(37, 99, 235, 0.75)) !important;
   pointer-events: auto !important;
   transition-delay: 0s !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual {
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .node-visual {
   transform: translate(-50%, -50%) scale(2) !important;
-  border-color: #38bdf8 !important;
+  border-color: #2563eb !important;
   border-width: 2px !important;
-  box-shadow: 0 0 28px rgba(56, 189, 248, 0.75), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
+  box-shadow: 0 0 28px rgba(37, 99, 235, 0.65), 0 8px 24px rgba(15, 23, 42, 0.12) !important;
   opacity: 1 !important;
   z-index: 100 !important;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
   transition-delay: 0s !important;
 }
 
-/* 1B. AWARD WINNER PROJECTS: RADIANT GOLDEN-YELLOW HOVER GLOW SYSTEM */
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered {
-  filter: drop-shadow(0 0 32px rgba(250, 204, 21, 0.95)) !important;
-}
-
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .node-visual {
-  border-color: #facc15 !important;
-  box-shadow: 0 0 34px rgba(250, 204, 21, 0.92), 0 0 16px rgba(250, 204, 21, 0.6), 0 12px 36px rgba(2, 6, 23, 0.95) !important;
-}
-
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .orbit-circle,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .orbit-circle,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .orbit-circle,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .orbit-circle,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .orbit-circle {
-  border-color: rgba(250, 204, 21, 0.45) !important;
+  border-color: rgba(37, 99, 235, 0.45) !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .visual-img,
@@ -8872,4 +8866,40 @@ body {
 .merope-pill-item:hover {
     border-color: #2563eb !important;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12) !important;
+}
+
+/* ALL PROJECTS HOVER GLOW / PARLATMA OVERRIDE (UNIFORM ARCHITECTURAL DARK BLUE) */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered {
+    filter: drop-shadow(0 0 24px rgba(37, 99, 235, 0.75)) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .node-visual {
+    border-color: #2563eb !important;
+    border-width: 2px !important;
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.65), 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .orbit-circle,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .orbit-circle {
+    border-color: rgba(37, 99, 235, 0.45) !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node .sat-point,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node .sat-glow {
+    background: #2563eb !important;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.8) !important;
 }
