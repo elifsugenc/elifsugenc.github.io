@@ -1,32 +1,30 @@
 /* =========================================================
-   ELIFSU GENÇ PORTFOLIO — ARCHITECTURAL PROJECT THEME
-   Unified Pastel Blueprint UI/UX for all Architectural Projects
-   Matches Pleiades Cluster & Constellation Map Experience
+   ELIFSU GENÇ PORTFOLIO — ARCHITECTURAL PROJECT DETAIL THEME
+   Crisp Architectural Paper White (#ffffff) for Drawing Integration
+   with Soft Signature Ambient Color Washes & Harmonious Transitions
    ========================================================= */
 
 :root {
-    --bg-universe: #f8fafc;
-    --bg-page: #f8fafc;
+    --bg-universe: #ffffff;
+    --bg-page: #ffffff;
     --proj-color: #2563eb;
     --proj-rgb: 37, 99, 235;
     --proj-accent2: #3b82f6;
     --proj-accent2-rgb: 59, 130, 246;
-    --proj-bg-dark: #f1f5f9;
-    --proj-bg-rgb: 241, 245, 249;
-    --blueprint-grid: rgba(26, 54, 93, 0.035);
+    --proj-bg-dark: #f8fafc;
+    --proj-bg-rgb: 248, 250, 252;
+    --blueprint-grid: rgba(var(--proj-rgb, 37, 99, 235), 0.035);
     --text-primary: #0f172a;
     --text-secondary: #334155;
     --text-muted: #64748b;
-    --border-light: rgba(26, 54, 93, 0.12);
+    --border-light: rgba(var(--proj-rgb, 37, 99, 235), 0.16);
     --border-dashed: rgba(var(--proj-rgb, 37, 99, 235), 0.28);
     --card-bg: #ffffff;
-    --card-tint: rgba(248, 250, 252, 0.85);
+    --card-tint: rgba(var(--proj-rgb, 37, 99, 235), 0.04);
 }
 
 /* =========================================================
    UNIVERSAL ARCHITECTURAL CUSTOM CURSOR ENFORCEMENT
-   Guarantees 100% hidden native cursor across all project pages.
-   Prevents double-cursor glitching, blinking or disappearing.
    ========================================================= */
 html, body {
     cursor: none !important;
@@ -88,6 +86,11 @@ a, button, input, select, textarea, [role="button"],
     display: none !important;
 }
 
+/* =========================================================
+   PAGE SHELL & EYE-FRIENDLY ARCHITECTURAL TRANSITION
+   Crisp White background for white architectural drawings,
+   with soft atmospheric ambient gradient at the top.
+   ========================================================= */
 html, body.project-detail-body, body {
     transform: none !important;
     filter: none !important;
@@ -95,28 +98,28 @@ html, body.project-detail-body, body {
 }
 
 body.project-detail-body, body {
-    background-color: #f8fafc !important;
+    background-color: #ffffff !important;
     background-image: 
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(var(--proj-rgb, 37, 99, 235), 0.08) 0%, transparent 70%),
-        radial-gradient(circle at 85% 85%, rgba(var(--proj-accent2-rgb, var(--proj-rgb, 59, 130, 246)), 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 15% 45%, rgba(var(--proj-rgb, 37, 99, 235), 0.04) 0%, transparent 45%) !important;
+        radial-gradient(ellipse 85% 55% at 50% -10%, rgba(var(--proj-rgb, 37, 99, 235), 0.09) 0%, rgba(var(--proj-rgb, 37, 99, 235), 0.02) 50%, #ffffff 80%),
+        radial-gradient(circle at 85% 60%, rgba(var(--proj-accent2-rgb, var(--proj-rgb, 59, 130, 246)), 0.04) 0%, transparent 45%),
+        radial-gradient(circle at 15% 35%, rgba(var(--proj-rgb, 37, 99, 235), 0.03) 0%, transparent 40%) !important;
     background-attachment: fixed !important;
     color: #334155 !important;
-    animation: projectPageFadeIn 0.5s ease-out forwards;
+    animation: projectPageFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes projectPageFadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Blueprint Grid - Architectural Drafting Lines */
+/* Blueprint Grid - Architectural Drafting Paper Texture */
 .blueprint-bg {
     position: fixed !important;
     inset: 0 !important;
     background-image: 
-        linear-gradient(to right, rgba(26, 54, 93, 0.035) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(26, 54, 93, 0.035) 1px, transparent 1px) !important;
+        linear-gradient(to right, rgba(var(--proj-rgb, 37, 99, 235), 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(var(--proj-rgb, 37, 99, 235), 0.035) 1px, transparent 1px) !important;
     background-size: 36px 36px !important;
     pointer-events: none !important;
     z-index: 0 !important;
@@ -124,10 +127,10 @@ body.project-detail-body, body {
 
 /* Sticky Architectural Navigation Bar */
 .project-nav {
-    background: rgba(248, 250, 252, 0.94) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
-    border-bottom: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border-bottom: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.16) !important;
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
     position: sticky !important;
     top: 0 !important;
@@ -138,8 +141,8 @@ body.project-detail-body, body {
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.18) !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.06) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22) !important;
     border-radius: 999px !important;
     padding: 7px 18px !important;
     color: #1e293b !important;
@@ -151,15 +154,18 @@ body.project-detail-body, body {
 }
 
 .back-link:hover, .back-btn:hover {
-    background: #eff6ff !important;
-    border-color: var(--proj-accent2, var(--proj-color, #2563eb)) !important;
-    box-shadow: 0 4px 14px rgba(var(--proj-rgb, 37, 99, 235), 0.2) !important;
-    color: var(--proj-color, #2563eb) !important;
+    background: var(--proj-color, #2563eb) !important;
+    border-color: var(--proj-color, #2563eb) !important;
+    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+    color: #ffffff !important;
     transform: translateX(-3px) !important;
 }
 
 .back-link .nav-arrow {
     color: var(--proj-color, #2563eb) !important;
+}
+.back-link:hover .nav-arrow {
+    color: #ffffff !important;
 }
 
 /* Breadcrumb Styling */
@@ -172,7 +178,7 @@ body.project-detail-body, body {
     font-weight: 700 !important;
 }
 .project-crumb .crumb-sep {
-    color: rgba(26, 54, 93, 0.25) !important;
+    color: rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
 }
 .project-crumb .crumb-title {
     color: #0f172a !important;
@@ -180,9 +186,9 @@ body.project-detail-body, body {
     letter-spacing: 0.06em !important;
 }
 .project-crumb .crumb-tag {
-    background: #fffbeb !important;
-    border: 1px solid rgba(217, 119, 6, 0.4) !important;
-    color: #b45309 !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+    color: var(--proj-color, #2563eb) !important;
     border-radius: 4px !important;
     padding: 2px 8px !important;
     font-size: 0.68rem !important;
@@ -203,7 +209,7 @@ body.project-detail-body, body {
 .section-quicklinks a:hover,
 .section-quicklinks a.active {
     color: var(--proj-color, #2563eb) !important;
-    background: #eff6ff !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.09) !important;
     border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
 }
 
@@ -212,18 +218,22 @@ body.project-detail-body, body {
     color: #0f172a !important;
     text-shadow: none !important;
 }
+
 .hero-core-question {
     color: var(--proj-color, #2563eb) !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.05) !important;
     font-style: italic !important;
-    border-left: 2px solid var(--proj-color, #2563eb) !important;
-    padding-left: 14px !important;
+    border-left: 3px solid var(--proj-color, #2563eb) !important;
+    padding: 14px 18px !important;
+    border-radius: 6px !important;
+    margin: 18px 0 !important;
 }
 
 /* Badges */
 .badge-accent, .meta-item {
-    background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.16) !important;
-    color: #334155 !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.24) !important;
+    color: var(--proj-color, #2563eb) !important;
     border-radius: 999px !important;
     font-family: monospace !important;
     padding: 4px 14px !important;
@@ -231,7 +241,7 @@ body.project-detail-body, body {
 
 .badge-award {
     background: #fffbeb !important;
-    border: 1px solid rgba(217, 119, 6, 0.4) !important;
+    border: 1px solid rgba(217, 119, 6, 0.45) !important;
     color: #b45309 !important;
     border-radius: 999px !important;
     font-family: monospace !important;
@@ -242,7 +252,7 @@ body.project-detail-body, body {
 /* Specs Grid */
 .specs-grid {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.16) !important;
     border-radius: 8px !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -261,8 +271,9 @@ body.project-detail-body, body {
 /* Award Banner */
 .award-hero-banner, .award-box {
     background: #fffdf5 !important;
-    border: 1px solid rgba(217, 119, 6, 0.35) !important;
+    border: 1.5px solid rgba(245, 158, 11, 0.45) !important;
     border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12) !important;
     color: #78350f !important;
 }
 .award-title {
@@ -273,30 +284,24 @@ body.project-detail-body, body {
     color: #92400e !important;
 }
 
-/* Content Panels, Cards & Boxes — Architectural Pastel Blueprint Theme */
+/* Content Panels, Concept Boxes & Text Cards — Architectural White with Tinted Accents */
 .card,
-.concept-box,
 .block-container,
 .detail-card,
 .program-item,
 .metabolism-box,
-.drawing-card,
-.board-card,
 .analysis-card,
 .palette-card,
 .tectonic-block,
 .narrative-block,
-.quote-card,
 .step-card,
 .project-content,
 .phase-card,
-.manifesto-box,
 .site-box,
 .spec-card,
 .gallery-card,
 .gallery-card-footer,
 .statement-card,
-.statement-panel,
 .statement-wrapper,
 .statement-col,
 .statement-grid,
@@ -327,7 +332,6 @@ body.project-detail-body, body {
 .recipe-type-card,
 .recipe-matrix-cards,
 .refuge-item-card,
-.render-gal-card,
 .render-quad-card,
 .ritual-card,
 .scent-card,
@@ -347,12 +351,53 @@ body.project-detail-body, body {
 .stage-desc,
 .cases-footer {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.14) !important;
     border-radius: 8px !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03) !important;
     color: #334155 !important;
+}
+
+/* Strategic Colored Inset Boxes (Concept, Manifesto, Quote Panels) */
+.concept-box,
+.manifesto-box,
+.statement-panel,
+.quote-card {
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.04) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.18) !important;
+    border-left: 4px solid var(--proj-color, #2563eb) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(var(--proj-rgb, 37, 99, 235), 0.04) !important;
+    color: #334155 !important;
+}
+
+/* ARCHITECTURAL DRAWINGS, BOARDS & MEDIA CONTAINERS — PURE CLEAN WHITE */
+/* Eliminates unsightly borders or gray boxes behind white drawings/axonometrics */
+.drawing-viewer,
+.slider-container,
+.hero-visual-frame,
+.perspective-card,
+.lightbox-trigger,
+.media-wrapper,
+.zoom-wrapper,
+.artifact-frame,
+.drawing-card,
+.board-card,
+.render-gal-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.03) !important;
+}
+
+.drawing-viewer img,
+.media-wrapper img,
+.board-card img,
+.drawing-card img,
+.render-gal-card img,
+.artifact-frame img {
+    background: #ffffff !important;
 }
 
 /* Headings & Titles inside all Project Pages */
@@ -457,8 +502,8 @@ strong, b, em {
 .lang-btn,
 .lang-tab-btn,
 .era-tab-btn {
-    background: #f1f5f9 !important;
-    border: 1px solid rgba(26, 54, 93, 0.15) !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22) !important;
     color: #64748b !important;
     font-family: monospace !important;
     transition: all 0.2s ease !important;
@@ -472,22 +517,22 @@ strong, b, em {
 .lang-tab-btn:hover,
 .era-tab-btn.active,
 .era-tab-btn:hover {
-    background: #eff6ff !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.1) !important;
     border-color: var(--proj-color, #2563eb) !important;
     color: var(--proj-color, #2563eb) !important;
-    box-shadow: 0 2px 8px rgba(var(--proj-rgb, 37, 99, 235), 0.15) !important;
+    box-shadow: 0 2px 10px rgba(var(--proj-rgb, 37, 99, 235), 0.18) !important;
 }
 
 .folder-meta-pill {
-    background: #eff6ff !important;
-    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.28) !important;
     color: var(--proj-color, #2563eb) !important;
     font-family: monospace !important;
 }
 
 .folder-toggle-indicator {
-    background: #f1f5f9 !important;
-    border: 1px solid rgba(26, 54, 93, 0.16) !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.06) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22) !important;
     color: var(--proj-color, #2563eb) !important;
     font-family: monospace !important;
 }
@@ -507,10 +552,10 @@ strong, b, em {
 .gal-zoom-btn,
 .board-expand-btn {
     background: #ffffff !important;
-    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.28) !important;
+    border: 1.5px solid rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
     color: var(--proj-color, #2563eb) !important;
     font-family: monospace !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.25s ease !important;
 }
 
 .board-btn:hover,
@@ -521,19 +566,21 @@ strong, b, em {
 .btn-card-download:hover,
 .btn-trace-action:hover {
     background: var(--proj-color, #2563eb) !important;
+    border-color: var(--proj-color, #2563eb) !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
+    box-shadow: 0 4px 18px rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
 }
 
 .board-btn-primary {
     background: var(--proj-color, #2563eb) !important;
-    border: 1px solid var(--proj-color, #2563eb) !important;
+    border: 1.5px solid var(--proj-color, #2563eb) !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
+    box-shadow: 0 4px 18px rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
 }
 
 .board-btn-primary:hover {
-    background: #1d4ed8 !important;
+    background: var(--proj-accent2, #1d4ed8) !important;
+    border-color: var(--proj-accent2, #1d4ed8) !important;
     color: #ffffff !important;
 }
 
@@ -541,19 +588,19 @@ strong, b, em {
 .pill-citrus {
     background: #fffbeb !important;
     color: #b45309 !important;
-    border: 1px solid rgba(245, 158, 11, 0.35) !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
 }
 
 .pill-repellent {
     background: #f0fdf4 !important;
     color: #15803d !important;
-    border: 1px solid rgba(34, 197, 94, 0.35) !important;
+    border: 1px solid rgba(34, 197, 94, 0.4) !important;
 }
 
 .pill-cotton {
     background: #fff1f2 !important;
     color: #be123c !important;
-    border: 1px solid rgba(244, 63, 94, 0.35) !important;
+    border: 1px solid rgba(244, 63, 94, 0.4) !important;
 }
 
 .opacity-swatch {
@@ -564,7 +611,7 @@ strong, b, em {
 /* Stage Watermarks & Drafting Accents */
 .stage-corner-mark,
 .stage-watermark {
-    color: rgba(37, 99, 235, 0.25) !important;
+    color: rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
 }
 
 /* Tables (Harvest table, data grids) */
@@ -575,32 +622,18 @@ table {
 }
 
 th {
-    background: #f8fafc !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.06) !important;
     color: var(--proj-color, #2563eb) !important;
     font-family: monospace !important;
-    border: 1px solid rgba(26, 54, 93, 0.14) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.16) !important;
     padding: 10px 14px !important;
 }
 
 td {
     background: #ffffff !important;
     color: #334155 !important;
-    border: 1px solid rgba(26, 54, 93, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
     padding: 10px 14px !important;
-}
-
-/* Drawing & Media Frames */
-.drawing-viewer,
-.slider-container,
-.hero-visual-frame,
-.perspective-card,
-.lightbox-trigger,
-.media-wrapper,
-.zoom-wrapper,
-.artifact-frame {
-    background: #f1f5f9 !important;
-    border: 1px solid rgba(26, 54, 93, 0.14) !important;
-    border-radius: 8px !important;
 }
 
 /* Captions */
@@ -613,7 +646,7 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 .image-lightbox,
 .lightbox-overlay,
 .lightbox-modal {
-    background: rgba(15, 23, 42, 0.82) !important;
+    background: rgba(15, 23, 42, 0.85) !important;
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
 }
@@ -621,15 +654,15 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 .lightbox-content-box,
 .lightbox-dialog {
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.16) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
     border-radius: 10px !important;
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25), 0 0 20px rgba(var(--proj-rgb, 37, 99, 235), 0.1) !important;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25), 0 0 20px rgba(var(--proj-rgb, 37, 99, 235), 0.12) !important;
 }
 
 .lightbox-close-btn {
-    background: #f1f5f9 !important;
-    border: 1px solid rgba(26, 54, 93, 0.2) !important;
-    color: #0f172a !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+    color: var(--proj-color, #2563eb) !important;
     font-family: monospace !important;
     cursor: none !important;
     transition: all 0.2s ease !important;
@@ -638,7 +671,7 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 .lightbox-close-btn:hover {
     background: var(--proj-color, #2563eb) !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
 }
 
 .lightbox-caption,
@@ -649,9 +682,9 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 
 /* Bottom Footer Return Section */
 .project-footer-nav, .project-detail-footer, .project-bottom-nav {
-    border-top: 1px solid rgba(26, 54, 93, 0.12) !important;
-    background: #f8fafc !important;
-    padding: 32px 24px !important;
+    border-top: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.16) !important;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(var(--proj-rgb, 37, 99, 235), 0.05) 100%) !important;
+    padding: 36px 24px !important;
     margin-top: 60px !important;
 }
 
@@ -671,7 +704,7 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
     gap: 4px !important;
     text-decoration: none !important;
     padding: 12px 20px !important;
-    border: 1px solid rgba(26, 54, 93, 0.12) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.18) !important;
     border-radius: 6px !important;
     background: #ffffff !important;
     color: #334155 !important;
@@ -680,9 +713,9 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 
 .pnav-link:hover, .prev-proj-link:hover, .next-proj-link:hover, .foot-nav-item:hover, .nav-bottom-link:hover {
     border-color: var(--proj-color, #2563eb) !important;
-    background: #eff6ff !important;
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 14px rgba(var(--proj-rgb, 37, 99, 235), 0.15) !important;
+    box-shadow: 0 4px 14px rgba(var(--proj-rgb, 37, 99, 235), 0.18) !important;
 }
 
 .pnav-dir, .nav-dir, .foot-nav-lbl {
@@ -703,7 +736,7 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
     align-items: center !important;
     gap: 10px !important;
     background: #ffffff !important;
-    border: 1px solid rgba(26, 54, 93, 0.18) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
     border-radius: 999px !important;
     padding: 12px 28px !important;
     color: #1e293b !important;
@@ -715,9 +748,9 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
 }
 
 .footer-nav-btn:hover, .pnav-center-btn:hover, .center-directory-btn:hover {
-    background: #eff6ff !important;
+    background: var(--proj-color, #2563eb) !important;
     border-color: var(--proj-color, #2563eb) !important;
-    box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.2) !important;
-    color: var(--proj-color, #2563eb) !important;
+    box-shadow: 0 4px 18px rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+    color: #ffffff !important;
     transform: translateY(-2px) !important;
 }
