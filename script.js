@@ -575,8 +575,8 @@ document.addEventListener('DOMContentLoaded', () => {
             themeLine1: 'TIME · MEMORY',
             themeLine2: 'TRANSFORMATION',
             curve: 'M 340 405 Q 525 610 750 500',
-            labelX: 535,
-            labelY: 525,
+            labelX: 405,
+            labelY: 458,
             badgeW: 104,
             badgeH: 26
         },
