@@ -71,19 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isSpatialInteractive(target)) return true;
 
             const clickableAncestor = target.closest(
-                'a, button, input, select, textarea, label, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"]), ' +
+                'a, button, input, select, textarea, label, summary, details, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"]), ' +
                 '.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, .wwh-btn, .wwh-reopen-circle, ' +
                 '.tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, ' +
                 '.m-lens-btn, .hq-explore-all-btn, .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, ' +
                 '.cluster-state-btn, .merope-modal-backdrop, .c-axis-link, .c-corner-node, .relation-theme-badge, [data-cursor="question"], ' +
-                '.portfolio-filter-item, .methodology-card, .wwh-modal-close'
+                '.portfolio-filter-item, .methodology-card, .wwh-modal-close, .modal-close, .cluster-brand-node, .merope-star, ' +
+                '.c-approach-core, .center-core, #constellation-center-btn, .constellation-center, .cs-core, .node-visual, .card-external-arrow, ' +
+                '.filter-chip, .contact-link, .back-btn, .jump-btn, .prev-proj, .next-proj, .close-detail, .detail-tag, ' +
+                '.modal-img-wrap, .m-lang-btn, .c-axis-hit, .card-action-btn, [onclick], [data-tab], [data-id], [data-pole], [data-target]'
             );
             if (clickableAncestor) return true;
-
-            try {
-                const comp = window.getComputedStyle(target);
-                if (comp && (comp.cursor === 'pointer' || comp.cursor === 'help')) return true;
-            } catch (_) {}
 
             return false;
         }
@@ -110,6 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
                 cursorWrapper.classList.remove('cursor-spatial');
             }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorWrapper.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorWrapper.style.opacity = '1';
         });
     }
 

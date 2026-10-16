@@ -952,7 +952,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: none !important;
     z-index: 40 !important;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
@@ -968,7 +968,7 @@ a:hover {
 
 .merope-star .cluster-star-pill {
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: none !important;
     border-color: rgba(37, 99, 235, 0.35);
 }
 
@@ -4297,8 +4297,6 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 @media (max-width: 768px) {
-    * { cursor: auto !important; }
-    #cursor-wrapper { display: none; }
     body {
         padding: 10px;
         align-items: stretch;
@@ -7301,7 +7299,7 @@ body {
     border: 1px solid rgba(37, 99, 235, 0.28);
     background: rgba(37, 99, 235, 0.05);
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: help !important;
+    cursor: none !important;
 }
 
 .wwh-btn-learn:hover {
@@ -7892,7 +7890,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core * {
   pointer-events: auto !important;
-  cursor: pointer !important;
+  cursor: none !important;
 }
 
 /* -------------------------------------------------------------
@@ -8761,7 +8759,7 @@ body {
 .constellation-center,
 .constellation-center:hover,
 #constellation-center-btn {
-    cursor: default !important;
+    cursor: none !important;
     pointer-events: none !important;
     transform: translate(-50%, -50%) !important;
 }
@@ -9033,7 +9031,7 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
     user-select: none;
     z-index: 45;
@@ -9257,7 +9255,7 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
     user-select: none;
     z-index: 40;
@@ -9513,7 +9511,41 @@ body {
 #tab-main .pleiades-observatory-stage .merope-star,
 #tab-main .pleiades-observatory-stage .merope-star * {
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: none !important;
+}
+
+/* =========================================================
+   ABSOLUTE NATIVE CURSOR SUPPRESSION
+   Ensures the OS/browser native mouse cursor is 100% hidden across all elements,
+   states, pseudo-elements, and viewports. Only the custom cursor shall render.
+   ========================================================= */
+html,
+body,
+*,
+*::before,
+*::after,
+a,
+a:hover,
+a:focus,
+a:active,
+button,
+button:hover,
+button:focus,
+button:active,
+input,
+select,
+textarea,
+label,
+summary,
+details,
+svg,
+svg *,
+canvas,
+iframe,
+[role="button"],
+[role="link"],
+[tabindex] {
+    cursor: none !important;
 }
 
 
