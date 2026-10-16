@@ -50,18 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = (homeStage && homeStage.getAttribute('data-state')) || 'cluster';
 
             if (state === 'cluster') {
-                // In cluster state, circular star cores, cluster-brand-node, and control buttons are interactive:
+                // In cluster state, circular star cores, cluster-brand-node, merope, and control buttons are interactive:
                 if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring')) {
                     return false;
                 }
-                return !!target.closest('.cs-core, .cluster-brand-node, #cluster-brand-node, .cluster-transition-btn, #hq-cluster-toggle-pill');
+                return !!target.closest('.cs-core, .cluster-brand-node, #cluster-brand-node, #merope-star-node, .merope-star, .cluster-transition-btn, #hq-cluster-toggle-pill');
             } else {
                 // In constellation state:
                 // Exclude labels, headers, keywords, orbit rigs, and hidden cluster elements
-                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
+                if (target.closest('.cluster-star-visual, .merope-cluster-view, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
                     return false;
                 }
-                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge, .cluster-brand-node, #cluster-brand-node, .constellation-design-approach-node, #constellation-design-approach-node');
+                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge, .cluster-brand-node, #cluster-brand-node, .constellation-design-approach-node, #constellation-design-approach-node, #merope-star-node, .merope-star');
             }
         }
 
@@ -218,8 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'story',
                 clusterX: 478,
                 clusterY: 510,
-                triangleX: 478,
-                triangleY: 510,
+                triangleX: 500,
+                triangleY: 460,
                 subtle: true,
                 description: 'The seventh sister: mythological reflection on invisibility, presence, and relational cosmology.'
             }
@@ -733,6 +733,20 @@ document.addEventListener('DOMContentLoaded', () => {
             brandNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
         }
 
+        // 3. Smoothly glide Merope (The Hidden Sister -> Design Approach Center Barycenter)
+        const meropeNode = container.querySelector('[id="merope-star-node"], .constellation-design-approach-node');
+        if (meropeNode) {
+            const targetX = isTargetConstellation
+                ? parseFloat(meropeNode.getAttribute('data-triangle-x') || 500)
+                : parseFloat(meropeNode.getAttribute('data-cluster-x') || 478);
+            const targetY = isTargetConstellation
+                ? parseFloat(meropeNode.getAttribute('data-triangle-y') || 460)
+                : parseFloat(meropeNode.getAttribute('data-cluster-y') || 510);
+
+            meropeNode.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
+            meropeNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
+        }
+
         // Unlock after transition duration (2600ms)
         setTimeout(() => {
             isTransitioning = false;
@@ -946,30 +960,52 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
-        // 4. Merope (The 7th Sister) Star element
+        // 4. Merope (The Hidden Sister) / DESIGN APPROACH Morphing Node
         const meropeConfig = PLEIADES_STARS_BY_TARGET['merope-story'];
-        const meropeLeftPct = (meropeConfig.clusterX / stageWidth * 100).toFixed(2);
-        const meropeTopPct = (meropeConfig.clusterY / stageHeight * 100).toFixed(2);
+        const meropeInitX = isClusterInitial ? meropeConfig.clusterX : meropeConfig.triangleX;
+        const meropeInitY = isClusterInitial ? meropeConfig.clusterY : meropeConfig.triangleY;
+        const meropeLeftPct = (meropeInitX / stageWidth * 100).toFixed(2);
+        const meropeTopPct = (meropeInitY / stageHeight * 100).toFixed(2);
         const meropeHtml = `
-            <div class="merope-star" id="merope-star-node" data-id="merope"
-                 style="left: ${meropeLeftPct}%; top: ${meropeTopPct}%;"
-                 tabindex="0"
-                 role="button"
-                 aria-label="Merope: The Seventh Sister Story">
-                <div class="cs-orbit-ring ring-dashed" style="width: 56px; height: 56px;"></div>
-                <div class="cs-core">
-                    <span class="cs-symbol">&#x2726;</span>
+            <a href="#design-approach" class="merope-star constellation-design-approach-node" id="merope-star-node"
+               data-id="merope"
+               data-tab="design-approach"
+               data-cluster-x="${meropeConfig.clusterX}"
+               data-cluster-y="${meropeConfig.clusterY}"
+               data-triangle-x="${meropeConfig.triangleX}"
+               data-triangle-y="${meropeConfig.triangleY}"
+               tabindex="0"
+               role="button"
+               aria-label="The Hidden Sister &bull; Design Approach"
+               style="left: ${meropeLeftPct}%; top: ${meropeTopPct}%;">
+                <div class="center-ring ring-outer"></div>
+                <div class="center-ring ring-mid"></div>
+
+                <!-- State A: The Hidden Sister in Cluster Mode -->
+                <div class="merope-cluster-view">
+                    <div class="cs-orbit-ring ring-dashed" style="width: 56px; height: 56px;"></div>
+                    <div class="cs-core">
+                        <span class="cs-symbol">&#x2726;</span>
+                    </div>
+                    <div class="cs-caption-block">
+                        <span class="cs-project-name">The Hidden Sister</span>
+                        <span class="cs-star-astronomy">Merope &bull; 23 Tauri</span>
+                    </div>
+                    <div class="cluster-star-pill">
+                        <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
+                        <div class="csp-title">THE HIDDEN SISTER</div>
+                        <div class="csp-meta">4.14 mag &bull; Click to read the narrative panel &rarr;</div>
+                    </div>
                 </div>
-                <div class="cs-caption-block">
-                    <span class="cs-project-name">The Hidden Sister</span>
-                    <span class="cs-star-astronomy">Merope &bull; 23 Tauri</span>
+
+                <!-- State B: Design Approach in Constellation Mode -->
+                <div class="merope-constellation-view">
+                    <div class="c-approach-core">
+                        <span class="c-approach-word">DESIGN</span>
+                        <span class="c-approach-word">APPROACH</span>
+                    </div>
                 </div>
-                <div class="cluster-star-pill">
-                    <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
-                    <div class="csp-title">THE HIDDEN SISTER</div>
-                    <div class="csp-meta">4.14 mag &bull; Click to read the narrative panel &rarr;</div>
-                </div>
-            </div>
+            </a>
         `;
 
         // 5. Alcyone / EG Center coordinates based on state
@@ -1027,19 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </a>
 
-                <!-- Central Barycenter DESIGN APPROACH Node (Emerges with radiant burst in Constellation) -->
-                <a href="#design-approach" class="constellation-design-approach-node" id="constellation-design-approach-node"
-                   data-tab="design-approach"
-                   aria-label="Methodology &amp; Design Approach"
-                   style="left: 50.00%; top: 61.33%;">
-                    <div class="center-ring ring-outer"></div>
-                    <div class="center-ring ring-mid"></div>
-                    <div class="c-approach-core">
-                        <span class="c-approach-word">DESIGN</span>
-                        <span class="c-approach-word">APPROACH</span>
-                    </div>
-                </a>
-
                 <!-- 3 Sector Corner Nodes (Vertices with Hover Emphasis) -->
                 <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="critical-inquiry" data-tab="design-approach" aria-label="Methodology: Critical Inquiry" style="left: 50.00%; top: 8.00%;">
                     <div class="c-corner-ring-outer"></div>
@@ -1065,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </a>
 
-                <!-- Merope 7th Sister Star -->
+                <!-- Merope (The Hidden Sister) / DESIGN APPROACH Morphing Node -->
                 ${meropeHtml}
 
                 <!-- 12 Spatial Project Nodes -->
@@ -1101,11 +1124,17 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.hq-card').forEach(c => c.classList.remove('is-constellation-highlight'));
         }
 
-        // Central DESIGN APPROACH Node -> Navigate to Methodology
-        if (approachNode) {
-            approachNode.addEventListener('click', (e) => {
+        // Merope / Hidden Sister -> Design Approach Morphing Node
+        if (meropeStar) {
+            meropeStar.addEventListener('click', (e) => {
                 e.preventDefault();
-                switchTab('design-approach');
+                e.stopPropagation();
+                const isCluster = container.getAttribute('data-state') === 'cluster';
+                if (isCluster) {
+                    openMeropeStoryModal();
+                } else {
+                    switchTab('design-approach');
+                }
             });
         }
 
@@ -1167,15 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Merope Click -> Open Merope Story Modal (ONLY in cluster state)
-        if (meropeStar) {
-            meropeStar.addEventListener('click', (e) => {
-                if (container.getAttribute('data-state') !== 'cluster') return;
-                e.preventDefault();
-                e.stopPropagation();
-                openMeropeStoryModal();
-            });
-        }
+
 
         // Node hover & click interactions (strictly triggered by project photo sphere .node-visual)
         allNodes.forEach(node => {
@@ -1645,10 +1666,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const approachNode = e.target.closest('#constellation-design-approach-node, .constellation-design-approach-node');
-        if (approachNode) {
+        const approachOrMerope = e.target.closest('#merope-star-node, .merope-star, #constellation-design-approach-node, .constellation-design-approach-node');
+        if (approachOrMerope) {
             e.preventDefault();
-            switchTab('design-approach');
+            const homeSky = document.getElementById('hq-constellation-sky');
+            const isCluster = !homeSky || homeSky.getAttribute('data-state') === 'cluster';
+            if (isCluster) {
+                openMeropeStoryModal();
+            } else {
+                switchTab('design-approach');
+            }
             return;
         }
     });

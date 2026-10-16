@@ -921,6 +921,7 @@ a:hover {
 }
 
 /* Subtle Merope (The 7th Sister) Styling */
+/* Subtle Merope (The 7th Sister) Styling */
 .merope-star {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -930,56 +931,59 @@ a:hover {
     justify-content: center;
     pointer-events: auto !important;
     cursor: pointer !important;
-    z-index: 35 !important;
+    z-index: 40 !important;
     min-width: 44px;
     min-height: 44px;
-    opacity: 0.62;
-    filter: brightness(0.85);
-    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 1 !important;
     user-select: none;
+    text-decoration: none;
+    transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .merope-star .cluster-star-pill {
     pointer-events: auto !important;
     cursor: pointer !important;
+    border-color: rgba(37, 99, 235, 0.35);
 }
 
 .merope-star .cs-core {
-    width: 32px;
-    height: 32px;
-    border: 1.8px dashed rgba(148, 163, 184, 0.75);
-    background: #090d1a;
-    box-shadow: 0 0 16px rgba(148, 163, 184, 0.45);
+    width: 34px;
+    height: 34px;
+    border: 1.8px dashed #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 16px rgba(37, 99, 235, 0.45);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .merope-star .cs-symbol {
-    color: #94a3b8;
+    color: #2563eb;
     font-size: 1.15rem;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .merope-star:hover {
-    opacity: 1 !important;
-    filter: brightness(1.25) !important;
-    transform: translate(-50%, -50%) scale(1.18);
+    transform: translate(-50%, -50%) scale(1.15);
 }
 
 .merope-star:hover .cs-core {
-    border: 2px solid #a78bfa;
-    background: #1e1b4b;
-    box-shadow: 0 0 28px rgba(167, 139, 250, 0.85);
+    border: 2px solid #1d4ed8;
+    background: #2563eb;
+    box-shadow: 0 0 28px rgba(37, 99, 235, 0.85);
 }
 
 .merope-star:hover .cs-symbol {
-    color: #c4b5fd;
+    color: #ffffff;
     transform: rotate(45deg);
 }
 
-.merope-star .cluster-star-pill {
-    border-color: rgba(167, 139, 250, 0.35);
-}
-
 .merope-star:hover .cluster-star-pill {
-    border-color: #a78bfa;
+    border-color: #2563eb;
 }
 
 /* State-Dependent Visibility & Pointer Events */
@@ -987,10 +991,6 @@ a:hover {
 .pleiades-observatory-stage[data-state="cluster"] .merope-star {
     opacity: 1;
     pointer-events: auto !important;
-}
-
-.pleiades-observatory-stage[data-state="cluster"] .merope-star {
-    opacity: 0.62;
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .constellation-node:not(.is-cluster-star),
@@ -1290,20 +1290,11 @@ a:hover {
 }
 
 
-/* --- ALCYONE (CENTER) & MEROPE (7th SISTER) TRANSITIONS --- */
-.pleiades-observatory-stage[data-state="constellation"] .merope-star {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-    transform: translate(-50%, -50%) scale(0.25) !important;
-    transition: opacity 0.8s ease, transform 1.0s ease, visibility 0s 0.8s !important;
-}
-
-.pleiades-observatory-stage[data-state="cluster"] .merope-star {
-    opacity: 0.62 !important;
+/* --- ALCYONE (CENTER) & MEROPE (THE HIDDEN SISTER -> DESIGN APPROACH) TRANSITIONS --- */
+.pleiades-observatory-stage .merope-star {
+    opacity: 1 !important;
     visibility: visible !important;
-    transform: translate(-50%, -50%) scale(1) !important;
-    transition: opacity 1.0s ease 0.4s, transform 1.2s ease 0.4s, visibility 0s 0s !important;
+    pointer-events: auto !important;
 }
 
 .pleiades-observatory-stage[data-state="constellation"] .constellation-center .cs-caption-block,
@@ -7862,12 +7853,20 @@ body {
   clip-path: circle(50% at 50% 50%) !important;
 }
 
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .merope-cluster-view,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .merope-cluster-view *,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual * {
   pointer-events: none !important;
   cursor: none !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core * {
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
 
 /* -------------------------------------------------------------
@@ -9018,8 +9017,8 @@ body {
     color: #1d4ed8;
 }
 
-/* 2. Constellation Geometric Center "DESIGN APPROACH" Node */
-.constellation-design-approach-node {
+/* 2. Merope (The Hidden Sister) <-> DESIGN APPROACH Unified Morphing Node */
+.merope-star.constellation-design-approach-node {
     position: absolute;
     transform: translate(-50%, -50%);
     display: flex;
@@ -9030,28 +9029,100 @@ body {
     pointer-events: auto !important;
     user-select: none;
     z-index: 40;
-    will-change: transform, opacity;
+    will-change: left, top, transform;
+    transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.constellation-design-approach-node .ring-outer {
+/* Concentric Dual Rings around Merope / Design Approach */
+.merope-star .ring-outer {
     inset: -14px;
     border: 1.5px dashed rgba(37, 99, 235, 0.4);
     animation: hqSpinRingRev 22s linear infinite;
+    transition: opacity 0.6s ease, border-color 0.4s ease;
 }
 
-.constellation-design-approach-node .ring-mid {
+.merope-star .ring-mid {
     inset: -7px;
     border: 1.5px solid rgba(37, 99, 235, 0.25);
     animation: hqSpinRing 28s linear infinite;
+    transition: opacity 0.6s ease;
 }
 
+/* Internal Views: Cluster (Hidden Sister) vs Constellation (Design Approach) */
+.merope-cluster-view {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.merope-constellation-view {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- CLUSTER MODE: The Hidden Sister is Active --- */
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-cluster-view {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) !important;
+    pointer-events: auto !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-constellation-view {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: scale(0.25) !important;
+    pointer-events: none !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-outer {
+    opacity: 0.38;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-mid {
+    opacity: 0.28;
+}
+
+/* --- CONSTELLATION MODE: The Hidden Sister Morphs into Radiant DESIGN APPROACH --- */
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-cluster-view {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: scale(0.25) !important;
+    pointer-events: none !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-constellation-view {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) !important;
+    pointer-events: auto !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .ring-outer {
+    opacity: 1 !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .ring-mid {
+    opacity: 1 !important;
+}
+
+/* Design Approach Core Styling */
 .c-approach-core {
     width: 68px;
     height: 68px;
     border-radius: 50%;
     background: #ffffff !important;
     border: 2px solid #2563eb !important;
-    box-shadow: 0 0 26px rgba(37, 99, 235, 0.5), 0 4px 18px rgba(37, 99, 235, 0.25) !important;
+    box-shadow: 0 0 28px rgba(37, 99, 235, 0.55), 0 4px 20px rgba(37, 99, 235, 0.25) !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9075,34 +9146,19 @@ body {
     transition: color 0.3s ease;
 }
 
-.constellation-design-approach-node:hover .c-approach-core {
+.merope-star:hover .c-approach-core {
     transform: scale(1.08);
     background: #2563eb !important;
     border-color: #1d4ed8 !important;
-    box-shadow: 0 0 36px rgba(37, 99, 235, 0.8), 0 8px 24px rgba(15, 23, 42, 0.15) !important;
+    box-shadow: 0 0 38px rgba(37, 99, 235, 0.85), 0 8px 24px rgba(15, 23, 42, 0.15) !important;
 }
 
-.constellation-design-approach-node:hover .c-approach-word {
+.merope-star:hover .c-approach-word {
     color: #ffffff !important;
 }
 
-.constellation-design-approach-node:hover .ring-outer {
+.merope-star:hover .ring-outer {
     border-color: #2563eb;
-}
-
-/* Cluster Mode vs Constellation Mode Transitions for Central Approach Node */
-.pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: translate(-50%, -50%) scale(0.08) !important;
-    transition: opacity 0.8s ease 0.2s, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
-}
-
-.pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: translate(-50%, -50%) scale(1) !important;
-    transition: opacity 0.5s ease 0.15s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s !important;
 }
 
 /* Mobile & Touch Responsiveness */
@@ -9126,16 +9182,10 @@ body {
 /* Pointer Events and Cursor overrides for observatory stage mount */
 #tab-main .pleiades-observatory-stage .cluster-brand-node,
 #tab-main .pleiades-observatory-stage .cluster-brand-node *,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node * {
+#tab-main .pleiades-observatory-stage .merope-star,
+#tab-main .pleiades-observatory-stage .merope-star * {
     pointer-events: auto !important;
     cursor: pointer !important;
-}
-
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node * {
-    pointer-events: none !important;
-    cursor: none !important;
 }
 
 
