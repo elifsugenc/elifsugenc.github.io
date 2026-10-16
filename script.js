@@ -65,37 +65,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Add hover effect for clickable elements
+        // Check if a target element is clickable/interactive across the entire portfolio
+        function isClickable(target) {
+            if (!target || target === document.body || target === document.documentElement) return false;
+            if (isSpatialInteractive(target)) return true;
+
+            const clickableAncestor = target.closest(
+                'a, button, input, select, textarea, label, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"]), ' +
+                '.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, .wwh-btn, .wwh-reopen-circle, ' +
+                '.tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, ' +
+                '.m-lens-btn, .hq-explore-all-btn, .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, ' +
+                '.cluster-state-btn, .merope-modal-backdrop, .c-axis-link, .c-corner-node, .relation-theme-badge, [data-cursor="question"], ' +
+                '.portfolio-filter-item, .methodology-card, .wwh-modal-close'
+            );
+            if (clickableAncestor) return true;
+
+            try {
+                const comp = window.getComputedStyle(target);
+                if (comp && (comp.cursor === 'pointer' || comp.cursor === 'help')) return true;
+            } catch (_) {}
+
+            return false;
+        }
+
+        // Add hover effect for clickable elements (pulsing / blinking question mark cursor)
         document.addEventListener('mouseover', (e) => {
-            // 1. Clickable elements inside Spatial Map (strictly state-segregated)
-            if (isSpatialInteractive(e.target)) {
+            const spatial = isSpatialInteractive(e.target);
+            if (spatial) {
                 cursorWrapper.classList.add('cursor-spatial');
-                customCursor.classList.remove('cursor-hover', 'cursor-project');
-                return;
             } else {
                 cursorWrapper.classList.remove('cursor-spatial');
             }
 
-            // 2. Elements outside spatial map or non-spatial controls
-            const projectItem = e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]');
-            if (projectItem) {
-                customCursor.classList.remove('cursor-hover');
-                customCursor.classList.add('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn, .merope-modal-backdrop')) {
-                customCursor.classList.add('cursor-hover');
+            if (spatial || isClickable(e.target)) {
+                customCursor.classList.add('cursor-hover', 'cursor-question');
+            } else {
+                customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
             }
         });
 
         document.addEventListener('mouseout', (e) => {
-            // Check if leaving spatial map clickable element
-            if (!e.relatedTarget || !isSpatialInteractive(e.relatedTarget)) {
+            const rel = e.relatedTarget;
+            if (!rel || (!isSpatialInteractive(rel) && !isClickable(rel))) {
+                customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
                 cursorWrapper.classList.remove('cursor-spatial');
-            }
-
-            if (e.target.closest('.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, [data-cursor="question"]')) {
-                customCursor.classList.remove('cursor-project');
-            } else if (e.target.closest('a, button, .tag, .tab-button, .dir-btn, .hq-view-btn, .m-tri-node-group, .m-tri-tag-group, .m-tri-center-group, .m-tri-edge-group, .m-lens-btn, .hq-explore-all-btn, [role="button"], .cluster-transition-btn, .hq-cluster-toggle-pill, .merope-close-btn, .merope-foot-cta, .cluster-state-btn, .merope-modal-backdrop')) {
-                customCursor.classList.remove('cursor-hover');
             }
         });
     }
