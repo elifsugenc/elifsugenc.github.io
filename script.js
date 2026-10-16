@@ -2187,12 +2187,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'emek-museum': {
                 en: `
                     <p>Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself—their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum asks: how can we make this labour visible again?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum asks: how can we make this labour visible again?</p>
                     <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Spatial research &amp; counter-monument initiative in progress.</p>
                 `,
                 tr: `
                     <p>İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor—onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum soruyor: bu emeği yeniden nasıl görünür kılabiliriz?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum soruyor: bu emeği yeniden nasıl görünür kılabiliriz?</p>
                     <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Mekânsal araştırma ve karşı-anıt inisiyatifi geliştirilme aşamasındadır.</p>
                 `
             },
@@ -2209,24 +2209,24 @@ document.addEventListener('DOMContentLoaded', () => {
             'you-were-here': {
                 en: `
                     <p><strong>YOU WERE HERE.</strong> transforms the entire portfolio website into an active topological sensorium. When a visitor grants consent, their involuntary cursor gestures are recorded across the viewport as normalized coordinate vectors. Kinetic velocities are inverted into line stroke weights, while cognitive hesitations bloom into translucent cerulean halos.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Can an anonymous trace possess the weight of physical presence? Can a cursor line become an architectural memory?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Can an anonymous trace possess the weight of physical presence? Can a cursor line become an architectural memory?</p>
                     <p>Rather than surveillance, this is an open participatory monument: a persistent Cloud Firebase Firestore archive preserving both past and live traces, generating lightweight 1:1 PNG vector-raster artifacts, and superimposing all journeys into a living collective palimpsest.</p>
                 `,
                 tr: `
                     <p><strong>YOU WERE HERE.</strong>, tüm portfolyo web sitesini duyarlı bir mekânsal yüzeye dönüştürür. Ziyaretçi rıza verdiğinde, ekran üzerindeki tüm istemsiz imleç hareketleri normalize edilmiş koordinat vektörleri olarak kaydedilir. Hareket hızları ters orantılı çizgi kalınlıklarına dönüşürken, okuma ve düşünme duraklamaları yarı saydam mavi hâleler olarak çiçek açar.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Anonim bir imleç çizgisi fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Anonim bir imleç çizgisi fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?</p>
                     <p>Bu sistem bir gözetleme mekanizması değil; katılımcı bir açık anıttır: geçmiş ve canlı tüm izleri Cloud Firebase Firestore üzerinde koruyan, hafif 1:1 PNG artefaktları üreten ve tüm ziyaretleri canlı bir kolektif dijital tortuda buluşturan bir bellek deneyi.</p>
                 `
             },
             'chronoclines': {
                 en: `
                     <p><strong>CHRONOCLINES</strong> interrogates how an urban territory registers and exhibits its own temporal transformations. Investigating algorithmic stratification and digital forensics, the project translates historical topographical sedimentations, spatial layers, and collective memory into generative cartographic artifacts.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Can a city exhibit itself?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Can a city exhibit itself?</p>
                     <p>By superimposing historical strata and contemporary urban flows, Chronoclines questions whether architectural representation can function not merely as a static blueprint, but as an evolving geological and societal clock.</p>
                 `,
                 tr: `
                     <p><strong>CHRONOCLINES</strong>, kentsel bir coğrafyanın kendi zamansal dönüşümlerini nasıl kaydettiğini ve sergilediğini sorgular. Algoritmik katmanlaşma ve dijital adli mimarlık tekniklerini araştıran proje; kentin tarihsel topoğrafik tortularını, mekânsal katmanlarını ve kolektif hafızasını üretken kartografik artefaktlara dönüştürür.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Bir kent kendi kendini sergileyebilir mi?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Bir kent kendi kendini sergileyebilir mi?</p>
                     <p>Tarihsel katmanlar ile çağdaş kentsel akışları üst üste bindiren Chronoclines, mimari temsilin yalnızca durağan bir plan değil, yaşayan jeolojik ve toplumsal bir saat olarak çalışıp çalışamayacağını tartışır.</p>
                 `
             },
@@ -2273,12 +2273,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'ara-sira': {
                 en: `
                     <p><strong>ARA-SIRA</strong> investigates dual-state spatial dynamics, collective play, and quiet contemplation within community architecture. Exploring how a single envelope can transition between energetic shared activity and introverted solitude, the project utilizes flexible furniture systems and tactile thresholds.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Can one space hold both play and quiet?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Can one space hold both play and quiet?</p>
                     <p>Through an editorial format and tactile full-scale mockups, Ara-Sıra demonstrates how modular timber and acoustic boundaries negotiate conflicting civic desires without resorting to permanent physical separation.</p>
                 `,
                 tr: `
                     <p><strong>ARA-SIRA</strong>, topluluk mekânlarında çift kutuplu mekânsal dinamikleri, kolektif oyun ve sessiz tefekkür hallerini araştırır. Tek bir mekân zarfının enerjik ortak faaliyetler ile içe dönük dinginlik arasında nasıl geçiş yapabileceğini esnek donatılar ve duyusal eşikler aracılığıyla inceler.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Bir mekân hem oyunu hem sessizliği aynı anda barındırabilir mi?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Bir mekân hem oyunu hem sessizliği aynı anda barındırabilir mi?</p>
                     <p>Editoryal bir yayın formatı ve birebir ölçekli prototipler üzerinden proje; modüler ahşap ve akustik sınırların, kalıcı duvarlara gerek kalmaksızın zıt kamusal beklentileri nasıl uzlaştırabileceğini ortaya koyar.</p>
                 `
             },
@@ -2305,12 +2305,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'fire-escape-simulation': {
                 en: `
                     <p><strong>FIRE ESCAPE SIMULATION</strong> is a computational behavioral inquiry and spatial simulation investigating emergency crowd dynamics, exit route choices, and spatial panic under hazardous conditions.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Can you escape the fire?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Can you escape the fire?</p>
                     <p>By modeling individual agent behaviors, visibility occlusions, bottlenecks, and speed variations during emergency egress, the simulation interrogates whether conventional fire exit codes truly account for psychological hesitation and collective spatial instincts.</p>
                 `,
                 tr: `
                     <p><strong>FIRE ESCAPE SIMULATION</strong>, acil durum tahliye dinamiklerini, kaçış rotası tercihlerini ve tehlike anındaki mekânsal paniği araştıran hesaplamalı bir simülasyon ve davranış modelidir.</p>
-                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Yangından kaçabilir misin?</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Yangından kaçabilir misin?</p>
                     <p>Bireysel etmen (agent) davranışlarını, duman ve görüş engellerini, darboğazları ve tahliye hızlarını simüle eden çalışma; standart yangın kaçış yönetmeliklerinin insan psikolojisindeki tereddüt ve kolektif içgüdüleri ne kadar doğru öngörebildiğini sorgular.</p>
                 `
             }
@@ -2477,8 +2477,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         let liveBadgeHTML = '';
                         if (slug === 'you-were-here') {
                             liveBadgeHTML = `
-                                <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.28); border-radius: 999px; font-family: monospace; font-size: 0.74rem; font-weight: 700; color: #22c55e;">
-                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: wwhPulseDot 1.8s infinite ease-in-out;"></span>
+                                <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.28); border-radius: 999px; font-family: monospace; font-size: 0.74rem; font-weight: 700; color: #15803d;">
+                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 8px rgba(22, 163, 74, 0.5); animation: wwhPulseDot 1.8s infinite ease-in-out;"></span>
                                     <span>LIVE PARTICIPATORY TELEMETRY ACTIVE</span>
                                 </div>
                             `;

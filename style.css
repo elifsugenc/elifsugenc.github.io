@@ -4544,21 +4544,22 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .modal-preview-compact .m-statement-block {
-    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.88);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
-    border-radius: 8px;
-    padding: 24px 28px;
-    backdrop-filter: blur(8px);
+    background: #ffffff;
+    border: 1.5px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22);
+    border-radius: 10px;
+    padding: 28px 32px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05), 0 0 16px rgba(var(--proj-rgb, 37, 99, 235), 0.06);
 }
 
 .modal-preview-compact .m-desc-pane {
     font-size: 1.05rem;
-    line-height: 1.72;
-    color: #cbd5e1;
+    line-height: 1.75;
+    color: #334155;
 }
 
 .modal-preview-compact .m-desc-pane p {
-    margin-bottom: 14px;
+    color: #334155;
+    margin-bottom: 16px;
 }
 
 .modal-preview-compact .m-desc-pane p:last-child {
@@ -4696,51 +4697,68 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 }
 
 .m-statement-block {
-    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.85);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
-    border-radius: 8px;
-    padding: 26px 28px;
-    backdrop-filter: blur(8px);
+    background: #ffffff;
+    border: 1.5px solid rgba(var(--proj-rgb, 37, 99, 235), 0.2);
+    border-radius: 10px;
+    padding: 26px 30px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
 }
 
 .m-lang-toggle {
     display: flex;
     gap: 10px;
     margin-bottom: 18px;
-    border-bottom: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.2);
+    border-bottom: 1px dashed rgba(var(--proj-rgb, 37, 99, 235), 0.2);
     padding-bottom: 14px;
 }
 
 .m-lang-btn {
-    background: rgba(var(--proj-bg-rgb, 15, 23, 42), 0.75);
-    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
+    background: #f8fafc;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22);
     border-radius: 20px;
-    padding: 6px 16px;
+    padding: 7px 18px;
     font-family: monospace;
     font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: #94a3b8;
+    color: #475569;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.m-lang-btn.active, .m-lang-btn:hover {
-    background: rgba(var(--proj-rgb, 56, 189, 248), 0.22);
-    border-color: var(--proj-color, #38bdf8);
+.m-lang-btn.active {
+    background: var(--proj-color, #2563eb);
+    border-color: var(--proj-color, #2563eb);
     color: #ffffff;
-    box-shadow: 0 0 12px rgba(var(--proj-rgb, 56, 189, 248), 0.25);
+    box-shadow: 0 4px 14px rgba(var(--proj-rgb, 37, 99, 235), 0.28);
+}
+
+.m-lang-btn:hover:not(.active) {
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08);
+    border-color: var(--proj-color, #2563eb);
+    color: var(--proj-color, #2563eb);
 }
 
 .m-desc-pane {
     display: none;
-    font-size: 0.98rem;
-    line-height: 1.7;
-    color: #cbd5e1;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #334155;
+}
+
+.m-desc-pane p {
+    color: #334155;
+    margin-bottom: 14px;
 }
 
 .m-desc-pane strong {
-    color: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.m-desc-pane em {
+    color: #1e293b;
+    font-style: italic;
 }
 
 .m-desc-pane.active {
@@ -8759,6 +8777,113 @@ body {
     background: var(--proj-color, #2563eb) !important;
     color: #ffffff !important;
     box-shadow: 0 4px 16px rgba(var(--proj-rgb, 37, 99, 235), 0.25) !important;
+}
+
+/* PREVIEW MODAL — TEXT & STATEMENT ENHANCED CONTRAST OVERRIDES */
+.modal-preview-compact .m-statement-block,
+.m-statement-block {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05), 0 0 16px rgba(var(--proj-rgb, 37, 99, 235), 0.06) !important;
+}
+
+.m-desc-pane,
+.m-desc-pane p,
+.modal-preview-compact .m-desc-pane,
+.modal-preview-compact .m-desc-pane p {
+    color: #334155 !important;
+    font-size: 1.05rem !important;
+    line-height: 1.75 !important;
+}
+
+.m-desc-pane strong,
+.modal-preview-compact .m-desc-pane strong {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+.m-desc-pane em,
+.modal-preview-compact .m-desc-pane em {
+    color: #1e293b !important;
+}
+
+.m-lang-btn {
+    background: #f8fafc !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.22) !important;
+    color: #475569 !important;
+}
+
+.m-lang-btn.active {
+    background: var(--proj-color, #2563eb) !important;
+    border-color: var(--proj-color, #2563eb) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(var(--proj-rgb, 37, 99, 235), 0.28) !important;
+}
+
+.m-lang-btn:hover:not(.active) {
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
+    border-color: var(--proj-color, #2563eb) !important;
+    color: var(--proj-color, #2563eb) !important;
+}
+
+#modal-award-pill,
+.project-modal .card-award-pill,
+.modal-tag.tag-award {
+    background: #fffbeb !important;
+    color: #b45309 !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12) !important;
+}
+
+.modal-tag.tag-ongoing {
+    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
+    color: var(--proj-color, #2563eb) !important;
+    border: 1px solid rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+}
+
+.m-living-hero-badge {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #15803d !important;
+    border: 1px solid rgba(34, 197, 94, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+.modal-preview-compact .modal-open-standalone-btn,
+.modal-preview-compact .m-btn-primary {
+    background: #0f172a !important;
+    border: 1px solid #0f172a !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15) !important;
+}
+
+.modal-preview-compact .modal-open-standalone-btn:hover,
+.modal-preview-compact .m-btn-primary:hover {
+    background: var(--proj-color, #2563eb) !important;
+    border-color: var(--proj-color, #2563eb) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(var(--proj-rgb, 37, 99, 235), 0.3) !important;
+}
+
+.modal-num {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+.m-quote-box,
+.m-gal-card,
+.m-boards-strip {
+    background: #ffffff !important;
+    border-color: rgba(var(--proj-rgb, 37, 99, 235), 0.2) !important;
+    color: #334155 !important;
+}
+
+.m-gal-card img {
+    background: #f8fafc !important;
+}
+
+.m-gal-caption {
+    color: #475569 !important;
 }
 
 /* OBSERVATORY CANVAS ELEMENTS OVERRIDE (Corners, Center Core, Stars & Pills) */
