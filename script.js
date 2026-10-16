@@ -1050,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    data-cluster-y="${alcyoneConfig.clusterY}"
                    data-triangle-x="${alcyoneConfig.triangleX}"
                    data-triangle-y="${alcyoneConfig.triangleY}"
-                   aria-label="About Elifsu Genç — Curriculum Vitae &amp; Manifesto"
+                   aria-label="About Elifsu Genç — Alcyone &bull; &eta; Tauri"
                    style="left: ${egLeftPct}%; top: ${egTopPct}%;">
                     <div class="brand-cluster-circle">
                         <div class="center-ring ring-outer"></div>
@@ -1058,8 +1058,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="brand-circle-core"></div>
                     </div>
                     <div class="brand-content">
-                        <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="brand-logo-gif" width="44" height="44">
+                        <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="brand-logo-gif" width="40" height="40">
                         <span class="brand-name-text">elifsu genc.</span>
+                    </div>
+                    <div class="cs-caption-block">
+                        <span class="cs-project-name">About</span>
+                        <span class="cs-star-astronomy">Alcyone &bull; &eta; Tauri</span>
+                    </div>
+                    <div class="cluster-star-pill">
+                        <div class="csp-star">ALCYONE <span class="csp-bayer">&bull; &eta; Tauri</span></div>
+                        <div class="csp-title">ABOUT // PRACTICE NEXUS</div>
+                        <div class="csp-meta">2.87 mag &bull; Curriculum Vitae &bull; Manifesto &rarr;</div>
                     </div>
                 </a>
 

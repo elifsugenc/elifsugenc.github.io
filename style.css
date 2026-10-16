@@ -8905,11 +8905,14 @@ body {
    ========================================================= */
 
 /* 1. Alcyone Cluster Star / Floating Brand Logo Node */
+/* 1. Alcyone Cluster Star / Floating Brand Logo Node */
 .cluster-brand-node {
     position: absolute;
     transform: translate(-50%, -50%);
-    display: inline-flex;
-    flex-direction: column;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -8927,10 +8930,10 @@ body {
     transform: translate(-50%, -50%) scale(1.08);
 }
 
-/* Cluster Halo Circle surrounding the logo in Cluster Mode */
+/* Cluster Halo Circle surrounding the logo in Cluster Mode (Strict Perfect Circle) */
 .brand-cluster-circle {
     position: absolute;
-    inset: -14px;
+    inset: 0;
     pointer-events: none;
     border-radius: 50%;
     transition: opacity 0.8s ease;
@@ -8955,12 +8958,14 @@ body {
 .brand-cluster-circle .ring-outer {
     inset: -14px;
     border: 1.5px dashed rgba(37, 99, 235, 0.45);
+    border-radius: 50%;
     animation: hqSpinRingRev 20s linear infinite;
 }
 
 .brand-cluster-circle .ring-mid {
     inset: -7px;
     border: 1.5px solid rgba(37, 99, 235, 0.35);
+    border-radius: 50%;
     animation: hqSpinRing 26s linear infinite;
 }
 
@@ -8980,17 +8985,16 @@ body {
 .brand-content {
     position: relative;
     z-index: 2;
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
     pointer-events: auto !important;
 }
 
 .brand-logo-gif {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     display: block;
     object-fit: contain;
     mix-blend-mode: multiply;
@@ -9001,7 +9005,16 @@ body {
     transform: scale(1.06);
 }
 
-.brand-name-text {
+/* In cluster mode: NO "elifsu genc." text! */
+.pleiades-observatory-stage[data-state="cluster"] .brand-name-text {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* In constellation mode (top-left): Show "elifsu genc." underneath the logo */
+.pleiades-observatory-stage[data-state="constellation"] .brand-name-text {
+    display: block !important;
     font-family: var(--font-primary, 'Space Grotesk', sans-serif);
     font-size: 0.72rem;
     font-weight: 500;
@@ -9010,11 +9023,81 @@ body {
     text-transform: lowercase;
     line-height: 1.1;
     white-space: nowrap;
-    transition: color 0.2s ease;
+    margin-top: 3px;
+    transition: color 0.2s ease, opacity 0.5s ease 0.3s;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .cluster-brand-node:hover .brand-name-text {
     color: #1d4ed8;
+}
+
+/* Alcyone Caption Block in Cluster vs Constellation */
+.cluster-brand-node .cs-caption-block {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
+    z-index: 25;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .cluster-brand-node .cs-caption-block {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .cluster-brand-node .cs-caption-block,
+.pleiades-observatory-stage[data-state="constellation"] .cluster-brand-node .cluster-star-pill {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateX(-50%) translateY(8px) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s !important;
+}
+
+.cluster-brand-node:hover .cs-caption-block {
+    opacity: 0.18 !important;
+    transform: translateX(-50%) translateY(2px) !important;
+}
+
+.cluster-brand-node .cluster-star-pill {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    top: auto;
+    left: 50%;
+    transform: translate(-50%, 8px) scale(0.96);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 7px 11px;
+    background: #ffffff;
+    border: 1px solid rgba(37, 99, 235, 0.45);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12), 0 0 16px rgba(37, 99, 235, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    z-index: 90;
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .cluster-brand-node:hover .cluster-star-pill {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%, 0) scale(1) !important;
+    pointer-events: auto !important;
 }
 
 /* 2. Merope (The Hidden Sister) <-> DESIGN APPROACH Unified Morphing Node */
