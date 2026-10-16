@@ -926,14 +926,15 @@ a:hover {
     position: absolute;
     transform: translate(-50%, -50%);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     pointer-events: auto !important;
     cursor: pointer !important;
     z-index: 40 !important;
-    min-width: 44px;
-    min-height: 44px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-sizing: border-box;
     opacity: 1 !important;
     user-select: none;
     text-decoration: none;
@@ -8911,7 +8912,12 @@ body {
     transform: translate(-50%, -50%);
     width: 66px;
     height: 66px;
+    min-width: 66px;
+    min-height: 66px;
+    max-width: 66px;
+    max-height: 66px;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8920,6 +8926,8 @@ body {
     pointer-events: auto !important;
     user-select: none;
     z-index: 45;
+    flex-shrink: 0;
+    box-sizing: border-box;
     will-change: left, top, transform;
     transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
                 top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -8934,15 +8942,23 @@ body {
 .brand-cluster-circle {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
     transition: opacity 0.8s ease;
 }
 
 .brand-circle-core {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
     background: #ffffff;
     border: 2px solid #2563eb;
     box-shadow: 0 0 24px rgba(37, 99, 235, 0.4), 0 0 45px rgba(37, 99, 235, 0.2);
@@ -8956,16 +8972,30 @@ body {
 
 /* Outer & Mid spinning dashed rings inside brand circle */
 .brand-cluster-circle .ring-outer {
-    inset: -14px;
+    position: absolute;
+    width: calc(100% + 28px);
+    height: calc(100% + 28px);
+    top: -14px;
+    left: -14px;
     border: 1.5px dashed rgba(37, 99, 235, 0.45);
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    transform-origin: center center;
     animation: hqSpinRingRev 20s linear infinite;
 }
 
 .brand-cluster-circle .ring-mid {
-    inset: -7px;
+    position: absolute;
+    width: calc(100% + 14px);
+    height: calc(100% + 14px);
+    top: -7px;
+    left: -7px;
     border: 1.5px solid rgba(37, 99, 235, 0.35);
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    transform-origin: center center;
     animation: hqSpinRing 26s linear infinite;
 }
 
@@ -9104,6 +9134,14 @@ body {
 .merope-star.constellation-design-approach-node {
     position: absolute;
     transform: translate(-50%, -50%);
+    width: 78px;
+    height: 78px;
+    min-width: 78px;
+    min-height: 78px;
+    max-width: 78px;
+    max-height: 78px;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9112,48 +9150,91 @@ body {
     pointer-events: auto !important;
     user-select: none;
     z-index: 40;
+    flex-shrink: 0;
+    box-sizing: border-box;
     will-change: left, top, transform;
     transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
                 top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
                 transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Concentric Dual Rings around Merope / Design Approach */
+/* Concentric Dual Rings around Merope / Design Approach (Strict 1:1 Circle Geometry) */
 .merope-star .ring-outer {
-    inset: -14px;
-    border: 1.5px dashed rgba(37, 99, 235, 0.4);
-    animation: hqSpinRingRev 22s linear infinite;
-    transition: opacity 0.6s ease, border-color 0.4s ease;
+    position: absolute !important;
+    width: calc(100% + 28px) !important;
+    height: calc(100% + 28px) !important;
+    top: -14px !important;
+    left: -14px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    border: 1.5px dashed rgba(37, 99, 235, 0.45) !important;
+    box-sizing: border-box !important;
+    pointer-events: none !important;
+    transform-origin: center center !important;
+    animation: hqSpinRingRev 22s linear infinite !important;
+    transition: opacity 0.6s ease, border-color 0.4s ease !important;
 }
 
 .merope-star .ring-mid {
-    inset: -7px;
-    border: 1.5px solid rgba(37, 99, 235, 0.25);
-    animation: hqSpinRing 28s linear infinite;
-    transition: opacity 0.6s ease;
+    position: absolute !important;
+    width: calc(100% + 14px) !important;
+    height: calc(100% + 14px) !important;
+    top: -7px !important;
+    left: -7px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    border: 1.5px solid rgba(37, 99, 235, 0.28) !important;
+    box-sizing: border-box !important;
+    pointer-events: none !important;
+    transform-origin: center center !important;
+    animation: hqSpinRing 28s linear infinite !important;
+    transition: opacity 0.6s ease !important;
 }
 
 /* Internal Views: Cluster (Hidden Sister) vs Constellation (Design Approach) */
 .merope-cluster-view {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1 !important;
+    box-sizing: border-box !important;
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
 }
 
 .merope-constellation-view {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.7s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1 !important;
+    box-sizing: border-box !important;
+    transition: opacity 0.7s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* --- CLUSTER MODE: The Hidden Sister is Active --- */
+.pleiades-observatory-stage[data-state="cluster"] .merope-star {
+    width: 66px !important;
+    height: 66px !important;
+    min-width: 66px !important;
+    min-height: 66px !important;
+    max-width: 66px !important;
+    max-height: 66px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+}
+
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-cluster-view {
+    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: scale(1) !important;
@@ -9161,6 +9242,7 @@ body {
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-constellation-view {
+    display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     transform: scale(0.25) !important;
@@ -9168,15 +9250,27 @@ body {
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-outer {
-    opacity: 0.38;
+    opacity: 0.38 !important;
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-mid {
-    opacity: 0.28;
+    opacity: 0.28 !important;
 }
 
 /* --- CONSTELLATION MODE: The Hidden Sister Morphs into Radiant DESIGN APPROACH --- */
+.pleiades-observatory-stage[data-state="constellation"] .merope-star {
+    width: 78px !important;
+    height: 78px !important;
+    min-width: 78px !important;
+    min-height: 78px !important;
+    max-width: 78px !important;
+    max-height: 78px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+}
+
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-cluster-view {
+    display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
     transform: scale(0.25) !important;
@@ -9184,6 +9278,7 @@ body {
 }
 
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-constellation-view {
+    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: scale(1) !important;
@@ -9198,23 +9293,33 @@ body {
     opacity: 1 !important;
 }
 
-/* Design Approach Core Styling */
+/* Design Approach Core Styling (Strict 1:1 Perfect Circle) */
 .c-approach-core {
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
+    width: 68px !important;
+    height: 68px !important;
+    min-width: 68px !important;
+    min-height: 68px !important;
+    max-width: 68px !important;
+    max-height: 68px !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1 !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    box-sizing: border-box !important;
     background: #ffffff !important;
     border: 2px solid #2563eb !important;
     box-shadow: 0 0 28px rgba(37, 99, 235, 0.55), 0 4px 20px rgba(37, 99, 235, 0.25) !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    margin: auto !important;
+    overflow: hidden !important;
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
                 background 0.3s ease,
                 border-color 0.3s ease,
-                box-shadow 0.3s ease;
+                box-shadow 0.3s ease !important;
 }
 
 .c-approach-word {
@@ -9227,10 +9332,11 @@ body {
     text-align: center;
     text-transform: uppercase;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .merope-star:hover .c-approach-core {
-    transform: scale(1.08);
+    transform: scale(1.08) !important;
     background: #2563eb !important;
     border-color: #1d4ed8 !important;
     box-shadow: 0 0 38px rgba(37, 99, 235, 0.85), 0 8px 24px rgba(15, 23, 42, 0.15) !important;
@@ -9241,7 +9347,18 @@ body {
 }
 
 .merope-star:hover .ring-outer {
-    border-color: #2563eb;
+    border-color: #2563eb !important;
+}
+
+/* Explicit Keyframe Definitions for Smooth Rotating Rings */
+@keyframes hqSpinRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes hqSpinRingRev {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
 }
 
 /* Mobile & Touch Responsiveness */
@@ -9253,12 +9370,29 @@ body {
     .brand-name-text {
         font-size: 0.62rem;
     }
+    .pleiades-observatory-stage[data-state="constellation"] .merope-star {
+        width: 64px !important;
+        height: 64px !important;
+        min-width: 64px !important;
+        min-height: 64px !important;
+        max-width: 64px !important;
+        max-height: 64px !important;
+        aspect-ratio: 1 / 1 !important;
+    }
     .c-approach-core {
-        width: 56px;
-        height: 56px;
+        width: 56px !important;
+        height: 56px !important;
+        min-width: 56px !important;
+        min-height: 56px !important;
+        max-width: 56px !important;
+        max-height: 56px !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
     }
     .c-approach-word {
-        font-size: 0.48rem;
+        font-size: 0.46rem !important;
+        letter-spacing: 0.1em !important;
     }
 }
 
