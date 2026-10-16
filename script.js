@@ -1571,7 +1571,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pleiadesMount = document.getElementById('pleiades-stage-mount');
     if (pleiadesMount) {
         const curHash = window.location.hash.replace('#', '').trim();
-        const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-'));
+        const portfolioProjectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
+        const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || portfolioProjectSlugs.includes(curHash));
         renderConstellation(pleiadesMount, startInConstellation ? 'constellation' : 'cluster');
     }
 
@@ -1714,12 +1715,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#card-wood-weave) and support back/forward
+    // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#stray) and support back/forward
     function openFromHash() {
         const hash = window.location.hash.replace('#', '').trim();
+        const projectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
         
-        // Handle return to a specific project modal over Constellation Map (e.g. #project-wood-weave, #modal-wood-weave, #card-wood-weave)
-        if (hash.startsWith('project-') || hash.startsWith('modal-') || hash.startsWith('card-') || (hash && document.getElementById(`card-${hash}`))) {
+        // Handle return or direct navigation to a specific project modal over Constellation Map (e.g. #stray, #project-wood-weave, #card-wood-weave)
+        if (projectSlugs.includes(hash) || hash.startsWith('project-') || hash.startsWith('modal-') || hash.startsWith('card-') || (hash && document.getElementById(`card-${hash}`))) {
             const slug = hash.replace(/^(project-|modal-|card-)/, '');
             
             // 1. Activate Main tab and ensure Constellation state is active
@@ -1733,10 +1735,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Open the project modal preview window with dedicated page button
             setTimeout(() => {
                 if (typeof window.openProjectModalBySlug === 'function') {
-                    window.openProjectModalBySlug(slug);
+                    window.openProjectModalBySlug(slug, false);
                 }
             }, 100);
             return;
+        }
+
+        // If modal was open and user navigated back to a non-project hash, close modal
+        const pModal = document.getElementById('project-modal');
+        if (pModal && !pModal.classList.contains('hidden')) {
+            pModal.classList.add('hidden');
+            document.body.style.overflow = '';
         }
 
         if (hash === 'constellation' || hash === 'projects') {
@@ -2160,19 +2169,163 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalClose = document.getElementById('modal-close');
     
     if (projectModal && modalClose) {
-        // Close modal
-        modalClose.addEventListener('click', () => {
+        const portfolioProjectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
+
+        // Centralized Bilingual Project Statements for Concise Previews
+        const PROJECT_PREVIEW_STATEMENTS = {
+            'emek-museum': {
+                en: `
+                    <p>Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself—their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum asks: how can we make this labour visible again?</p>
+                    <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Spatial research &amp; counter-monument initiative in progress.</p>
+                `,
+                tr: `
+                    <p>İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor—onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum soruyor: bu emeği yeniden nasıl görünür kılabiliriz?</p>
+                    <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Mekânsal araştırma ve karşı-anıt inisiyatifi geliştirilme aşamasındadır.</p>
+                `
+            },
+            'stray': {
+                en: `
+                    <p><strong>STRAY</strong> investigates the boundaries between purposelessness and presence in contemporary urban life. Grounded in 19th-century theories of the <em>Flâneur</em>, Situationist <em>dérive</em> (psychogeography), and the <em>Slow City</em> philosophy, the project questions the utilitarian tyranny of efficiency: <em>“Is doing nothing doing something?”</em> and <em>“Is it laziness to do (nothing)?”</em></p>
+                    <p>Situated along the coastal tree canopy of Moda, Kadıköy, the building acts as an open urban interior where pedestrians naturally drift inward from the seaside promenade. A continuous multi-level ramp weaves through a series of transformative zones—from semi-outdoor frontyards framed by magenta mesh lattices, to active mark-making surfaces where visitors leave tangible traces of their thoughts, to flexible moveable-wall workshops, culminating in the contemplative sensory silence of <em>The Dark Room</em>.</p>
+                `,
+                tr: `
+                    <p><strong>STRAY</strong>, çağdaş kent yaşamında amaçsızlık ile varoluş arasındaki sınırları araştıran bir mekânsal sorgulamadır. 19. yüzyılın <em>Flâneur</em> kavramından, Sitüasyonist <em>dérive</em> (psikocoğrafya) pratiklerinden ve <em>Sakin Şehir (Slow City)</em> felsefesinden beslenen proje, faydacı üretkenlik baskısını tersyüz eder: <em>“Hiçbir şey yapmamak bir şey yapmak mıdır?”</em> ve <em>“Aylaklık tembellik midir?”</em></p>
+                    <p>Kadıköy Moda Sahili boyunca uzanan ağaç dokusunun arkasında konumlanan yapı, yayaların sahil hattından içeriye kendiliğinden sürüklendiği bir kentsel iç mekan gibi kurgulanmıştır. Sürekli bir rampa omurgası, pembe metal ızgaralarla filtrelenen yarı açık avlulardan, ziyaretçilerin çizimler ve izler bıraktığı etkileşimli yüzeylere, hareketli duvarlarla dönüşen atölyelere ve en üstte duyusal bir içe dönüş sunan <em>Karanlık Oda'ya (The Dark Room)</em> kadar uzanan kesintisiz bir deneyim sunar.</p>
+                `
+            },
+            'you-were-here': {
+                en: `
+                    <p><strong>YOU WERE HERE.</strong> transforms the entire portfolio website into an active topological sensorium. When a visitor grants consent, their involuntary cursor gestures are recorded across the viewport as normalized coordinate vectors. Kinetic velocities are inverted into line stroke weights, while cognitive hesitations bloom into translucent cerulean halos.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Can an anonymous trace possess the weight of physical presence? Can a cursor line become an architectural memory?</p>
+                    <p>Rather than surveillance, this is an open participatory monument: a persistent Cloud Firebase Firestore archive preserving both past and live traces, generating lightweight 1:1 PNG vector-raster artifacts, and superimposing all journeys into a living collective palimpsest.</p>
+                `,
+                tr: `
+                    <p><strong>YOU WERE HERE.</strong>, tüm portfolyo web sitesini duyarlı bir mekânsal yüzeye dönüştürür. Ziyaretçi rıza verdiğinde, ekran üzerindeki tüm istemsiz imleç hareketleri normalize edilmiş koordinat vektörleri olarak kaydedilir. Hareket hızları ters orantılı çizgi kalınlıklarına dönüşürken, okuma ve düşünme duraklamaları yarı saydam mavi hâleler olarak çiçek açar.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #22c55e); padding-left: 14px;">Anonim bir imleç çizgisi fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?</p>
+                    <p>Bu sistem bir gözetleme mekanizması değil; katılımcı bir açık anıttır: geçmiş ve canlı tüm izleri Cloud Firebase Firestore üzerinde koruyan, hafif 1:1 PNG artefaktları üreten ve tüm ziyaretleri canlı bir kolektif dijital tortuda buluşturan bir bellek deneyi.</p>
+                `
+            },
+            'chronoclines': {
+                en: `
+                    <p><strong>CHRONOCLINES</strong> interrogates how an urban territory registers and exhibits its own temporal transformations. Investigating algorithmic stratification and digital forensics, the project translates historical topographical sedimentations, spatial layers, and collective memory into generative cartographic artifacts.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Can a city exhibit itself?</p>
+                    <p>By superimposing historical strata and contemporary urban flows, Chronoclines questions whether architectural representation can function not merely as a static blueprint, but as an evolving geological and societal clock.</p>
+                `,
+                tr: `
+                    <p><strong>CHRONOCLINES</strong>, kentsel bir coğrafyanın kendi zamansal dönüşümlerini nasıl kaydettiğini ve sergilediğini sorgular. Algoritmik katmanlaşma ve dijital adli mimarlık tekniklerini araştıran proje; kentin tarihsel topoğrafik tortularını, mekânsal katmanlarını ve kolektif hafızasını üretken kartografik artefaktlara dönüştürür.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ea580c); padding-left: 14px;">Bir kent kendi kendini sergileyebilir mi?</p>
+                    <p>Tarihsel katmanlar ile çağdaş kentsel akışları üst üste bindiren Chronoclines, mimari temsilin yalnızca durağan bir plan değil, yaşayan jeolojik ve toplumsal bir saat olarak çalışıp çalışamayacağını tartışır.</p>
+                `
+            },
+            'millieu': {
+                en: `
+                    <p><strong>Millieu</strong> (/mɪl'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in Kadıköy’s historic Yeldeğirmeni district. Defined as <em>a person’s social environment or atmosphere</em>, the project reinterprets the historical heritage of Yeldeğirmeni—where coastal winds once powered windmills transforming grain into flour—into a contemporary social hub centered around the craft of quiche.</p>
+                    <p>Quiche functions as a circular architectural diagram of communal sharing. The geometric dialogue between windmill blades, the sliced pastry wedge, and the letterform <em>M</em> generates the entire spatial language: from custom triangular table bases and arched lighting brackets to an expansive stepped amphitheater framed by burgundy tubular steel pergolas.</p>
+                `,
+                tr: `
+                    <p><strong>Millieu</strong> (/mɪl'ju:/), Kadıköy Yeldeğirmeni’nin köklü mahalle hafızası ile gastronomi ritüelini iç mimari bir deneyimde buluşturan bir mekânsal tasarımdır. Etimolojik olarak <em>kişinin içinde bulunduğu toplumsal çevre veya atmosfer</em> anlamına gelen "milieu" kavramı; geçmişte yel değirmenleriyle buğdayın una dönüştüğü bu tarihi semtte, kiş (quiche) pişirme ve paylaşma eylemi etrafında yeni bir kentsel buluşma alanına dönüşür.</p>
+                    <p>Kiş, yuvarlak bütününden dilimlenerek paylaşılan formuyla projenin temel mekânsal şemasına ilham verir. Yel değirmeni kanatları, kiş dilimi ve "M" harfinin geometrik kesişimi; özel tasarım üçgen masa ayaklarından kemerli aydınlatmalara, bordo çelik konstrüksiyonlu amfi basamaklarından özel ambalaj ve menü tasarımına kadar tüm mekân tektoniğini şekillendirir.</p>
+                `
+            },
+            'sprouting-garden': {
+                en: `
+                    <p><strong>Sprouting Garden</strong> is situated in a public park beside the historical Kuzguncuk Bostanı in Üsküdar, Istanbul. Its primary objective is to forge a shared-use community pavilion dedicated to cultivating, preparing, and serving a specialty culinary dish crafted from native bean varieties specifically adapted to Kuzguncuk’s microclimate.</p>
+                    <p>Designed to weave gracefully into the park without severing the historical foot-traffic between adjacent streets (+18.00m to +22.50m), the pavilion is constructed entirely from wood with an open, perforated waffle structure. This porous skin provides climbing beans with an organic trellis while honoring the height and spread of mature park trees.</p>
+                `,
+                tr: `
+                    <p><strong>Sprouting Garden</strong>, İstanbul'un Üsküdar ilçesinde, tarihi Kuzguncuk Bostanı'na komşu bir park alanında yer almaktadır. Projenin ana konusu, Kuzguncuk Bostanı'nda yetişen ve bölgenin iklimine uygun yerel fasulye çeşitlerinden yapılan özel bir ritüel yemeğinin hazırlanması, servis edilmesi ve yetiştirilmesi süreçlerini destekleyen ortak bir kamusal yapı tasarlamaktır.</p>
+                    <p>Yapı, iki sokak arasındaki yaya geçirgenliğini koparmamak ve doğal çevreyle uyum içinde olmak için ahşaptan, boşluklu bir waffle strüktür olarak kurgulanmıştır. Açık ve gözenekli yapısı fasulyelerin sarmaşıklarına dikey tırmanma alanı sağlarken, parktaki mevcut ağaçların boyutlarına saygı göstererek etraflarından kıvrılır.</p>
+                `
+            },
+            'bajo-la-fresca': {
+                en: `
+                    <p><strong>Bajo la Fresca</strong> is a contextual research and ephemeral spatial installation realized in Patio San Basilio 44 during the celebrated Fiesta de los Patios in Córdoba, Spain. Exploring the socio-climatic ritual of <em>tomar el fresco</em> (gathering outside in the evening cool), the project reinterprets the UNESCO-recognized courtyard as an atmospheric sanctuary of coexistence.</p>
+                    <p>To overcome the strict ground and wall limitations of the historic courtyard, the installation suspends an undulating, lightweight pleated canopy that carries gradient-dyed cotton petals infused with fresh Andalusian orange and lemon peels alongside natural citronella essence. As convective evening breezes circulate, the suspended pouches sway gently, diffusing pleasant citrus notes and creating a sensory microclimatic refuge for neighbors and visitors below.</p>
+                `,
+                tr: `
+                    <p><strong>Bajo la Fresca</strong>, Córdoba’nın dünyaca ünlü tarihi avlu şenlikleri (Fiesta de los Patios) sırasında Patio San Basilio 44 avlusunda hayata geçirilen bağlamsal bir araştırma ve mekânsal yerleştirmedir. Proje, akşam serinliğinde kapı önüne veya avluya çıkıp komşularla sohbet etme geleneği olan <em>tomar el fresco</em> ritüelini merkeze alır.</p>
+                    <p>Tarihi avludaki dar zemin ve duvar kısıtlarını aşmak amacıyla avlunun gökyüzü boşluğuna dalgalı kumaş kıvrımlarından oluşan asılı bir gölgelik yerleştirilmiştir. Begonvil ve narenciye tonlarında degrade boyanmış pamuk liflerine emdirilen taze portakal-limon kabukları ve doğal sivrisinek kovucu esanslar, akşam esintileriyle avluya yayılarak altındaki ziyaretçilere ferahlatıcı bir mikroklimatik sığınak sunar.</p>
+                `
+            },
+            'wood-weave': {
+                en: `
+                    <p><strong>WOOD WEAVE</strong> is formed by interlocking wooden pieces, each two meters in length, creating flexible spatial intervals between them. This design provides a generative civic space where individuals can showcase and display their creations, while offering local bazaar vendors and pedestrians the opportunity to personalize their own territories within the space.</p>
+                    <p>Situated directly beside the historic market in Bursa, students and neighbors gather every Thursday morning following Wednesday's market day to collect leftover wooden fruit crates and agricultural surplus. Throughout the week, they experiment with wood joinery, botanical drying, textile sewing, and sculpting, discovering how to repurpose waste into functional community architecture.</p>
+                `,
+                tr: `
+                    <p><strong>WOOD WEAVE</strong>, her biri iki metre uzunluğunda birbirine kenetlenen ahşap parçalardan meydana gelmekte ve aralarında zengin mekânsal boşluklar üretmektedir. Bu kurgu, kullanıcıların kendi üretimlerini sergileyebilecekleri ortak bir zemin sağlarken, Bursa Tarihi Çarşısı'nı kullanan esnafa ve mahalle sakinlerine mekân içinde kendi kişiselleştirilmiş alanlarını kurma özgürlüğü tanır.</p>
+                    <p>Bursa'daki tarihi pazar alanının hemen bitişiğinde yer alan projede öğrenciler ve mahalle sakinleri, Çarşamba günleri kurulan pazarın ardından Perşembe sabahları atık ahşap meyve kasalarını ve sebze-meyve fazlalıklarını toplar. Hafta boyunca atölyelerde bu malzemeler kurutma, dikiş, yontu ve strüktürel eklemlenme teknikleriyle yeni mekân bileşenlerine dönüştürülür.</p>
+                `
+            },
+            'ara-sira': {
+                en: `
+                    <p><strong>ARA-SIRA</strong> investigates dual-state spatial dynamics, collective play, and quiet contemplation within community architecture. Exploring how a single envelope can transition between energetic shared activity and introverted solitude, the project utilizes flexible furniture systems and tactile thresholds.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Can one space hold both play and quiet?</p>
+                    <p>Through an editorial format and tactile full-scale mockups, Ara-Sıra demonstrates how modular timber and acoustic boundaries negotiate conflicting civic desires without resorting to permanent physical separation.</p>
+                `,
+                tr: `
+                    <p><strong>ARA-SIRA</strong>, topluluk mekânlarında çift kutuplu mekânsal dinamikleri, kolektif oyun ve sessiz tefekkür hallerini araştırır. Tek bir mekân zarfının enerjik ortak faaliyetler ile içe dönük dinginlik arasında nasıl geçiş yapabileceğini esnek donatılar ve duyusal eşikler aracılığıyla inceler.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #818cf8); padding-left: 14px;">Bir mekân hem oyunu hem sessizliği aynı anda barındırabilir mi?</p>
+                    <p>Editoryal bir yayın formatı ve birebir ölçekli prototipler üzerinden proje; modüler ahşap ve akustik sınırların, kalıcı duvarlara gerek kalmaksızın zıt kamusal beklentileri nasıl uzlaştırabileceğini ortaya koyar.</p>
+                `
+            },
+            'the-earthen': {
+                en: `
+                    <p><strong>The Earthen</strong> approaches architecture as a closed-loop living metabolism that embraces decay as the fertile origin of new life. Structured upon a vertical cycle of matter—from subterranean liquid mud-bathing and soaking pools, up to radial shaping workshops in the Material Creator Lab, and crowning in a +6.00m terrace garden where decomposed matter regenerates living soil.</p>
+                    <p>Functional curved metal tubes weave through the entire volume, serving simultaneously as primary structural columns, interior furniture (benches, tables, dividers), and vertical pipelines transporting harvested seeds, clay slurry, and water between levels. Translucent fiberglass envelopes diffuse harsh urban light into a warm, contemplative glow.</p>
+                `,
+                tr: `
+                    <p><strong>The Earthen</strong>, mimariyi çözünmeyi yeni yaşamın doğurgan başlangıcı olarak kucaklayan kapalı devre bir metabolizma olarak ele alır. Maddenin dikey dönüşüm döngüsü üzerine kurgulanmıştır: en alttaki sıvı çamur banyolarından başlayıp, zemin kattaki radyal yoğurma ve şekillendirme atölyelerine, oradan da ayrışan organik maddenin toprağı beslediği +6.00m çatı teras bahçesine uzanır.</p>
+                    <p>Çok işlevli metal boru ağı; taşıyıcı strüktür, mobilya ve tohum/çamur/su taşıyan düşey tesisat kanalları olarak tüm yapıyı canlı bir dolaşım sistemiyle birbirine bağlar. Dıştaki yarı saydam fiberglas kabuk, sert kentsel ışığı süzerek iç mekânda meditatif ve sıcak bir atmosfer yaratır.</p>
+                `
+            },
+            'bio-decay': {
+                en: `
+                    <p><strong>BIO-DECAY</strong> investigates non-petrochemical material life cycles within an urban interior, confronting the insidious presence of synthetic microplastics in daily consumption. Situated in the historic Milli Reasürans Passage in Nişantaşı, Istanbul, the project establishes a living organic archive, bio-materials laboratory, and public amphitheater fueled by local restaurant food waste.</p>
+                    <p>Structured with a permanent steel wire grid skeleton, the architecture accepts decomposition as an intrinsic material quality: food-waste biopolymer panels soften, darken, and biodegrade over time, inviting visitors to harvest, cast, and replace degrading tiles in an unending cycle of civic renewal.</p>
+                `,
+                tr: `
+                    <p><strong>BIO-DECAY</strong>, kentsel bir iç mekânda petrokimyasal olmayan malzeme yaşam döngülerini ve günlük tüketimimizdeki mikroplastik tehdidini araştırır. İstanbul Nişantaşı’ndaki tarihi Milli Reasürans Pasajı’nda konumlanan proje; çevre restoranların gıda atıklarıyla beslenen yaşayan organik bir arşiv, biyo-malzeme laboratuvarı ve kamusal amfi kurgular.</p>
+                    <p>Kalıcı bir çelik hasır iskelet üzerine inşa edilen yapı, çözünmeyi mimarinin doğal bir parçası olarak kabul eder: atık gıdalardan üretilen biyo-plastik paneller zamanla renk değiştirir, kararır ve yavaşça ayrışır; ziyaretçiler kendi ürettikleri yeni panelleri eskileriyle değiştirerek yapıyı yaşayan bir döngüde tutar.</p>
+                `
+            },
+            'fire-escape-simulation': {
+                en: `
+                    <p><strong>FIRE ESCAPE SIMULATION</strong> is a computational behavioral inquiry and spatial simulation investigating emergency crowd dynamics, exit route choices, and spatial panic under hazardous conditions.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Can you escape the fire?</p>
+                    <p>By modeling individual agent behaviors, visibility occlusions, bottlenecks, and speed variations during emergency egress, the simulation interrogates whether conventional fire exit codes truly account for psychological hesitation and collective spatial instincts.</p>
+                `,
+                tr: `
+                    <p><strong>FIRE ESCAPE SIMULATION</strong>, acil durum tahliye dinamiklerini, kaçış rotası tercihlerini ve tehlike anındaki mekânsal paniği araştıran hesaplamalı bir simülasyon ve davranış modelidir.</p>
+                    <p style="font-size: 1.15rem; font-weight: 700; color: var(--text-color); margin: 10px 0; border-left: 3px solid var(--proj-color, #ef4444); padding-left: 14px;">Yangından kaçabilir misin?</p>
+                    <p>Bireysel etmen (agent) davranışlarını, duman ve görüş engellerini, darboğazları ve tahliye hızlarını simüle eden çalışma; standart yangın kaçış yönetmeliklerinin insan psikolojisindeki tereddüt ve kolektif içgüdüleri ne kadar doğru öngörebildiğini sorgular.</p>
+                `
+            }
+        };
+
+        // Close modal and revert URL hash to #constellation
+        function closeProjectModal() {
             projectModal.classList.add('hidden');
             document.body.style.overflow = '';
-            if (window.location.hash.startsWith('#project-') || window.location.hash.startsWith('#modal-') || window.location.hash.startsWith('#card-') || window.location.hash === '#projects') {
+            const curHash = window.location.hash.replace(/^#/, '').trim();
+            if (portfolioProjectSlugs.includes(curHash) || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || curHash === 'projects') {
                 history.replaceState(null, '', '#constellation');
             }
-        });
+        }
+        window.closeProjectModal = closeProjectModal;
+        modalClose.addEventListener('click', closeProjectModal);
 
-        function openProjectModalBySlug(slug) {
+        function openProjectModalBySlug(slug, updateHash = true) {
             if (!slug || !projectModal) return;
             slug = slug.replace(/^(project-|modal-|card-)/, '').trim();
             window.lastOpenedProjectSlug = slug;
+
+            // Synchronize browser address bar to #proje-adi
+            if (updateHash && window.location.hash !== '#' + slug) {
+                history.pushState({ modalSlug: slug }, '', '#' + slug);
+            }
 
             // Try to find the master project card in the Projects tab to get full data
             let masterCard = document.querySelector(`.project-card[href*="${slug}"]`) || document.getElementById(`card-${slug}`);
@@ -2302,723 +2455,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-                    // Rich Project Content Injection
+                    // Concise Statement Content & Dedicated Page Link Injection
                     const modalTextContainer = projectModal.querySelector('.modal-text');
                     if (modalTextContainer) {
-                        if (slug === 'sprouting-garden') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO</span><span class="m-val">Rituals of Otherworldly &bull; Fall 2023–24</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">AWARDS</span><span class="m-val">★ MEF Dean's Award &bull; 1st Year (Best Projects)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">INSTRUCTOR</span><span class="m-val">İrem Korkmaz</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Kuzguncuk Bostanı, Üsküdar / İstanbul</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Public Food Architecture &bull; Waffle Timber</span></div>
-                                    </div>
+                        const stmt = PROJECT_PREVIEW_STATEMENTS[slug] || {
+                            en: '<p>Here you can dive deep into the details of the project. This is a full in-page preview that maintains the portfolio\'s architectural directory interface without navigating to a blank page.</p>',
+                            tr: '<p>Burada projenin detaylı açıklamasını ve mekânsal kurgusunu inceleyebilirsiniz.</p>'
+                        };
 
-                                    <div class="m-action-bar">
-                                        <a href="./projects/sprouting-garden/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                        <a href="./projects/sprouting-garden/assets/sprouting-garden-booklet.pdf" target="_blank" class="m-action-btn m-btn-secondary modal-open-standalone-btn">
-                                            <span>VIEW PROCESS BOOKLET (PDF) ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>The user is not only human.</strong> Making a space where trees, beans, and humans can live and grow together.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>How to settle down without chopping the trees down?</strong> The timber waffle envelope curves organically around existing canopies.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Hide everything, but don't hide anything.</strong> Public services shape themselves seamlessly out of the structural ribs.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>Sprouting Garden</strong> is situated in a public park beside the historical Kuzguncuk Bostanı in Üsküdar, Istanbul. Its primary objective is to forge a shared-use community pavilion dedicated to cultivating, preparing, and serving a specialty culinary dish crafted from native bean varieties specifically adapted to Kuzguncuk’s microclimate.</p>
-                                            <p>Designed to weave gracefully into the park without severing the historical foot-traffic between adjacent streets (+18.00m to +22.50m), the pavilion is constructed entirely from wood with an open, perforated waffle structure. This porous skin provides climbing beans with an organic trellis while honoring the height and spread of mature park trees.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>Sprouting Garden</strong>, İstanbul'un Üsküdar ilçesinde, tarihi Kuzguncuk Bostanı'na komşu bir park alanında yer almaktadır. Projenin ana konusu, Kuzguncuk Bostanı'nda yetişen ve bölgenin iklimine uygun yerel fasulye çeşitlerinden yapılan özel bir ritüel yemeğinin hazırlanması, servis edilmesi ve yetiştirilmesi süreçlerini destekleyen ortak bir kamusal yapı tasarlamaktır.</p>
-                                            <p>Yapı, iki sokak arasındaki yaya geçirgenliğini koparmamak ve doğal çevreyle uyum içinde olmak için ahşaptan, boşluklu bir waffle strüktür olarak kurgulanmıştır. Açık ve gözenekli yapısı fasulyelerin sarmaşıklarına dikey tırmanma alanı sağlarken, parktaki mevcut ağaçların boyutlarına saygı göstererek etraflarından kıvrılır.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">STRUCTURAL & CULINARY DIAGRAMS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/sprouting-garden/assets/diagram-exploded-axonometric.jpg" alt="Exploded Axonometric">
-                                                <div class="m-gal-caption">EXPLODED AXONOMETRIC &bull; Waffle canopy, bridge plate, sub-structure & nested services</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/sprouting-garden/assets/diagram-culinary-ritual.jpg" alt="Culinary Ritual">
-                                                <div class="m-gal-caption">SPROUTING PLATE PREPARATION &bull; 11-day seed to dish cyclical ritual</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/sprouting-garden/assets/drawing-site-plan.jpg" alt="1/200 Site Plan">
-                                                <div class="m-gal-caption">1/200 SITE PLAN &bull; Kuzguncuk Bostanı & street permeability</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/sprouting-garden/assets/drawing-sections.jpg" alt="1/100 Sections">
-                                                <div class="m-gal-caption">1/100 SECTIONS AA' & BB' &bull; Topographic relationship & tree preservation</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>FULL EXHIBITION BOARDS & BOOKLET &bull; DEAN'S AWARD</h4>
-                                            <p>Access the complete 1/100 level plans, structural waffle joinery, atmosphere collages, and process booklet selected for the MEF University Dean's Awards (1st Year Category).</p>
-                                        </div>
-                                        <a href="./projects/sprouting-garden/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
+                        let liveBadgeHTML = '';
+                        if (slug === 'you-were-here') {
+                            liveBadgeHTML = `
+                                <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.28); border-radius: 999px; font-family: monospace; font-size: 0.74rem; font-weight: 700; color: #22c55e;">
+                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: wwhPulseDot 1.8s infinite ease-in-out;"></span>
+                                    <span>LIVE PARTICIPATORY TELEMETRY ACTIVE</span>
                                 </div>
                             `;
-                        } else if (slug === 'wood-weave') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO</span><span class="m-val">Spatial Design &bull; 2024</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Historic Bazaar District, Bursa / Türkiye</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Community Upcycling Hub &bull; Covered Arcade</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">PRIMARY MEDIUM</span><span class="m-val">Modular Timber Beams (2-Meter Units)</span></div>
-                                    </div>
+                        }
 
-                                    <div class="m-action-bar">
-                                        <a href="./projects/wood-weave/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                        <a href="./projects/wood-weave/#boards" class="m-action-btn m-btn-secondary modal-open-standalone-btn">
-                                            <span>VIEW FULL JURY BOARDS & POSTERS ↗</span>
-                                        </a>
+                        modalTextContainer.innerHTML = `
+                            <div class="modal-project-body modal-preview-compact">
+                                <div class="m-statement-block">
+                                    <div class="m-lang-toggle">
+                                        <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
+                                        <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
                                     </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>When does waste become a place?</strong> Transforming discarded market produce crates and organic surplus into building blocks of community life.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Modular 2-Meter Interlocking Logic:</strong> Interlocking timber beams assemble without irreversible wet joints, creating spaces for personal display.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Living Collectively with Less Waste:</strong> Every Thursday morning, students gather the market's surplus and repurpose materials through hands-on making.</p>
-                                        </div>
+                                    <div id="m-desc-en" class="m-desc-pane active">
+                                        ${stmt.en}
                                     </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>WOOD WEAVE</strong> is formed by interlocking wooden pieces, each two meters in length, creating flexible spatial intervals between them. This design provides a generative civic space where individuals can showcase and display their creations, while offering local bazaar vendors and pedestrians the opportunity to personalize their own territories within the space.</p>
-                                            <p>Situated directly beside the historic market in Bursa, students and neighbors gather every Thursday morning following Wednesday's market day to collect leftover wooden fruit crates and agricultural surplus. Throughout the week, they experiment with wood joinery, botanical drying, textile sewing, and sculpting, discovering how to repurpose waste into functional community architecture.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>WOOD WEAVE</strong>, her biri iki metre uzunluğunda birbirine kenetlenen ahşap parçalardan meydana gelmekte ve aralarında zengin mekânsal boşluklar üretmektedir. Bu kurgu, kullanıcıların kendi üretimlerini sergileyebilecekleri ortak bir zemin sağlarken, Bursa Tarihi Çarşısı'nı kullanan esnafa ve mahalle sakinlerine mekân içinde kendi kişiselleştirilmiş alanlarını kurma özgürlüğü tanır.</p>
-                                            <p>Bursa'daki tarihi pazar alanının hemen bitişiğinde yer alan projede öğrenciler ve mahalle sakinleri, Çarşamba günleri kurulan pazarın ardından Perşembe sabahları atık ahşap meyve kasalarını ve sebze-meyve fazlalıklarını toplar. Hafta boyunca atölyelerde bu malzemeler kurutma, dikiş, yontu ve strüktürel eklemlenme teknikleriyle yeni mekân bileşenlerine dönüştürülür.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">ARCHITECTURAL DRAWINGS & PROCESS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/wood-weave/assets/sheet_detail_1.jpg" alt="1/200 Axonometric Overview">
-                                                <div class="m-gal-caption">1/200 AXONOMETRIC OVERVIEW &bull; Interlocking timber structure weaving through Bursa alleyway</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/wood-weave/assets/section-dd.jpg" alt="1/100 Section DD'">
-                                                <div class="m-gal-caption">1/100 SECTION DD' &bull; Hanging stepped timber ceiling with display niches and street passage</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/wood-weave/assets/sheet_detail_5.jpg" alt="Upcycling Storyboard">
-                                                <div class="m-gal-caption">UPCYCLING STORYBOARD &bull; Thursday market collection, workshop crafting & exhibition display</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/wood-weave/assets/sections-aa-bb.jpg" alt="1/500 Sections A'A & B'B">
-                                                <div class="m-gal-caption">1/500 SECTIONS A'A & B'B &bull; Bursa historic vaults, urban profile & diurnal solar trajectory</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE JURY BOARDS &amp; HIGH-RES POSTERS</h4>
-                                            <p>Access full 1/100 floor plans, 1/200 elevations, demographic analysis, and 9933&times;18000px exhibition posters on the dedicated project page.</p>
-                                        </div>
-                                        <a href="./projects/wood-weave/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
+                                    <div id="m-desc-tr" class="m-desc-pane">
+                                        ${stmt.tr}
                                     </div>
                                 </div>
-                            `;
-                        } else if (slug === 'bio-decay') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO</span><span class="m-val">INT 202 Design Studio &bull; MEF University (2025)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">AWARDS</span><span class="m-val">im2025 2nd Place &bull; MEF Dean's Award</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Milli Reasürans Passage, Nişantaşı / İstanbul</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Living Organic Archive &bull; Bio-Lab &bull; Amphitheatre</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">PRIMARY MEDIUM</span><span class="m-val">Food Waste Biopolymers &bull; Wire Grid Frame</span></div>
-                                    </div>
 
-                                    <div class="m-action-bar">
-                                        <a href="./projects/bio-decay/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>The space is never finished — it is always in progress.</strong> The archive accepts decay as part of its life; bioplastics slowly lose transparency, darken, and harden.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>How many microplastics can we eat in a day?</strong> Inverting toxic synthetic accumulation into an architectural bio-refinery fueled by restaurant waste.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Permanent Skeleton vs. Ephemeral Skin:</strong> Steel wire grid acts as a skeleton, while biopolymer panels rot, crack, and are continuously replaced by visitors.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>Bio-Decay</strong> began with a provocative inquiry into everyday consumption: <em>“How many microplastics can we eat in a day?”</em> Rather than passively enduring synthetic accumulation, the project develops an active architectural archive situated in the iconic Milli Reasürans passage in Nişantaşı, Istanbul.</p>
-                                            <p>The building operates as an open circular bio-refinery, harvesting organic waste (fruit peels, starch residues, coffee grounds, and vegetables) from neighboring restaurants and transforming them into functional biopolymer skins. The bioplastics undergo a dynamic lifecycle of physical decay across 6+ weeks—shifting from pliable 10–30% clarity, through matte stiffening at 50%, to brittle 70–90% amber opacity. At its core, a stepped public amphitheatre provides a civic gathering space shaded by transforming biopolymer canopies.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>Bio-Decay</strong>, gündelik tüketimin görünmeyen maddelerine dair kışkırtıcı bir soruyla başladı: <em>“Günde ne kadar mikroplastik yiyebiliriz?”</em> Proje, sentetik birikimi pasifçe izlemek yerine, İstanbul Nişantaşı'ndaki Milli Reasürans Çarşısı'nda yaşayan bir organik atık arşivi ve biyoplastik laboratuvarı önerir.</p>
-                                            <p>Yapı, çevredeki restoran ve kafelerden toplanan organik atıkları (meyve kabukları, nişasta tortuları, kahve ve sebzeler) yerinde işleyen döngüsel bir kentsel biyo-rafineri gibi çalışır. Üretilen biyoplastik paneller 6 haftayı aşkın bir sürede 4 aşamalı bir bozunma döngüsünden geçer: %10–30 arası şeffaf ve esnek durumdan, matlaşan ara evreye ve %70–90 arası kehribar rengi, kırılgan son evreye ulaşır. Bozulan paneller toplanıp yeniden pişirilirken, ziyaretçiler yeni paneller asarak yapım sürecini hiç bitmeyen kolektif bir eyleme dönüştürür.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">ARCHITECTURAL DRAWINGS &amp; MATERIAL PROCESS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bio-decay/assets/crop-section-perspective-3d.png" alt="3D Section Perspective">
-                                                <div class="m-gal-caption">3D SECTION PERSPECTIVE &bull; Stepped amphitheatre, suspended bioplastic canopies &amp; labs</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bio-decay/assets/crop-exploded-axonometric.png" alt="Exploded Axonometric">
-                                                <div class="m-gal-caption">EXPLODED AXONOMETRIC &bull; Wire grid skeleton, public waste triage chute &amp; workshops</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bio-decay/assets/crop-recipes-flowchart.png" alt="Bioplastic Chemistry Matrix">
-                                                <div class="m-gal-caption">BIOPLASTIC RECIPES &bull; Sugar, cellulose, protein &amp; starch fabrication stations</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bio-decay/assets/crop-decay-stages-physical.png" alt="Empirical Decay Timeline">
-                                                <div class="m-gal-caption">EMPIRICAL DECAY TRACKING &bull; Newly prepared green &rarr; dried amber &rarr; decayed disc</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE JURY BOARDS &amp; HIGH-RES POSTERS</h4>
-                                            <p>Access all 4 master presentation sheets awarded 2nd Place in im2025 National Awards, with 1/100 plans, 1/20 details, and material recipes.</p>
-                                        </div>
-                                        <a href="./projects/bio-decay/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
+                                <div class="m-action-bar m-action-bar-primary">
+                                    <a href="./projects/${slug}/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
+                                        <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
+                                    </a>
+                                    ${liveBadgeHTML}
                                 </div>
-                            `;
-                        } else if (slug === 'stray') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO</span><span class="m-val">INT 201 Interior Design Studio I &bull; MEF University (2025)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">AWARDS</span><span class="m-val">★ im2025 National Awards Honorary Mention</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Moda Seaside, Kadıköy / İstanbul</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Urban Interior &bull; Psychogeographical Sanctuary &bull; Interactive Ramp</span></div>
-                                    </div>
+                            </div>
+                        `;
 
-                                    <div class="m-action-bar">
-                                        <a href="./projects/stray/" class="m-action-btn m-btn-primary modal-open-standalone-btn" style="background: var(--proj-color, #10b981); border-color: var(--proj-color, #10b981);">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                        <a href="./projects/stray/#boards" class="m-action-btn m-btn-secondary modal-open-standalone-btn" style="color: var(--proj-accent2, #f43f5e); border-color: rgba(var(--proj-accent2-rgb, 244, 63, 94), 0.45); background: rgba(var(--proj-accent2-rgb, 244, 63, 94), 0.1);">
-                                            <span>VIEW COMPETITION JURY PANELS ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Is doing nothing doing something?</strong> In the frantic rhythm of modern city life, the deliberate act of doing nothing becomes a radical spatial and psychological stance.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>The Flâneur & The Stray Cat:</strong> Wandering off the beaten path without a predetermined goal, uncovering hidden emotions, collective memory, and unplanned encounters.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>An Urban Sanctuary for Drifting:</strong> Rotating surfaces invite people to mark, draw, and reflect as they ascend a continuous diagonal ramp from Moda beach to The Dark Room.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>STRAY</strong> investigates the boundaries between purposelessness and presence in contemporary urban life. Grounded in 19th-century theories of the <em>Flâneur</em>, Situationist <em>dérive</em> (psychogeography), and the <em>Slow City</em> philosophy, the project questions the utilitarian tyranny of efficiency: <em>“Is doing nothing doing something?”</em> and <em>“Is it laziness to do (nothing)?”</em></p>
-                                            <p>Situated along the coastal tree canopy of Moda, Kadıköy, the building acts as an open urban interior where pedestrians naturally drift inward from the seaside promenade. A continuous multi-level ramp weaves through a series of transformative zones—from semi-outdoor frontyards framed by magenta mesh lattices, to active mark-making surfaces where visitors leave tangible traces of their thoughts, to flexible moveable-wall workshops, culminating in the contemplative sensory silence of <em>The Dark Room</em>.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>STRAY</strong>, çağdaş kent yaşamında amaçsızlık ile varoluş arasındaki sınırları araştıran bir mekânsal sorgulamadır. 19. yüzyılın <em>Flâneur</em> kavramından, Sitüasyonist <em>dérive</em> (psikocoğrafya) pratiklerinden ve <em>Sakin Şehir (Slow City)</em> felsefesinden beslenen proje, faydacı üretkenlik baskısını tersyüz eder: <em>“Hiçbir şey yapmamak bir şey yapmak mıdır?”</em> ve <em>“Aylaklık tembellik midir?”</em></p>
-                                            <p>Kadıköy Moda Sahili boyunca uzanan ağaç dokusunun arkasında konumlanan yapı, yayaların sahil hattından içeriye kendiliğinden sürüklendiği (straying) bir kentsel iç mekan gibi kurgulanmıştır. Sürekli bir rampa omurgası, pembe metal ızgaralarla filtrelenen yarı açık avlulardan, ziyaretçilerin çizimler ve izler bıraktığı etkileşimli yüzeylere, hareketli duvarlarla dönüşen atölyelere ve en üstte duyusal bir içe dönüş sunan <em>Karanlık Oda'ya (The Dark Room)</em> kadar uzanan kesintisiz bir deneyim sunar.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">ARCHITECTURAL DRAWINGS, SECTIONS &amp; RENDERS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/axonometric_section_3d.jpg" alt="3D Isometric Perspective Section">
-                                                <div class="m-gal-caption">3D PERSPECTIVE SECTION &bull; Triple-height void, continuous ramp journey, workshop &amp; Dark Room</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/b1_crop_exploded_axonometric.jpg" alt="Exploded Axonometric Drawing">
-                                                <div class="m-gal-caption">EXPLODED AXONOMETRIC &bull; Concrete frame, magenta mesh screens, vertical circulation &amp; seaside threshold</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/perspective_ramp_interior.jpg" alt="The Ramp Interior Mark-Making Experience">
-                                                <div class="m-gal-caption">THE RAMP EXPERIENCE (VIEW Q) &bull; Rotating interactive surfaces where visitors leave traces and drawings</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/render_the_dark_room.jpg" alt="The Dark Room">
-                                                <div class="m-gal-caption">THE DARK ROOM (VIEW E) &bull; Sensory stillness lit only by morning sun and passing silhouettes</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/render_the_workshop_area.jpg" alt="The Workshop Area">
-                                                <div class="m-gal-caption">THE WORKSHOP AREA (VIEW F) &bull; Double-height flexible studio with exposed magenta timber ceiling</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/stray/assets/render_the_ramp.jpg" alt="The Ramp Seaside Approach">
-                                                <div class="m-gal-caption">SEASIDE APPROACH (VIEW A) &bull; Moda coastline trees filtering the entrance threshold</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE JURY PRESENTATION BOARDS</h4>
-                                            <p>Access all 3 master presentation boards awarded Honorary Mention in im2025 National Awards, with 1/100 plans, 1/50 sections, and moveable wall details.</p>
-                                        </div>
-                                        <a href="./projects/stray/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (slug === 'emek-museum') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO / INITIATIVE</span><span class="m-val">Spatial Design &bull; Research (2027 Ongoing)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Counter-Monument &bull; Living Labor Archive</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">GEOGRAPHY</span><span class="m-val">Türkiye</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">CENTRAL INQUIRY</span><span class="m-val">Labour Memorialization &bull; Spatial Justice</span></div>
-                                    </div>
-
-                                    <div class="m-action-bar">
-                                        <a href="./projects/emek-museum/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 6px; font-family: monospace; font-size: 0.76rem; font-weight: 700; color: var(--accent-color);">
-                                            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color); box-shadow: 0 0 8px rgba(37,99,235,0.8);"></span>
-                                            <span>CONCEPT &amp; SPATIAL RESEARCH IN PROGRESS</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Work-related accidents remain a persistent reality</strong>, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Emek Museum asks:</strong> How can we make this labour visible again?</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Their labour, the time they gave,</strong> and the lives shaped through their work gradually disappear from view.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p>Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself—their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p>
-                                            <p style="font-size: 1.18rem; font-weight: 700; color: var(--text-color); margin: 8px 0; border-left: 3px solid var(--accent-color); padding-left: 14px;">Emek Museum asks: how can we make this labour visible again?</p>
-                                            <p style="font-family: monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-color); letter-spacing: 0.05em; margin-top: 10px;">More from this project soon.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p>İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor—onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.</p>
-                                            <p style="font-size: 1.18rem; font-weight: 700; color: var(--text-color); margin: 8px 0; border-left: 3px solid var(--accent-color); padding-left: 14px;">Emek Museum soruyor: bu emeği yeniden nasıl görünür kılabiliriz?</p>
-                                            <p style="font-family: monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-color); letter-spacing: 0.05em; margin-top: 10px;">Çok yakında bu projeden daha fazlası.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">RESEARCH CANVAS &amp; DRAFTING BLUEPRINT</h3>
-                                        <div class="m-gallery-grid" style="grid-template-columns: 1fr;">
-                                            <div class="m-gal-card">
-                                                <img src="./assets/emek-museum-wip.svg" alt="Emek Museum Drafting Blueprint" style="max-height: 380px; object-fit: contain; background: #f8fafc;">
-                                                <div class="m-gal-caption">RESEARCH &amp; DRAFTING SHEET &bull; Ongoing concept, spatial mapping &amp; memorial archive (2027)</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>DEDICATED RESEARCH &amp; MANIFESTO SHEET</h4>
-                                            <p>Access the full curatorial statement, theoretical framework, and inquiry on the dedicated project page.</p>
-                                        </div>
-                                        <a href="./projects/emek-museum/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (slug === 'the-earthen') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">STUDIO / INITIATIVE</span><span class="m-val">Spatial Design Studio (2026)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Cyclical Earth Architecture &bull; Bio-Creation Lab &bull; Mud Baths</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">MEDIUM</span><span class="m-val">Soil &amp; Clay &bull; Fiberglass &bull; Structural Tubes</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">CENTRAL INQUIRY</span><span class="m-val">“to decay is to begin again — Is there death because there is life?”</span></div>
-                                    </div>
-
-                                    <div class="m-action-bar">
-                                        <a href="./projects/the-earthen/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Life and death are inseparable aspects of existence.</strong> Death is not an ultimate end, but a transformation that allows new life to emerge.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>The Earthen asks:</strong> Is there death because there is life? To decay is to begin again.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>We promote fatigue, failures, and losses</strong> as an opening to appreciate growth, tactile presence, and natural renewal.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>The Earthen</strong> approaches architecture as a closed-loop living metabolism that embraces decay as the fertile origin of new life. Structured upon a vertical cycle of matter—from subterranean liquid mud-bathing and soaking pools, up to radial shaping workshops in the Material Creator Lab, and crowning in a +6.00m terrace garden where decomposed matter regenerates living soil.</p>
-                                            <p>Functional curved metal tubes weave through the entire volume, serving simultaneously as primary structural columns, interior furniture (benches, tables, dividers), and vertical pipelines transporting harvested seeds, clay slurry, and water between levels. Translucent fiberglass envelopes diffuse harsh urban light into a warm, contemplative glow.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>The Earthen</strong>, mimariyi çözünmeyi yeni yaşamın doğurgan başlangıcı olarak kucaklayan kapalı devre bir metabolizma olarak ele alır. Maddenin dikey dönüşüm döngüsü üzerine kurgulanmıştır: en alttaki sıvı çamur banyolarından başlayıp, zemin kattaki radyal yoğurma ve şekillendirme atölyelerine, oradan da ayrışan organik maddenin toprağı beslediği +6.00m çatı teras bahçesine uzanır.</p>
-                                            <p>Çok işlevli metal boru ağı; taşıyıcı strüktür, mobilya ve tohum/çamur/su taşıyan düşey tesisat kanalları olarak tüm yapıyı canlı bir dolaşım sistemiyle birbirine bağlar. Dıştaki yarı saydam fiberglas kabuk, sert kentsel ışığı süzerek iç mekânda meditatif ve sıcak bir atmosfer yaratır.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">ARCHITECTURAL DRAWINGS &amp; SPATIAL PROCESS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/the-earthen/assets/render-atrium.jpg" alt="Central Atrium">
-                                                <div class="m-gal-caption">CENTRAL MONUMENTAL ATRIUM &bull; Translucent fiberglass skin, double-height core &amp; rammed earth seating</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/the-earthen/assets/render-earth-workshop.jpg" alt="Earth Workshop">
-                                                <div class="m-gal-caption">KNEADING &amp; SHAPING LAB &bull; Circular clay bins, potter wheels and tactile forming tables</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/the-earthen/assets/render-portal-bath.jpg" alt="Mud Bath Portal">
-                                                <div class="m-gal-caption">RAMMED EARTH PORTAL &bull; Mineral mud immersion pool draped in living ivy &amp; pipe columns</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/the-earthen/assets/diagram-exploded-axonometric.jpg" alt="Exploded Axonometric">
-                                                <div class="m-gal-caption">EXPLODED AXONOMETRIC &bull; Roof slab, fiberglass skin, tube ring, soil walls &amp; base</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE ARCHITECTURAL JURY BOARDS (5 MASTER SHEETS)</h4>
-                                            <p>Explore all 5 comprehensive presentation sheets with 1/50 plans, building sections, 1/20 partial sections, and 1/5 joinery details.</p>
-                                        </div>
-                                        <a href="./projects/the-earthen/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (slug === 'bajo-la-fresca') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">INITIATIVE</span><span class="m-val">AA Visiting School Córdoba &bull; MuDD Architects</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Patio San Basilio 44 &bull; Córdoba, Spain</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">COLLABORATORS</span><span class="m-val">Sara Serés Béjar &bull; Özgün Ege Bilgiç &bull; Elifsu Genç</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Ephemeral Spatial Installation &bull; Microclimate Canopy</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">MEDIUM</span><span class="m-val">Pleated Textile &bull; Gradient-Dyed Cotton &bull; Citrus Oils</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">CENTRAL INQUIRY</span><span class="m-val">“How do you highlight beauty without stealing its spotlight?”</span></div>
-                                    </div>
-
-                                    <div class="m-action-bar">
-                                        <a href="./projects/bajo-la-fresca/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Bajo la Fresca (/ˈbaxo la ˈfɾeska/):</strong> Rooted in the Spanish tradition of sitting outside in the evening cool to relax, converse, and celebrate neighborhood life.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Overcoming Spatial Limits:</strong> Expanding the patio’s cooling vegetation into the aerial volume above without occupying scarce courtyard ground.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Olfactory Architecture:</strong> Dyed cotton petals infused with real orange and lemon peels, releasing citrus aromas and natural mosquito defense.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>Bajo la Fresca</strong> is a contextual research and ephemeral spatial installation realized in Patio San Basilio 44 during the celebrated Fiesta de los Patios in Córdoba, Spain. Exploring the socio-climatic ritual of <em>tomar el fresco</em> (gathering outside in the evening cool), the project reinterprets the UNESCO-recognized courtyard as an atmospheric sanctuary of coexistence.</p>
-                                            <p>To overcome the strict ground and wall limitations of the historic courtyard, the installation suspends an undulating, lightweight pleated canopy that carries gradient-dyed cotton petals infused with fresh Andalusian orange and lemon peels alongside natural citronella essence. As convective evening breezes circulate, the suspended pouches sway gently, diffusing pleasant citrus notes and creating a sensory microclimatic refuge for neighbors and visitors below.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>Bajo la Fresca</strong>, Córdoba’nın dünyaca ünlü tarihi avlu şenlikleri (Fiesta de los Patios) sırasında Patio San Basilio 44 avlusunda hayata geçirilen bağlamsal bir araştırma ve mekânsal yerleştirmedir. Proje, akşam serinliğinde kapı önüne veya avluya çıkıp komşularla sohbet etme geleneği olan <em>tomar el fresco</em> ritüelini merkeze alır.</p>
-                                            <p>Tarihi avludaki dar zemin ve duvar kısıtlarını aşmak amacıyla avlunun gökyüzü boşluğuna dalgalı kumaş kıvrımlarından oluşan asılı bir gölgelik yerleştirilmiştir. Begonvil ve narenciye tonlarında degrade boyanmış pamuk liflerine emdirilen taze portakal-limon kabukları ve doğal sivrisinek kovucu esanslar, akşam esintileriyle avluya yayılarak altındaki ziyaretçilere ferahlatıcı bir mikroklimatik sığınak sunar.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">INSTALLATION VIEWS &amp; MATERIAL PROCESS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bajo-la-fresca/assets/bajo-la-fresca-courtyard-wide.jpg" alt="Patio San Basilio 44 Wide View">
-                                                <div class="m-gal-caption">PATIO SAN BASILIO 44 &bull; Canopy suspended between whitewashed walls, clay tiles &amp; bougainvillea</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bajo-la-fresca/assets/bajo-la-fresca-canopy-vertical.jpg" alt="Skyward Canopy Perspective">
-                                                <div class="m-gal-caption">SKYWARD PERSPECTIVE &bull; Gradient pleated waves and hanging pouches under the Andalusian sky</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bajo-la-fresca/assets/installation-hanging-scent-canopy.jpg" alt="Hanging Scent Canopies">
-                                                <div class="m-gal-caption">SCENT POUCHES &bull; Suspended sachets carrying citrus-infused cotton swaying in convection currents</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/bajo-la-fresca/assets/process-workshop-canopy-table.jpg" alt="Studio Assembly">
-                                                <div class="m-gal-caption">PARAMETRIC PLEATS &bull; Assembling the stamped wave canopy strips on the studio workbench</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE RESEARCH &amp; PROCESS ARCHIVE (12 SLIDES)</h4>
-                                            <p>Explore the full presentation archive detailing historical patio competition timelines, climate vs. microclimate diagrams, and scent extraction.</p>
-                                        </div>
-                                        <a href="./projects/bajo-la-fresca/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (slug === 'millieu') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">LOCATION</span><span class="m-val">Yeldeğirmeni, Kadıköy / İstanbul</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">TYPOLOGY</span><span class="m-val">Culinary Interior &bull; Social Amphitheatre &bull; Spatial Branding</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">MEDIUM</span><span class="m-val">Burgundy Steel &bull; Marble &bull; Oak Plywood &bull; Terrazzo</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">CENTRAL INQUIRY</span><span class="m-val">“How does a culinary ritual shape a social atmosphere?”</span></div>
-                                    </div>
-
-                                    <div class="m-action-bar">
-                                        <a href="./projects/millieu/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Milieu (/mɪl'ju:/):</strong> A person's social environment or atmosphere. Rooted in Yeldeğirmeni's historical windmill and grain milling heritage.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Quiche as Circular Architecture:</strong> Translating the radial geometry of quiche and windmill blades into custom furniture, lighting, and stepped amphitheater platforms.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Diagonal Threshold:</strong> Guiding kinetic street flows from the tramway corridor directly into a double-height civic dining interior.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>Millieu</strong> (/mɪl'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in Kadıköy’s historic Yeldeğirmeni district. Defined as <em>a person’s social environment or atmosphere</em>, the project reinterprets the historical heritage of Yeldeğirmeni—where coastal winds once powered windmills transforming grain into flour—into a contemporary social hub centered around the craft of quiche.</p>
-                                            <p>Quiche functions as a circular architectural diagram of communal sharing. The geometric dialogue between windmill blades, the sliced pastry wedge, and the letterform <em>M</em> generates the entire spatial language: from custom triangular table bases and arched lighting brackets to an expansive stepped amphitheater framed by burgundy tubular steel pergolas.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>Millieu</strong> (/mɪl'ju:/), Kadıköy Yeldeğirmeni’nin köklü mahalle hafızası ile gastronomi ritüelini iç mimari bir deneyimde buluşturan bir mekânsal tasarımdır. Etimolojik olarak <em>kişinin içinde bulunduğu toplumsal çevre veya atmosfer</em> anlamına gelen "milieu" kavramı; geçmişte yel değirmenleriyle buğdayın una dönüştüğü bu tarihi semtte, kiş (quiche) pişirme ve paylaşma eylemi etrafında yeni bir kentsel buluşma alanına dönüşür.</p>
-                                            <p>Kiş, yuvarlak bütününden dilimlenerek paylaşılan formuyla projenin temel mekânsal şemasına ilham verir. Yel değirmeni kanatları, kiş dilimi ve "M" harfinin geometrik kesişimi; özel tasarım üçgen masa ayaklarından kemerli aydınlatmalara, bordo çelik konstrüksiyonlu amfi basamaklarından özel ambalaj ve menü tasarımına kadar tüm mekân tektoniğini şekillendirir.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">ARCHITECTURAL RENDERS &amp; SPATIAL PROCESS</h3>
-                                        <div class="m-gallery-grid">
-                                            <div class="m-gal-card">
-                                                <img src="./projects/millieu/assets/crop-sheet5-render-view-x-hall.jpg" alt="Communal Dining Hall (View X)">
-                                                <div class="m-gal-caption">COMMUNAL DINING HALL (VIEW X) &bull; Double-height dining commons under clerestory daylight &amp; burgundy arch lighting</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/millieu/assets/crop-sheet2-render-view-l-amphitheater.jpg" alt="Amphitheatre Glow (View L)">
-                                                <div class="m-gal-caption">AMPHITHEATRE GLOW (VIEW L) &bull; Stepped seating under industrial steel roof trusses with under-step illumination</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/millieu/assets/crop-sheet3-render-view-w-communal-table.jpg" alt="Open Bakery (View W)">
-                                                <div class="m-gal-caption">OPEN BAKERY (VIEW W) &bull; Service counter with quiche display, central table &amp; diagonal circulation</div>
-                                            </div>
-                                            <div class="m-gal-card">
-                                                <img src="./projects/millieu/assets/crop-sheet4-axonometric-section-cutaway.jpg" alt="Isometric Cutaway">
-                                                <div class="m-gal-caption">ISOMETRIC CUTAWAY &bull; Inhabitable amphitheater landscape, red steel pergolas &amp; booths</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>COMPLETE ARCHITECTURAL JURY BOARDS (5 MASTER SHEETS)</h4>
-                                            <p>Explore all 5 comprehensive presentation sheets with 1/50 plans, building sections, 1/20 joinery details, and spatial branding.</p>
-                                        </div>
-                                        <a href="./projects/millieu/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (slug === 'you-were-here') {
-                            modalTextContainer.innerHTML = `
-                                <div class="modal-project-body">
-                                    <div class="m-specs-row">
-                                        <div class="m-spec-item"><span class="m-lbl">FIELD</span><span class="m-val">Digital Cartography &bull; Spatial Telemetry</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">SCALE</span><span class="m-val">Global Coordinate Space &bull; Infinite Superposition</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">DATABASE</span><span class="m-val">Cloud Firebase Firestore &bull; Atomic Preserved Traces</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">ARTIFACT ENGINE</span><span class="m-val">HTML5 Canvas PNG Vector-Raster Renderings (1:1)</span></div>
-                                        <div class="m-spec-item"><span class="m-lbl">AUTHOR / YEAR</span><span class="m-val">Elifsu Genç &bull; 2026</span></div>
-                                    </div>
-
-                                    <div class="m-action-bar">
-                                        <a href="./projects/you-were-here/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                            <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                        </a>
-                                        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 6px; font-family: monospace; font-size: 0.76rem; font-weight: 700; color: var(--accent-color);">
-                                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: wwhPulseDot 1.8s infinite ease-in-out;"></span>
-                                            <span>LIVE PARTICIPATORY TELEMETRY ACTIVE</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-quotes-grid">
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>What remains of the movements we forget?</strong> Digital presence as an ephemeral, irreversible spatial memory.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>Involuntary Kinetic Choreography:</strong> Micro-hesitations of a cursor over text, sweeping arches between links, and pauses where contemplation precedes action.</p>
-                                        </div>
-                                        <div class="m-quote-box">
-                                            <span class="m-quote-mark">&ldquo;</span>
-                                            <p><strong>A Participatory Palimpsest:</strong> Every visit is assigned an atomic sequential registry number (TRACE_0001...) and permanently etched into a collective topological cloud.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-statement-block">
-                                        <div class="m-lang-toggle">
-                                            <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                            <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                        </div>
-                                        <div id="m-desc-en" class="m-desc-pane active">
-                                            <p><strong>YOU WERE HERE.</strong> transforms the entire portfolio website into an active topological sensorium. When a visitor grants consent, their involuntary cursor gestures are recorded across the viewport as normalized coordinate vectors. Kinetic velocities are inverted into line stroke weights, while cognitive hesitations bloom into translucent cerulean halos.</p>
-                                            <p style="font-size: 1.18rem; font-weight: 700; color: var(--text-color); margin: 8px 0; border-left: 3px solid var(--accent-color); padding-left: 14px;">Can an anonymous trace possess the weight of physical presence? Can a cursor line become an architectural memory?</p>
-                                            <p>Rather than surveillance, this is an open participatory monument: a persistent Cloud Firebase Firestore archive preserving both past and live traces, generating lightweight 1:1 PNG vector-raster artifacts, and superimposing all journeys into a living collective palimpsest.</p>
-                                        </div>
-                                        <div id="m-desc-tr" class="m-desc-pane">
-                                            <p><strong>YOU WERE HERE.</strong>, tüm portfolyo web sitesini duyarlı bir mekânsal yüzeye dönüştürür. Ziyaretçi rıza verdiğinde, ekran üzerindeki tüm istemsiz imleç hareketleri normalize edilmiş koordinat vektörleri olarak kaydedilir. Hareket hızları ters orantılı çizgi kalınlıklarına dönüşürken, okuma ve düşünme duraklamaları yarı saydam mavi hâleler olarak çiçek açar.</p>
-                                            <p style="font-size: 1.18rem; font-weight: 700; color: var(--text-color); margin: 8px 0; border-left: 3px solid var(--accent-color); padding-left: 14px;">Anonim bir imleç çizgisi fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?</p>
-                                            <p>Bu sistem bir gözetleme mekanizması değil; katılımcı bir açık anıttır: geçmiş ve canlı tüm izleri Cloud Firebase Firestore üzerinde koruyan, hafif 1:1 PNG artefaktları üreten ve tüm ziyaretleri canlı bir kolektif dijital tortuda buluşturan bir bellek deneyi.</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-gallery-section">
-                                        <h3 class="m-sec-title">COLLECTIVE MEMORY OVERLAY &amp; TELEMETRY ARTIFACT</h3>
-                                        <div class="m-gallery-grid" style="grid-template-columns: 1fr;">
-                                            <div class="m-gal-card">
-                                                <img id="modal-palimpsest-img" src="./assets/you-were-here-cover.png" alt="YOU WERE HERE — Collective Palimpsest Cartography" style="max-height: 480px; width: 100%; object-fit: contain; background: #fafbfc; border-radius: 4px;">
-                                                <div class="m-gal-caption">COLLECTIVE PALIMPSEST &bull; Superimposed trajectories, velocity line weights and dwell halos of historical visitors</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="m-boards-strip">
-                                        <div class="m-boards-text">
-                                            <h4>DEDICATED INTERACTIVE ARCHIVE &amp; TRACE DIRECTORY</h4>
-                                            <p>Experience the live collective memory canvas, browse and filter individual registered traces (TRACE_0001...), and download 1:1 trace artifacts as high-resolution PNGs.</p>
-                                        </div>
-                                        <a href="./projects/you-were-here/" class="m-btn-pill modal-open-standalone-btn">VIEW FULL PROJECT SHEET &amp; ARCHIVE ↗</a>
-                                    </div>
-                                </div>
-                            `;
-                            // Trigger immediate living palimpsest update for the open modal
+                        if (slug === 'you-were-here') {
                             setTimeout(() => {
                                 if (window.YouWereHereTracker && typeof window.YouWereHereTracker.updateLivingPalimpsests === 'function') {
                                     window.YouWereHereTracker.updateLivingPalimpsests();
                                 }
                             }, 40);
-                        } else {
-                            modalTextContainer.innerHTML = `
-                                <p>Here you can dive deep into the details of the project. This is a full in-page preview that maintains the portfolio's architectural directory interface without navigating to a blank page.</p>
-                                <p>Further images, texts, and diagrams will be dynamically loaded here.</p>
-                            `;
                         }
                     }
                     
@@ -3037,6 +2521,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (scrollArea) scrollArea.scrollTop = 0;
                     
                     // Lock background scrolling
+                    document.body.style.overflow = 'hidden';
         }
         window.openProjectModalBySlug = openProjectModalBySlug;
 
@@ -3071,28 +2556,34 @@ document.addEventListener('DOMContentLoaded', () => {
         projectModal.addEventListener('click', (e) => {
             const standaloneBtn = e.target.closest('.modal-open-standalone-btn');
             if (standaloneBtn && window.lastOpenedProjectSlug) {
-                history.replaceState(null, '', '#project-' + window.lastOpenedProjectSlug);
+                history.replaceState(null, '', '#' + window.lastOpenedProjectSlug);
             }
         });
 
         // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !projectModal.classList.contains('hidden')) {
-                modalClose.click();
+                closeProjectModal();
             }
         });
 
-        // Check if page opened with a project hash
+        // Check if page opened with a project hash or back/forward triggered hash
         function checkHashAndOpenModal() {
-            const curHash = window.location.hash.replace('#', '').trim();
-            if (curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-')) {
+            const curHash = window.location.hash.replace(/^#/, '').trim();
+            if (portfolioProjectSlugs.includes(curHash) || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-')) {
                 const initSlug = curHash.replace(/^(project-|modal-|card-)/, '');
-                openProjectModalBySlug(initSlug);
+                openProjectModalBySlug(initSlug, false);
+            } else {
+                if (!projectModal.classList.contains('hidden')) {
+                    projectModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
             }
         }
 
         setTimeout(checkHashAndOpenModal, 80);
         window.addEventListener('hashchange', checkHashAndOpenModal);
+        window.addEventListener('popstate', checkHashAndOpenModal);
     }
 });
 

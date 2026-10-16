@@ -4537,6 +4537,48 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     margin-top: 10px;
 }
 
+/* Compact In-Page Project Statement Preview */
+.modal-preview-compact {
+    gap: 22px;
+    margin-top: 5px;
+}
+
+.modal-preview-compact .m-statement-block {
+    background: rgba(var(--proj-bg-rgb, 10, 20, 44), 0.88);
+    border: 1px solid rgba(var(--proj-rgb, 56, 189, 248), 0.25);
+    border-radius: 8px;
+    padding: 24px 28px;
+    backdrop-filter: blur(8px);
+}
+
+.modal-preview-compact .m-desc-pane {
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: #cbd5e1;
+}
+
+.modal-preview-compact .m-desc-pane p {
+    margin-bottom: 14px;
+}
+
+.modal-preview-compact .m-desc-pane p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-preview-compact .m-action-bar-primary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 4px;
+}
+
+.modal-preview-compact .m-btn-primary {
+    padding: 14px 30px;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+}
+
 .m-specs-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
