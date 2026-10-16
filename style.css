@@ -7667,7 +7667,7 @@ body {
 #tab-main .pleiades-coord-tag,
 #tab-main .pleiades-status-pill,
 #tab-main .projects-watermark { display: none !important; }
-#tab-main .pleiades-top-bar { inset: 0 !important; pointer-events: none; }
+#tab-main .pleiades-top-bar { inset: 0 !important; pointer-events: none !important; z-index: 900 !important; }
 #tab-main .cluster-transition-btn {
   pointer-events: auto !important;
   position: absolute !important;
@@ -7690,7 +7690,7 @@ body {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition: background .35s ease, border-color .35s ease, box-shadow .35s ease, transform .25s ease, top .35s ease, left .35s ease !important;
-  z-index: 600 !important;
+  z-index: 950 !important;
 }
 
 /* 1. CLUSTER STATE: "EXPLORE ALL PROJECTS ↗" stays in original bottom-center pill position */
@@ -7705,7 +7705,7 @@ body {
   background: #2563eb;
   border-color: #93c5fd;
   box-shadow: 0 6px 22px rgba(37, 99, 235, 0.45);
-  transform: translate(-50%, calc(-50% - 2px)) !important;
+  transform: translate(-50%, -50%) scale(1.02) !important;
 }
 
 /* 2. CONSTELLATION STATE: "BACK TO CLUSTER" placed directly below EG. PRACTICE in center */
@@ -7720,7 +7720,7 @@ body {
   background: #2563eb;
   border-color: #93c5fd;
   box-shadow: 0 6px 22px rgba(37, 99, 235, 0.45);
-  transform: translate(-50%, calc(-50% - 2px)) !important;
+  transform: translate(-50%, -50%) scale(1.02) !important;
 }
 /* Methodology vertices form a readable, architectural backbone with EG. */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .c-ternary-axis {
@@ -7787,12 +7787,18 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .merope-star .cs-core *,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn .center-core,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount #constellation-center-btn .center-core *,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn,
-#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn *,
+#tab-main .cluster-transition-btn,
+#tab-main .cluster-transition-btn *,
 #tab-main #hq-cluster-toggle-pill,
 #tab-main #hq-cluster-toggle-pill * {
   pointer-events: auto !important;
   cursor: none !important;
+}
+#tab-main .cluster-transition-btn .ctb-icon,
+#tab-main .cluster-transition-btn .ctb-text,
+#tab-main #hq-cluster-toggle-pill .c-toggle-glyph,
+#tab-main #hq-cluster-toggle-pill .c-toggle-label {
+  pointer-events: none !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cs-core,
@@ -7889,11 +7895,16 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-axis-link,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .c-axis-link *,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core *,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .relation-theme-badge * {
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core * {
   pointer-events: auto !important;
   cursor: none !important;
+}
+
+#tab-main .pleiades-observatory-stage .pleiades-stage-mount .relation-theme-badge,
+#tab-main .pleiades-observatory-stage .pleiades-stage-mount .relation-theme-badge *,
+.relation-theme-badge,
+.relation-theme-badge * {
+  pointer-events: none !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core {

@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // In constellation state:
                 // Exclude labels, headers, keywords, orbit rigs, and hidden cluster elements
-                if (target.closest('.cluster-star-visual, .merope-cluster-view, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
+                if (target.closest('.cluster-star-visual, .merope-cluster-view, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring, .relation-theme-badge')) {
                     return false;
                 }
-                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge, .cluster-brand-node, #cluster-brand-node, .constellation-design-approach-node, #constellation-design-approach-node, #merope-star-node, .merope-star');
+                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .cluster-brand-node, #cluster-brand-node, .constellation-design-approach-node, #constellation-design-approach-node, #merope-star-node, .merope-star, .cluster-transition-btn, #hq-cluster-toggle-pill');
             }
         }
 
@@ -772,10 +772,10 @@ document.addEventListener('DOMContentLoaded', () => {
             meropeNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
         }
 
-        // Unlock after transition duration (2600ms)
+        // Unlock after transition duration (350ms to keep button instantly responsive)
         setTimeout(() => {
             isTransitioning = false;
-        }, 2600);
+        }, 350);
     }
 
     function toggleConstellationState(container) {
@@ -1495,7 +1495,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeBottomCta = document.getElementById('hq-explore-bottom-cta');
 
     function handleStageToggleClick(e) {
-        if (e) e.preventDefault();
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         const homeSky = document.getElementById('hq-constellation-sky');
         if (homeSky) {
             const mapEl = homeSky.querySelector('.constellation-map');
@@ -1505,6 +1508,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (homeTransitionBtn) homeTransitionBtn.addEventListener('click', handleStageToggleClick);
     if (homeTogglePill) homeTogglePill.addEventListener('click', handleStageToggleClick);
+
+    // Global document-level click delegation to ensure transition clicks are never lost
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cluster-transition-btn, #hq-cluster-toggle-pill');
+        if (btn) {
+            handleStageToggleClick(e);
+        }
+    });
     if (homeBottomCta) {
         homeBottomCta.addEventListener('click', (e) => {
             e.preventDefault();
