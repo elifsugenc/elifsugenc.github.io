@@ -56,17 +56,17 @@
     content: '';
 }
 
-/* Tıklanabilir elementin üzerine gelince: Yanıp sönen soru işareti (?) */
+/* Tıklanabilir elementin üzerine gelince: 2 Katı Büyütülmüş Yanıp Sönen Soru İşareti (?) */
 #custom-cursor.cursor-hover,
 #custom-cursor.cursor-project,
 #custom-cursor.cursor-question,
 #cursor-wrapper.cursor-spatial #custom-cursor {
-    width: 24px;
-    height: 24px;
+    width: 48px;
+    height: 48px;
     background-color: var(--accent-color, #2563eb);
-    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.95);
     border-radius: 50%;
-    box-shadow: 0 0 16px rgba(37, 99, 235, 0.8), 0 2px 8px rgba(15, 23, 42, 0.25);
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.85), 0 4px 14px rgba(15, 23, 42, 0.28);
     animation: cursorQuestionPulse 0.95s infinite ease-in-out;
 }
 
@@ -79,13 +79,13 @@
     align-items: center !important;
     justify-content: center !important;
     font-family: var(--font-primary, 'Space Grotesk', -apple-system, sans-serif) !important;
-    font-size: 14.5px !important;
+    font-size: 28px !important;
     font-weight: 800 !important;
     color: #ffffff !important;
     line-height: 1 !important;
     text-align: center !important;
-    transform: translateY(-0.5px);
-    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
 #cursor-label {
@@ -101,12 +101,12 @@
     0%, 100% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
-        box-shadow: 0 0 18px rgba(37, 99, 235, 0.85), 0 0 28px rgba(37, 99, 235, 0.45);
+        box-shadow: 0 0 28px rgba(37, 99, 235, 0.9), 0 0 48px rgba(37, 99, 235, 0.5);
     }
     45%, 55% {
         opacity: 0.35;
-        transform: translate(-50%, -50%) scale(0.88);
-        box-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+        transform: translate(-50%, -50%) scale(0.92);
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.25);
     }
 }
 
