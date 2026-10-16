@@ -2459,8 +2459,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const modalTextContainer = projectModal.querySelector('.modal-text');
                     if (modalTextContainer) {
                         const stmt = PROJECT_PREVIEW_STATEMENTS[slug] || {
-                            en: '<p>Here you can dive deep into the details of the project. This is a full in-page preview that maintains the portfolio\'s architectural directory interface without navigating to a blank page.</p>',
-                            tr: '<p>Burada projenin detaylı açıklamasını ve mekânsal kurgusunu inceleyebilirsiniz.</p>'
+                            en: '<p>Project documentation and spatial inquiry.</p>',
+                            tr: '<p>Proje dökümantasyonu ve mekânsal araştırma.</p>'
                         };
 
                         let liveBadgeHTML = '';

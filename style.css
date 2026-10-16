@@ -3467,7 +3467,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--text-color);
-    margin: 0 0 6px;
+    margin: 0;
 }
 .cv-action-banner .banner-text p {
     font-size: 0.92rem;
