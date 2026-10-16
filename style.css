@@ -8900,49 +8900,45 @@ body {
 }
 
 /* =========================================================
-   TOP-LEFT ARCHITECTURAL BRAND & ABOUT TRIGGER (LOGO GIF + NAME)
+   TOP-LEFT SPACE BRAND & ABOUT TRIGGER (INSIDE OBSERVATORY SKY)
    ========================================================= */
-.brand-about-btn {
-    position: fixed;
-    top: 24px;
-    left: 28px;
-    z-index: 600;
+.space-about-anchor {
+    position: absolute;
+    transform: translate(-50%, -50%);
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
     text-decoration: none;
-    cursor: pointer;
-    pointer-events: auto;
+    cursor: pointer !important;
+    pointer-events: auto !important;
     user-select: none;
-    background: transparent;
-    padding: 2px 4px;
-    border-radius: 6px;
-    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+    z-index: 50;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
 }
 
-.brand-about-btn:hover {
-    transform: translateY(-2px) scale(1.04);
+.space-about-anchor:hover {
+    transform: translate(-50%, -50%) scale(1.08);
 }
 
-.brand-about-logo {
-    width: 38px;
-    height: 38px;
+.space-about-logo {
+    width: 44px;
+    height: 44px;
     display: block;
     object-fit: contain;
     mix-blend-mode: multiply;
     transition: transform 0.25s ease;
 }
 
-.brand-about-btn:hover .brand-about-logo {
-    transform: scale(1.06);
+.space-about-anchor:hover .space-about-logo {
+    transform: scale(1.05);
 }
 
-.brand-about-name {
+.space-about-name {
     font-family: var(--font-primary, 'Space Grotesk', sans-serif);
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 500;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     color: #2563eb;
     text-transform: lowercase;
     line-height: 1.1;
@@ -8950,28 +8946,24 @@ body {
     transition: color 0.2s ease;
 }
 
-.brand-about-btn:hover .brand-about-name {
+.space-about-anchor:hover .space-about-name {
     color: #1d4ed8;
 }
 
-body.is-about-active .brand-about-btn {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
+#tab-main .pleiades-observatory-stage .space-about-anchor,
+#tab-main .pleiades-observatory-stage .space-about-anchor * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
 }
 
 @media (max-width: 768px) {
-    .brand-about-btn {
-        top: 16px;
-        left: 18px;
-        gap: 3px;
+    .space-about-logo {
+        width: 34px;
+        height: 34px;
     }
-    .brand-about-logo {
-        width: 32px;
-        height: 32px;
-    }
-    .brand-about-name {
+    .space-about-name {
         font-size: 0.62rem;
     }
 }
+
 

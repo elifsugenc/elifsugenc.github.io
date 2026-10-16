@@ -52,15 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state === 'cluster') {
                 // In cluster state, ONLY circular star cores and control buttons are spatial interactive targets:
                 // Star captions, orbit rings, and pills (when unhovered) must not trigger spatial hover
-                if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring')) {
+                if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring, .space-about-anchor')) {
                     return false;
                 }
                 return !!target.closest('.cs-core, .cluster-transition-btn, #hq-cluster-toggle-pill');
             } else {
                 // In constellation state:
                 // ONLY the 66px circular project photo spheres (.node-visual), active cards, corner nodes, and relation badges
-                // Exclude labels, headers, keywords, orbit rigs, center core, and cluster elements
-                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring, .center-core, #constellation-center-btn')) {
+                // Exclude labels, headers, keywords, orbit rigs, center core, space-about-anchor, and cluster elements
+                if (target.closest('.space-about-anchor, .cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring, .center-core, #constellation-center-btn')) {
                     return false;
                 }
                 return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge');
@@ -983,6 +983,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = `
             <div class="constellation-stage constellation-stage-core" data-state="${initialState}">
+                <!-- Top-Left Space Brand & About Trigger (Sol Üst Köşe — Uzay Alanı İçinde) -->
+                <a href="#about" class="space-about-anchor" id="space-about-anchor" aria-label="About Elifsu Genç — Curriculum Vitae &amp; Manifesto" style="left: 9.7%; top: 9.4%;">
+                    <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="space-about-logo" width="44" height="44">
+                    <span class="space-about-name">elifsu genc.</span>
+                </a>
+
                 <!-- Faint Architectural Background Watermark -->
                 <div class="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
 
@@ -1607,18 +1613,13 @@ document.addEventListener('DOMContentLoaded', () => {
         projectJumpBtn.addEventListener('click', () => switchTab(projectJumpBtn.getAttribute('data-target')));
     }
 
-    const brandAboutBtn = document.getElementById('brand-about-btn');
-    if (brandAboutBtn) {
-        brandAboutBtn.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
+        const spaceAbout = e.target.closest('#space-about-anchor, .space-about-anchor');
+        if (spaceAbout) {
             e.preventDefault();
-            const activeTab = document.querySelector('.tab-content.active');
-            if (activeTab && activeTab.id === 'tab-about') {
-                goBack();
-            } else {
-                switchTab('about');
-            }
-        });
-    }
+            switchTab('about');
+        }
+    });
 
     // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#card-wood-weave) and support back/forward
     function openFromHash() {
