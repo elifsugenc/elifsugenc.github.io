@@ -5827,8 +5827,10 @@ body {
     transform: scale(1.05);
 }
 
-/* Selected Works (Emek Museum, Stray, You Were Here, The Earthen, Bio-Decay) - Highlighted Curation */
+/* Selected Works (Emek Museum, Stray, You Were Here, The Earthen, Bio-Decay) - Highlighted Curation (Larger Circle than Other Stars) */
 .is-selected-work .node-visual {
+    width: 80px !important;
+    height: 80px !important;
     border: 2px solid var(--accent-color) !important;
     box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35), 0 0 0 2.5px rgba(37, 99, 235, 0.16) !important;
     filter: none !important;
@@ -8927,64 +8929,87 @@ body {
     box-shadow: 0 0 10px rgba(37, 99, 235, 0.8) !important;
 }
 
-/* 2. AWARD WINNER PROJECTS: Luminous Golden Yellow Back Light ("arkadaki ışığı sarı olsun") */
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered {
-    filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 55px rgba(250, 204, 21, 0.5)) !important;
+/* =========================================================
+   2. SELECTED WORKS (EMEK MUSEUM, STRAY, THE EARTHEN, BIO-DECAY, YOU WERE HERE)
+   - Selected projects' circles are slightly larger than other stars (80px vs 66px)
+   - Orbit rings are scaled proportionally (96px, 124px, 160px)
+   - Label clearance and preview card offsets adjusted
+   ========================================================= */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work .node-visual,
+.constellation-node.is-selected-work .node-visual {
+    width: 80px !important;
+    height: 80px !important;
+    border: 2px solid var(--accent-color, #2563eb) !important;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.32), 0 0 0 2.5px rgba(37, 99, 235, 0.16) !important;
 }
 
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .node-visual,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .node-visual {
-    border-color: #f59e0b !important;
-    border-width: 2px !important;
-    box-shadow: 0 0 35px rgba(245, 158, 11, 0.85), 0 0 70px rgba(234, 179, 8, 0.55), 0 0 105px rgba(250, 204, 21, 0.35), 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work:hover .node-visual,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work.is-hovered .node-visual {
+    transform: translate(-50%, -50%) scale(2) !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 36px rgba(37, 99, 235, 0.7), 0 0 65px rgba(37, 99, 235, 0.4), 0 10px 28px rgba(15, 23, 42, 0.15) !important;
 }
 
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .orbit-circle,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .orbit-circle,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .orbit-circle,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .orbit-circle {
-    border-color: rgba(245, 158, 11, 0.65) !important;
+/* Proportionally larger orbit rings for selected work circles */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work .orbit-ring-inner {
+    width: 96px !important;
+    height: 96px !important;
+}
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work .orbit-ring-dashed {
+    width: 124px !important;
+    height: 124px !important;
+}
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-selected-work .orbit-ring-outer {
+    width: 160px !important;
+    height: 160px !important;
 }
 
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner:hover .orbit-ring-dashed,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner.is-hovered .orbit-ring-dashed,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"]:hover .orbit-ring-dashed,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"].is-hovered .orbit-ring-dashed {
-    border-color: rgba(250, 204, 21, 0.75) !important;
+/* Directional label clearances for selected works (80px circle) */
+.constellation-node.is-selected-work.node-right .node-label {
+    left: 52px !important;
+}
+.constellation-node.is-selected-work.node-left .node-label {
+    right: 52px !important;
+}
+.constellation-node.is-selected-work.node-top .node-label {
+    bottom: 52px !important;
+}
+.constellation-node.is-selected-work.node-bottom .node-label {
+    top: 52px !important;
+}
+.constellation-node.is-selected-work.node-top-left .node-label {
+    right: 44px !important;
+    bottom: 26px !important;
+}
+.constellation-node.is-selected-work.node-bottom-left .node-label {
+    right: 44px !important;
+    top: 26px !important;
 }
 
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner .sat-point,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner .sat-glow,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"] .sat-point,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"] .sat-glow {
-    background: #f59e0b !important;
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.95), 0 0 22px rgba(250, 204, 21, 0.6) !important;
+/* Preview card offset for selected works' 80px circles */
+.constellation-node.is-selected-work.card-right .node-hover-card,
+.constellation-node.is-selected-work.card-top-right .node-hover-card,
+.constellation-node.is-selected-work.card-bottom-right .node-hover-card {
+    left: 88px !important;
+}
+.constellation-node.is-selected-work.card-left .node-hover-card,
+.constellation-node.is-selected-work.card-top-left .node-hover-card,
+.constellation-node.is-selected-work.card-bottom-left .node-hover-card {
+    right: 88px !important;
+}
+.constellation-node.is-selected-work.card-bottom .node-hover-card {
+    top: 86px !important;
+}
+.constellation-node.is-selected-work.card-top .node-hover-card {
+    bottom: 86px !important;
 }
 
-/* Award Winner Preview Card & Pills Accentuation */
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner .node-hover-card,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"] .node-hover-card {
-    border-color: rgba(245, 158, 11, 0.45) !important;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12), 0 0 24px rgba(245, 158, 11, 0.22) !important;
-}
-
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner .card-year-tag,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"] .card-year-tag {
-    color: #d97706 !important;
-    border-color: rgba(245, 158, 11, 0.4) !important;
-}
-
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-award-winner .card-award-pill,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node[data-award="true"] .card-award-pill {
-    background: #fffbeb !important;
-    color: #b45309 !important;
-    border: 1px solid #f59e0b !important;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25) !important;
+/* Standard clean card award pill */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node .card-award-pill {
+    background: rgba(37, 99, 235, 0.08) !important;
+    color: #1d4ed8 !important;
+    border: 1px solid rgba(37, 99, 235, 0.3) !important;
+    box-shadow: none !important;
 }
 
 /* =========================================================
