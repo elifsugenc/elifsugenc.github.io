@@ -253,17 +253,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'critical-inquiry': {
                 name: 'CRITICAL INQUIRY',
                 badge: 'APEX // VERTEX 01',
-                projects: ['emek-museum', 'stray', 'you-were-here', 'fire-escape-simulation']
+                projects: ['emek-museum', 'stray', 'sprouting-garden']
             },
             'contextual-research': {
                 name: 'CONTEXTUAL RESEARCH',
                 badge: 'BASE-LEFT // VERTEX 02',
-                projects: ['chronoclines', 'millieu', 'bajo-la-fresca', 'wood-weave', 'ara-sira']
+                projects: ['chronoclines', 'millieu', 'bajo-la-fresca', 'ara-sira', 'fire-escape-simulation']
             },
             'experimental-thinking': {
                 name: 'EXPERIMENTAL THINKING',
                 badge: 'BASE-RIGHT // VERTEX 03',
-                projects: ['sprouting-garden', 'the-earthen', 'bio-decay']
+                projects: ['you-were-here', 'wood-weave', 'the-earthen', 'bio-decay']
             }
         }
     };
@@ -1194,10 +1194,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // SECTION 06: Vertex Hover Emphasis Behavior
+        // Calculates Euclidean distance from each project to the 3 corner vertices
+        // and illuminates the projects closest to each respective corner
+        const CORNER_COORDINATES = {
+            'critical-inquiry': { x: 500, y: 60 },
+            'contextual-research': { x: 115, y: 695 },
+            'experimental-thinking': { x: 885, y: 695 }
+        };
+
+        const projectsByClosestCorner = {
+            'critical-inquiry': new Set(),
+            'contextual-research': new Set(),
+            'experimental-thinking': new Set()
+        };
+
+        CONSTELLATION_PROJECTS.forEach(p => {
+            let closestKey = null;
+            let minDist = Infinity;
+            for (const [key, pt] of Object.entries(CORNER_COORDINATES)) {
+                const dist = Math.hypot(p.x - pt.x, p.y - pt.y);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closestKey = key;
+                }
+            }
+            if (closestKey && projectsByClosestCorner[closestKey]) {
+                projectsByClosestCorner[closestKey].add(p.id);
+            }
+        });
+
+        // Synchronize PLEIADES_CONFIG.vertexAssociations with calculated closest sets
+        Object.keys(projectsByClosestCorner).forEach(key => {
+            if (PLEIADES_CONFIG.vertexAssociations && PLEIADES_CONFIG.vertexAssociations[key]) {
+                PLEIADES_CONFIG.vertexAssociations[key].projects = Array.from(projectsByClosestCorner[key]);
+            }
+        });
+
         axisLinks.forEach(corner => {
             const vKey = corner.getAttribute('data-vertex-key');
+            const targetProjects = projectsByClosestCorner[vKey] || (PLEIADES_CONFIG.vertexAssociations[vKey] ? new Set(PLEIADES_CONFIG.vertexAssociations[vKey].projects) : new Set());
             const assoc = PLEIADES_CONFIG.vertexAssociations[vKey];
-            if (!assoc) return;
 
             corner.addEventListener('mouseenter', () => {
                 if (container.getAttribute('data-state') !== 'constellation') return;
@@ -1207,11 +1243,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 container.classList.remove('corners-intro-pulsing');
                 container.classList.add('is-vertex-hovered');
-                const assocSet = new Set(assoc.projects);
 
                 allNodes.forEach(node => {
                     const id = node.getAttribute('data-id');
-                    if (assocSet.has(id)) {
+                    if (targetProjects.has(id)) {
                         node.classList.add('is-vertex-emphasized');
                         node.classList.remove('is-dimmed');
                     } else {
@@ -1219,6 +1254,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         node.classList.remove('is-vertex-emphasized');
                     }
                 });
+
+                const inquiryDisplay = document.getElementById('home-inquiry-display');
+                if (inquiryDisplay && assoc) {
+                    inquiryDisplay.innerHTML = `&ldquo;${assoc.name} &bull; ${assoc.badge}&rdquo;`;
+                }
             });
 
             corner.addEventListener('mouseleave', () => {
@@ -1227,6 +1267,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 allNodes.forEach(node => {
                     node.classList.remove('is-vertex-emphasized', 'is-dimmed');
                 });
+                const inquiryDisplay = document.getElementById('home-inquiry-display');
+                if (inquiryDisplay) {
+                    inquiryDisplay.innerHTML = '&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;';
+                }
             });
         });
 

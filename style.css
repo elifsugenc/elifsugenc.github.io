@@ -1380,15 +1380,31 @@ a:hover {
 
 /* Section 06: Vertex Hover Emphasis */
 .pleiades-observatory-stage.is-vertex-hovered .constellation-node.is-dimmed {
-    opacity: 0.22 !important;
-    filter: grayscale(40%) contrast(90%);
+    opacity: 0.18 !important;
+    filter: grayscale(85%) contrast(85%) !important;
+    transition: opacity 0.3s ease, filter 0.3s ease !important;
 }
 
 .pleiades-observatory-stage.is-vertex-hovered .constellation-node.is-vertex-emphasized {
     opacity: 1 !important;
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
     z-index: 45 !important;
-    filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.75));
+    filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.6)) !important;
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease !important;
+}
+
+.pleiades-observatory-stage.is-vertex-hovered .constellation-node.is-vertex-emphasized .node-visual {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3), 0 0 24px rgba(37, 99, 235, 0.55), 0 4px 18px rgba(15, 23, 42, 0.12) !important;
+}
+
+.pleiades-observatory-stage.is-vertex-hovered .constellation-node.is-vertex-emphasized .visual-img {
+    filter: grayscale(0%) contrast(1.1) !important;
+}
+
+.pleiades-observatory-stage.is-vertex-hovered .constellation-node.is-vertex-emphasized .node-title {
+    color: #1d4ed8 !important;
+    font-weight: 700 !important;
 }
 
 /* =========================================================
