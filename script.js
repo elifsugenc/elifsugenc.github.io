@@ -117,6 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('mouseenter', () => {
             cursorWrapper.style.opacity = '1';
         });
+
+        // Prevent native HTML5 drag ghosting and OS copy plus (+) cursor
+        window.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            return false;
+        }, { passive: false });
     }
 
     // Architectural Project Cards Data Store

@@ -964,7 +964,7 @@ body.project-detail-body {
 }
 
 .board-img-container:hover .board-img {
-    cursor: zoom-in !important;
+    cursor: none !important;
 }
 
 /* =========================================================
