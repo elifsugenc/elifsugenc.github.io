@@ -50,20 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const state = (homeStage && homeStage.getAttribute('data-state')) || 'cluster';
 
             if (state === 'cluster') {
-                // In cluster state, ONLY circular star cores and control buttons are spatial interactive targets:
-                // Star captions, orbit rings, and pills (when unhovered) must not trigger spatial hover
-                if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring, .space-about-anchor')) {
+                // In cluster state, circular star cores, cluster-brand-node, and control buttons are interactive:
+                if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring')) {
                     return false;
                 }
-                return !!target.closest('.cs-core, .cluster-transition-btn, #hq-cluster-toggle-pill');
+                return !!target.closest('.cs-core, .cluster-brand-node, #cluster-brand-node, .cluster-transition-btn, #hq-cluster-toggle-pill');
             } else {
                 // In constellation state:
-                // ONLY the 66px circular project photo spheres (.node-visual), active cards, corner nodes, and relation badges
-                // Exclude labels, headers, keywords, orbit rigs, center core, space-about-anchor, and cluster elements
-                if (target.closest('.space-about-anchor, .cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring, .center-core, #constellation-center-btn')) {
+                // Exclude labels, headers, keywords, orbit rigs, and hidden cluster elements
+                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
                     return false;
                 }
-                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge');
+                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge, .cluster-brand-node, #cluster-brand-node, .constellation-design-approach-node, #constellation-design-approach-node');
             }
         }
 
@@ -130,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 url: '#about',
                 clusterX: 340,
                 clusterY: 443,
-                triangleX: 500,
-                triangleY: 460,
+                triangleX: 97,
+                triangleY: 71,
                 description: 'Practice nexus: Architectural research, critical spatial inquiry, and living archives.'
             },
             {
@@ -721,18 +719,18 @@ document.addEventListener('DOMContentLoaded', () => {
             node.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
         });
 
-        // 2. Smoothly glide Alcyone / EG Center
-        const centerBtn = container.querySelector('[id="constellation-center-btn"]');
-        if (centerBtn) {
+        // 2. Smoothly glide Alcyone / Logo Node (from Cluster Center to Top-Left in Constellation)
+        const brandNode = container.querySelector('[id="cluster-brand-node"], [id="constellation-center-btn"]');
+        if (brandNode) {
             const targetX = isTargetConstellation
-                ? parseFloat(centerBtn.getAttribute('data-triangle-x'))
-                : parseFloat(centerBtn.getAttribute('data-cluster-x'));
+                ? parseFloat(brandNode.getAttribute('data-triangle-x'))
+                : parseFloat(brandNode.getAttribute('data-cluster-x'));
             const targetY = isTargetConstellation
-                ? parseFloat(centerBtn.getAttribute('data-triangle-y'))
-                : parseFloat(centerBtn.getAttribute('data-cluster-y'));
+                ? parseFloat(brandNode.getAttribute('data-triangle-y'))
+                : parseFloat(brandNode.getAttribute('data-cluster-y'));
 
-            centerBtn.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
-            centerBtn.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
+            brandNode.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
+            brandNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
         }
 
         // Unlock after transition duration (2600ms)
@@ -983,12 +981,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = `
             <div class="constellation-stage constellation-stage-core" data-state="${initialState}">
-                <!-- Top-Left Space Brand & About Trigger (Sol Üst Köşe — Uzay Alanı İçinde) -->
-                <a href="#about" class="space-about-anchor" id="space-about-anchor" aria-label="About Elifsu Genç — Curriculum Vitae &amp; Manifesto" style="left: 9.7%; top: 9.4%;">
-                    <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="space-about-logo" width="44" height="44">
-                    <span class="space-about-name">elifsu genc.</span>
-                </a>
-
                 <!-- Faint Architectural Background Watermark -->
                 <div class="projects-watermark" class="constellation-watermark" aria-hidden="true">ASK A QUESTION</div>
 
@@ -1009,24 +1001,44 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Secondary Conceptual Curves -->
                     ${secondarySvgPaths}
 
-                    <!-- Primary Radial Connectors from EG -->
+                    <!-- Primary Radial Connectors from Design Approach -->
                     ${radialSvgPaths}
                 </svg>
 
                 <!-- Conceptual Relationship Theme Badges -->
                 ${relationLabelsHtml}
 
-                <!-- Central Plain Circle Element (Geometric Barycenter / Axis Hub) -->
-                <div class="constellation-center is-plain-center" id="constellation-center-btn"
+                <!-- Alcyone Cluster Star / Brand Logo Node (Morphs to Top-Left in Constellation) -->
+                <a href="#about" class="cluster-brand-node" id="cluster-brand-node"
                    data-cluster-x="${alcyoneConfig.clusterX}"
                    data-cluster-y="${alcyoneConfig.clusterY}"
                    data-triangle-x="${alcyoneConfig.triangleX}"
                    data-triangle-y="${alcyoneConfig.triangleY}"
+                   aria-label="About Elifsu Genç — Curriculum Vitae &amp; Manifesto"
                    style="left: ${egLeftPct}%; top: ${egTopPct}%;">
+                    <div class="brand-cluster-circle">
+                        <div class="center-ring ring-outer"></div>
+                        <div class="center-ring ring-mid"></div>
+                        <div class="brand-circle-core"></div>
+                    </div>
+                    <div class="brand-content">
+                        <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="brand-logo-gif" width="44" height="44">
+                        <span class="brand-name-text">elifsu genc.</span>
+                    </div>
+                </a>
+
+                <!-- Central Barycenter DESIGN APPROACH Node (Emerges with radiant burst in Constellation) -->
+                <a href="#design-approach" class="constellation-design-approach-node" id="constellation-design-approach-node"
+                   data-tab="design-approach"
+                   aria-label="Methodology &amp; Design Approach"
+                   style="left: 50.00%; top: 61.33%;">
                     <div class="center-ring ring-outer"></div>
                     <div class="center-ring ring-mid"></div>
-                    <div class="center-core"></div>
-                </div>
+                    <div class="c-approach-core">
+                        <span class="c-approach-word">DESIGN</span>
+                        <span class="c-approach-word">APPROACH</span>
+                    </div>
+                </a>
 
                 <!-- 3 Sector Corner Nodes (Vertices with Hover Emphasis) -->
                 <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="critical-inquiry" data-tab="design-approach" aria-label="Methodology: Critical Inquiry" style="left: 50.00%; top: 8.00%;">
@@ -1068,7 +1080,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const allRadialLines = container.querySelectorAll('.radial-line');
         const allSecondaryLines = container.querySelectorAll('.secondary-line');
         const allRelationBadges = container.querySelectorAll('.relation-theme-badge');
-        const centerBtn = container.querySelector('[id="constellation-center-btn"]');
+        const approachNode = container.querySelector('#constellation-design-approach-node');
+        const brandNodeEl = container.querySelector('#cluster-brand-node');
         const axisLinks = container.querySelectorAll('.c-axis-link');
         const meropeStar = container.querySelector('[id="merope-star-node"]');
 
@@ -1088,9 +1101,20 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.hq-card').forEach(c => c.classList.remove('is-constellation-highlight'));
         }
 
-        // Central circle is a plain empty convergence circle (no navigation to about)
-        if (centerBtn) {
-            centerBtn.style.cursor = 'default';
+        // Central DESIGN APPROACH Node -> Navigate to Methodology
+        if (approachNode) {
+            approachNode.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab('design-approach');
+            });
+        }
+
+        // Alcyone Brand Node -> Navigate to About
+        if (brandNodeEl) {
+            brandNodeEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab('about');
+            });
         }
 
         // Clickable 3 Sector Headings -> Navigate to Methodology (ONLY in constellation state)
@@ -1614,10 +1638,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', (e) => {
-        const spaceAbout = e.target.closest('#space-about-anchor, .space-about-anchor');
+        const spaceAbout = e.target.closest('#space-about-anchor, .space-about-anchor, #cluster-brand-node, .cluster-brand-node');
         if (spaceAbout) {
             e.preventDefault();
             switchTab('about');
+            return;
+        }
+
+        const approachNode = e.target.closest('#constellation-design-approach-node, .constellation-design-approach-node');
+        if (approachNode) {
+            e.preventDefault();
+            switchTab('design-approach');
+            return;
         }
     });
 

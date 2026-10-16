@@ -1323,7 +1323,9 @@ a:hover {
 
 /* Smooth GPU-Accelerated Glide Transitions (2.6s Elegant Easing) */
 .pleiades-observatory-stage .constellation-node,
+.pleiades-observatory-stage .cluster-brand-node,
 .pleiades-observatory-stage .constellation-center,
+.pleiades-observatory-stage .constellation-design-approach-node,
 .pleiades-observatory-stage .merope-star,
 .pleiades-observatory-stage .c-corner-node {
     transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -8900,28 +8902,94 @@ body {
 }
 
 /* =========================================================
-   TOP-LEFT SPACE BRAND & ABOUT TRIGGER (INSIDE OBSERVATORY SKY)
+   ALCYONE BRAND LOGO NODE & CONSTELLATION DESIGN APPROACH NODE
    ========================================================= */
-.space-about-anchor {
+
+/* 1. Alcyone Cluster Star / Floating Brand Logo Node */
+.cluster-brand-node {
     position: absolute;
     transform: translate(-50%, -50%);
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
     text-decoration: none;
     cursor: pointer !important;
     pointer-events: auto !important;
     user-select: none;
-    z-index: 50;
-    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+    z-index: 45;
+    will-change: left, top, transform;
+    transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.space-about-anchor:hover {
+.cluster-brand-node:hover {
     transform: translate(-50%, -50%) scale(1.08);
 }
 
-.space-about-logo {
+/* Cluster Halo Circle surrounding the logo in Cluster Mode */
+.brand-cluster-circle {
+    position: absolute;
+    inset: -14px;
+    pointer-events: none;
+    border-radius: 50%;
+    transition: opacity 0.8s ease;
+}
+
+.brand-circle-core {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #2563eb;
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.4), 0 0 45px rgba(37, 99, 235, 0.2);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cluster-brand-node:hover .brand-circle-core {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 32px rgba(37, 99, 235, 0.65), 0 0 55px rgba(37, 99, 235, 0.35);
+}
+
+/* Outer & Mid spinning dashed rings inside brand circle */
+.brand-cluster-circle .ring-outer {
+    inset: -14px;
+    border: 1.5px dashed rgba(37, 99, 235, 0.45);
+    animation: hqSpinRingRev 20s linear infinite;
+}
+
+.brand-cluster-circle .ring-mid {
+    inset: -7px;
+    border: 1.5px solid rgba(37, 99, 235, 0.35);
+    animation: hqSpinRing 26s linear infinite;
+}
+
+/* When morphing to constellation, dissolve the circle halo ("yukarı çıkarken yuvarlağı gitsin") */
+.pleiades-observatory-stage[data-state="constellation"] .brand-cluster-circle {
+    opacity: 0 !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .brand-cluster-circle {
+    opacity: 1 !important;
+    visibility: visible;
+}
+
+/* Brand inner content (Gif Logo + Name) */
+.brand-content {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    pointer-events: auto !important;
+}
+
+.brand-logo-gif {
     width: 44px;
     height: 44px;
     display: block;
@@ -8930,11 +8998,11 @@ body {
     transition: transform 0.25s ease;
 }
 
-.space-about-anchor:hover .space-about-logo {
-    transform: scale(1.05);
+.cluster-brand-node:hover .brand-logo-gif {
+    transform: scale(1.06);
 }
 
-.space-about-name {
+.brand-name-text {
     font-family: var(--font-primary, 'Space Grotesk', sans-serif);
     font-size: 0.72rem;
     font-weight: 500;
@@ -8946,24 +9014,128 @@ body {
     transition: color 0.2s ease;
 }
 
-.space-about-anchor:hover .space-about-name {
+.cluster-brand-node:hover .brand-name-text {
     color: #1d4ed8;
 }
 
-#tab-main .pleiades-observatory-stage .space-about-anchor,
-#tab-main .pleiades-observatory-stage .space-about-anchor * {
+/* 2. Constellation Geometric Center "DESIGN APPROACH" Node */
+.constellation-design-approach-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    user-select: none;
+    z-index: 40;
+    will-change: transform, opacity;
+}
+
+.constellation-design-approach-node .ring-outer {
+    inset: -14px;
+    border: 1.5px dashed rgba(37, 99, 235, 0.4);
+    animation: hqSpinRingRev 22s linear infinite;
+}
+
+.constellation-design-approach-node .ring-mid {
+    inset: -7px;
+    border: 1.5px solid rgba(37, 99, 235, 0.25);
+    animation: hqSpinRing 28s linear infinite;
+}
+
+.c-approach-core {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #ffffff !important;
+    border: 2px solid #2563eb !important;
+    box-shadow: 0 0 26px rgba(37, 99, 235, 0.5), 0 4px 18px rgba(37, 99, 235, 0.25) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.c-approach-word {
+    font-family: monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #2563eb;
+    line-height: 1.15;
+    text-align: center;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.constellation-design-approach-node:hover .c-approach-core {
+    transform: scale(1.08);
+    background: #2563eb !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 0 36px rgba(37, 99, 235, 0.8), 0 8px 24px rgba(15, 23, 42, 0.15) !important;
+}
+
+.constellation-design-approach-node:hover .c-approach-word {
+    color: #ffffff !important;
+}
+
+.constellation-design-approach-node:hover .ring-outer {
+    border-color: #2563eb;
+}
+
+/* Cluster Mode vs Constellation Mode Transitions for Central Approach Node */
+.pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translate(-50%, -50%) scale(0.08) !important;
+    transition: opacity 0.8s ease 0.2s, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    transition: opacity 0.5s ease 0.15s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s !important;
+}
+
+/* Mobile & Touch Responsiveness */
+@media (max-width: 768px) {
+    .brand-logo-gif {
+        width: 36px;
+        height: 36px;
+    }
+    .brand-name-text {
+        font-size: 0.62rem;
+    }
+    .c-approach-core {
+        width: 56px;
+        height: 56px;
+    }
+    .c-approach-word {
+        font-size: 0.48rem;
+    }
+}
+
+/* Pointer Events and Cursor overrides for observatory stage mount */
+#tab-main .pleiades-observatory-stage .cluster-brand-node,
+#tab-main .pleiades-observatory-stage .cluster-brand-node *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-design-approach-node * {
     pointer-events: auto !important;
     cursor: pointer !important;
 }
 
-@media (max-width: 768px) {
-    .space-about-logo {
-        width: 34px;
-        height: 34px;
-    }
-    .space-about-name {
-        font-size: 0.62rem;
-    }
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node,
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .constellation-design-approach-node * {
+    pointer-events: none !important;
+    cursor: none !important;
 }
 
 
