@@ -8740,26 +8740,21 @@ body {
 .center-core {
     background: #ffffff !important;
     border: 2px solid #2563eb !important;
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.22), 0 0 16px rgba(37, 99, 235, 0.14) !important;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18) !important;
 }
 
-.center-eg {
-    color: #0f172a !important;
-}
-
-.center-sub {
-    color: #2563eb !important;
+.constellation-center,
+.constellation-center:hover,
+#constellation-center-btn {
+    cursor: default !important;
+    pointer-events: none !important;
+    transform: translate(-50%, -50%) !important;
 }
 
 .constellation-center:hover .center-core {
-    background: #2563eb !important;
-    border-color: #1d4ed8 !important;
-    box-shadow: 0 0 28px rgba(37, 99, 235, 0.6) !important;
-}
-
-.constellation-center:hover .center-eg,
-.constellation-center:hover .center-sub {
-    color: #ffffff !important;
+    background: #ffffff !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18) !important;
 }
 
 .cluster-star-pill {
@@ -8903,3 +8898,80 @@ body {
     background: #2563eb !important;
     box-shadow: 0 0 10px rgba(37, 99, 235, 0.8) !important;
 }
+
+/* =========================================================
+   TOP-LEFT ARCHITECTURAL BRAND & ABOUT TRIGGER (LOGO GIF + NAME)
+   ========================================================= */
+.brand-about-btn {
+    position: fixed;
+    top: 24px;
+    left: 28px;
+    z-index: 600;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+    background: transparent;
+    padding: 2px 4px;
+    border-radius: 6px;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+}
+
+.brand-about-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+}
+
+.brand-about-logo {
+    width: 38px;
+    height: 38px;
+    display: block;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform 0.25s ease;
+}
+
+.brand-about-btn:hover .brand-about-logo {
+    transform: scale(1.06);
+}
+
+.brand-about-name {
+    font-family: var(--font-primary, 'Space Grotesk', sans-serif);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #2563eb;
+    text-transform: lowercase;
+    line-height: 1.1;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.brand-about-btn:hover .brand-about-name {
+    color: #1d4ed8;
+}
+
+body.is-about-active .brand-about-btn {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+@media (max-width: 768px) {
+    .brand-about-btn {
+        top: 16px;
+        left: 18px;
+        gap: 3px;
+    }
+    .brand-about-logo {
+        width: 32px;
+        height: 32px;
+    }
+    .brand-about-name {
+        font-size: 0.62rem;
+    }
+}
+

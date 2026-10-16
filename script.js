@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('.cs-caption-block, .cs-caption, .cs-orbit-ring')) {
                     return false;
                 }
-                return !!target.closest('.cs-core, .center-core, #constellation-center-btn .center-core, .cluster-transition-btn, #hq-cluster-toggle-pill');
+                return !!target.closest('.cs-core, .cluster-transition-btn, #hq-cluster-toggle-pill');
             } else {
                 // In constellation state:
                 // ONLY the 66px circular project photo spheres (.node-visual), active cards, corner nodes, and relation badges
-                // Exclude labels, headers, keywords, orbit rigs, and cluster elements
-                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring')) {
+                // Exclude labels, headers, keywords, orbit rigs, center core, and cluster elements
+                if (target.closest('.cluster-star-visual, .merope-star, #merope-star-node, .node-label, .node-header, .node-title, .node-keywords, .node-orbit-rig, .center-ring, .center-core, #constellation-center-btn')) {
                     return false;
                 }
-                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .center-core, .constellation-map .relation-theme-badge');
+                return !!target.closest('.constellation-map .node-visual, .constellation-map .node-hover-card, .constellation-map .c-axis-link, .constellation-map .c-corner-node, .constellation-map .relation-theme-badge');
             }
         }
 
@@ -1010,8 +1010,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- Conceptual Relationship Theme Badges -->
                 ${relationLabelsHtml}
 
-                <!-- Central EG. Element (Alcyone / Practice Center) -->
-                <a href="#about" class="constellation-center" id="constellation-center-btn"
+                <!-- Central Plain Circle Element (Geometric Barycenter / Axis Hub) -->
+                <div class="constellation-center is-plain-center" id="constellation-center-btn"
                    data-cluster-x="${alcyoneConfig.clusterX}"
                    data-cluster-y="${alcyoneConfig.clusterY}"
                    data-triangle-x="${alcyoneConfig.triangleX}"
@@ -1019,20 +1019,8 @@ document.addEventListener('DOMContentLoaded', () => {
                    style="left: ${egLeftPct}%; top: ${egTopPct}%;">
                     <div class="center-ring ring-outer"></div>
                     <div class="center-ring ring-mid"></div>
-                    <div class="center-core">
-                        <span class="center-eg">EG.</span>
-                        <span class="center-sub">PRACTICE</span>
-                    </div>
-                    <div class="cs-caption-block">
-                        <span class="cs-project-name">Elifsu Genç (EG.)</span>
-                        <span class="cs-star-astronomy">${alcyoneConfig.starName} &bull; ${alcyoneConfig.bayer}</span>
-                    </div>
-                    <div class="cluster-star-pill">
-                        <div class="csp-star">${alcyoneConfig.starName} <span class="csp-bayer">&bull; ${alcyoneConfig.bayer}</span></div>
-                        <div class="csp-title">${alcyoneConfig.title}</div>
-                        <div class="csp-meta">${alcyoneConfig.mag} &bull; Practice Center &bull; Explore About &rarr;</div>
-                    </div>
-                </a>
+                    <div class="center-core"></div>
+                </div>
 
                 <!-- 3 Sector Corner Nodes (Vertices with Hover Emphasis) -->
                 <a href="#design-approach" class="c-axis-link c-corner-node" data-vertex-key="critical-inquiry" data-tab="design-approach" aria-label="Methodology: Critical Inquiry" style="left: 50.00%; top: 8.00%;">
@@ -1094,31 +1082,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.hq-card').forEach(c => c.classList.remove('is-constellation-highlight'));
         }
 
-        // Center EG. click: Navigate to About
+        // Central circle is a plain empty convergence circle (no navigation to about)
         if (centerBtn) {
-            const centerCore = centerBtn.querySelector('.center-core');
-            centerBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                switchTab('about');
-            });
-            const handleCenterEnter = () => {
-                if (container.getAttribute('data-state') === 'constellation') {
-                    container.classList.remove('eg-intro-pulsing');
-                    if (container.classList.contains('has-hover')) {
-                        resetConstellation();
-                    }
-                    container.classList.add('is-center-hovered');
-                }
-            };
-            const handleCenterLeave = () => {
-                container.classList.remove('is-center-hovered');
-            };
-            if (centerCore) {
-                centerCore.addEventListener('mouseenter', handleCenterEnter);
-                centerCore.addEventListener('mouseleave', handleCenterLeave);
-            }
-            centerBtn.addEventListener('mouseenter', handleCenterEnter);
-            centerBtn.addEventListener('mouseleave', handleCenterLeave);
+            centerBtn.style.cursor = 'default';
         }
 
         // Clickable 3 Sector Headings -> Navigate to Methodology (ONLY in constellation state)
@@ -1574,6 +1540,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabContents.forEach(c => c.classList.remove('active'));
         target.classList.add('active');
         setActive(targetTabId);
+        document.body.classList.toggle('is-about-active', targetTabId === 'about');
         window.scrollTo({ top: 0, behavior: 'auto' });
 
         if (updateHash) {
@@ -1638,6 +1605,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (projectJumpBtn) {
         projectJumpBtn.addEventListener('click', () => switchTab(projectJumpBtn.getAttribute('data-target')));
+    }
+
+    const brandAboutBtn = document.getElementById('brand-about-btn');
+    if (brandAboutBtn) {
+        brandAboutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab && activeTab.id === 'tab-about') {
+                goBack();
+            } else {
+                switchTab('about');
+            }
+        });
     }
 
     // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#card-wood-weave) and support back/forward
