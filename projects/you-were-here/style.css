@@ -93,7 +93,7 @@ body.project-detail-body {
 }
 
 #custom-cursor.cursor-project {
-    animation: blinkQuestion 0.8s infinite alternate ease-in-out;
+    opacity: 1;
 }
 #custom-cursor.cursor-project::after {
     content: '?';

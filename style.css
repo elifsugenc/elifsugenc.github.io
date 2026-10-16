@@ -62,7 +62,7 @@
     -webkit-user-select: none !important;
 }
 
-/* Tıklanabilir elementin üzerine gelince: 2 Katı Büyütülmüş Yanıp Sönen Soru İşareti (?) */
+/* Tıklanabilir elementin üzerine gelince: Büyüyüp Sabit Kalan Soru İşareti (?) */
 #custom-cursor.cursor-hover,
 #custom-cursor.cursor-project,
 #custom-cursor.cursor-question,
@@ -73,7 +73,8 @@
     border: 2px solid rgba(255, 255, 255, 0.95);
     border-radius: 50%;
     box-shadow: 0 0 24px rgba(37, 99, 235, 0.85), 0 4px 14px rgba(15, 23, 42, 0.28);
-    animation: cursorQuestionPulse 0.95s infinite ease-in-out;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
 }
 
 #custom-cursor.cursor-hover::after,
@@ -103,20 +104,6 @@
 
 #cursor-wrapper.cursor-spatial #cursor-label {
     display: none !important;
-}
-
-/* Yanıp sönen soru işareti animasyonu (Pulsing / Blinking Question Mark) */
-@keyframes cursorQuestionPulse {
-    0%, 100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        box-shadow: 0 0 28px rgba(37, 99, 235, 0.9), 0 0 48px rgba(37, 99, 235, 0.5);
-    }
-    45%, 55% {
-        opacity: 0.35;
-        transform: translate(-50%, -50%) scale(0.92);
-        box-shadow: 0 0 8px rgba(37, 99, 235, 0.25);
-    }
 }
 
 body {
