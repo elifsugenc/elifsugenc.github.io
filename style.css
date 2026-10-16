@@ -1146,8 +1146,8 @@ a:hover {
 
 .pleiades-observatory-stage[data-state="cluster"] .constellation-node.is-cluster-star .node-label {
     opacity: 0 !important;
-    transform: translateY(10px) !important;
-    transition: opacity 0.4s ease, transform 0.4s ease !important;
+    pointer-events: none !important;
+    transition: opacity 0.4s ease !important;
 }
 
 
@@ -1218,9 +1218,7 @@ a:hover {
 
 .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-cluster-star .node-label {
     opacity: 1 !important;
-    transform: translateY(0) !important;
-    transition: opacity 1.0s ease 1.1s,
-                transform 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.1s !important;
+    transition: opacity 1.0s ease 1.1s !important;
 }
 
 
@@ -1260,8 +1258,8 @@ a:hover {
 
 .pleiades-observatory-stage[data-state="cluster"] .constellation-node:not(.is-cluster-star) .node-label {
     opacity: 0 !important;
-    transform: translateY(10px) !important;
-    transition: opacity 0.4s ease, transform 0.4s ease !important;
+    pointer-events: none !important;
+    transition: opacity 0.4s ease !important;
 }
 
 
@@ -1304,9 +1302,7 @@ a:hover {
 
 .pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star) .node-label {
     opacity: 1 !important;
-    transform: translateY(0) !important;
-    transition: opacity 1.1s ease calc(var(--star-delay, 0.12s) + 1.4s),
-                transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--star-delay, 0.12s) + 1.4s) !important;
+    transition: opacity 1.1s ease calc(var(--star-delay, 0.12s) + 1.4s) !important;
 }
 
 
@@ -8043,8 +8039,7 @@ body {
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-label,
 #tab-main .constellation-map[data-state="constellation"]:not(.is-morphing-entrance) .constellation-node .node-label {
-  transition: opacity 0.3s ease,
-              transform 0.3s ease !important;
+  transition: opacity 0.3s ease !important;
   transition-delay: 0s !important;
 }
 
@@ -8088,7 +8083,6 @@ body {
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-label {
   opacity: 1 !important;
-  transform: translateY(0) !important;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related .node-title {
@@ -9121,26 +9115,90 @@ body {
     height: 160px !important;
 }
 
-/* Directional label clearances for selected works (80px circle) */
+/* Directional label clearances & exact horizontal/vertical centering */
+/* Regular works (66px circle, radius 33px) */
+.constellation-node.node-right .node-label {
+    left: 44px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateY(-50%) !important;
+    text-align: left !important;
+}
+.constellation-node.node-left .node-label {
+    right: 44px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: translateY(-50%) !important;
+    text-align: right !important;
+}
+.constellation-node.node-bottom .node-label {
+    left: 0 !important;
+    top: 44px !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+}
+.constellation-node.node-top .node-label {
+    left: 0 !important;
+    bottom: 44px !important;
+    top: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+}
+
+/* Selected works (80px circle, radius 40px) */
 .constellation-node.is-selected-work.node-right .node-label {
     left: 52px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateY(-50%) !important;
+    text-align: left !important;
 }
 .constellation-node.is-selected-work.node-left .node-label {
     right: 52px !important;
+    top: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: translateY(-50%) !important;
+    text-align: right !important;
 }
 .constellation-node.is-selected-work.node-top .node-label {
+    left: 0 !important;
     bottom: 52px !important;
+    top: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
 }
 .constellation-node.is-selected-work.node-bottom .node-label {
+    left: 0 !important;
     top: 52px !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
 }
 .constellation-node.is-selected-work.node-top-left .node-label {
     right: 44px !important;
     bottom: 26px !important;
+    top: auto !important;
+    left: auto !important;
 }
 .constellation-node.is-selected-work.node-bottom-left .node-label {
     right: 44px !important;
     top: 26px !important;
+    bottom: auto !important;
+    left: auto !important;
+}
+
+.constellation-node.node-bottom .node-header,
+.constellation-node.node-top .node-header {
+    justify-content: center !important;
 }
 
 /* Preview card offset for selected works' 80px circles */
