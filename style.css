@@ -6774,18 +6774,18 @@ body {
 }
 
 .m-tri-edge-box {
-    fill: rgba(255, 255, 255, 0.96);
-    stroke: rgba(26, 54, 93, 0.18);
-    stroke-width: 1;
+    fill: rgba(255, 255, 255, 0.98);
+    stroke: rgba(26, 54, 93, 0.22);
+    stroke-width: 1.2;
     transition: all 0.25s ease;
 }
 
 .m-tri-edge-label {
     font-family: monospace;
-    font-size: 9.5px;
+    font-size: 13px;
     font-weight: 700;
-    fill: rgba(26, 54, 93, 0.72);
-    letter-spacing: 0.12em;
+    fill: #1a365d;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     user-select: none;
     transition: fill 0.25s ease;
@@ -6794,7 +6794,7 @@ body {
 .m-tri-edge-group:hover .m-tri-edge-box {
     fill: #ffffff;
     stroke: var(--accent-color);
-    filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.2));
+    filter: drop-shadow(0 3px 10px rgba(37, 99, 235, 0.25));
 }
 
 .m-tri-edge-group:hover .m-tri-edge-label {
@@ -6809,89 +6809,45 @@ body {
 .m-tri-center-core {
     fill: #1a365d;
     stroke: #2563eb;
-    stroke-width: 2.2;
+    stroke-width: 3;
     transition: stroke-width 0.25s ease, filter 0.25s ease;
 }
 
 .m-tri-core-label {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     fill: #ffffff;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     user-select: none;
 }
 
 .m-tri-core-sub {
     font-family: monospace;
-    font-size: 7px;
+    font-size: 12.5px;
     font-weight: 700;
-    fill: rgba(255, 255, 255, 0.88);
-    letter-spacing: 0.22em;
-    user-select: none;
-}
-
-.m-tri-flow-box {
-    fill: rgba(37, 99, 235, 0.06);
-    stroke: rgba(37, 99, 235, 0.22);
-    stroke-width: 1;
-    transition: all 0.25s ease;
-}
-
-.m-tri-flow-text {
-    font-family: monospace;
-    font-size: 9px;
-    font-weight: 700;
-    fill: #1a365d;
+    fill: #2563eb;
     letter-spacing: 0.12em;
     user-select: none;
-    transition: fill 0.25s ease;
-}
-
-.m-tri-core-caption {
-    font-family: monospace;
-    font-size: 8.5px;
-    font-weight: 700;
-    fill: #64748b;
-    letter-spacing: 0.12em;
-    user-select: none;
-    transition: fill 0.25s ease;
+    text-transform: uppercase;
 }
 
 .m-tri-center-group:hover .m-tri-center-core {
-    stroke-width: 3.5;
-    filter: drop-shadow(0 0 14px rgba(37, 99, 235, 0.45));
+    stroke-width: 4.5;
+    filter: drop-shadow(0 0 18px rgba(37, 99, 235, 0.55));
 }
 
-.m-tri-center-group:hover .m-tri-flow-box {
-    fill: rgba(37, 99, 235, 0.12);
-    stroke: var(--accent-color);
-}
-
-.m-tri-center-group:hover .m-tri-flow-text {
-    fill: var(--accent-color);
-}
-
-/* Vertex Poles (Zero Scale - Pure SVG Vector Transitions) */
+/* Vertex Poles (Bold, Crisp & Large Architectural Typography) */
 .m-tri-node-group {
     cursor: pointer;
 }
 
-.m-tri-pole-id {
-    font-family: monospace;
-    font-size: 9px;
-    font-weight: 700;
-    fill: #2563eb;
-    letter-spacing: 0.14em;
-    user-select: none;
-}
-
 .m-tri-node-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 21px;
     font-weight: 800;
     fill: #1a365d;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     user-select: none;
     transition: fill 0.25s ease;
 }
@@ -6899,22 +6855,22 @@ body {
 .m-tri-node-circle {
     fill: #ffffff;
     stroke: #1a365d;
-    stroke-width: 2;
+    stroke-width: 2.5;
     transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
 }
 
 .m-tri-node-badge {
     font-family: monospace;
-    font-size: 9.5px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
     fill: #2563eb;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
     user-select: none;
 }
 
 .m-tri-node-sub {
     font-family: monospace;
-    font-size: 7.5px;
+    font-size: 9.5px;
     font-weight: 700;
     fill: #1a365d;
     user-select: none;
@@ -6922,45 +6878,20 @@ body {
 
 .m-tri-role-sub {
     font-family: monospace;
-    font-size: 8.8px;
-    font-weight: 600;
-    fill: #64748b;
-    letter-spacing: 0.06em;
-    user-select: none;
-}
-
-.m-tri-q-box {
-    fill: rgba(255, 255, 255, 0.94);
-    stroke: rgba(37, 99, 235, 0.22);
-    stroke-width: 1;
-    transition: all 0.25s ease;
-}
-
-.m-tri-q-text {
-    font-family: 'Space Grotesk', serif;
-    font-style: italic;
-    font-size: 10.5px;
-    font-weight: 600;
-    fill: #1a365d;
-    user-select: none;
-    transition: fill 0.25s ease;
-}
-
-.m-tri-method-bullets {
-    font-family: monospace;
-    font-size: 8.2px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 700;
     fill: #475569;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.08em;
     user-select: none;
+    text-transform: uppercase;
 }
 
-/* Vertex Hover Effects (Zero Position Jitter) */
+/* Vertex Hover Effects */
 .m-tri-node-group:hover .m-tri-node-circle,
 .m-tri-node-group.is-focused .m-tri-node-circle {
     stroke: var(--accent-color);
-    stroke-width: 3;
-    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.4));
+    stroke-width: 4;
+    filter: drop-shadow(0 0 14px rgba(37, 99, 235, 0.45));
 }
 
 .m-tri-node-group:hover .m-tri-node-title,
@@ -6968,48 +6899,371 @@ body {
     fill: var(--accent-color);
 }
 
-.m-tri-node-group:hover .m-tri-q-box,
-.m-tri-node-group.is-focused .m-tri-q-box {
-    fill: #ffffff;
-    stroke: var(--accent-color);
+/* =========================================================
+   NEW METHODOLOGY STANCE CARDS & TERNARY MATRIX
+   ========================================================= */
+
+/* Hero Stance Grid (3 Direct Takeaways) */
+.approach-stance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 14px;
 }
 
-.m-tri-node-group:hover .m-tri-q-text,
-.m-tri-node-group.is-focused .m-tri-q-text {
-    fill: var(--accent-color);
+.approach-stance-card {
+    background: rgba(26, 54, 93, 0.02);
+    border: 1px solid rgba(26, 54, 93, 0.14);
+    border-radius: 8px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.25s ease;
 }
 
-/* Project Tags in Diagram */
-.m-tri-tag-group {
-    cursor: pointer;
+.approach-stance-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+}
+
+.asc-num {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.12em;
+}
+
+.asc-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.asc-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.85;
+    margin: 0;
+}
+
+/* Section 02: Matrix Poles Grid (3 Vertices + Center Card) */
+.matrix-poles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 10px;
+}
+
+.matrix-pole-card {
+    background: #ffffff;
+    border: 1px solid rgba(26, 54, 93, 0.16);
+    border-radius: 8px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(26, 54, 93, 0.03);
+    transition: all 0.25s ease;
+}
+
+.matrix-pole-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
+    transform: translateY(-3px);
+}
+
+.mpc-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mpc-badge {
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.12em;
+    display: inline-block;
+}
+
+.mpc-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #1a365d;
+    margin: 4px 0 2px;
+}
+
+.mpc-role {
+    font-family: monospace;
+    font-size: 0.72rem;
+    color: #64748b;
+    letter-spacing: 0.06em;
+    display: block;
+    text-transform: uppercase;
+}
+
+.mpc-question {
+    font-family: 'Space Grotesk', serif;
+    font-style: italic;
+    font-size: 0.98rem;
+    line-height: 1.45;
+    color: var(--accent-color);
+    border-left: 2.5px solid var(--accent-color);
+    padding-left: 12px;
+    margin: 2px 0;
+}
+
+.mpc-desc {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0;
+}
+
+.mpc-projects-list {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(26, 54, 93, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mpc-proj-label {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.08em;
+}
+
+.mpc-pills-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mpc-pill {
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1a365d;
+    background: rgba(26, 54, 93, 0.03);
+    border: 1px solid rgba(26, 54, 93, 0.16);
+    border-radius: 4px;
+    padding: 7px 12px;
     text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.m-tri-tag-bg {
-    fill: #ffffff;
-    stroke: rgba(26, 54, 93, 0.18);
-    stroke-width: 1;
+.mpc-pill:hover {
+    background: rgba(37, 99, 235, 0.08);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateX(3px);
+}
+
+.mpc-arrow {
+    color: var(--accent-color);
+}
+
+/* Center Card (Spans full width across 3 columns) */
+.matrix-center-card {
+    grid-column: span 3;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.04) 0%, rgba(248, 250, 255, 0.95) 100%);
+    border: 1.5px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.08);
+    margin-top: 10px;
+}
+
+.mcc-beacon {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mcc-beacon-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(37, 99, 235, 0.5);
+    animation: egPulseRing 14s linear infinite;
+}
+
+.mcc-beacon-core {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+
+.mcc-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.mcc-badge {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.12em;
+}
+
+.mcc-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1a365d;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.mcc-lead {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0;
+}
+
+.mcc-flow-diagram {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.flow-step-box {
+    background: #ffffff;
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 140px;
     transition: all 0.2s ease;
 }
 
-.m-tri-tag {
+.flow-step-box:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.fsb-num {
     font-family: monospace;
-    font-size: 8.5px;
+    font-size: 0.65rem;
     font-weight: 700;
-    fill: #1a365d;
+    color: var(--accent-color);
+}
+
+.fsb-name {
+    font-family: monospace;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #1a365d;
     letter-spacing: 0.06em;
-    user-select: none;
-    transition: fill 0.2s ease;
 }
 
-.m-tri-tag-group:hover .m-tri-tag-bg {
-    fill: rgba(37, 99, 235, 0.1);
-    stroke: var(--accent-color);
-    stroke-width: 1.5;
+.fsb-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.35;
 }
 
-.m-tri-tag-group:hover .m-tri-tag {
-    fill: var(--accent-color);
+.fsb-arrow {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Section 03: Dialectical Axes Grid */
+.dialectical-axes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.axis-diagram-card {
+    background: #ffffff;
+    border: 1px solid rgba(26, 54, 93, 0.15);
+    border-radius: 8px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.25s ease;
+}
+
+.axis-diagram-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+}
+
+.adc-badge {
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.1em;
+}
+
+.adc-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #1a365d;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.adc-formula {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(26, 54, 93, 0.7);
+    background: rgba(26, 54, 93, 0.04);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: -2px;
+}
+
+.adc-text {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0;
 }
 
 /* =========================================================
@@ -7088,11 +7342,11 @@ body {
 
 .m-lens-btn {
     background: rgba(26, 54, 93, 0.04);
-    border: 1px solid rgba(26, 54, 93, 0.15);
+    border: 1px solid rgba(26, 54, 93, 0.18);
     border-radius: 4px;
-    padding: 6px 12px;
+    padding: 7px 14px;
     font-family: monospace;
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: #1a365d;
@@ -7126,17 +7380,17 @@ body {
 
 .m-lens-badge {
     font-family: monospace;
-    font-size: 0.65rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--accent-color);
     background: rgba(37, 99, 235, 0.08);
-    padding: 3px 8px;
-    border-radius: 3px;
+    padding: 4px 10px;
+    border-radius: 4px;
 }
 
 .m-lens-title {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: #1a365d;
     letter-spacing: 0.04em;
@@ -7146,16 +7400,16 @@ body {
 .m-lens-quote {
     font-family: 'Space Grotesk', serif;
     font-style: italic;
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.45;
     color: var(--accent-color);
-    border-left: 2px solid rgba(37, 99, 235, 0.4);
-    padding-left: 12px;
+    border-left: 2.5px solid rgba(37, 99, 235, 0.5);
+    padding-left: 14px;
     margin: 4px 0 0;
 }
 
 .m-lens-desc {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
     line-height: 1.65;
     color: #334155;
     margin: 0;
@@ -7177,7 +7431,7 @@ body {
     align-items: center;
     gap: 8px;
     font-family: monospace;
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 700;
     color: #1a365d;
     letter-spacing: 0.06em;
@@ -7185,7 +7439,7 @@ body {
 
 .m-flow-step {
     background: rgba(26, 54, 93, 0.05);
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 4px;
 }
 
@@ -7202,7 +7456,7 @@ body {
 
 .m-lens-tag-label {
     font-family: monospace;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 700;
     color: #64748b;
     letter-spacing: 0.08em;
@@ -7210,12 +7464,12 @@ body {
 
 .m-lens-proj-pill {
     font-family: monospace;
-    font-size: 0.68rem;
+    font-size: 0.76rem;
     font-weight: 700;
     color: #1a365d;
     background: #ffffff;
     border: 1px solid rgba(26, 54, 93, 0.2);
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 4px;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -7225,6 +7479,36 @@ body {
     border-color: var(--accent-color);
     color: var(--accent-color);
     background: rgba(37, 99, 235, 0.06);
+}
+
+@media (max-width: 900px) {
+    .approach-stance-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .matrix-poles-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .matrix-center-card {
+        grid-column: span 1;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 24px 20px;
+    }
+    .mcc-flow-diagram {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .fsb-arrow {
+        transform: rotate(90deg);
+        margin: 4px auto;
+    }
+    .dialectical-axes-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
 }
 
 @media (max-width: 768px) {

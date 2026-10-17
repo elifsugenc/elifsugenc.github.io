@@ -2019,61 +2019,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const LENS_DATA = {
         all: {
             mode: 'ACTIVE LENS // EG. PRACTICE SYNTHESIS',
-            badge: 'EQUILIBRIUM BARYCENTER',
+            badge: 'BARYCENTER // DYNAMIC SYNTHESIS',
             title: 'CONTINUOUS SPATIAL SYNTHESIS LOOP',
-            quote: '“Architecture is neither pure ideological critique nor indifferent physical construction: it is an epistemic feedback loop.”',
-            desc: 'Rather than executing predetermined briefs, my architectural methodology operates through perpetual tension between ethical interrogation, physical matter, and site forensics. Every inquiry unearths dormant memories; every material prototype tests speculative justice; every spatial encounter invites the public to reconsider the ordinary.',
+            quote: '“Architecture is an investigative feedback loop between ethical inquiry, site forensics, and tactile matter.”',
+            desc: 'Rather than executing predetermined briefs, projects dismantle assumptions, unearth dormant site memories, and prototype fragile futures. All 12 constellation projects converge at this barycentric core.',
             flow: ['01. QUESTION', '02. EXCAVATE', '03. PROTOTYPE', '04. RETHINK'],
-            footerLabel: 'ALL 8 CORE WORKS CONVERGE AT BARYCENTER',
-            projects: []
+            footerLabel: 'BARYCENTRIC CORE // THE HIDDEN SISTER:',
+            projects: [
+                { title: 'THE HIDDEN SISTER (MEROPE)', url: '#design-approach' }
+            ]
         },
         v1: {
             mode: 'FOCUSED LENS // VERTEX 01: CRITICAL INQUIRY',
-            badge: 'APEX COGNITIVE POLE',
-            title: 'CRITICAL INQUIRY // DECONSTRUCTING THE FAMILIAR',
-            quote: '“What is left unspoken? Whose perspectives are centered?”',
-            desc: 'Architecture frequently operates as a tool of spatial obedience and institutional erasure. This pole approaches every spatial convention as a political contract to be deconstructed. By centering the dignity of overlooked Turkish workers and examining multi-species urban coexistence, it transforms architectural briefs into spaces of active resistance and memory.',
+            badge: 'APEX // VERTEX 01',
+            title: 'CRITICAL INQUIRY // DECONSTRUCTING NORMS',
+            quote: '“Whose labor, presence, and daily rituals does monumental architecture erase?”',
+            desc: 'Transforms spatial design into an instrument of resistance. Challenges institutional dogma, centers forgotten civic labor, and investigates multispecies urban coexistence.',
             flow: ['ETHICAL AUDIT', 'INSTITUTIONAL CRITIQUE', 'SPATIAL JUSTICE'],
-            footerLabel: 'MANIFESTED PROJECTS:',
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
             projects: [
-                { title: 'STRAY', url: './projects/stray/' },
-                { title: 'EMEK MUSEUM', url: './projects/emek-museum/' }
+                { title: '01. EMEK MUSEUM', url: './projects/emek-museum/' },
+                { title: '02. STRAY', url: './projects/stray/' },
+                { title: '04. SPROUTING GARDEN', url: './projects/sprouting-garden/' }
             ]
         },
         v2: {
             mode: 'FOCUSED LENS // VERTEX 02: CONTEXTUAL RESEARCH',
-            badge: 'BASE-LEFT COGNITIVE POLE',
-            title: 'CONTEXTUAL RESEARCH // EXCAVATING MATERIAL MEMORY',
-            quote: '“What does matter remember? What traces exist?”',
-            desc: 'Context is never a passive backdrop or a static municipal zone; it is a live archive of microclimatic comfort, material wear, and historical strata. This pole investigates passive shade and ephemeral cooling in Andalusian patios, treats urban sedimentary transformations as an autonomous museum, and shapes social atmospheres through culinary communion.',
-            flow: ['MICROCLIMATES', 'SEDIMENTARY LAYERS', 'EPHEMERAL CANOPIES'],
-            footerLabel: 'MANIFESTED PROJECTS:',
+            badge: 'BASE-LEFT // VERTEX 02',
+            title: 'CONTEXTUAL RESEARCH // MATERIAL MEMORY',
+            quote: '“What does physical site, stone, and microclimate remember over time?”',
+            desc: 'Treats context not as an empty plot, but as an unwritten physical archive of microclimatic comfort, stone wear, and historical urban strata.',
+            flow: ['MICROCLIMATES', 'SEDIMENTARY LAYERS', 'EPHEMERAL ATMOSPHERES'],
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
             projects: [
-                { title: 'BAJO LA FRESCA', url: './projects/bajo-la-fresca/' },
-                { title: 'CHRONOCLINES', url: './projects/chronoclines/' },
-                { title: 'MILLIEU', url: './projects/millieu/' }
+                { title: '03. CHRONOCLINES', url: './projects/chronoclines/' },
+                { title: '05. MILLIEU', url: './projects/millieu/' },
+                { title: '07. BAJO LA FRESCA', url: './projects/bajo-la-fresca/' },
+                { title: '09. ARA SIRA', url: './projects/ara-sira/' },
+                { title: '12. FIRE ESCAPE SIM', url: './projects/fire-escape-simulation/' }
             ]
         },
         v3: {
             mode: 'FOCUSED LENS // VERTEX 03: EXPERIMENTAL THINKING',
-            badge: 'BASE-RIGHT COGNITIVE POLE',
-            title: 'EXPERIMENTAL THINKING // SPECULATIVE EMBODIMENT & MATTER',
-            quote: '“How do we make hidden systemic crises tangible?”',
-            desc: 'Theoretical inquiry achieves its true ethical resonance when tested against physical matter, bodily touch, and temporal mortality. This pole explores bio-fabricated microplastic decay cycles connecting planetary toxicity to our food, sculpts raw soil & fired clay vessels investigating mortality, and crafts digital archives tracking ephemeral human gestures.',
-            flow: ['BIOMATERIAL CYCLES', 'SOIL & CLAY TECTONICS', 'DIGITAL FORENSICS'],
-            footerLabel: 'MANIFESTED PROJECTS:',
+            badge: 'BASE-RIGHT // VERTEX 03',
+            title: 'EXPERIMENTAL THINKING // SPECULATIVE MATTER',
+            quote: '“How do raw earth and decaying biopolymers confront permanence?”',
+            desc: 'Tests high-level systemic crises against tactile matter. Bio-fabricating biodegradable food-waste polymers, unbaked clay vessels, and participatory digital movement palimpsests.',
+            flow: ['BIOMATERIAL DECAY', 'RAW CLAY TECTONICS', 'DIGITAL FORENSICS'],
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
             projects: [
-                { title: 'BIO-DECAY', url: './projects/bio-decay/' },
-                { title: 'THE EARTHEN', url: './projects/the-earthen/' },
-                { title: 'YOU WERE HERE.', url: './projects/you-were-here/' }
+                { title: '10. THE EARTHEN', url: './projects/the-earthen/' },
+                { title: '11. BIO-DECAY', url: './projects/bio-decay/' },
+                { title: '03. YOU WERE HERE.', url: './projects/you-were-here/' },
+                { title: '08. WOOD WEAVE', url: './projects/wood-weave/' }
             ]
         },
         'edge-left': {
             mode: 'DIALECTICAL TENSION // LEFT AXIS',
-            badge: 'INQUIRY × CONTEXT TENSION',
-            title: 'INSTITUTIONAL CRITIQUE × MATERIAL FORENSICS',
-            quote: '“How does ethical resistance anchor itself in the sedimentary memory of site?”',
-            desc: 'Bridging Critical Inquiry and Contextual Research: Interrogating who built the city while excavating physical strata of stone, pavement, and labor wear. Theory meets forensic fieldwork.',
+            badge: 'AXIS 01 // INQUIRY &times; CONTEXT',
+            title: 'INSTITUTIONAL CRITIQUE &times; MATERIAL FORENSICS',
+            quote: '“How does ethical resistance anchor itself in the physical memory of site?”',
+            desc: 'Critique cannot remain purely theoretical; it must excavate physical stone, pavement, and labor wear. Theory meets forensic fieldwork.',
             flow: ['DECONSTRUCT BRIEF', '⇄', 'EXCAVATE STRATA'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
@@ -2083,10 +2089,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'edge-right': {
             mode: 'DIALECTICAL TENSION // RIGHT AXIS',
-            badge: 'INQUIRY × EXPERIMENT TENSION',
-            title: 'SPECULATIVE EMBODIMENT × BIOPOLITICS',
+            badge: 'AXIS 02 // INQUIRY &times; EXPERIMENT',
+            title: 'SPATIAL JUSTICE &times; LIVING MATTER',
             quote: '“How do abstract systemic crises translate into living physical vulnerability?”',
-            desc: 'Bridging Critical Inquiry and Experimental Thinking: Connecting planetary pollution and societal control directly to the vulnerable human body through decaying biomaterials and interactive public installations.',
+            desc: 'Connecting civic labor rights, non-human agency, and planetary pollution directly to tactile matter through biodegradable testbeds.',
             flow: ['ETHICAL AUDIT', '⇄', 'BIOMATERIAL PROTOTYPE'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
@@ -2096,10 +2102,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'edge-bottom': {
             mode: 'DIALECTICAL TENSION // BASE AXIS',
-            badge: 'CONTEXT × EXPERIMENT TENSION',
-            title: 'CLIMATIC MEMORY × TECTONIC PROTOTYPING',
-            quote: '“How does physical matter respond to time, temperature, and cyclical decay?”',
-            desc: 'Bridging Contextual Research and Experimental Thinking: Testing natural microclimates, earth and raw clay vessels, and atmospheric canopies against real material degradation and weathering.',
+            badge: 'AXIS 03 // CONTEXT &times; EXPERIMENT',
+            title: 'CLIMATIC MEMORY &times; TECTONIC PROTOTYPING',
+            quote: '“How do vernacular cooling and earth traditions inform future architecture?”',
+            desc: 'Historical microclimates, raw earth, and vernacular shade systems re-tested with bio-fabrication for regenerative architectures.',
             flow: ['SITE SENSITIVITY', '⇄', 'TECTONIC PROTOTYPE'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
