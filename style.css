@@ -2981,6 +2981,42 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     background: repeating-linear-gradient(90deg, rgba(26, 54, 93, 0.22) 0, rgba(26, 54, 93, 0.22) 4px, transparent 4px, transparent 8px);
 }
 
+.cv-header-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    color: #2563eb !important;
+    background: rgba(37, 99, 235, 0.04);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.cv-header-action-btn:hover {
+    border-color: #2563eb;
+    color: #ffffff !important;
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+.cv-header-action-btn .btn-arrow {
+    font-size: 0.82rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+.cv-header-action-btn:hover .btn-arrow {
+    transform: translate(2px, -2px);
+}
+
 /* Manifesto */
 .manifesto-lead-quote {
     font-size: clamp(1.25rem, 2.3vw, 1.7rem);

@@ -1705,6 +1705,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.goBack = goBack;
     window.goBackFromAbout = goBack;
+    window.setPreviousTab = function(tabId) {
+        previousTabId = tabId;
+    };
 
     const aboutBackBtn = document.getElementById('about-back-btn');
     if (aboutBackBtn) {
