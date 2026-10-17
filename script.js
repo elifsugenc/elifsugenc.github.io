@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clusterY: 287,
                 triangleX: 605,
                 triangleY: 435,
-                description: 'Unbaked soil burial vessel interrogating material impermanence and memory.'
+                description: 'Tactile soil & mud sanctuary linking earth’s regenerative cycles to human physical and spiritual wellbeing.'
             },
             {
                 starId: 'celaeno',
@@ -488,8 +488,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'the-earthen',
             num: '10',
             title: 'THE EARTHEN',
-            question: 'Is there death because there is life?',
-            keywords: ['Matter & Mortality', 'Soil & Clay', 'Cyclical Time'],
+            question: 'How can reconnecting with earth’s cycles cultivate physical and emotional wellbeing?',
+            keywords: ['Earth & Wellbeing', 'Soil Cycles', 'Tactile Grounding'],
             year: '2026',
             medium: 'Soil & Clay',
             url: './projects/the-earthen/',
@@ -2062,10 +2062,10 @@ document.addEventListener('DOMContentLoaded', () => {
         v3: {
             mode: 'FOCUSED LENS // VERTEX 03: EXPERIMENTAL THINKING',
             badge: 'BASE-RIGHT // VERTEX 03',
-            title: 'EXPERIMENTAL THINKING // SPECULATIVE MATTER',
-            quote: '“How do raw earth and decaying biopolymers confront permanence?”',
-            desc: 'Tests high-level systemic crises against tactile matter. Bio-fabricating biodegradable food-waste polymers, unbaked clay vessels, and participatory digital movement palimpsests.',
-            flow: ['BIOMATERIAL DECAY', 'RAW CLAY TECTONICS', 'DIGITAL FORENSICS'],
+            title: 'EXPERIMENTAL THINKING // EARTH CYCLES & WELLBEING',
+            quote: '“How can reconnecting with earth’s cycles cultivate physical and emotional wellbeing?”',
+            desc: 'Connects human life cycles to the restorative rhythms of nature. Prototyping tactile soil immersion, mud-bathing wellbeing, raw clay shaping, and circular biopolymer renewal.',
+            flow: ['SOIL WELLBEING', 'RAW CLAY SHAPING', 'CIRCULAR RENEWAL'],
             footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
             projects: [
                 { title: '10. THE EARTHEN', url: './projects/the-earthen/' },
@@ -2334,12 +2334,12 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'the-earthen': {
                 en: `
-                    <p><strong>The Earthen</strong> approaches architecture as a closed-loop living metabolism that embraces decay as the fertile origin of new life. Structured upon a vertical cycle of matter—from subterranean liquid mud-bathing and soaking pools, up to radial shaping workshops in the Material Creator Lab, and crowning in a +6.00m terrace garden where decomposed matter regenerates living soil.</p>
-                    <p>Functional curved metal tubes weave through the entire volume, serving simultaneously as primary structural columns, interior furniture (benches, tables, dividers), and vertical pipelines transporting harvested seeds, clay slurry, and water between levels. Translucent fiberglass envelopes diffuse harsh urban light into a warm, contemplative glow.</p>
+                    <p><strong>The Earthen</strong> is a healing sanctuary designed to cultivate physical and spiritual wellbeing through tactile connection with soil and clay. Likening the regenerative cycles of the earth—resting, decomposing, and blooming—to the natural rhythms of human life, it offers urbanites a restorative grounding space.</p>
+                    <p>The architecture unfolds along a vertical wellbeing journey: subterranean mineral mud-bathing pools for physical release, radial clay-shaping workshops in the Material Creator Lab, and a rooftop living terrace garden. Curved conduits weave through the structure, circulating living water, slurry, and seeds across all levels.</p>
                 `,
                 tr: `
-                    <p><strong>The Earthen</strong>, mimariyi çözünmeyi yeni yaşamın doğurgan başlangıcı olarak kucaklayan kapalı devre bir metabolizma olarak ele alır. Maddenin dikey dönüşüm döngüsü üzerine kurgulanmıştır: en alttaki sıvı çamur banyolarından başlayıp, zemin kattaki radyal yoğurma ve şekillendirme atölyelerine, oradan da ayrışan organik maddenin toprağı beslediği +6.00m çatı teras bahçesine uzanır.</p>
-                    <p>Çok işlevli metal boru ağı; taşıyıcı strüktür, mobilya ve tohum/çamur/su taşıyan düşey tesisat kanalları olarak tüm yapıyı canlı bir dolaşım sistemiyle birbirine bağlar. Dıştaki yarı saydam fiberglas kabuk, sert kentsel ışığı süzerek iç mekânda meditatif ve sıcak bir atmosfer yaratır.</p>
+                    <p><strong>The Earthen</strong>, toprak ve kille kurulan dokunsal temas üzerinden fiziksel ve ruhsal esenlik (wellbeing) kazandıran bir iyileşme mekânıdır. Toprağın dinlenme, arınma ve yeniden canlanma döngülerini insan yaşamındaki iniş çıkışlar ve yenilenme süreçleriyle buluşturur.</p>
+                    <p>Mekân dikey bir iyileşme rotası sunar: bedensel rahatlama sağlayan mineral çamur havuzları, zemin kattaki radyal kil şekillendirme atölyeleri ve en üstteki canlı teras bahçesi. Çok işlevli boru ağı ise su, tohum ve çamur dolaşımını sağlayarak yapıyı yaşayan bir metabolizmaya dönüştürür.</p>
                 `
             },
             'bio-decay': {
