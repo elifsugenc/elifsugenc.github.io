@@ -239,14 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 mag: '4.14 mag',
                 targetId: 'merope-story',
                 title: 'THE HIDDEN SISTER',
-                role: 'Mythological & Practice Narrative',
+                role: '&Uuml;lker &amp; Methodology Core',
                 type: 'story',
                 clusterX: 478,
                 clusterY: 510,
                 triangleX: 500,
                 triangleY: 460,
                 subtle: true,
-                description: 'The seventh sister: mythological reflection on invisibility, presence, and relational cosmology.'
+                description: '&Uuml;lker’s 7th sister: Investigating the invisible layers of space and practice methodology.'
             }
         ],
         vertexAssociations: {
@@ -1019,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="cluster-star-pill">
                         <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
                         <div class="csp-title">THE HIDDEN SISTER</div>
-                        <div class="csp-meta">4.14 mag &bull; Click to read the narrative panel &rarr;</div>
+                        <div class="csp-meta">&Uuml;lker &bull; Design Methodology &rarr;</div>
                     </div>
                 </div>
 
