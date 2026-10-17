@@ -9495,10 +9495,18 @@ body {
     z-index: 40;
     flex-shrink: 0;
     box-sizing: border-box;
-    will-change: left, top, transform;
+    will-change: left, top, transform, width, height;
     transition: left 2.6s cubic-bezier(0.22, 1, 0.36, 1),
                 top 2.6s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+                width 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                height 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                min-width 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                min-height 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                max-width 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                max-height 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 2.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 1.8s ease,
+                filter 0.6s ease !important;
 }
 
 /* Concentric Dual Rings around Merope / Design Approach (Strict 1:1 Circle Geometry) */
@@ -9515,7 +9523,7 @@ body {
     pointer-events: none !important;
     transform-origin: center center !important;
     animation: hqSpinRingRev 22s linear infinite !important;
-    transition: opacity 0.6s ease, border-color 0.4s ease !important;
+    transition: opacity 1.2s ease, border-color 0.4s ease, width 1.8s cubic-bezier(0.22, 1, 0.36, 1), height 1.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
 .merope-star .ring-mid {
@@ -9531,10 +9539,11 @@ body {
     pointer-events: none !important;
     transform-origin: center center !important;
     animation: hqSpinRing 28s linear infinite !important;
-    transition: opacity 0.6s ease !important;
+    transition: opacity 1.2s ease, width 1.8s cubic-bezier(0.22, 1, 0.36, 1), height 1.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
-/* Internal Views: Cluster (Hidden Sister) vs Constellation (Design Approach) */
+/* Internal Views: Cluster (Hidden Sister) vs Constellation (Design Approach)
+   Both views stay in DOM simultaneously; cross-fading & scaling smoothly without display:none snapping */
 .merope-cluster-view {
     position: absolute !important;
     inset: 0 !important;
@@ -9547,7 +9556,7 @@ body {
     border-radius: 50% !important;
     aspect-ratio: 1 / 1 !important;
     box-sizing: border-box !important;
-    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    will-change: opacity, transform;
 }
 
 .merope-constellation-view {
@@ -9561,10 +9570,10 @@ body {
     border-radius: 50% !important;
     aspect-ratio: 1 / 1 !important;
     box-sizing: border-box !important;
-    transition: opacity 0.7s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    will-change: opacity, transform;
 }
 
-/* --- CLUSTER MODE: The Hidden Sister is Active --- */
+/* --- CLUSTER MODE: The Hidden Sister is Visible & Active --- */
 .pleiades-observatory-stage[data-state="cluster"] .merope-star {
     width: 66px !important;
     height: 66px !important;
@@ -9577,27 +9586,48 @@ body {
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-cluster-view {
-    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: scale(1) !important;
     pointer-events: auto !important;
+    transition: opacity 0.6s ease 0.2s, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .cs-symbol {
+    opacity: 1 !important;
+    transform: scale(1) rotate(0deg) !important;
+    transition: opacity 0.6s ease, transform 0.6s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .cs-caption-block {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s !important;
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .merope-constellation-view {
-    display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transform: scale(0.25) !important;
+    transform: scale(0.35) !important;
     pointer-events: none !important;
+    transition: opacity 0.5s ease, transform 0.6s ease, visibility 0s 0.6s !important;
+}
+
+.pleiades-observatory-stage[data-state="cluster"] .merope-star .c-approach-core {
+    opacity: 0 !important;
+    transform: scale(0.35) !important;
+    transition: opacity 0.5s ease, transform 0.6s ease !important;
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-outer {
     opacity: 0.38 !important;
+    transition: opacity 0.8s ease !important;
 }
 
 .pleiades-observatory-stage[data-state="cluster"] .merope-star .ring-mid {
     opacity: 0.28 !important;
+    transition: opacity 0.8s ease !important;
 }
 
 /* --- CONSTELLATION MODE: The Hidden Sister Morphs into Radiant DESIGN APPROACH --- */
@@ -9612,28 +9642,67 @@ body {
     border-radius: 50% !important;
 }
 
+/* The Hidden Sister star expands and dissolves smoothly like other cluster stars */
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-cluster-view {
-    display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transform: scale(0.25) !important;
+    transform: scale(1.6) !important;
     pointer-events: none !important;
+    transition: opacity 0.65s ease 0.15s,
+                transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s,
+                visibility 0s 0.8s !important;
 }
 
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .cs-symbol {
+    opacity: 0 !important;
+    transform: scale(1.4) rotate(45deg) !important;
+    transition: opacity 0.5s ease, transform 0.6s ease !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .cs-caption-block {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateX(-50%) translateY(8px) !important;
+    transition: opacity 0.45s ease, transform 0.5s ease, visibility 0s 0.5s !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .cluster-star-pill {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0s 0.3s !important;
+}
+
+/* DESIGN APPROACH core emerges smoothly from a seed with identical timing to the 5 project circles */
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .merope-constellation-view {
-    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: scale(1) !important;
     pointer-events: auto !important;
+    transition: opacity 0.65s ease 0.2s,
+                transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s !important;
+}
+
+.pleiades-observatory-stage[data-state="constellation"] .merope-star .c-approach-core {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2), 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+    transition: opacity 0.65s ease 0.2s,
+                transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s,
+                background 1.4s ease 0.3s,
+                border-color 1.4s ease 0.3s,
+                box-shadow 1.4s ease 0.3s !important;
 }
 
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .ring-outer {
     opacity: 1 !important;
+    transition: opacity 1.2s ease 0.3s, border-color 0.4s ease !important;
 }
 
 .pleiades-observatory-stage[data-state="constellation"] .merope-star .ring-mid {
     opacity: 1 !important;
+    transition: opacity 1.2s ease 0.3s !important;
 }
 
 /* Design Approach Core Styling (Strict 1:1 Perfect Circle) */
