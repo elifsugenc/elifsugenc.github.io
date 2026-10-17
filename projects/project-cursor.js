@@ -142,9 +142,69 @@
         });
     }
 
+    // =========================================================
+    // UNIVERSAL SAFE RETURN TO PREVIOUS PAGE
+    // Always returns to whatever previous page/view the user came from
+    // =========================================================
+    window.handleProjectReturn = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        const referrer = document.referrer;
+        let isInternal = false;
+        if (referrer) {
+            try {
+                const refUrl = new URL(referrer, window.location.href);
+                if (refUrl.origin === window.location.origin ||
+                    (window.location.protocol === 'file:' && referrer.includes('elifsugenc'))) {
+                    isInternal = true;
+                }
+            } catch (err) {
+                if (referrer.indexOf(window.location.host) !== -1) {
+                    isInternal = true;
+                }
+            }
+        }
+
+        // If visited from within the portfolio and history exists, go back
+        if (isInternal && window.history.length > 1) {
+            window.history.back();
+            return;
+        }
+
+        // If history has entries (fallback with timeout in case of strict privacy/referrer)
+        if (window.history.length > 1) {
+            const currentLoc = window.location.href;
+            window.history.back();
+            setTimeout(function() {
+                if (window.location.href === currentLoc) {
+                    window.location.href = '../../';
+                }
+            }, 300);
+            return;
+        }
+
+        // Default root landing fallback
+        window.location.href = '../../';
+    };
+
+    // Event delegation for all return links on project pages
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.back-link, .back-btn, .footer-nav-btn, .footer-back-link, .pnav-center-btn, .center-directory-btn');
+        if (btn) {
+            const href = btn.getAttribute('href') || '';
+            if (href.includes('../') || href.includes('#constellation') || href === '#' || href === '') {
+                window.handleProjectReturn(e);
+            }
+        }
+    });
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initProjectCursor);
     } else {
         initProjectCursor();
     }
 })();
+

@@ -23,9 +23,9 @@
     <!-- Top Sticky Architectural Navigation Bar -->
     <header class="project-nav">
         <div class="nav-container">
-            <a href="../../#constellation" class="back-link">
+            <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
                 <span class="nav-arrow">&larr;</span>
-                <span class="nav-label">[ RETURN TO CONSTELLATION ]</span>
+                <span class="nav-label">RETURN</span>
             </a>
             <div class="project-crumb">
                 <span class="crumb-num">11</span>
@@ -660,8 +660,8 @@
                     <span class="pnav-title">10 &mdash; THE EARTHEN</span>
                 </a>
                 
-                <a href="../../#constellation" class="pnav-center-btn">
-                    [ RETURN TO CONSTELLATION ]
+                <a href="../../" class="pnav-center-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
+                    RETURN
                 </a>
                 
                 <a href="../fire-escape-simulation/" class="pnav-link pnav-next">

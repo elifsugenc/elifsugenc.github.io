@@ -22,9 +22,9 @@
     <!-- Top Sticky Architectural Navigation Bar -->
     <header class="project-nav">
         <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
-            <a href="../../#constellation" class="back-link">
+            <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
                 <span class="nav-arrow">&larr;</span>
-                <span class="nav-label">[ RETURN TO CONSTELLATION ]</span>
+                <span class="nav-label">RETURN</span>
             </a>
             <div class="project-crumb">
                 <span class="crumb-num">04</span>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div style="margin-top: 40px;">
-            <a href="../../#constellation" class="footer-nav-btn">&larr; RETURN TO CONSTELLATION MAP</a>
+            <a href="../../" class="footer-nav-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">&larr; RETURN</a>
         </div>
     </main>
 
