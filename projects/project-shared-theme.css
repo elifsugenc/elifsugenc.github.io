@@ -537,11 +537,7 @@ figcaption,
 }
 
 .zoom-hint {
-    font-size: 0.72rem !important;
-    color: #94a3b8 !important;
-    font-family: var(--font-mono) !important;
-    letter-spacing: 0.08em !important;
-    margin-top: 4px !important;
+    display: none !important;
 }
 
 /* =========================================================
