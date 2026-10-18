@@ -449,29 +449,62 @@ body.project-detail-body, body {
 }
 
 /* =========================================================
-   PROJECT VISUALS & DUAL VISUAL HERO GRID
-   Unconstrained aspect ratios, generous spacing, quiet captions
+   PROJECT VISUALS & EDITORIAL FIGURES SYSTEM
+   "direk görseli sayfaya koy kocaman yazı yazacaksan alta yaz"
+   
+   1. Absolutely ZERO boxed cards, zero borders, zero background boxes,
+      zero shadows around visuals. Pure clean paper canvas.
+   2. Images are large, prominent, unconstrained, sitting directly on the page.
+   3. Captions, titles, and explanations sit cleanly directly underneath.
    ========================================================= */
-.hero-dual-visual-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr)) !important;
-    gap: 32px !important;
-    margin: 36px 0 64px 0 !important;
-}
 
+/* All Visual Cards & Containers — Completely Unboxed */
 .hero-visual-card,
 .drawing-card,
 .board-card,
 .perspective-card,
 .render-gal-card,
 .media-wrapper,
-.artifact-frame {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    overflow: hidden !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+.artifact-frame,
+.content-card,
+.recipe-diagram-card,
+.tectonics-hero-card,
+.tectonic-sub-card,
+.dual-card,
+.tech-card,
+.render-quad-card,
+.refuge-item-card,
+.drawing-item,
+.board-item,
+.board-card-full,
+.master-board-card,
+.diag-card,
+.cases-diagram-card,
+.physical-specimen-card,
+.visual-frame,
+.exo-item-card,
+.spatial-frame,
+.editorial-gallery-item,
+.gallery-card,
+.recipe-diagram-card.zoomable-image-container,
+.dual-card.zoomable-image-container,
+.tech-card.zoomable-image-container,
+.board-item.zoomable-image-container,
+.render-gal-card.zoomable-image-container,
+.tectonics-hero-card.zoomable-image-container,
+.tectonic-sub-card.zoomable-image-container,
+.refuge-item-card.zoomable-image-container,
+.content-card.zoomable-image-container {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .hero-visual-card:hover,
@@ -481,66 +514,241 @@ body.project-detail-body, body {
 .render-gal-card:hover,
 .editorial-gallery-item:hover,
 .gallery-card:hover,
-.drawing-card:hover img,
-.drawing-card:hover .drawing-img,
-img:hover {
-    border-color: #cbd5e1 !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+.content-card:hover,
+.recipe-diagram-card:hover,
+.tectonics-hero-card:hover,
+.tectonic-sub-card:hover,
+.dual-card:hover,
+.tech-card:hover,
+.drawing-item:hover,
+.board-item:hover,
+.diag-card:hover,
+.board-card-full:hover,
+.master-board-card:hover {
+    border: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
     transform: none !important;
+    background: transparent !important;
 }
 
+/* Inner Image Wrappers — Zero inner borders, frames, or padding */
+.recipe-img-wrap,
+.content-card-img-wrap,
+.drawing-frame,
+.tectonics-img-wrap,
+.refuge-img-frame,
+.diag-img-box,
+.board-thumb-frame,
+.drawing-viewer,
+.img-wrap,
+.feature-visual-side .visual-frame {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* All Architectural Images — Large, Unconstrained, Direct */
 .hero-visual-img,
 .drawing-card img,
 .board-card img,
 .perspective-card img,
 .render-gal-card img,
-.drawing-viewer img {
+.drawing-viewer img,
+.content-card-img,
+.refuge-img,
+.dual-img,
+.quad-img,
+.tech-img,
+.tectonic-sub-img,
+.physical-specimen-img,
+.contain-img,
+.axo-img,
+.drawing-frame img,
+.board-thumb-frame img,
+.recipe-img-wrap img,
+.tectonics-img-wrap img,
+.diag-img-box img,
+.hero-visual-card img,
+.recipe-diagram-card img,
+.board-item img,
+.drawing-item img,
+.dual-card img,
+.tech-card img,
+.content-card img,
+.board-card-full img,
+.master-board-card img {
     display: block !important;
     width: 100% !important;
     height: auto !important;
     max-height: none !important;
+    max-width: 100% !important;
     object-fit: contain !important;
-    background: #ffffff !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: opacity 0.2s ease !important;
 }
 
-/* Captions & Footers */
+.zoomable-image-container:hover img,
+.zoomable-image-container:hover .hero-visual-img,
+.zoomable-image-container:hover .drawing-img,
+.zoomable-image-container:hover .board-img {
+    opacity: 0.94 !important;
+    transform: none !important;
+}
+
+/* Captions & Explanatory Text — Cleanly Directly Underneath on the Canvas */
 .visual-card-footer,
 .drawing-footer,
 .board-footer,
 figcaption,
-.img-caption {
-    padding: 16px 20px !important;
-    background: #fafbfc !important;
-    border-top: 1px solid #f1f5f9 !important;
+.img-caption,
+.drawing-info,
+.render-gal-info,
+.board-info,
+.content-card-body,
+.quad-meta,
+.diag-meta,
+.physical-specimen-text,
+.frame-caption,
+.recipe-diagram-card > div:not(.recipe-img-wrap),
+.tectonic-sub-card > div:not(.tectonic-sub-img) {
+    background: transparent !important;
+    border: none !important;
+    border-top: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 18px 0 0 0 !important;
+    margin-top: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 4px !important;
+    gap: 6px !important;
+    max-width: 900px !important;
 }
 
+/* Caption Tags / Sub-labels */
 .caption-tag,
 .scale-badge,
 .drawing-tag,
-.board-tag {
-    font-size: 0.72rem !important;
+.board-tag,
+.card-tag,
+.render-gal-tag,
+.drawing-scale,
+.refuge-item-card .refuge-card-title,
+.board-num,
+.board-pill {
+    display: inline-block !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
     color: var(--proj-color, #2563eb) !important;
-    font-weight: 600 !important;
-    font-family: var(--font-mono) !important;
+    margin: 0 0 2px 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
 }
 
+/* Caption Headings / Titles */
+.caption-title,
+.drawing-title,
+.board-title,
+.card-title,
+.quad-title,
+.render-gal-title,
+.board-info h3,
+.visual-card-footer h3,
+.recipe-diagram-card h4,
+.tectonic-sub-card h4,
+.physical-specimen-text h3,
+.diag-meta h3 {
+    font-family: var(--font-heading) !important;
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem) !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.015em !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.3 !important;
+}
+
+/* Caption Descriptions / Text */
 .caption-text,
 .drawing-desc,
 .drawing-caption,
 .board-meta,
-.board-specs {
-    font-size: 0.88rem !important;
-    color: #64748b !important;
-    line-height: 1.55 !important;
+.board-specs,
+.board-info p,
+.visual-card-footer p,
+.render-gal-desc,
+.quad-desc,
+.card-text,
+.recipe-diagram-card p,
+.tectonic-sub-card p,
+.physical-specimen-text p,
+.diag-meta p {
+    font-family: var(--font-heading) !important;
+    font-size: clamp(0.92rem, 1.1vw, 1.02rem) !important;
+    color: #475569 !important;
+    line-height: 1.7 !important;
+    margin: 0 !important;
 }
 
-.zoom-hint {
+/* Hide zoom hints and expand pills cleanly */
+.zoom-hint,
+.board-expand-btn,
+.zoom-btn,
+.panel-tag {
     display: none !important;
+}
+
+/* Editorial Flow Grids — Generous, Large, Unconstrained Presentation */
+.recipes-showcase-grid,
+.hero-dual-visual-grid,
+.two-col-grid,
+.drawings-dual-row,
+.secondary-diagrams-grid,
+.tech-drawings-grid,
+.drawings-grid,
+.boards-grid,
+.boards-gallery-grid,
+.boards-showcase-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: clamp(48px, 7vw, 84px) !important;
+    margin: clamp(36px, 5vw, 64px) 0 !important;
+}
+
+/* Multi-perspective and quad grids (renders, atmosphere, sub-tectonics) */
+.renders-gallery-grid,
+.renders-quad-grid,
+.tectonics-grid-sub,
+.triad-refuge-grid,
+.three-col-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr)) !important;
+    gap: clamp(36px, 5vw, 56px) !important;
+    margin: clamp(36px, 5vw, 64px) 0 !important;
+}
+
+/* Physical Specimen Degradation Banner — Stack image above, text below */
+.physical-specimen-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    margin: clamp(36px, 5vw, 64px) 0 !important;
 }
 
 /* =========================================================
@@ -606,12 +814,8 @@ figcaption,
 .metabolism-box,
 .analysis-card,
 .case-card,
-.cases-diagram-card,
-.diag-card,
-.dual-card,
 .recipe-type-card,
 .system-box,
-.tech-card,
 .drift-step-card,
 .card,
 .block-container {
@@ -805,26 +1009,26 @@ figcaption,
 
 /* =========================================================
    DRAWINGS, PERSPECTIVES & BOARD SHOWCASES
-   Generous grids, pure white image containers, zero gray bars
+   Generous full-width flow, pure direct images, clean captions
    ========================================================= */
 .drawings-grid,
 .perspectives-grid,
 .boards-showcase-grid,
 .render-gallery-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr)) !important;
-    gap: 32px !important;
-    margin: 36px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: clamp(48px, 7vw, 84px) !important;
+    margin: clamp(36px, 5vw, 64px) 0 !important;
 }
 
 .board-card-full,
 .master-board-card {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    overflow: hidden !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-    margin: 36px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    margin: clamp(36px, 5vw, 64px) 0 !important;
 }
 
 .board-card-full img,
@@ -832,7 +1036,11 @@ figcaption,
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    background: #ffffff !important;
+    max-height: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 /* Board Action Buttons & Download Links */
@@ -921,7 +1129,6 @@ figcaption,
 
 /* THE EARTHEN: Soil Metabolism, Conduits & Mud Bathing */
 .metabolism-box,
-.tectonics-hero-card,
 .tectonic-block {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;

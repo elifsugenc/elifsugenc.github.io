@@ -530,49 +530,51 @@ body.project-detail-body {
     line-height: 1.6;
 }
 
-/* Recipes & Chemistry Section (Section 02) */
+/* Recipes & Chemistry Section (Section 02) — Unboxed Direct Editorial Display */
 .recipes-showcase-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 7vw, 84px);
+    margin-bottom: 56px;
 }
 
 .recipe-diagram-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    padding: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    gap: 16px;
+    transition: none;
 }
 
 .recipe-diagram-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent-bio);
+    transform: none;
+    border-color: transparent;
 }
 
 .recipe-img-wrap {
     width: 100%;
-    background: #fdfdfc;
-    border: 1px solid var(--border-light);
+    background: transparent;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    overflow: hidden;
+    padding: 0;
+    overflow: visible;
 }
 
 .recipe-img-wrap img {
+    width: 100%;
     max-width: 100%;
-    max-height: 520px;
+    height: auto;
+    max-height: none;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: none;
 }
 
 .recipe-diagram-card:hover .recipe-img-wrap img {
-    transform: scale(1.02);
+    transform: none;
 }
 
 /* 4 Recipes Matrix Flow */
@@ -770,94 +772,100 @@ body.project-detail-body {
     line-height: 1.45;
 }
 
-/* Physical Specimen Degradation Banner */
+/* Physical Specimen Degradation Banner — Direct Unboxed */
 .physical-specimen-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    padding: 24px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 28px;
-    align-items: center;
-    margin-bottom: 40px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 56px;
 }
 
 .physical-specimen-img {
     width: 100%;
-    max-height: 380px;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
     object-fit: contain;
-    background: #fbfbf9;
-    border: 1px solid var(--border-light);
-    padding: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 
 .physical-specimen-text {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    max-width: 900px;
 }
 
 .physical-specimen-text h3 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
+    margin: 0;
 }
 
 .physical-specimen-text p {
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.65;
+    margin: 0;
 }
 
-/* Axonometric & Tectonics Section (Section 04) */
+/* Axonometric & Tectonics Section (Section 04) — Direct Unboxed */
 .tectonics-hero-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    padding: 24px;
-    margin-bottom: 32px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 56px;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: none;
 }
 
 .tectonics-hero-card:hover {
-    border-color: var(--accent-bio);
+    border-color: transparent;
 }
 
 .tectonics-img-wrap {
     width: 100%;
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    overflow: hidden;
+    background: transparent;
+    border: none;
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 0;
 }
 
 .tectonics-img-wrap img {
+    width: 100%;
     max-width: 100%;
-    max-height: 620px;
+    height: auto;
+    max-height: none;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: none;
 }
 
 .tectonics-hero-card:hover .tectonics-img-wrap img {
-    transform: scale(1.015);
+    transform: none;
 }
 
 .tectonics-grid-sub {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr));
+    gap: clamp(36px, 5vw, 56px);
+    margin-bottom: 56px;
 }
 
 .tectonic-sub-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    padding: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -865,65 +873,71 @@ body.project-detail-body {
 
 .tectonic-sub-img {
     width: 100%;
-    height: 320px;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
     object-fit: contain;
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    padding: 8px;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 
-/* Drawings & Perspectives (Section 05) */
+/* Drawings & Perspectives (Section 05) — Direct Full-Width Unboxed */
 .drawings-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 7vw, 84px);
+    margin-bottom: 56px;
 }
 
 .drawing-item {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
+    background: transparent;
+    border: none;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: visible;
+    transition: none;
 }
 
 .drawing-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-    border-color: var(--accent-bio);
+    transform: none;
+    box-shadow: none;
+    border-color: transparent;
 }
 
 .drawing-frame {
     width: 100%;
-    height: 340px;
-    background: #ffffff;
-    border-bottom: 1px solid var(--border-light);
+    height: auto;
+    max-height: none;
+    background: transparent;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    overflow: hidden;
+    padding: 0;
+    overflow: visible;
 }
 
 .drawing-frame img {
+    width: 100%;
     max-width: 100%;
-    max-height: 100%;
+    height: auto;
+    max-height: none;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: none;
 }
 
 .drawing-item:hover .drawing-frame img {
-    transform: scale(1.02);
+    transform: none;
 }
 
 .drawing-info {
-    padding: 16px 20px;
+    padding: 16px 0 0 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    background: #ffffff;
+    background: transparent;
+    max-width: 900px;
 }
 
 .drawing-scale {
@@ -945,135 +959,137 @@ body.project-detail-body {
     line-height: 1.45;
 }
 
-/* Renders Showcase Grid */
+/* Renders Showcase Grid — Direct Unboxed */
 .renders-gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr));
+    gap: clamp(36px, 5vw, 56px);
+    margin-bottom: 56px;
 }
 
 .render-gal-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
+    background: transparent;
+    border: none;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    overflow: visible;
+    transition: none;
 }
 
 .render-gal-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent-bio);
+    transform: none;
+    border-color: transparent;
 }
 
 .render-gal-card img {
     width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-bottom: 1px solid var(--border-light);
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    border: none;
+    display: block;
 }
 
 .render-gal-info {
-    padding: 14px 18px;
+    padding: 16px 0 0 0;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    background: transparent;
 }
 
 .render-gal-tag {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 700;
     color: var(--accent-bio);
     letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .render-gal-title {
-    font-size: 0.88rem;
-    font-weight: 700;
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--text-primary);
 }
 
 .render-gal-desc {
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
-    line-height: 1.4;
+    line-height: 1.6;
 }
 
-/* Full Presentation Boards (Section 06) */
+/* Full Presentation Boards (Section 06) — Direct Full-Width Unboxed Plates */
 .boards-intro {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+    max-width: 860px;
 }
 
 .boards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    gap: 24px;
-    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 7vw, 84px);
+    margin-bottom: 56px;
 }
 
 .board-item {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
+    background: transparent;
+    border: none;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: visible;
+    transition: none;
 }
 
 .board-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.08);
-    border-color: var(--accent-bio);
+    transform: none;
+    box-shadow: none;
+    border-color: transparent;
 }
 
 .board-thumb-frame {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #f1f5f9;
-    border-bottom: 1px solid var(--border-light);
-    overflow: hidden;
+    aspect-ratio: auto;
+    background: transparent;
+    border: none;
+    overflow: visible;
 }
 
 .board-thumb-frame img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    transition: none;
+    border: none;
+    display: block;
 }
 
 .board-item:hover .board-thumb-frame img {
-    transform: scale(1.025);
+    transform: none;
 }
 
 .board-pill {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(28, 25, 23, 0.85);
-    color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 4px 10px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    display: none;
 }
 
 .board-info {
-    padding: 18px 22px;
+    padding: 16px 0 0 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    background: transparent;
+    max-width: 900px;
 }
 
 .board-info h3 {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.15rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin: 0;
 }
 
 .board-info p {
