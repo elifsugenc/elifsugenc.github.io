@@ -555,7 +555,7 @@ body.project-detail-body, body {
     overflow: visible !important;
 }
 
-/* All Architectural Images — Large, Unconstrained, Direct */
+/* All Architectural Images — Large, Unconstrained, Crisp Direct Rendering */
 .hero-visual-img,
 .drawing-card img,
 .board-card img,
@@ -586,18 +586,38 @@ body.project-detail-body, body {
 .board-card-full img,
 .master-board-card img {
     display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
     max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 88vh !important;
     object-fit: contain !important;
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     padding: 0 !important;
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: high-quality !important;
     transition: opacity 0.2s ease !important;
+}
+
+/* Wide Architectural Drawings, Master Boards & Perspectives — Full Container Span */
+.hero-visual-card img,
+.hero-visual-img,
+.drawing-item img,
+.drawing-frame img,
+.board-item img,
+.board-thumb-frame img,
+.board-card-full img,
+.master-board-card img,
+.tectonics-hero-card img,
+.tectonics-img-wrap img,
+.physical-specimen-img,
+.dual-card img,
+.tech-card img {
+    width: 100% !important;
+    max-height: none !important;
 }
 
 .zoomable-image-container:hover img,

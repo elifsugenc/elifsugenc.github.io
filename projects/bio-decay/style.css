@@ -565,11 +565,13 @@ body.project-detail-body {
 }
 
 .recipe-img-wrap img {
-    width: 100%;
+    width: auto;
     max-width: 100%;
     height: auto;
-    max-height: none;
+    max-height: 85vh;
     object-fit: contain;
+    margin: 0 auto;
+    image-rendering: -webkit-optimize-contrast;
     transition: none;
 }
 
