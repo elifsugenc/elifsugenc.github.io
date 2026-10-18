@@ -1548,23 +1548,15 @@ figcaption,
 
 .editorial-narrative-grid {
     display: grid !important;
-    grid-template-columns: 1.15fr 0.85fr !important;
-    gap: clamp(32px, 5vw, 60px) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 8px !important;
+    grid-template-columns: 1.2fr 0.8fr !important;
+    gap: 48px !important;
+    max-width: 1120px !important;
 }
 
-.narrative-col {
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.narrative-col.inquiry-col,
-.editorial-narrative-grid .narrative-col:nth-child(2) {
-    position: relative !important;
-    padding-left: clamp(24px, 3.5vw, 44px) !important;
-    border-left: 1px solid #e2e8f0 !important;
+.editorial-narrative-grid.single-col,
+.editorial-narrative-grid:has(> .narrative-col:only-child) {
+    display: block !important;
+    max-width: 840px !important;
 }
 
 .editorial-col-label {
@@ -1603,25 +1595,7 @@ figcaption,
     font-weight: 500 !important;
 }
 
-.editorial-quote {
-    font-family: var(--font-heading) !important;
-    font-size: clamp(1.05rem, 1.2vw, 1.18rem) !important;
-    font-weight: 500 !important;
-    font-style: italic !important;
-    line-height: 1.55 !important;
-    color: #0f172a !important;
-    margin: 0 0 10px 0 !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-.editorial-col-text.sub-inquiry {
-    font-size: 0.92rem !important;
-    line-height: 1.68 !important;
-    color: #64748b !important;
-}
-
-/* Vertical Hairline Divider — hidden because column has border-left */
+/* Vertical Hairline Divider — hidden for horizontal architectural ribbon rhythm */
 .editorial-divider {
     display: none !important;
 }
@@ -1668,18 +1642,11 @@ figcaption,
     font-weight: 500 !important;
 }
 
+/* Responsive Refinements */
 @media (max-width: 980px) {
     .editorial-narrative-grid {
         grid-template-columns: 1fr !important;
         gap: 24px !important;
-    }
-
-    .narrative-col.inquiry-col,
-    .editorial-narrative-grid .narrative-col:nth-child(2) {
-        padding-left: 0 !important;
-        border-left: none !important;
-        padding-top: 20px !important;
-        border-top: 1px solid #e2e8f0 !important;
     }
 
     .editorial-meta-col {
