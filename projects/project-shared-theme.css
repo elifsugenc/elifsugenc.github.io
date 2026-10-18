@@ -1284,6 +1284,12 @@ figcaption,
     gap: 32px !important;
 }
 
+.editorial-narrative-grid.single-col,
+.editorial-narrative-grid:has(> .narrative-col:only-child) {
+    display: block !important;
+    max-width: 640px !important;
+}
+
 .editorial-col-label {
     display: block !important;
     font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
