@@ -1243,3 +1243,189 @@ figcaption,
         justify-content: center !important;
     }
 }
+
+/* =========================================================
+   SERGIO MUTIS EDITORIAL PROJECT HEADER COMPONENT
+   ========================================================= */
+.project-editorial-header {
+    width: 100% !important;
+    margin-bottom: 36px !important;
+    padding-bottom: 28px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.editorial-header-grid {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 48px !important;
+    width: 100% !important;
+}
+
+/* Left Narrative Block */
+.editorial-main-col {
+    flex: 1 1 58% !important;
+    min-width: 0 !important;
+}
+
+.editorial-project-title {
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
+    font-size: clamp(2.4rem, 4.2vw, 3.4rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.1 !important;
+    color: #0f172a !important;
+    margin: 0 0 28px 0 !important;
+}
+
+.editorial-narrative-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+}
+
+.editorial-col-label {
+    display: block !important;
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    margin-bottom: 10px !important;
+    line-height: 1.3 !important;
+}
+
+.editorial-col-text {
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
+    font-size: 0.88rem !important;
+    line-height: 1.68 !important;
+    color: #475569 !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+}
+
+.editorial-col-text em {
+    font-style: italic !important;
+    color: #1e293b !important;
+}
+
+/* Vertical Hairline Divider */
+.editorial-divider {
+    width: 1px !important;
+    background: #e2e8f0 !important;
+    align-self: stretch !important;
+    flex-shrink: 0 !important;
+}
+
+/* Right Metadata Grid */
+.editorial-meta-col {
+    flex: 0 0 38% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 22px 16px !important;
+}
+
+.editorial-meta-col .meta-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+}
+
+.editorial-meta-col .meta-label {
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    line-height: 1.3 !important;
+}
+
+.editorial-meta-col .meta-value {
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    color: #64748b !important;
+    font-weight: 400 !important;
+}
+
+/* Responsive Editorial Header */
+@media (max-width: 980px) {
+    .editorial-header-grid {
+        flex-direction: column !important;
+        gap: 28px !important;
+    }
+
+    .editorial-divider {
+        width: 100% !important;
+        height: 1px !important;
+        align-self: auto !important;
+    }
+
+    .editorial-meta-col {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .editorial-narrative-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .editorial-meta-col {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 18px 14px !important;
+    }
+}
+
+/* =========================================================
+   UNIVERSAL SUPPRESSION OF HOVER ELEVATION & FLOATING
+   Clean, stable editorial presentation across all projects
+   ========================================================= */
+.hero-visual-card,
+.hero-visual-card:hover,
+.zoomable-image-container,
+.zoomable-image-container:hover,
+.tech-card,
+.tech-card:hover,
+.board-card,
+.board-card:hover,
+.dual-card,
+.dual-card:hover,
+.render-quad-card,
+.render-quad-card:hover,
+.drawing-card,
+.drawing-card:hover,
+.process-card,
+.process-card:hover,
+.manifesto-card,
+.manifesto-card:hover,
+.concept-card,
+.concept-card:hover,
+.system-box,
+.system-box:hover,
+.card,
+.card:hover,
+.media-card,
+.media-card:hover,
+.photo-card,
+.photo-card:hover,
+.gallery-item,
+.gallery-item:hover,
+.spec-card,
+.spec-card:hover,
+.award-box,
+.award-box:hover,
+.visual-card,
+.visual-card:hover,
+.visual-card-footer,
+.visual-card-footer:hover,
+img,
+img:hover {
+    transform: none !important;
+    transition: none !important;
+}
