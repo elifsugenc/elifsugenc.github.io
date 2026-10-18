@@ -1337,14 +1337,14 @@ figcaption,
     display: none !important;
 }
 
-/* Horizontal Architectural Specification Ribbon (Data Matrix) */
+/* Horizontal Architectural Specification Ribbon (Balanced 4x2 Data Matrix) */
 .editorial-meta-col {
     width: 100% !important;
     flex: none !important;
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
-    gap: 20px 28px !important;
-    padding: 22px 0 !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 24px 36px !important;
+    padding: 24px 0 !important;
     margin-top: 8px !important;
     border-top: 1px solid #e2e8f0 !important;
     border-bottom: 1px solid #e2e8f0 !important;
@@ -1387,15 +1387,15 @@ figcaption,
     }
 
     .editorial-meta-col {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
-        gap: 16px 20px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px 24px !important;
     }
 }
 
 @media (max-width: 640px) {
     .editorial-meta-col {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 16px 14px !important;
+        gap: 18px 16px !important;
     }
 }
 
