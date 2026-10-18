@@ -428,7 +428,138 @@ body.project-detail-body {
     gap: 20px;
 }
 
-/* Content Cards */
+/* =========================================================
+   UNBOXED ARCHITECTURAL VISUAL PLATES & GRIDS
+   Pure canvas, uncropped natural aspect ratios, clean captions underneath
+   ========================================================= */
+.visual-plate-grid {
+    display: grid;
+    gap: 36px;
+    margin-bottom: 40px;
+}
+
+.visual-plate-grid.two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.visual-plate-grid.three-col {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.visual-plate {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.visual-plate-media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.visual-plate-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.visual-plate:hover .visual-plate-img {
+    transform: scale(1.015);
+}
+
+.visual-plate-caption {
+    margin-top: 14px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.caption-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.caption-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+}
+
+.caption-hint {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.visual-plate:hover .caption-hint {
+    color: var(--accent-color);
+}
+
+.caption-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+}
+
+.caption-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+/* Feature full-width plate */
+.visual-feature-plate {
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.visual-feature-media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.visual-feature-img {
+    width: 100%;
+    height: auto;
+    max-height: 820px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.visual-feature-plate:hover .visual-feature-img {
+    transform: scale(1.01);
+}
+
+@media (max-width: 900px) {
+    .visual-plate-grid.two-col,
+    .visual-plate-grid.three-col {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+}
+
+/* Content Cards Fallback */
 .content-card {
     background: #ffffff;
     border: 1px solid var(--border-light);
@@ -446,8 +577,7 @@ body.project-detail-body {
 
 .content-card-img {
     width: 100%;
-    height: 240px;
-    object-fit: cover;
+    height: auto;
     display: block;
     transition: transform 0.3s ease;
 }
