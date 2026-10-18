@@ -1622,6 +1622,42 @@ figcaption,
     margin: 0 !important;
 }
 
+/* Individual Role & Contributions Block (Group Projects) */
+.editorial-contribution-box {
+    margin-top: 18px !important;
+    padding-top: 14px !important;
+    border-top: 1px dashed rgba(var(--proj-rgb, 37, 99, 235), 0.28) !important;
+}
+
+.editorial-col-label.contribution-label {
+    color: var(--proj-color, #2563eb) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: 6px !important;
+}
+
+.editorial-col-text.contribution-text {
+    font-size: 0.88rem !important;
+    line-height: 1.62 !important;
+    color: #475569 !important;
+}
+
+.editorial-col-text.contribution-text strong {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+}
+
+/* Stacked Author List & Bold Styling */
+.meta-value.author-list {
+    line-height: 1.45 !important;
+    display: block !important;
+}
+
+.meta-value strong {
+    font-weight: 700 !important;
+    color: #0f172a !important;
+}
+
 /* Vertical Hairline Divider — hidden because column has border-left */
 .editorial-divider {
     display: none !important;
