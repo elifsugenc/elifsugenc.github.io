@@ -125,7 +125,17 @@
             '.lightbox-close-btn',
             '.lightbox-modal',
             '.lightbox-trigger',
-            '.artifact-frame'
+            '.artifact-frame',
+            '.wwh-reopen-circle',
+            '#wwh-reopen-circle',
+            '.wwh-live-indicator',
+            '#wwh-live-indicator',
+            '.wwh-consent-popup',
+            '#wwh-consent-popup',
+            '.wwh-btn',
+            '.wwh-btn-yes',
+            '.wwh-btn-no',
+            '.wwh-btn-learn'
         ].join(', ');
 
         // Event delegation for rock-solid hover states across dynamic and static elements

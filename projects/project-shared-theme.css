@@ -790,3 +790,32 @@ figcaption, .img-caption, .caption-text, .drawing-meta {
     color: #ffffff !important;
     transform: translateY(-2px) !important;
 }
+
+/* =========================================================
+   YOU WERE HERE / YOU ARE HERE FLOATING CONTROLS
+   Ensure floating telemetry and consent controls stay above all project layers
+   ========================================================= */
+.wwh-reopen-circle,
+#wwh-reopen-circle {
+    z-index: 2147483640 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.wwh-live-indicator,
+#wwh-live-indicator {
+    z-index: 2147483640 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.wwh-consent-popup,
+#wwh-consent-popup {
+    z-index: 2147483645 !important;
+}
+
+.wwh-consent-popup.wwh-visible,
+#wwh-consent-popup.wwh-visible {
+    pointer-events: auto !important;
+}
+

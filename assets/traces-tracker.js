@@ -184,19 +184,41 @@
         }
     }
 
+    // Helper to get safe mount root (documentElement avoids body scroll/transform containment)
+    function getMountRoot() {
+        return document.documentElement || document.body;
+    }
+
     // Live Indicator UI
     function ensureLiveIndicator() {
         let el = document.getElementById('wwh-live-indicator');
+        const mount = getMountRoot();
         if (!el) {
             el = document.createElement('div');
             el.id = 'wwh-live-indicator';
             el.className = 'wwh-live-indicator';
             el.setAttribute('aria-live', 'polite');
+            el.setAttribute('role', 'button');
+            el.setAttribute('tabindex', '0');
+            el.setAttribute('title', 'YOU WERE HERE. // Live traces recording. Click to manage tracking or visit archive.');
             el.innerHTML = `
                 <span class="wwh-live-dot" aria-hidden="true"></span>
                 <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
             `;
-            document.body.appendChild(el);
+            mount.appendChild(el);
+
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showConsentPopup();
+            });
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    showConsentPopup();
+                }
+            });
+        } else if (el.parentElement !== mount) {
+            mount.appendChild(el);
         }
         return el;
     }
@@ -215,9 +237,17 @@
 
     // Floating "you are here." Reopen Circle on the Right Side
     function showReopenCircle() {
-        if (document.getElementById('wwh-reopen-circle')) return;
+        let circle = document.getElementById('wwh-reopen-circle');
+        const mount = getMountRoot();
+        if (circle) {
+            circle.classList.remove('wwh-circle-exit');
+            if (circle.parentElement !== mount) {
+                mount.appendChild(circle);
+            }
+            return;
+        }
 
-        const circle = document.createElement('button');
+        circle = document.createElement('button');
         circle.type = 'button';
         circle.id = 'wwh-reopen-circle';
         circle.className = 'wwh-reopen-circle';
@@ -229,12 +259,20 @@
             <span class="wwh-circle-text">you are<br>here.</span>
         `;
 
-        document.body.appendChild(circle);
+        mount.appendChild(circle);
 
         circle.addEventListener('click', (e) => {
             e.stopPropagation();
             hideReopenCircle();
             showConsentPopup();
+        });
+        circle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                hideReopenCircle();
+                showConsentPopup();
+            }
         });
     }
 
@@ -261,9 +299,19 @@
     // Consent Popup UI
     function showConsentPopup() {
         hideReopenCircle();
-        if (document.getElementById('wwh-consent-popup')) return;
+        const mount = getMountRoot();
+        let popup = document.getElementById('wwh-consent-popup');
+        if (popup) {
+            popup.classList.remove('wwh-exit');
+            if (popup.parentElement !== mount) {
+                mount.appendChild(popup);
+            }
+            void popup.offsetWidth;
+            popup.classList.add('wwh-visible');
+            return;
+        }
 
-        const popup = document.createElement('div');
+        popup = document.createElement('div');
         popup.id = 'wwh-consent-popup';
         popup.className = 'wwh-consent-popup';
         popup.setAttribute('role', 'dialog');
@@ -294,7 +342,7 @@
             </div>
         `;
 
-        document.body.appendChild(popup);
+        mount.appendChild(popup);
 
         // Immediate entrance animation trigger
         void popup.offsetWidth;
@@ -1038,7 +1086,8 @@
 
     // Bootstrap on DOM Ready
     async function init() {
-        const isMainPage = !window.location.pathname.includes('/projects/');
+        const path = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
+        const isMainPage = !path.includes('/projects/');
         const consent = sessionStorage.getItem(CONSENT_KEY);
 
         // 1. Siteye girişte "you are here." popupı her zaman açık gelsin (kapalı kalmasın)
@@ -1046,14 +1095,13 @@
             showConsentPopup();
         } else if (consent === 'no') {
             showReopenCircle();
+        } else if (consent === 'yes') {
+            startRecording();
         }
 
         // 2. Firebase SDK ve geçmiş izleri arka planda yükle (popup açılışını geciktirmez)
         initFirebase().then(() => {
             fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
-            if (consent === 'yes') {
-                startRecording();
-            }
         }).catch(err => {
             console.warn('[YOU WERE HERE] Firebase init:', err);
         });
