@@ -763,10 +763,7 @@ figcaption,
 .drawings-dual-row,
 .secondary-diagrams-grid,
 .tech-drawings-grid,
-.drawings-grid,
-.boards-grid,
-.boards-gallery-grid,
-.boards-showcase-grid {
+.drawings-grid {
     display: flex !important;
     flex-direction: column !important;
     gap: clamp(48px, 7vw, 84px) !important;
