@@ -959,11 +959,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-question-text">&ldquo;${p.question}&rdquo;</div>
                         <div class="card-concepts-text">${keywordsUpper}</div>
                         <div class="card-btn-row">
-                            <a href="${p.url}" class="card-action-btn card-btn-preview">
-                                PREVIEW&nbsp;&#x2197;
-                            </a>
-                            <a href="${p.url}" class="card-action-btn modal-open-standalone-btn card-btn-dedicated">
-                                DEDICATED PAGE&nbsp;&#x2197;
+                            <a href="${p.url}" class="card-action-btn card-btn-dedicated" style="flex: 1; width: 100%; text-align: center; justify-content: center;">
+                                VIEW PROJECT&nbsp;&#x2197;
                             </a>
                         </div>
                     </div>
@@ -1394,14 +1391,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (currentState === 'cluster') {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (typeof window.openProjectModalBySlug === 'function') {
-                            window.openProjectModalBySlug(projId);
-                        }
+                        window.location.href = `./projects/${projId}/`;
                     }
                 });
             }
 
-            // Card or node click -> open project preview modal
+            // Card or node click -> navigate directly to dedicated project page
             node.addEventListener('click', (e) => {
                 const currentState = container.getAttribute('data-state');
                 if (currentState === 'cluster') {
@@ -1412,12 +1407,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 }
-                // If clicking an explicit dedicated link, let default handle it
-                if (e.target.closest('.card-btn-dedicated')) return;
                 e.preventDefault();
-                if (typeof window.openProjectModalBySlug === 'function') {
-                    window.openProjectModalBySlug(projId);
-                }
+                window.location.href = `./projects/${projId}/`;
             });
         });
 
@@ -1778,24 +1769,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const hash = window.location.hash.replace('#', '').trim();
         const projectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
         
-        // Handle return or direct navigation to a specific project modal over Constellation Map (e.g. #stray, #project-wood-weave, #card-wood-weave)
+        // Handle direct navigation to a specific project (e.g. #stray, #project-wood-weave, #card-wood-weave)
         if (projectSlugs.includes(hash) || hash.startsWith('project-') || hash.startsWith('modal-') || hash.startsWith('card-') || (hash && document.getElementById(`card-${hash}`))) {
             const slug = hash.replace(/^(project-|modal-|card-)/, '');
-            
-            // 1. Activate Main tab and ensure Constellation state is active
-            switchTab('main', false);
-            const homeSky = document.getElementById('hq-constellation-sky');
-            if (homeSky) {
-                const mapEl = homeSky.querySelector('.constellation-map');
-                if (mapEl) setConstellationState(mapEl, 'constellation', false);
-            }
-            
-            // 2. Open the project modal preview window with dedicated page button
-            setTimeout(() => {
-                if (typeof window.openProjectModalBySlug === 'function') {
-                    window.openProjectModalBySlug(slug, false);
-                }
-            }, 100);
+            window.location.href = `./projects/${slug}/`;
             return;
         }
 
@@ -2382,220 +2359,15 @@ document.addEventListener('DOMContentLoaded', () => {
         modalClose.addEventListener('click', closeProjectModal);
 
         function openProjectModalBySlug(slug, updateHash = true) {
-            if (!slug || !projectModal) return;
+            if (!slug) return;
             slug = slug.replace(/^(project-|modal-|card-)/, '').trim();
-            window.lastOpenedProjectSlug = slug;
-
-            // Synchronize browser address bar to #proje-adi
-            if (updateHash && window.location.hash !== '#' + slug) {
-                history.pushState({ modalSlug: slug }, '', '#' + slug);
-            }
-
-            // Try to find the master project card in the Projects tab to get full data
-            let masterCard = document.querySelector(`.project-card[href*="${slug}"]`) || document.getElementById(`card-${slug}`);
-            
-            let projectData = null;
-            if (typeof CONSTELLATION_PROJECTS !== 'undefined') {
-                projectData = CONSTELLATION_PROJECTS.find(p => p.id === slug || (p.url && p.url.includes(slug)));
-            } else if (typeof allConstellationProjects !== 'undefined') {
-                projectData = allConstellationProjects.find(p => p.id === slug || p.url.includes(slug));
-            }
-
-            const num = masterCard ? masterCard.getAttribute('data-num') : (projectData ? projectData.num : '00');
-            const title = masterCard ? masterCard.getAttribute('data-title') : (projectData ? projectData.title : 'TITLE');
-            const question = masterCard ? masterCard.getAttribute('data-question') : (projectData ? projectData.question : 'Question?');
-            const medium = masterCard ? masterCard.getAttribute('data-medium') : (projectData ? projectData.medium : 'Medium');
-            const year = masterCard ? masterCard.getAttribute('data-year') : (projectData ? projectData.year : 'Year');
-
-            if (projectData) {
-                if (projectData.color) {
-                    projectModal.style.setProperty('--proj-color', projectData.color);
-                    projectModal.style.setProperty('--proj-rgb', projectData.colorRgb);
-                }
-                if (projectData.accent2) {
-                    projectModal.style.setProperty('--proj-accent2', projectData.accent2);
-                    projectModal.style.setProperty('--proj-accent2-rgb', projectData.accent2Rgb);
-                } else {
-                    projectModal.style.setProperty('--proj-accent2', projectData.color || '#38bdf8');
-                    projectModal.style.setProperty('--proj-accent2-rgb', projectData.colorRgb || '56, 189, 248');
-                }
-                if (projectData.darkBg) {
-                    projectModal.style.setProperty('--proj-bg-dark', projectData.darkBg);
-                    projectModal.style.setProperty('--proj-bg-rgb', projectData.darkBgRgb);
-                }
-                projectModal.setAttribute('data-project', projectData.id);
-                projectModal.setAttribute('data-award', projectData.isAward ? 'true' : 'false');
-            } else {
-                projectModal.removeAttribute('data-project');
-                projectModal.removeAttribute('data-award');
-                projectModal.style.removeProperty('--proj-color');
-                projectModal.style.removeProperty('--proj-rgb');
-                projectModal.style.removeProperty('--proj-accent2');
-                projectModal.style.removeProperty('--proj-accent2-rgb');
-                projectModal.style.removeProperty('--proj-bg-dark');
-                projectModal.style.removeProperty('--proj-bg-rgb');
-            }
-
-            document.getElementById('modal-num').innerText = num || '00';
-            document.getElementById('modal-title').innerText = title || 'TITLE';
-            document.getElementById('modal-question').innerText = question || 'Question?';
-            document.getElementById('modal-medium').innerText = medium || 'Medium';
-            document.getElementById('modal-year').innerText = year || 'Year';
-
-            const modalTag = document.getElementById('modal-tag');
-            const modalAwardPill = document.getElementById('modal-award-pill');
-            const awardProjects = new Set(['bio-decay', 'stray', 'sprouting-garden']);
-            const isAwardProject = awardProjects.has(slug) || (projectData && !!projectData.isAward);
-
-            if (modalAwardPill) {
-                if (isAwardProject) {
-                    modalAwardPill.classList.remove('hidden');
-                } else {
-                    modalAwardPill.classList.add('hidden');
-                }
-            }
-
-            if (modalTag) {
-                if (isAwardProject) {
-                    modalTag.innerText = 'AWARD WINNER';
-                    modalTag.className = 'modal-tag tag-award';
-                } else if (slug === 'emek-museum') {
-                    modalTag.innerText = 'RESEARCH IN PROGRESS';
-                    modalTag.className = 'modal-tag tag-ongoing';
-                } else if (slug === 'you-were-here') {
-                    modalTag.innerText = 'LIVE PARTICIPATORY ARCHIVE';
-                    modalTag.className = 'modal-tag tag-ongoing';
-                } else {
-                    modalTag.innerText = '';
-                    modalTag.className = 'modal-tag hidden';
-                }
-            }
-
-            const cardImg = masterCard ? masterCard.querySelector('.card-img') : null;
-            const modalHero = document.getElementById('modal-hero');
-            if (modalHero) {
-                if (slug === 'you-were-here') {
-                    modalHero.style.backgroundSize = 'contain';
-                    modalHero.style.backgroundRepeat = 'no-repeat';
-                    modalHero.style.backgroundPosition = 'center';
-                    modalHero.style.backgroundColor = '#fafbfc';
-
-                    let liveUrl = null;
-                    if (window.YouWereHereTracker && typeof window.YouWereHereTracker.getLivingPalimpsestDataURL === 'function') {
-                        liveUrl = window.YouWereHereTracker.getLivingPalimpsestDataURL(1200, 750);
-                    }
-                    if (liveUrl) {
-                        modalHero.style.backgroundImage = `url("${liveUrl}")`;
-                    } else if (cardImg && cardImg.style.backgroundImage) {
-                        modalHero.style.backgroundImage = cardImg.style.backgroundImage;
-                    } else {
-                        modalHero.style.backgroundImage = `url("./assets/you-were-here-cover.png")`;
-                    }
-
-                    let badge = modalHero.querySelector('.m-living-hero-badge');
-                    if (!badge) {
-                        badge = document.createElement('div');
-                        badge.className = 'm-living-hero-badge';
-                        modalHero.appendChild(badge);
-                    }
-                    const tracesList = (window.YouWereHereTracker && window.YouWereHereTracker.getCachedTraces && window.YouWereHereTracker.getCachedTraces()) || [];
-                    const count = tracesList.length > 0 ? tracesList.length : 47;
-                    badge.innerHTML = `<span class="live-pulse-dot"></span> LIVING PALIMPSEST &bull; ${count} TRACES OVERLAYED (REAL-TIME)`;
-                } else {
-                    modalHero.style.backgroundSize = '';
-                    modalHero.style.backgroundRepeat = '';
-                    modalHero.style.backgroundPosition = '';
-                    modalHero.style.backgroundColor = '';
-                    const oldBadge = modalHero.querySelector('.m-living-hero-badge');
-                    if (oldBadge) oldBadge.remove();
-
-                    if (cardImg && cardImg.style.backgroundImage) {
-                        modalHero.style.backgroundImage = cardImg.style.backgroundImage;
-                    } else if (projectData && projectData.img) {
-                        modalHero.style.backgroundImage = `url("${projectData.img}")`;
-                    } else {
-                        modalHero.style.backgroundImage = 'none';
-                    }
-                }
-            }
-
-                    // Concise Statement Content & Dedicated Page Link Injection
-                    const modalTextContainer = projectModal.querySelector('.modal-text');
-                    if (modalTextContainer) {
-                        const stmt = PROJECT_PREVIEW_STATEMENTS[slug] || {
-                            en: '<p>Project documentation and spatial inquiry.</p>',
-                            tr: '<p>Proje dökümantasyonu ve mekânsal araştırma.</p>'
-                        };
-
-                        let liveBadgeHTML = '';
-                        if (slug === 'you-were-here') {
-                            liveBadgeHTML = `
-                                <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.28); border-radius: 999px; font-family: monospace; font-size: 0.74rem; font-weight: 700; color: #15803d;">
-                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 8px rgba(22, 163, 74, 0.5); animation: wwhPulseDot 1.8s infinite ease-in-out;"></span>
-                                    <span>LIVE PARTICIPATORY TELEMETRY ACTIVE</span>
-                                </div>
-                            `;
-                        }
-
-                        modalTextContainer.innerHTML = `
-                            <div class="modal-project-body modal-preview-compact">
-                                <div class="m-statement-block">
-                                    <div class="m-lang-toggle">
-                                        <button type="button" class="m-lang-btn active" onclick="toggleModalLang('en')">ENGLISH STATEMENT</button>
-                                        <button type="button" class="m-lang-btn" onclick="toggleModalLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                                    </div>
-                                    <div id="m-desc-en" class="m-desc-pane active">
-                                        ${stmt.en}
-                                    </div>
-                                    <div id="m-desc-tr" class="m-desc-pane">
-                                        ${stmt.tr}
-                                    </div>
-                                </div>
-
-                                <div class="m-action-bar m-action-bar-primary">
-                                    <a href="./projects/${slug}/" class="m-action-btn m-btn-primary modal-open-standalone-btn">
-                                        <span>OPEN DEDICATED FULL PROJECT PAGE ↗</span>
-                                    </a>
-                                    ${liveBadgeHTML}
-                                </div>
-                            </div>
-                        `;
-
-                        if (slug === 'you-were-here') {
-                            setTimeout(() => {
-                                if (window.YouWereHereTracker && typeof window.YouWereHereTracker.updateLivingPalimpsests === 'function') {
-                                    window.YouWereHereTracker.updateLivingPalimpsests();
-                                }
-                            }, 40);
-                        }
-                    }
-                    
-                    // Close Merope story modal if open to prevent any dual modal stacking
-                    const mModal = document.getElementById('merope-story-modal');
-                    if (mModal && !mModal.classList.contains('hidden')) {
-                        mModal.classList.add('hidden');
-                        mModal.setAttribute('aria-hidden', 'true');
-                    }
-
-                    // Show modal
-                    projectModal.classList.remove('hidden');
-                    
-                    // Reset scroll to top
-                    const scrollArea = projectModal.querySelector('.modal-scroll-area');
-                    if (scrollArea) scrollArea.scrollTop = 0;
-                    
-                    // Lock background scrolling
-                    document.body.style.overflow = 'hidden';
+            window.location.href = './projects/' + slug + '/';
+            return;
         }
         window.openProjectModalBySlug = openProjectModalBySlug;
 
-        // Intercept any link going to a project
+        // Intercept any link going to a project - direct navigation to dedicated page
         document.body.addEventListener('click', (e) => {
-            // Allow direct navigation if clicking standalone page link inside modal
-            if (e.target.closest('.modal-open-standalone-btn')) {
-                return;
-            }
-
             const link = e.target.closest('a[href*="./projects/"]');
             if (link) {
                 // If this link is inside the constellation stage while in cluster state,
@@ -2611,8 +2383,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 e.preventDefault();
                 const href = link.getAttribute('href');
-                const slug = href.split('/').filter(Boolean).pop();
-                openProjectModalBySlug(slug);
+                if (href) {
+                    window.location.href = href;
+                }
             }
         });
 
@@ -2636,7 +2409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const curHash = window.location.hash.replace(/^#/, '').trim();
             if (portfolioProjectSlugs.includes(curHash) || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-')) {
                 const initSlug = curHash.replace(/^(project-|modal-|card-)/, '');
-                openProjectModalBySlug(initSlug, false);
+                window.location.href = './projects/' + initSlug + '/';
             } else {
                 if (!projectModal.classList.contains('hidden')) {
                     projectModal.classList.add('hidden');
