@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../project-shared-theme.css">
 </head>
-<body class="project-detail-body" style="--proj-color: #ef4444; --proj-rgb: 239, 68, 68; --proj-accent2: #f97316; --proj-accent2-rgb: 249, 115, 22; --proj-bg-dark: #1a0606; --proj-bg-rgb: 26, 6, 6;">
+<body class="project-detail-body" style="--proj-color: #ef4444; --proj-rgb: 239, 68, 68; --proj-accent2: #f97316; --proj-accent2-rgb: 249, 115, 22;">
     <!-- Architectural Grid Background -->
     <div class="blueprint-bg"></div>
 
@@ -21,36 +21,62 @@
     
     <!-- Top Sticky Architectural Navigation Bar -->
     <header class="project-nav">
-        <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div class="nav-container">
             <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
                 <span class="nav-arrow">&larr;</span>
                 <span class="nav-label">RETURN</span>
             </a>
             <div class="project-crumb">
-                <span class="crumb-num">12</span>
-                <span class="crumb-sep">/</span>
                 <span class="crumb-title">FIRE ESCAPE SIMULATION</span>
                 <span class="crumb-tag">SIMULATION &bull; 2027</span>
             </div>
         </div>
     </header>
     
-    <main class="project-page-container" style="max-width: 1000px; margin: 60px auto; padding: 0 24px;">
-        <div class="project-header" style="margin-bottom: 40px;">
-            <div style="font-family: monospace; font-size: 0.8rem; color: #38bdf8; letter-spacing: 0.12em; margin-bottom: 12px;">CONSTELLATION NODE 12 // EGRESS DYNAMICS</div>
-            <h1 class="project-title" style="font-size: 3.5rem; text-transform: uppercase; margin-bottom: 16px; color: #f8fafc;">FIRE ESCAPE SIMULATION</h1>
-            <p class="hero-core-question" style="font-size: 1.2rem; color: #93c5fd; font-style: italic; margin-bottom: 24px;">"Can you escape the fire?"</p>
-        </div>
-        <div class="detail-card" style="padding: 32px; border-radius: 8px;">
-            <p style="font-size: 1.1rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 20px;">
-                Computational behavioral model and emergency spatial simulation analyzing crowd dynamics, spatial panic, bottlenecks, and exit trajectories under extreme conditions.
-            </p>
-            <div style="font-family: monospace; font-size: 0.78rem; color: #94a3b8; display: flex; gap: 20px; flex-wrap: wrap;">
-                <span>YEAR: 2027</span> &bull; <span>TYPOLOGY: Computational Simulation</span> &bull; <span>KEYWORDS: Egress Dynamics &bull; Spatial Panic</span>
+    <main class="project-page-container">
+        <!-- Hero Section -->
+        <section class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">SIMULATION &bull; 2027</span>
+                    <span class="meta-item">COMPUTATIONAL MODEL</span>
+                    <span class="meta-item">EGRESS DYNAMICS</span>
+                </div>
+                <h1 class="hero-title">FIRE ESCAPE SIMULATION</h1>
+                <p class="hero-core-question">&ldquo;Can you escape the fire?&rdquo;</p>
             </div>
-        </div>
-        <div style="margin-top: 40px;">
-            <a href="../../" class="footer-nav-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">&larr; RETURN</a>
+
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">YEAR</span>
+                    <span class="spec-val">2027</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Computational Simulation &bull; Behavioral Modeling</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">KEYWORDS</span>
+                    <span class="spec-val">Egress Dynamics &bull; Spatial Panic &bull; Bottleneck Optimization</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept Section -->
+        <section class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CROWD PANIC &amp; SPATIAL TRAJECTORIES</span>
+            </div>
+            <div class="detail-card">
+                <p style="font-size: 1.05rem; line-height: 1.8; color: #334155; margin: 0;">
+                    Computational behavioral model and emergency spatial simulation analyzing crowd dynamics, spatial panic, bottlenecks, and exit trajectories under extreme conditions. Testing egress thresholds and structural circulation limits through algorithmic agent simulation.
+                </p>
+            </div>
+        </section>
+
+        <div style="margin-top: 48px;">
+            <a href="../../" class="footer-nav-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">&larr; RETURN TO CONSTELLATION</a>
         </div>
     </main>
 

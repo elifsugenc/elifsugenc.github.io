@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../project-shared-theme.css">
 </head>
-<body class="project-detail-body" style="--proj-color: #818cf8; --proj-rgb: 129, 140, 248; --proj-accent2: #38bdf8; --proj-accent2-rgb: 56, 189, 248; --proj-bg-dark: #0f0f24; --proj-bg-rgb: 15, 15, 36;">
+<body class="project-detail-body" style="--proj-color: #6366f1; --proj-rgb: 99, 102, 241; --proj-accent2: #38bdf8; --proj-accent2-rgb: 56, 189, 248;">
     <!-- Architectural Grid Background -->
     <div class="blueprint-bg"></div>
 
@@ -21,36 +21,62 @@
     
     <!-- Top Sticky Architectural Navigation Bar -->
     <header class="project-nav">
-        <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+        <div class="nav-container">
             <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
                 <span class="nav-arrow">&larr;</span>
                 <span class="nav-label">RETURN</span>
             </a>
             <div class="project-crumb">
-                <span class="crumb-num">09</span>
-                <span class="crumb-sep">/</span>
                 <span class="crumb-title">ARA-SIRA</span>
                 <span class="crumb-tag">EDITORIAL &bull; 2024</span>
             </div>
         </div>
     </header>
     
-    <main class="project-page-container" style="max-width: 1000px; margin: 60px auto; padding: 0 24px;">
-        <div class="project-header" style="margin-bottom: 40px;">
-            <div style="font-family: monospace; font-size: 0.8rem; color: #38bdf8; letter-spacing: 0.12em; margin-bottom: 12px;">CONSTELLATION NODE 09 // EDITORIAL DESIGN</div>
-            <h1 class="project-title" style="font-size: 3.5rem; text-transform: uppercase; margin-bottom: 16px; color: #f8fafc;">ARA-SIRA</h1>
-            <p class="hero-core-question" style="font-size: 1.2rem; color: #93c5fd; font-style: italic; margin-bottom: 24px;">"Can one space hold both play and quiet?"</p>
-        </div>
-        <div class="detail-card" style="padding: 32px; border-radius: 8px;">
-            <p style="font-size: 1.1rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 20px;">
-                An investigation into dual-state spatial dynamics, collective play, and quiet contemplation within community architecture.
-            </p>
-            <div style="font-family: monospace; font-size: 0.78rem; color: #94a3b8; display: flex; gap: 20px; flex-wrap: wrap;">
-                <span>YEAR: 2024</span> &bull; <span>TYPOLOGY: Editorial &bull; Community</span> &bull; <span>KEYWORDS: Play &bull; Community &bull; Construction</span>
+    <main class="project-page-container">
+        <!-- Hero Section -->
+        <section class="project-hero">
+            <div class="hero-header">
+                <div class="hero-meta-top">
+                    <span class="badge-accent">EDITORIAL &bull; 2024</span>
+                    <span class="meta-item">COMMUNITY ARCHITECTURE</span>
+                    <span class="meta-item">DUAL-STATE DYNAMICS</span>
+                </div>
+                <h1 class="hero-title">ARA-SIRA</h1>
+                <p class="hero-core-question">&ldquo;Can one space hold both play and quiet?&rdquo;</p>
             </div>
-        </div>
-        <div style="margin-top: 40px;">
-            <a href="../../" class="footer-nav-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">&larr; RETURN</a>
+
+            <div class="specs-grid">
+                <div class="spec-col">
+                    <span class="spec-label">YEAR</span>
+                    <span class="spec-val">2024</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">TYPOLOGY</span>
+                    <span class="spec-val">Editorial &bull; Community</span>
+                </div>
+                <div class="spec-col">
+                    <span class="spec-label">KEYWORDS</span>
+                    <span class="spec-val">Play &bull; Community &bull; Construction</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept Section -->
+        <section class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; INVESTIGATION</span>
+            </div>
+            <div class="detail-card">
+                <p style="font-size: 1.05rem; line-height: 1.8; color: #334155; margin: 0;">
+                    An investigation into dual-state spatial dynamics, collective play, and quiet contemplation within community architecture. Exploring how architecture balances the lively energy of communal encounter with the introspective silence of solitary retreat.
+                </p>
+            </div>
+        </section>
+
+        <div style="margin-top: 48px;">
+            <a href="../../" class="footer-nav-btn" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">&larr; RETURN TO CONSTELLATION</a>
         </div>
     </main>
 
