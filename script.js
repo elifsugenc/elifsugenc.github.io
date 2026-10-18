@@ -1630,7 +1630,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let currentTabId = 'main';
-    let previousTabId = 'main';
+    let pageHistory = ['main'];
+    let lastBackTimestamp = 0;
 
     // Helper to navigate to Constellation view on Main tab
     function goToProjects() {
@@ -1645,7 +1646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.goToProjects = goToProjects;
 
     // --- PAGE NAVIGATION: each section is a separate full-screen page ---
-    function switchTab(targetTabId, updateHash = true) {
+    function switchTab(targetTabId, updateHash = true, isBack = false) {
         // There is no separate #projects page: project exploration lives directly in #tab-main
         if (targetTabId === 'projects') {
             switchTab('main', false);
@@ -1663,9 +1664,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = document.getElementById(`tab-${targetTabId}`);
         if (!target) return;
 
-        // Remember previous tab so [ BACK ] on About / Methodology returns to where the user came from
-        if (currentTabId !== targetTabId && currentTabId !== 'about' && currentTabId !== 'design-approach') {
-            previousTabId = currentTabId;
+        // Maintain resilient navigation history stack
+        if (isBack) {
+            // Stack was already popped by goBack()
+        } else if (!updateHash) {
+            // Direct hash / popstate navigation
+            if (targetTabId === 'main') {
+                pageHistory = ['main'];
+            } else if (pageHistory.includes(targetTabId)) {
+                pageHistory = pageHistory.slice(0, pageHistory.lastIndexOf(targetTabId) + 1);
+            } else {
+                pageHistory.push(targetTabId);
+            }
+        } else {
+            // Forward user action (click tab, link, etc.)
+            if (targetTabId === 'main') {
+                pageHistory = ['main'];
+            } else if (targetTabId === 'about') {
+                // If navigating to about, prune any trailing design-approach to avoid back button trap
+                while (pageHistory.length > 1 && pageHistory[pageHistory.length - 1] === 'design-approach') {
+                    pageHistory.pop();
+                }
+                if (pageHistory[pageHistory.length - 1] !== 'about') {
+                    pageHistory.push('about');
+                }
+            } else {
+                if (pageHistory[pageHistory.length - 1] !== targetTabId) {
+                    pageHistory.push(targetTabId);
+                }
+            }
         }
         currentTabId = targetTabId;
 
@@ -1692,12 +1719,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function goBack() {
-        switchTab(previousTabId || 'main');
+        const now = Date.now();
+        if (now - lastBackTimestamp < 250) return;
+        lastBackTimestamp = now;
+
+        // Pop current page off history stack if it's currently on top
+        if (pageHistory.length > 0 && pageHistory[pageHistory.length - 1] === currentTabId) {
+            pageHistory.pop();
+        }
+
+        // If we are navigating back from 'about', ensure we never loop back into 'design-approach'
+        if (currentTabId === 'about') {
+            while (pageHistory.length > 0 && pageHistory[pageHistory.length - 1] === 'design-approach') {
+                pageHistory.pop();
+            }
+        }
+
+        const targetTab = (pageHistory.length > 0) ? pageHistory[pageHistory.length - 1] : 'main';
+        if (!pageHistory.length) {
+            pageHistory = ['main'];
+        }
+
+        switchTab(targetTab, true, true);
     }
     window.goBack = goBack;
     window.goBackFromAbout = goBack;
     window.setPreviousTab = function(tabId) {
-        previousTabId = tabId;
+        // Kept for backward compatibility
+        if (tabId && !pageHistory.includes(tabId)) {
+            pageHistory.unshift(tabId);
+        }
     };
 
     const aboutBackBtn = document.getElementById('about-back-btn');
