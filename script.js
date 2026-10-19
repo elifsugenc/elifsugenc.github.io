@@ -719,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (label) label.textContent = 'BACK TO CLUSTER';
             } else {
                 if (icon) icon.innerHTML = '&#x2726;';
-                if (label) label.textContent = 'EXPLORE ALL PROJECTS ↗';
+                if (label) label.textContent = 'EXPLORE CONSTELLATION ↗';
             }
         });
 

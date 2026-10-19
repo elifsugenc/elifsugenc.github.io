@@ -8285,9 +8285,9 @@ body {
   z-index: 950 !important;
 }
 
-/* 1. CLUSTER STATE: "EXPLORE ALL PROJECTS ↗" stays in centered position with ample margin */
+/* 1. CLUSTER STATE: "EXPLORE CONSTELLATION ↗" moved lower to give generous clearance */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-  top: 79% !important;
+  top: 85.5% !important;
   left: 50% !important;
   right: auto !important;
   bottom: auto !important;
@@ -8791,7 +8791,7 @@ body {
 
 @media (max-width: 650px) {
   #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-    top: 80% !important;
+    top: 86% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     max-width: 90vw;
