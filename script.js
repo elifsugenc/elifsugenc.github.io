@@ -1691,7 +1691,9 @@ document.addEventListener('DOMContentLoaded', () => {
         target.classList.add('active');
         setActive(targetTabId);
         document.body.classList.toggle('is-about-active', targetTabId === 'about');
-        window.scrollTo({ top: 0, behavior: 'auto' });
+        if (!sessionStorage.getItem('portfolio_return_active')) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }
 
         if (updateHash) {
             history.pushState(null, '', targetTabId === 'main' ? window.location.pathname : `#${targetTabId}`);
@@ -1868,14 +1870,56 @@ document.addEventListener('DOMContentLoaded', () => {
             const homeSky = document.getElementById('hq-constellation-sky');
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
-                if (mapEl && mapEl.getAttribute('data-state') === 'constellation') {
-                    setConstellationState(mapEl, 'cluster', false);
+                if (!sessionStorage.getItem('portfolio_return_active')) {
+                    if (mapEl && mapEl.getAttribute('data-state') === 'constellation') {
+                        setConstellationState(mapEl, 'cluster', false);
+                    }
                 }
             }
         }
     }
+
+    function restorePortfolioReturnPosition() {
+        try {
+            const isActive = sessionStorage.getItem('portfolio_return_active');
+            const savedScroll = sessionStorage.getItem('portfolio_return_scroll');
+            const savedState = sessionStorage.getItem('portfolio_return_state');
+            const savedTab = sessionStorage.getItem('portfolio_return_tab');
+
+            if (isActive && savedScroll !== null) {
+                const targetY = parseInt(savedScroll, 10);
+
+                if (savedTab && savedTab !== currentTabId && document.getElementById(`tab-${savedTab}`)) {
+                    switchTab(savedTab, false);
+                }
+
+                if (savedState) {
+                    const homeSky = document.getElementById('hq-constellation-sky');
+                    if (homeSky) {
+                        const mapEl = homeSky.querySelector('.constellation-map');
+                        if (mapEl) setConstellationState(mapEl, savedState, false);
+                    }
+                }
+
+                window.scrollTo({ top: targetY, behavior: 'auto' });
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: targetY, behavior: 'auto' });
+                });
+                setTimeout(() => {
+                    window.scrollTo({ top: targetY, behavior: 'auto' });
+                    sessionStorage.removeItem('portfolio_return_active');
+                    sessionStorage.removeItem('portfolio_return_scroll');
+                    sessionStorage.removeItem('portfolio_return_state');
+                    sessionStorage.removeItem('portfolio_return_tab');
+                }, 80);
+            }
+        } catch (err) {}
+    }
+
     window.addEventListener('popstate', openFromHash);
+    window.addEventListener('pageshow', restorePortfolioReturnPosition);
     openFromHash();
+    restorePortfolioReturnPosition();
 
     // Subtle border under the nav once the page is scrolled
     window.addEventListener('scroll', () => {
@@ -2419,9 +2463,25 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeProjectModal = closeProjectModal;
         modalClose.addEventListener('click', closeProjectModal);
 
+        function savePortfolioReturnState() {
+            try {
+                const scrollY = window.scrollY || window.pageYOffset || 0;
+                sessionStorage.setItem('portfolio_return_scroll', String(scrollY));
+                sessionStorage.setItem('portfolio_return_tab', currentTabId || 'main');
+                const stageEl = document.getElementById('hq-constellation-sky');
+                const curState = stageEl ? (stageEl.getAttribute('data-state') || 'cluster') : 'cluster';
+                sessionStorage.setItem('portfolio_return_state', curState);
+                sessionStorage.setItem('portfolio_return_url', window.location.href);
+                sessionStorage.setItem('portfolio_return_active', 'true');
+            } catch (err) {}
+        }
+        window.savePortfolioReturnState = savePortfolioReturnState;
+        window.addEventListener('beforeunload', savePortfolioReturnState);
+
         function openProjectModalBySlug(slug, updateHash = true) {
             if (!slug) return;
             slug = slug.replace(/^(project-|modal-|card-)/, '').trim();
+            savePortfolioReturnState();
             window.location.href = './projects/' + slug + '/';
             return;
         }
@@ -2442,6 +2502,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
+                savePortfolioReturnState();
                 e.preventDefault();
                 const href = link.getAttribute('href');
                 if (href) {

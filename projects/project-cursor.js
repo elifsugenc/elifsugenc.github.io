@@ -134,8 +134,32 @@
     }
 
     // =========================================================
-    // UNIVERSAL SAFE RETURN TO PREVIOUS PAGE
-    // Always returns to whatever previous page/view the user came from
+    // IN-PAGE ANCHOR NAVIGATION WITHOUT HISTORY POLLUTION
+    // Prevents in-page # links from creating back-button traps
+    // =========================================================
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        const hash = link.getAttribute('href');
+        if (!hash || hash === '#' || hash === '#!') return;
+
+        try {
+            const target = document.querySelector(hash);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+                // Use replaceState so in-page browsing NEVER traps the back button!
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', hash);
+                }
+            }
+        } catch (err) {}
+    });
+
+    // =========================================================
+    // UNIVERSAL SAFE RETURN TO PREVIOUS PORTFOLIO VIEW
+    // Always returns directly to the exact spot where the user came from
+    // Never traps the user in in-page # hash history!
     // =========================================================
     window.handleProjectReturn = function(e) {
         if (e) {
@@ -143,52 +167,26 @@
             e.stopPropagation();
         }
 
-        const referrer = document.referrer;
-        let isInternal = false;
-        if (referrer) {
-            try {
-                const refUrl = new URL(referrer, window.location.href);
-                if (refUrl.origin === window.location.origin ||
-                    (window.location.protocol === 'file:' && referrer.includes('elifsugenc'))) {
-                    isInternal = true;
-                }
-            } catch (err) {
-                if (referrer.indexOf(window.location.host) !== -1) {
-                    isInternal = true;
-                }
+        // Flag that we are returning to the portfolio so index.html restores exact scroll & state
+        try {
+            sessionStorage.setItem('portfolio_return_active', 'true');
+            const returnUrl = sessionStorage.getItem('portfolio_return_url');
+            if (returnUrl) {
+                window.location.href = returnUrl;
+                return false;
             }
-        }
+        } catch (err) {}
 
-        // If visited from within the portfolio and history exists, go back
-        if (isInternal && window.history.length > 1) {
-            window.history.back();
-            return;
-        }
-
-        // If history has entries (fallback with timeout in case of strict privacy/referrer)
-        if (window.history.length > 1) {
-            const currentLoc = window.location.href;
-            window.history.back();
-            setTimeout(function() {
-                if (window.location.href === currentLoc) {
-                    window.location.href = '../../';
-                }
-            }, 300);
-            return;
-        }
-
-        // Default root landing fallback
+        // Fallback directly to portfolio root
         window.location.href = '../../';
+        return false;
     };
 
     // Event delegation for all return links on project pages
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('.back-link, .back-btn, .footer-nav-btn, .footer-back-link, .pnav-center-btn, .center-directory-btn');
         if (btn) {
-            const href = btn.getAttribute('href') || '';
-            if (href.includes('../') || href.includes('#constellation') || href === '#' || href === '') {
-                window.handleProjectReturn(e);
-            }
+            window.handleProjectReturn(e);
         }
     });
 
