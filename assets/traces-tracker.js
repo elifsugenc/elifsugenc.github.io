@@ -325,20 +325,20 @@
         popup.innerHTML = `
             <div class="wwh-consent-inner">
                 <div class="wwh-consent-text-col">
-                    <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
-                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can a digital portfolio register physical presence?</h4>
+                    <span class="wwh-consent-tag">&#x2726; YOU WERE HERE. &mdash; RESEARCH EXPERIMENT</span>
+                    <h4 id="wwh-consent-title" class="wwh-consent-title">Would you like to record your visual trace while exploring?</h4>
                     <p class="wwh-consent-desc">
-                        This website functions as the live experimental testbed for <strong>YOU WERE HERE.</strong>, an architectural research project investigating the attention economy and digital dwell time. With your consent, anonymous cursor velocities and hesitation pauses are recorded as spatial vectors in our open collective archive.
+                        This website is part of a research project exploring what we leave behind in digital spaces. If you choose to participate, anonymous pointer movements and pauses will be drawn as a visual trace you can view or download. No text, forms, or personal information are ever recorded.
                     </p>
                 </div>
                 <div class="wwh-consent-actions">
                     <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
                         <span class="wwh-learn-icon">&#x2726;</span>
-                        <span class="wwh-learn-text">RESEARCH THESIS &amp; DEMO &nearr;</span>
+                        <span class="wwh-learn-text">About the project &nearr;</span>
                     </a>
                     <div class="wwh-consent-choice-group">
-                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">AGREE &amp; RECORD</button>
-                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">DECLINE</button>
+                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">EXPERIENCE (OPT-IN)</button>
+                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">BROWSE NORMALLY</button>
                     </div>
                 </div>
             </div>
@@ -817,12 +817,12 @@
 
         ctx.fillStyle = '#0f172a';
         ctx.font = 'bold 11px monospace';
-        const titleText = options.title || 'YOU WERE HERE. // LIVING COLLECTIVE PALIMPSEST';
+        const titleText = options.title || 'YOU WERE HERE. // SHARED DRAWINGS';
         ctx.fillText(titleText, originX + 4, height - 12);
 
         ctx.fillStyle = '#64748b';
         ctx.font = '10px monospace';
-        const rightText = options.rightText || `${totalTracesCount} TRACES SUPERIMPOSED • ${totalPoints.toLocaleString()} PTS`;
+        const rightText = options.rightText || `${totalTracesCount} DRAWINGS LAYERED • ${totalPoints.toLocaleString()} PTS`;
         const textWidth = ctx.measureText(rightText).width;
         ctx.fillText(rightText, Math.max(originX + 220, originX + sheetW - textWidth - 4), height - 12);
 
@@ -910,7 +910,7 @@
                 badge.className = 'm-living-hero-badge';
                 modalHero.appendChild(badge);
             }
-            badge.innerHTML = `<span class="live-pulse-dot"></span> LIVING PALIMPSEST &bull; ${cachedTracesList.length} TRACES OVERLAYED`;
+            badge.innerHTML = `<span class="live-pulse-dot"></span> SHARED DRAWING &bull; ${cachedTracesList.length} SESSIONS`;
         }
 
         const modalGalImg = document.getElementById('modal-palimpsest-img');
