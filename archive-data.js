@@ -20,9 +20,27 @@ window.ARCHIVE_QUESTIONS = [
         date: "19 October 2026",
         time: "23:47",
         question: "Can doing nothing still change something?",
-        reflection: "Maybe an action does not need to be intentional to leave a trace. When we pause in a room, does the room change around us, or do we become part of its furniture?",
+        reflection: "",
         tags: ["inaction", "trace", "daily-life", "presence"],
-        relatedProject: { title: "STRAY", url: "./projects/stray/" }
+        relatedProject: null
+    },
+    {
+        id: "q-2026-10-19-02",
+        date: "19 October 2026",
+        time: "23:38",
+        question: "Is voice the only difference between a female and male AI chatbot, or does it also shape the conversational flow?",
+        reflection: "",
+        tags: ["ai", "voice", "daily-life", "interaction"],
+        relatedProject: null
+    },
+    {
+        id: "q-2026-10-19-03",
+        date: "19 October 2026",
+        time: "23:33",
+        question: "Why are robot bodies so often designed as female, while the default voices of AI tools are male?",
+        reflection: "",
+        tags: ["ai", "gender", "technology", "daily-life"],
+        relatedProject: null
     },
     {
         id: "q-2026-10-18-01",
