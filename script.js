@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
             x: 605,
             y: 435,
             labelPos: 'bottom',
-            cardDir: 'card-left',
+            cardDir: 'card-right',
             yearPos: 'year-top'
         },
         {
@@ -549,34 +549,12 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             from: 'stray',
             to: 'the-earthen',
-            themeLine1: 'CUMULATIVE TRACES',
-            themeLine2: 'SPATIAL IMPRINTS',
+            themeLine1: 'CARE · PAUSE',
+            themeLine2: 'NONHUMAN AGENCY',
             curve: 'M 560 160 Q 640 290 605 435',
             labelX: 620,
             labelY: 290,
-            badgeW: 140,
-            badgeH: 28
-        },
-        {
-            from: 'the-earthen',
-            to: 'bio-decay',
-            themeLine1: 'CUMULATIVE TRACES',
-            themeLine2: 'SPATIAL ACCUMULATION',
-            curve: 'M 605 435 Q 675 480 750 500',
-            labelX: 675,
-            labelY: 480,
-            badgeW: 140,
-            badgeH: 28
-        },
-        {
-            from: 'stray',
-            to: 'bio-decay',
-            themeLine1: 'SPATIAL IMPRINTS',
-            themeLine2: 'CUMULATIVE TRACES',
-            curve: 'M 560 160 Q 770 290 750 500',
-            labelX: 755,
-            labelY: 295,
-            badgeW: 140,
+            badgeW: 136,
             badgeH: 28
         },
         {
