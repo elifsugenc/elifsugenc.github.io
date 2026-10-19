@@ -2548,6 +2548,140 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('hashchange', checkHashAndOpenModal);
         window.addEventListener('popstate', checkHashAndOpenModal);
     }
+
+    // --- ARCHIVE QUESTIONS & INTERNAL MONOLOGUE FEED ---
+    function initArchiveFeed() {
+        const feedContainer = document.getElementById('archive-questions-feed');
+        if (!feedContainer || !window.ARCHIVE_QUESTIONS) return;
+
+        const searchInput = document.getElementById('archive-search-input');
+        const clearBtn = document.getElementById('archive-search-clear');
+        const filterPills = document.querySelectorAll('#archive-filter-pills .archive-pill');
+        const countBadge = document.getElementById('archive-count-badge');
+        const statCount = document.getElementById('archive-stat-count');
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function render() {
+            const query = searchQuery.trim().toLowerCase();
+            const list = window.ARCHIVE_QUESTIONS.filter(item => {
+                const matchesFilter = (currentFilter === 'all') || (item.tags && item.tags.includes(currentFilter));
+                const matchesQuery = !query ||
+                    item.question.toLowerCase().includes(query) ||
+                    (item.reflection && item.reflection.toLowerCase().includes(query)) ||
+                    (item.tags && item.tags.some(t => t.toLowerCase().includes(query))) ||
+                    (item.relatedProject && item.relatedProject.title.toLowerCase().includes(query));
+                return matchesFilter && matchesQuery;
+            });
+
+            if (countBadge) {
+                countBadge.textContent = `${list.length} INQUIRIES \u2022 ISTANBUL TIME`;
+            }
+            if (statCount) {
+                statCount.textContent = list.length < 10 ? `0${list.length}` : `${list.length}`;
+            }
+
+            if (list.length === 0) {
+                feedContainer.innerHTML = `
+                    <div class="archive-empty-feed">
+                        <p class="a-empty-title">No questions found matching your filter.</p>
+                        <button type="button" class="archive-reset-filter-btn" id="archive-reset-btn">Reset Filters</button>
+                    </div>
+                `;
+                const resetBtn = document.getElementById('archive-reset-btn');
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => {
+                        currentFilter = 'all';
+                        searchQuery = '';
+                        if (searchInput) searchInput.value = '';
+                        if (clearBtn) clearBtn.classList.add('hidden');
+                        filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === 'all'));
+                        render();
+                    });
+                }
+                return;
+            }
+
+            feedContainer.innerHTML = list.map(item => {
+                const tagsHtml = (item.tags || []).map(t => `<button type="button" class="a-tag" data-tag="${t}">#${t}</button>`).join(' ');
+                const reflectionHtml = item.reflection ? `<p class="archive-entry-reflection">${item.reflection}</p>` : '';
+                const projectHtml = item.relatedProject ? `
+                    <div class="archive-entry-related">
+                        <span class="a-rel-label">&#x2726; related thought:</span>
+                        <a href="${item.relatedProject.url}" class="a-rel-link">${item.relatedProject.title} &nearr;</a>
+                    </div>
+                ` : '';
+
+                return `
+                    <article class="archive-entry-card" data-id="${item.id}">
+                        <div class="archive-entry-meta">
+                            <div class="archive-entry-timestamp">
+                                <span class="a-time-date">${item.date}</span>
+                                <span class="a-time-sep">&bull;</span>
+                                <span class="a-time-clock">${item.time}</span>
+                            </div>
+                            <div class="archive-entry-tags">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                        <div class="archive-entry-body">
+                            <h2 class="archive-entry-question">&ldquo;${item.question}&rdquo;</h2>
+                            ${reflectionHtml}
+                            ${projectHtml}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            // Allow clicking inline tags to filter
+            feedContainer.querySelectorAll('.a-tag').forEach(tagBtn => {
+                tagBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const tag = tagBtn.getAttribute('data-tag');
+                    if (tag) {
+                        currentFilter = tag;
+                        filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === tag));
+                        render();
+                    }
+                });
+            });
+        }
+
+        // Filter pills click
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentFilter = pill.getAttribute('data-filter') || 'all';
+                render();
+            });
+        });
+
+        // Search input
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                if (clearBtn) {
+                    clearBtn.classList.toggle('hidden', searchQuery.length === 0);
+                }
+                render();
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                searchQuery = '';
+                if (searchInput) searchInput.value = '';
+                clearBtn.classList.add('hidden');
+                render();
+            });
+        }
+
+        render();
+    }
+
+    initArchiveFeed();
 });
 
 // Global language toggle for project modal
