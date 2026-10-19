@@ -1617,7 +1617,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const navBar = document.querySelector('.folder-tabs');
 
     function setActive(tabId) {
-        tabButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId));
+        tabButtons.forEach(btn => {
+            const bTab = btn.getAttribute('data-tab');
+            if (tabId === 'projects' || tabId === 'constellation') {
+                btn.classList.toggle('active', bTab === 'projects' || bTab === 'constellation');
+            } else if (tabId === 'main') {
+                btn.classList.toggle('active', bTab === 'main' && !btn.classList.contains('nav-brand-link'));
+            } else {
+                btn.classList.toggle('active', bTab === tabId);
+            }
+        });
     }
 
     let currentTabId = 'main';
@@ -1689,7 +1698,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tabContents.forEach(c => c.classList.remove('active'));
         target.classList.add('active');
-        setActive(targetTabId);
+        if (targetTabId === 'main') {
+            const homeSky = document.getElementById('hq-constellation-sky');
+            const isConstellation = homeSky && homeSky.getAttribute('data-state') === 'constellation';
+            setActive(isConstellation ? 'projects' : 'main');
+        } else {
+            setActive(targetTabId);
+        }
         document.body.classList.toggle('is-about-active', targetTabId === 'about');
         if (!sessionStorage.getItem('portfolio_return_active')) {
             window.scrollTo({ top: 0, behavior: 'auto' });
@@ -1787,15 +1802,34 @@ document.addEventListener('DOMContentLoaded', () => {
     window.goToPage = switchTab;
 
     tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
             const tabId = button.getAttribute('data-tab');
-            if (tabId === 'main' && currentTabId === 'main') {
-                const homeSky = document.getElementById('hq-constellation-sky');
-                if (homeSky) {
-                    const mapEl = homeSky.querySelector('.constellation-map');
-                    if (mapEl) toggleConstellationState(mapEl);
-                    homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (tabId === 'main') {
+                if (currentTabId === 'main') {
+                    const homeSky = document.getElementById('hq-constellation-sky');
+                    if (homeSky) {
+                        const mapEl = homeSky.querySelector('.constellation-map');
+                        if (mapEl && mapEl.getAttribute('data-state') === 'constellation') {
+                            setConstellationState(mapEl, 'cluster', true);
+                        }
+                        homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    switchTab('main');
+                    const homeSky = document.getElementById('hq-constellation-sky');
+                    if (homeSky) {
+                        const mapEl = homeSky.querySelector('.constellation-map');
+                        if (mapEl && mapEl.getAttribute('data-state') === 'constellation') {
+                            setConstellationState(mapEl, 'cluster', false);
+                        }
+                    }
                 }
+                setActive('main');
+                return;
+            }
+            if (tabId === 'projects' || tabId === 'constellation') {
+                e.preventDefault();
+                goToProjects();
                 return;
             }
             switchTab(tabId);
@@ -1857,6 +1891,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 60);
             }
+            setActive('projects');
             if (hash === 'projects') {
                 history.replaceState(null, '', '#constellation');
             }
@@ -1875,6 +1910,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         setConstellationState(mapEl, 'cluster', false);
                     }
                 }
+                const curState = homeSky.getAttribute('data-state') || 'cluster';
+                setActive(curState === 'constellation' ? 'projects' : 'main');
             }
         }
     }
@@ -1898,6 +1935,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (homeSky) {
                         const mapEl = homeSky.querySelector('.constellation-map');
                         if (mapEl) setConstellationState(mapEl, savedState, false);
+                    }
+                    if (currentTabId === 'main') {
+                        setActive(savedState === 'constellation' ? 'projects' : 'main');
                     }
                 }
 
