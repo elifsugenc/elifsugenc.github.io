@@ -151,8 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 role: 'Practice Center · Spatial Inquiry',
                 type: 'author',
                 url: '#about',
-                clusterX: 340,
-                clusterY: 443,
+                clusterX: 280,
+                clusterY: 435,
                 triangleX: 97,
                 triangleY: 71,
                 description: 'Practice nexus: Architectural research, critical spatial inquiry, and living archives.'
@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projNum: '01',
                 title: 'EMEK MUSEUM',
                 type: 'project',
-                clusterX: 537,
-                clusterY: 330,
+                clusterX: 520,
+                clusterY: 345,
                 triangleX: 380,
                 triangleY: 250,
                 description: 'Spatial justice & counter-monument spatializing hidden civic labor.'
@@ -181,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projNum: '02',
                 title: 'STRAY',
                 type: 'project',
-                clusterX: 651,
-                clusterY: 439,
+                clusterX: 710,
+                clusterY: 455,
                 triangleX: 560,
                 triangleY: 160,
                 description: 'Responsive urban feline sanctuary questioning non-human agency and temporal pauses.'
@@ -196,8 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projNum: '03',
                 title: 'YOU WERE HERE.',
                 type: 'project',
-                clusterX: 528,
-                clusterY: 250,
+                clusterX: 525,
+                clusterY: 215,
                 triangleX: 690,
                 triangleY: 380,
                 description: 'Living participatory monument recording involuntary visitor cursor movements.'
@@ -211,8 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projNum: '10',
                 title: 'THE EARTHEN',
                 type: 'project',
-                clusterX: 612,
-                clusterY: 287,
+                clusterX: 645,
+                clusterY: 260,
                 triangleX: 605,
                 triangleY: 435,
                 description: 'Tactile soil & mud sanctuary linking earth’s regenerative cycles to human physical and spiritual wellbeing.'
@@ -226,8 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 projNum: '11',
                 title: 'BIO-DECAY',
                 type: 'project',
-                clusterX: 660,
-                clusterY: 364,
+                clusterX: 720,
+                clusterY: 345,
                 triangleX: 750,
                 triangleY: 500,
                 description: 'Circular biopolymers confronting petrochemical permanence.'
@@ -241,8 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: 'THE HIDDEN SISTER',
                 role: '&Uuml;lker &amp; Methodology Core',
                 type: 'story',
-                clusterX: 478,
-                clusterY: 510,
+                clusterX: 470,
+                clusterY: 525,
                 triangleX: 500,
                 triangleY: 460,
                 subtle: true,
@@ -766,10 +766,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (meropeNode) {
             const targetX = isTargetConstellation
                 ? parseFloat(meropeNode.getAttribute('data-triangle-x') || 500)
-                : parseFloat(meropeNode.getAttribute('data-cluster-x') || 478);
+                : parseFloat(meropeNode.getAttribute('data-cluster-x') || 470);
             const targetY = isTargetConstellation
                 ? parseFloat(meropeNode.getAttribute('data-triangle-y') || 460)
-                : parseFloat(meropeNode.getAttribute('data-cluster-y') || 510);
+                : parseFloat(meropeNode.getAttribute('data-cluster-y') || 525);
 
             meropeNode.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
             meropeNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
