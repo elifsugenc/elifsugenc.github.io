@@ -558,17 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
             badgeH: 28
         },
         {
-            from: 'millieu',
-            to: 'fire-escape-simulation',
-            themeLine1: 'CIRCULATION · DYNAMICS',
-            themeLine2: 'SPATIAL THRESHOLDS',
-            curve: 'M 315 490 Q 250 545 230 600',
-            labelX: 250,
-            labelY: 545,
-            badgeW: 140,
-            badgeH: 28
-        },
-        {
             from: 'sprouting-garden',
             to: 'bio-decay',
             themeLine1: 'BIO-MATERIALS',
@@ -580,6 +569,17 @@ document.addEventListener('DOMContentLoaded', () => {
             badgeH: 28
         },
         {
+            from: 'sprouting-garden',
+            to: 'bajo-la-fresca',
+            themeLine1: 'CLIMATIC COMFORT',
+            themeLine2: 'LIVING ECOLOGIES',
+            curve: 'M 580 270 Q 470 410 410 595',
+            labelX: 475,
+            labelY: 415,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
             from: 'wood-weave',
             to: 'ara-sira',
             themeLine1: 'MAKING · COMMUNITY',
@@ -587,17 +587,6 @@ document.addEventListener('DOMContentLoaded', () => {
             curve: 'M 595 655 Q 460 690 330 655',
             labelX: 460,
             labelY: 678,
-            badgeW: 136,
-            badgeH: 28
-        },
-        {
-            from: 'bajo-la-fresca',
-            to: 'ara-sira',
-            themeLine1: 'STREET THRESHOLDS',
-            themeLine2: 'SENSORY PAUSES',
-            curve: 'M 410 595 Q 370 635 330 655',
-            labelX: 370,
-            labelY: 635,
             badgeW: 136,
             badgeH: 28
         }
@@ -1290,8 +1279,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (other !== node) other.classList.add('is-dimmed');
                 });
 
-                // 3. Highlight connected relation in constellation state (strictly 1 relationship per project)
-                const activeRelations = relations.slice(0, 1);
+                // 3. Highlight connected relations in constellation state
+                const activeRelations = relations;
                 activeRelations.forEach(rel => {
                     const secLine = container.querySelector(`.secondary-line[data-ridx="${rel.rIdx}"]`);
                     const secBadge = container.querySelector(`.relation-theme-badge[data-ridx="${rel.rIdx}"]`);
