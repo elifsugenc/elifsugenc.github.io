@@ -26,10 +26,49 @@
 
 
     <div class="folder-container">
-        <!-- CORNER SHEET MARKS -->
-        <nav class="folder-tabs sheet-nav" aria-label="Portfolio Sections">
-            <span class="sheet-mark tl"></span><span class="sheet-mark tr"></span>
-            <span class="sheet-mark bl"></span><span class="sheet-mark br"></span>
+        <!-- ARCHITECTURAL STICKY NAVIGATION BAR -->
+        <nav class="folder-tabs" id="main-nav" aria-label="Portfolio Sections">
+            <div class="nav-brand-group">
+                <a href="#main" class="tab-button nav-brand-link" data-tab="main" onclick="event.preventDefault(); goToPage('main');">
+                    <span class="nav-brand-name">ELIFSU GENÇ</span>
+                    <span class="nav-brand-role">ARCHITECTURE &bull; SPATIAL RESEARCH</span>
+                </a>
+            </div>
+
+            <div class="nav-tabs-group">
+                <button type="button" class="tab-button active" data-tab="main" aria-label="Go to Index / Selected Works">
+                    <span class="nav-num">01</span>
+                    <span class="nav-text">INDEX</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="projects" onclick="goToProjects();" aria-label="Explore Constellation Map">
+                    <span class="nav-num">02</span>
+                    <span class="nav-text">CONSTELLATION (M45)</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="design-approach" aria-label="Go to Methodology">
+                    <span class="nav-num">03</span>
+                    <span class="nav-text">METHODOLOGY</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="about" aria-label="Go to About and CV">
+                    <span class="nav-num">04</span>
+                    <span class="nav-text">ABOUT / CV</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="archive" aria-label="Go to Archive Directory">
+                    <span class="nav-num">05</span>
+                    <span class="nav-text">ARCHIVE</span>
+                </button>
+            </div>
+
+            <div class="nav-actions-group">
+                <a href="./projects/you-were-here/" class="nav-demo-badge" title="YOU WERE HERE. // Live Research Demo on Attention Economy">
+                    <span class="ndb-dot" aria-hidden="true"></span>
+                    <span class="ndb-label">LIVE DEMO: ATTENTION ECONOMY</span>
+                    <span class="ndb-arrow">&nearr;</span>
+                </a>
+                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn" title="Download Elifsu Genç's CV (PDF)">
+                    <span class="ncv-glyph">&darr;</span>
+                    <span>CV (PDF)</span>
+                </a>
+            </div>
         </nav>
 
         <div class="folder-body">
@@ -73,12 +112,6 @@
                                 <button class="hq-view-btn" data-mode="cards" aria-label="Focus on architectural photo cards">
                                     <span class="view-btn-glyph">&#x2630;</span>
                                     <span class="view-btn-label">PROJECT DIRECTORY (5 WORKS)</span>
-                                </button>
-                            </div>
-                            <div class="hq-constellation-legend">
-                                <button type="button" class="hq-cluster-toggle-pill" id="hq-cluster-toggle-pill" aria-label="Toggle between Pleiades cluster and all projects constellation">
-                                    <span class="c-toggle-glyph">&#x2726;</span>
-                                    <span class="c-toggle-label">EXPLORE ALL PROJECTS &#x2197;</span>
                                 </button>
                             </div>
                         </div>
@@ -177,29 +210,32 @@
                             </article>
 
                             <!-- CARD 03: YOU WERE HERE. -->
-                            <article class="hq-card" data-id="you-were-here" data-num="03" data-title="YOU WERE HERE." data-medium="Digital Archive" data-question="What remains of the movements we forget?">
+                            <article class="hq-card hq-card-research-demo" data-id="you-were-here" data-num="03" data-title="YOU WERE HERE." data-medium="Attention Economy &bull; Live Demo" data-question="What remains of the movements we forget in the attention economy?">
                                 <a href="./projects/you-were-here/" class="hq-card-link" aria-label="Explore YOU WERE HERE. project">
                                     <div class="hq-card-media">
-                                        <img src="./assets/you-were-here-cover.png" alt="YOU WERE HERE. — Digital Archive &amp; Collective Palimpsest" class="hq-card-img" loading="eager">
+                                        <img src="./assets/you-were-here-cover.png" alt="YOU WERE HERE. — The Attention Economy Demo &amp; Digital Spatiality" class="hq-card-img" loading="eager">
                                         <div class="hq-media-overlay"></div>
                                         <div class="hq-media-badges">
                                             <span class="hq-pill hq-pill-id">&#x2726; STAR &gamma; // 03</span>
-                                            <span class="hq-pill hq-pill-status">LIVING PALIMPSEST</span>
+                                            <span class="hq-pill hq-pill-demo">&#x25CF; LIVE RESEARCH DEMO</span>
                                         </div>
                                         <span class="hq-zoom-hint">EXPLORE &rarr;</span>
                                     </div>
                                     <div class="hq-card-body">
                                         <div class="hq-card-topline">
                                             <h3 class="hq-card-title">YOU WERE HERE.</h3>
-                                            <span class="hq-card-year">2026</span>
+                                            <div style="display:flex;align-items:center;gap:6px;">
+                                                <span class="hq-card-year">2026</span>
+                                                <span class="card-award-pill card-topic-pill">ATTENTION ECONOMY</span>
+                                            </div>
                                         </div>
-                                        <p class="hq-card-question">&ldquo;What remains of the movements we forget?&rdquo;</p>
+                                        <p class="hq-card-question">&ldquo;What remains of the movements we forget in the attention economy?&rdquo;</p>
                                         <p class="hq-card-desc">
-                                            An anonymous participatory monument recording involuntary visitor cursor movements and pauses into a living digital surface and persistent spatial archive.
+                                            An embedded spatial research apparatus deployed across this portfolio as a live field demo. Investigating the digital attention economy, it spatializes involuntary visitor cursor velocities and cognitive dwell zones into an open, participatory architectural palimpsest.
                                         </p>
                                         <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">DIGITAL PALIMPSEST &bull; COLLECTIVE TRACE</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                            <span class="hq-foot-meta">ATTENTION ECONOMY &bull; DIGITAL CARTOGRAPHY &bull; LIVE EXPERIMENT</span>
+                                            <span class="hq-foot-action">VIEW RESEARCH DEMO &rarr;</span>
                                         </div>
                                     </div>
                                 </a>
@@ -342,13 +378,14 @@
                             </div>
                         </a>
 
-                        <a id="card-you-were-here" href="./projects/you-were-here/" class="project-card span-2x2" data-num="03" data-year="2026" data-medium="Digital Archive" data-title="YOU WERE HERE." data-question="What remains of the movements we forget?">
+                        <a id="card-you-were-here" href="./projects/you-were-here/" class="project-card span-2x2" data-num="03" data-year="2026" data-medium="Attention Economy &bull; Live Demo" data-title="YOU WERE HERE." data-question="What remains of the movements we forget in the attention economy?">
                             <div class="card-img" style="background-image: url('./assets/you-were-here-cover.png');"></div>
                             <div class="card-info">
-                                <h3 class="card-main-text">What remains of the movements we forget?</h3>
+                                <h3 class="card-main-text">What remains of the movements we forget in the attention economy?</h3>
                                 <div class="card-footer">
                                     <span class="card-num">03 &mdash;</span>
                                     <span class="card-title">YOU WERE HERE.</span>
+                                    <span class="card-award-tag" style="background: rgba(37,99,235,0.9);">LIVE RESEARCH DEMO</span>
                                 </div>
                             </div>
                         </a>

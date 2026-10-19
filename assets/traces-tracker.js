@@ -200,9 +200,11 @@
             el.setAttribute('aria-live', 'polite');
             el.setAttribute('role', 'button');
             el.setAttribute('tabindex', '0');
-            el.setAttribute('title', 'YOU WERE HERE. // Live traces recording. Click to manage tracking or visit archive.');
+            el.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Apparatus. Click to manage recording or visit thesis.');
             el.innerHTML = `
                 <span class="wwh-live-dot" aria-hidden="true"></span>
+                <span class="wwh-live-tag">RESEARCH DEMO</span>
+                <span class="wwh-live-sep">&bull;</span>
                 <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
             `;
             mount.appendChild(el);
@@ -251,8 +253,8 @@
         circle.type = 'button';
         circle.id = 'wwh-reopen-circle';
         circle.className = 'wwh-reopen-circle';
-        circle.setAttribute('aria-label', 'you are here. — Click to reconsider movement recording');
-        circle.setAttribute('title', 'you are here.');
+        circle.setAttribute('aria-label', 'YOU WERE HERE. — Reopen Attention Economy research demo prompt');
+        circle.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Demo');
 
         circle.innerHTML = `
             <span class="wwh-circle-dot" aria-hidden="true"></span>
@@ -323,20 +325,20 @@
         popup.innerHTML = `
             <div class="wwh-consent-inner">
                 <div class="wwh-consent-text-col">
-                    <span class="wwh-consent-tag">&#x2726; YOU WERE HERE. // DIGITAL TRACES</span>
-                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can we remember your movements?</h4>
+                    <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
+                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can a digital portfolio register physical presence?</h4>
                     <p class="wwh-consent-desc">
-                        With your permission, your mouse movements will be recorded as an anonymous trace during this visit.
+                        This website functions as the live experimental testbed for <strong>YOU WERE HERE.</strong>, an architectural research project investigating the attention economy and digital dwell time. With your consent, anonymous cursor velocities and hesitation pauses are recorded as spatial vectors in our open collective archive.
                     </p>
                 </div>
                 <div class="wwh-consent-actions">
                     <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
-                        <span class="wwh-learn-icon">?</span>
-                        <span class="wwh-learn-text">LEARN MORE</span>
+                        <span class="wwh-learn-icon">&#x2726;</span>
+                        <span class="wwh-learn-text">RESEARCH THESIS &amp; DEMO &nearr;</span>
                     </a>
                     <div class="wwh-consent-choice-group">
-                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">YES</button>
-                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">NO</button>
+                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">AGREE &amp; RECORD</button>
+                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">DECLINE</button>
                     </div>
                 </div>
             </div>

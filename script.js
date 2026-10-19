@@ -706,6 +706,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (homeStage) {
             homeStage.setAttribute('data-state', targetState);
         }
+        if (typeof setActive === 'function' && currentTabId === 'main') {
+            setActive(isTargetConstellation ? 'projects' : 'main');
+        }
 
         // Update all transition button texts and icons
         document.querySelectorAll('.cluster-transition-btn, #hq-cluster-toggle-pill').forEach(btn => {
