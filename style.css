@@ -3333,74 +3333,49 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
     text-decoration: underline;
 }
 
-/* Skills Matrix */
+/* Skills Matrix — Flat, Neutral Architectural Grid */
 .skills-matrix-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 20px;
+    gap: 16px;
 }
 
 .skill-category-card {
-    border-radius: 10px;
-    padding: 22px;
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 6px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-.skill-category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--cat-accent, #38bdf8);
-    opacity: 0.9;
-    box-shadow: 0 0 12px var(--cat-accent, #38bdf8);
-}
-
-.skill-category-card:hover {
-    transform: translateY(-3px);
+    gap: 12px;
+    box-sizing: border-box;
+    cursor: default;
 }
 
 .skill-cat-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    padding-bottom: 12px;
+    gap: 10px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    padding-bottom: 10px;
 }
 
 .skill-cat-header .cat-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 6px;
-    background: rgba(var(--cat-rgb, 56, 189, 248), 0.12);
-    border: 1px solid rgba(var(--cat-rgb, 56, 189, 248), 0.32);
-    color: var(--cat-accent, #38bdf8);
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: rgba(37, 99, 235, 0.06);
+    border: 1px solid rgba(37, 99, 235, 0.16);
+    color: #2563eb;
     flex-shrink: 0;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.skill-category-card:hover .skill-cat-header .cat-icon {
-    background: rgba(var(--cat-rgb, 56, 189, 248), 0.24);
-    border-color: var(--cat-accent, #38bdf8);
-    box-shadow: 0 0 14px rgba(var(--cat-rgb, 56, 189, 248), 0.45);
-    transform: scale(1.08);
 }
 
 .skill-cat-header .cat-icon svg {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     stroke: currentColor;
     stroke-width: 1.8;
     fill: none;
@@ -3409,142 +3384,44 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 
 .skill-cat-header .cat-title {
     font-family: monospace;
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     margin: 0;
-    color: var(--cat-accent, #f8fafc) !important;
+    color: #0f172a;
+    text-transform: uppercase;
 }
 
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .skill-category-card .skill-pill {
-    font-size: 0.84rem;
-    padding: 6px 12px;
-    border-radius: 6px;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 0.82rem;
+    padding: 5px 10px;
+    border-radius: 4px;
     display: inline-flex;
     align-items: center;
     line-height: 1.4;
     cursor: default;
-    background: rgba(var(--cat-rgb, 56, 189, 248), 0.08) !important;
-    border: 1px solid rgba(var(--cat-rgb, 56, 189, 248), 0.3) !important;
-    color: #e2e8f0 !important;
-}
-
-.skill-category-card .skill-pill:hover {
-    background: rgba(var(--cat-rgb, 56, 189, 248), 0.22) !important;
-    border-color: var(--cat-accent, #38bdf8) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(var(--cat-rgb, 56, 189, 248), 0.4);
-    transform: translateY(-1px);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-weight: 500;
 }
 
 .skill-category-card .skill-pill.lang-pill {
     font-family: monospace;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
 }
 
 .skill-category-card .skill-pill.lang-pill em {
     font-style: normal;
-    color: var(--cat-accent, #facc15);
-    opacity: 0.95;
+    color: #64748b;
     margin-left: 5px;
-    font-weight: 600;
-}
-
-/* Category 1: CAD & 3D Modeling (Cyan) */
-.skill-category-card.skill-cat-cad,
-.skill-category-card[data-cat="cad"] {
-    --cat-accent: #38bdf8;
-    --cat-rgb: 56, 189, 248;
-    background: linear-gradient(145deg, rgba(14, 30, 56, 0.82) 0%, rgba(8, 18, 38, 0.95) 100%) !important;
-    border: 1px solid rgba(56, 189, 248, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(56, 189, 248, 0.15);
-}
-.skill-category-card.skill-cat-cad:hover,
-.skill-category-card[data-cat="cad"]:hover {
-    border-color: rgba(56, 189, 248, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(56, 189, 248, 0.25);
-}
-
-/* Category 2: Parametric Modeling (Violet) */
-.skill-category-card.skill-cat-param,
-.skill-category-card[data-cat="param"] {
-    --cat-accent: #c084fc;
-    --cat-rgb: 192, 132, 252;
-    background: linear-gradient(145deg, rgba(32, 16, 56, 0.82) 0%, rgba(14, 10, 34, 0.95) 100%) !important;
-    border: 1px solid rgba(192, 132, 252, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(192, 132, 252, 0.15);
-}
-.skill-category-card.skill-cat-param:hover,
-.skill-category-card[data-cat="param"]:hover {
-    border-color: rgba(192, 132, 252, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(192, 132, 252, 0.25);
-}
-
-/* Category 3: Rendering & Visualization (Amber) */
-.skill-category-card.skill-cat-render,
-.skill-category-card[data-cat="render"] {
-    --cat-accent: #fbbf24;
-    --cat-rgb: 251, 191, 36;
-    background: linear-gradient(145deg, rgba(46, 32, 10, 0.82) 0%, rgba(24, 16, 6, 0.95) 100%) !important;
-    border: 1px solid rgba(251, 191, 36, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.15);
-}
-.skill-category-card.skill-cat-render:hover,
-.skill-category-card[data-cat="render"]:hover {
-    border-color: rgba(251, 191, 36, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(251, 191, 36, 0.25);
-}
-
-/* Category 4: Graphic Design & Editorial (Rose) */
-.skill-category-card.skill-cat-graphic,
-.skill-category-card[data-cat="graphic"] {
-    --cat-accent: #fb7185;
-    --cat-rgb: 251, 113, 133;
-    background: linear-gradient(145deg, rgba(46, 16, 28, 0.82) 0%, rgba(26, 8, 16, 0.95) 100%) !important;
-    border: 1px solid rgba(251, 113, 133, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(251, 113, 133, 0.15);
-}
-.skill-category-card.skill-cat-graphic:hover,
-.skill-category-card[data-cat="graphic"]:hover {
-    border-color: rgba(251, 113, 133, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(251, 113, 133, 0.25);
-}
-
-/* Category 5: Programming & Game Engines (Emerald) */
-.skill-category-card.skill-cat-prog,
-.skill-category-card[data-cat="prog"] {
-    --cat-accent: #34d399;
-    --cat-rgb: 52, 211, 153;
-    background: linear-gradient(145deg, rgba(12, 38, 28, 0.82) 0%, rgba(6, 22, 16, 0.95) 100%) !important;
-    border: 1px solid rgba(52, 211, 153, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(52, 211, 153, 0.15);
-}
-.skill-category-card.skill-cat-prog:hover,
-.skill-category-card[data-cat="prog"]:hover {
-    border-color: rgba(52, 211, 153, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(52, 211, 153, 0.25);
-}
-
-/* Category 6: Languages (Starlight Gold) */
-.skill-category-card.skill-cat-lang,
-.skill-category-card[data-cat="lang"] {
-    --cat-accent: #facc15;
-    --cat-rgb: 250, 204, 21;
-    background: linear-gradient(145deg, rgba(40, 36, 12, 0.82) 0%, rgba(22, 20, 6, 0.95) 100%) !important;
-    border: 1px solid rgba(250, 204, 21, 0.32) !important;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(250, 204, 21, 0.15);
-}
-.skill-category-card.skill-cat-lang:hover,
-.skill-category-card[data-cat="lang"]:hover {
-    border-color: rgba(250, 204, 21, 0.7) !important;
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.8), 0 0 24px rgba(250, 204, 21, 0.25);
+    font-weight: 500;
 }
 
 /* Action Banner */
