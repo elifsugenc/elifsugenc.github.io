@@ -236,14 +236,14 @@
                 <div class="collective-era-switch-bar">
                     <span class="era-switch-label">VIEW ERA:</span>
                     <div class="era-switch-group">
-                        <button type="button" class="era-tab-btn active" data-era="ALL">
-                            <span>✦ ALL DRAWINGS LAYERED</span>
+                        <button type="button" class="era-tab-btn active" data-era="CURRENT">
+                            <span>⚡ CURRENT ARCHIVE (RECENT SESSIONS)</span>
+                        </button>
+                        <button type="button" class="era-tab-btn" data-era="ALL">
+                            <span>✦ ALL DRAWINGS SUPERIMPOSED</span>
                         </button>
                         <button type="button" class="era-tab-btn" data-era="LEGACY">
                             <span>📁 PREVIOUS WEBSITE ARCHIVE (≤ 2026)</span>
-                        </button>
-                        <button type="button" class="era-tab-btn" data-era="CURRENT">
-                            <span>⚡ RECENT SESSIONS</span>
                         </button>
                     </div>
                 </div>
@@ -307,8 +307,8 @@
 
                     <span class="filter-label">SORT:</span>
                     <select id="filter-sort" class="archive-select">
-                        <option value="OLDEST" selected>OLDEST FIRST (TRACE_0001 &rarr; NEWEST)</option>
-                        <option value="NEWEST">NEWEST FIRST (NEWEST &rarr; TRACE_0001)</option>
+                        <option value="NEWEST" selected>NEWEST FIRST (NEWEST &rarr; TRACE_0001)</option>
+                        <option value="OLDEST">OLDEST FIRST (TRACE_0001 &rarr; NEWEST)</option>
                         <option value="MOST_POINTS">MOST POINTS</option>
                     </select>
                 </div>
@@ -446,7 +446,7 @@
                 });
             });
 
-            window.collectiveEraMode = 'ALL';
+            window.collectiveEraMode = 'CURRENT';
 
             // 2. Fetch All Traces from Cloud Firebase Firestore
             async function loadTracesArchive() {

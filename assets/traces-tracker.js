@@ -732,44 +732,80 @@
         drawCross(originX, originY + sheetH);
         drawCross(originX + sheetW, originY + sheetH);
 
-        // 1. Layer 1: Render All Dwell Pauses Across All Visitors + Active Trace (Translucent Cerulean Halos)
+        // Ensure chronological ordering: oldest first (drawn behind in background), newest last (drawn on top in front)
+        traces.sort((a, b) => (a.started || 0) - (b.started || 0));
+        const totalTraceCount = traces.length;
+
+        // 1. Layer 1: Render All Dwell Pauses Across Visitors + Active Trace (Halos: older fainter, newer clearer)
         const includeActive = !options.excludeActive;
-        const allDwellsList = [];
-        traces.forEach(tr => { if (tr.dwells) allDwellsList.push(...tr.dwells); });
-        if (includeActive && activeTrace && activeTrace.dwells) allDwellsList.push(...activeTrace.dwells);
 
-        allDwellsList.forEach(d => {
-            const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
-            ctx.beginPath();
-            ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.04)';
-            ctx.fill();
+        traces.forEach((tr, idx) => {
+            if (!tr.dwells || !tr.dwells.length) return;
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+            const dAlpha = 0.02 + progress * 0.07;
+            tr.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(37, 99, 235, ${dAlpha.toFixed(3)})`;
+                ctx.fill();
 
-            ctx.beginPath();
-            ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
-            ctx.fill();
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(26, 54, 93, ${(dAlpha * 1.5).toFixed(3)})`;
+                ctx.fill();
+            });
         });
 
-        // 2. Layer 2: Render All Movement Trajectories
+        if (includeActive && activeTrace && activeTrace.dwells) {
+            activeTrace.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(37, 99, 235, 0.12)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(26, 54, 93, 0.22)';
+                ctx.fill();
+            });
+        }
+
+        // 2. Layer 2: Render Movement Trajectories
+        // Older traces: faint translucent underdrawings (opacity ~0.10, soft blue, fine stroke)
+        // Newer traces: progressively darker, bolder, and drawn ON TOP in front (opacity up to 0.78, deep navy, bolder line)
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        traces.forEach(tr => {
+        traces.forEach((tr, idx) => {
             const pts = tr.points || [];
             if (pts.length < 2) return;
+
+            // Normalized chronological progress from 0 (oldest) to 1 (newest)
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+
+            // Progressive opacity curve: older traces are faint (0.10), newest traces are bold & rich (0.78)
+            const opacity = 0.10 + Math.pow(progress, 1.35) * 0.68;
+
+            // Color gradient: softer cerulean for older traces -> deep architectural navy/indigo for newest traces
+            const r = Math.round(75 + (20 - 75) * progress);
+            const g = Math.round(145 + (45 - 145) * progress);
+            const b = Math.round(245 + (120 - 245) * progress);
+
+            const lineWidth = (1.1 + progress * 0.8) * Math.max(0.8, scale * 1.1);
 
             ctx.beginPath();
             ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
             for (let i = 1; i < pts.length; i++) {
                 ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
             }
-            ctx.strokeStyle = 'rgba(37, 99, 235, 0.17)';
-            ctx.lineWidth = 1.35 * Math.max(0.8, scale * 1.1);
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(3)})`;
+            ctx.lineWidth = lineWidth;
             ctx.stroke();
         });
 
-        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse)
+        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse at the very front / top)
         if (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1) {
             const livePts = activeTrace.points;
             ctx.beginPath();
@@ -777,8 +813,8 @@
             for (let i = 1; i < livePts.length; i++) {
                 ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
             }
-            ctx.strokeStyle = 'rgba(37, 99, 235, 0.75)';
-            ctx.lineWidth = 2.2 * Math.max(0.8, scale * 1.1);
+            ctx.strokeStyle = 'rgba(20, 45, 120, 0.90)';
+            ctx.lineWidth = 2.4 * Math.max(0.8, scale * 1.1);
             ctx.stroke();
 
             // Glowing cursor tip
@@ -793,14 +829,19 @@
             ctx.fill();
         }
 
-        // 4. Layer 4: Click Glyphs
-        traces.forEach(tr => {
-            (tr.clicks || []).forEach(c => {
+        // 4. Layer 4: Click Glyphs (Older are softer, newest are vibrant crimson crosses)
+        traces.forEach((tr, idx) => {
+            if (!tr.clicks || !tr.clicks.length) return;
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+            const cAlpha = 0.22 + progress * 0.65;
+            const starRadius = (3.5 + progress * 1.5) * scale;
+            const cWidth = 1.0 + progress * 0.5;
+
+            tr.clicks.forEach(c => {
                 const cx = toX(c.x);
                 const cy = toY(c.y);
-                const starRadius = 4 * scale;
-                ctx.strokeStyle = 'rgba(29, 78, 216, 0.38)';
-                ctx.lineWidth = 1.2;
+                ctx.strokeStyle = `rgba(220, 38, 38, ${cAlpha.toFixed(3)})`;
+                ctx.lineWidth = cWidth;
                 ctx.beginPath();
                 ctx.moveTo(cx - starRadius, cy);
                 ctx.lineTo(cx + starRadius, cy);
@@ -809,6 +850,22 @@
                 ctx.stroke();
             });
         });
+
+        if (includeActive && activeTrace && activeTrace.clicks) {
+            activeTrace.clicks.forEach(c => {
+                const cx = toX(c.x);
+                const cy = toY(c.y);
+                const starRadius = 5.5 * scale;
+                ctx.strokeStyle = 'rgba(220, 38, 38, 0.92)';
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.moveTo(cx - starRadius, cy);
+                ctx.lineTo(cx + starRadius, cy);
+                ctx.moveTo(cx, cy - starRadius);
+                ctx.lineTo(cx, cy + starRadius);
+                ctx.stroke();
+            });
+        }
 
         // 5. Layer 5: Technical Title Block
         const activeCount = (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 5) ? 1 : 0;
@@ -921,17 +978,20 @@
         // 4. Update collective canvas on dedicated project page if open
         const collectiveCanvas = document.getElementById('collective-canvas-overlay');
         if (collectiveCanvas) {
-            if (window.collectiveEraMode === 'LEGACY') {
+            const era = window.collectiveEraMode || 'CURRENT';
+            if (era === 'LEGACY') {
                 renderCollectivePalimpsest(collectiveCanvas, getLegacyTraces(), {
-                    title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                    title: 'PREVIOUS WEBSITE ARCHIVE (≤ 2026)',
                     excludeActive: true
                 });
-            } else if (window.collectiveEraMode === 'CURRENT') {
-                renderCollectivePalimpsest(collectiveCanvas, getCurrentTraces(), {
-                    title: 'CURRENT WEBSITE SESSIONS (09.10.2026 – PRESENT)'
+            } else if (era === 'ALL') {
+                renderCollectivePalimpsest(collectiveCanvas, cachedTracesList, {
+                    title: 'ALL DRAWINGS SUPERIMPOSED'
                 });
             } else {
-                renderCollectivePalimpsest(collectiveCanvas, cachedTracesList);
+                renderCollectivePalimpsest(collectiveCanvas, getCurrentTraces(), {
+                    title: 'CURRENT WEBSITE SESSIONS (2026)'
+                });
             }
         }
 
