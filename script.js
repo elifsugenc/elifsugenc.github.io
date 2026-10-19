@@ -1850,7 +1850,19 @@ document.addEventListener('DOMContentLoaded', () => {
     window.goToPage = switchTab;
 
     tabButtons.forEach(button => {
-        button.addEventListener('click', () => switchTab(button.getAttribute('data-tab')));
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            if (tabId === 'main' && currentTabId === 'main') {
+                const homeSky = document.getElementById('hq-constellation-sky');
+                if (homeSky) {
+                    const mapEl = homeSky.querySelector('.constellation-map');
+                    if (mapEl) toggleConstellationState(mapEl);
+                    homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+            switchTab(tabId);
+        });
     });
 
     if (projectJumpBtn) {
