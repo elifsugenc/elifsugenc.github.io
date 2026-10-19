@@ -7,6 +7,40 @@
     --accent-color: #2563eb; /* Vibrant architectural blue */
     --accent-glow: rgba(37, 99, 235, 0.25);
     --font-primary: 'Space Grotesk', sans-serif;
+    --nav-height: 52px;
+    --constellation-scale: 0.88;
+}
+
+@media (min-width: 1600px) and (min-height: 900px) {
+    :root {
+        --constellation-scale: 0.91;
+    }
+}
+
+@media (max-height: 820px) {
+    :root {
+        --constellation-scale: 0.84;
+    }
+}
+
+@media (max-height: 700px) {
+    :root {
+        --constellation-scale: 0.78;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --nav-height: 48px;
+        --constellation-scale: 0.82;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --nav-height: 48px;
+        --constellation-scale: 0.76;
+    }
 }
 
 * {
@@ -4958,7 +4992,10 @@ body {
     z-index: 500;
     margin: 0;
     min-height: 0;
-    padding: 14px 4vw;
+    height: var(--nav-height, 52px);
+    max-height: var(--nav-height, 52px);
+    box-sizing: border-box;
+    padding: 0 4vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4971,8 +5008,6 @@ body {
 }
 .folder-tabs.scrolled {
     border-bottom-color: rgba(26, 54, 93, 0.18);
-    padding-top: 10px;
-    padding-bottom: 10px;
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
 }
 
@@ -5129,7 +5164,7 @@ body {
     .nav-tabs-group .nav-num { display: none; }
     .nav-tabs-group { gap: 10px; }
     .nav-tabs-group .tab-button { font-size: 0.7rem; }
-    .folder-tabs { padding: 10px 16px; }
+    .folder-tabs { padding: 0 16px; height: var(--nav-height, 48px); max-height: var(--nav-height, 48px); }
 }
 
 /* Content: all sections visible, stacked */
@@ -8067,13 +8102,41 @@ body {
 #tab-main .hq-grid { width: min(1140px, calc(100% - 36px)); margin: 42px auto 0; }
 /* The map and the sky must share one coordinate rectangle (1000 x 750).
    Previously the stage could be 740px tall inside a 580px sky. */
-#tab-main .pleiades-stage-mount,
-#tab-main .pleiades-stage-mount > .constellation-map,
-#tab-main .pleiades-stage-mount .constellation-stage {
-    width: 100%; height: 100%; min-height: 0; max-width: none;
-    margin: 0; padding: 0;
+#tab-main .pleiades-stage-mount {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 50 !important;
+    pointer-events: none !important;
 }
-#tab-main .pleiades-stage-mount > .constellation-map { display: block; }
+#tab-main .pleiades-stage-mount > .constellation-map {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+}
+#tab-main .pleiades-stage-mount .constellation-stage {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 1220px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    position: relative !important;
+    pointer-events: none !important;
+    transform: scale(var(--constellation-scale, 0.88)) !important;
+    transform-origin: center center !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 #tab-main .pleiades-top-bar { top: 24px; left: 26px; right: 26px; }
 #tab-main .pleiades-status-pill { background: transparent; border: 0; padding-left: 0; backdrop-filter: none; }
 #tab-main .cluster-transition-btn {
@@ -8115,13 +8178,43 @@ body {
    FULL-SCREEN CLUSTER / SLOW INTERACTIONS — 2026-10-13
    No existing triangle project coordinates are changed.
    ============================================================ */
-#tab-main { padding: 0 !important; min-height: 100svh; }
-#tab-main .main-intro-wrapper { width: 100% !important; max-width: none !important; margin: 0 !important; }
-#tab-main .home-selected-quad { width: 100% !important; min-height: 100svh; }
+#tab-main {
+  padding: 0 !important;
+  height: calc(100vh - var(--nav-height, 52px)) !important;
+  height: calc(100svh - var(--nav-height, 52px)) !important;
+  min-height: calc(100vh - var(--nav-height, 52px)) !important;
+  min-height: calc(100svh - var(--nav-height, 52px)) !important;
+  max-height: calc(100vh - var(--nav-height, 52px)) !important;
+  max-height: calc(100svh - var(--nav-height, 52px)) !important;
+  overflow: hidden !important;
+}
+#tab-main .main-intro-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+#tab-main .home-selected-quad {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
 #tab-main .pleiades-observatory-stage {
-  height: 100svh !important; min-height: 100svh !important;
-  width: 100vw !important; max-width: 100% !important;
-  margin: 0 !important; border-radius: 0 !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  width: 100vw !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  position: relative !important;
 }
 /* Keep original card markup for project-modal data, but never show it on the landing view. */
 #tab-main .hq-grid, #tab-main .hq-inquiry-bar, #tab-main .hq-explore-bottom,
@@ -8191,9 +8284,9 @@ body {
   z-index: 950 !important;
 }
 
-/* 1. CLUSTER STATE: "EXPLORE ALL PROJECTS ↗" stays in original bottom-center pill position */
+/* 1. CLUSTER STATE: "EXPLORE ALL PROJECTS ↗" stays in centered position with ample margin */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-  top: 82% !important;
+  top: 79% !important;
   left: 50% !important;
   right: auto !important;
   bottom: auto !important;
@@ -8208,7 +8301,7 @@ body {
 
 /* 2. CONSTELLATION STATE: "BACK TO CLUSTER" placed directly below EG. PRACTICE in center */
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
-  top: 70.5% !important;
+  top: 68.5% !important;
   left: 50% !important;
   right: auto !important;
   bottom: auto !important;
@@ -8697,7 +8790,7 @@ body {
 
 @media (max-width: 650px) {
   #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-    top: 83% !important;
+    top: 80% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     max-width: 90vw;
@@ -8705,7 +8798,7 @@ body {
     padding: 9px 16px !important;
   }
   #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
-    top: 72% !important;
+    top: 69% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     padding: 8px 14px !important;
