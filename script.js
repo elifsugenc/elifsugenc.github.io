@@ -1622,7 +1622,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tabId === 'projects' || tabId === 'constellation') {
                 btn.classList.toggle('active', bTab === 'projects' || bTab === 'constellation');
             } else if (tabId === 'main') {
-                btn.classList.toggle('active', bTab === 'main' && !btn.classList.contains('nav-brand-link'));
+                btn.classList.toggle('active', bTab === 'main');
             } else {
                 btn.classList.toggle('active', bTab === tabId);
             }
