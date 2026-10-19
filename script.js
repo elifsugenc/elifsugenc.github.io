@@ -552,8 +552,8 @@ document.addEventListener('DOMContentLoaded', () => {
             themeLine1: 'TIME · MEMORY',
             themeLine2: 'TRANSFORMATION',
             curve: 'M 340 405 Q 525 610 750 500',
-            labelX: 405,
-            labelY: 458,
+            labelX: 435,
+            labelY: 515,
             badgeW: 104,
             badgeH: 26
         },
@@ -587,6 +587,83 @@ document.addEventListener('DOMContentLoaded', () => {
             curve: 'M 595 655 Q 460 690 330 655',
             labelX: 460,
             labelY: 678,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
+            from: 'millieu',
+            to: 'fire-escape-simulation',
+            themeLine1: 'CIRCULATION · DYNAMICS',
+            themeLine2: 'SPATIAL THRESHOLDS',
+            curve: 'M 180 460 Q 170 535 230 600',
+            labelX: 175,
+            labelY: 535,
+            badgeW: 140,
+            badgeH: 28
+        },
+        {
+            from: 'bio-decay',
+            to: 'wood-weave',
+            themeLine1: 'CIRCULAR MATERIALITY',
+            themeLine2: 'TECTONICS',
+            curve: 'M 750 500 Q 700 600 595 655',
+            labelX: 685,
+            labelY: 585,
+            badgeW: 140,
+            badgeH: 28
+        },
+        {
+            from: 'emek-museum',
+            to: 'stray',
+            themeLine1: 'ETHICAL INQUIRY',
+            themeLine2: 'CIVIC SPACES',
+            curve: 'M 380 250 Q 470 185 560 160',
+            labelX: 470,
+            labelY: 195,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
+            from: 'millieu',
+            to: 'chronoclines',
+            themeLine1: 'URBAN STRATA',
+            themeLine2: 'SOCIAL ATMOSPHERE',
+            curve: 'M 180 460 Q 255 420 340 405',
+            labelX: 255,
+            labelY: 425,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
+            from: 'fire-escape-simulation',
+            to: 'ara-sira',
+            themeLine1: 'EGRESS &amp; THRESHOLD',
+            themeLine2: 'MOVEMENT',
+            curve: 'M 230 600 Q 275 640 330 655',
+            labelX: 275,
+            labelY: 640,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
+            from: 'sprouting-garden',
+            to: 'the-earthen',
+            themeLine1: 'LIVING SOIL',
+            themeLine2: 'REGENERATIVE CYCLES',
+            curve: 'M 580 270 Q 615 350 605 435',
+            labelX: 620,
+            labelY: 350,
+            badgeW: 136,
+            badgeH: 28
+        },
+        {
+            from: 'bajo-la-fresca',
+            to: 'ara-sira',
+            themeLine1: 'STREET THRESHOLDS',
+            themeLine2: 'SENSORY PAUSES',
+            curve: 'M 410 595 Q 370 635 330 655',
+            labelX: 370,
+            labelY: 635,
             badgeW: 136,
             badgeH: 28
         }
