@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
             x: 605,
             y: 435,
             labelPos: 'bottom',
-            cardDir: 'card-right',
+            cardDir: 'card-left',
             yearPos: 'year-top'
         },
         {
