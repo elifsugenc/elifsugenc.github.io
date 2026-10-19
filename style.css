@@ -8,38 +8,38 @@
     --accent-glow: rgba(37, 99, 235, 0.25);
     --font-primary: 'Space Grotesk', sans-serif;
     --nav-height: 52px;
-    --constellation-scale: 0.88;
+    --constellation-scale: 0.90;
 }
 
 @media (min-width: 1600px) and (min-height: 900px) {
     :root {
-        --constellation-scale: 0.91;
+        --constellation-scale: 0.93;
     }
 }
 
 @media (max-height: 820px) {
     :root {
-        --constellation-scale: 0.84;
+        --constellation-scale: 0.86;
     }
 }
 
 @media (max-height: 700px) {
     :root {
-        --constellation-scale: 0.78;
+        --constellation-scale: 0.80;
     }
 }
 
 @media (max-width: 768px) {
     :root {
         --nav-height: 48px;
-        --constellation-scale: 0.82;
+        --constellation-scale: 0.84;
     }
 }
 
 @media (max-width: 480px) {
     :root {
         --nav-height: 48px;
-        --constellation-scale: 0.76;
+        --constellation-scale: 0.78;
     }
 }
 
@@ -8128,12 +8128,13 @@ body {
 #tab-main .pleiades-stage-mount .constellation-stage {
     width: 100% !important;
     height: 100% !important;
-    max-width: 1220px !important;
+    max-width: 1540px !important;
     margin: 0 auto !important;
-    padding: 0 !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
     position: relative !important;
     pointer-events: none !important;
-    transform: scale(var(--constellation-scale, 0.88)) !important;
+    transform: scale(var(--constellation-scale, 0.90)) !important;
     transform-origin: center center !important;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
