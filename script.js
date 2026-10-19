@@ -2652,16 +2652,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             feedContainer.innerHTML = list.map(item => {
                 const tagsHtml = (item.tags || []).map(t => `<button type="button" class="a-tag" data-tag="${t}">#${t}</button>`).join(' ');
-                const reflectionHtml = item.reflection ? `<p class="archive-entry-reflection">${item.reflection}</p>` : '';
-                const projectHtml = item.relatedProject ? `
-                    <div class="archive-entry-related">
-                        <span class="a-rel-label">&#x2726; related thought:</span>
-                        <a href="${item.relatedProject.url}" class="a-rel-link">${item.relatedProject.title} &nearr;</a>
-                    </div>
-                ` : '';
 
                 return `
-                    <article class="archive-entry-card" data-id="${item.id}">
+                    <article class="archive-entry-card" data-archive-id="${item.id}">
                         <div class="archive-entry-meta">
                             <div class="archive-entry-timestamp">
                                 <span class="a-time-date">${item.date}</span>
@@ -2673,9 +2666,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                         <div class="archive-entry-body">
-                            <h2 class="archive-entry-question">&ldquo;${item.question}&rdquo;</h2>
-                            ${reflectionHtml}
-                            ${projectHtml}
+                            <p class="archive-entry-question">&ldquo;${item.question}&rdquo;</p>
                         </div>
                     </article>
                 `;

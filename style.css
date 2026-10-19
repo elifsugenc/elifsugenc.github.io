@@ -9366,17 +9366,12 @@ body {
 
 .archive-entry-card {
     background: #ffffff;
-    border: 1px solid rgba(37, 99, 235, 0.14);
-    border-radius: 8px;
-    padding: 22px 26px;
-    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.03);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 6px;
+    padding: 16px 22px;
+    box-shadow: none;
     box-sizing: border-box;
-}
-.archive-entry-card:hover {
-    border-color: rgba(37, 99, 235, 0.35);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.08);
-    transform: translateY(-1px);
+    cursor: default;
 }
 
 .archive-entry-meta {
@@ -9385,7 +9380,7 @@ body {
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .archive-entry-timestamp {
     display: inline-flex;
@@ -9430,12 +9425,13 @@ body {
 
 .archive-entry-question {
     font-family: var(--font-primary, 'Space Grotesk', system-ui, sans-serif);
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 0.98rem;
+    font-weight: 500;
     color: #0f172a;
-    line-height: 1.4;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.01em;
+    line-height: 1.5;
+    margin: 0;
+    text-transform: none !important;
+    letter-spacing: normal;
 }
 
 .archive-entry-reflection {
@@ -9516,10 +9512,10 @@ body {
         align-self: flex-start;
     }
     .archive-entry-card {
-        padding: 18px 18px;
+        padding: 14px 16px;
     }
     .archive-entry-question {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
     }
 }
 
