@@ -1770,6 +1770,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const archiveBackBtn = document.getElementById('archive-back-btn');
+    if (archiveBackBtn) {
+        archiveBackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            goBack();
+        });
+    }
+
     // CV Toolbar View Switcher / Smooth Scroll
     document.querySelectorAll('.cv-toolbar-nav .cv-tool-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
