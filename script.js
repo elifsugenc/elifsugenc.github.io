@@ -192,15 +192,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 starName: 'Asterope',
                 bayer: '21 Tauri',
                 mag: '5.76 mag',
-                targetId: 'you-were-here',
-                projNum: '03',
-                title: 'YOU WERE HERE.',
+                targetId: 'fire-escape-simulation',
+                projNum: '12',
+                title: 'FIRE ESCAPE SIMULATION',
                 type: 'project',
                 clusterX: 525,
                 clusterY: 215,
-                triangleX: 690,
-                triangleY: 380,
-                description: 'Living participatory monument recording involuntary visitor cursor movements.'
+                triangleX: 230,
+                triangleY: 600,
+                description: 'Spatial panic, egress dynamics & agent-based evacuation simulation.'
             },
             {
                 starId: 'taygeta',
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'experimental-thinking': {
                 name: 'EXPERIMENTAL THINKING',
                 badge: 'BASE-RIGHT // VERTEX 03',
-                projects: ['you-were-here', 'wood-weave', 'the-earthen', 'bio-decay']
+                projects: ['wood-weave', 'the-earthen', 'bio-decay']
             }
         }
     };
@@ -319,29 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isAward: true,
             x: 560,
             y: 160,
-            labelPos: 'right',
-            cardDir: 'card-right',
-            yearPos: 'year-top'
-        },
-        {
-            id: 'you-were-here',
-            num: '03',
-            title: 'YOU WERE HERE.',
-            question: 'What remains of the movements we forget?',
-            keywords: ['Presence', 'Traces', 'Digital Archive'],
-            year: '2026',
-            medium: 'Digital Archive',
-            url: './projects/you-were-here/',
-            img: './assets/you-were-here-cover.png',
-            color: '#22c55e',
-            colorRgb: '34, 197, 94',
-            accent2: '#38bdf8',
-            accent2Rgb: '56, 189, 248',
-            darkBg: '#07170e',
-            darkBgRgb: '7, 23, 14',
-            isAward: false,
-            x: 690,
-            y: 380,
             labelPos: 'right',
             cardDir: 'card-right',
             yearPos: 'year-top'
@@ -540,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
             year: '2027',
             medium: 'Simulation',
             url: './projects/fire-escape-simulation/',
-            img: './assets/work-in-progress.svg',
+            img: './assets/fire-escape-wip.svg',
             color: '#ef4444',
             colorRgb: '239, 68, 68',
             accent2: '#f97316',
@@ -560,12 +537,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const CONSTELLATION_RELATIONS = [
         {
             from: 'stray',
-            to: 'you-were-here',
-            themeLine1: 'PRESENCE · TRACES',
-            themeLine2: 'PARTICIPATION',
-            curve: 'M 560 160 Q 675 250 690 380',
-            labelX: 650,
-            labelY: 260,
+            to: 'the-earthen',
+            themeLine1: 'CARE · PAUSE',
+            themeLine2: 'NONHUMAN AGENCY',
+            curve: 'M 560 160 Q 640 290 605 435',
+            labelX: 620,
+            labelY: 290,
             badgeW: 136,
             badgeH: 28
         },
@@ -621,8 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "EMEK MUSEUM",
         "BIO-DECAY",
         "STRAY",
-        "YOU WERE HERE.",
-        "YOU WERE HERE"
+        "FIRE ESCAPE SIMULATION"
     ]);
 
     const SELECTED_PROJECT_IDS = new Set([
@@ -630,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'stray',
         'the-earthen',
         'bio-decay',
-        'you-were-here'
+        'fire-escape-simulation'
     ]);
 
     let hasEgIntroPulsed = false;
@@ -727,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusLabel = document.getElementById('pleiades-status-label');
         if (statusLabel) {
             statusLabel.textContent = isTargetConstellation
-                ? 'CONSTELLATION STATE • ALL 12 PROJECTS'
+                ? 'CONSTELLATION STATE • ALL PROJECTS'
                 : 'CLUSTER STATE • PLEIADES / M45 (7 STARS)';
         }
 
@@ -2112,7 +2088,6 @@ document.addEventListener('DOMContentLoaded', () => {
             projects: [
                 { title: '10. THE EARTHEN', url: './projects/the-earthen/' },
                 { title: '11. BIO-DECAY', url: './projects/bio-decay/' },
-                { title: '03. YOU WERE HERE.', url: './projects/you-were-here/' },
                 { title: '08. WOOD WEAVE', url: './projects/wood-weave/' }
             ]
         },
