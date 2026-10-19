@@ -8320,7 +8320,7 @@ body {
 
 /* 1. CLUSTER STATE: "EXPLORE CONSTELLATION ↗" moved lower to give generous clearance */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-  top: 85.5% !important;
+  top: 91.5% !important;
   left: 50% !important;
   right: auto !important;
   bottom: auto !important;
@@ -8824,7 +8824,7 @@ body {
 
 @media (max-width: 650px) {
   #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-    top: 86% !important;
+    top: 92% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     max-width: 90vw;

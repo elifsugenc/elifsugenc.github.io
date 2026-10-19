@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 role: '&Uuml;lker &amp; Methodology Core',
                 type: 'story',
                 clusterX: 470,
-                clusterY: 525,
+                clusterY: 515,
                 triangleX: 500,
                 triangleY: 460,
                 subtle: true,
@@ -769,7 +769,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 : parseFloat(meropeNode.getAttribute('data-cluster-x') || 470);
             const targetY = isTargetConstellation
                 ? parseFloat(meropeNode.getAttribute('data-triangle-y') || 460)
-                : parseFloat(meropeNode.getAttribute('data-cluster-y') || 525);
+                : parseFloat(meropeNode.getAttribute('data-cluster-y') || 515);
 
             meropeNode.style.left = (targetX / stageWidth * 100).toFixed(2) + '%';
             meropeNode.style.top = (targetY / stageHeight * 100).toFixed(2) + '%';
