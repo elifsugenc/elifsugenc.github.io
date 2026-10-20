@@ -804,8 +804,8 @@ figcaption,
     display: flex !important;
     align-items: baseline !important;
     gap: 12px !important;
-    margin-bottom: 36px !important;
-    padding-bottom: 16px !important;
+    margin: clamp(48px, 7vw, 76px) 0 32px 0 !important;
+    padding-bottom: 14px !important;
     border-bottom: 1px solid #e2e8f0 !important;
     flex-wrap: wrap !important;
 }
@@ -813,141 +813,283 @@ figcaption,
 .sec-index,
 .section-num {
     font-family: var(--font-mono) !important;
-    font-size: 0.84rem !important;
-    font-weight: 700 !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
     color: var(--proj-color, #2563eb) !important;
     letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+}
+
+.sec-index::before,
+.section-num::before {
+    content: '// ';
+    color: #94a3b8;
+    font-weight: 400;
 }
 
 .sec-title,
 .section-title {
     font-family: var(--font-heading) !important;
-    font-size: clamp(1.25rem, 2.2vw, 1.65rem) !important;
+    font-size: clamp(1.18rem, 2vw, 1.48rem) !important;
     font-weight: 600 !important;
     color: #0f172a !important;
-    letter-spacing: -0.01em !important;
+    letter-spacing: -0.015em !important;
     text-transform: uppercase !important;
     margin: 0 !important;
+    line-height: 1.25 !important;
 }
 
 .section-line {
     display: none !important;
 }
 
-/* Manifesto & Concept Cards Grid */
-.manifesto-grid,
-.pillars-grid,
-.step-grid,
-.quad-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
-    gap: 24px !important;
-    margin: 32px 0 44px 0 !important;
-}
+/* =========================================================
+   PURE UNBOXED EDITORIAL MONOGRAPH SYSTEM
+   Heading -> Text -> Visual -> Heading -> Visual -> Text
+   - ZERO boxed cards, zero borders, zero background boxes, zero shadows.
+   - Sitting directly on the pure white paper canvas.
+   - Restrained, calm, grounded typography.
+   - Absolute suppression of hover movement ("uçan kaçan durmasın").
+   ========================================================= */
 
+/* Unbox ALL cards, panels, boxes, containers universally */
 .manifesto-card,
 .pillar-card,
 .step-card,
 .detail-card,
 .program-item,
+.prog-card,
 .metabolism-box,
 .analysis-card,
 .case-card,
 .recipe-type-card,
 .system-box,
 .drift-step-card,
+.triad-card,
+.case-item,
+.concept-box,
+.manifesto-box,
+.statement-panel,
+.statement-card,
+.statement-wrapper,
+.manifesto-monument-card,
+.manifesto-inquiry-box,
+.bilingual-container,
+.bilingual-statement-container,
+.timeline-card,
+.opacity-stage-card,
+.tectonic-block,
+.tectonic-breakdown-panel,
+.collective-container,
+.collective-stage,
+.blueprint-sheet-container,
+.blueprint-canvas-box,
+.ritual-card,
+.ritual-cards-row,
+.cases-diagram-card,
+.cases-footer,
+.cases-grid-desc,
+.harvest-table-card,
+.harvest-grid,
+.harvest-item,
+.legacy-palimpsest-card,
+.trace-modal-box,
+.traces-grid,
 .card,
-.block-container {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: clamp(20px, 3vw, 28px) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
-    transition: all 0.25s ease !important;
+.block-container,
+.visual-feature-plate,
+.visual-plate {
+    background: transparent !important;
+    border: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    transition: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     color: #334155 !important;
 }
 
-.manifesto-card:hover,
-.pillar-card:hover,
-.step-card:hover,
-.detail-card:hover {
-    border-color: rgba(var(--proj-rgb, 37, 99, 235), 0.35) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04) !important;
+/* Unboxed Content Grids — Natural columns sitting directly on the canvas */
+.manifesto-grid,
+.pillars-grid,
+.step-grid,
+.quad-grid,
+.drift-loop-grid,
+.triad-grid,
+.ritual-cards-row,
+.systems-grid,
+.cases-grid-desc,
+.recipe-matrix-cards,
+.opacity-timeline-grid,
+.harvest-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
+    gap: clamp(28px, 4vw, 44px) !important;
+    margin: 28px 0 44px 0 !important;
 }
 
+/* Kicker sub-labels (e.g. // STRAND 01, // STAGE 01, // CASE 01, // SYSTEM A) */
 .manifesto-num,
 .pillar-index,
 .step-badge,
-.card-tag {
-    display: inline-block !important;
+.drift-step-num,
+.ritual-step,
+.case-tag,
+.card-tag,
+.recipe-type-tag,
+.system-num,
+.sub-label {
+    display: block !important;
     font-family: var(--font-mono) !important;
     font-size: 0.72rem !important;
-    letter-spacing: 0.1em !important;
+    letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
     color: var(--proj-color, #2563eb) !important;
     font-weight: 600 !important;
-    margin-bottom: 10px !important;
+    margin: 0 0 8px 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
 }
 
+.pillar-index::before,
+.step-badge::before,
+.drift-step-num::before,
+.ritual-step::before,
+.case-tag::before,
+.system-num::before,
+.sub-label::before {
+    content: '// ';
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* Titles inside unboxed items */
 .manifesto-card h3,
+.manifesto-card h4,
 .pillar-title,
 .step-title,
+.drift-step-title,
+.triad-card h4,
+.ritual-name,
+.case-name,
+.recipe-type-title,
+.system-title,
+.metabolism-title,
+.harvest-title,
 .card-title,
-.case-name {
-    font-size: 1.12rem !important;
-    font-weight: 600 !important;
+.manifesto-sub-title {
+    font-family: var(--font-heading) !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
     color: #0f172a !important;
     margin: 0 0 10px 0 !important;
     letter-spacing: -0.01em !important;
+    line-height: 1.35 !important;
 }
 
+/* Descriptive paragraph text */
 .manifesto-card p,
+.manifesto-body,
 .pillar-desc,
 .step-desc,
+.drift-step-desc,
+.triad-card p,
+.ritual-desc,
+.case-p,
 .card-text,
-.case-p {
-    font-size: 0.94rem !important;
-    line-height: 1.7 !important;
-    color: #475569 !important;
-    margin: 0 !important;
-}
-
-/* Strategic Concept/Manifesto Highlight Box */
-.concept-box,
-.manifesto-box,
-.statement-panel,
-.manifesto-monument-card {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-left: 3px solid var(--proj-color, #2563eb) !important;
-    border-radius: 6px !important;
-    padding: clamp(24px, 4vw, 36px) !important;
-    margin: 32px 0 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-}
-
-.manifesto-lead-quote {
-    font-size: clamp(1.05rem, 1.6vw, 1.2rem) !important;
-    line-height: 1.7 !important;
-    color: #1e293b !important;
-    margin-bottom: 20px !important;
+.recipe-type-card p,
+.system-text,
+.metabolism-desc,
+.harvest-desc,
+.section-lead-text {
+    font-family: var(--font-heading) !important;
+    font-size: 1.02rem !important;
+    line-height: 1.8 !important;
+    color: #334155 !important;
+    margin: 0 0 16px 0 !important;
     font-weight: 400 !important;
+    max-width: 900px !important;
 }
 
-.manifesto-inquiry-box {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: 18px 22px !important;
-    margin: 20px 0 !important;
+.recipe-steps-list,
+.system-bullets {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 12px 0 0 0 !important;
+}
+
+.recipe-steps-list li,
+.system-bullets li {
+    font-size: 0.94rem !important;
+    line-height: 1.68 !important;
+    color: #475569 !important;
+    margin-bottom: 8px !important;
+    padding-left: 14px !important;
+    position: relative !important;
+}
+
+.recipe-steps-list li::before,
+.system-bullets li::before {
+    content: '—';
+    position: absolute !important;
+    left: 0 !important;
+    color: #94a3b8 !important;
+}
+
+/* Curatorial Lead Quote */
+.manifesto-lead-quote,
+.manifesto-lead {
+    font-family: var(--font-heading) !important;
+    font-size: clamp(1.15rem, 1.8vw, 1.35rem) !important;
+    line-height: 1.65 !important;
+    color: #0f172a !important;
+    margin: 0 0 24px 0 !important;
+    font-weight: 400 !important;
+    max-width: 900px !important;
+}
+
+.manifesto-lead-quote em,
+.manifesto-lead em {
+    font-style: italic !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+}
+
+/* Curatorial Inquiry Highlight & Quote Highlights */
+.manifesto-inquiry-box,
+.quote-highlight,
+.quote-dan-barber {
+    background: transparent !important;
+    border: none !important;
+    border-left: 2px solid var(--proj-color, #2563eb) !important;
+    padding: 4px 0 4px 20px !important;
+    margin: 24px 0 !important;
+    border-radius: 0 !important;
+}
+
+.quote-author {
+    display: block !important;
+    margin-top: 8px !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #94a3b8 !important;
+    font-style: normal !important;
 }
 
 .inquiry-prefix {
     display: block !important;
     font-family: var(--font-mono) !important;
-    font-size: 0.68rem !important;
+    font-size: 0.72rem !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
     color: var(--proj-color, #2563eb) !important;
@@ -955,56 +1097,116 @@ figcaption,
     font-weight: 600 !important;
 }
 
+.inquiry-prefix::before {
+    content: '// ';
+    color: #94a3b8;
+    font-weight: 400;
+}
+
 .inquiry-statement {
-    font-size: 1.05rem !important;
-    font-weight: 500 !important;
+    font-family: var(--font-heading) !important;
+    font-size: clamp(1.12rem, 1.6vw, 1.3rem) !important;
+    font-weight: 600 !important;
     color: #0f172a !important;
-    line-height: 1.6 !important;
+    line-height: 1.5 !important;
     font-style: italic !important;
+}
+
+/* Remove decorative quotation marks */
+.quote-mark,
+.manifesto-num {
+    display: none !important;
+}
+
+/* Clean status strip (Emek Museum "More from this project soon") */
+.status-soon-strip {
+    display: inline-flex !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 18px !important;
+}
+
+.pulse-beacon {
+    display: none !important;
+}
+
+.status-soon-text {
+    font-family: var(--font-mono) !important;
+    font-size: 0.76rem !important;
+    color: #64748b !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+.status-soon-text::before {
+    content: '// ';
+    color: #94a3b8;
 }
 
 /* =========================================================
    BILINGUAL STATEMENTS & TAB CONTROLS
-   Minimal, calm tabs with crisp typography.
+   Minimal, calm inline tabs with crisp typography.
    ========================================================= */
 .statement-wrapper,
-.bilingual-container {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: clamp(24px, 4vw, 40px) !important;
-    margin: 36px 0 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+.bilingual-container,
+.bilingual-statement-container {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 28px 0 44px 0 !important;
+    box-shadow: none !important;
 }
 
 .lang-switch-row,
 .lang-toggle-bar,
+.lang-tab-bar,
+.lang-selector-bar,
 .manifesto-badge-row {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
+    gap: 16px !important;
     margin-bottom: 24px !important;
-    padding-bottom: 14px !important;
-    border-bottom: 1px solid #f1f5f9 !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
     flex-wrap: wrap !important;
+}
+
+.manifesto-badge,
+.lang-bar-label {
+    font-family: var(--font-mono) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+}
+
+.manifesto-badge::before,
+.lang-bar-label::before {
+    content: '// ';
+    color: #cbd5e1;
 }
 
 .lang-btn,
 .lang-tab-btn,
 .lang-pill,
 .era-tab-btn {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 4px !important;
-    color: #64748b !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    color: #94a3b8 !important;
     font-family: var(--font-mono) !important;
     font-size: 0.74rem !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
-    padding: 6px 14px !important;
-    transition: all 0.2s ease !important;
-    cursor: none !important;
+    padding: 4px 6px !important;
+    margin: 0 !important;
+    transition: color 0.15s ease, border-color 0.15s ease !important;
+    cursor: pointer !important;
     box-shadow: none !important;
 }
 
@@ -1013,37 +1215,62 @@ figcaption,
 .lang-pill:hover,
 .era-tab-btn:hover {
     color: #0f172a !important;
-    border-color: #cbd5e1 !important;
-    background: #f8fafc !important;
+    background: transparent !important;
+    border-bottom-color: #cbd5e1 !important;
+    transform: none !important;
 }
 
 .lang-btn.active,
 .lang-tab-btn.active,
 .lang-pill.active,
 .era-tab-btn.active {
-    background: rgba(var(--proj-rgb, 37, 99, 235), 0.08) !important;
-    border-color: var(--proj-color, #2563eb) !important;
     color: var(--proj-color, #2563eb) !important;
+    border-bottom: 2px solid var(--proj-color, #2563eb) !important;
+    background: transparent !important;
     font-weight: 600 !important;
+    transform: none !important;
 }
 
-.lang-pane {
+.statement-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)) !important;
+    gap: clamp(24px, 4vw, 44px) !important;
+}
+
+.statement-col h4,
+.col-heading {
+    font-family: var(--font-heading) !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin: 0 0 10px 0 !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.35 !important;
+}
+
+.lang-pane,
+.statement-pane,
+.statement-panel {
     display: none;
 }
 
-.lang-pane.active {
+.lang-pane.active,
+.statement-pane.active,
+.statement-panel.active {
     display: block !important;
-    animation: editorialFadeIn 0.3s ease forwards;
+    animation: editorialFadeIn 0.25s ease forwards;
 }
 
 .lang-pane p,
 .statement-pane p,
-.statement-card p {
+.statement-card p,
+.statement-panel p,
+.statement-col p {
     font-size: 1.02rem !important;
     line-height: 1.82 !important;
     color: #334155 !important;
     margin-bottom: 18px !important;
-    max-width: 820px !important;
+    max-width: 860px !important;
 }
 
 /* =========================================================
@@ -1138,85 +1365,90 @@ figcaption,
 
 /* =========================================================
    PROJECT SPECIFIC COMPONENTS (STRAY, BIO-DECAY, THE EARTHEN, ETC.)
-   Preserving all unique functional data with refined editorial calm
+   All unboxed with clean monograph typography
    ========================================================= */
 
 /* STRAY: 4 Moveable Cases & Psychogeography */
 .cases-diagram-card,
 .cases-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
-    gap: 20px !important;
-    margin: 28px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    margin: 32px 0 48px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.cases-diagram-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    border: none !important;
+}
+
+.cases-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
 }
 
 /* BIO-DECAY: Recipe Matrix & Decay Horizon Timeline */
 .recipe-matrix-cards {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
-    gap: 20px !important;
-    margin: 28px 0 !important;
+    gap: clamp(24px, 4vw, 40px) !important;
+    margin: 32px 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.recipe-type-card {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.recipe-type-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    margin-bottom: 12px !important;
 }
 
 .timeline-card,
 .opacity-stage-card {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: 20px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
 }
 
 /* THE EARTHEN: Soil Metabolism, Conduits & Mud Bathing */
 .metabolism-box,
 .tectonic-block {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: 24px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
     margin: 24px 0 !important;
-}
-
-/* EMEK MUSEUM: Ongoing status beacon */
-.status-soon-strip {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 999px !important;
-    padding: 6px 16px !important;
-    margin-top: 24px !important;
-}
-
-.pulse-beacon {
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50% !important;
-    background: var(--proj-color, #2563eb) !important;
-    box-shadow: 0 0 0 0 rgba(var(--proj-rgb, 37, 99, 235), 0.7) !important;
-    animation: beaconPulse 2s infinite !important;
-}
-
-@keyframes beaconPulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--proj-rgb, 37, 99, 235), 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(var(--proj-rgb, 37, 99, 235), 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--proj-rgb, 37, 99, 235), 0); }
-}
-
-.status-soon-text {
-    font-family: var(--font-mono) !important;
-    font-size: 0.76rem !important;
-    color: #64748b !important;
-    letter-spacing: 0.06em !important;
+    box-shadow: none !important;
 }
 
 /* YOU WERE HERE: Collective Palimpsest Canvas & Controls */
 .collective-container {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
-    padding: clamp(20px, 3vw, 32px) !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
     margin: 28px 0 !important;
+    box-shadow: none !important;
 }
 
 .collective-stage {
@@ -1335,8 +1567,8 @@ figcaption,
 .project-bottom-nav {
     border-top: 1px solid #e2e8f0 !important;
     background: #ffffff !important;
-    padding: clamp(48px, 7vw, 72px) clamp(20px, 4vw, 48px) !important;
-    margin-top: clamp(64px, 10vw, 110px) !important;
+    padding: clamp(36px, 5vw, 60px) clamp(20px, 4vw, 48px) !important;
+    margin-top: clamp(64px, 8vw, 96px) !important;
 }
 
 .bottom-nav-inner {
@@ -1358,13 +1590,14 @@ figcaption,
     flex-direction: column !important;
     gap: 4px !important;
     text-decoration: none !important;
-    padding: 16px 24px !important;
+    padding: 12px 18px !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
+    border-radius: 4px !important;
     background: #ffffff !important;
     color: #334155 !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    transition: border-color 0.15s ease, background 0.15s ease !important;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 .pnav-link:hover,
@@ -1372,10 +1605,10 @@ figcaption,
 .next-proj-link:hover,
 .foot-nav-item:hover,
 .nav-bottom-link:hover {
-    border-color: var(--proj-color, #2563eb) !important;
-    background: #ffffff !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
+    border-color: #0f172a !important;
+    background: #f8fafc !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .pnav-dir,
@@ -1387,6 +1620,13 @@ figcaption,
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
+}
+
+.pnav-dir::before,
+.nav-dir::before,
+.foot-nav-lbl::before {
+    content: '// ';
+    color: #94a3b8;
 }
 
 .pnav-title,
@@ -1405,16 +1645,17 @@ figcaption,
     gap: 10px !important;
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
-    border-radius: 999px !important;
-    padding: 12px 28px !important;
+    border-radius: 4px !important;
+    padding: 10px 22px !important;
     color: #0f172a !important;
     font-family: var(--font-mono) !important;
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.08em !important;
     text-decoration: none !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 .footer-nav-btn:hover,
@@ -1422,9 +1663,23 @@ figcaption,
 .center-directory-btn:hover {
     background: #0f172a !important;
     border-color: #0f172a !important;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15) !important;
+    box-shadow: none !important;
     color: #ffffff !important;
-    transform: translateY(-2px) !important;
+    transform: none !important;
+}
+
+.footer-nav-btn.primary {
+    background: #0f172a !important;
+    border-color: #0f172a !important;
+    color: #ffffff !important;
+}
+
+.footer-nav-btn.primary:hover {
+    background: #1e293b !important;
+    border-color: #1e293b !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
 /* =========================================================
@@ -1731,8 +1986,9 @@ figcaption,
 }
 
 /* =========================================================
-   UNIVERSAL SUPPRESSION OF HOVER ELEVATION & FLOATING
-   Clean, stable editorial presentation across all projects
+   UNIVERSAL SUPPRESSION OF HOVER ELEVATION & FLOATING ("UÇAN KAÇAN DURMASIN")
+   Completely calm, quiet, grounded editorial presentation across all projects.
+   Zero lifting, zero jumping, zero floating cards, zero shadow popping.
    ========================================================= */
 .hero-visual-card,
 .hero-visual-card:hover,
@@ -1752,10 +2008,36 @@ figcaption,
 .process-card:hover,
 .manifesto-card,
 .manifesto-card:hover,
+.pillar-card,
+.pillar-card:hover,
+.step-card,
+.step-card:hover,
+.detail-card,
+.detail-card:hover,
+.drift-step-card,
+.drift-step-card:hover,
+.triad-card,
+.triad-card:hover,
+.ritual-card,
+.ritual-card:hover,
+.case-item,
+.case-item:hover,
+.case-card,
+.case-card:hover,
+.recipe-type-card,
+.recipe-type-card:hover,
 .concept-card,
 .concept-card:hover,
+.concept-box,
+.concept-box:hover,
 .system-box,
 .system-box:hover,
+.metabolism-box,
+.metabolism-box:hover,
+.timeline-card,
+.timeline-card:hover,
+.opacity-stage-card,
+.opacity-stage-card:hover,
 .card,
 .card:hover,
 .media-card,
@@ -1772,8 +2054,27 @@ figcaption,
 .visual-card:hover,
 .visual-card-footer,
 .visual-card-footer:hover,
+.visual-plate,
+.visual-plate:hover,
+.visual-feature-plate,
+.visual-feature-plate:hover,
+.blueprint-sheet-container,
+.blueprint-sheet-container:hover,
+.collective-container,
+.collective-container:hover,
+.pnav-link,
+.pnav-link:hover,
+.prev-proj-link,
+.prev-proj-link:hover,
+.next-proj-link,
+.next-proj-link:hover,
+.foot-nav-item,
+.foot-nav-item:hover,
+.footer-nav-btn,
+.footer-nav-btn:hover,
 img,
 img:hover {
     transform: none !important;
     transition: none !important;
+    box-shadow: none !important;
 }
