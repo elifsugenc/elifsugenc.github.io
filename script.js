@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isSpatialInteractive(target)) return true;
 
             // When hovering over tags, keep cursor as plain blue dot (do not turn into question mark)
-            if (target.closest('.archive-tag-btn, .archive-project-btn, .a-tag, .a-project-pill, .archive-pill, .archive-tag-list, .archive-filter-bar, .archive-entry-tags, .tag, .detail-tag, .filter-chip, [data-cursor="dot"]')) {
+            if (target.closest('.archive-tag-btn, .archive-project-btn, .a-tag, .a-project-pill, .archive-pill, .archive-tag-list, .archive-filter-track-wrap, .archive-filter-row, .archive-filter-bar, .archive-entry-tags, .tag, .detail-tag, .filter-chip, [data-cursor="dot"]')) {
                 return false;
             }
 
@@ -2908,7 +2908,137 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Interactive Horizontal Drift for Filter Tracks
+        function initArchiveFilterTrackDrift() {
+            const trackWraps = document.querySelectorAll('.archive-filter-track-wrap');
+            if (!trackWraps.length) return;
+
+            trackWraps.forEach(wrap => {
+                let currentScroll = wrap.scrollLeft;
+                let targetScroll = wrap.scrollLeft;
+                let isHovered = false;
+                let rafId = null;
+
+                function updateMask() {
+                    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+                    if (maxScroll <= 2) {
+                        wrap.classList.add('no-overflow');
+                        wrap.classList.remove('has-overflow', 'has-scroll-left', 'at-scroll-end');
+                        return;
+                    }
+                    wrap.classList.remove('no-overflow');
+                    wrap.classList.add('has-overflow');
+
+                    if (wrap.scrollLeft > 6) {
+                        wrap.classList.add('has-scroll-left');
+                    } else {
+                        wrap.classList.remove('has-scroll-left');
+                    }
+
+                    if (wrap.scrollLeft >= maxScroll - 6) {
+                        wrap.classList.add('at-scroll-end');
+                    } else {
+                        wrap.classList.remove('at-scroll-end');
+                    }
+                }
+
+                function step() {
+                    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+                    if (maxScroll > 0) {
+                        const diff = targetScroll - currentScroll;
+                        if (Math.abs(diff) > 0.35) {
+                            currentScroll += diff * 0.085;
+                            wrap.scrollLeft = currentScroll;
+                            updateMask();
+                            rafId = requestAnimationFrame(step);
+                        } else {
+                            currentScroll = targetScroll;
+                            wrap.scrollLeft = currentScroll;
+                            updateMask();
+                            rafId = null;
+                        }
+                    } else {
+                        rafId = null;
+                        updateMask();
+                    }
+                }
+
+                function requestStep() {
+                    if (!rafId) {
+                        rafId = requestAnimationFrame(step);
+                    }
+                }
+
+                // Panoramic tracking: mouse moves right -> tags glide left to reveal further items
+                wrap.addEventListener('mousemove', (e) => {
+                    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+                    if (maxScroll <= 0) return;
+
+                    const rect = wrap.getBoundingClientRect();
+                    const relX = e.clientX - rect.left;
+                    
+                    const edgeBuffer = 32;
+                    const effectiveWidth = Math.max(1, rect.width - (edgeBuffer * 2));
+                    const clampedX = Math.max(0, Math.min(effectiveWidth, relX - edgeBuffer));
+                    const ratio = clampedX / effectiveWidth;
+
+                    targetScroll = ratio * maxScroll;
+                    requestStep();
+                });
+
+                wrap.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    currentScroll = wrap.scrollLeft;
+                });
+
+                wrap.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                });
+
+                // Mouse wheel horizontal scrolling
+                wrap.addEventListener('wheel', (e) => {
+                    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+                    if (maxScroll <= 0) return;
+
+                    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+                    if (Math.abs(delta) > 0) {
+                        e.preventDefault();
+                        targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + (delta * 0.8)));
+                        requestStep();
+                    }
+                }, { passive: false });
+
+                // Native scroll synchronization
+                wrap.addEventListener('scroll', () => {
+                    if (!isHovered && !rafId) {
+                        currentScroll = wrap.scrollLeft;
+                        targetScroll = wrap.scrollLeft;
+                        updateMask();
+                    }
+                }, { passive: true });
+
+                if (window.ResizeObserver) {
+                    const ro = new ResizeObserver(() => {
+                        updateMask();
+                    });
+                    ro.observe(wrap);
+                }
+
+                updateMask();
+                window.addEventListener('resize', () => {
+                    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+                    targetScroll = Math.min(targetScroll, Math.max(0, maxScroll));
+                    updateMask();
+                });
+
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden) updateMask();
+                });
+            });
+        }
+
         render();
+        initArchiveFilterTrackDrift();
     }
 
     initArchiveFeed();
