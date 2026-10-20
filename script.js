@@ -2630,14 +2630,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             feedContainer.innerHTML = list.map(item => {
                 const tagsHtml = (item.tags || []).map(t => `<button type="button" class="a-tag" data-tag="${t}">#${t}</button>`).join(' ');
+                const timeHtml = item.time ? `<span class="a-time-sep">&bull;</span><span class="a-time-clock">${item.time}</span>` : '';
 
                 return `
                     <article class="archive-entry-card" data-archive-id="${item.id}">
                         <div class="archive-entry-meta">
                             <div class="archive-entry-timestamp">
                                 <span class="a-time-date">${item.date}</span>
-                                <span class="a-time-sep">&bull;</span>
-                                <span class="a-time-clock">${item.time}</span>
+                                ${timeHtml}
                             </div>
                             <div class="archive-entry-tags">
                                 ${tagsHtml}
