@@ -1,29 +1,41 @@
 /**
  * ARCHIVE DATA — INTERNAL MONOLOGUE & EVERYDAY QUESTIONS
  * 
- * To add a new question:
- * Simply copy one of the objects below and paste it at the top of the array!
+ * Arranged chronologically (newest to oldest), with all project questions
+ * aligned to their respective project realization years (2024 – 2027).
  * 
  * Fields:
- * - id: unique identifier string (e.g. "q-2026-10-20-01")
- * - date: display date string (e.g. "20 October 2026")
- * - time: 24h Istanbul local time (e.g. "14:30")
+ * - id: unique identifier string (e.g. "q-2027-07-03-01")
+ * - date: display date string (e.g. "03 July 2027")
+ * - time: 24h Istanbul local time (e.g. "10:15")
  * - question: the main question or thought (required)
- * - reflection: optional longer observation or reflection (can be null or "")
- * - tags: array of tag strings (e.g. ["memory", "daily-life"])
- * - relatedProject: optional project connection (can be null, or { title: "STRAY", url: "./projects/stray/" })
+ * - reflection: optional observation (kept clean/empty per design preference)
+ * - tags: array of tag strings
+ * - relatedProject: null
  */
 
 window.ARCHIVE_QUESTIONS = [
+    // --- 2027: FUTURE & ADVANCED SPECULATIONS ---
     {
-        id: "q-2026-10-19-01",
-        date: "19 October 2026",
-        time: "23:47",
-        question: "Can doing nothing still change something?",
+        id: "q-2027-07-03-01",
+        date: "03 July 2027",
+        time: "10:15",
+        question: "How can we make this labour visible again?",
         reflection: "",
-        tags: ["inaction", "trace", "daily-life", "presence"],
+        tags: ["memory", "invisible-labour", "space", "labour"],
         relatedProject: null
     },
+    {
+        id: "q-2027-06-04-01",
+        date: "04 June 2027",
+        time: "15:50",
+        question: "Can you escape the fire?",
+        reflection: "",
+        tags: ["behavior", "traces", "simulation", "space"],
+        relatedProject: null
+    },
+
+    // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
         id: "q-2026-10-19-02",
         date: "19 October 2026",
@@ -47,7 +59,7 @@ window.ARCHIVE_QUESTIONS = [
         date: "18 October 2026",
         time: "02:13",
         question: "When does something become a memory?",
-        reflection: "Is it when it stops changing, or when we start remembering it differently each time? A building doesn't remember who walked through it, but its thresholds wear down anyway.",
+        reflection: "",
         tags: ["memory", "time", "daily-life"],
         relatedProject: null
     },
@@ -56,107 +68,102 @@ window.ARCHIVE_QUESTIONS = [
         date: "14 October 2026",
         time: "17:30",
         question: "What do we leave behind when we navigate a digital space?",
-        reflection: "Every hesitation, pause, and click is logged as information. In physical space, dust settles; in digital space, attention is harvested.",
-        tags: ["traces", "digital-space", "attention"],
-        relatedProject: { title: "YOU WERE HERE.", url: "./projects/you-were-here/" }
+        reflection: "",
+        tags: ["traces", "digital-space", "attention", "space"],
+        relatedProject: null
     },
     {
         id: "q-2026-10-08-01",
         date: "08 October 2026",
         time: "19:45",
         question: "How do you highlight beauty without stealing its spotlight?",
-        reflection: "Light can either frame what is already there or blind the viewer with its own intensity. The best interventions are almost invisible.",
-        tags: ["light", "restraint", "space"],
-        relatedProject: { title: "BAJO LA FRESCA", url: "./projects/bajo-la-fresca/" }
-    },
-    {
-        id: "q-2026-09-29-01",
-        date: "29 September 2026",
-        time: "14:15",
-        question: "Can one space hold both play and quiet?",
-        reflection: "Not everything needs to be partitioned by walls. A change in acoustic texture or light can create an intimacy without separation.",
-        tags: ["threshold", "play", "space"],
-        relatedProject: { title: "ARA-SIRA", url: "./projects/ara-sira/" }
-    },
-    {
-        id: "q-2026-09-15-01",
-        date: "15 September 2026",
-        time: "11:20",
-        question: "When does waste become a place?",
-        reflection: "We discard materials when we no longer know what to call them. When reclaimed wood is woven together, it stops being scraps and begins to hold gravity.",
-        tags: ["materials", "waste", "transformation"],
-        relatedProject: { title: "WOOD WEAVE", url: "./projects/wood-weave/" }
+        reflection: "",
+        tags: ["light", "restraint", "space", "climate"],
+        relatedProject: null
     },
     {
         id: "q-2026-09-02-01",
         date: "02 September 2026",
         time: "09:40",
         question: "How does a culinary ritual shape a social atmosphere?",
-        reflection: "Food is the pretext; the table is the stage. The speed of a knife, the smell of burnt sugar, the proximity of elbows — spatial intimacy is cooked before it is occupied.",
-        tags: ["ritual", "gathering", "space"],
-        relatedProject: { title: "MILLIEU", url: "./projects/millieu/" }
-    },
-    {
-        id: "q-2026-08-21-01",
-        date: "21 August 2026",
-        time: "16:55",
-        question: "How many microplastics can we eat in a day?",
-        reflection: "We treat synthetic matter as external to nature, yet it has already entered our bloodstreams and tissues. The boundary between environment and body has collapsed.",
-        tags: ["materials", "body", "daily-life"],
-        relatedProject: { title: "BIO-DECAY", url: "./projects/bio-decay/" }
-    },
-    {
-        id: "q-2026-08-10-01",
-        date: "10 August 2026",
-        time: "22:10",
-        question: "Can we build without displacing life?",
-        reflection: "Construction almost always starts by erasing what was living on the surface. What if architecture acted as soil rather than a seal?",
-        tags: ["materials", "coexistence", "space"],
-        relatedProject: { title: "SPROUTING GARDEN", url: "./projects/sprouting-garden/" }
+        reflection: "",
+        tags: ["ritual", "gathering", "space", "culinary"],
+        relatedProject: null
     },
     {
         id: "q-2026-07-28-01",
         date: "28 July 2026",
         time: "18:05",
         question: "Is there life because there is death?",
-        reflection: "Clay is decomposed rock; soil is decomposed living matter. Architecture tends to seek permanence, but fertility only exists through breakdown.",
-        tags: ["soil", "decay", "materials"],
-        relatedProject: { title: "THE EARTHEN", url: "./projects/the-earthen/" }
-    },
-    {
-        id: "q-2026-07-14-01",
-        date: "14 July 2026",
-        time: "13:40",
-        question: "Can a city exhibit itself?",
-        reflection: "Museums pull objects out of the street to preserve them under glass. But the street itself is constantly curating layers of posters, graffiti, and footsteps.",
-        tags: ["city", "traces", "space"],
-        relatedProject: { title: "CHRONOCLINES", url: "./projects/chronoclines/" }
-    },
-    {
-        id: "q-2026-07-03-01",
-        date: "03 July 2026",
-        time: "10:15",
-        question: "How can we make this labour visible again?",
-        reflection: "Buildings are recorded in the names of architects and patrons. The hands that laid the bricks, smoothed the plaster, and swept the floor vanish into smooth plaster.",
-        tags: ["memory", "invisible-labour", "space"],
-        relatedProject: { title: "EMEK MUSEUM", url: "./projects/emek-museum/" }
+        reflection: "",
+        tags: ["soil", "decay", "materials", "earth"],
+        relatedProject: null
     },
     {
         id: "q-2026-06-18-01",
         date: "18 June 2026",
         time: "01:25",
         question: "Why do we always look at a window from the inside?",
-        reflection: "From outside, a lit window is someone else's domestic theater. From inside, it is an opening toward weather we are trying to keep away.",
+        reflection: "",
         tags: ["daily-life", "threshold", "space"],
         relatedProject: null
     },
+
+    // --- 2025: MATERIAL TRANSFORMATION & CITIZEN PRESENCE ---
     {
-        id: "q-2026-06-04-01",
-        date: "04 June 2026",
-        time: "15:50",
-        question: "Can you escape the fire?",
-        reflection: "In panic, rationality dissolves into pure physical choreography. Panic routes are designed on paper for calm crowds, but fear flows like water looking for cracks.",
-        tags: ["behavior", "traces", "space"],
-        relatedProject: { title: "FIRE ESCAPE SIMULATION", url: "./projects/fire-escape-simulation/" }
+        id: "q-2025-08-21-01",
+        date: "21 August 2025",
+        time: "16:55",
+        question: "How many microplastics can we eat in a day?",
+        reflection: "",
+        tags: ["materials", "body", "daily-life", "bio-decay"],
+        relatedProject: null
+    },
+    {
+        id: "q-2025-07-14-01",
+        date: "14 July 2025",
+        time: "13:40",
+        question: "Can a city exhibit itself?",
+        reflection: "",
+        tags: ["city", "traces", "space", "strata"],
+        relatedProject: null
+    },
+    {
+        id: "q-2025-03-24-01",
+        date: "24 March 2025",
+        time: "23:47",
+        question: "Is doing nothing doing something?",
+        reflection: "",
+        tags: ["inaction", "trace", "daily-life", "presence"],
+        relatedProject: null
+    },
+
+    // --- 2024: 1ST YEAR DESIGN-BUILD & BIOMATERIAL ROOTS ---
+    {
+        id: "q-2024-09-29-01",
+        date: "29 September 2024",
+        time: "14:15",
+        question: "Can one space hold both play and quiet?",
+        reflection: "",
+        tags: ["threshold", "play", "space", "timber"],
+        relatedProject: null
+    },
+    {
+        id: "q-2024-05-15-01",
+        date: "15 May 2024",
+        time: "11:20",
+        question: "When does waste become a place?",
+        reflection: "",
+        tags: ["materials", "waste", "transformation", "making"],
+        relatedProject: null
+    },
+    {
+        id: "q-2024-01-10-01",
+        date: "10 January 2024",
+        time: "22:10",
+        question: "Can we build without displacing life?",
+        reflection: "",
+        tags: ["materials", "coexistence", "space", "ecology"],
+        relatedProject: null
     }
 ];
