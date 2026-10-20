@@ -44,6 +44,15 @@ window.ARCHIVE_QUESTIONS = [
         relatedProject: null
     },
     {
+        id: "q-2026-fire-politic",
+        date: "2026",
+        time: "",
+        question: "Is being affected by fire political?",
+        reflection: "",
+        tags: ["simulation", "space", "body"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-fire",
         date: "2026",
         time: "",
