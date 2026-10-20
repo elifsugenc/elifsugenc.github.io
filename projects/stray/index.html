@@ -176,12 +176,8 @@
                 </div>
             </div>
 
-            <!-- Bilingual Description Tabs -->
+            <!-- Research Statement -->
             <div class="statement-wrapper">
-                <div class="lang-switch-row">
-                    <button type="button" class="lang-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
-                    <button type="button" class="lang-btn" onclick="switchLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                </div>
 
                 <div id="pane-en" class="lang-pane active">
                     <p><strong>The Spark: Why "Stray"?</strong><br>
@@ -194,16 +190,6 @@
                     Responding to the studio brief, <em>"Encounters at the Seaside: Intersection of Two Actions"</em>, the project stages an encounter between purposeful human routine and purposeless straying. Located behind the coastal tree canopy of Moda, Kadıköy, the building acts as a continuous ascending ramp rather than a rigid enclosure. Passersby drift inward from the coastline, leave tactile marks on rotating surfaces, engage in flexible workshop pods, and arrive at <em>The Dark Room</em>—a quiet sanctuary lit solely by natural daylight slits and the passing silhouettes of people outside.</p>
                 </div>
 
-                <div id="pane-tr" class="lang-pane">
-                    <p><strong>Çıkış Noktası: Neden "Stray" (Başıboş)?</strong><br>
-                    Proje, her gün kullandığımız yalın bir kelimeyi sorgulayarak başladı: <em>sokak hayvanları (stray animals)</em>. Onlara neden "stray" (başıboş, rotasından sapmış) diyoruz? İnternette ve günlük hayatta sıkça karşılaştığımız tanıdık bir meme vardır: Bir sokak kedisi bir anda fırlayıp delicesine koşmaya başlar; biz de arkasından güleriz: <em>"Herhalde önemli bir işi çıktı, bir yere yetişiyor!"</em> Peki gerçekten bir işleri var mı? Yoksa ne yapıyorlar? Günleri takvimlerle, mesailerle ve hedeflerle sınırlı olmayan bu canlıları neden "başıboş" olarak yaftalıyoruz da, asıl amaçsız bir döngüde koşturan kendimizi öyle görmüyoruz? Neden onlar stray de biz değiliz?</p>
-                    
-                    <p><strong>Eylemi ve Eylemsizliği Sorgulamak:</strong><br>
-                    Bu gözlem doğrudan projenin ana sorusuna dönüştü: <em>Bir eylem nedir? Hiçbir şey yapmamak da bir şey yapmak mıdır? Yoksa hiçbir şey yapmamak gerçekten mümkün müdür?</em> Günümüzün üretkenlik odaklı dünyasında amaçsızca gezinmek bir boşluk veya zaman kaybı olarak görülür. Oysa bir kedinin kayalıkta durması ya da sokakta dolaşması asla bir boşluk değildir; aksine çevresini, rüzgarı, ışığı ve dokuları tüm duyularıyla hisseden aktif bir varoluş halidir. Hiçbir şey yapmamak bir boşluk değil, mekânsal bir farkındalıktır.</p>
-                    
-                    <p><strong>Moda Sahilinde Mekânsal Karşılaşma:</strong><br>
-                    Stüdyo teması olan <em>"Encounters at the Seaside: Intersection of Two Actions (Sahilde Karşılaşmalar: İki Eylemin Kesişimi)"</em> doğrultusunda proje, iki zıt eylemi karşı karşıya getirir: insanın hedefe kilitli günlük rutini ile amaçsızca gezinme (straying). Kadıköy Moda sahilindeki ağaç dokusunun arkasında konumlanan yapı, keskin duvarlar yerine kesintisiz yükselen bir rampa omurgası kurar. Sahilden içeri süzülen ziyaretçiler rampa boyunca yavaşlar; dönen yüzeylere izler ve çizimler bırakır, hareketli panellerle dönüşen atölyelerde vakit geçirir ve en üstte sadece sabah ışığı ve gölgelerle aydınlanan <em>Karanlık Oda'da (The Dark Room)</em> içsel bir dinginliğe ulaşır.</p>
-                </div>
             </div>
 
             <!-- Conceptual Diagram Visual Card -->
@@ -622,16 +608,7 @@
 
     <!-- Scripts -->
     <script src="../project-cursor.js"></script>
-    <script>
-        // Bilingual toggle
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.lang-pane').forEach(p => p.classList.remove('active'));
-            
-            if (lang === 'tr') {
-                document.querySelector('.lang-btn:nth-child(2)').classList.add('active');
-                document.getElementById('pane-tr').classList.add('active');
-            } else {
+    <script> else {
                 document.querySelector('.lang-btn:nth-child(1)').classList.add('active');
                 document.getElementById('pane-en').classList.add('active');
             }

@@ -139,10 +139,6 @@
             <div class="manifesto-monument-card">
                 <div class="manifesto-badge-row">
                     <span class="manifesto-badge">PROJECT MANIFESTO &bull; 2026</span>
-                    <div class="lang-toggle-bar">
-                        <button type="button" class="lang-btn active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
-                        <button type="button" class="lang-btn" onclick="switchDetailLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                    </div>
                 </div>
 
                 <!-- English Pane (Exact User Provided Statement) -->
@@ -163,23 +159,6 @@
                     </div>
                 </div>
 
-                <!-- Turkish Pane -->
-                <div id="pane-tr" class="lang-pane">
-                    <div class="manifesto-lead-quote">
-                        İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor—onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.
-                    </div>
-
-                    <div class="manifesto-inquiry-box">
-                        <span class="inquiry-prefix">Emek Museum soruyor:</span>
-                        <div class="inquiry-statement">“Bir fabrikanın yapısını koruduğumuzda, orada çalışmış insanların hafızasını da korumuş oluyor muyuz?”</div>
-                        <div class="inquiry-statement" style="margin-top: 10px; font-size: 1.1rem; opacity: 0.9;">“Bu emeği yeniden nasıl görünür kılabiliriz?”</div>
-                    </div>
-
-                    <div class="status-soon-strip">
-                        <span class="pulse-beacon"></span>
-                        <span class="status-soon-text">Çok yakında bu projeden daha fazlası.</span>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -253,18 +232,7 @@
     </main>
 
     <!-- Custom Cursor & Interaction Scripts -->
-    <script>
-        // Language Toggle
-        function switchDetailLang(lang) {
-            const btns = document.querySelectorAll('.lang-btn');
-            const panes = document.querySelectorAll('.lang-pane');
-            btns.forEach(b => b.classList.remove('active'));
-            panes.forEach(p => p.classList.remove('active'));
-            if (lang === 'tr') {
-                if (btns[1]) btns[1].classList.add('active');
-                const pTr = document.getElementById('pane-tr');
-                if (pTr) pTr.classList.add('active');
-            } else {
+    <script> else {
                 if (btns[0]) btns[0].classList.add('active');
                 const pEn = document.getElementById('pane-en');
                 if (pEn) pEn.classList.add('active');

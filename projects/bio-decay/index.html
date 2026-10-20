@@ -172,12 +172,8 @@
                 </div>
             </div>
 
-            <!-- Bilingual Description Tabs -->
+            <!-- Research Statement -->
             <div class="bilingual-container">
-                <div class="lang-tab-bar">
-                    <button class="lang-tab-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
-                    <button class="lang-tab-btn" onclick="switchLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                </div>
                 <div id="statement-en" class="statement-pane active">
                     <p class="lead-text">
                         <strong>Bio-Decay</strong> began with a provocative inquiry into everyday consumption: <em>“How many microplastics can we eat in a day?”</em> Rather than passively enduring synthetic accumulation, the project develops an active architectural archive situated in the iconic Milli Reasürans passage in Nişantaşı, Istanbul.
@@ -187,17 +183,6 @@
                     </p>
                     <p>
                         The bioplastics undergo a dynamic lifecycle of physical decay across 6+ weeks—shifting from pliable 10–30% clarity, through matte stiffening at 50%, to brittle 70–90% amber opacity and desiccation. As panels weather and fall away, researchers, workshop participants, and passage pedestrians harvest the fragments, cook new batches in underground lab stations, and re-insert fresh panels into the living frame. At its core, a stepped public amphitheatre provides a much-needed civic gathering space shaded by transforming biopolymer canopies.
-                    </p>
-                </div>
-                <div id="statement-tr" class="statement-pane">
-                    <p class="lead-text">
-                        <strong>Bio-Decay</strong>, gündelik tüketimin görünmeyen maddelerine dair kışkırtıcı bir soruyla başladı: <em>“Günde ne kadar mikroplastik yiyebiliriz?”</em> Proje, sentetik birikimi pasifçe izlemek yerine, İstanbul Nişantaşı'ndaki Milli Reasürans Çarşısı'nda yaşayan bir organik atık arşivi ve biyoplastik laboratuvarı önerir.
-                    </p>
-                    <p>
-                        Yapı, çevredeki restoran ve kafelerden toplanan organik atıkları (meyve kabukları, nişasta tortuları, kahve ve sebzeler) yerinde işleyen döngüsel bir kentsel biyo-rafineri gibi çalışır. Çelik tel ızgara bir iskelet üzerine kurulan mekân, mimari kalıcılık yanılsamasını reddeder.
-                    </p>
-                    <p>
-                        Üretilen biyoplastik paneller 6 haftayı aşkın bir sürede 4 aşamalı bir bozunma döngüsünden geçer: %10–30 arası şeffaf ve esnek durumdan, matlaşan ve sertleşen ara evreye, ardından %70–90 arası kehribar rengi, kırılgan ve çatlak son evreye ulaşır. Bozulan paneller toplanıp yeniden pişirilirken, ziyaretçiler ve araştırmacılar yeni paneller asarak yapım sürecini hiç bitmeyen kolektif bir eyleme dönüştürür. Merkeze yerleştirilen amfitiyatro ise Nişantaşı'nın kamusal oturma alanı eksiğine cevap vererek biyoplastik gölgelikler altında canlı bir toplanma odağı yaratır.
                     </p>
                 </div>
             </div>
@@ -677,15 +662,7 @@
     </div>
 
     <!-- Interactive Script -->
-    <script>
-        // Language Toggle
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.statement-pane').forEach(p => p.classList.remove('active'));
-            if (lang === 'tr') {
-                document.querySelectorAll('.lang-tab-btn')[1].classList.add('active');
-                document.getElementById('statement-tr').classList.add('active');
-            } else {
+    <script> else {
                 document.querySelectorAll('.lang-tab-btn')[0].classList.add('active');
                 document.getElementById('statement-en').classList.add('active');
             }

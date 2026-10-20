@@ -126,7 +126,6 @@
                             <span class="meta-value">Rhino 3D, Grasshopper</span>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
 
@@ -168,12 +167,8 @@
                 </div>
             </div>
 
-            <!-- Bilingual Description Tabs -->
+            <!-- Research Statement -->
             <div class="bilingual-container">
-                <div class="lang-tab-bar">
-                    <button class="lang-tab-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
-                    <button class="lang-tab-btn" onclick="switchLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                </div>
                 <div id="statement-en" class="statement-pane active">
                     <p class="lead-text">
                         The structure is formed by <strong>interlocking wooden pieces, each two meters in length</strong>, creating generative spatial intervals between them. This design allows users to establish an open communal environment where individuals can showcase and display their creations, while offering the people who frequent the bazaar the opportunity to personalize their own territories within the space.
@@ -183,17 +178,6 @@
                     </p>
                     <p>
                         Students attend classes every day except Wednesdays (the weekly market day) and weekends. Every Thursday morning, they gather the bazaar’s leftover waste and surplus produce, learning through hands-on experience how to repurpose materials throughout the week. This ritual keeps their neighborhood clean while teaching how to turn discarded matter into valuable new creations, gaining deep insight into material properties and structural behaviors.
-                    </p>
-                </div>
-                <div id="statement-tr" class="statement-pane">
-                    <p class="lead-text">
-                        Yapı, her biri <strong>iki metre uzunluğunda birbirine kenetlenen ahşap parçalardan</strong> meydana gelmekte ve aralarında dinamik mekânsal boşluklar üretmektedir. Bu kurgu, kullanıcıların kendi üretimlerini sergileyebilecekleri ortak bir zemin sağlarken, pazar alanını kullanan yerel halk ve esnafa da mekân içinde kendi kişiselleştirilmiş alanlarını kurma özgürlüğü tanır.
-                    </p>
-                    <p>
-                        Eğitim ve üretim merkezi Bursa'daki tarihi pazar alanının hemen bitişiğinde yer almaktadır. Burada öğrenciler ve mahalle sakinleri, pazar tezgahlarından ve çevre sokaklardan toplanan ahşap kasaları, atık sebze ve meyveleri ileri dönüştürerek (upcycling) daha az atıkla kolektif bir yaşam kurmanın yollarını keşfederler.
-                    </p>
-                    <p>
-                        Öğrenciler Çarşamba (pazarın kurulduğu gün) ve hafta sonları hariç her gün atölye çalışmalarına katılır. Her Perşembe sabahı pazarın ardından kalan atık ve fazlalıklar toplanır; hafta boyunca dikiş, kurutma, ahşap yontu ve biçimlendirme teknikleriyle yeni mekân ve kullanım nesnelerine dönüştürülür. Bu döngü hem sokakları temiz tutar hem de malzemelerin fiziksel özelliklerini yaparak yaşayarak öğrenmeyi sağlar.
                     </p>
                 </div>
             </div>
@@ -451,19 +435,6 @@
 
     <!-- Interactive Script -->
     <script>
-        // Language Toggle
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.statement-pane').forEach(p => p.classList.remove('active'));
-            if (lang === 'tr') {
-                document.querySelectorAll('.lang-tab-btn')[1].classList.add('active');
-                document.getElementById('statement-tr').classList.add('active');
-            } else {
-                document.querySelectorAll('.lang-tab-btn')[0].classList.add('active');
-                document.getElementById('statement-en').classList.add('active');
-            }
-        }
-
         // Lightbox Functions
         function openLightbox(src, caption) {
             const modal = document.getElementById('lightbox-modal');

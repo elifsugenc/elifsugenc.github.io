@@ -1251,14 +1251,22 @@ figcaption,
 .lang-pane,
 .statement-pane,
 .statement-panel {
-    display: none;
+    display: block !important;
 }
 
 .lang-pane.active,
 .statement-pane.active,
 .statement-panel.active {
     display: block !important;
-    animation: editorialFadeIn 0.25s ease forwards;
+}
+
+/* Hide legacy language toggles */
+.lang-toggle-bar,
+.lang-switch-row,
+.lang-tab-bar,
+.lang-selector-bar,
+.lang-toggle-wrap {
+    display: none !important;
 }
 
 .lang-pane p,

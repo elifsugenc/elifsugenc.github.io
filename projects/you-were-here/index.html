@@ -141,10 +141,6 @@
             <div class="manifesto-monument-card">
                 <div class="manifesto-badge-row">
                     <span class="manifesto-badge">// THE CRITICAL APPARATUS</span>
-                    <div class="lang-toggle-bar">
-                        <button class="lang-btn active" data-lang="en">EN</button>
-                        <button class="lang-btn" data-lang="tr">TR</button>
-                    </div>
                 </div>
 
                 <!-- English Thesis -->
@@ -178,36 +174,6 @@
                     </div>
                 </div>
 
-                <!-- Turkish Thesis -->
-                <div class="lang-pane" id="pane-tr">
-                    <p class="manifesto-lead-quote">
-                        Yalnızca kasti eylemlerin &mdash; tıklanan butonların, gönderilen formların &mdash; kaydedildiği dijital dünyada, varlığımızın asıl ağırlığı satır aralarında gizlidir: bir başlığın üzerinde duraksayan imleç, sayfalar arasındaki kararsız yaylar ve düşüncenin eyleme dönüştüğü o mikro anlar.
-                    </p>
-                    <div class="manifesto-inquiry-box">
-                        <span class="inquiry-prefix">TEMEL SORUŞTURMA:</span>
-                        <div class="inquiry-statement">
-                            &ldquo;Anonim bir imleç çizgisi, fiziksel bir izin ağırlığına sahip olabilir mi? Dijital bir hat mekânsal bir belleğe dönüşebilir mi?&rdquo;
-                        </div>
-                    </div>
-                    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65;">
-                        <strong>YOU WERE HERE.</strong> bütün web sitesini duyarlı bir mekânsal yüzeye dönüştürür. Ziyaretçi onay verdiğinde, ekran üzerindeki tüm istemsiz kinetik hareketleri normalize edilmiş bir koordinat dizisi olarak kaydedilir. Her ziyaret tekil ve ardışık bir numara ile (<code>TRACE_0001</code>, <code>TRACE_0002</code>...) kalıcı bulut arşivine işlenir. Bu sistem bir gözetleme mekanizması değil; bireysel varlığın kolektif bir dijital tortuya dönüştüğü katılımcı bir anıttır.
-                    </p>
-
-                    <!-- Dikkat Ekonomisi Mimari Çerçevesi -->
-                    <div class="attention-economy-block" style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed rgba(26,54,93,0.15);">
-                        <span class="manifesto-badge" style="background: rgba(37,99,235,0.08); color: var(--accent-color, #2563eb); border-color: rgba(37,99,235,0.25);">// ARAŞTIRMA ÇERÇEVESİ: DİKKAT EKONOMİSİ &bull; KİME, NEDEN VE NASIL BİR VERİ?</span>
-                        <h3 style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 12px 0 8px 0; letter-spacing: -0.01em;">Mekânsal Bir Zemin Olarak Ekran: Veri Sömürüsünü Kolektif Belleğe Dönüştürmek</h3>
-                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px;">
-                            Günümüz dikkat ekonomisinde dijital arayüzler; bakışı yakalamak, ekranda kalma süresini metalaştırmak ve kullanıcıyı manipüle etmek üzere kurgulanır. Her duraksama, kaydırma hızı ve kararsızlık anı, algoritmik sistemler tarafından ticari bir kâra dönüştürülmek üzere gizlice kaydedilir.
-                        </p>
-                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px;">
-                            <strong>YOU WERE HERE.</strong> bu düzeneği mimari ve eleştirel bir yaklaşımla tersyüz eder. Gizli bir veri madenciliği yerine, bu portfolyo web sitesi şeffaf bir canlı araştırma demosu olarak çalışır: <em>İnsanlar ekranın hangi kısımlarında daha fazla vakit geçiriyor? Hangi sorular zihinsel bir duraklamaya yol açıyor? Ticari baskılardan arındırılmış bir yüzeyde insan eli ve bakışı nasıl mekânsal arzular inşa ediyor?</em>
-                        </p>
-                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
-                            Bu araştırmada dikkat verisi şirketlerin mülkü değil, kamuya açık kolektif bir anıttır. Ekranda geçirilen süre reklam geliri üretmez; aksine tefekkürün ve duraksamanın yarı saydam hâlelerine dönüşür. Web sitesi pasif bir portfolyo olmaktan çıkarak, insan dikkatinin kırılgan koreografisini belgeleyen canlı bir araştırma aygıtı hâlini alır.
-                        </p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -459,23 +425,6 @@
             let allTraces = [];
             let filteredTraces = [];
             let selectedModalTrace = null;
-
-            // 1. Language Toggle (EN / TR)
-            const langBtns = document.querySelectorAll('.lang-btn');
-            const langPanes = {
-                en: document.getElementById('pane-en'),
-                tr: document.getElementById('pane-tr')
-            };
-
-            langBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const lang = btn.dataset.lang;
-                    langBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    Object.keys(langPanes).forEach(k => {
-                        langPanes[k].classList.toggle('active', k === lang);
-                    });
-                });
             });
 
             window.collectiveEraMode = 'CURRENT';

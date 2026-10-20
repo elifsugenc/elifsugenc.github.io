@@ -141,10 +141,6 @@
             <div class="manifesto-monument-card">
                 <div class="manifesto-badge-row">
                     <span class="manifesto-badge">SIMULATION INQUIRY &bull; 2026</span>
-                    <div class="lang-toggle-bar">
-                        <button type="button" class="lang-btn active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
-                        <button type="button" class="lang-btn" onclick="switchDetailLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                    </div>
                 </div>
 
                 <!-- English Pane -->
@@ -163,21 +159,6 @@
                     </p>
                 </div>
 
-                <!-- Turkish Pane -->
-                <div id="pane-tr" class="lang-pane">
-                    <div class="manifesto-lead-quote">
-                        Afet hiçbir zaman tarafsız değildir. Yangının her bedene eşit davrandığı yönündeki yaygın kabul, mimarlığın mekânsal politikasını ve yapısal eşitsizlikleri görünmez kılar. Kaçış darboğazları, yetersiz yangın merdivenleri, kilitli acil çıkış kapıları, yanıcı cephe kaplamaları ve tahliye hiyerarşileri ani kazalar değil; afetten çok önce imar planlarında ve bütçe kararlarında alınmış mimari tercihlerdir.
-                    </div>
-
-                    <div class="manifesto-inquiry-box">
-                        <span class="inquiry-prefix">Fire Escape Simulation soruyor:</span>
-                        <div class="inquiry-statement">“Yangından etkilenmek politik midir?”</div>
-                    </div>
-
-                    <p class="editorial-col-text" style="margin-top: 18px; font-size: 1rem; color: #475569; line-height: 1.8;">
-                        Bir acil durum meydana geldiğinde, hayatta kalma olasılığı mekânsal eşiklerle ve yönetmelik tavizleriyle dağıtılır. Yüksek yoğunluklu yapılar, üniversiteler ve kamusal kompleksler yalnızca insanları barındırmaz; kaçışın ve hayatta kalmanın koreografisini çizer. Bu simülasyon projesi, salt asgari mevzuat standartlarını onaylamak için değil; mimari sıkışmanın ve mekânsal ihmalin yarattığı görünmez eşitsizlikleri algoritmik olarak görünür kılmak için kurgulanmıştır.
-                    </p>
-                </div>
             </div>
         </section>
 
@@ -243,21 +224,6 @@
 
     <!-- Custom Cursor & Interaction Scripts -->
     <script>
-        // Language Toggle
-        function switchDetailLang(lang) {
-            const btns = document.querySelectorAll('.lang-btn');
-            const panes = document.querySelectorAll('.lang-pane');
-            btns.forEach(b => b.classList.remove('active'));
-            panes.forEach(p => p.classList.remove('active'));
-            if (lang === 'tr') {
-                if (btns[1]) btns[1].classList.add('active');
-                const pTr = document.getElementById('pane-tr');
-                if (pTr) pTr.classList.add('active');
-            } else {
-                if (btns[0]) btns[0].classList.add('active');
-                const pEn = document.getElementById('pane-en');
-                if (pEn) pEn.classList.add('active');
-            }
         }
     </script>
     <script src="../project-cursor.js"></script>

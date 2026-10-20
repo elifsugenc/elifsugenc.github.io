@@ -165,12 +165,8 @@
                 </div>
             </div>
 
-            <!-- Bilingual Description Tabs -->
+            <!-- Research Statement -->
             <div class="bilingual-container">
-                <div class="lang-tab-bar">
-                    <button class="lang-tab-btn active" onclick="switchLang('en')">ENGLISH STATEMENT</button>
-                    <button class="lang-tab-btn" onclick="switchLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                </div>
                 <div id="statement-en" class="statement-pane active">
                     <p class="lead-text">
                         This project is situated in a public park right beside the historical <strong>Kuzguncuk Bostanı</strong> in Üsküdar, Istanbul. Its primary objective is to forge a shared-use community pavilion dedicated to cultivating, preparing, and serving a specialty culinary dish crafted from native bean varieties specifically adapted to Kuzguncuk’s microclimate.
@@ -180,17 +176,6 @@
                     </p>
                     <p>
                         The communal kitchen borrows its geometric rhythm directly from the structural ribs, embedding cooktops, drying racks, prep counters, and seed archives into a continuous sequence. Similarly, the public restrooms are woven into the thickest curve of the waffle envelope, serving civic needs without imposing an aggressive, out-of-place volume onto the serene green landscape.
-                    </p>
-                </div>
-                <div id="statement-tr" class="statement-pane">
-                    <p class="lead-text">
-                        Bu proje, İstanbul'un Üsküdar ilçesinde, tarihi <strong>Kuzguncuk Bostanı</strong>'na komşu bir park alanında yer almaktadır. Projenin ana konusu, Kuzguncuk Bostanı'nda yetişen ve bölgenin iklimine uygun yerel fasulye çeşitlerinden yapılan özel bir ritüel yemeğinin hazırlanması, pişirilmesi, servis edilmesi ve yetiştirilmesi süreçlerini destekleyen ortak bir kamusal yapı tasarlamaktır.
-                    </p>
-                    <p>
-                        Yapı, parkın mevcut dokusunu ve iki sokak arasındaki yaya geçirgenliğini koparmamak adına ahşaptan, boşluklu bir waffle (kaset) strüktür olarak kurgulanmıştır. Bu açık ve gözenekli yapı hem fasulye sarmaşıklarının tırmanarak yaşayabileceği dikey bir yaşam alanı sunar hem de alandaki mevcut ağaçların gövdelerine ve taçlarına saygı duyarak etraflarından kıvrılır.
-                    </p>
-                    <p>
-                        Mutfak alanı, yapının taşıyıcı kurgusundan şekil alarak pişirme, kurutma, servis ve depolama birimlerini tek bir dilde çözer. Tuvalet kütlesi de parkın ortasında yabancı bir kutu gibi durmak yerine strüktürün en yoğun kıvrımının içine gizlenerek doğal çevreye kusursuzca entegre olur.
                     </p>
                 </div>
             </div>
@@ -457,15 +442,7 @@
     </div>
 
     <!-- Interactive Script -->
-    <script>
-        // Language Toggle
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.statement-pane').forEach(p => p.classList.remove('active'));
-            if (lang === 'tr') {
-                document.querySelectorAll('.lang-tab-btn')[1].classList.add('active');
-                document.getElementById('statement-tr').classList.add('active');
-            } else {
+    <script> else {
                 document.querySelectorAll('.lang-tab-btn')[0].classList.add('active');
                 document.getElementById('statement-en').classList.add('active');
             }

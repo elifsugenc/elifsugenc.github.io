@@ -460,14 +460,11 @@
         <section id="statement" class="project-section">
             <div class="section-badge-header">
                 <span class="sec-index">06</span>
-                <span class="sec-title">CURATORIAL MANIFESTO // BILINGUAL STATEMENT</span>
+                <span class="sec-title">CURATORIAL MANIFESTO // RESEARCH STATEMENT</span>
             </div>
 
             <div class="statement-card">
-                <div class="lang-toggle-wrap">
-                    <button type="button" class="lang-pill active" onclick="switchDetailLang('en')">ENGLISH STATEMENT</button>
-                    <button type="button" class="lang-pill" onclick="switchDetailLang('tr')">TÜRKÇE AÇIKLAMA</button>
-                </div>
+
 
                 <div id="statement-en" class="statement-panel active">
                     <p>
@@ -481,17 +478,6 @@
                     </p>
                 </div>
 
-                <div id="statement-tr" class="statement-panel">
-                    <p>
-                        <strong>Bajo la Fresca</strong>, İspanya'nın Córdoba kentinde yer alan tarihi Patio San Basilio 44 avlusunda, kentin geleneksel avlu şenlikleri bağlamında gerçekleştirilmiş bir mekânsal yerleştirme ve bağlamsal araştırmadır. Proje, Endülüs kültürünün köklü bir geleneği olan <em>tomar el fresco</em> (akşam serinliğinde dışarı çıkıp sohbet etme ve dinlenme) ritüelini mekânsal bir deneyime dönüştürür.
-                    </p>
-                    <p>
-                        Yaz aylarında sıcaklığın 40°C'yi aştığı Córdoba'da tarihi avlular; kireç badanalı kalın taş duvarları, yoğun sarmaşıkları ve kuyularıyla kentin boğucu sıcağına karşı birer mikroklimatik sığınak ve komşuluk vahası işlevi görür. Ancak bu tarihi avlularda saksı ve oturma alanlarının yoğunluğu nedeniyle yeni bitkilendirme için zemin alanı son derece kısıtlıdır. <em>Bajo la Fresca</em>, bu mekânsal kısıtı aşmak için avlunun kullanılmayan hava sahasını askıya alınmış bir kumaş gölgelikle etkinleştirir; bahçeyi zemini işgal etmeden yukarıya doğru genişletir.
-                    </p>
-                    <p>
-                        Dalgalı kıvrımlarla işlenmiş hafif kumaş şeritlerinden üretilen yerleştirme; avlunun begonvil, narenciye ve seramik renk tonlarını taşıyan degrade boyalı pamuk yapraklarıyla donatılmıştır. Pamuk liflerine emdirilen taze portakal ve limon kabukları ile doğal sivrisinek kovucu esanslar, akşam esintisiyle birlikte avluya yayılarak aşağıda toplanan insanlara ferahlatıcı bir koku peyzajı sunar. Proje, tarihi bir miras dokusu içinde şu temel soruyu araştırır: <em>Güzelliğin rolünü çalmadan onun altını nasıl çizebilirsiniz?</em>
-                    </p>
-                </div>
             </div>
         </section>
 
@@ -538,16 +524,7 @@
 
     <!-- Scripts -->
     <script src="../project-cursor.js"></script>
-    <script>
-        // Bilingual Toggle
-        function switchDetailLang(lang) {
-            document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.statement-panel').forEach(p => p.classList.remove('active'));
-
-            if (lang === 'tr') {
-                document.querySelectorAll('.lang-pill')[1].classList.add('active');
-                document.getElementById('statement-tr').classList.add('active');
-            } else {
+    <script> else {
                 document.querySelectorAll('.lang-pill')[0].classList.add('active');
                 document.getElementById('statement-en').classList.add('active');
             }

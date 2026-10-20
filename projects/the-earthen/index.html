@@ -163,15 +163,8 @@
                 </div>
             </div>
 
-            <!-- Bilingual Curatorial Statements -->
+            <!-- Curatorial Statement -->
             <div class="bilingual-statement-container">
-                <div class="lang-selector-bar">
-                    <span class="lang-bar-label">CURATORIAL STATEMENT:</span>
-                    <div class="lang-pills">
-                        <button type="button" class="lang-pill active" onclick="switchDetailLang('en')">ENGLISH</button>
-                        <button type="button" class="lang-pill" onclick="switchDetailLang('tr')">TÜRKÇE</button>
-                    </div>
-                </div>
 
                 <div id="statement-en" class="statement-panel active">
                     <div class="statement-grid">
@@ -196,28 +189,6 @@
                     </div>
                 </div>
 
-                <div id="statement-tr" class="statement-panel">
-                    <div class="statement-grid">
-                        <div class="statement-col">
-                            <h4 class="col-heading">TOPRAKLA GELEN FİZİKSEL VE RUHSAL ESENLİK (WELLBEING)</h4>
-                            <p>
-                                Yoğun iş merkezlerinin ve kentsel koşturmacanın ortasında konumlanan <em>The Earthen</em>, bedensel ve ruhsal iyileşme sunan bir sığınaktır. Çağdaş kent yaşamında yorgunluk ve tükenmişlik sürekli ertelenir veya bastırılır.
-                            </p>
-                            <p>
-                                <em>The Earthen</em>, ziyaretçilerin toprak, kil ve çamurla doğrudan bedensel temas kurduğu duyusal bir ortam sağlar. Mineral çamur havuzları, kili yoğurma atölyeleri ve dokunsal yüzeyler sayesinde insan bedenine ve zihnine dinginlik ve canlılık kazandırır.
-                            </p>
-                        </div>
-                        <div class="statement-col">
-                            <h4 class="col-heading">TOPRAĞIN DÖNGÜLERİNDEN YAŞAMIN DÖNGÜLERİNE</h4>
-                            <p>
-                                Proje, toprağın doğal döngülerini insan yaşamındaki iniş, çıkış, dinlenme ve yenilenme süreçlerine benzetir. Toprak nasıl dinlenip arınarak yeniden verimli hale gelirse, insan da durup nefes alarak tazelenir.
-                            </p>
-                            <p>
-                                Yarı saydam kabuğun süzdüğü sıcak ışık altında, çatı bahçesinden zemin altı çamur havuzlarına uzanan döngüsel tesisat ağı yapıyı ve insan bedenini yaşayan ortak bir iyileşme döngüsünde buluşturur.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- (Re)Birth Biological Cycle Diagram Cards -->
@@ -589,16 +560,7 @@
 
     <!-- Page Scripts -->
     <script src="../project-cursor.js"></script>
-    <script>
-        // Bilingual Toggle
-        function switchDetailLang(lang) {
-            document.querySelectorAll('.lang-pill').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.statement-panel').forEach(p => p.classList.remove('active'));
-
-            if (lang === 'tr') {
-                document.querySelectorAll('.lang-pill')[1].classList.add('active');
-                document.getElementById('statement-tr').classList.add('active');
-            } else {
+    <script> else {
                 document.querySelectorAll('.lang-pill')[0].classList.add('active');
                 document.getElementById('statement-en').classList.add('active');
             }
