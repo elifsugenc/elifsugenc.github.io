@@ -70,6 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!target || target === document.body || target === document.documentElement) return false;
             if (isSpatialInteractive(target)) return true;
 
+            // When hovering over tags, keep cursor as plain blue dot (do not turn into question mark)
+            if (target.closest('.archive-tag-btn, .a-tag, .archive-pill, .archive-tag-list, .archive-filter-bar, .archive-entry-tags, .tag, .detail-tag, .filter-chip, [data-cursor="dot"]')) {
+                return false;
+            }
+
             const clickableAncestor = target.closest(
                 'a, button, input, select, textarea, label, summary, details, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"]), ' +
                 '.project-card, .radial-dot, .hq-card, .hq-star-node, .wwh-btn-learn, .wwh-btn, .wwh-reopen-circle, ' +
