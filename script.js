@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             question: 'How can we make this labour visible again?',
             keywords: ['Collective Memory', 'Narratives', 'Spatial Justice'],
             year: '2027',
-            medium: 'Spatial Design',
+            medium: 'Design',
             url: './projects/emek-museum/',
             img: './assets/emek-museum-wip.svg',
             color: '#38bdf8',
