@@ -9201,7 +9201,7 @@ body {
     display: none;
 }
 
-/* ARCHIVE TAG FILTER BAR — EMPTY/FILLED SQUARE ARCHITECTURAL TAXONOMY */
+/* ARCHIVE TAG FILTER BAR — BLUE ARCHITECTURAL PALETTE */
 .archive-filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -9219,10 +9219,10 @@ body {
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #0f172a;
+    color: #2563eb;
     text-transform: uppercase;
     padding-right: 12px;
-    border-right: 1px solid rgba(15, 23, 42, 0.14);
+    border-right: 1px solid rgba(37, 99, 235, 0.22);
     user-select: none;
     flex-shrink: 0;
 }
@@ -9231,9 +9231,11 @@ body {
     display: inline-block;
     width: 9px;
     height: 9px;
-    background: #0f172a;
+    background: #2563eb;
+    color: #2563eb;
     flex-shrink: 0;
     line-height: 1;
+    font-size: 0;
 }
 
 .archive-tag-list,
@@ -9265,11 +9267,11 @@ body {
 }
 
 .archive-tag-btn:hover {
-    color: #0f172a;
+    color: #2563eb;
 }
 
 .archive-tag-btn:hover .tag-sq {
-    border-color: #0f172a;
+    border-color: #2563eb;
 }
 
 .tag-sq {
@@ -9277,24 +9279,24 @@ body {
     width: 9px;
     height: 9px;
     box-sizing: border-box;
-    border: 1.5px solid #94a3b8;
+    border: 1.5px solid rgba(37, 99, 235, 0.4);
     background: transparent;
     flex-shrink: 0;
     transition: all 0.15s ease;
 }
 
 .archive-tag-btn.active {
-    color: #0f172a;
+    color: #2563eb;
     font-weight: 700;
 }
 
 .archive-tag-btn.active .tag-sq {
-    background: #0f172a;
-    border-color: #0f172a;
+    background: #2563eb;
+    border-color: #2563eb;
 }
 
 .archive-tag-btn:focus-visible {
-    outline: 1px dotted #0f172a;
+    outline: 1px dotted #2563eb;
     outline-offset: 2px;
 }
 
@@ -9310,7 +9312,7 @@ body {
     cursor: pointer;
 }
 .archive-pill.active {
-    color: #0f172a;
+    color: #2563eb;
     font-weight: 700;
 }
 
@@ -9366,8 +9368,8 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(15, 23, 42, 0.03);
-    border: 1px solid rgba(15, 23, 42, 0.1);
+    background: rgba(37, 99, 235, 0.04);
+    border: 1px solid rgba(37, 99, 235, 0.18);
     border-radius: 2px;
     padding: 3px 7px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -9385,27 +9387,27 @@ body {
     width: 6px;
     height: 6px;
     box-sizing: border-box;
-    border: 1px solid #94a3b8;
+    border: 1px solid rgba(37, 99, 235, 0.4);
     background: transparent;
     flex-shrink: 0;
     transition: all 0.15s ease;
 }
 .a-tag:hover {
-    color: #0f172a;
-    border-color: #0f172a;
+    color: #2563eb;
+    border-color: #2563eb;
 }
 .a-tag:hover .a-tag-sq {
-    border-color: #0f172a;
+    border-color: #2563eb;
 }
 .a-tag.active {
-    color: #0f172a;
+    color: #2563eb;
     font-weight: 700;
-    border-color: #0f172a;
-    background: rgba(15, 23, 42, 0.07);
+    border-color: #2563eb;
+    background: rgba(37, 99, 235, 0.1);
 }
 .a-tag.active .a-tag-sq {
-    background: #0f172a;
-    border-color: #0f172a;
+    background: #2563eb;
+    border-color: #2563eb;
 }
 
 .archive-entry-question {
