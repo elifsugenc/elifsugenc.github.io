@@ -2648,55 +2648,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const searchInput = document.getElementById('archive-search-input');
         const clearBtn = document.getElementById('archive-search-clear');
-        const filterPills = document.querySelectorAll('#archive-filter-pills .archive-pill');
         const countBadge = document.getElementById('archive-count-badge');
         const statCount = document.getElementById('archive-stat-count');
 
-        let currentFilter = 'all';
+        // Multi-select state: Set of active tag strings (empty set = ALL)
+        const activeFilters = new Set();
         let searchQuery = '';
 
+        function toggleTag(tag) {
+            if (tag === 'all') {
+                activeFilters.clear();
+            } else {
+                if (activeFilters.has(tag)) {
+                    activeFilters.delete(tag);
+                } else {
+                    activeFilters.add(tag);
+                }
+            }
+            render();
+        }
+
         function render() {
-            const query = searchQuery.trim().toLowerCase();
-            const list = window.ARCHIVE_QUESTIONS.filter(item => {
-                const matchesFilter = (currentFilter === 'all') || (item.tags && item.tags.includes(currentFilter));
-                const matchesQuery = !query ||
-                    item.question.toLowerCase().includes(query) ||
-                    (item.reflection && item.reflection.toLowerCase().includes(query)) ||
-                    (item.tags && item.tags.some(t => t.toLowerCase().includes(query))) ||
-                    (item.relatedProject && item.relatedProject.title.toLowerCase().includes(query));
-                return matchesFilter && matchesQuery;
+            const filterButtons = document.querySelectorAll('#archive-filter-bar .archive-tag-btn, #archive-filter-pills .archive-tag-btn, .archive-pill');
+            const isAll = (activeFilters.size === 0);
+
+            filterButtons.forEach(btn => {
+                const f = btn.getAttribute('data-filter');
+                if (f === 'all') {
+                    btn.classList.toggle('active', isAll);
+                } else {
+                    btn.classList.toggle('active', activeFilters.has(f));
+                }
             });
 
+            const query = searchQuery.trim().toLowerCase();
+            let list = window.ARCHIVE_QUESTIONS;
+
+            // Multi-tag filter logic
+            if (activeFilters.size === 1) {
+                const single = Array.from(activeFilters)[0];
+                list = list.filter(item => item.tags && item.tags.includes(single));
+            } else if (activeFilters.size >= 2) {
+                const filterArr = Array.from(activeFilters);
+                // First check if any question matches ALL selected tags simultaneously (intersection)
+                const exactMatches = list.filter(item =>
+                    item.tags && filterArr.every(t => item.tags.includes(t))
+                );
+                if (exactMatches.length > 0) {
+                    list = exactMatches;
+                } else {
+                    // Fallback: match questions having ANY of the selected tags (union)
+                    list = list.filter(item =>
+                        item.tags && filterArr.some(t => item.tags.includes(t))
+                    );
+                }
+            }
+
+            // Text search query
+            if (query) {
+                list = list.filter(item =>
+                    (item.question && item.question.toLowerCase().includes(query)) ||
+                    (item.reflection && item.reflection.toLowerCase().includes(query)) ||
+                    (item.tags && item.tags.some(t => t.toLowerCase().includes(query)))
+                );
+            }
+
+            // Topbar badge & counter stats
             if (countBadge) {
-                countBadge.textContent = `${list.length} INQUIRIES \u2022 ISTANBUL TIME`;
+                if (activeFilters.size === 0) {
+                    countBadge.textContent = `${list.length} INQUIRIES \u2022 ALL`;
+                } else {
+                    const tagLabels = Array.from(activeFilters).map(t => `#${t.toUpperCase()}`).join(' + ');
+                    countBadge.textContent = `${list.length} INQUIRIES \u2022 ${tagLabels}`;
+                }
             }
             if (statCount) {
                 statCount.textContent = list.length < 10 ? `0${list.length}` : `${list.length}`;
             }
 
+            // Empty state
             if (list.length === 0) {
                 feedContainer.innerHTML = `
                     <div class="archive-empty-feed">
-                        <p class="a-empty-title">No questions found matching your filter.</p>
-                        <button type="button" class="archive-reset-filter-btn" id="archive-reset-btn">Reset Filters</button>
+                        <p class="a-empty-title">No inquiries match the selected filter.</p>
+                        <button type="button" class="archive-reset-filter-btn" id="archive-reset-btn">[ RESET FILTERS ]</button>
                     </div>
                 `;
                 const resetBtn = document.getElementById('archive-reset-btn');
                 if (resetBtn) {
                     resetBtn.addEventListener('click', () => {
-                        currentFilter = 'all';
+                        activeFilters.clear();
                         searchQuery = '';
                         if (searchInput) searchInput.value = '';
                         if (clearBtn) clearBtn.classList.add('hidden');
-                        filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === 'all'));
                         render();
                     });
                 }
                 return;
             }
 
+            // Question cards
             feedContainer.innerHTML = list.map(item => {
-                const tagsHtml = (item.tags || []).map(t => `<button type="button" class="a-tag" data-tag="${t}">#${t}</button>`).join(' ');
+                const tagsHtml = (item.tags || []).map(t => {
+                    const isTagActive = activeFilters.has(t);
+                    return `<button type="button" class="a-tag ${isTagActive ? 'active' : ''}" data-tag="${t}"><span class="a-tag-sq"></span>#${t}</button>`;
+                }).join(' ');
                 const timeHtml = item.time ? `<span class="a-time-sep">&bull;</span><span class="a-time-clock">${item.time}</span>` : '';
 
                 return `
@@ -2717,27 +2773,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }).join('');
 
-            // Allow clicking inline tags to filter
+            // Allow clicking inline tags to toggle filter
             feedContainer.querySelectorAll('.a-tag').forEach(tagBtn => {
                 tagBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const tag = tagBtn.getAttribute('data-tag');
                     if (tag) {
-                        currentFilter = tag;
-                        filterPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter') === tag));
-                        render();
+                        toggleTag(tag);
                     }
                 });
             });
         }
 
-        // Filter pills click
-        filterPills.forEach(pill => {
-            pill.addEventListener('click', () => {
-                filterPills.forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                currentFilter = pill.getAttribute('data-filter') || 'all';
-                render();
+        // Attach click listeners to all filter buttons
+        const filterButtons = document.querySelectorAll('#archive-filter-bar .archive-tag-btn, #archive-filter-pills .archive-tag-btn, .archive-pill');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tag = btn.getAttribute('data-filter') || 'all';
+                toggleTag(tag);
             });
         });
 

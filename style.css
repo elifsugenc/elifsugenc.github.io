@@ -9201,37 +9201,117 @@ body {
     display: none;
 }
 
+/* ARCHIVE TAG FILTER BAR — EMPTY/FILLED SQUARE ARCHITECTURAL TAXONOMY */
+.archive-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    padding: 12px 0 4px 0;
+    width: 100%;
+}
+
+.archive-filter-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #0f172a;
+    text-transform: uppercase;
+    padding-right: 12px;
+    border-right: 1px solid rgba(15, 23, 42, 0.14);
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.filter-heading-sq {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: #0f172a;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.archive-tag-list,
 .archive-filter-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
     align-items: center;
+    gap: 8px 16px;
 }
-.archive-pill {
-    background: #ffffff;
-    border: 1px solid rgba(26, 54, 93, 0.14);
-    border-radius: 4px;
-    padding: 5px 12px;
-    font-family: monospace;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: #475569;
+
+.archive-tag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: transparent;
+    border: none;
+    padding: 4px 0;
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    color: #64748b;
     cursor: pointer;
-    transition: all 0.2s ease;
     line-height: 1;
+    text-transform: uppercase;
+    transition: color 0.15s ease;
+    user-select: none;
 }
-.archive-pill:hover {
-    background: #f1f5f9;
+
+.archive-tag-btn:hover {
     color: #0f172a;
-    border-color: rgba(37, 99, 235, 0.28);
+}
+
+.archive-tag-btn:hover .tag-sq {
+    border-color: #0f172a;
+}
+
+.tag-sq {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    box-sizing: border-box;
+    border: 1.5px solid #94a3b8;
+    background: transparent;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+
+.archive-tag-btn.active {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.archive-tag-btn.active .tag-sq {
+    background: #0f172a;
+    border-color: #0f172a;
+}
+
+.archive-tag-btn:focus-visible {
+    outline: 1px dotted #0f172a;
+    outline-offset: 2px;
+}
+
+/* Fallback for legacy archive pill markup */
+.archive-pill {
+    background: transparent;
+    border: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    color: #64748b;
+    cursor: pointer;
 }
 .archive-pill.active {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: #ffffff;
+    color: #0f172a;
     font-weight: 700;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
 }
 
 .archive-questions-feed {
@@ -9283,21 +9363,49 @@ body {
     gap: 5px;
 }
 .a-tag {
-    background: rgba(15, 23, 42, 0.04);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 3px;
-    padding: 2px 7px;
-    font-family: monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(15, 23, 42, 0.03);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 2px;
+    padding: 3px 7px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: #64748b;
     cursor: pointer;
-    line-height: 1.1;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+}
+.a-tag .a-tag-sq {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    box-sizing: border-box;
+    border: 1px solid #94a3b8;
+    background: transparent;
+    flex-shrink: 0;
     transition: all 0.15s ease;
 }
 .a-tag:hover {
-    background: #dbeafe;
-    color: #1e40af;
-    border-color: #bfdbfe;
+    color: #0f172a;
+    border-color: #0f172a;
+}
+.a-tag:hover .a-tag-sq {
+    border-color: #0f172a;
+}
+.a-tag.active {
+    color: #0f172a;
+    font-weight: 700;
+    border-color: #0f172a;
+    background: rgba(15, 23, 42, 0.07);
+}
+.a-tag.active .a-tag-sq {
+    background: #0f172a;
+    border-color: #0f172a;
 }
 
 .archive-entry-question {

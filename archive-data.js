@@ -22,7 +22,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "23:38",
         question: "Is voice the only difference between a female and male AI chatbot, or does it also shape the conversational flow?",
         reflection: "",
-        tags: ["ai", "voice", "daily-life", "interaction"],
+        tags: ["ai", "daily-life"],
         relatedProject: null
     },
     {
@@ -31,7 +31,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "23:33",
         question: "Why are robot bodies so often designed as female, while the default voices of AI tools are male?",
         reflection: "",
-        tags: ["ai", "gender", "technology", "daily-life"],
+        tags: ["ai", "body"],
         relatedProject: null
     },
     {
@@ -40,7 +40,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "How can we make this labour visible again?",
         reflection: "",
-        tags: ["memory", "invisible-labour", "space", "labour"],
+        tags: ["memory", "space", "body"],
         relatedProject: null
     },
     {
@@ -49,7 +49,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Can you escape the fire?",
         reflection: "",
-        tags: ["behavior", "traces", "simulation", "space"],
+        tags: ["simulation", "space", "traces"],
         relatedProject: null
     },
     {
@@ -58,7 +58,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "When does something become a memory?",
         reflection: "",
-        tags: ["memory", "time", "daily-life"],
+        tags: ["memory", "time"],
         relatedProject: null
     },
     {
@@ -67,7 +67,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "What do we leave behind when we navigate a digital space?",
         reflection: "",
-        tags: ["traces", "digital-space", "attention", "space"],
+        tags: ["ai", "space", "traces"],
         relatedProject: null
     },
     {
@@ -76,7 +76,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "How do you highlight beauty without stealing its spotlight?",
         reflection: "",
-        tags: ["light", "restraint", "space", "climate"],
+        tags: ["space", "ecology"],
         relatedProject: null
     },
     {
@@ -85,7 +85,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "How does a culinary ritual shape a social atmosphere?",
         reflection: "",
-        tags: ["ritual", "gathering", "space", "culinary"],
+        tags: ["ritual", "space", "daily-life"],
         relatedProject: null
     },
     {
@@ -94,7 +94,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Is there life because there is death?",
         reflection: "",
-        tags: ["soil", "decay", "materials", "earth"],
+        tags: ["materials", "decay", "ecology"],
         relatedProject: null
     },
     {
@@ -103,7 +103,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Why do we always look at a window from the inside?",
         reflection: "",
-        tags: ["daily-life", "threshold", "space"],
+        tags: ["threshold", "space", "daily-life"],
         relatedProject: null
     },
 
@@ -114,7 +114,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "How many microplastics can we eat in a day?",
         reflection: "",
-        tags: ["materials", "body", "daily-life", "bio-decay"],
+        tags: ["materials", "decay", "body"],
         relatedProject: null
     },
     {
@@ -123,7 +123,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Can a city exhibit itself?",
         reflection: "",
-        tags: ["city", "traces", "space", "strata"],
+        tags: ["traces", "memory", "space"],
         relatedProject: null
     },
     {
@@ -132,7 +132,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Is doing nothing doing something?",
         reflection: "",
-        tags: ["inaction", "trace", "daily-life", "presence"],
+        tags: ["traces", "daily-life", "time"],
         relatedProject: null
     },
 
@@ -143,7 +143,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Can one space hold both play and quiet?",
         reflection: "",
-        tags: ["threshold", "play", "space", "timber"],
+        tags: ["threshold", "space"],
         relatedProject: null
     },
     {
@@ -152,7 +152,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "When does waste become a place?",
         reflection: "",
-        tags: ["materials", "waste", "transformation", "making"],
+        tags: ["materials", "space", "decay"],
         relatedProject: null
     },
     {
@@ -161,7 +161,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "",
         question: "Can we build without displacing life?",
         reflection: "",
-        tags: ["materials", "coexistence", "space", "ecology"],
+        tags: ["space", "materials", "ecology"],
         relatedProject: null
     }
 ];
