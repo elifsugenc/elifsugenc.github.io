@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../project-shared-theme.css">
+    <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
+    <script>
+        window.handleProjectReturn = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            try {
+                sessionStorage.setItem('portfolio_return_active', 'true');
+                var ret = sessionStorage.getItem('portfolio_return_url');
+                if (ret) { window.location.href = ret; return false; }
+            } catch (_) {}
+            try {
+                var p = new URLSearchParams(window.location.search).get('from');
+                if (p === 'constellation') { window.location.href = '../../#constellation'; return false; }
+                if (p === 'about') { window.location.href = '../../#about'; return false; }
+                if (p === 'archive') { window.location.href = '../../#archive'; return false; }
+                if (p === 'design-approach') { window.location.href = '../../#design-approach'; return false; }
+            } catch (_) {}
+            if (window.history && window.history.length > 1) { window.history.back(); return false; }
+            window.location.href = '../../';
+            return false;
+        };
+    </script>
 </head>
 <body class="project-detail-body" style="--proj-color: #ef4444; --proj-rgb: 239, 68, 68; --proj-accent2: #f97316; --proj-accent2-rgb: 249, 115, 22;">
     <!-- Architectural Grid Background -->

@@ -772,6 +772,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // =========================================================
+    // ORIGIN TRACKING & SAFE RETURN ACROSS ALL PORTFOLIO TABS
+    // =========================================================
+    function getPortfolioCurrentOrigin() {
+        const curTab = window.currentTabId || (typeof currentTabId !== 'undefined' ? currentTabId : 'main') || 'main';
+        if (curTab === 'main') {
+            const homeSky = document.getElementById('hq-constellation-sky');
+            const isConstellation = homeSky && homeSky.getAttribute('data-state') === 'constellation';
+            const hash = (window.location.hash || '').replace(/^#/, '').trim();
+            if (isConstellation || hash === 'constellation' || hash === 'projects') {
+                return 'constellation';
+            }
+            return 'cluster';
+        }
+        return curTab;
+    }
+    window.getPortfolioCurrentOrigin = getPortfolioCurrentOrigin;
+
+    function savePortfolioReturnState() {
+        try {
+            const origin = getPortfolioCurrentOrigin();
+            const scrollY = window.scrollY || window.pageYOffset || 0;
+            const tab = (origin === 'constellation' || origin === 'cluster') ? 'main' : origin;
+            const state = (origin === 'constellation') ? 'constellation' : 'cluster';
+
+            sessionStorage.setItem('portfolio_return_scroll', String(scrollY));
+            sessionStorage.setItem('portfolio_return_tab', tab);
+            sessionStorage.setItem('portfolio_return_state', state);
+            sessionStorage.setItem('portfolio_return_origin', origin);
+
+            let returnUrl = window.location.href.split('#')[0];
+            if (origin === 'constellation') {
+                returnUrl += '#constellation';
+            } else if (origin !== 'cluster') {
+                returnUrl += '#' + origin;
+            }
+            sessionStorage.setItem('portfolio_return_url', returnUrl);
+            sessionStorage.setItem('portfolio_return_active', 'true');
+        } catch (err) {}
+    }
+    window.savePortfolioReturnState = savePortfolioReturnState;
+
+    function navigateToProject(targetHref) {
+        if (!targetHref) return;
+        savePortfolioReturnState();
+        const origin = getPortfolioCurrentOrigin();
+
+        let url = targetHref;
+        if (!url.includes('/')) {
+            url = './projects/' + url + '/';
+        }
+        const sep = url.includes('?') ? '&' : '?';
+        url = url + sep + 'from=' + encodeURIComponent(origin);
+
+        window.location.href = url;
+    }
+    window.navigateToProject = navigateToProject;
+
     function renderConstellation(targetContainer = document.getElementById('pleiades-stage-mount'), initialState = 'cluster') {
         if (!targetContainer) return null;
         targetContainer.innerHTML = '';
@@ -1371,7 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (currentState === 'cluster') {
                         e.preventDefault();
                         e.stopPropagation();
-                        window.location.href = `./projects/${projId}/`;
+                        navigateToProject(projId);
                     }
                 });
             }
@@ -1388,7 +1446,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 e.preventDefault();
-                window.location.href = `./projects/${projId}/`;
+                navigateToProject(projId);
             });
         });
 
@@ -1596,9 +1654,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mount Pleiades Observatory Stage in #tab-main (Cluster View on Entry, or Constellation if requested by hash)
     const pleiadesMount = document.getElementById('pleiades-stage-mount');
     if (pleiadesMount) {
-        const curHash = window.location.hash.replace('#', '').trim();
+        const curHash = window.location.hash.replace(/^#/, '').trim();
         const portfolioProjectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
-        const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || portfolioProjectSlugs.includes(curHash));
+        const savedOrigin = sessionStorage.getItem('portfolio_return_origin');
+        const savedState = sessionStorage.getItem('portfolio_return_state');
+        const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || portfolioProjectSlugs.includes(curHash) || savedOrigin === 'constellation' || savedState === 'constellation');
         renderConstellation(pleiadesMount, startInConstellation ? 'constellation' : 'cluster');
     }
 
@@ -1619,6 +1679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let currentTabId = 'main';
+    window.currentTabId = 'main';
     let pageHistory = ['main'];
     let lastBackTimestamp = 0;
 
@@ -1684,6 +1745,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         currentTabId = targetTabId;
+        window.currentTabId = targetTabId;
 
         tabContents.forEach(c => c.classList.remove('active'));
         target.classList.add('active');
@@ -1853,13 +1915,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Open the page matching the URL (e.g. index.html#archive, index.html#constellation, index.html#stray) and support back/forward
     function openFromHash() {
-        const hash = window.location.hash.replace('#', '').trim();
+        let hash = window.location.hash.replace('#', '').trim();
+        const savedTab = sessionStorage.getItem('portfolio_return_tab');
+        const savedOrigin = sessionStorage.getItem('portfolio_return_origin');
         const projectSlugs = ['emek-museum', 'stray', 'you-were-here', 'chronoclines', 'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave', 'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'];
         
         // Handle direct navigation to a specific project (e.g. #stray, #project-wood-weave, #card-wood-weave)
         if (projectSlugs.includes(hash) || hash.startsWith('project-') || hash.startsWith('modal-') || hash.startsWith('card-') || (hash && document.getElementById(`card-${hash}`))) {
             const slug = hash.replace(/^(project-|modal-|card-)/, '');
-            window.location.href = `./projects/${slug}/`;
+            navigateToProject(slug);
             return;
         }
 
@@ -1870,15 +1934,26 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         }
 
+        // If URL has no hash but we are returning from a project, restore saved origin/tab
+        if (!hash) {
+            if (savedOrigin === 'constellation') {
+                hash = 'constellation';
+            } else if (savedTab && savedTab !== 'main') {
+                hash = savedTab;
+            }
+        }
+
         if (hash === 'constellation' || hash === 'projects') {
             switchTab('main', false);
             const homeSky = document.getElementById('hq-constellation-sky');
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
                 if (mapEl) setConstellationState(mapEl, 'constellation', false);
-                setTimeout(() => {
-                    homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 60);
+                if (!sessionStorage.getItem('portfolio_return_active')) {
+                    setTimeout(() => {
+                        homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 60);
+                }
             }
             setActive('projects');
             if (hash === 'projects') {
@@ -1911,41 +1986,51 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedScroll = sessionStorage.getItem('portfolio_return_scroll');
             const savedState = sessionStorage.getItem('portfolio_return_state');
             const savedTab = sessionStorage.getItem('portfolio_return_tab');
+            const savedOrigin = sessionStorage.getItem('portfolio_return_origin');
 
-            if (isActive && savedScroll !== null) {
-                const targetY = parseInt(savedScroll, 10);
+            if (isActive || savedOrigin) {
+                const targetY = savedScroll !== null ? parseInt(savedScroll, 10) : 0;
+                const effectiveTab = (savedOrigin === 'constellation') ? 'main' : (savedTab || 'main');
 
-                if (savedTab && savedTab !== currentTabId && document.getElementById(`tab-${savedTab}`)) {
-                    switchTab(savedTab, false);
+                if (effectiveTab && document.getElementById(`tab-${effectiveTab}`)) {
+                    switchTab(effectiveTab, false);
                 }
 
-                if (savedState) {
+                if (savedOrigin === 'constellation' || savedState === 'constellation') {
                     const homeSky = document.getElementById('hq-constellation-sky');
                     if (homeSky) {
                         const mapEl = homeSky.querySelector('.constellation-map');
-                        if (mapEl) setConstellationState(mapEl, savedState, false);
+                        if (mapEl) setConstellationState(mapEl, 'constellation', false);
                     }
-                    if (currentTabId === 'main') {
-                        setActive(savedState === 'constellation' ? 'projects' : 'main');
-                    }
+                    setActive('projects');
                 }
 
-                window.scrollTo({ top: targetY, behavior: 'auto' });
-                requestAnimationFrame(() => {
+                if (!isNaN(targetY)) {
                     window.scrollTo({ top: targetY, behavior: 'auto' });
-                });
+                    requestAnimationFrame(() => {
+                        window.scrollTo({ top: targetY, behavior: 'auto' });
+                    });
+                }
+
                 setTimeout(() => {
-                    window.scrollTo({ top: targetY, behavior: 'auto' });
+                    if (!isNaN(targetY)) {
+                        window.scrollTo({ top: targetY, behavior: 'auto' });
+                    }
                     sessionStorage.removeItem('portfolio_return_active');
                     sessionStorage.removeItem('portfolio_return_scroll');
                     sessionStorage.removeItem('portfolio_return_state');
                     sessionStorage.removeItem('portfolio_return_tab');
-                }, 80);
+                    sessionStorage.removeItem('portfolio_return_origin');
+                    sessionStorage.removeItem('portfolio_return_url');
+                }, 100);
             }
         } catch (err) {}
     }
 
-    window.addEventListener('popstate', openFromHash);
+    window.addEventListener('popstate', () => {
+        openFromHash();
+        restorePortfolioReturnPosition();
+    });
     window.addEventListener('pageshow', restorePortfolioReturnPosition);
     openFromHash();
     restorePortfolioReturnPosition();
@@ -2492,31 +2577,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeProjectModal = closeProjectModal;
         modalClose.addEventListener('click', closeProjectModal);
 
-        function savePortfolioReturnState() {
-            try {
-                const scrollY = window.scrollY || window.pageYOffset || 0;
-                sessionStorage.setItem('portfolio_return_scroll', String(scrollY));
-                sessionStorage.setItem('portfolio_return_tab', currentTabId || 'main');
-                const stageEl = document.getElementById('hq-constellation-sky');
-                const curState = stageEl ? (stageEl.getAttribute('data-state') || 'cluster') : 'cluster';
-                sessionStorage.setItem('portfolio_return_state', curState);
-                sessionStorage.setItem('portfolio_return_url', window.location.href);
-                sessionStorage.setItem('portfolio_return_active', 'true');
-            } catch (err) {}
-        }
-        window.savePortfolioReturnState = savePortfolioReturnState;
-        window.addEventListener('beforeunload', savePortfolioReturnState);
-
         function openProjectModalBySlug(slug, updateHash = true) {
             if (!slug) return;
             slug = slug.replace(/^(project-|modal-|card-)/, '').trim();
-            savePortfolioReturnState();
-            window.location.href = './projects/' + slug + '/';
-            return;
+            navigateToProject(slug);
         }
         window.openProjectModalBySlug = openProjectModalBySlug;
 
-        // Intercept any link going to a project - direct navigation to dedicated page
+        // Intercept any link going to a project - direct navigation to dedicated page with origin tracking
         document.body.addEventListener('click', (e) => {
             const link = e.target.closest('a[href*="./projects/"]');
             if (link) {
@@ -2531,11 +2599,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                savePortfolioReturnState();
                 e.preventDefault();
                 const href = link.getAttribute('href');
                 if (href) {
-                    window.location.href = href;
+                    navigateToProject(href);
                 }
             }
         });

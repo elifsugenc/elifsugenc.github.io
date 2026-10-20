@@ -167,7 +167,7 @@
             e.stopPropagation();
         }
 
-        // Flag that we are returning to the portfolio so index.html restores exact scroll & state
+        // 1. Try exact returnUrl from sessionStorage
         try {
             sessionStorage.setItem('portfolio_return_active', 'true');
             const returnUrl = sessionStorage.getItem('portfolio_return_url');
@@ -177,10 +177,73 @@
             }
         } catch (err) {}
 
-        // Fallback directly to portfolio root
+        // 2. Try URL query parameter ?from=...
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const from = params.get('from');
+            if (from === 'constellation') {
+                window.location.href = '../../#constellation';
+                return false;
+            } else if (from === 'about') {
+                window.location.href = '../../#about';
+                return false;
+            } else if (from === 'archive') {
+                window.location.href = '../../#archive';
+                return false;
+            } else if (from === 'design-approach') {
+                window.location.href = '../../#design-approach';
+                return false;
+            } else if (from === 'cluster' || from === 'main') {
+                window.location.href = '../../';
+                return false;
+            }
+        } catch (err) {}
+
+        // 3. Fallback to browser history back if previous page was our site
+        try {
+            if (document.referrer && document.referrer.includes(window.location.host)) {
+                window.history.back();
+                return false;
+            }
+        } catch (err) {}
+
+        // 4. Default fallback to portfolio root
         window.location.href = '../../';
         return false;
     };
+
+    function syncProjectReturnLinks() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const from = params.get('from') || sessionStorage.getItem('portfolio_return_origin');
+            let targetHref = '../../';
+            let labelSuffix = '';
+
+            if (from === 'constellation') {
+                targetHref = '../../#constellation';
+                labelSuffix = 'CONSTELLATION';
+            } else if (from === 'about') {
+                targetHref = '../../#about';
+                labelSuffix = 'ABOUT / CV';
+            } else if (from === 'archive') {
+                targetHref = '../../#archive';
+                labelSuffix = 'ARCHIVE';
+            } else if (from === 'design-approach') {
+                targetHref = '../../#design-approach';
+                labelSuffix = 'METHODOLOGY';
+            } else if (from === 'cluster' || from === 'main') {
+                targetHref = '../../';
+                labelSuffix = 'OBSERVATORY';
+            }
+
+            document.querySelectorAll('.back-link, .back-btn, .footer-nav-btn, .footer-back-link, .pnav-center-btn, .center-directory-btn').forEach(btn => {
+                btn.setAttribute('href', targetHref);
+                if (btn.classList.contains('footer-nav-btn') && labelSuffix) {
+                    btn.innerHTML = `&larr; RETURN TO ${labelSuffix}`;
+                }
+            });
+        } catch (err) {}
+    }
 
     // Event delegation for all return links on project pages
     document.addEventListener('click', function(e) {
@@ -191,9 +254,13 @@
     });
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initProjectCursor);
+        document.addEventListener('DOMContentLoaded', () => {
+            initProjectCursor();
+            syncProjectReturnLinks();
+        });
     } else {
         initProjectCursor();
+        syncProjectReturnLinks();
     }
 })();
 
