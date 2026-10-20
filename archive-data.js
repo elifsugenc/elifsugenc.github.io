@@ -15,26 +15,6 @@
  */
 
 window.ARCHIVE_QUESTIONS = [
-    // --- 2027: FUTURE & ADVANCED SPECULATIONS ---
-    {
-        id: "q-2027-01",
-        date: "2027",
-        time: "",
-        question: "How can we make this labour visible again?",
-        reflection: "",
-        tags: ["memory", "invisible-labour", "space", "labour"],
-        relatedProject: null
-    },
-    {
-        id: "q-2027-02",
-        date: "2027",
-        time: "",
-        question: "Can you escape the fire?",
-        reflection: "",
-        tags: ["behavior", "traces", "simulation", "space"],
-        relatedProject: null
-    },
-
     // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
         id: "q-2026-10-19-02",
@@ -52,6 +32,24 @@ window.ARCHIVE_QUESTIONS = [
         question: "Why are robot bodies so often designed as female, while the default voices of AI tools are male?",
         reflection: "",
         tags: ["ai", "gender", "technology", "daily-life"],
+        relatedProject: null
+    },
+    {
+        id: "q-2026-emek",
+        date: "2026",
+        time: "",
+        question: "How can we make this labour visible again?",
+        reflection: "",
+        tags: ["memory", "invisible-labour", "space", "labour"],
+        relatedProject: null
+    },
+    {
+        id: "q-2026-fire",
+        date: "2026",
+        time: "",
+        question: "Can you escape the fire?",
+        reflection: "",
+        tags: ["behavior", "traces", "simulation", "space"],
         relatedProject: null
     },
     {
