@@ -9427,7 +9427,7 @@ body {
    Zero animation, zero color shift, pure plain text.
    Only mouse cursor turns into question mark. */
 .archive-entry-question.is-linked {
-    cursor: help !important;
+    cursor: none !important;
     text-decoration: none !important;
     color: #0f172a !important;
     transition: none !important;
@@ -9438,7 +9438,7 @@ body {
 .archive-entry-question.is-linked:hover,
 .archive-entry-question.is-linked:focus,
 .archive-entry-question.is-linked:active {
-    cursor: help !important;
+    cursor: none !important;
     text-decoration: none !important;
     color: #0f172a !important;
     background: transparent !important;
