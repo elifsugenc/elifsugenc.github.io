@@ -17,6 +17,32 @@
 window.ARCHIVE_QUESTIONS = [
     // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
+        id: "q-2026-10-20-02",
+        date: "20 October 2026",
+        time: "13:20",
+        question: "When we preserve the structure of a factory, do we also preserve the memory of the people who worked there?",
+        reflection: "",
+        tags: ["memory", "space", "body"],
+        relatedProject: {
+            id: "emek-museum",
+            title: "EMEK MUSEUM",
+            url: "./projects/emek-museum/"
+        }
+    },
+    {
+        id: "q-2026-10-20-01",
+        date: "20 October 2026",
+        time: "13:12",
+        question: "Is being affected by fire political?",
+        reflection: "",
+        tags: ["simulation", "space", "body"],
+        relatedProject: {
+            id: "fire-escape-simulation",
+            title: "FIRE ESCAPE SIMULATION",
+            url: "./projects/fire-escape-simulation/"
+        }
+    },
+    {
         id: "q-2026-10-19-02",
         date: "19 October 2026",
         time: "23:38",
@@ -35,19 +61,6 @@ window.ARCHIVE_QUESTIONS = [
         relatedProject: null
     },
     {
-        id: "q-2026-emek-factory",
-        date: "2026",
-        time: "",
-        question: "When we preserve the structure of a factory, do we also preserve the memory of the people who worked there?",
-        reflection: "",
-        tags: ["memory", "space", "body"],
-        relatedProject: {
-            id: "emek-museum",
-            title: "EMEK MUSEUM",
-            url: "./projects/emek-museum/"
-        }
-    },
-    {
         id: "q-2026-emek",
         date: "2026",
         time: "",
@@ -58,19 +71,6 @@ window.ARCHIVE_QUESTIONS = [
             id: "emek-museum",
             title: "EMEK MUSEUM",
             url: "./projects/emek-museum/"
-        }
-    },
-    {
-        id: "q-2026-fire-politic",
-        date: "2026",
-        time: "",
-        question: "Is being affected by fire political?",
-        reflection: "",
-        tags: ["simulation", "space", "body"],
-        relatedProject: {
-            id: "fire-escape-simulation",
-            title: "FIRE ESCAPE SIMULATION",
-            url: "./projects/fire-escape-simulation/"
         }
     },
     {
