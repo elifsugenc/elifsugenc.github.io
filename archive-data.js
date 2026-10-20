@@ -2,16 +2,16 @@
  * ARCHIVE DATA — INTERNAL MONOLOGUE & EVERYDAY QUESTIONS
  * 
  * Arranged chronologically (newest to oldest), with project questions
- * aligned to their respective project realization years (2024 – 2027).
+ * aligned to their respective project realization years (2024 – 2026).
  * 
  * Fields:
- * - id: unique identifier string (e.g. "q-2027-01")
- * - date: display date or year string (e.g. "2027" or "19 October 2026")
+ * - id: unique identifier string (e.g. "q-2026-01")
+ * - date: display date or year string (e.g. "2026" or "19 October 2026")
  * - time: 24h time string if known, otherwise empty string ""
  * - question: the main question or thought (required)
  * - reflection: optional observation (kept clean/empty per design preference)
- * - tags: array of tag strings
- * - relatedProject: null
+ * - tags: array of tag strings (max 3 tags per question from general taxonomy)
+ * - relatedProject: null or { id: string, title: string, url: string }
  */
 
 window.ARCHIVE_QUESTIONS = [
@@ -35,13 +35,30 @@ window.ARCHIVE_QUESTIONS = [
         relatedProject: null
     },
     {
+        id: "q-2026-emek-factory",
+        date: "2026",
+        time: "",
+        question: "When we preserve the structure of a factory, do we also preserve the memory of the people who worked there?",
+        reflection: "",
+        tags: ["memory", "space", "body"],
+        relatedProject: {
+            id: "emek-museum",
+            title: "EMEK MUSEUM",
+            url: "./projects/emek-museum/"
+        }
+    },
+    {
         id: "q-2026-emek",
         date: "2026",
         time: "",
         question: "How can we make this labour visible again?",
         reflection: "",
         tags: ["memory", "space", "body"],
-        relatedProject: null
+        relatedProject: {
+            id: "emek-museum",
+            title: "EMEK MUSEUM",
+            url: "./projects/emek-museum/"
+        }
     },
     {
         id: "q-2026-fire-politic",
@@ -50,7 +67,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Is being affected by fire political?",
         reflection: "",
         tags: ["simulation", "space", "body"],
-        relatedProject: null
+        relatedProject: {
+            id: "fire-escape-simulation",
+            title: "FIRE ESCAPE SIMULATION",
+            url: "./projects/fire-escape-simulation/"
+        }
     },
     {
         id: "q-2026-fire",
@@ -59,7 +80,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Can you escape the fire?",
         reflection: "",
         tags: ["simulation", "space", "traces"],
-        relatedProject: null
+        relatedProject: {
+            id: "fire-escape-simulation",
+            title: "FIRE ESCAPE SIMULATION",
+            url: "./projects/fire-escape-simulation/"
+        }
     },
     {
         id: "q-2026-01",
@@ -86,7 +111,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "How do you highlight beauty without stealing its spotlight?",
         reflection: "",
         tags: ["space", "ecology"],
-        relatedProject: null
+        relatedProject: {
+            id: "bajo-la-fresca",
+            title: "BAJO LA FRESCA",
+            url: "./projects/bajo-la-fresca/"
+        }
     },
     {
         id: "q-2026-04",
@@ -95,7 +124,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "How does a culinary ritual shape a social atmosphere?",
         reflection: "",
         tags: ["ritual", "space", "daily-life"],
-        relatedProject: null
+        relatedProject: {
+            id: "millieu",
+            title: "MILLIEU",
+            url: "./projects/millieu/"
+        }
     },
     {
         id: "q-2026-05",
@@ -104,7 +137,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Is there life because there is death?",
         reflection: "",
         tags: ["materials", "decay", "ecology"],
-        relatedProject: null
+        relatedProject: {
+            id: "the-earthen",
+            title: "THE EARTHEN",
+            url: "./projects/the-earthen/"
+        }
     },
     {
         id: "q-2026-06",
@@ -124,7 +161,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "How many microplastics can we eat in a day?",
         reflection: "",
         tags: ["materials", "decay", "body"],
-        relatedProject: null
+        relatedProject: {
+            id: "bio-decay",
+            title: "BIO-DECAY",
+            url: "./projects/bio-decay/"
+        }
     },
     {
         id: "q-2025-02",
@@ -133,7 +174,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Can a city exhibit itself?",
         reflection: "",
         tags: ["traces", "memory", "space"],
-        relatedProject: null
+        relatedProject: {
+            id: "chronoclines",
+            title: "CHRONOCLINES",
+            url: "./projects/chronoclines/"
+        }
     },
     {
         id: "q-2025-03",
@@ -142,7 +187,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Is doing nothing doing something?",
         reflection: "",
         tags: ["traces", "daily-life", "time"],
-        relatedProject: null
+        relatedProject: {
+            id: "stray",
+            title: "STRAY",
+            url: "./projects/stray/"
+        }
     },
 
     // --- 2024: 1ST YEAR DESIGN-BUILD & BIOMATERIAL ROOTS ---
@@ -153,7 +202,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "Can one space hold both play and quiet?",
         reflection: "",
         tags: ["threshold", "space"],
-        relatedProject: null
+        relatedProject: {
+            id: "ara-sira",
+            title: "ARA-SIRA",
+            url: "./projects/ara-sira/"
+        }
     },
     {
         id: "q-2024-02",
@@ -162,7 +215,11 @@ window.ARCHIVE_QUESTIONS = [
         question: "When does waste become a place?",
         reflection: "",
         tags: ["materials", "space", "decay"],
-        relatedProject: null
+        relatedProject: {
+            id: "wood-weave",
+            title: "WOOD WEAVE",
+            url: "./projects/wood-weave/"
+        }
     },
     {
         id: "q-2024-03",
@@ -171,6 +228,10 @@ window.ARCHIVE_QUESTIONS = [
         question: "Can we build without displacing life?",
         reflection: "",
         tags: ["space", "materials", "ecology"],
-        relatedProject: null
+        relatedProject: {
+            id: "sprouting-garden",
+            title: "SPROUTING GARDEN",
+            url: "./projects/sprouting-garden/"
+        }
     }
 ];

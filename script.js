@@ -2755,6 +2755,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).join(' ');
                 const timeHtml = item.time ? `<span class="a-time-sep">&bull;</span><span class="a-time-clock">${item.time}</span>` : '';
 
+                const questionHtml = item.relatedProject && item.relatedProject.url
+                    ? `<a href="${item.relatedProject.url}" class="archive-entry-question is-linked" data-cursor="question" data-project-id="${item.relatedProject.id}">&ldquo;${item.question}&rdquo;</a>`
+                    : `<p class="archive-entry-question">&ldquo;${item.question}&rdquo;</p>`;
+
                 return `
                     <article class="archive-entry-card" data-archive-id="${item.id}">
                         <div class="archive-entry-meta">
@@ -2767,11 +2771,27 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                         <div class="archive-entry-body">
-                            <p class="archive-entry-question">&ldquo;${item.question}&rdquo;</p>
+                            ${questionHtml}
                         </div>
                     </article>
                 `;
             }).join('');
+
+            // Clickable questions navigate directly without animation, preserving archive return state
+            feedContainer.querySelectorAll('.archive-entry-question.is-linked').forEach(linkEl => {
+                linkEl.addEventListener('click', (e) => {
+                    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+                    const href = linkEl.getAttribute('href');
+                    if (href) {
+                        e.preventDefault();
+                        try {
+                            sessionStorage.setItem('portfolio_return_url', window.location.pathname + '#archive');
+                            sessionStorage.setItem('portfolio_return_active', 'true');
+                        } catch (_) {}
+                        window.location.href = href + (href.includes('?') ? '&' : '?') + 'from=archive';
+                    }
+                });
+            });
 
             // Allow clicking inline tags to toggle filter
             feedContainer.querySelectorAll('.a-tag').forEach(tagBtn => {

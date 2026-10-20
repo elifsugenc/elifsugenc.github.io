@@ -9419,6 +9419,32 @@ body {
     margin: 0;
     text-transform: none !important;
     letter-spacing: normal;
+    text-decoration: none !important;
+    display: block;
+}
+
+/* Clickable questions linked to projects:
+   Zero animation, zero color shift, pure plain text.
+   Only mouse cursor turns into question mark. */
+.archive-entry-question.is-linked {
+    cursor: help !important;
+    text-decoration: none !important;
+    color: #0f172a !important;
+    transition: none !important;
+    transform: none !important;
+    outline: none !important;
+}
+
+.archive-entry-question.is-linked:hover,
+.archive-entry-question.is-linked:focus,
+.archive-entry-question.is-linked:active {
+    cursor: help !important;
+    text-decoration: none !important;
+    color: #0f172a !important;
+    background: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 .archive-entry-reflection {
