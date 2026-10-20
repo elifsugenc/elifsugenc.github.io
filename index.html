@@ -934,53 +934,102 @@
                                 <button type="button" id="archive-search-clear" class="archive-search-clear hidden" aria-label="Clear search">&times;</button>
                             </div>
                             <div class="archive-filter-bar" id="archive-filter-bar">
-                                <div class="archive-filter-heading">
-                                    <span class="filter-heading-sq">■</span>
-                                    <span class="filter-heading-label">TAGS</span>
+                                <!-- ROW 1: THEMATIC TAGS -->
+                                <div class="archive-filter-row">
+                                    <div class="archive-filter-heading">
+                                        <span class="filter-heading-sq">■</span>
+                                        <span class="filter-heading-label">TAGS</span>
+                                    </div>
+                                    <div class="archive-tag-list" id="archive-filter-pills">
+                                        <button type="button" class="archive-tag-btn active" data-filter="all">
+                                            <span class="tag-sq"></span><span class="tag-label">ALL</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ai">
+                                            <span class="tag-sq"></span><span class="tag-label">AI</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="body">
+                                            <span class="tag-sq"></span><span class="tag-label">BODY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="daily-life">
+                                            <span class="tag-sq"></span><span class="tag-label">DAILY LIFE</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="decay">
+                                            <span class="tag-sq"></span><span class="tag-label">DECAY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ecology">
+                                            <span class="tag-sq"></span><span class="tag-label">ECOLOGY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="materials">
+                                            <span class="tag-sq"></span><span class="tag-label">MATERIALS</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="memory">
+                                            <span class="tag-sq"></span><span class="tag-label">MEMORY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ritual">
+                                            <span class="tag-sq"></span><span class="tag-label">RITUAL</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="simulation">
+                                            <span class="tag-sq"></span><span class="tag-label">SIMULATION</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="space">
+                                            <span class="tag-sq"></span><span class="tag-label">SPACE</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="threshold">
+                                            <span class="tag-sq"></span><span class="tag-label">THRESHOLD</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="time">
+                                            <span class="tag-sq"></span><span class="tag-label">TIME</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="traces">
+                                            <span class="tag-sq"></span><span class="tag-label">TRACES</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="archive-tag-list" id="archive-filter-pills">
-                                    <button type="button" class="archive-tag-btn active" data-filter="all">
-                                        <span class="tag-sq"></span><span class="tag-label">ALL</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="ai">
-                                        <span class="tag-sq"></span><span class="tag-label">AI</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="body">
-                                        <span class="tag-sq"></span><span class="tag-label">BODY</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="daily-life">
-                                        <span class="tag-sq"></span><span class="tag-label">DAILY LIFE</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="decay">
-                                        <span class="tag-sq"></span><span class="tag-label">DECAY</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="ecology">
-                                        <span class="tag-sq"></span><span class="tag-label">ECOLOGY</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="materials">
-                                        <span class="tag-sq"></span><span class="tag-label">MATERIALS</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="memory">
-                                        <span class="tag-sq"></span><span class="tag-label">MEMORY</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="ritual">
-                                        <span class="tag-sq"></span><span class="tag-label">RITUAL</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="simulation">
-                                        <span class="tag-sq"></span><span class="tag-label">SIMULATION</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="space">
-                                        <span class="tag-sq"></span><span class="tag-label">SPACE</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="threshold">
-                                        <span class="tag-sq"></span><span class="tag-label">THRESHOLD</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="time">
-                                        <span class="tag-sq"></span><span class="tag-label">TIME</span>
-                                    </button>
-                                    <button type="button" class="archive-tag-btn" data-filter="traces">
-                                        <span class="tag-sq"></span><span class="tag-label">TRACES</span>
-                                    </button>
+
+                                <!-- ROW 2: SPECIFIC PROJECTS -->
+                                <div class="archive-filter-row archive-filter-row-projects">
+                                    <div class="archive-filter-heading">
+                                        <span class="filter-heading-sq">■</span>
+                                        <span class="filter-heading-label">PROJECTS</span>
+                                    </div>
+                                    <div class="archive-tag-list" id="archive-filter-projects">
+                                        <button type="button" class="archive-project-btn active" data-project-filter="all">
+                                            <span class="tag-sq"></span><span class="tag-label">ALL</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="emek-museum">
+                                            <span class="tag-sq"></span><span class="tag-label">EMEK MUSEUM</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="fire-escape-simulation">
+                                            <span class="tag-sq"></span><span class="tag-label">FIRE ESCAPE SIMULATION</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="the-earthen">
+                                            <span class="tag-sq"></span><span class="tag-label">THE EARTHEN</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="bio-decay">
+                                            <span class="tag-sq"></span><span class="tag-label">BIO-DECAY</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="bajo-la-fresca">
+                                            <span class="tag-sq"></span><span class="tag-label">BAJO LA FRESCA</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="chronoclines">
+                                            <span class="tag-sq"></span><span class="tag-label">CHRONOCLINES</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="stray">
+                                            <span class="tag-sq"></span><span class="tag-label">STRAY</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="millieu">
+                                            <span class="tag-sq"></span><span class="tag-label">MILLIEU</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="ara-sira">
+                                            <span class="tag-sq"></span><span class="tag-label">ARA-SIRA</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="wood-weave">
+                                            <span class="tag-sq"></span><span class="tag-label">WOOD WEAVE</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="sprouting-garden">
+                                            <span class="tag-sq"></span><span class="tag-label">SPROUTING GARDEN</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
