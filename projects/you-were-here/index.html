@@ -334,8 +334,8 @@
             </div>
 
             <!-- Legacy Website Archive Dossier Folder (<= 08.10.2026) -->
-            <div class="traces-archive-folder" id="legacy-archive-folder">
-                <div class="folder-header" id="folder-toggle-btn" role="button" tabindex="0" aria-expanded="true">
+            <div class="traces-archive-folder folder-collapsed" id="legacy-archive-folder">
+                <div class="folder-header" id="folder-toggle-btn" role="button" tabindex="0" aria-expanded="false">
                     <div class="folder-header-left">
                         <div class="folder-tab-badge">📁 ARCHIVE // PREVIOUS SESSIONS</div>
                         <h3 class="folder-title">PREVIOUS WEBSITE DRAWINGS (≤ 2026)</h3>
@@ -344,8 +344,8 @@
                     <div class="folder-header-right">
                         <span class="folder-meta-pill" id="legacy-traces-count-pill">RETRIEVING...</span>
                         <div class="folder-toggle-indicator">
-                            <span class="toggle-icon">−</span>
-                            <span class="toggle-text">COLLAPSE FOLDER</span>
+                            <span class="toggle-icon">+</span>
+                            <span class="toggle-text">OPEN FOLDER</span>
                         </div>
                     </div>
                 </div>
@@ -782,8 +782,22 @@
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.era-tab-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    window.collectiveEraMode = btn.getAttribute('data-era');
+                    const era = btn.getAttribute('data-era');
+                    window.collectiveEraMode = era;
                     renderCollectiveCanvas();
+
+                    // If user selects LEGACY era, expand the folder automatically if closed
+                    if (era === 'LEGACY') {
+                        if (archiveFolder && archiveFolder.classList.contains('folder-collapsed')) {
+                            archiveFolder.classList.remove('folder-collapsed');
+                            const iconEl = folderToggleBtn ? folderToggleBtn.querySelector('.toggle-icon') : null;
+                            const textEl = folderToggleBtn ? folderToggleBtn.querySelector('.toggle-text') : null;
+                            if (iconEl) iconEl.textContent = '−';
+                            if (textEl) textEl.textContent = 'COLLAPSE FOLDER';
+                            if (folderToggleBtn) folderToggleBtn.setAttribute('aria-expanded', 'true');
+                            setTimeout(renderLegacyCollectiveCanvas, 40);
+                        }
+                    }
                 });
             });
 
@@ -791,7 +805,7 @@
             const folderToggleBtn = document.getElementById('folder-toggle-btn');
             const archiveFolder = document.getElementById('legacy-archive-folder');
             if (folderToggleBtn && archiveFolder) {
-                folderToggleBtn.addEventListener('click', () => {
+                const toggleFolder = () => {
                     const isCollapsed = archiveFolder.classList.toggle('folder-collapsed');
                     const iconEl = folderToggleBtn.querySelector('.toggle-icon');
                     const textEl = folderToggleBtn.querySelector('.toggle-text');
@@ -800,6 +814,14 @@
                     folderToggleBtn.setAttribute('aria-expanded', !isCollapsed);
                     if (!isCollapsed) {
                         setTimeout(renderLegacyCollectiveCanvas, 40);
+                    }
+                };
+
+                folderToggleBtn.addEventListener('click', toggleFolder);
+                folderToggleBtn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleFolder();
                     }
                 });
             }
