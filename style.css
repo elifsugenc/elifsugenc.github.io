@@ -660,15 +660,16 @@ a:hover {
 .pct-bl { bottom: 16px; left: 20px; }
 .pct-br { bottom: 16px; right: 20px; text-align: right; }
 
-/* Astronomical Inscription / Observation Note (Cluster State) */
+/* Astronomical Inscription / Observation Note (Cluster State) - Sits cleanly above the action button */
 .cluster-astronomy-inscription {
     position: absolute;
-    bottom: 20px;
+    bottom: 74px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;
-    max-width: 660px;
-    width: calc(100% - 320px);
+    max-width: 680px;
+    width: max-content;
+    max-width: calc(100% - 48px);
     text-align: center;
     font-family: 'Space Grotesk', system-ui, sans-serif;
     font-size: 0.84rem;
@@ -695,7 +696,7 @@ a:hover {
 @media (max-width: 900px) {
     .cluster-astronomy-inscription {
         width: calc(100% - 36px);
-        bottom: 46px;
+        bottom: 66px;
         font-size: 0.74rem;
         padding: 6px 14px;
         line-height: 1.4;
@@ -8237,19 +8238,22 @@ body {
   z-index: 950 !important;
 }
 
-/* 1. CLUSTER STATE: "EXPLORE CONSTELLATION ↗" moved lower to give generous clearance */
+/* 1. CLUSTER STATE: "EXPLORE CONSTELLATION ↗" at bottom, with inscription cleanly above it */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-  top: 91.5% !important;
+  top: auto !important;
+  bottom: 22px !important;
   left: 50% !important;
   right: auto !important;
-  bottom: auto !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translateX(-50%) !important;
 }
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn:hover {
   background: #2563eb;
   border-color: #93c5fd;
   box-shadow: 0 6px 22px rgba(37, 99, 235, 0.45);
-  transform: translate(-50%, -50%) scale(1.02) !important;
+  transform: translateX(-50%) scale(1.02) !important;
+}
+#tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-astronomy-inscription {
+  bottom: 74px !important;
 }
 
 /* 2. CONSTELLATION STATE: "BACK TO CLUSTER" placed directly below EG. PRACTICE in center */
@@ -8743,12 +8747,21 @@ body {
 
 @media (max-width: 650px) {
   #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-transition-btn {
-    top: 92% !important;
+    top: auto !important;
+    bottom: 16px !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    transform: translateX(-50%) !important;
     max-width: 90vw;
     font-size: .65rem !important;
     padding: 9px 16px !important;
+  }
+  #tab-main .pleiades-observatory-stage[data-state="cluster"] .cluster-astronomy-inscription {
+    bottom: 64px !important;
+    width: calc(100% - 32px);
+    max-width: 92vw;
+    font-size: 0.72rem;
+    padding: 6px 14px;
+    line-height: 1.35;
   }
   #tab-main .pleiades-observatory-stage[data-state="constellation"] .cluster-transition-btn {
     top: 69% !important;
