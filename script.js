@@ -2246,7 +2246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         col.addEventListener('mouseenter', () => {
             if (matchingNode) {
                 matchingNode.style.opacity = '1';
-                matchingNode.style.filter = 'drop-shadow(0 0 10px rgba(255, 72, 32, 0.6))';
+                matchingNode.style.filter = 'drop-shadow(0 0 10px rgba(37, 99, 235, 0.6))';
             }
         });
 
