@@ -3588,7 +3588,7 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
    DESIGN APPROACH / METHODOLOGY TAB (SPATIAL INQUIRY)
    ========================================================= */
 .approach-centered-content {
-    max-width: 980px;
+    max-width: 1260px;
     padding-top: 40px;
 }
 .approach-wrapper {
@@ -10947,9 +10947,10 @@ iframe,
     background: #ffffff;
     border: 1px solid rgba(37, 99, 235, 0.22);
     border-radius: 8px;
-    padding: 24px 20px 28px;
+    padding: 30px 24px 34px;
     margin-bottom: 40px;
-    box-shadow: 0 4px 24px rgba(26, 54, 93, 0.05);
+    box-shadow: 0 6px 28px rgba(26, 54, 93, 0.06);
+    overflow-x: auto;
 }
 
 .arch-main-diagram-wrap {
@@ -10961,7 +10962,6 @@ iframe,
 
 .arch-main-diagram-svg {
     width: 100%;
-    max-height: 600px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -10976,23 +10976,23 @@ iframe,
 
 .arch-pill-bg {
     fill: rgba(37, 99, 235, 0.04);
-    stroke: rgba(37, 99, 235, 0.2);
-    stroke-width: 1;
+    stroke: rgba(37, 99, 235, 0.22);
+    stroke-width: 1.2;
     transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
 .arch-pill-text {
     font-family: 'Space Grotesk', monospace;
-    font-size: 8px;
+    font-size: 11.5px;
     font-weight: 600;
     fill: #0f172a;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     transition: fill 0.2s ease;
 }
 
 .arch-pill-arrow {
     font-family: 'Space Grotesk', monospace;
-    font-size: 8.5px;
+    font-size: 13px;
     font-weight: 700;
     fill: #2563eb;
     transition: fill 0.2s ease;
@@ -11013,8 +11013,28 @@ iframe,
 }
 
 .arch-diag-node:hover {
-    opacity: 0.92;
+    opacity: 0.94;
     transform: translateY(-2px);
+}
+
+.arch-mobile-scroll-hint {
+    display: none;
+    text-align: center;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent-color, #2563eb);
+    margin-top: 14px;
+}
+
+@media (max-width: 900px) {
+    .arch-main-diagram-svg {
+        min-width: 960px;
+    }
+    .arch-mobile-scroll-hint {
+        display: block;
+    }
 }
 
 .arch-pillars-grid {
