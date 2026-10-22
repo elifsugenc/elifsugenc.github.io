@@ -10939,24 +10939,24 @@ iframe,
 }
 
 /* ==========================================================================
-   RESEARCH APPROACH // ARCHITECTURAL MINIMALIST DIAGRAM & 3-ICON PILLAR SYSTEM
-   (Avant-garde constructivist & editorial aesthetic, vermilion/orange accents)
+   RESEARCH APPROACH // ARCHITECTURAL SYNTHESIS DIAGRAM & 3-ICON PILLAR SYSTEM
+   (Architectural electric blue #2563eb, deep slate #0f172a, high-contrast)
    ========================================================================== */
 
 .arch-research-framework {
     background: #ffffff;
-    border: 1px solid rgba(255, 72, 32, 0.25);
-    border-radius: 6px;
+    border: 1px solid rgba(37, 99, 235, 0.22);
+    border-radius: 8px;
     padding: 38px 32px 42px;
     margin-bottom: 40px;
-    box-shadow: 0 4px 24px rgba(255, 72, 32, 0.04);
+    box-shadow: 0 4px 24px rgba(26, 54, 93, 0.05);
 }
 
 .arch-main-diagram-wrap {
     width: 100%;
-    margin-bottom: 48px;
-    padding-bottom: 34px;
-    border-bottom: 1px solid rgba(255, 72, 32, 0.18);
+    margin-bottom: 44px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.16);
 }
 
 .arch-main-diagram-svg {
@@ -10973,18 +10973,18 @@ iframe,
 }
 
 .arch-diag-node:hover {
-    opacity: 0.85;
+    opacity: 0.82;
 }
 
 .arch-pillars-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 36px;
+    gap: 32px;
 }
 
 .arch-pillar-col {
-    border-left: 2px solid #ff4820;
-    padding-left: 24px;
+    border-left: 2px solid var(--accent-color, #2563eb);
+    padding-left: 22px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -10995,12 +10995,12 @@ iframe,
 .arch-pillar-col:hover,
 .arch-pillar-col.highlighted {
     transform: translateY(-3px);
-    background: rgba(255, 72, 32, 0.02);
+    background: rgba(37, 99, 235, 0.025);
 }
 
 .arch-tile-wrap {
     width: 100%;
-    max-width: 220px;
+    max-width: 200px;
     aspect-ratio: 1 / 1;
     margin-bottom: 4px;
 }
@@ -11009,46 +11009,46 @@ iframe,
     width: 100%;
     height: 100%;
     display: block;
-    box-shadow: 0 6px 18px rgba(255, 72, 32, 0.14);
-    border-radius: 4px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+    border-radius: 6px;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
 .arch-pillar-col:hover .arch-tile-svg,
 .arch-pillar-col.highlighted .arch-tile-svg {
     transform: scale(1.03);
-    box-shadow: 0 12px 28px rgba(255, 72, 32, 0.25);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
 }
 
 .arch-col-num {
     font-family: 'Space Grotesk', monospace;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.14em;
-    color: #ff4820;
+    color: var(--accent-color, #2563eb);
 }
 
 .arch-col-title {
-    font-size: 1.45rem;
-    font-weight: 600;
+    font-size: 1.38rem;
+    font-weight: 700;
     line-height: 1.25;
-    color: #ff4820;
+    color: var(--text-color, #0f172a);
     margin: 0;
     letter-spacing: -0.01em;
 }
 
 .arch-col-subtitle {
     font-family: 'Space Grotesk', monospace;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #64748b;
+    letter-spacing: 0.08em;
+    color: var(--accent-color, #2563eb);
     margin-top: -6px;
 }
 
 .arch-col-text {
-    font-size: 0.95rem;
+    font-size: 0.94rem;
     line-height: 1.65;
     color: var(--text-color, #0f172a);
     opacity: 0.88;
@@ -11058,7 +11058,7 @@ iframe,
 .arch-col-projects {
     margin-top: auto;
     padding-top: 14px;
-    border-top: 1px dashed rgba(255, 72, 32, 0.25);
+    border-top: 1px dashed rgba(37, 99, 235, 0.2);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -11069,7 +11069,7 @@ iframe,
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: #ff4820;
+    color: var(--accent-color, #2563eb);
 }
 
 .arch-proj-pills {
@@ -11084,9 +11084,9 @@ iframe,
     justify-content: space-between;
     padding: 7px 12px;
     border-radius: 4px;
-    background: rgba(255, 72, 32, 0.04);
-    border: 1px solid rgba(255, 72, 32, 0.2);
-    color: #0f172a;
+    background: rgba(37, 99, 235, 0.04);
+    border: 1px solid rgba(37, 99, 235, 0.18);
+    color: var(--text-color, #0f172a);
     text-decoration: none;
     font-size: 0.82rem;
     font-weight: 600;
@@ -11095,8 +11095,8 @@ iframe,
 }
 
 .arch-proj-pill:hover {
-    background: #ff4820;
-    border-color: #ff4820;
+    background: var(--accent-color, #2563eb);
+    border-color: var(--accent-color, #2563eb);
     color: #ffffff;
     transform: translateX(4px);
 }
@@ -11104,10 +11104,10 @@ iframe,
 @media (max-width: 900px) {
     .arch-pillars-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 36px;
     }
     .arch-tile-wrap {
-        max-width: 190px;
+        max-width: 180px;
     }
 }
 

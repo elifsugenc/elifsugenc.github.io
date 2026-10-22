@@ -550,69 +550,73 @@
 
                                 <!-- TOP: THE MAIN CONVERGENCE & SYNTHESIS DIAGRAM -->
                                 <div class="arch-main-diagram-wrap">
-                                    <svg class="arch-main-diagram-svg" viewBox="0 0 960 440" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="arch-main-diagram-svg" viewBox="0 0 960 420" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                                         <defs>
-                                            <linearGradient id="researchConeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%" stop-color="#ff4820" stop-opacity="0.95" />
-                                                <stop offset="35%" stop-color="#ff5e38" stop-opacity="0.70" />
-                                                <stop offset="75%" stop-color="#ff8566" stop-opacity="0.25" />
-                                                <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
-                                            </linearGradient>
+                                            <radialGradient id="meropeCoreGlow" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="rgba(37, 99, 235, 0.25)" />
+                                                <stop offset="100%" stop-color="rgba(37, 99, 235, 0)" />
+                                            </radialGradient>
                                         </defs>
 
-                                        <!-- Top Header: Research Approach in Red/Orange Monospace -->
-                                        <text x="480" y="42" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="20" font-weight="700" letter-spacing="0.16em" fill="#ff4820">Research Approach</text>
+                                        <!-- Header Label: Architectural Practice Synthesis in Accent Blue -->
+                                        <text x="480" y="34" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="14" font-weight="700" letter-spacing="0.16em" fill="#2563eb">SPATIAL PRACTICE PARTI // TRIPARTITE SYNTHESIS</text>
 
-                                        <!-- Expanding Speculative Cone / Gradient -->
-                                        <polygon points="450,225 840,95 840,290" fill="url(#researchConeGradient)" />
-
-                                        <!-- Dark Upper Sector (Conventional Dogmas / Standard Technology) -->
-                                        <path d="M 720,75 C 720,145 775,165 840,165 L 840,75 Z" fill="#1e293b" />
-                                        <text x="780" y="112" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="11" font-weight="600" fill="#94a3b8">Conventional</text>
-                                        <text x="780" y="128" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="11" font-weight="600" fill="#94a3b8">Dogmas</text>
-
-                                        <!-- Upper Projection Ray from Origin through Crossing to Top Horizon -->
-                                        <line x1="180" y1="216" x2="840" y2="95" stroke="#0f172a" stroke-width="1.2" />
-
-                                        <!-- Lower Projection Ray from Origin through Crossing to Bottom Horizon -->
-                                        <line x1="180" y1="234" x2="840" y2="290" stroke="#0f172a" stroke-width="1.2" />
-
-                                        <!-- Crossing lines between Origin and Crossing Node -->
-                                        <line x1="180" y1="216" x2="450" y2="225" stroke="#0f172a" stroke-width="1.2" />
-                                        <line x1="180" y1="234" x2="450" y2="225" stroke="#0f172a" stroke-width="1.2" />
-
-                                        <!-- Node 001: Left Origin Circle (Critical Inquiry) -->
-                                        <g class="arch-diag-node" data-target-pillar="01" style="cursor: pointer;">
-                                            <circle cx="180" cy="225" r="18" fill="#ff4820" />
-                                            <text x="180" y="272" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="11" font-style="italic" fill="#64748b">by</text>
-                                            <text x="180" y="292" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#0f172a">Centering Marginalized</text>
-                                            <text x="180" y="308" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#0f172a">&amp; Deconstructing Norms</text>
-                                        </g>
-
-                                        <!-- Node 002: Center Crossing Point (Contextual Research) -->
-                                        <g class="arch-diag-node" data-target-pillar="02" style="cursor: pointer;">
-                                            <circle cx="450" cy="225" r="5" fill="#ff4820" />
-                                            <text x="450" y="188" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="11" font-style="italic" fill="#64748b">through</text>
-                                            <text x="450" y="206" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#0f172a">Site Forensics &amp; Material Strata</text>
-                                        </g>
-
-                                        <!-- Node 003: Right Expanding Horizon (Experimental Thinking) -->
-                                        <g class="arch-diag-node" data-target-pillar="03" style="cursor: pointer;">
-                                            <text x="790" y="235" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="11" font-style="italic" fill="#64748b">for</text>
-                                            <text x="790" y="253" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#0f172a">Strange Speculation</text>
-                                            <text x="790" y="269" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#0f172a">&amp; Unconventional Space</text>
-                                        </g>
-
-                                        <!-- Horizontal Datum Axis at Bottom -->
-                                        <line x1="140" y1="365" x2="840" y2="365" stroke="#0f172a" stroke-width="1.6" />
-                                        <!-- Left Arrowhead -->
-                                        <path d="M 148,360 L 138,365 L 148,370" fill="none" stroke="#0f172a" stroke-width="1.6" stroke-linecap="round" />
-                                        <!-- Right Dot -->
-                                        <circle cx="840" cy="365" r="4.5" fill="#0f172a" />
+                                        <!-- Intersecting Tripartite Rings (Delicate architectural geometric fields) -->
+                                        <!-- Ring 01: Critical Inquiry (Top Apex) -->
+                                        <circle cx="480" cy="155" r="115" fill="rgba(37, 99, 235, 0.02)" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.4" />
                                         
-                                        <!-- Axis Labels -->
-                                        <text x="140" y="392" text-anchor="start" font-family="'Space Grotesk', sans-serif" font-size="15" font-weight="500" font-style="italic" fill="#0f172a">edge</text>
-                                        <text x="840" y="392" text-anchor="end" font-family="'Space Grotesk', sans-serif" font-size="15" font-weight="500" font-style="italic" fill="#0f172a">center</text>
+                                        <!-- Ring 02: Contextual Research (Base Left) -->
+                                        <circle cx="380" cy="255" r="115" fill="rgba(15, 23, 42, 0.015)" stroke="rgba(15, 23, 42, 0.3)" stroke-width="1.4" />
+                                        
+                                        <!-- Ring 03: Experimental Thinking (Base Right) -->
+                                        <circle cx="580" cy="255" r="115" fill="rgba(37, 99, 235, 0.02)" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.4" />
+
+                                        <!-- Dialectical Tension Axes (Connecting the 3 Centers) -->
+                                        <polygon points="480,155 380,255 580,255" fill="none" stroke="rgba(37, 99, 235, 0.22)" stroke-width="1.2" stroke-dasharray="4 4" />
+
+                                        <!-- Continuous Synthesis Loop Flow Labels -->
+                                        <text x="410" y="195" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="600" fill="#64748b">01. QUESTION &searr;</text>
+                                        <text x="480" y="292" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="600" fill="#64748b">&harr; 02. EXCAVATE &harr;</text>
+                                        <text x="550" y="195" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="600" fill="#64748b">&nearr; 03. SPECULATE</text>
+
+                                        <!-- Central Barycenter: THE HIDDEN SISTER (Merope) -->
+                                        <circle cx="480" cy="222" r="44" fill="url(#meropeCoreGlow)" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 4" />
+                                        <circle cx="480" cy="222" r="26" fill="#ffffff" stroke="#0f172a" stroke-width="2" />
+                                        <circle cx="480" cy="222" r="5" fill="#2563eb" />
+                                        <text x="480" y="217" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10" font-weight="700" fill="#0f172a">THE HIDDEN SISTER</text>
+                                        <text x="480" y="229" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="8" font-weight="600" fill="#2563eb">MEROPE // SYNTHESIS</text>
+
+                                        <!-- Peripheral Pillar Nodes (Clickable & Interactive) -->
+                                        <!-- Node 001: Apex (Critical Inquiry) -->
+                                        <g class="arch-diag-node" data-target-pillar="01" style="cursor: pointer;">
+                                            <circle cx="480" cy="55" r="16" fill="#2563eb" />
+                                            <text x="480" y="59" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="700" fill="#ffffff">01</text>
+                                            <text x="480" y="85" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">CRITICAL INQUIRY</text>
+                                            <text x="480" y="99" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" fill="#64748b">by Deconstructing Norms</text>
+                                        </g>
+
+                                        <!-- Node 002: Base-Left (Contextual Research) -->
+                                        <g class="arch-diag-node" data-target-pillar="02" style="cursor: pointer;">
+                                            <circle cx="230" cy="275" r="16" fill="#0f172a" />
+                                            <text x="230" y="279" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="700" fill="#ffffff">02</text>
+                                            <text x="230" y="305" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">CONTEXTUAL RESEARCH</text>
+                                            <text x="230" y="319" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" fill="#64748b">through Site Forensics &amp; Strata</text>
+                                        </g>
+
+                                        <!-- Node 003: Base-Right (Experimental Thinking) -->
+                                        <g class="arch-diag-node" data-target-pillar="03" style="cursor: pointer;">
+                                            <circle cx="730" cy="275" r="16" fill="#2563eb" />
+                                            <text x="730" y="279" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" font-weight="700" fill="#ffffff">03</text>
+                                            <text x="730" y="305" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">EXPERIMENTAL THINKING</text>
+                                            <text x="730" y="319" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="10" fill="#64748b">for Strange &amp; Unconventional Space</text>
+                                        </g>
+
+                                        <!-- Bottom Baseline Datum Axis -->
+                                        <line x1="140" y1="365" x2="820" y2="365" stroke="#0f172a" stroke-width="1.5" />
+                                        <path d="M 148,360 L 138,365 L 148,370" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round" />
+                                        <path d="M 812,360 L 822,365 L 812,370" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round" />
+                                        <text x="140" y="390" text-anchor="start" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="500" font-style="italic" fill="#0f172a">default architectural formulas</text>
+                                        <text x="820" y="390" text-anchor="end" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="500" font-style="italic" fill="#0f172a">strange &amp; unconventional realities</text>
                                     </svg>
                                 </div>
 
@@ -623,19 +627,30 @@
                                     <div class="arch-pillar-col" id="pillar-01">
                                         <div class="arch-tile-wrap">
                                             <svg viewBox="0 0 200 200" class="arch-tile-svg" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="200" height="200" fill="#ff4820" rx="4"/>
-                                                <!-- Outer jagged constructivist cutout -->
-                                                <polygon points="
-                                                    36,36 84,36 68,68 124,52 102,90 164,74 136,118 164,136 128,142 164,164 
-                                                    116,164 132,132 76,148 98,110 36,126 64,82 36,64 72,58 36,36
-                                                " fill="#ffffff" />
-                                                <!-- Inner negative aperture -->
-                                                <polygon points="86,82 122,82 104,112 126,128 78,124 94,98" fill="#ff4820" />
+                                                <rect width="200" height="200" fill="#0f172a" rx="6"/>
+                                                <!-- Grid backdrop -->
+                                                <path d="M 40,40 L 160,40 M 40,80 L 160,80 M 40,120 L 160,120 M 40,160 L 160,160 M 40,40 L 40,160 M 80,40 L 80,160 M 120,40 L 120,160 M 160,40 L 160,160" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                                                <!-- Orthogonal room frame -->
+                                                <rect x="44" y="56" width="100" height="100" fill="rgba(255,255,255,0.03)" stroke="#ffffff" stroke-width="2"/>
+                                                <!-- Displaced corner along blue vector -->
+                                                <polygon points="120,32 168,32 168,80 144,80 144,56 120,56" fill="rgba(37,99,235,0.22)" stroke="#2563eb" stroke-width="2"/>
+                                                <line x1="120" y1="56" x2="148" y2="28" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="3 3"/>
+                                                <polyline points="140,28 148,28 148,36" fill="none" stroke="#2563eb" stroke-width="1.8"/>
+                                                <!-- Interrogation crosshair -->
+                                                <circle cx="94" cy="106" r="14" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                                <circle cx="94" cy="106" r="3" fill="#2563eb"/>
+                                                <line x1="72" y1="106" x2="116" y2="106" stroke="#2563eb" stroke-width="1.2"/>
+                                                <line x1="94" y1="84" x2="94" y2="128" stroke="#2563eb" stroke-width="1.2"/>
+                                                <!-- Dimension ticks -->
+                                                <line x1="44" y1="164" x2="144" y2="164" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                                <line x1="44" y1="161" x2="44" y2="167" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                                <line x1="144" y1="161" x2="144" y2="167" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+                                                <text x="94" y="180" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="8" fill="rgba(255,255,255,0.5)" letter-spacing="0.1em">NORM // DISSECTED</text>
                                             </svg>
                                         </div>
                                         <span class="arch-col-num">001</span>
-                                        <h3 class="arch-col-title">For Critical Inquiry</h3>
-                                        <span class="arch-col-subtitle">By Deconstructing Norms</span>
+                                        <h3 class="arch-col-title">Critical Inquiry</h3>
+                                        <span class="arch-col-subtitle">Deconstructing Norms</span>
                                         <p class="arch-col-text">
                                             Spatial briefs are not neutral instructions. Projects begin by interrogating institutional dogmas, civic labor, and spatial justice to unearth what is systematically erased.
                                         </p>
@@ -653,33 +668,39 @@
                                     <div class="arch-pillar-col" id="pillar-02">
                                         <div class="arch-tile-wrap">
                                             <svg viewBox="0 0 200 200" class="arch-tile-svg" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="200" height="200" fill="#ff4820" rx="4"/>
-                                                <!-- Bottom-left backdrop rectangle -->
-                                                <rect x="25" y="100" width="75" height="75" fill="#e2e8f0" opacity="0.9" />
-                                                <rect x="25" y="25" width="75" height="75" fill="#ffffff" />
-                                                
-                                                <!-- Outer concentric ring -->
-                                                <circle cx="100" cy="100" r="70" fill="#ffffff" />
-                                                <!-- Bottom-left quadrant in solid orange -->
-                                                <path d="M 30,100 A 70,70 0 0,0 100,170 L 100,100 Z" fill="#ff4820" />
-                                                <!-- Top-left quadrant in soft grey -->
-                                                <path d="M 30,100 A 70,70 0 0,1 100,30 L 100,100 Z" fill="#e2e8f0" />
-                                                
-                                                <!-- Inner concentric circle / excavation layer -->
-                                                <circle cx="100" cy="100" r="42" fill="#ffffff" />
-                                                
-                                                <!-- The Forensic Eye / Lens Aperture -->
-                                                <path d="M 62,100 Q 100,64 138,100 Q 100,136 62,100 Z" fill="#ff4820" />
-                                                <!-- Inner Lens Core -->
-                                                <circle cx="100" cy="100" r="16" fill="#ffffff" />
-                                                <circle cx="100" cy="100" r="7" fill="#ff4820" />
+                                                <rect width="200" height="200" fill="#0f172a" rx="6"/>
+                                                <!-- Strata layer 1: Surface & microclimate -->
+                                                <path d="M 32,54 Q 60,46 95,54 T 168,50" fill="none" stroke="#ffffff" stroke-width="2"/>
+                                                <path d="M 32,42 Q 65,36 100,42 T 168,38" fill="none" stroke="rgba(37,99,235,0.7)" stroke-width="1.2" stroke-dasharray="3 3"/>
+                                                <!-- Strata layer 2: Historic urban sediments -->
+                                                <line x1="32" y1="84" x2="168" y2="84" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+                                                <path d="M 46,62 L 46,76 M 66,62 L 66,76 M 86,62 L 86,76 M 126,62 L 126,76 M 146,62 L 146,76" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                                <!-- Strata layer 3: Geological strata -->
+                                                <line x1="32" y1="118" x2="168" y2="118" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-dasharray="6 4"/>
+                                                <!-- Strata layer 4: Deep bedrock -->
+                                                <path d="M 32,148 L 168,148" stroke="rgba(255,255,255,0.9)" stroke-width="2"/>
+                                                <line x1="36" y1="154" x2="48" y2="166" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+                                                <line x1="60" y1="154" x2="72" y2="166" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+                                                <line x1="130" y1="154" x2="142" y2="166" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+                                                <line x1="150" y1="154" x2="162" y2="166" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+                                                <!-- Vertical Forensic Core Borehole -->
+                                                <line x1="104" y1="30" x2="104" y2="170" stroke="#2563eb" stroke-width="2.2"/>
+                                                <circle cx="104" cy="52" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+                                                <circle cx="104" cy="84" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+                                                <circle cx="104" cy="118" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5"/>
+                                                <circle cx="104" cy="148" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+                                                <line x1="98" y1="52" x2="104" y2="52" stroke="#2563eb" stroke-width="1.2"/>
+                                                <line x1="96" y1="84" x2="104" y2="84" stroke="#2563eb" stroke-width="1.2"/>
+                                                <line x1="94" y1="118" x2="104" y2="118" stroke="#2563eb" stroke-width="1.5"/>
+                                                <line x1="96" y1="148" x2="104" y2="148" stroke="#2563eb" stroke-width="1.2"/>
+                                                <text x="104" y="186" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="8" fill="rgba(255,255,255,0.5)" letter-spacing="0.1em">STRATA // CORE EXCAVATION</text>
                                             </svg>
                                         </div>
                                         <span class="arch-col-num">002</span>
-                                        <h3 class="arch-col-title">Through Contextual Research</h3>
-                                        <span class="arch-col-subtitle">By Site Forensics</span>
+                                        <h3 class="arch-col-title">Contextual Research</h3>
+                                        <span class="arch-col-subtitle">Site Forensics &amp; Strata</span>
                                         <p class="arch-col-text">
-                                            Treats context not as an empty plot, but as an unwritten physical archive. Investigating geological strata, historic stone wear, microclimatic comfort, and atmospheric memory.
+                                            Treats site not as a blank canvas, but as an unwritten physical archive. Investigating geological strata, historic stone wear, microclimatic dynamics, and deep temporal memory.
                                         </p>
                                         <div class="arch-col-projects">
                                             <span class="arch-proj-label">MAPPED CONSTELLATION PROJECTS:</span>
@@ -696,37 +717,29 @@
                                     <div class="arch-pillar-col" id="pillar-03">
                                         <div class="arch-tile-wrap">
                                             <svg viewBox="0 0 200 200" class="arch-tile-svg" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="200" height="200" fill="#ff4820" rx="4"/>
-                                                
-                                                <!-- Vertical flutes / rays descending from top edge with staggered heights -->
-                                                <rect x="35" y="20" width="5" height="110" rx="2.5" fill="#ffffff" />
-                                                <rect x="46" y="20" width="5" height="120" rx="2.5" fill="#ffffff" />
-                                                <rect x="57" y="20" width="5" height="98" rx="2.5" fill="#ffffff" />
-                                                <rect x="68" y="20" width="5" height="132" rx="2.5" fill="#ffffff" />
-                                                <rect x="79" y="20" width="5" height="88" rx="2.5" fill="#ffffff" />
-                                                <rect x="90" y="20" width="5" height="136" rx="2.5" fill="#ffffff" />
-                                                <rect x="101" y="20" width="5" height="105" rx="2.5" fill="#ffffff" />
-                                                <rect x="112" y="20" width="5" height="138" rx="2.5" fill="#ffffff" />
-                                                <rect x="123" y="20" width="5" height="92" rx="2.5" fill="#ffffff" />
-                                                <rect x="134" y="20" width="5" height="124" rx="2.5" fill="#ffffff" />
-                                                <rect x="145" y="20" width="5" height="80" rx="2.5" fill="#ffffff" />
-                                                <rect x="156" y="20" width="5" height="112" rx="2.5" fill="#ffffff" />
-                                                
-                                                <!-- Floating speculative orbs -->
-                                                <circle cx="106" cy="128" r="7.5" fill="#ffffff" />
-                                                <circle cx="138" cy="142" r="5" fill="#ffffff" />
-                                                
-                                                <!-- Bottom irregular liquid mound with floating sphere cutout -->
-                                                <ellipse cx="120" cy="172" rx="36" ry="12" fill="#ffffff" />
-                                                <circle cx="134" cy="164" r="9" fill="#ffffff" />
-                                                <circle cx="134" cy="164" r="6" fill="#ff4820" />
+                                                <rect width="200" height="200" fill="#0f172a" rx="6"/>
+                                                <!-- Conventional track lines -->
+                                                <line x1="32" y1="135" x2="168" y2="135" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                                                <line x1="32" y1="150" x2="168" y2="150" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                                                <text x="36" y="165" font-family="'Space Grotesk', monospace" font-size="7" fill="rgba(255,255,255,0.35)" letter-spacing="0.08em">DEFAULT FORMULA</text>
+                                                <!-- Radical divergence curve in electric blue -->
+                                                <path d="M 40,142 L 72,142 C 105,142 95,68 140,68 C 165,68 172,96 150,108 C 128,118 116,92 135,76" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round"/>
+                                                <!-- Branching inflection point -->
+                                                <circle cx="72" cy="142" r="4" fill="#0f172a" stroke="#2563eb" stroke-width="2"/>
+                                                <!-- Speculative termination node -->
+                                                <ellipse cx="140" cy="68" rx="20" ry="10" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" transform="rotate(-20 140 68)"/>
+                                                <circle cx="140" cy="68" r="8" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+                                                <circle cx="140" cy="68" r="3" fill="#2563eb"/>
+                                                <line x1="140" y1="52" x2="140" y2="44" stroke="#ffffff" stroke-width="1.5"/>
+                                                <line x1="154" y1="60" x2="162" y2="55" stroke="#ffffff" stroke-width="1.5"/>
+                                                <text x="100" y="186" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="8" fill="rgba(255,255,255,0.5)" letter-spacing="0.1em">RADICAL DIVERGENCE</text>
                                             </svg>
                                         </div>
                                         <span class="arch-col-num">003</span>
-                                        <h3 class="arch-col-title">For Strange Speculation</h3>
-                                        <span class="arch-col-subtitle">By Unconventional Solutions</span>
+                                        <h3 class="arch-col-title">Experimental Thinking</h3>
+                                        <span class="arch-col-subtitle">Strange Alternatives</span>
                                         <p class="arch-col-text">
-                                            Refusing default architectural templates to invent strange, provocative, and unorthodox spatial responses. Challenging accepted problem-solving dogmas through radical alternatives.
+                                            Refusing default architectural templates to conceive strange, provocative, and unorthodox spatial responses. Challenging accepted problem-solving dogmas through radical spatial divergence.
                                         </p>
                                         <div class="arch-col-projects">
                                             <span class="arch-proj-label">MAPPED CONSTELLATION PROJECTS:</span>
