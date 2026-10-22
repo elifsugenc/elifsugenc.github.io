@@ -2210,6 +2210,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// --- METHODOLOGY: ARCHITECTURAL RESEARCH APPROACH INTERACTION ---
+document.addEventListener('DOMContentLoaded', () => {
+    const diagNodes = document.querySelectorAll('.arch-diag-node');
+    const pillarCols = document.querySelectorAll('.arch-pillar-col');
+
+    if (!diagNodes.length || !pillarCols.length) return;
+
+    diagNodes.forEach(node => {
+        const pillarNum = node.getAttribute('data-target-pillar');
+        const targetCol = document.getElementById(`pillar-${pillarNum}`);
+
+        node.addEventListener('mouseenter', () => {
+            if (targetCol) targetCol.classList.add('highlighted');
+        });
+
+        node.addEventListener('mouseleave', () => {
+            if (targetCol) targetCol.classList.remove('highlighted');
+        });
+
+        node.addEventListener('click', () => {
+            if (targetCol) {
+                targetCol.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetCol.classList.add('highlighted');
+                setTimeout(() => targetCol.classList.remove('highlighted'), 1800);
+            }
+        });
+    });
+
+    pillarCols.forEach(col => {
+        const colId = col.id; // e.g. pillar-01
+        const num = colId.replace('pillar-', '');
+        const matchingNode = document.querySelector(`.arch-diag-node[data-target-pillar="${num}"]`);
+
+        col.addEventListener('mouseenter', () => {
+            if (matchingNode) {
+                matchingNode.style.opacity = '1';
+                matchingNode.style.filter = 'drop-shadow(0 0 10px rgba(255, 72, 32, 0.6))';
+            }
+        });
+
+        col.addEventListener('mouseleave', () => {
+            if (matchingNode) {
+                matchingNode.style.opacity = '';
+                matchingNode.style.filter = '';
+            }
+        });
+    });
+});
+
 // --- METHODOLOGY: TERNARY DIAGRAM & ACTIVE LENS INTERACTION ---
 document.addEventListener('DOMContentLoaded', () => {
     const lensPanel = document.getElementById('methodology-lens');

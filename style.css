@@ -10938,4 +10938,178 @@ iframe,
     user-drag: none !important;
 }
 
+/* ==========================================================================
+   RESEARCH APPROACH // ARCHITECTURAL MINIMALIST DIAGRAM & 3-ICON PILLAR SYSTEM
+   (Avant-garde constructivist & editorial aesthetic, vermilion/orange accents)
+   ========================================================================== */
+
+.arch-research-framework {
+    background: #ffffff;
+    border: 1px solid rgba(255, 72, 32, 0.25);
+    border-radius: 6px;
+    padding: 38px 32px 42px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 24px rgba(255, 72, 32, 0.04);
+}
+
+.arch-main-diagram-wrap {
+    width: 100%;
+    margin-bottom: 48px;
+    padding-bottom: 34px;
+    border-bottom: 1px solid rgba(255, 72, 32, 0.18);
+}
+
+.arch-main-diagram-svg {
+    width: 100%;
+    max-height: 520px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.arch-diag-node {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.arch-diag-node:hover {
+    opacity: 0.85;
+}
+
+.arch-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+}
+
+.arch-pillar-col {
+    border-left: 2px solid #ff4820;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    border-radius: 0 4px 4px 0;
+}
+
+.arch-pillar-col:hover,
+.arch-pillar-col.highlighted {
+    transform: translateY(-3px);
+    background: rgba(255, 72, 32, 0.02);
+}
+
+.arch-tile-wrap {
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 4px;
+}
+
+.arch-tile-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    box-shadow: 0 6px 18px rgba(255, 72, 32, 0.14);
+    border-radius: 4px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.arch-pillar-col:hover .arch-tile-svg,
+.arch-pillar-col.highlighted .arch-tile-svg {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px rgba(255, 72, 32, 0.25);
+}
+
+.arch-col-num {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #ff4820;
+}
+
+.arch-col-title {
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #ff4820;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.arch-col-subtitle {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+    margin-top: -6px;
+}
+
+.arch-col-text {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-color, #0f172a);
+    opacity: 0.88;
+    margin: 0;
+}
+
+.arch-col-projects {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(255, 72, 32, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.arch-proj-label {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #ff4820;
+}
+
+.arch-proj-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.arch-proj-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    border-radius: 4px;
+    background: rgba(255, 72, 32, 0.04);
+    border: 1px solid rgba(255, 72, 32, 0.2);
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: all 0.2s ease;
+}
+
+.arch-proj-pill:hover {
+    background: #ff4820;
+    border-color: #ff4820;
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+@media (max-width: 900px) {
+    .arch-pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .arch-tile-wrap {
+        max-width: 190px;
+    }
+}
+
+
 
