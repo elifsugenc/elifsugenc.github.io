@@ -2227,9 +2227,9 @@ document.addEventListener('DOMContentLoaded', () => {
             mode: 'ACTIVE LENS // EG. PRACTICE SYNTHESIS',
             badge: 'BARYCENTER // DYNAMIC SYNTHESIS',
             title: 'CONTINUOUS SPATIAL SYNTHESIS LOOP',
-            quote: '“Architecture is an investigative feedback loop between ethical inquiry, site forensics, and tactile matter.”',
-            desc: 'Rather than executing predetermined briefs, projects dismantle assumptions, unearth dormant site memories, and prototype fragile futures. All 12 constellation projects converge at this barycentric core.',
-            flow: ['01. QUESTION', '02. EXCAVATE', '03. PROTOTYPE', '04. RETHINK'],
+            quote: '“Architecture is an investigative feedback loop between ethical inquiry, site forensics, and unconventional spatial speculation.”',
+            desc: 'Rather than executing predetermined briefs, projects dismantle assumptions, unearth dormant site memories, and prototype strange, provocative futures. All 12 constellation projects converge at this barycentric core.',
+            flow: ['01. QUESTION', '02. EXCAVATE', '03. SPECULATE', '04. RETHINK'],
             footerLabel: 'BARYCENTRIC CORE // THE HIDDEN SISTER:',
             projects: [
                 { title: 'THE HIDDEN SISTER (MEROPE)', url: '#design-approach' }
@@ -2268,15 +2268,16 @@ document.addEventListener('DOMContentLoaded', () => {
         v3: {
             mode: 'FOCUSED LENS // VERTEX 03: EXPERIMENTAL THINKING',
             badge: 'BASE-RIGHT // VERTEX 03',
-            title: 'EXPERIMENTAL THINKING // EARTH CYCLES & WELLBEING',
-            quote: '“Is there life because there is death?”',
-            desc: 'Connects human life cycles to the restorative rhythms of nature. Prototyping tactile soil immersion, mud-bathing wellbeing, raw clay shaping, and circular biopolymer renewal.',
-            flow: ['SOIL WELLBEING', 'RAW CLAY SHAPING', 'CIRCULAR RENEWAL'],
+            title: 'EXPERIMENTAL THINKING // STRANGE & UNCONVENTIONAL SOLUTIONS',
+            quote: '“Why reproduce familiar formulas when space can propose strange, unexpected alternatives?”',
+            desc: 'Rather than defaulting to standard architectural remedies, Experimental Thinking generates strange, provocative, and radically different proposals. By challenging accepted problem-solving dogmas, projects invent unorthodox spatial rituals, speculative systems, and unpredicted scenarios.',
+            flow: ['REJECT FAMILIAR FIXES', 'STRANGE SPECULATION', 'UNORTHODOX PROPOSALS'],
             footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
             projects: [
                 { title: '10. THE EARTHEN', url: './projects/the-earthen/' },
                 { title: '11. BIO-DECAY', url: './projects/bio-decay/' },
-                { title: '08. WOOD WEAVE', url: './projects/wood-weave/' }
+                { title: '08. WOOD WEAVE', url: './projects/wood-weave/' },
+                { title: '12. FIRE ESCAPE SIM', url: './projects/fire-escape-simulation/' }
             ]
         },
         'edge-left': {
@@ -2294,11 +2295,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'edge-right': {
             mode: 'DIALECTICAL TENSION // RIGHT AXIS',
-            badge: 'AXIS 02 // INQUIRY &times; EXPERIMENT',
-            title: 'SPATIAL JUSTICE &times; LIVING MATTER',
-            quote: '“How do abstract systemic crises translate into living physical vulnerability?”',
-            desc: 'Connecting civic labor rights, non-human agency, and planetary pollution directly to tactile matter through biodegradable testbeds.',
-            flow: ['ETHICAL AUDIT', '⇄', 'BIOMATERIAL PROTOTYPE'],
+            badge: 'AXIS 02 // INQUIRY &times; STRANGE SPECULATION',
+            title: 'SPATIAL JUSTICE &times; STRANGE SPECULATION',
+            quote: '“How do critical ethics spark radically unexpected and provocative alternatives?”',
+            desc: 'Connecting institutional critique and spatial justice with strange, speculative design alternatives that challenge conventional architectural recipes.',
+            flow: ['ETHICAL AUDIT', '⇄', 'RADICAL SPECULATION'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
                 { title: 'STRAY', url: './projects/stray/' },
@@ -2307,11 +2308,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'edge-bottom': {
             mode: 'DIALECTICAL TENSION // BASE AXIS',
-            badge: 'AXIS 03 // CONTEXT &times; EXPERIMENT',
-            title: 'CLIMATIC MEMORY &times; TECTONIC PROTOTYPING',
-            quote: '“How do vernacular cooling and earth traditions inform future architecture?”',
-            desc: 'Historical microclimates, raw earth, and vernacular shade systems re-tested with bio-fabrication for regenerative architectures.',
-            flow: ['SITE SENSITIVITY', '⇄', 'TECTONIC PROTOTYPE'],
+            badge: 'AXIS 03 // CONTEXT &times; UNORTHODOX ALTERNATIVES',
+            title: 'SITE MEMORY &times; UNORTHODOX ALTERNATIVES',
+            quote: '“How does deep site excavation generate surprising, unpredicted solutions?”',
+            desc: 'Historical microclimates, forgotten site layers, and vernacular traces repurposed to produce strange, unconventional spatial interventions rather than standard architectural forms.',
+            flow: ['SITE SENSITIVITY', '⇄', 'UNORTHODOX PROPOSAL'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
                 { title: 'BAJO LA FRESCA', url: './projects/bajo-la-fresca/' },
