@@ -2222,15 +2222,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetCol = document.getElementById(`pillar-${pillarNum}`);
 
         node.addEventListener('mouseenter', () => {
-            if (targetCol) targetCol.classList.add('highlighted');
+            if (pillarNum === 'all') {
+                pillarCols.forEach(c => c.classList.add('highlighted'));
+            } else if (targetCol) {
+                targetCol.classList.add('highlighted');
+            }
         });
 
         node.addEventListener('mouseleave', () => {
-            if (targetCol) targetCol.classList.remove('highlighted');
+            if (pillarNum === 'all') {
+                pillarCols.forEach(c => c.classList.remove('highlighted'));
+            } else if (targetCol) {
+                targetCol.classList.remove('highlighted');
+            }
         });
 
         node.addEventListener('click', () => {
-            if (targetCol) {
+            if (pillarNum === 'all') {
+                const grid = document.querySelector('.arch-pillars-grid');
+                if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                pillarCols.forEach(c => c.classList.add('highlighted'));
+                setTimeout(() => pillarCols.forEach(c => c.classList.remove('highlighted')), 1800);
+            } else if (targetCol) {
                 targetCol.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 targetCol.classList.add('highlighted');
                 setTimeout(() => targetCol.classList.remove('highlighted'), 1800);
