@@ -2212,64 +2212,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- METHODOLOGY: ARCHITECTURAL RESEARCH APPROACH INTERACTION ---
 document.addEventListener('DOMContentLoaded', () => {
-    const diagNodes = document.querySelectorAll('.arch-diag-node');
-    const pillarCols = document.querySelectorAll('.arch-pillar-col');
-
-    if (!diagNodes.length || !pillarCols.length) return;
-
-    diagNodes.forEach(node => {
-        const pillarNum = node.getAttribute('data-target-pillar');
-        const targetCol = document.getElementById(`pillar-${pillarNum}`);
-
-        node.addEventListener('mouseenter', () => {
-            if (pillarNum === 'all') {
-                pillarCols.forEach(c => c.classList.add('highlighted'));
-            } else if (targetCol) {
-                targetCol.classList.add('highlighted');
+    const synthesisNode = document.querySelector('.arch-diag-synthesis');
+    if (synthesisNode) {
+        synthesisNode.style.cursor = 'pointer';
+        synthesisNode.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            if (typeof openMeropeStoryModal === 'function') {
+                openMeropeStoryModal();
             }
         });
-
-        node.addEventListener('mouseleave', () => {
-            if (pillarNum === 'all') {
-                pillarCols.forEach(c => c.classList.remove('highlighted'));
-            } else if (targetCol) {
-                targetCol.classList.remove('highlighted');
-            }
-        });
-
-        node.addEventListener('click', () => {
-            if (pillarNum === 'all') {
-                const grid = document.querySelector('.arch-pillars-grid');
-                if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                pillarCols.forEach(c => c.classList.add('highlighted'));
-                setTimeout(() => pillarCols.forEach(c => c.classList.remove('highlighted')), 1800);
-            } else if (targetCol) {
-                targetCol.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                targetCol.classList.add('highlighted');
-                setTimeout(() => targetCol.classList.remove('highlighted'), 1800);
-            }
-        });
-    });
-
-    pillarCols.forEach(col => {
-        const colId = col.id; // e.g. pillar-01
-        const num = colId.replace('pillar-', '');
-        const matchingNode = document.querySelector(`.arch-diag-node[data-target-pillar="${num}"]`);
-
-        col.addEventListener('mouseenter', () => {
-            if (matchingNode) {
-                matchingNode.style.opacity = '1';
-                matchingNode.style.filter = 'drop-shadow(0 0 10px rgba(37, 99, 235, 0.6))';
-            }
-        });
-
-        col.addEventListener('mouseleave', () => {
-            if (matchingNode) {
-                matchingNode.style.opacity = '';
-                matchingNode.style.filter = '';
-            }
-        });
-    });
+    }
 });
 
 // --- METHODOLOGY: TERNARY DIAGRAM & ACTIVE LENS INTERACTION ---
