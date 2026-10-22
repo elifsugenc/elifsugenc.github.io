@@ -2210,8 +2210,225 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- METHODOLOGY: PRACTICE DIAGRAM INITIALIZATION ---
-// Handled natively via semantic HTML, SVGs, and CSS. Responsive and interactive links.
+// --- METHODOLOGY: TERNARY DIAGRAM & ACTIVE LENS INTERACTION ---
+document.addEventListener('DOMContentLoaded', () => {
+    const lensPanel = document.getElementById('methodology-lens');
+    const lensStatus = document.getElementById('m-lens-status');
+    const lensContent = document.getElementById('m-lens-content');
+    const lensButtons = document.querySelectorAll('.m-lens-btn');
+    const triNodes = document.querySelectorAll('.m-tri-node-group');
+    const triCore = document.getElementById('m-tri-core');
+    const triEdges = document.querySelectorAll('.m-tri-edge-group');
+
+    if (!lensPanel || !lensContent) return;
+
+    const LENS_DATA = {
+        all: {
+            mode: 'ACTIVE LENS // EG. PRACTICE SYNTHESIS',
+            badge: 'BARYCENTER // DYNAMIC SYNTHESIS',
+            title: 'CONTINUOUS SPATIAL SYNTHESIS LOOP',
+            quote: '“Architecture is an investigative feedback loop between ethical inquiry, site forensics, and tactile matter.”',
+            desc: 'Rather than executing predetermined briefs, projects dismantle assumptions, unearth dormant site memories, and prototype fragile futures. All 12 constellation projects converge at this barycentric core.',
+            flow: ['01. QUESTION', '02. EXCAVATE', '03. PROTOTYPE', '04. RETHINK'],
+            footerLabel: 'BARYCENTRIC CORE // THE HIDDEN SISTER:',
+            projects: [
+                { title: 'THE HIDDEN SISTER (MEROPE)', url: '#design-approach' }
+            ]
+        },
+        v1: {
+            mode: 'FOCUSED LENS // VERTEX 01: CRITICAL INQUIRY',
+            badge: 'APEX // VERTEX 01',
+            title: 'CRITICAL INQUIRY // DECONSTRUCTING NORMS',
+            quote: '“Whose labor, presence, and daily rituals does monumental architecture erase?”',
+            desc: 'Transforms spatial design into an instrument of resistance. Challenges institutional dogma, centers forgotten civic labor, and investigates multispecies urban coexistence.',
+            flow: ['ETHICAL AUDIT', 'INSTITUTIONAL CRITIQUE', 'SPATIAL JUSTICE'],
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
+            projects: [
+                { title: '01. EMEK MUSEUM', url: './projects/emek-museum/' },
+                { title: '02. STRAY', url: './projects/stray/' },
+                { title: '04. SPROUTING GARDEN', url: './projects/sprouting-garden/' }
+            ]
+        },
+        v2: {
+            mode: 'FOCUSED LENS // VERTEX 02: CONTEXTUAL RESEARCH',
+            badge: 'BASE-LEFT // VERTEX 02',
+            title: 'CONTEXTUAL RESEARCH // MATERIAL MEMORY',
+            quote: '“What does physical site, stone, and microclimate remember over time?”',
+            desc: 'Treats context not as an empty plot, but as an unwritten physical archive of microclimatic comfort, stone wear, and historical urban strata.',
+            flow: ['MICROCLIMATES', 'SEDIMENTARY LAYERS', 'EPHEMERAL ATMOSPHERES'],
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
+            projects: [
+                { title: '03. CHRONOCLINES', url: './projects/chronoclines/' },
+                { title: '05. MILLIEU', url: './projects/millieu/' },
+                { title: '07. BAJO LA FRESCA', url: './projects/bajo-la-fresca/' },
+                { title: '09. ARA SIRA', url: './projects/ara-sira/' },
+                { title: '12. FIRE ESCAPE SIM', url: './projects/fire-escape-simulation/' }
+            ]
+        },
+        v3: {
+            mode: 'FOCUSED LENS // VERTEX 03: EXPERIMENTAL THINKING',
+            badge: 'BASE-RIGHT // VERTEX 03',
+            title: 'EXPERIMENTAL THINKING // EARTH CYCLES & WELLBEING',
+            quote: '“Is there life because there is death?”',
+            desc: 'Connects human life cycles to the restorative rhythms of nature. Prototyping tactile soil immersion, mud-bathing wellbeing, raw clay shaping, and circular biopolymer renewal.',
+            flow: ['SOIL WELLBEING', 'RAW CLAY SHAPING', 'CIRCULAR RENEWAL'],
+            footerLabel: 'MAPPED CONSTELLATION PROJECTS:',
+            projects: [
+                { title: '10. THE EARTHEN', url: './projects/the-earthen/' },
+                { title: '11. BIO-DECAY', url: './projects/bio-decay/' },
+                { title: '08. WOOD WEAVE', url: './projects/wood-weave/' }
+            ]
+        },
+        'edge-left': {
+            mode: 'DIALECTICAL TENSION // LEFT AXIS',
+            badge: 'AXIS 01 // INQUIRY &times; CONTEXT',
+            title: 'INSTITUTIONAL CRITIQUE &times; MATERIAL FORENSICS',
+            quote: '“How does ethical resistance anchor itself in the physical memory of site?”',
+            desc: 'Critique cannot remain purely theoretical; it must excavate physical stone, pavement, and labor wear. Theory meets forensic fieldwork.',
+            flow: ['DECONSTRUCT BRIEF', '⇄', 'EXCAVATE STRATA'],
+            footerLabel: 'BRIDGE WORKS:',
+            projects: [
+                { title: 'EMEK MUSEUM', url: './projects/emek-museum/' },
+                { title: 'CHRONOCLINES', url: './projects/chronoclines/' }
+            ]
+        },
+        'edge-right': {
+            mode: 'DIALECTICAL TENSION // RIGHT AXIS',
+            badge: 'AXIS 02 // INQUIRY &times; EXPERIMENT',
+            title: 'SPATIAL JUSTICE &times; LIVING MATTER',
+            quote: '“How do abstract systemic crises translate into living physical vulnerability?”',
+            desc: 'Connecting civic labor rights, non-human agency, and planetary pollution directly to tactile matter through biodegradable testbeds.',
+            flow: ['ETHICAL AUDIT', '⇄', 'BIOMATERIAL PROTOTYPE'],
+            footerLabel: 'BRIDGE WORKS:',
+            projects: [
+                { title: 'STRAY', url: './projects/stray/' },
+                { title: 'BIO-DECAY', url: './projects/bio-decay/' }
+            ]
+        },
+        'edge-bottom': {
+            mode: 'DIALECTICAL TENSION // BASE AXIS',
+            badge: 'AXIS 03 // CONTEXT &times; EXPERIMENT',
+            title: 'CLIMATIC MEMORY &times; TECTONIC PROTOTYPING',
+            quote: '“How do vernacular cooling and earth traditions inform future architecture?”',
+            desc: 'Historical microclimates, raw earth, and vernacular shade systems re-tested with bio-fabrication for regenerative architectures.',
+            flow: ['SITE SENSITIVITY', '⇄', 'TECTONIC PROTOTYPE'],
+            footerLabel: 'BRIDGE WORKS:',
+            projects: [
+                { title: 'BAJO LA FRESCA', url: './projects/bajo-la-fresca/' },
+                { title: 'THE EARTHEN', url: './projects/the-earthen/' }
+            ]
+        }
+    };
+
+    let currentSelectedPole = 'all';
+
+    function renderLens(poleKey) {
+        const data = LENS_DATA[poleKey] || LENS_DATA.all;
+        
+        // Update header status
+        if (lensStatus) lensStatus.textContent = data.mode;
+        
+        // Update container highlight classes
+        lensPanel.classList.remove('highlight-v1', 'highlight-v2', 'highlight-v3');
+        if (poleKey === 'v1') lensPanel.classList.add('highlight-v1');
+        else if (poleKey === 'v2') lensPanel.classList.add('highlight-v2');
+        else if (poleKey === 'v3') lensPanel.classList.add('highlight-v3');
+
+        // Update button active states
+        lensButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-pole') === poleKey);
+        });
+
+        // Update SVG node focus
+        triNodes.forEach(node => {
+            node.classList.toggle('is-focused', node.getAttribute('data-pole') === poleKey);
+        });
+
+        // Build project pills HTML
+        let projHtml = '';
+        if (data.projects && data.projects.length > 0) {
+            projHtml = data.projects.map(p => `<a href="${p.url}" class="m-lens-proj-pill">${p.title} &nearr;</a>`).join(' ');
+        }
+
+        // Build flow pills HTML
+        let flowHtml = data.flow.map((step, idx) => {
+            return step === '⇄' 
+                ? `<span class="m-flow-sep">&harr;</span>`
+                : (idx > 0 && data.flow[idx - 1] !== '⇄' 
+                    ? `<span class="m-flow-sep">&rarr;</span><span class="m-flow-step">${step}</span>` 
+                    : `<span class="m-flow-step">${step}</span>`);
+        }).join('');
+
+        lensContent.innerHTML = `
+            <div class="m-lens-card-inner">
+                <div class="m-lens-meta-row">
+                    <span class="m-lens-badge">${data.badge}</span>
+                    <h3 class="m-lens-title">${data.title}</h3>
+                </div>
+                <p class="m-lens-quote">${data.quote}</p>
+                <p class="m-lens-desc">${data.desc}</p>
+                <div class="m-lens-footer-row">
+                    <div class="m-lens-flow-pills">${flowHtml}</div>
+                    <div class="m-lens-tag-list">
+                        <span class="m-lens-tag-label">${data.footerLabel}</span>
+                        ${projHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Switcher buttons click
+    lensButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentSelectedPole = btn.getAttribute('data-pole');
+            renderLens(currentSelectedPole);
+        });
+    });
+
+    // SVG Vertices hover and click
+    triNodes.forEach(node => {
+        const pole = node.getAttribute('data-pole');
+        node.addEventListener('mouseenter', () => {
+            renderLens(pole);
+        });
+        node.addEventListener('mouseleave', () => {
+            renderLens(currentSelectedPole);
+        });
+        node.addEventListener('click', (e) => {
+            if (!e.target.closest('.m-tri-tag-group')) {
+                currentSelectedPole = pole;
+                renderLens(currentSelectedPole);
+            }
+        });
+    });
+
+    // SVG Core hover and click
+    if (triCore) {
+        triCore.addEventListener('mouseenter', () => {
+            renderLens('all');
+        });
+        triCore.addEventListener('mouseleave', () => {
+            renderLens(currentSelectedPole);
+        });
+        triCore.addEventListener('click', () => {
+            currentSelectedPole = 'all';
+            renderLens('all');
+        });
+    }
+
+    // SVG Tension Edges hover
+    triEdges.forEach(edge => {
+        const edgeId = 'edge-' + edge.getAttribute('data-edge');
+        edge.addEventListener('mouseenter', () => {
+            renderLens(edgeId);
+        });
+        edge.addEventListener('mouseleave', () => {
+            renderLens(currentSelectedPole);
+        });
+    });
+});
+
 
 // --- PROJECT MODAL INTERACTION ---
 document.addEventListener('DOMContentLoaded', () => {
