@@ -6063,8 +6063,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 3px;
-    max-width: 170px;
-    white-space: normal;
+    width: max-content;
+    white-space: nowrap;
     pointer-events: none !important;
     user-select: none;
     z-index: 3;
@@ -6176,14 +6176,7 @@ body {
     white-space: nowrap !important;
 }
 .node-keywords {
-    font-family: monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-    color: rgba(26, 54, 93, 0.55);
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-    white-space: normal;
-    line-height: 1.35;
+    display: none !important;
 }
 .constellation-node:hover .node-title,
 .constellation-node.is-hovered .node-title {

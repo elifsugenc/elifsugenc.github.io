@@ -1018,7 +1018,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${numLabelHtml}
                             <span class="node-title">${p.titleDisplay || p.title}</span>
                         </div>
-                        <div class="node-keywords">${keywordsHtml}</div>
                     </div>
                 </div>
             `;
