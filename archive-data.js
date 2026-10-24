@@ -17,6 +17,15 @@
 window.ARCHIVE_QUESTIONS = [
     // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
+        id: "q-2026-10-24-01",
+        date: "24 October 2026",
+        time: "21:07",
+        question: "Ölüm sınıfsal mı? (spoiler alert: evet) (Is death class-based? (spoiler alert: yes))",
+        reflection: "",
+        tags: ["body", "decay", "daily-life"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-10-20-02",
         date: "20 October 2026",
         time: "13:20",
