@@ -17,6 +17,15 @@
 window.ARCHIVE_QUESTIONS = [
     // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
+        id: "q-2026-10-24-02",
+        date: "24 October 2026",
+        time: "21:09",
+        question: "Hiç savaşta ölmüş bir soylunun mezarını gördün mü? (Have you ever seen the grave of a noble who died in war?)",
+        reflection: "",
+        tags: ["memory", "traces", "space"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-10-24-01",
         date: "24 October 2026",
         time: "21:07",
