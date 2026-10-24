@@ -10043,19 +10043,7 @@ body {
 }
 
 .csp-quote {
-    font-family: 'Space Grotesk', system-ui, sans-serif !important;
-    font-size: 0.74rem !important;
-    font-style: italic !important;
-    font-weight: 500 !important;
-    color: #1e3a8a !important;
-    line-height: 1.35 !important;
-    max-width: 250px !important;
-    white-space: normal !important;
-    text-align: center !important;
-    margin: 4px 0 3px !important;
-    padding: 4px 6px !important;
-    border-top: 1px dashed rgba(37, 99, 235, 0.25) !important;
-    border-bottom: 1px dashed rgba(37, 99, 235, 0.25) !important;
+    display: none !important;
 }
 
 .cluster-star-visual:hover .cluster-star-pill,

@@ -1057,7 +1057,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="cluster-star-pill">
                         <div class="csp-star">MEROPE <span class="csp-bayer">&bull; 23 Tauri</span></div>
                         <div class="csp-title">THE HIDDEN SISTER</div>
-                        <div class="csp-quote">&ldquo;While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars.&rdquo;</div>
                         <div class="csp-meta">&Uuml;lker &bull; Design Methodology &rarr;</div>
                     </div>
                 </div>
