@@ -286,9 +286,38 @@
         });
     } catch (_) {}
 
+    function ensureUniversalLightbox() {
+        let modal = document.querySelector(
+            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
+        );
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'universal-lightbox';
+            modal.className = 'lightbox-overlay';
+            modal.innerHTML = `
+                <div class="lightbox-img-wrapper">
+                    <img id="lightbox-img" src="" alt="Enlarged view">
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        return modal;
+    }
+
+    window.openUniversalFullscreenImage = function(src) {
+        if (!src) return;
+        const modal = ensureUniversalLightbox();
+        const img = modal.querySelector('img');
+        if (img) img.src = src;
+        modal.classList.remove('hidden');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lastLightboxOpenedTime = Date.now();
+    };
+
     function closeAnyActiveLightbox() {
         const activeModals = document.querySelectorAll(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active'
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         let closed = false;
         activeModals.forEach(modal => {
@@ -310,19 +339,49 @@
         return closed;
     }
 
-    // Capture-phase click: clicking ANYWHERE on the screen closes the open lightbox
+    // Capture-phase click:
+    // 1. If lightbox is currently open: clicking ANYWHERE on the screen closes it
+    // 2. If lightbox is closed: clicking ANY image across the project zooms it to fullscreen!
     document.addEventListener('click', function(e) {
-        if (Date.now() - lastLightboxOpenedTime < 180) {
-            return;
-        }
+        // CASE 1: Close active lightbox
         const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active'
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
-            // The user clicked while lightbox is open -> close it immediately!
+            if (Date.now() - lastLightboxOpenedTime < 180) {
+                return;
+            }
             e.preventDefault();
             e.stopPropagation();
             closeAnyActiveLightbox();
+            return;
+        }
+
+        // CASE 2: Click on any content image or diagram or plate
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        if (clickedImg) {
+            const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
+            if (fullSrc) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.openUniversalFullscreenImage(fullSrc);
+                return;
+            }
+        }
+
+        const zoomContainer = e.target.closest(
+            '.zoomable-image-container, .board-compact-card, .tech-card, .dual-card, .render-quad-card, .hero-visual-card, .visual-feature-plate, .visual-plate, .tectonic-image-panel, .recipe-diagram-card, .diag-card, .board-item, .visual-frame'
+        );
+        if (zoomContainer && !e.target.closest('a, button')) {
+            const innerImg = zoomContainer.querySelector('img');
+            if (innerImg) {
+                const fullSrc = innerImg.getAttribute('data-full-src') || innerImg.currentSrc || innerImg.src || innerImg.getAttribute('src');
+                if (fullSrc) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.openUniversalFullscreenImage(fullSrc);
+                }
+            }
         }
     }, true);
 

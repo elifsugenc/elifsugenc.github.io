@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 '.portfolio-filter-item, .methodology-card, .wwh-modal-close, .modal-close, .cluster-brand-node, .merope-star, ' +
                 '.c-approach-core, .center-core, #constellation-center-btn, .constellation-center, .cs-core, .node-visual, .card-external-arrow, ' +
                 '.filter-chip, .contact-link, .back-btn, .jump-btn, .prev-proj, .next-proj, .close-detail, .detail-tag, ' +
-                '.modal-img-wrap, .m-lang-btn, .c-axis-hit, .card-action-btn, [onclick], [data-tab], [data-id], [data-pole], [data-target]'
+                '.modal-img-wrap, .m-lang-btn, .c-axis-hit, .card-action-btn, [onclick], [data-tab], [data-id], [data-pole], [data-target], img:not(.brand-logo-gif):not([src*="favicon"])'
             );
             if (clickableAncestor) return true;
 
@@ -3076,3 +3076,90 @@ window.toggleModalLang = function(lang) {
     }
 };
 
+
+
+// =========================================================
+// UNIVERSAL FULLSCREEN IMAGE LIGHTBOX FOR WEBSITE
+// Minimalist architectural viewer, dark translucent overlay, click anywhere to close
+// =========================================================
+(function() {
+    let lastLightboxOpenedTime = 0;
+
+    function ensureUniversalLightbox() {
+        let modal = document.querySelector(
+            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
+        );
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'universal-lightbox';
+            modal.className = 'lightbox-overlay';
+            modal.innerHTML = `
+                <div class="lightbox-img-wrapper">
+                    <img id="lightbox-img" src="" alt="Enlarged view">
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        return modal;
+    }
+
+    function closeAnyActiveLightbox() {
+        const activeModals = document.querySelectorAll(
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
+        );
+        let closed = false;
+        activeModals.forEach(modal => {
+            modal.classList.remove('active');
+            const img = modal.querySelector('img');
+            if (img) img.src = '';
+            closed = true;
+        });
+        if (closed) {
+            document.body.style.overflow = '';
+        }
+        return closed;
+    }
+
+    window.openUniversalFullscreenImage = function(src) {
+        if (!src) return;
+        const modal = ensureUniversalLightbox();
+        const img = modal.querySelector('img');
+        if (img) img.src = src;
+        modal.classList.remove('hidden');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lastLightboxOpenedTime = Date.now();
+    };
+
+    // Capture-phase click delegator:
+    // 1. If lightbox is open: clicking ANYWHERE closes it!
+    // 2. If lightbox is closed: clicking ANY content image opens it full screen!
+    document.addEventListener('click', function(e) {
+        const activeModal = document.querySelector(
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
+        );
+        if (activeModal) {
+            if (Date.now() - lastLightboxOpenedTime < 180) return;
+            e.preventDefault();
+            e.stopPropagation();
+            closeAnyActiveLightbox();
+            return;
+        }
+
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        if (clickedImg) {
+            const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
+            if (fullSrc) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.openUniversalFullscreenImage(fullSrc);
+            }
+        }
+    }, true);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAnyActiveLightbox();
+        }
+    });
+})();

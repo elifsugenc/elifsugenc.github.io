@@ -11213,5 +11213,126 @@ iframe,
     }
 }
 
+/* =========================================================
+   UNIVERSAL MINIMALIST FULLSCREEN IMAGE LIGHTBOX
+   Pure architectural presentation:
+   - Only the image itself, full screen with aspect ratio preserved
+   - Semi-transparent dark background with low opacity (rgba(0, 0, 0, 0.72))
+   - Click ANYWHERE on the screen (image or backdrop) to close
+   - Zero text, zero captions, zero buttons, zero card wrappers
+   ========================================================= */
+.image-lightbox,
+.lightbox-overlay,
+.lightbox-modal,
+#universal-lightbox {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.72) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    z-index: 2147483640 !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.image-lightbox.active,
+.lightbox-modal.active,
+.lightbox-overlay.active,
+#universal-lightbox.active {
+    display: flex !important;
+}
+
+.lightbox-content-box,
+.lightbox-dialog,
+.lightbox-stage,
+.lightbox-img-wrapper {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-width: 96vw !important;
+    max-height: 96vh !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+    position: relative !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+.lightbox-content-box img,
+.lightbox-dialog img,
+.lightbox-stage img,
+.lightbox-img-wrapper img,
+#lightbox-img,
+.lightbox-img {
+    max-width: 94vw !important;
+    max-height: 94vh !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: auto !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.lightbox-close-btn,
+.lightbox-top-bar,
+.lightbox-top-info,
+.lightbox-controls,
+.lightbox-btn,
+.lightbox-btn-dl,
+.lightbox-btn-open,
+.lightbox-btn-close,
+.lightbox-badge,
+.lightbox-title,
+.lightbox-nav-arrow,
+.lightbox-caption-bar,
+.lightbox-caption,
+.lightbox-caption-text,
+.lightbox-hint,
+#lightbox-sheet-badge,
+#lightbox-sheet-title,
+#lightbox-download-btn,
+#lightbox-open-btn,
+#lightbox-prev-btn,
+#lightbox-next-btn,
+#lightbox-caption {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]) {
+    cursor: pointer;
+}
+
+
 
 

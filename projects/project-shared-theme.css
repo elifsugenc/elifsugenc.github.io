@@ -1491,7 +1491,8 @@ figcaption,
    ========================================================= */
 .image-lightbox,
 .lightbox-overlay,
-.lightbox-modal {
+.lightbox-modal,
+#universal-lightbox {
     background: rgba(0, 0, 0, 0.72) !important;
     backdrop-filter: blur(5px) !important;
     -webkit-backdrop-filter: blur(5px) !important;
@@ -1512,8 +1513,13 @@ figcaption,
 
 .image-lightbox.active,
 .lightbox-modal.active,
-.lightbox-overlay.active {
+.lightbox-overlay.active,
+#universal-lightbox.active {
     display: flex !important;
+}
+
+img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]) {
+    cursor: pointer !important;
 }
 
 .lightbox-content-box,
