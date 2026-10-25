@@ -536,40 +536,10 @@
 
     </main>
 
-    <!-- Interactive Lightbox Modal -->
+    <!-- Minimalist Fullscreen Lightbox Modal -->
     <div id="image-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
-        <div class="lightbox-dialog" onclick="event.stopPropagation()">
-            <!-- Top Action Bar -->
-            <div class="lightbox-top-bar">
-                <div class="lightbox-top-info">
-                    <span id="lightbox-sheet-badge" class="lightbox-badge">SHEET 01 / 05</span>
-                    <span id="lightbox-sheet-title" class="lightbox-title"></span>
-                </div>
-                <div class="lightbox-controls">
-                    <a id="lightbox-download-btn" href="#" download="" class="lightbox-btn lightbox-btn-dl" title="Tam Çözünürlüklü İndir">
-                        <span>İNDİR</span> ↓
-                    </a>
-                    <a id="lightbox-open-btn" href="#" target="_blank" class="lightbox-btn lightbox-btn-open" title="Yeni Sekmede Aç">
-                        <span>TAM EKRAN</span> ↗
-                    </a>
-                    <button type="button" class="lightbox-btn lightbox-btn-close" onclick="closeLightbox(event)" title="Kapat (ESC)">&times;</button>
-                </div>
-            </div>
-
-            <!-- Image Container with Prev/Next Navigation -->
-            <div class="lightbox-stage">
-                <button type="button" id="lightbox-prev-btn" class="lightbox-nav-arrow prev" onclick="navigateLightbox(-1)" title="Önceki Pafta (Sol Ok)">&#8249;</button>
-                <div class="lightbox-img-wrapper">
-                    <img id="lightbox-img" src="" alt="Enlarged view">
-                </div>
-                <button type="button" id="lightbox-next-btn" class="lightbox-nav-arrow next" onclick="navigateLightbox(1)" title="Sonraki Pafta (Sağ Ok)">&#8250;</button>
-            </div>
-
-            <!-- Bottom Caption Bar -->
-            <div class="lightbox-caption-bar">
-                <span id="lightbox-caption"></span>
-                <span class="lightbox-hint">[ USE &larr; &rarr; ARROWS TO NAVIGATE, ESC TO CLOSE ]</span>
-            </div>
+        <div class="lightbox-img-wrapper" onclick="closeLightbox(event)">
+            <img id="lightbox-img" src="" alt="Enlarged view" onclick="closeLightbox(event)">
         </div>
     </div>
 
@@ -617,89 +587,42 @@
 
         let activeSheetIndex = -1;
 
-        // Lightbox Functions
+        // Minimalist Fullscreen Lightbox Functions (Zero text, click anywhere to close)
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCaption = document.getElementById('lightbox-caption');
-        const lightboxBadge = document.getElementById('lightbox-sheet-badge');
-        const lightboxTitle = document.getElementById('lightbox-sheet-title');
-        const lightboxDlBtn = document.getElementById('lightbox-download-btn');
-        const lightboxOpenBtn = document.getElementById('lightbox-open-btn');
-        const lightboxPrevBtn = document.getElementById('lightbox-prev-btn');
-        const lightboxNextBtn = document.getElementById('lightbox-next-btn');
 
         function openBoardLightbox(index) {
             if (index < 0 || index >= millieuSheets.length) return;
             activeSheetIndex = index;
             const item = millieuSheets[index];
-
-            lightboxImg.src = item.src;
-            lightboxCaption.textContent = item.caption;
-
-            lightboxBadge.textContent = item.num;
-            lightboxBadge.style.display = 'inline-block';
-            lightboxTitle.textContent = item.title;
-
-            lightboxDlBtn.href = item.src;
-            lightboxDlBtn.setAttribute('download', item.filename);
-            lightboxDlBtn.style.display = 'inline-flex';
-
-            lightboxOpenBtn.href = item.src;
-            lightboxOpenBtn.style.display = 'inline-flex';
-
-            lightboxPrevBtn.style.display = 'flex';
-            lightboxNextBtn.style.display = 'flex';
-
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (lightboxImg) lightboxImg.src = item.src;
+            if (lightbox) {
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
-        function navigateLightbox(dir) {
-            if (activeSheetIndex === -1) return;
-            let nextIdx = (activeSheetIndex + dir + millieuSheets.length) % millieuSheets.length;
-            openBoardLightbox(nextIdx);
-        }
-
-        function openLightbox(src, caption) {
+        function openLightbox(src) {
             activeSheetIndex = -1;
-            lightboxImg.src = src;
-            lightboxCaption.textContent = caption || '';
-
-            lightboxBadge.style.display = 'none';
-            lightboxTitle.textContent = '';
-
-            const parts = src.split('/');
-            const filename = parts[parts.length - 1] || 'drawing.jpg';
-            lightboxDlBtn.href = src;
-            lightboxDlBtn.setAttribute('download', filename);
-            lightboxDlBtn.style.display = 'inline-flex';
-
-            lightboxOpenBtn.href = src;
-            lightboxOpenBtn.style.display = 'inline-flex';
-
-            lightboxPrevBtn.style.display = 'none';
-            lightboxNextBtn.style.display = 'none';
-
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (lightboxImg) lightboxImg.src = src;
+            if (lightbox) {
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeLightbox(e) {
-            if (e) e.preventDefault();
-            lightbox.classList.remove('active');
-            lightboxImg.src = '';
+            if (e && e.preventDefault) e.preventDefault();
+            if (lightbox) lightbox.classList.remove('active');
+            if (lightboxImg) lightboxImg.src = '';
             activeSheetIndex = -1;
             document.body.style.overflow = '';
         }
 
         document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
+            if (!lightbox || !lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') {
                 closeLightbox();
-            } else if (e.key === 'ArrowLeft') {
-                if (activeSheetIndex !== -1) navigateLightbox(-1);
-            } else if (e.key === 'ArrowRight') {
-                if (activeSheetIndex !== -1) navigateLightbox(1);
             }
         });
     </script>

@@ -513,12 +513,10 @@
 
     </main>
 
-    <!-- Interactive Lightbox Modal -->
+    <!-- Minimalist Fullscreen Lightbox Modal -->
     <div id="image-lightbox" class="image-lightbox" onclick="closeLightbox(event)">
-        <div class="lightbox-content-box" onclick="event.stopPropagation()">
-            <button class="lightbox-close-btn" onclick="closeLightbox(event)">&times;</button>
-            <img id="lightbox-img" src="" alt="Enlarged Architectural Drawing" class="lightbox-img">
-            <p id="lightbox-caption" class="lightbox-caption-text"></p>
+        <div class="lightbox-content-box" onclick="closeLightbox(event)">
+            <img id="lightbox-img" src="" alt="Enlarged Architectural Drawing" class="lightbox-img" onclick="closeLightbox(event)">
         </div>
     </div>
 
@@ -528,24 +526,24 @@
         // Lightbox Functions
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCaption = document.getElementById('lightbox-caption');
 
-        function openLightbox(src, caption) {
-            lightboxImg.src = src;
-            lightboxCaption.textContent = caption || '';
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        function openLightbox(src) {
+            if (lightboxImg) lightboxImg.src = src;
+            if (lightbox) {
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeLightbox(e) {
-            if (e) e.preventDefault();
-            lightbox.classList.remove('active');
-            lightboxImg.src = '';
+            if (e && e.preventDefault) e.preventDefault();
+            if (lightbox) lightbox.classList.remove('active');
+            if (lightboxImg) lightboxImg.src = '';
             document.body.style.overflow = '';
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
                 closeLightbox();
             }
         });

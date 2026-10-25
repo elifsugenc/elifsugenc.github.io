@@ -424,12 +424,10 @@
 
     </main>
 
-    <!-- FULLSCREEN LIGHTBOX MODAL -->
+    <!-- Minimalist Fullscreen Lightbox Modal -->
     <div id="lightbox-modal" class="lightbox-modal hidden" onclick="closeLightbox()">
-        <button class="lightbox-close-btn" onclick="closeLightbox()">[ CLOSE &times; ]</button>
-        <div class="lightbox-content-box" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" alt="Zoomed Architectural Drawing">
-            <div id="lightbox-caption" class="lightbox-caption"></div>
+        <div class="lightbox-content-box" onclick="closeLightbox()">
+            <img id="lightbox-img" src="" alt="Zoomed Architectural Drawing" onclick="closeLightbox()">
         </div>
     </div>
 

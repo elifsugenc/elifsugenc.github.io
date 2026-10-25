@@ -107,6 +107,16 @@
             '.lang-tab-btn',
             '.era-tab-btn',
             '.lightbox-close-btn',
+            '.zoomable-image-container',
+            '.board-compact-card',
+            '.recipe-diagram-card',
+            '.visual-feature-plate',
+            '.visual-plate',
+            '.lightbox-overlay',
+            '.image-lightbox',
+            '.lightbox-modal',
+            '#lightbox-img',
+            '.lightbox-img',
             '.wwh-reopen-circle',
             '#wwh-reopen-circle',
             '.wwh-live-indicator',
@@ -250,6 +260,53 @@
         const btn = e.target.closest('.back-link, .back-btn, .footer-nav-btn, .footer-back-link, .pnav-center-btn, .center-directory-btn');
         if (btn) {
             window.handleProjectReturn(e);
+        }
+    });
+
+    // =========================================================
+    // UNIVERSAL LIGHTBOX CONTROLLER (CLICK ANYWHERE TO CLOSE)
+    // Pure minimal fullscreen image viewer, zero text, dark translucent overlay
+    // =========================================================
+    function closeAnyActiveLightbox() {
+        const activeModals = document.querySelectorAll(
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, .lightbox-modal:not(.hidden), #image-lightbox.active, #lightbox.active, #lightbox-modal:not(.hidden)'
+        );
+        let closed = false;
+        activeModals.forEach(modal => {
+            modal.classList.remove('active');
+            modal.classList.add('hidden');
+            const img = modal.querySelector('img');
+            if (img) img.src = '';
+            closed = true;
+        });
+        if (closed) {
+            document.body.style.overflow = '';
+        }
+        if (typeof window.closeLightbox === 'function') {
+            try { window.closeLightbox(); } catch(_) {}
+        }
+        if (typeof window.closeLightboxDirect === 'function') {
+            try { window.closeLightboxDirect(); } catch(_) {}
+        }
+        return closed;
+    }
+
+    // Capture-phase click: clicking ANYWHERE on the screen closes the open lightbox
+    document.addEventListener('click', function(e) {
+        const activeModal = document.querySelector(
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, .lightbox-modal:not(.hidden), #image-lightbox.active, #lightbox.active, #lightbox-modal:not(.hidden)'
+        );
+        if (activeModal) {
+            // The user clicked while lightbox is open -> close it immediately!
+            e.preventDefault();
+            e.stopPropagation();
+            closeAnyActiveLightbox();
+        }
+    }, true);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAnyActiveLightbox();
         }
     });
 
