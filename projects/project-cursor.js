@@ -60,34 +60,33 @@
             }
         }, { passive: true });
 
-        // On scroll: maintain exact viewport position and re-evaluate hover element
-        window.addEventListener('scroll', () => {
-            if (cursorX >= 0 && cursorY >= 0) {
-                if (!ticking) {
-                    requestAnimationFrame(updatePosition);
-                    ticking = true;
-                }
-                const el = document.elementFromPoint(cursorX, cursorY);
-                if (el && el.closest(interactiveSelector)) {
-                    customCursor.classList.add('cursor-hover');
-                } else {
-                    customCursor.classList.remove('cursor-hover');
-                }
-            }
-        }, { passive: true });
+        // Image elements selector — triggers solid blue dot expansion (NO question mark, NO hollow ring)
+        const imageSelector = [
+            'img:not(.brand-logo-gif):not([src*="favicon"])',
+            '.zoomable-image-container',
+            '.board-compact-card',
+            '.recipe-diagram-card',
+            '.visual-feature-plate',
+            '.visual-plate',
+            '.tech-card',
+            '.dual-card',
+            '.render-quad-card',
+            '.hero-visual-card',
+            '.tectonic-image-panel',
+            '.diag-card',
+            '.board-item',
+            '.visual-frame',
+            '.image-lightbox',
+            '.lightbox-overlay',
+            '.lightbox-modal',
+            '#universal-lightbox',
+            '.lightbox-img-wrapper',
+            '.lightbox-content-box',
+            '#lightbox-img',
+            '.lightbox-img'
+        ].join(', ');
 
-        // Hide when mouse exits window
-        document.addEventListener('mouseleave', () => {
-            cursorWrapper.style.opacity = '0';
-        });
-
-        document.addEventListener('mouseenter', () => {
-            if (cursorX >= 0 && cursorY >= 0) {
-                cursorWrapper.style.opacity = '1';
-            }
-        });
-
-        // Interactive elements selector
+        // Interactive UI elements selector (buttons, navigation links, tabs, form controls)
         const interactiveSelector = [
             'a',
             'button',
@@ -107,16 +106,6 @@
             '.lang-tab-btn',
             '.era-tab-btn',
             '.lightbox-close-btn',
-            '.zoomable-image-container',
-            '.board-compact-card',
-            '.recipe-diagram-card',
-            '.visual-feature-plate',
-            '.visual-plate',
-            '.lightbox-overlay',
-            '.image-lightbox',
-            '.lightbox-modal',
-            '#lightbox-img',
-            '.lightbox-img',
             '.wwh-reopen-circle',
             '#wwh-reopen-circle',
             '.wwh-live-indicator',
@@ -129,16 +118,57 @@
             '.wwh-btn-learn'
         ].join(', ');
 
+        function updateCursorHoverState(target) {
+            if (!target || !target.closest) {
+                customCursor.classList.remove('cursor-hover', 'cursor-img-hover');
+                return;
+            }
+            if (target.closest(imageSelector)) {
+                customCursor.classList.remove('cursor-hover');
+                customCursor.classList.add('cursor-img-hover');
+            } else if (target.closest(interactiveSelector)) {
+                customCursor.classList.remove('cursor-img-hover');
+                customCursor.classList.add('cursor-hover');
+            } else {
+                customCursor.classList.remove('cursor-hover', 'cursor-img-hover');
+            }
+        }
+
+        // On scroll: maintain exact viewport position and re-evaluate hover element
+        window.addEventListener('scroll', () => {
+            if (cursorX >= 0 && cursorY >= 0) {
+                if (!ticking) {
+                    requestAnimationFrame(updatePosition);
+                    ticking = true;
+                }
+                const el = document.elementFromPoint(cursorX, cursorY);
+                updateCursorHoverState(el);
+            }
+        }, { passive: true });
+
+        // Hide when mouse exits window
+        document.addEventListener('mouseleave', () => {
+            cursorWrapper.style.opacity = '0';
+            customCursor.classList.remove('cursor-hover', 'cursor-img-hover');
+        });
+
+        document.addEventListener('mouseenter', () => {
+            if (cursorX >= 0 && cursorY >= 0) {
+                cursorWrapper.style.opacity = '1';
+            }
+        });
+
         // Event delegation for rock-solid hover states across dynamic and static elements
         document.addEventListener('mouseover', (e) => {
-            if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
-                customCursor.classList.add('cursor-hover');
+            if (e.target && e.target.closest) {
+                updateCursorHoverState(e.target);
             }
         });
 
         document.addEventListener('mouseout', (e) => {
-            if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
-                customCursor.classList.remove('cursor-hover');
+            if (e.target && e.target.closest) {
+                const rel = e.relatedTarget;
+                updateCursorHoverState(rel);
             }
         });
     }

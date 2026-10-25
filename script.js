@@ -84,15 +84,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 '.portfolio-filter-item, .methodology-card, .wwh-modal-close, .modal-close, .cluster-brand-node, .merope-star, ' +
                 '.c-approach-core, .center-core, #constellation-center-btn, .constellation-center, .cs-core, .node-visual, .card-external-arrow, ' +
                 '.filter-chip, .contact-link, .back-btn, .jump-btn, .prev-proj, .next-proj, .close-detail, .detail-tag, ' +
-                '.modal-img-wrap, .m-lang-btn, .c-axis-hit, .card-action-btn, [onclick], [data-tab], [data-id], [data-pole], [data-target], img:not(.brand-logo-gif):not([src*="favicon"])'
+                '.m-lang-btn, .c-axis-hit, .card-action-btn, [onclick], [data-tab], [data-id], [data-pole], [data-target]'
             );
             if (clickableAncestor) return true;
 
             return false;
         }
 
-        // Add hover effect for clickable elements (pulsing / blinking question mark cursor)
+        // Helper to check if element is an image or image container
+        function isImage(target) {
+            if (!target || target === document.body || target === document.documentElement) return false;
+            return !!target.closest(
+                'img:not(.brand-logo-gif):not([src*="favicon"]), ' +
+                '.modal-img-wrap, .zoomable-image-container, ' +
+                '.image-lightbox, .lightbox-overlay, .lightbox-modal, #universal-lightbox, ' +
+                '.lightbox-content-box, .lightbox-img-wrapper, #lightbox-img, .lightbox-img'
+            );
+        }
+
+        // Add hover effect for clickable elements and images
         document.addEventListener('mouseover', (e) => {
+            if (!e.target) return;
+
+            if (isImage(e.target)) {
+                customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
+                customCursor.classList.add('cursor-img-hover');
+                cursorWrapper.classList.remove('cursor-spatial');
+                return;
+            } else {
+                customCursor.classList.remove('cursor-img-hover');
+            }
+
             const spatial = isSpatialInteractive(e.target);
             if (spatial) {
                 cursorWrapper.classList.add('cursor-spatial');
@@ -109,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.addEventListener('mouseout', (e) => {
             const rel = e.relatedTarget;
+            if (!rel || !isImage(rel)) {
+                customCursor.classList.remove('cursor-img-hover');
+            }
             if (!rel || (!isSpatialInteractive(rel) && !isClickable(rel))) {
                 customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
                 cursorWrapper.classList.remove('cursor-spatial');

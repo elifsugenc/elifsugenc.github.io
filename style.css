@@ -132,6 +132,24 @@
     -webkit-user-select: none !important;
 }
 
+/* Image hover state: Solid architectural blue dot slightly enlarged with gentle glow (NO question mark, NO ring) */
+#custom-cursor.cursor-img-hover {
+    width: 22px !important;
+    height: 22px !important;
+    background-color: var(--accent-color, #2563eb) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 14px rgba(37, 99, 235, 0.6) !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1 !important;
+}
+
+#custom-cursor.cursor-img-hover::before,
+#custom-cursor.cursor-img-hover::after {
+    content: '' !important;
+    display: none !important;
+}
+
 #cursor-label {
     display: none !important;
 }
@@ -5008,7 +5026,7 @@ body {
     font-size: 0.70rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.07em !important;
-    cursor: pointer !important;
+    cursor: none !important;
     position: relative !important;
     box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.02) !important;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
@@ -7879,7 +7897,7 @@ body {
     gap: 8px;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 0 12px rgba(37, 99, 235, 0.12);
     pointer-events: auto !important;
-    cursor: pointer !important;
+    cursor: none !important;
     user-select: none;
     animation: wwhFadeIn 0.3s ease;
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -8011,7 +8029,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 3px;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
     z-index: 2147483640 !important;
     color: #ffffff;
@@ -11238,7 +11256,7 @@ iframe,
     justify-content: center !important;
     padding: 0 !important;
     margin: 0 !important;
-    cursor: pointer !important;
+    cursor: none !important;
     user-select: none !important;
     -webkit-user-select: none !important;
 }
@@ -11270,7 +11288,7 @@ iframe,
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
 }
 
@@ -11291,7 +11309,7 @@ iframe,
     border: none !important;
     border-radius: 0 !important;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -11330,7 +11348,22 @@ iframe,
 }
 
 img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]) {
-    cursor: pointer;
+    cursor: none !important;
+}
+
+/* =========================================================
+   ABSOLUTE NATIVE OS MOUSE POINTER SUPPRESSION
+   Guarantees that no OS pointer / hand / arrow leaks anywhere
+   ========================================================= */
+html, body, *, *::before, *::after,
+a, button, input, select, textarea, [role="button"],
+img, picture, figure, canvas, svg,
+.zoomable-image-container,
+.image-lightbox, .lightbox-modal, .lightbox-overlay, #universal-lightbox,
+.lightbox-content-box, .lightbox-dialog, .lightbox-stage, .lightbox-img-wrapper,
+#lightbox-img, .lightbox-img,
+.wwh-live-indicator, .wwh-reopen-circle, .tab-button {
+    cursor: none !important;
 }
 
 
