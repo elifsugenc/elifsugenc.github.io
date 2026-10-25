@@ -26,11 +26,27 @@
         appId: "1:537119213522:web:35ab67f62add69968e6a0b"
     };
 
+    function getConsent() {
+        try {
+            return localStorage.getItem(CONSENT_KEY) || sessionStorage.getItem(CONSENT_KEY) || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function setConsent(val) {
+        try {
+            localStorage.setItem(CONSENT_KEY, val);
+            sessionStorage.setItem(CONSENT_KEY, val);
+        } catch (e) {}
+    }
+
     // Global in-memory state
     let db = null;
     let docFn = null;
     let setDocFn = null;
     let runTransactionFn = null;
+    let initFirebasePromise = null;
 
     let activeTrace = null;
     let isTracking = false;
@@ -52,24 +68,37 @@
     }
 
     // Initialize Firebase Firestore SDK modularly
-    async function initFirebase() {
-        try {
-            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
-            const { getFirestore, doc, setDoc, runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
-            const app = initializeApp(FIREBASE_CONFIG);
-            db = getFirestore(app);
-            docFn = doc;
-            setDocFn = setDoc;
-            runTransactionFn = runTransaction;
-            return true;
-        } catch (err) {
-            console.warn('[YOU WERE HERE] Firebase initialization fallback to local session:', err);
-            return false;
-        }
+    function initFirebase() {
+        if (db && docFn && setDocFn) return Promise.resolve(true);
+        if (initFirebasePromise) return initFirebasePromise;
+
+        initFirebasePromise = (async () => {
+            try {
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
+                const { getFirestore, doc, setDoc, runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+                const app = initializeApp(FIREBASE_CONFIG);
+                db = getFirestore(app);
+                docFn = doc;
+                setDocFn = setDoc;
+                runTransactionFn = runTransaction;
+                return true;
+            } catch (err) {
+                console.warn('[YOU WERE HERE] Firebase initialization fallback to local session:', err);
+                return false;
+            }
+        })();
+
+        return initFirebasePromise;
     }
 
     // Allocate an atomic unique trace number (e.g. TRACE_0001, TRACE_0002)
     async function allocateTraceNumber() {
+        if (!db) {
+            try {
+                await initFirebase();
+            } catch (e) {}
+        }
+
         if (!db || !runTransactionFn || !docFn) {
             const fallbackNum = Math.floor(1000 + Math.random() * 9000);
             return 'TRACE_' + fallbackNum;
@@ -84,9 +113,9 @@
                 if (metaDoc.exists()) {
                     currentTotal = metaDoc.data().total || 0;
                 }
-                // Account for the 47 preserved historical traces
-                if (currentTotal < 47) {
-                    currentTotal = 47;
+                // Account for the preserved historical traces in Firestore
+                if (currentTotal < 51) {
+                    currentTotal = 51;
                 }
                 currentTotal += 1;
                 transaction.set(metaRef, { 
@@ -148,16 +177,22 @@
     }
 
     // Incremental batch save to Firebase Firestore
-    async function saveTraceToCloud() {
-        if (!activeTrace || sessionStorage.getItem(CONSENT_KEY) !== 'yes') return;
+    async function saveTraceToCloud(force = false) {
+        if (!activeTrace || getConsent() !== 'yes') return;
         saveTraceToSession();
 
         // Require at least 2 points to avoid empty cloud records
         if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
-        if (!hasUnsavedChanges) return;
+        if (!hasUnsavedChanges && !force) return;
+
+        if (!db) {
+            try {
+                await initFirebase();
+            } catch (e) {}
+        }
 
         if (db && setDocFn && docFn) {
-            if (isCloudSaving) return;
+            if (isCloudSaving && !force) return;
             isCloudSaving = true;
             try {
                 const cloudPayload = {
@@ -390,19 +425,24 @@
         if (btnYes) {
             btnYes.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                sessionStorage.setItem(CONSENT_KEY, 'yes');
+                setConsent('yes');
                 dismissPopup(popup);
                 hideReopenCircle();
                 await startRecording();
+                saveTraceToCloud(true);
             });
         }
 
         if (btnNo) {
             btnNo.addEventListener('click', (e) => {
                 e.stopPropagation();
-                sessionStorage.setItem(CONSENT_KEY, 'no');
+                setConsent('no');
                 dismissPopup(popup);
                 stopRecording();
+                activeTrace = null;
+                try {
+                    sessionStorage.removeItem(SESSION_KEY);
+                } catch(e) {}
                 showReopenCircle();
             });
         }
@@ -415,25 +455,36 @@
         setTimeout(() => popup.remove(), 400);
     }
 
-    // Mouse Tracking Logic
+    // Mouse, Stylus & Touch Pointer Tracking Logic
     function handlePointerMove(e) {
         if (!isTracking || !activeTrace) return;
-        if (e.pointerType === 'touch') return; // Mouse & stylus only
 
         const now = Date.now();
-        // High-fidelity sampling: 40ms interval (~25 fps) with generous 30,000 points limit
-        if (now - lastPointTime < 40 || activeTrace.points.length >= 30000) return;
+        // High-fidelity sampling: 40ms interval (~25 fps) with generous 15,000 points limit
+        if (now - lastPointTime < 40 || activeTrace.points.length >= 15000) return;
 
         // Privacy guard: ignore when interacting with form inputs
         const targetTag = e.target ? e.target.tagName : '';
         if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
 
-        // Normalized viewport coordinates (0 to 1000)
-        const nx = clamp(Math.round((e.clientX / window.innerWidth) * 1000), 0, 1000);
-        const ny = clamp(Math.round((e.clientY / window.innerHeight) * 1000), 0, 1000);
+        // Get coordinates across mouse, pointer, and touch
+        let cx = e.clientX;
+        let cy = e.clientY;
+        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
+            cx = e.touches[0].clientX;
+            cy = e.touches[0].clientY;
+        }
+        if (cx == null || cy == null || isNaN(cx) || isNaN(cy)) return;
 
-        // Distance threshold to avoid 0px static jitter while capturing slow smooth movements (1.2 units ≈ 2px)
-        if (Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y) < 1.2 && activeTrace.points.length > 0) {
+        // Normalized viewport coordinates (0 to 1000)
+        const winW = window.innerWidth || 1000;
+        const winH = window.innerHeight || 1000;
+        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
+        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
+
+        // Distance threshold to avoid static jitter while capturing smooth movements (2 units ≈ 3px)
+        const dist = Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y);
+        if (dist < 2 && activeTrace.points.length > 0 && (now - lastPointTime < 140)) {
             return;
         }
 
@@ -472,10 +523,20 @@
     function handleClick(e) {
         if (!isTracking || !activeTrace) return;
         const targetTag = e.target ? e.target.tagName : '';
-        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') return;
+        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
 
-        const nx = clamp(Math.round((e.clientX / window.innerWidth) * 1000), 0, 1000);
-        const ny = clamp(Math.round((e.clientY / window.innerHeight) * 1000), 0, 1000);
+        let cx = e.clientX;
+        let cy = e.clientY;
+        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
+            cx = e.touches[0].clientX;
+            cy = e.touches[0].clientY;
+        }
+        if (cx == null || cy == null) return;
+
+        const winW = window.innerWidth || 1000;
+        const winH = window.innerHeight || 1000;
+        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
+        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
 
         activeTrace.clicks.push({
             x: nx,
@@ -507,20 +568,47 @@
         }
     }
 
+    // Start Pre-Recording (buffers points into memory before explicit click)
+    async function startPreRecording() {
+        if (isTracking) return;
+        await loadOrCreateTrace();
+
+        isTracking = true;
+
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('touchmove', handlePointerMove);
+        window.removeEventListener('click', handleClick);
+
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('touchmove', handlePointerMove, { passive: true });
+        window.addEventListener('click', handleClick, { passive: true });
+
+        if (dwellTimer) clearInterval(dwellTimer);
+        dwellTimer = setInterval(checkDwellPauses, 180);
+    }
+
     // Start Recording Lifecycle
     async function startRecording() {
-        if (isTracking) return;
+        if (isTracking && saveTimer) return;
         await loadOrCreateTrace();
 
         isTracking = true;
         ensureLiveIndicator();
         updateLiveCount();
 
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('touchmove', handlePointerMove);
+        window.removeEventListener('click', handleClick);
+
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('touchmove', handlePointerMove, { passive: true });
         window.addEventListener('click', handleClick, { passive: true });
 
+        if (dwellTimer) clearInterval(dwellTimer);
+        if (saveTimer) clearInterval(saveTimer);
+
         dwellTimer = setInterval(checkDwellPauses, 180);
-        saveTimer = setInterval(saveTraceToCloud, 2500); // 2.5s rapid auto-sync
+        saveTimer = setInterval(() => saveTraceToCloud(false), 2000); // 2s rapid auto-sync
     }
 
     function stopRecording() {
@@ -528,10 +616,13 @@
         hideLiveIndicator();
 
         window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('touchmove', handlePointerMove);
         window.removeEventListener('click', handleClick);
 
         if (dwellTimer) clearInterval(dwellTimer);
         if (saveTimer) clearInterval(saveTimer);
+        dwellTimer = null;
+        saveTimer = null;
     }
 
     // Lightweight HTML5 Canvas PNG Generator (replaces PDF export for fast, compact size)
@@ -1130,38 +1221,42 @@
     };
     window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
 
+    function handlePageExit() {
+        saveTraceToSession();
+        if (activeTrace && getConsent() === 'yes') {
+            saveTraceToCloud(true);
+        }
+    }
+
     // Auto-save on page lifecycle events
     window.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
-            saveTraceToSession();
-            saveTraceToCloud();
+            handlePageExit();
         }
     });
-    window.addEventListener('pagehide', () => {
-        saveTraceToSession();
-        saveTraceToCloud();
-    });
-    window.addEventListener('beforeunload', () => {
-        saveTraceToSession();
-        saveTraceToCloud();
-    });
+    window.addEventListener('pagehide', handlePageExit);
+    window.addEventListener('beforeunload', handlePageExit);
 
     // Bootstrap on DOM Ready
     async function init() {
-        const path = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
-        const isMainPage = !path.includes('/projects/');
-        const consent = sessionStorage.getItem(CONSENT_KEY);
+        const consent = getConsent();
 
-        // 1. Siteye girişte "you are here." popupı her zaman açık gelsin (kapalı kalmasın)
-        if (isMainPage || !consent) {
-            showConsentPopup();
+        // 1. Consent State Handling
+        if (consent === 'yes') {
+            // Already consented: start recording immediately across all pages
+            hideReopenCircle();
+            await startRecording();
         } else if (consent === 'no') {
+            // Explicitly declined: show the subtle reopen circle, do not record
             showReopenCircle();
-        } else if (consent === 'yes') {
-            startRecording();
+        } else {
+            // First time visitor (no choice made yet):
+            // Show popup AND start pre-recording so initial movement/dwell is not lost
+            showConsentPopup();
+            await startPreRecording();
         }
 
-        // 2. Firebase SDK ve geçmiş izleri arka planda yükle (popup açılışını geciktirmez)
+        // 2. Initialize Firebase SDK and fetch historical traces in background
         initFirebase().then(() => {
             fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
         }).catch(err => {
