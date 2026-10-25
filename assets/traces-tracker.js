@@ -97,21 +97,37 @@
         return initFirebasePromise;
     }
 
-    // Allocate an atomic unique trace number (e.g. TRACE_0054, TRACE_0055)
+    // Trial and test documents from development to exclude so the new site starts completely fresh from TRACE_0001
+    const EXCLUDED_TRIAL_DOC_IDS = new Set([
+        '242420ef-a7b2-4567-aa1c-b29303d7d794', // TRACE_0059
+        '2f5d6bf7-1a56-45c5-bcd2-02206721b82a', // TRACE_2422
+        '55ca2320-d07b-4ca3-a581-ada083c36145', // TRACE_0057
+        'a8683653-8339-4e05-af32-3bf72f93d8ae', // TRACE_0001
+        'b6ac5b7b-695f-441e-86d6-0cef8988ce99', // TRACE_0058
+        'cf606e17-7506-4f86-833d-b9f22bfebf66', // TRACE_7373
+        'd17c29b6-075f-4379-8bf3-2b383fcc841c', // TRACE_8137
+        'df09ec24-9979-4f18-aecd-1a303675f717', // TRACE_0056
+        'eb584b62-34c4-4e49-aa51-63f67a05ffb3'  // TRACE_4696
+    ]);
+
+    function isTrialTestDoc(id) {
+        if (!id) return false;
+        if (id.startsWith('test_')) return true;
+        return EXCLUDED_TRIAL_DOC_IDS.has(id);
+    }
+
+    // Allocate sequential trace number for new site sessions (TRACE_0001, TRACE_0002...)
     async function allocateTraceNumber() {
-        let count = 51;
+        let currentEraTraces = [];
         if (cachedTracesList && cachedTracesList.length > 0) {
-            count = cachedTracesList.length;
+            currentEraTraces = getCurrentTraces(cachedTracesList);
         } else {
             try {
-                const res = await fetch('https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces?pageSize=300');
-                if (res.ok) {
-                    const data = await res.json();
-                    count = data.documents ? data.documents.length : 51;
-                }
+                const all = await fetchAllTraces();
+                currentEraTraces = getCurrentTraces(all);
             } catch (e) {}
         }
-        const nextNum = Math.max(51, count) + 1;
+        const nextNum = currentEraTraces.length + 1;
         return 'TRACE_' + String(nextNum).padStart(4, '0');
     }
 
@@ -1231,6 +1247,8 @@
             let fallbackIdx = 1;
 
             snap.forEach(docSnap => {
+                const docId = docSnap.id;
+                if (isTrialTestDoc(docId)) return; // Exclude new site trial/test traces so new sessions start fresh!
                 const data = docSnap.data();
                 const pts = data.points || [];
                 let dateStr = data.date;
@@ -1340,11 +1358,19 @@
                 }
             }
 
-            // En eski 0001, en yeniye kadar kronolojik artan sırada numaralandır
+            // Number legacy and current traces logically:
+            // Legacy traces (preserved folder) are numbered chronologically
+            // Current era traces start cleanly from TRACE_0001
             list.sort((a, b) => (a.started || 0) - (b.started || 0));
 
-            list.forEach((item, index) => {
-                item.traceNumber = 'TRACE_' + String(index + 1).padStart(4, '0');
+            let currentCounter = 1;
+            let legacyCounter = 1;
+            list.forEach((item) => {
+                if (isLegacyTrace(item)) {
+                    item.traceNumber = item.savedTraceNumber || ('TRACE_' + String(legacyCounter++).padStart(4, '0'));
+                } else {
+                    item.traceNumber = 'TRACE_' + String(currentCounter++).padStart(4, '0');
+                }
             });
 
             cachedTracesList = list;
@@ -1403,6 +1429,7 @@
         try {
             localStorage.removeItem(CONSENT_KEY);
             localStorage.removeItem(SESSION_KEY);
+            sessionStorage.removeItem('wwh_last_completed_trace');
         } catch (e) {}
 
         const consent = getConsent();
