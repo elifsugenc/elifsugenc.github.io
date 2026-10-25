@@ -203,17 +203,25 @@
         const url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
         const payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
 
+        // Note: Browsers reject fetch with keepalive:true if payload exceeds 64KB (65536 bytes)
+        // A trace with ~600+ points is >65KB, so keepalive must ONLY be enabled if under 60KB.
+        const canUseKeepalive = keepalive && payload.length < 60000;
+
         try {
             const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-            const timeoutId = controller ? setTimeout(() => controller.abort(), 6000) : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 8000) : null;
 
-            const res = await fetch(url, {
+            const fetchOptions = {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: payload,
-                keepalive: keepalive,
                 signal: controller ? controller.signal : undefined
-            });
+            };
+            if (canUseKeepalive) {
+                fetchOptions.keepalive = true;
+            }
+
+            const res = await fetch(url, fetchOptions);
 
             if (timeoutId) clearTimeout(timeoutId);
             return res.ok;
@@ -225,7 +233,7 @@
 
     // Incremental batch save to Firebase Firestore
     async function saveTraceToCloud(force = false, isFinal = false) {
-        if (!activeTrace || getConsent() !== 'yes') return;
+        if (!activeTrace) return;
         saveTraceToSession();
 
         // Require at least 2 points to avoid empty cloud records
@@ -250,7 +258,7 @@
         };
 
         try {
-            const ok = await sendTraceToFirestoreREST(cloudPayload, force || isFinal);
+            const ok = await sendTraceToFirestoreREST(cloudPayload, isFinal);
             if (ok) {
                 hasUnsavedChanges = false;
             } else if (db && setDocFn && docFn) {
@@ -266,24 +274,34 @@
 
     // Explicit User Trigger: Finish & Permanently Save Current Trace
     async function finishAndSaveCurrentTrace() {
-        if (!activeTrace) return;
-        const currentCount = activeTrace.points.length;
-        const currentNum = activeTrace.traceNumber || 'TRACE';
+        if (!activeTrace && !isTracking) return;
 
-        // 1. Force final cloud save via REST + keepalive
-        hasUnsavedChanges = true;
-        await saveTraceToCloud(true, true);
+        const currentCount = activeTrace ? activeTrace.points.length : 0;
+        const currentNum = activeTrace ? (activeTrace.traceNumber || 'TRACE') : 'TRACE';
 
-        // 2. Stop ongoing tracking & interval timers
-        stopRecording();
+        // 1. Stop tracking immediately so no further points or auto-sync run
+        stopRecording(false);
 
-        // 3. Clear session storage so reloads do not continue appending into this trace
+        // 2. Lock consent to 'finished' so reload or navigation NEVER records again in this session
+        setConsent('finished');
+
+        // 3. Force final cloud save of all accumulated points
+        if (activeTrace && activeTrace.points.length >= 2) {
+            hasUnsavedChanges = true;
+            try {
+                await saveTraceToCloud(true, false);
+            } catch (e) {
+                console.warn('[YOU WERE HERE] Final cloud save note:', e);
+            }
+        }
+
+        // 4. Clear session storage so reloads do not continue appending into this trace
         try {
             sessionStorage.removeItem(SESSION_KEY);
         } catch (e) {}
         activeTrace = null;
 
-        // 4. Update Live Indicator UI to celebrate completion
+        // 5. Update Live Indicator UI to celebrate completion
         const el = document.getElementById('wwh-live-indicator');
         if (el) {
             el.classList.add('wwh-saved-state');
@@ -296,7 +314,10 @@
             `;
             setTimeout(() => {
                 if (el) el.remove();
+                showReopenCircle();
             }, 8000);
+        } else {
+            showReopenCircle();
         }
     }
 
@@ -511,7 +532,6 @@
                 dismissPopup(popup);
                 hideReopenCircle();
                 await startRecording();
-                saveTraceToCloud(true);
             });
         }
 
@@ -520,7 +540,7 @@
                 e.stopPropagation();
                 setConsent('no');
                 dismissPopup(popup);
-                stopRecording();
+                stopRecording(true);
                 activeTrace = null;
                 try {
                     sessionStorage.removeItem(SESSION_KEY);
@@ -650,25 +670,6 @@
         }
     }
 
-    // Start Pre-Recording (buffers points into memory before explicit click)
-    async function startPreRecording() {
-        if (isTracking) return;
-        await loadOrCreateTrace();
-
-        isTracking = true;
-
-        window.removeEventListener('pointermove', handlePointerMove);
-        window.removeEventListener('touchmove', handlePointerMove);
-        window.removeEventListener('click', handleClick);
-
-        window.addEventListener('pointermove', handlePointerMove, { passive: true });
-        window.addEventListener('touchmove', handlePointerMove, { passive: true });
-        window.addEventListener('click', handleClick, { passive: true });
-
-        if (dwellTimer) clearInterval(dwellTimer);
-        dwellTimer = setInterval(checkDwellPauses, 180);
-    }
-
     // Start Recording Lifecycle
     async function startRecording() {
         if (isTracking && saveTimer) return;
@@ -690,12 +691,14 @@
         if (saveTimer) clearInterval(saveTimer);
 
         dwellTimer = setInterval(checkDwellPauses, 180);
-        saveTimer = setInterval(() => saveTraceToCloud(false), 2000); // 2s rapid auto-sync
+        saveTimer = setInterval(() => saveTraceToCloud(false), 3000); // 3s periodic auto-sync
     }
 
-    function stopRecording() {
+    function stopRecording(removeIndicator = true) {
         isTracking = false;
-        hideLiveIndicator();
+        if (removeIndicator) {
+            hideLiveIndicator();
+        }
 
         window.removeEventListener('pointermove', handlePointerMove);
         window.removeEventListener('touchmove', handlePointerMove);
@@ -1304,10 +1307,13 @@
     window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
 
     function handlePageExit() {
-        if (activeTrace && getConsent() === 'yes' && activeTrace.points.length >= 2) {
-            saveTraceToCloud(true, true);
+        if (activeTrace && isTracking && getConsent() === 'yes') {
+            if (activeTrace.points.length >= 2) {
+                saveTraceToCloud(true, true);
+            }
+            stopRecording(true);
+            setConsent('finished');
         }
-        // Clearing session key so page reload finalizes the trace and starts fresh
         try {
             sessionStorage.removeItem(SESSION_KEY);
         } catch (e) {}
@@ -1315,8 +1321,9 @@
 
     // Auto-save on page lifecycle events
     window.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden') {
-            handlePageExit();
+        if (document.visibilityState === 'hidden' && activeTrace && isTracking) {
+            saveTraceToSession();
+            saveTraceToCloud(false, false);
         }
     });
     window.addEventListener('pagehide', handlePageExit);
@@ -1325,23 +1332,26 @@
     // Bootstrap on DOM Ready
     async function init() {
         // Clear any old persistent consent from localStorage so new tabs always ask fresh
-        try { localStorage.removeItem(CONSENT_KEY); } catch (e) {}
+        try {
+            localStorage.removeItem(CONSENT_KEY);
+            localStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
 
         const consent = getConsent();
 
-        // 1. Strictly per-session consent handling:
+        // Strictly per-session consent handling:
         if (consent === 'yes') {
             hideReopenCircle();
             await startRecording();
-        } else if (consent === 'no') {
+        } else if (consent === 'finished' || consent === 'no') {
+            // Already finished or declined: remain completely stopped, do not record!
             showReopenCircle();
         } else {
-            // New tab or fresh visit: ALWAYS show consent popup!
+            // New tab or fresh visit: show consent popup without recording
             showConsentPopup();
-            await startPreRecording();
         }
 
-        // 2. Initialize Firebase SDK and fetch historical traces in background
+        // Initialize Firebase SDK and fetch historical traces in background
         initFirebase().then(() => {
             fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
         }).catch(err => {
