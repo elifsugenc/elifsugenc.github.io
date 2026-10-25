@@ -199,9 +199,9 @@
     // Direct REST API write with keepalive support (immune to SDK WebSocket hangs & page exit aborts)
     async function sendTraceToFirestoreREST(traceData, keepalive = false) {
         if (!traceData || !traceData.id) return false;
-        const docId = traceData.id;
-        const url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
-        const payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
+        let docId = traceData.id;
+        let url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
+        let payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
 
         // Note: Browsers reject fetch with keepalive:true if payload exceeds 64KB (65536 bytes)
         // A trace with ~600+ points is >65KB, so keepalive must ONLY be enabled if under 60KB.
@@ -221,7 +221,19 @@
                 fetchOptions.keepalive = true;
             }
 
-            const res = await fetch(url, fetchOptions);
+            let res = await fetch(url, fetchOptions);
+
+            // If 403 Forbidden (document already exists and Firestore rules only allow CREATE, not UPDATE):
+            // Retry with a fresh unique document ID so Firestore treats it as a brand-new CREATE!
+            if (res.status === 403) {
+                console.warn('[YOU WERE HERE] Doc ID already written; retrying with fresh ID to guarantee full save...');
+                const retryId = traceData.id + '_' + Date.now().toString().slice(-4);
+                traceData.id = retryId;
+                const retryUrl = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${retryId}`;
+                const retryPayload = JSON.stringify({ fields: toFirestoreFields(traceData) });
+                fetchOptions.body = retryPayload;
+                res = await fetch(retryUrl, fetchOptions);
+            }
 
             if (timeoutId) clearTimeout(timeoutId);
             return res.ok;
@@ -256,6 +268,11 @@
             clicks: activeTrace.clicks,
             lastUpdated: new Date().toISOString()
         };
+
+        // Cache last completed/saved trace locally so views immediately show the full dataset
+        try {
+            sessionStorage.setItem('wwh_last_completed_trace', JSON.stringify(cloudPayload));
+        } catch (e) {}
 
         try {
             const ok = await sendTraceToFirestoreREST(cloudPayload, isFinal);
@@ -562,8 +579,8 @@
         if (!isTracking || !activeTrace) return;
 
         const now = Date.now();
-        // High-fidelity sampling: 40ms interval (~25 fps) with generous 15,000 points limit
-        if (now - lastPointTime < 40 || activeTrace.points.length >= 15000) return;
+        // High-fidelity sampling: 18ms interval (~55 fps) with generous 25,000 points limit
+        if (now - lastPointTime < 18 || activeTrace.points.length >= 25000) return;
 
         // Privacy guard: ignore when interacting with form inputs
         const targetTag = e.target ? e.target.tagName : '';
@@ -584,9 +601,9 @@
         const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
         const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
 
-        // Distance threshold to avoid static jitter while capturing smooth movements (2 units ≈ 3px)
+        // Fluid distance threshold to preserve every subtle curve and hesitation
         const dist = Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y);
-        if (dist < 2 && activeTrace.points.length > 0 && (now - lastPointTime < 140)) {
+        if (dist < 0.8 && activeTrace.points.length > 0 && (now - lastPointTime < 75)) {
             return;
         }
 
@@ -672,7 +689,7 @@
 
     // Start Recording Lifecycle
     async function startRecording() {
-        if (isTracking && saveTimer) return;
+        if (isTracking) return;
         await loadOrCreateTrace();
 
         isTracking = true;
@@ -688,10 +705,7 @@
         window.addEventListener('click', handleClick, { passive: true });
 
         if (dwellTimer) clearInterval(dwellTimer);
-        if (saveTimer) clearInterval(saveTimer);
-
         dwellTimer = setInterval(checkDwellPauses, 180);
-        saveTimer = setInterval(() => saveTraceToCloud(false), 3000); // 3s periodic auto-sync
     }
 
     function stopRecording(removeIndicator = true) {
@@ -708,6 +722,9 @@
         if (saveTimer) clearInterval(saveTimer);
         dwellTimer = null;
         saveTimer = null;
+        lastPointTime = 0;
+        lastPointCoord = { x: 0, y: 0 };
+        anchorPoint = null;
     }
 
     // Lightweight HTML5 Canvas PNG Generator (replaces PDF export for fast, compact size)
@@ -744,15 +761,20 @@
 
         // 1. Draw Dwell Pauses
         (traceData.dwells || []).forEach(d => {
-            const r = clamp(d.duration / 120, 6, 40) * scaleX;
+            const dx = Number(d.x);
+            const dy = Number(d.y);
+            const dur = Number(d.duration || 300);
+            if (isNaN(dx) || isNaN(dy)) return;
+
+            const r = clamp(dur / 120, 6, 40) * scaleX;
             ctx.beginPath();
-            ctx.arc(d.x * scaleX, d.y * scaleY, r, 0, Math.PI * 2);
+            ctx.arc(dx * scaleX, dy * scaleY, r, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
             ctx.fill();
 
             ctx.beginPath();
-            ctx.arc(d.x * scaleX, d.y * scaleY, r * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.18)';
+            ctx.arc(dx * scaleX, dy * scaleY, r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.22)';
             ctx.fill();
         });
 
@@ -763,15 +785,27 @@
             for (let i = 1; i < pts.length; i++) {
                 const prev = pts[i - 1];
                 const curr = pts[i];
-                const dist = Math.hypot(curr.x - prev.x, curr.y - prev.y);
-                const dt = Math.max(30, curr.t - prev.t);
+                const px = Number(prev.x);
+                const py = Number(prev.y);
+                const cx = Number(curr.x);
+                const cy = Number(curr.y);
+                if (isNaN(px) || isNaN(py) || isNaN(cx) || isNaN(cy)) continue;
+
+                const pt = Number(prev.t || 0);
+                const ct = Number(curr.t || (pt + 25));
+                const dt = Math.max(16, ct - pt);
+
+                // Skip long pauses / cross-page jump lines
+                if (dt > 6000) continue;
+
+                const dist = Math.hypot(cx - px, cy - py);
                 const speed = (dist / dt) * 1000;
-                const strokeWidth = clamp(7 - speed * 0.04, 1.2, 7) * scaleX;
+                const strokeWidth = clamp(8 - speed * 0.03, 1.8, 8.5) * scaleX;
 
                 ctx.beginPath();
-                ctx.moveTo(prev.x * scaleX, prev.y * scaleY);
-                ctx.lineTo(curr.x * scaleX, curr.y * scaleY);
-                ctx.strokeStyle = 'rgba(37, 99, 235, 0.55)';
+                ctx.moveTo(px * scaleX, py * scaleY);
+                ctx.lineTo(cx * scaleX, cy * scaleY);
+                ctx.strokeStyle = 'rgba(37, 99, 235, 0.78)';
                 ctx.lineWidth = strokeWidth;
                 ctx.stroke();
             }
@@ -779,15 +813,19 @@
 
         // 3. Draw Click Glyphs
         (traceData.clicks || []).forEach(c => {
-            const cx = c.x * scaleX;
-            const cy = c.y * scaleY;
+            const cx = Number(c.x);
+            const cy = Number(c.y);
+            if (isNaN(cx) || isNaN(cy)) return;
+
+            const px = cx * scaleX;
+            const py = cy * scaleY;
             const starRadius = 6 * scaleX;
             ctx.strokeStyle = '#2563eb';
             ctx.lineWidth = 1.8;
             for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
                 ctx.beginPath();
-                ctx.moveTo(cx, cy);
-                ctx.lineTo(cx + Math.cos(angle) * starRadius, cy + Math.sin(angle) * starRadius);
+                ctx.moveTo(px, py);
+                ctx.lineTo(px + Math.cos(angle) * starRadius, py + Math.sin(angle) * starRadius);
                 ctx.stroke();
             }
         });
@@ -804,9 +842,9 @@
         return canvas;
     }
 
-    // Export Trace as lightweight PNG file download
+    // Export Trace as lightweight PNG file download (1200x1200 crisp high-res)
     function downloadTraceAsPNG(traceData) {
-        const canvas = renderTraceToCanvas(traceData);
+        const canvas = renderTraceToCanvas(traceData, 1200, 1200);
         canvas.toBlob(blob => {
             if (!blob) return;
             const url = URL.createObjectURL(blob);
@@ -885,8 +923,8 @@
         const originX = padX + (availW - sheetW) / 2;
         const originY = padY + (availH - sheetH) / 2;
 
-        const toX = (nx) => originX + (nx / 1000) * sheetW;
-        const toY = (ny) => originY + (ny / 1000) * sheetH;
+        const toX = (nx) => originX + (Number(nx) / 1000) * sheetW;
+        const toY = (ny) => originY + (Number(ny) / 1000) * sheetH;
 
         // Subtle architectural sheet boundary & corner marks
         ctx.strokeStyle = 'rgba(37, 99, 235, 0.12)';
@@ -1241,6 +1279,37 @@
                 });
             });
 
+            // Merge last completed trace so freshly finished sessions are never missing or truncated
+            try {
+                const completedRaw = sessionStorage.getItem('wwh_last_completed_trace');
+                if (completedRaw) {
+                    const completedTrace = JSON.parse(completedRaw);
+                    if (completedTrace && completedTrace.id && Array.isArray(completedTrace.points)) {
+                        const existingIdx = list.findIndex(t => t.id === completedTrace.id);
+                        const cPts = completedTrace.points;
+                        const cItem = {
+                            id: completedTrace.id,
+                            savedTraceNumber: completedTrace.traceNumber || null,
+                            date: completedTrace.date || '—',
+                            time: completedTrace.time || '—',
+                            started: completedTrace.started || Date.now(),
+                            duration: completedTrace.duration || 0,
+                            pointCount: cPts.length,
+                            points: cPts,
+                            dwells: completedTrace.dwells || [],
+                            clicks: completedTrace.clicks || []
+                        };
+                        if (existingIdx >= 0) {
+                            if (cPts.length >= (list[existingIdx].points || []).length) {
+                                list[existingIdx] = cItem;
+                            }
+                        } else if (cPts.length > 0) {
+                            list.push(cItem);
+                        }
+                    }
+                }
+            } catch (e) {}
+
             // Merge active live visitor session so it is never missing or truncated
             const currentActive = activeTrace || (function() {
                 try {
@@ -1319,11 +1388,10 @@
         } catch (e) {}
     }
 
-    // Auto-save on page lifecycle events
+    // Auto-save to session storage on page visibility changes
     window.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden' && activeTrace && isTracking) {
             saveTraceToSession();
-            saveTraceToCloud(false, false);
         }
     });
     window.addEventListener('pagehide', handlePageExit);
