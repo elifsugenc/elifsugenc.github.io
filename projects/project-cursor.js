@@ -267,9 +267,28 @@
     // UNIVERSAL LIGHTBOX CONTROLLER (CLICK ANYWHERE TO CLOSE)
     // Pure minimal fullscreen image viewer, zero text, dark translucent overlay
     // =========================================================
+    let lastLightboxOpenedTime = 0;
+
+    try {
+        const lightboxObserver = new MutationObserver(mutations => {
+            for (const m of mutations) {
+                if (m.type === 'attributes' && m.attributeName === 'class') {
+                    if (m.target && m.target.classList && m.target.classList.contains('active')) {
+                        lastLightboxOpenedTime = Date.now();
+                    }
+                }
+            }
+        });
+        lightboxObserver.observe(document.documentElement, {
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    } catch (_) {}
+
     function closeAnyActiveLightbox() {
         const activeModals = document.querySelectorAll(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, .lightbox-modal:not(.hidden), #image-lightbox.active, #lightbox.active, #lightbox-modal:not(.hidden)'
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active'
         );
         let closed = false;
         activeModals.forEach(modal => {
@@ -293,8 +312,11 @@
 
     // Capture-phase click: clicking ANYWHERE on the screen closes the open lightbox
     document.addEventListener('click', function(e) {
+        if (Date.now() - lastLightboxOpenedTime < 180) {
+            return;
+        }
         const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, .lightbox-modal:not(.hidden), #image-lightbox.active, #lightbox.active, #lightbox-modal:not(.hidden)'
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active'
         );
         if (activeModal) {
             // The user clicked while lightbox is open -> close it immediately!

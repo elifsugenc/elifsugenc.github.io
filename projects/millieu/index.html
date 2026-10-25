@@ -597,6 +597,7 @@
             const item = millieuSheets[index];
             if (lightboxImg) lightboxImg.src = item.src;
             if (lightbox) {
+                lightbox.classList.remove('hidden');
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -606,6 +607,7 @@
             activeSheetIndex = -1;
             if (lightboxImg) lightboxImg.src = src;
             if (lightbox) {
+                lightbox.classList.remove('hidden');
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -613,7 +615,7 @@
 
         function closeLightbox(e) {
             if (e && e.preventDefault) e.preventDefault();
-            if (lightbox) lightbox.classList.remove('active');
+            if (lightbox) { lightbox.classList.remove('active'); lightbox.classList.add('hidden'); }
             if (lightboxImg) lightboxImg.src = '';
             activeSheetIndex = -1;
             document.body.style.overflow = '';

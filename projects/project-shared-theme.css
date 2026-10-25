@@ -1500,7 +1500,7 @@ figcaption,
     width: 100vw !important;
     height: 100vh !important;
     z-index: 2147483640 !important;
-    display: none;
+    display: none !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 !important;
@@ -1512,15 +1512,8 @@ figcaption,
 
 .image-lightbox.active,
 .lightbox-modal.active,
-.lightbox-overlay.active,
-.lightbox-modal:not(.hidden) {
+.lightbox-overlay.active {
     display: flex !important;
-}
-
-.image-lightbox.hidden,
-.lightbox-modal.hidden,
-.lightbox-overlay.hidden {
-    display: none !important;
 }
 
 .lightbox-content-box,
