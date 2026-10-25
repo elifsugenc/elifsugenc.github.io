@@ -2889,6 +2889,11 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 .page-topbar-inner .section-label {
     margin-bottom: 0;
 }
+.page-topbar-inner .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .page-centered-content {
     max-width: 900px;
     margin: 0 auto;
@@ -3588,6 +3593,22 @@ Let me check, axis-y has top 0, bottom 0. So it's 100% height. */
 /* =========================================================
    DESIGN APPROACH / METHODOLOGY TAB (SPATIAL INQUIRY)
    ========================================================= */
+.approach-topbar-inner {
+    max-width: 1260px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-sizing: border-box;
+}
+.approach-topbar-inner .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .approach-centered-content {
     max-width: 1260px;
     padding-top: 40px;
