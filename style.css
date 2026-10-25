@@ -7934,6 +7934,32 @@ body {
     line-height: 1;
 }
 
+.wwh-finish-btn {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-family: monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.wwh-finish-btn:hover {
+    background: #1d4ed8;
+    transform: scale(1.04);
+}
+.wwh-saved-state {
+    border-color: #16a34a !important;
+    background: #f0fdf4 !important;
+}
+
 @media (max-width: 600px) {
     .wwh-consent-popup {
         bottom: 16px;

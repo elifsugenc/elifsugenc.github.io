@@ -28,7 +28,8 @@
 
     function getConsent() {
         try {
-            return localStorage.getItem(CONSENT_KEY) || sessionStorage.getItem(CONSENT_KEY) || null;
+            // Strictly per-session consent as requested: each new tab/window prompts separately
+            return sessionStorage.getItem(CONSENT_KEY) || null;
         } catch (e) {
             return null;
         }
@@ -36,8 +37,13 @@
 
     function setConsent(val) {
         try {
-            localStorage.setItem(CONSENT_KEY, val);
-            sessionStorage.setItem(CONSENT_KEY, val);
+            if (val) {
+                sessionStorage.setItem(CONSENT_KEY, val);
+            } else {
+                sessionStorage.removeItem(CONSENT_KEY);
+            }
+            // Clear any lingering persistent consent from localStorage
+            localStorage.removeItem(CONSENT_KEY);
         } catch (e) {}
     }
 
@@ -91,45 +97,22 @@
         return initFirebasePromise;
     }
 
-    // Allocate an atomic unique trace number (e.g. TRACE_0001, TRACE_0002)
+    // Allocate an atomic unique trace number (e.g. TRACE_0054, TRACE_0055)
     async function allocateTraceNumber() {
-        if (!db) {
+        let count = 51;
+        if (cachedTracesList && cachedTracesList.length > 0) {
+            count = cachedTracesList.length;
+        } else {
             try {
-                await initFirebase();
+                const res = await fetch('https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces?pageSize=300');
+                if (res.ok) {
+                    const data = await res.json();
+                    count = data.documents ? data.documents.length : 51;
+                }
             } catch (e) {}
         }
-
-        if (!db || !runTransactionFn || !docFn) {
-            const fallbackNum = Math.floor(1000 + Math.random() * 9000);
-            return 'TRACE_' + fallbackNum;
-        }
-
-        try {
-            const metaRef = docFn(db, 'metadata', 'traces_counter');
-            let assignedNum = 1;
-            await runTransactionFn(db, async (transaction) => {
-                const metaDoc = await transaction.get(metaRef);
-                let currentTotal = 0;
-                if (metaDoc.exists()) {
-                    currentTotal = metaDoc.data().total || 0;
-                }
-                // Account for the preserved historical traces in Firestore
-                if (currentTotal < 51) {
-                    currentTotal = 51;
-                }
-                currentTotal += 1;
-                transaction.set(metaRef, { 
-                    total: currentTotal,
-                    lastUpdated: new Date().toISOString()
-                }, { merge: true });
-                assignedNum = currentTotal;
-            });
-            return 'TRACE_' + String(assignedNum).padStart(4, '0');
-        } catch (e) {
-            console.warn('[YOU WERE HERE] Counter transaction note, using fallback format:', e);
-            const tsSuffix = Date.now().toString().slice(-4);
-            return 'TRACE_' + tsSuffix;
-        }
+        const nextNum = Math.max(51, count) + 1;
+        return 'TRACE_' + String(nextNum).padStart(4, '0');
     }
 
     // Load or initialize trace session
@@ -176,46 +159,144 @@
         } catch (e) {}
     }
 
+    // Convert plain JS object to Firestore REST API typed fields format
+    function toFirestoreFields(obj) {
+        const fields = {};
+        for (const [k, v] of Object.entries(obj)) {
+            if (v === null || v === undefined) continue;
+            if (typeof v === 'string') {
+                fields[k] = { stringValue: v };
+            } else if (typeof v === 'number') {
+                if (Number.isInteger(v)) {
+                    fields[k] = { integerValue: String(v) };
+                } else {
+                    fields[k] = { doubleValue: v };
+                }
+            } else if (typeof v === 'boolean') {
+                fields[k] = { booleanValue: v };
+            } else if (Array.isArray(v)) {
+                fields[k] = {
+                    arrayValue: {
+                        values: v.map(item => {
+                            if (typeof item === 'object' && item !== null) {
+                                return { mapValue: { fields: toFirestoreFields(item) } };
+                            } else if (typeof item === 'string') {
+                                return { stringValue: item };
+                            } else if (typeof item === 'number') {
+                                return { integerValue: String(item) };
+                            }
+                            return {};
+                        })
+                    }
+                };
+            } else if (typeof v === 'object') {
+                fields[k] = { mapValue: { fields: toFirestoreFields(v) } };
+            }
+        }
+        return fields;
+    }
+
+    // Direct REST API write with keepalive support (immune to SDK WebSocket hangs & page exit aborts)
+    async function sendTraceToFirestoreREST(traceData, keepalive = false) {
+        if (!traceData || !traceData.id) return false;
+        const docId = traceData.id;
+        const url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
+        const payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
+
+        try {
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 6000) : null;
+
+            const res = await fetch(url, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: keepalive,
+                signal: controller ? controller.signal : undefined
+            });
+
+            if (timeoutId) clearTimeout(timeoutId);
+            return res.ok;
+        } catch (e) {
+            console.warn('[YOU WERE HERE] Direct REST write note:', e);
+            return false;
+        }
+    }
+
     // Incremental batch save to Firebase Firestore
-    async function saveTraceToCloud(force = false) {
+    async function saveTraceToCloud(force = false, isFinal = false) {
         if (!activeTrace || getConsent() !== 'yes') return;
         saveTraceToSession();
 
         // Require at least 2 points to avoid empty cloud records
         if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
         if (!hasUnsavedChanges && !force) return;
+        if (isCloudSaving && !force) return;
 
-        if (!db) {
-            try {
-                await initFirebase();
-            } catch (e) {}
-        }
+        isCloudSaving = true;
 
-        if (db && setDocFn && docFn) {
-            if (isCloudSaving && !force) return;
-            isCloudSaving = true;
-            try {
-                const cloudPayload = {
-                    id: activeTrace.id,
-                    traceNumber: activeTrace.traceNumber,
-                    date: activeTrace.date,
-                    time: activeTrace.time,
-                    started: activeTrace.started,
-                    duration: Date.now() - activeTrace.started,
-                    pointCount: activeTrace.points.length,
-                    points: activeTrace.points,
-                    dwells: activeTrace.dwells,
-                    clicks: activeTrace.clicks,
-                    lastUpdated: new Date().toISOString()
-                };
+        const cloudPayload = {
+            id: activeTrace.id,
+            traceNumber: activeTrace.traceNumber,
+            date: activeTrace.date,
+            time: activeTrace.time,
+            started: activeTrace.started,
+            duration: Date.now() - activeTrace.started,
+            pointCount: activeTrace.points.length,
+            points: activeTrace.points,
+            dwells: activeTrace.dwells,
+            clicks: activeTrace.clicks,
+            lastUpdated: new Date().toISOString()
+        };
 
+        try {
+            const ok = await sendTraceToFirestoreREST(cloudPayload, force || isFinal);
+            if (ok) {
+                hasUnsavedChanges = false;
+            } else if (db && setDocFn && docFn) {
                 await setDocFn(docFn(db, 'traces', activeTrace.id), cloudPayload, { merge: true });
                 hasUnsavedChanges = false;
-            } catch (err) {
-                console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
-            } finally {
-                isCloudSaving = false;
             }
+        } catch (err) {
+            console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
+        } finally {
+            isCloudSaving = false;
+        }
+    }
+
+    // Explicit User Trigger: Finish & Permanently Save Current Trace
+    async function finishAndSaveCurrentTrace() {
+        if (!activeTrace) return;
+        const currentCount = activeTrace.points.length;
+        const currentNum = activeTrace.traceNumber || 'TRACE';
+
+        // 1. Force final cloud save via REST + keepalive
+        hasUnsavedChanges = true;
+        await saveTraceToCloud(true, true);
+
+        // 2. Stop ongoing tracking & interval timers
+        stopRecording();
+
+        // 3. Clear session storage so reloads do not continue appending into this trace
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+        activeTrace = null;
+
+        // 4. Update Live Indicator UI to celebrate completion
+        const el = document.getElementById('wwh-live-indicator');
+        if (el) {
+            el.classList.add('wwh-saved-state');
+            el.innerHTML = `
+                <span class="wwh-live-check" style="color: #16a34a; font-weight: 800; font-size: 0.9rem;">&check;</span>
+                <span class="wwh-live-tag" style="color: #16a34a;">${currentNum} SAVED</span>
+                <span class="wwh-live-sep">&bull;</span>
+                <span class="wwh-live-label">${currentCount} pts</span>
+                <a href="./projects/you-were-here/" class="wwh-view-archive-link" style="color: #2563eb; text-decoration: underline; font-weight: 700; font-size: 0.72rem; margin-left: 6px;">VIEW ARCHIVE &nearr;</a>
+            `;
+            setTimeout(() => {
+                if (el) el.remove();
+            }, 8000);
         }
     }
 
@@ -233,26 +314,27 @@
             el.id = 'wwh-live-indicator';
             el.className = 'wwh-live-indicator';
             el.setAttribute('aria-live', 'polite');
-            el.setAttribute('role', 'button');
-            el.setAttribute('tabindex', '0');
-            el.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Apparatus. Click to manage recording or visit thesis.');
+            el.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Apparatus');
             el.innerHTML = `
                 <span class="wwh-live-dot" aria-hidden="true"></span>
                 <span class="wwh-live-tag">RESEARCH DEMO</span>
                 <span class="wwh-live-sep">&bull;</span>
                 <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
+                <button type="button" class="wwh-finish-btn" id="wwh-finish-btn" title="Complete drawing and permanently save to archive">FINISH &amp; SAVE &check;</button>
             `;
             mount.appendChild(el);
+
+            const finishBtn = el.querySelector('#wwh-finish-btn');
+            if (finishBtn) {
+                finishBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    finishAndSaveCurrentTrace();
+                });
+            }
 
             el.addEventListener('click', (e) => {
                 e.stopPropagation();
                 showConsentPopup();
-            });
-            el.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    showConsentPopup();
-                }
             });
         } else if (el.parentElement !== mount) {
             mount.appendChild(el);
@@ -1222,10 +1304,13 @@
     window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
 
     function handlePageExit() {
-        saveTraceToSession();
-        if (activeTrace && getConsent() === 'yes') {
-            saveTraceToCloud(true);
+        if (activeTrace && getConsent() === 'yes' && activeTrace.points.length >= 2) {
+            saveTraceToCloud(true, true);
         }
+        // Clearing session key so page reload finalizes the trace and starts fresh
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
     }
 
     // Auto-save on page lifecycle events
@@ -1239,19 +1324,19 @@
 
     // Bootstrap on DOM Ready
     async function init() {
+        // Clear any old persistent consent from localStorage so new tabs always ask fresh
+        try { localStorage.removeItem(CONSENT_KEY); } catch (e) {}
+
         const consent = getConsent();
 
-        // 1. Consent State Handling
+        // 1. Strictly per-session consent handling:
         if (consent === 'yes') {
-            // Already consented: start recording immediately across all pages
             hideReopenCircle();
             await startRecording();
         } else if (consent === 'no') {
-            // Explicitly declined: show the subtle reopen circle, do not record
             showReopenCircle();
         } else {
-            // First time visitor (no choice made yet):
-            // Show popup AND start pre-recording so initial movement/dwell is not lost
+            // New tab or fresh visit: ALWAYS show consent popup!
             showConsentPopup();
             await startPreRecording();
         }
