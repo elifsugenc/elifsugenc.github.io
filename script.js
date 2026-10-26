@@ -567,13 +567,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const CONSTELLATION_RELATIONS = [
         {
             from: 'emek-museum',
-            to: 'chronoclines',
-            themeLine1: 'COLLECTIVE MEMORY',
-            themeLine2: 'URBAN STRATA',
-            curve: 'M 380 250 Q 375 325 340 405',
-            labelX: 370,
-            labelY: 325,
-            badgeW: 132,
+            to: 'fire-escape-simulation',
+            themeLine1: 'DISASTER IS',
+            themeLine2: 'NEVER NATURAL',
+            curve: 'M 380 250 Q 280 410 230 600',
+            labelX: 280,
+            labelY: 418,
+            badgeW: 140,
             badgeH: 28
         },
         {
@@ -2317,14 +2317,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'edge-left': {
             mode: 'DIALECTICAL TENSION // LEFT AXIS',
             badge: 'AXIS 01 // INQUIRY &times; CONTEXT',
-            title: 'INSTITUTIONAL CRITIQUE &times; MATERIAL FORENSICS',
-            quote: '“How does ethical resistance anchor itself in the physical memory of site?”',
-            desc: 'Critique cannot remain purely theoretical; it must excavate physical stone, pavement, and labor wear. Theory meets forensic fieldwork.',
-            flow: ['DECONSTRUCT BRIEF', '⇄', 'EXCAVATE STRATA'],
+            title: 'SPATIAL JUSTICE &times; POLITICAL ECOLOGY OF SURVIVAL',
+            quote: '“Disaster is never natural: how do built thresholds and labor conditions construct catastrophe?”',
+            desc: 'Connecting workplace fatality memorials with high-rise fire evacuation simulations—interrogating how spatial design and institutional neglect construct disaster.',
+            flow: ['LABOUR AUDIT', '⇄', 'EGRESS DYNAMICS'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
                 { title: 'EMEK MUSEUM', url: './projects/emek-museum/' },
-                { title: 'CHRONOCLINES', url: './projects/chronoclines/' }
+                { title: 'FIRE ESCAPE SIMULATION', url: './projects/fire-escape-simulation/' }
             ]
         },
         'edge-right': {
