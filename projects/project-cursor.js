@@ -10,6 +10,19 @@
     if (window.__portfolioProjectCursorInitialized) return;
     window.__portfolioProjectCursorInitialized = true;
 
+    // Ensure clean URLs on all project pages (strip trailing /index.html and any ?from=... parameters)
+    try {
+        const searchParams = new URLSearchParams(window.location.search);
+        const fromParam = searchParams.get('from');
+        if (fromParam) {
+            sessionStorage.setItem('portfolio_return_origin', fromParam);
+        }
+        if (window.location.search || window.location.pathname.endsWith('/index.html')) {
+            const cleanPath = window.location.pathname.replace(/\/index\.html$/, '/');
+            window.history.replaceState(null, '', cleanPath + window.location.hash);
+        }
+    } catch (_) {}
+
     function initProjectCursor() {
         let cursorWrapper = document.getElementById('cursor-wrapper');
         let customCursor = document.getElementById('custom-cursor');

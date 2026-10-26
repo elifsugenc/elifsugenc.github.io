@@ -847,14 +847,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function navigateToProject(targetHref) {
         if (!targetHref) return;
         savePortfolioReturnState();
-        const origin = getPortfolioCurrentOrigin();
 
         let url = targetHref;
         if (!url.includes('/')) {
             url = './projects/' + url + '/';
         }
-        const sep = url.includes('?') ? '&' : '?';
-        url = url + sep + 'from=' + encodeURIComponent(origin);
 
         window.location.href = url;
     }
@@ -2882,7 +2879,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             sessionStorage.setItem('portfolio_return_url', window.location.pathname + '#archive');
                             sessionStorage.setItem('portfolio_return_active', 'true');
                         } catch (_) {}
-                        window.location.href = href + (href.includes('?') ? '&' : '?') + 'from=archive';
+                        window.location.href = href;
                     }
                 });
             });
