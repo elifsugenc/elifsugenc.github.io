@@ -1311,7 +1311,7 @@ a:hover {
                 transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s !important;
 }
 
-.pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-cluster-star .node-label {
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-cluster-star:not(:hover):not(.is-hovered) .node-label {
     opacity: 1 !important;
     transition: opacity 1.0s ease 1.1s !important;
 }
@@ -1395,7 +1395,7 @@ a:hover {
                 transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--star-delay, 0.12s) + 1.1s) !important;
 }
 
-.pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star) .node-label {
+.pleiades-observatory-stage[data-state="constellation"] .constellation-node:not(.is-cluster-star):not(:hover):not(.is-hovered) .node-label {
     opacity: 1 !important;
     transition: opacity 1.1s ease calc(var(--star-delay, 0.12s) + 1.4s) !important;
 }
@@ -6230,8 +6230,11 @@ body {
 
 /* Hide static label of the hovered node completely so only the card renders */
 .constellation-node:hover .node-label,
-.constellation-node.is-hovered .node-label {
+.constellation-node.is-hovered .node-label,
+.constellation-node:hover .node-label *,
+.constellation-node.is-hovered .node-label * {
     opacity: 0 !important;
+    visibility: hidden !important;
     pointer-events: none !important;
 }
 
@@ -6704,10 +6707,14 @@ body {
 
 /* On hover, fade default label so the card & pill shine with zero text collision */
 .constellation-node:hover .node-label,
-.constellation-node.is-hovered .node-label {
-    opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+.constellation-node.is-hovered .node-label,
+.constellation-node:hover .node-label *,
+.constellation-node.is-hovered .node-label * {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: scale(0.92) !important;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease !important;
 }
 
 /* Responsiveness */
@@ -8797,10 +8804,40 @@ body {
   font-weight: 600 !important;
   text-shadow: none !important;
 }
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-title,
-#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-title {
-  color: #2563eb !important;
-  text-shadow: 0 0 12px rgba(37, 99, 235, 0.3) !important;
+/* -------------------------------------------------------------
+   HIDE STATIC NODE LABEL ON HOVER (HIGHEST SPECIFICITY OVERRIDE)
+   When a constellation node is hovered, its static label behind/beside
+   the circle MUST be completely hidden so only the hover card renders,
+   preventing the label from peeking out half-clipped behind the enlarged circle.
+   ------------------------------------------------------------- */
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-label,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-label,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related:hover .node-label,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related.is-hovered .node-label,
+#tab-main .pleiades-observatory-stage .constellation-node:hover .node-label,
+#tab-main .pleiades-observatory-stage .constellation-node.is-hovered .node-label,
+#tab-main .constellation-node:hover .node-label,
+#tab-main .constellation-node.is-hovered .node-label,
+.pleiades-observatory-stage .constellation-node:hover .node-label,
+.pleiades-observatory-stage .constellation-node.is-hovered .node-label,
+.constellation-node:hover .node-label,
+.constellation-node.is-hovered .node-label {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: scale(0.92) !important;
+    transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease !important;
+}
+
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node:hover .node-label *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-label *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related:hover .node-label *,
+#tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-related.is-hovered .node-label *,
+.constellation-node:hover .node-label *,
+.constellation-node.is-hovered .node-label * {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 @media (max-width: 650px) {
