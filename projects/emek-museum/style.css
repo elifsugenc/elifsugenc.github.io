@@ -334,41 +334,51 @@ body.project-detail-body {
     background: #ffffff;
     border: 1px solid var(--border-light);
     border-radius: 8px;
-    padding: clamp(32px, 5vw, 60px);
+    padding: clamp(28px, 4vw, 52px);
     box-shadow: 0 10px 40px rgba(15, 23, 42, 0.04);
     position: relative;
     overflow: hidden;
 }
 
-.manifesto-monument-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--accent-blue), #3b82f6, var(--text-primary));
-}
-
-.manifesto-badge-row {
+.manifesto-departure-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-direction: column;
 }
 
-.manifesto-badge {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+.manifesto-departure-narrative {
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    line-height: 1.8;
+    color: var(--text-secondary, #475569);
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.manifesto-departure-narrative p {
+    margin: 0;
+}
+
+.manifesto-departure-narrative strong {
+    color: var(--text-primary, #0f172a);
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--accent-blue);
-    background: rgba(37, 99, 235, 0.08);
-    padding: 4px 12px;
-    border-radius: 4px;
-    border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.inquiry-statement.sub {
+    margin-top: 10px;
+    font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    opacity: 0.92;
+}
+
+.inquiry-statement-tr {
+    margin-top: 10px;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-blue, #0284c7);
+    line-height: 1.4;
 }
 
 /* Language Switcher */
