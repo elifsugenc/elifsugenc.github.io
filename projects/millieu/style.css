@@ -107,7 +107,7 @@ body.project-detail-body {
 }
 
 .nav-container {
-    max-width: 1400px;
+    max-width: 880px;
     margin: 0 auto;
     padding: 16px 32px;
     display: flex;
@@ -179,7 +179,7 @@ body.project-detail-body {
 
 /* Page Container */
 .project-page-container {
-    max-width: 1400px;
+    max-width: 880px;
     margin: 0 auto;
     padding: 40px 32px 100px;
     position: relative;
