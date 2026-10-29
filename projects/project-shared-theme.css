@@ -2234,3 +2234,21 @@ img, picture, figure, canvas, svg,
 #lightbox-img, .lightbox-img {
     cursor: none !important;
 }
+
+/* =========================================================
+   PROTECT ARCHITECTURAL ASSETS (VIEW ONLY — NO DIRECT DOWNLOAD)
+   ========================================================= */
+img,
+.board-compact-img,
+.hero-visual-img,
+.lightbox-img,
+.board-card img,
+.drawing-card img {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    -webkit-touch-callout: none !important;
+}
