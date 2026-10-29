@@ -2014,6 +2014,15 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     font-weight: 500 !important;
 }
 
+@media (max-width: 640px) {
+    .vocab-tip {
+        white-space: normal !important;
+        width: max-content !important;
+        max-width: min(320px, calc(100vw - 32px)) !important;
+        flex-wrap: wrap !important;
+    }
+}
+
 /* Individual Role & Contributions Block (Group Projects) */
 .editorial-contribution-box {
     margin-top: 18px !important;
