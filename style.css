@@ -10979,8 +10979,7 @@ iframe,
    (Architectural electric blue #2563eb, deep slate #0f172a, high-contrast)
    ========================================================================== */
 
-.arch-research-framework,
-.arch-topology-framework {
+.arch-research-framework {
     background: #ffffff;
     border: 1px solid rgba(37, 99, 235, 0.22);
     border-radius: 8px;
@@ -10988,40 +10987,6 @@ iframe,
     margin-bottom: 40px;
     box-shadow: 0 6px 28px rgba(26, 54, 93, 0.06);
     overflow-x: auto;
-}
-
-.arch-topology-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    overflow: visible;
-}
-
-.topology-station-node {
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.topology-station-node:hover {
-    transform: scale(1.08);
-}
-
-.station-pulse-ring {
-    transition: opacity 0.3s ease, stroke-width 0.3s ease;
-}
-
-.topology-station-node:hover .station-pulse-ring {
-    opacity: 0.65;
-    stroke-width: 2.2;
-}
-
-.topology-annotations-layer text {
-    user-select: none;
-    transition: fill 0.2s ease;
-}
-
-.topology-tracks-layer path {
-    transition: stroke-width 0.25s ease, opacity 0.25s ease;
 }
 
 .arch-main-diagram-wrap {
@@ -11100,8 +11065,7 @@ iframe,
 }
 
 @media (max-width: 900px) {
-    .arch-main-diagram-svg,
-    .arch-topology-svg {
+    .arch-main-diagram-svg {
         min-width: 960px;
     }
     .arch-mobile-scroll-hint {
