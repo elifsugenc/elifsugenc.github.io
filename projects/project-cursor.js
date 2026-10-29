@@ -107,6 +107,7 @@
             'select',
             'textarea',
             '[role="button"]',
+            '.vocab-term',
             '.back-link',
             '.back-btn',
             '.footer-nav-btn',
