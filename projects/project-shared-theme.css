@@ -51,7 +51,7 @@ body.project-detail-body, body {
    Quiet precision ring/dot. No '?' character, no heavy glow.
    ========================================================= */
 html, body {
-    cursor: auto;
+    cursor: none !important;
 }
 
 *, *::before, *::after,
@@ -59,7 +59,7 @@ html, body {
 a, button, input, select, textarea, [role="button"],
 img, svg, canvas,
 .lightbox-close-btn, .zoomable-image-container, .board-card, .drawing-card {
-    cursor: auto;
+    cursor: none !important;
     -webkit-user-drag: none !important;
     user-drag: none !important;
 }
@@ -1223,7 +1223,7 @@ figcaption,
     padding: 4px 6px !important;
     margin: 0 !important;
     transition: color 0.15s ease, border-color 0.15s ease !important;
-    cursor: auto;
+    cursor: none !important;
     box-shadow: none !important;
 }
 
@@ -1358,7 +1358,7 @@ figcaption,
     padding: 8px 16px !important;
     text-decoration: none !important;
     transition: all 0.2s ease !important;
-    cursor: auto;
+    cursor: none !important;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
@@ -1523,7 +1523,7 @@ figcaption,
     justify-content: center !important;
     padding: 0 !important;
     margin: 0 !important;
-    cursor: auto;
+    cursor: none !important;
     user-select: none !important;
     -webkit-user-select: none !important;
 }
@@ -1536,7 +1536,7 @@ figcaption,
 }
 
 img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]) {
-    cursor: auto;
+    cursor: none !important;
 }
 
 .lightbox-content-box,
@@ -1559,7 +1559,7 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    cursor: auto;
+    cursor: none !important;
     pointer-events: auto !important;
 }
 
@@ -1580,7 +1580,7 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     border: none !important;
     border-radius: 0 !important;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
-    cursor: auto;
+    cursor: none !important;
     pointer-events: auto !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -1752,14 +1752,14 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
 #wwh-reopen-circle {
     z-index: 2147483640 !important;
     pointer-events: auto !important;
-    cursor: auto;
+    cursor: none !important;
 }
 
 .wwh-live-indicator,
 #wwh-live-indicator {
     z-index: 2147483640 !important;
     pointer-events: auto !important;
-    cursor: auto;
+    cursor: none !important;
 }
 
 .wwh-consent-popup,
@@ -2241,7 +2241,7 @@ img, picture, figure, canvas, svg,
 .image-lightbox, .lightbox-modal, .lightbox-overlay, #universal-lightbox,
 .lightbox-content-box, .lightbox-dialog, .lightbox-stage, .lightbox-img-wrapper,
 #lightbox-img, .lightbox-img {
-    cursor: auto;
+    cursor: none !important;
 }
 
 /* =========================================================

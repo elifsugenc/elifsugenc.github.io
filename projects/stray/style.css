@@ -60,7 +60,7 @@ body.project-detail-body {
 
 /* Custom Cursor */
 * {
-    cursor: auto;
+    cursor: none !important;
 }
 
 #cursor-wrapper {
@@ -1132,7 +1132,7 @@ body.project-detail-body {
 }
 
 .board-img-container:hover .board-img {
-    cursor: auto;
+    cursor: none !important;
 }
 
 /* =========================================================

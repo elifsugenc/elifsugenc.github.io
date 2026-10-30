@@ -52,7 +52,7 @@ body.project-detail-body {
 
 /* Custom Cursor - Hardware 1:1 GPU Accelerated Transform */
 * {
-    cursor: auto;
+    cursor: none !important;
 }
 
 #cursor-wrapper {

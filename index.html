@@ -3,243 +3,524 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elifsu Genç — Architecture, Spatial &amp; Experimental Design Portfolio</title>
+    <title>Elifsu Genç — Portfolio</title>
     <link rel="icon" type="image/png" href="./assets/favicon.png?v=blue">
     <link rel="icon" type="image/gif" href="./assets/logo-blue.gif?v=blue">
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg?v=blue">
     <link rel="apple-touch-icon" href="./assets/favicon.png">
-
-    <!-- Google Fonts: Space Grotesk & Newsreader (for restrained editorial pull-quotes) -->
+    
+    <!-- Google Fonts: Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="./style.css?v=20261030-minimal">
-    <style>
-        html, body, *, *::before, *::after { cursor: auto !important; }
-        a, a *, button, button *, [role="button"], [role="button"] *, summary, .ep-star-point, .ep-star-point * { cursor: pointer !important; }
-        input[type="search"], input[type="text"], textarea { cursor: text !important; }
-        #cursor-wrapper, #custom-cursor { display: none !important; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css?v=20261030-ulker">
 </head>
-<body class="editorial-portfolio-body">
-    <!-- Quiet Precision Custom Cursor -->
+<body>
+    <!-- Custom Cursor -->
     <div id="cursor-wrapper">
         <div id="custom-cursor"></div>
         <div id="cursor-label">EXPLORE &#x2197;</div>
     </div>
+    
 
-    <div class="ep-shell folder-container">
-        <!-- MINIMALIST STICKY HEADER -->
-        <header class="ep-topbar">
-            <div class="ep-topbar-inner">
-                <a href="#main" class="ep-brand" id="ep-brand-home" aria-label="Elifsu Genç — Portfolio Home">
-                    <span class="ep-brand-name">elifsu genç<span class="ep-brand-dot">.</span></span>
-                </a>
 
-                <nav class="folder-tabs ep-nav" id="main-nav" aria-label="Portfolio Navigation">
-                    <div class="nav-tabs-group ep-nav-group">
-                        <button type="button" class="tab-button ep-nav-btn active" data-tab="main">Works</button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="design-approach">&Uuml;lker &amp; Approach</button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="archive">Archive</button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="about">About &amp; CV</button>
-                    </div>
-                </nav>
+    <div class="folder-container">
+        <!-- ARCHITECTURAL STICKY NAVIGATION BAR -->
+        <nav class="folder-tabs" id="main-nav" aria-label="Portfolio Sections">
+            
+
+            <div class="nav-tabs-group">
+                <button type="button" class="tab-button active" data-tab="main" aria-label="Selected Works — Cluster View">
+                    <span class="nav-num">01</span>
+                    <span class="nav-text">&Uuml;LKER CLUSTER</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="projects" aria-label="Selected Works — Constellation View">
+                    <span class="nav-num">02</span>
+                    <span class="nav-text">SEE ALL PROJECTS</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="design-approach" aria-label="Go to Methodology">
+                    <span class="nav-num">03</span>
+                    <span class="nav-text">METHODOLOGY</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="about" aria-label="Go to About and CV">
+                    <span class="nav-num">04</span>
+                    <span class="nav-text">ABOUT / CV</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="archive" aria-label="Go to Archive Directory">
+                    <span class="nav-num">05</span>
+                    <span class="nav-text">ARCHIVE</span>
+                </button>
             </div>
-        </header>
 
-        <main class="folder-body ep-main">
+            <div class="nav-actions-group">
+                <a href="./projects/you-were-here/" class="nav-demo-badge" title="YOU WERE HERE. // Digital trace experiment">
+                    <span class="ndb-dot" aria-hidden="true"></span>
+                    <span class="ndb-label">YOU WERE HERE. // DEMO</span>
+                    <span class="ndb-arrow">&nearr;</span>
+                </a>
+                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn" title="Download Elifsu Genç's CV (PDF)">
+                    <span class="ncv-glyph">&darr;</span>
+                    <span>CV (PDF)</span>
+                </a>
+            </div>
+        </nav>
 
-            <!-- =========================================================
-                 TAB 01: MINIMALIST PROJECT-LED PORTFOLIO
-                 ========================================================= -->
+        <div class="folder-body">
+            
+            <!-- MAIN TAB -->
             <section class="tab-content active" id="tab-main">
-                <div class="ep-container">
+                <div class="main-intro-wrapper">
+                    
+                    <!-- ARCHITECTURAL SELECTED WORKS // CONSTELLATION OVERVIEW -->
+                    <!-- ARCHITECTURAL SELECTED WORKS // CURATED SPATIAL SHOWCASE -->
+                    <div class="home-selected-quad" id="home-selected-quad">
+                        <!-- Welcoming Architectural Studio Header -->
+                        <div class="hq-header">
+                            <div class="hq-header-meta">
+                                <span class="hq-eyebrow">&#x2726; MESSIER 45 // PLEIADES &rarr; ARCHITECTURAL CONSTELLATION</span>
+                                <span class="hq-header-coords">TAURUS &bull; RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY &bull; J2000.0</span>
+                            </div>
+                            <div class="hq-header-row">
+                                <h2 class="hq-title">SELECTED WORKS</h2>
+                                <p class="hq-lead">
+                                    While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars.
+                                </p>
+                            </div>
+                            <div class="hq-header-divider"></div>
+                        </div>
 
-                    <!-- QUIET 2-LINE INTRO + MINIMAL FILTER BAR -->
-                    <header class="ep-minimal-header" id="projects-explorer">
-                        <div class="ep-minimal-intro">
-                            <h1 class="ep-minimal-title">
-                                Architecture, spatial &amp; material works shaped around questions.
-                            </h1>
-                            <p class="ep-minimal-sub">
-                                Structured around the <strong>&Uuml;lker (Pleiades)</strong> cluster &mdash; six core works and a wider field of spatial research.
-                                <button type="button" class="ep-ulker-inline-btn" onclick="openMeropeStoryModal();">&#x2726; Read the &Uuml;lker note</button>
-                            </p>
+                        <!-- Anchor target for #constellation navigation -->
+                        <div id="constellation" style="position: relative; top: -40px;"></div>
+
+                        <!-- Architectural View Selector & State Controls -->
+                        <div class="hq-view-controls">
+                            <div class="hq-view-tabs">
+                                <button class="hq-view-btn active" data-mode="both" aria-label="Show both constellation observatory and project cards">
+                                    <span class="view-btn-glyph">&#x2726;</span>
+                                    <span class="view-btn-label">OBSERVATORY &amp; CARDS</span>
+                                </button>
+                                <button class="hq-view-btn" data-mode="sky" aria-label="Focus on interactive celestial observatory">
+                                    <span class="view-btn-glyph">&#x2605;</span>
+                                    <span class="view-btn-label">CELESTIAL OBSERVATORY (M45)</span>
+                                </button>
+                                <button class="hq-view-btn" data-mode="cards" aria-label="Focus on architectural photo cards">
+                                    <span class="view-btn-glyph">&#x2630;</span>
+                                    <span class="view-btn-label">PROJECT DIRECTORY (5 WORKS)</span>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="ep-discipline-bar" id="ep-discipline-bar" role=" navigation" aria-label="Filter by discipline">
-                            <button type="button" class="ep-disc-pill active" data-discipline="all">All</button>
-                            <button type="button" class="ep-disc-pill ep-disc-pill-cluster" data-discipline="ulker-cluster">&#x2726; &Uuml;lker Cluster</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Architectural Design">Architectural Design</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Spatial Design">Spatial Design</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Bio-Material & Ecological">Bio-Material &amp; Ecological</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Exhibition Design">Exhibition Design</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Interactive & Simulation">Interactive &amp; Simulation</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Visual Communication">Visual Communication</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Editorial Design">Editorial Design</button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Experimental Design">Experimental Design</button>
-                        </div>
-                    </header>
+                        <!-- 1. PLEIADES / M45 -> CONSTELLATION ASTRONOMICAL OBSERVATORY STAGE -->
+                        <div class="hq-constellation-sky pleiades-observatory-stage" id="hq-constellation-sky" data-state="cluster" aria-label="Interactive Pleiades M45 to Constellation Stage">
+                            <!-- Background Universe Atmosphere Layers -->
+                            <div class="pleiades-nebula-layer" aria-hidden="true"></div>
+                            <div class="pleiades-grid-layer" aria-hidden="true"></div>
+                            <div class="pleiades-grain-layer" aria-hidden="true"></div>
 
-                    <!-- LARGE-FORMAT VISUAL PROJECT GALLERY -->
-                    <section class="ep-projects-stage" id="ep-projects-stage" aria-live="polite">
-                        <!-- Populated cleanly by script.js -->
-                    </section>
+                            <!-- Astronomical Inscription / Observation Note -->
+                            <div class="cluster-astronomy-inscription" aria-label="Pleiades Cluster Note">
+                                &ldquo;While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars.&rdquo;
+                            </div>
 
-                    <!-- QUIET ONE-LINE FOOTER -->
-                    <footer class="ep-footer">
-                        <div class="ep-footer-inner">
-                            <span class="ep-footer-brand">Elifsu Gen&ccedil; &mdash; Architecture &amp; Spatial Design</span>
-                            <div class="ep-footer-links">
-                                <button type="button" class="ep-footer-link" onclick="goToPage('design-approach');">&Uuml;lker &amp; Approach</button>
-                                <button type="button" class="ep-footer-link" onclick="goToPage('archive');">Archive</button>
-                                <button type="button" class="ep-footer-link" onclick="goToPage('about');">About</button>
-                                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="ep-footer-link">CV (PDF)</a>
-                                <a href="mailto:elifsugenc44@gmail.com" class="ep-footer-link">elifsugenc44@gmail.com</a>
-                            </div>
-                        </div>
-                    </footer>
+                            <!-- Astronomical Coordinate References -->
+                            <div class="pleiades-coord-tag pct-tl" aria-hidden="true">MESSIER 45 // PLEIADES CLUSTER &bull; J2000.0</div>
+                            <div class="pleiades-coord-tag pct-tr" aria-hidden="true">RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY</div>
+                            <div class="pleiades-coord-tag pct-bl" aria-hidden="true">DIGITAL OBSERVATORY &bull; SPATIAL TOPOLOGY</div>
+                            <div class="pleiades-coord-tag pct-br" aria-hidden="true">ALCYONE (&eta; TAURI) &bull; 7 SISTERS ASTERISM</div>
 
-                </div>
+                            <!-- Observatory Top Bar Controls -->
+                            <div class="pleiades-top-bar">
+                                <div class="pleiades-status-pill">
+                                    <span class="psp-dot"></span>
+                                    <span class="psp-text" id="pleiades-status-label">CLUSTER STATE &bull; PLEIADES / M45 (7 STARS)</span>
+                                </div>
+                                <button type="button" class="cluster-transition-btn" id="cluster-transition-btn" aria-label="Toggle between Pleiades cluster and all projects constellation">
+                                    <span class="ctb-icon">&#x2726;</span>
+                                    <span class="ctb-text">SEE ALL PROJECTS &#x2192;</span>
+                                </button>
+                            </div>
 
-                <!-- PRESERVED PROJECT DATA ARCHIVE STORE (All 12 project cards preserved intact) -->
-                <div id="project-cards-store" class="projects-grid" style="display: none;" aria-hidden="true">
-                    <a id="card-emek-museum" href="./projects/emek-museum/" class="project-card span-2x2" data-num="01" data-year="2026" data-medium="Design" data-title="EMEK MUSEUM" data-question="How can we make this labour visible again?">
-                        <div class="card-img" style="background-image: url('./assets/emek-museum-wip.svg');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">How can we make this labour visible again?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">01 &mdash;</span>
-                                <span class="card-title">EMEK MUSEUM</span>
-                            </div>
+                            <!-- Dynamic Stage Mount: renderConstellation() mounts here -->
+                            <div id="pleiades-stage-mount" class="pleiades-stage-mount"></div>
                         </div>
-                    </a>
-                    <a id="card-stray" href="./projects/stray/" class="project-card span-2x2" data-num="02" data-year="2025" data-medium="Interactive Installation" data-title="STRAY" data-question="Is doing nothing doing something?">
-                        <div class="card-img" style="background-image: url('./assets/stray-project.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Is doing nothing doing something?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">02 &mdash;</span>
-                                <span class="card-title">STRAY</span>
-                                <span class="card-award-tag">AWARD WINNER</span>
-                            </div>
+
+                        <!-- 2. 5-Card Architectural Photo Grid (Configured as Constellation Elements) -->
+                        <div class="hq-grid" id="hq-grid">
+                            
+                            <!-- CARD 01: EMEK MUSEUM -->
+                            <article class="hq-card" data-id="emek-museum" data-num="01" data-title="EMEK MUSEUM" data-medium="Design" data-question="How can we make this labour visible again?">
+                                <a href="./projects/emek-museum/" class="hq-card-link" aria-label="Explore EMEK MUSEUM project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/emek-museum-wip.svg" alt="EMEK MUSEUM — Spatial Justice Blueprint" class="hq-card-img hq-blueprint-visual" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &alpha; // 01</span>
+                                            <span class="hq-pill hq-pill-status">RESEARCH &bull; 2026</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">EMEK MUSEUM</h3>
+                                            <span class="hq-card-year">2026</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;How can we make this labour visible again?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            A counter-monument and living civic archive spatializing the invisible bodily labor, collective memory, and forgotten human costs of urban infrastructure.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">LIVING ARCHIVE &bull; CIVIC TESTIMONY</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 02: STRAY -->
+                            <article class="hq-card" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?">
+                                <a href="./projects/stray/" class="hq-card-link" aria-label="Explore STRAY project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/stray-project.png" alt="STRAY — Interactive Installation" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &beta; // 02</span>
+                                            <span class="hq-pill hq-pill-award">&#x2605; AWARD WINNER</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">STRAY</h3>
+                                            <div style="display:flex;align-items:center;gap:6px;">
+                                                <span class="hq-card-year">2025</span>
+                                                <span class="card-award-pill" style="font-size:0.62rem;padding:1px 7px;">&#x2605; AWARD WINNER</span>
+                                            </div>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;Is doing nothing doing something?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            A responsive street-level sanctuary examining non-human feline agency, temporal pauses, and interspecies coexistence in urban Istanbul.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">INTERACTIVE &bull; URBAN SPATIAL</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 03: FIRE ESCAPE SIMULATION -->
+                            <article class="hq-card" data-id="fire-escape-simulation" data-num="12" data-title="FIRE ESCAPE SIMULATION" data-medium="Simulation" data-question="Can you escape the fire?">
+                                <a href="./projects/fire-escape-simulation/" class="hq-card-link" aria-label="Explore FIRE ESCAPE SIMULATION project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/fire-escape-wip.svg" alt="FIRE ESCAPE SIMULATION — Egress Dynamics &amp; Spatial Panic Blueprint" class="hq-card-img hq-blueprint-visual" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &gamma; // 12</span>
+                                            <span class="hq-pill hq-pill-status">SIMULATION &bull; 2026</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">FIRE ESCAPE SIMULATION</h3>
+                                            <span class="hq-card-year">2026</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;Can you escape the fire?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            An agent-based architectural simulation analyzing egress dynamics, behavioral panic thresholds, and bottleneck flow rates during emergency building evacuation scenarios.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">EGRESS DYNAMICS &bull; SIMULATION &bull; SPATIAL PANIC</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 04: THE EARTHEN -->
+                            <article class="hq-card" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there life because there is death?">
+                                <a href="./projects/the-earthen/" class="hq-card-link" aria-label="Explore THE EARTHEN project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/the-earthen-cover.png" alt="THE EARTHEN — Soil &amp; Clay Wellbeing Sanctuary" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &delta; // 10</span>
+                                            <span class="hq-pill hq-pill-craft">SOIL &amp; WELLBEING</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">THE EARTHEN</h3>
+                                            <span class="hq-card-year">2026</span>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;Is there life because there is death?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            A restorative sanctuary designed around soil and clay immersion, connecting natural earth cycles to human life to cultivate physical and spiritual wellbeing.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">SOIL HEALING &bull; CYCLICAL WELLBEING</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
+                            <!-- CARD 05: BIO-DECAY -->
+                            <article class="hq-card" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?">
+                                <a href="./projects/bio-decay/" class="hq-card-link" aria-label="Explore BIO-DECAY project">
+                                    <div class="hq-card-media">
+                                        <img src="./assets/bio-decay-cover.png" alt="BIO-DECAY — Bio-Materials &amp; Compostable Plastics" class="hq-card-img" loading="eager">
+                                        <div class="hq-media-overlay"></div>
+                                        <div class="hq-media-badges">
+                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &epsilon; // 11</span>
+                                            <span class="hq-pill hq-pill-award">&#x2605; DEAN&rsquo;S AWARD</span>
+                                        </div>
+                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
+                                    </div>
+                                    <div class="hq-card-body">
+                                        <div class="hq-card-topline">
+                                            <h3 class="hq-card-title">BIO-DECAY</h3>
+                                            <div style="display:flex;align-items:center;gap:6px;">
+                                                <span class="hq-card-year">2025</span>
+                                                <span class="card-award-pill" style="font-size:0.62rem;padding:1px 7px;">&#x2605; AWARD WINNER</span>
+                                            </div>
+                                        </div>
+                                        <p class="hq-card-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</p>
+                                        <p class="hq-card-desc">
+                                            Fully biodegradable agar and starch bio-composite surfaces challenging petrochemical permanence and consumer packaging contamination.
+                                        </p>
+                                        <div class="hq-card-foot">
+                                            <span class="hq-foot-meta">CIRCULAR MATERIAL &bull; SPECULATIVE LAB</span>
+                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+
                         </div>
-                    </a>
-                    <a id="card-you-were-here" href="./projects/you-were-here/" class="project-card span-2x2" data-num="03" data-year="2026" data-medium="Interactive Digital Archive" data-title="YOU WERE HERE." data-question="What remains of our movements in the attention economy?">
-                        <div class="card-img" style="background-image: url('./assets/you-were-here-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">What remains of our movements in the attention economy?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">03 &mdash;</span>
-                                <span class="card-title">YOU WERE HERE.</span>
-                            </div>
+
+                        <!-- Live Interactive Teletype Inquiry Bar -->
+                        <div class="hq-inquiry-bar">
+                            <div class="hq-inquiry-pulse"></div>
+                            <span class="hq-inquiry-tag">ACTIVE INQUIRY //</span>
+                            <span class="hq-inquiry-text" id="home-inquiry-display">&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;</span>
+                            <span id="matrix-project-name" style="display: none;">&mdash;</span>
                         </div>
-                    </a>
-                    <a id="card-chronoclines" href="./projects/chronoclines/" class="project-card span-1x2" data-num="04" data-year="2025" data-medium="Generative Art" data-title="CHRONOCLINES" data-question="Can a city exhibit itself?">
-                        <div class="card-img" style="background-image: url('./assets/chronoclines-cover.jpg');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Can a city exhibit itself?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">04 &mdash;</span>
-                                <span class="card-title">CHRONOCLINES</span>
-                            </div>
+
+                        <!-- Prominent Architectural Call-To-Action to Explore Full Constellation Map -->
+                        <div class="hq-cta-wrapper">
+                            <button type="button" class="hq-explore-all-btn" id="hq-explore-bottom-cta">
+                                <span class="hq-btn-star">&#x2726;</span>
+                                <span class="hq-btn-text">EXPLORE ALL PROJECTS &mdash; CONSTELLATION MAP</span>
+                                <span class="hq-btn-arrow">&rarr;</span>
+                            </button>
+                            <span class="hq-cta-sub">12 INTERCONNECTED RESEARCH WORKS &bull; 3 RELATIONAL POLES &bull; FULL SCREEN ATLAS</span>
                         </div>
-                    </a>
-                    <a id="card-millieu" href="./projects/millieu/" class="project-card span-1x2" data-num="05" data-year="2026" data-medium="Spatial Design &bull; Culinary Interior" data-title="MILLIEU" data-question="How does a culinary ritual shape a social atmosphere?">
-                        <div class="card-img" style="background-image: url('./assets/millieu-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">How does a culinary ritual shape a social atmosphere?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">05 &mdash;</span>
-                                <span class="card-title">MILLIEU</span>
-                            </div>
+                    </div>
+                    
+                    <!-- MINI APPROACH DIAGRAM -->
+                    <div class="mini-diagram-container" style="margin-top: 80px; display: flex; flex-direction: column; align-items: center;">
+                        <a href="#design-approach" class="md-label md-link" onclick="event.preventDefault(); goToPage('design-approach');">METHODOLOGY &mdash;</a>
+                        <div class="mini-diagram" style="justify-content: center; width: 100%;">
+                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
+                                <span class="step-num">01</span>
+                                <span class="step-label">QUESTION<br>THE FAMILIAR</span>
+                            </a>
+                            <div class="diagram-connector"></div>
+                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
+                                <span class="step-num">02</span>
+                                <span class="step-label">DESIGN AS<br>A QUESTION</span>
+                            </a>
+                            <div class="diagram-connector"></div>
+                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
+                                <span class="step-num">03</span>
+                                <span class="step-label">RETHINK<br>THE ORDINARY</span>
+                            </a>
                         </div>
-                    </a>
-                    <a id="card-sprouting-garden" href="./projects/sprouting-garden/" class="project-card span-2x2" data-num="06" data-year="2024" data-medium="Bio-Materials" data-title="SPROUTING GARDEN" data-question="Can we build without displacing life?">
-                        <div class="card-img" style="background-image: url('./assets/sprouting-garden-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Can we build without displacing life?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">06 &mdash;</span>
-                                <span class="card-title">SPROUTING GARDEN</span>
-                                <span class="card-award-tag">AWARD WINNER</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-bajo-la-fresca" href="./projects/bajo-la-fresca/" class="project-card span-1x2" data-num="07" data-year="2026" data-medium="Spatial Installation" data-title="BAJO LA FRESCA" data-question="How do you highlight beauty without stealing its spotlight?">
-                        <div class="card-img" style="background-image: url('./assets/bajo-la-fresca-hero.jpg');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">How do you highlight beauty without stealing its spotlight?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">07 &mdash;</span>
-                                <span class="card-title">BAJO LA FRESCA</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-wood-weave" href="./projects/wood-weave/" class="project-card span-2x1" data-num="08" data-year="2024" data-medium="Spatial Design" data-title="WOOD WEAVE" data-question="When does waste become a place?">
-                        <div class="card-img" style="background-image: url('./assets/wood-weave-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">When does waste become a place?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">08 &mdash;</span>
-                                <span class="card-title">WOOD WEAVE</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-ara-sira" href="./projects/ara-sira/" class="project-card span-1x2" data-num="09" data-year="2024" data-medium="Editorial Design" data-title="ARA-SIRA" data-question="Can one space hold both play and quiet?">
-                        <div class="card-img" style="background-image: url('./assets/ara-sira-cover.jpg');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Can one space hold both play and quiet?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">09 &mdash;</span>
-                                <span class="card-title">ARA-SIRA</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-the-earthen" href="./projects/the-earthen/" class="project-card span-2x1" data-num="10" data-year="2026" data-medium="Soil &amp; Clay" data-title="THE EARTHEN" data-question="Is there life because there is death?">
-                        <div class="card-img" style="background-image: url('./assets/the-earthen-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Is there life because there is death?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">10 &mdash;</span>
-                                <span class="card-title">THE EARTHEN</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-bio-decay" href="./projects/bio-decay/" class="project-card span-2x1" data-num="11" data-year="2025" data-medium="Bio-Materials" data-title="BIO-DECAY" data-question="How many microplastics can we eat in a day?">
-                        <div class="card-img" style="background-image: url('./assets/bio-decay-cover.png');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">How many microplastics can we eat in a day?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">11 &mdash;</span>
-                                <span class="card-title">BIO-DECAY</span>
-                                <span class="card-award-tag">AWARD WINNER</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a id="card-fire-escape-simulation" href="./projects/fire-escape-simulation/" class="project-card span-1x2" data-num="12" data-year="2026" data-medium="Simulation" data-title="FIRE ESCAPE SIMULATION" data-question="Can you escape the fire?">
-                        <div class="card-img" style="background-image: url('./assets/fire-escape-wip.svg');"></div>
-                        <div class="card-info">
-                            <h3 class="card-main-text">Can you escape the fire?</h3>
-                            <div class="card-footer">
-                                <span class="card-num">12 &mdash;</span>
-                                <span class="card-title">FIRE ESCAPE SIMULATION</span>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
+
+                    <!-- ARCHIVE LINK -->
+                    <div class="mini-diagram-container" style="margin-top: 80px; display: flex; flex-direction: column; align-items: center;">
+                        <a href="#archive" class="md-label md-link" onclick="event.preventDefault(); goToPage('archive');">ARCHIVE &mdash;</a>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- =========================================================
-                 TAB 02: DESIGN APPROACH / METHODOLOGY & ÜLKER CONCEPT
-                 ========================================================= -->
+            <!-- SEPARATE TAB 02: SEE ALL PROJECTS (MINIMALIST, VISUAL-LED, PERSONAL ARCHITECTURAL LANGUAGE) -->
+            <section class="tab-content" id="tab-projects" aria-label="All Projects Directory">
+                <div class="sp-wrapper">
+
+                    <!-- Minimal Architectural Top Bar inside All Projects -->
+                    <header class="sp-header">
+                        <div class="sp-header-top">
+                            <div class="sp-title-group">
+                                <span class="sp-eyebrow">&#x2726; M45 // &Uuml;LKER CONSTELLATION DIRECTORY</span>
+                                <h1 class="sp-title">ALL PROJECTS <span class="sp-count-badge" id="sp-visible-count">12</span></h1>
+                            </div>
+                            <button type="button" class="sp-back-cluster-btn" id="sp-back-cluster-btn" data-cursor="dot">
+                                <span>&larr; BACK TO &Uuml;LKER CLUSTER</span>
+                            </button>
+                        </div>
+
+                        <!-- Minimal Discipline Filter Bar -->
+                        <div class="sp-filter-bar" id="sp-filter-bar" role="navigation" aria-label="Filter projects by discipline">
+                            <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL WORKS</button>
+                            <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;LKER CLUSTER (6)</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">ARCHITECTURAL DESIGN</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">SPATIAL DESIGN</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Bio-Material & Ecological" data-cursor="dot">BIO-MATERIAL &amp; ECOLOGICAL</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Exhibition Design" data-cursor="dot">EXHIBITION DESIGN</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Interactive & Simulation" data-cursor="dot">INTERACTIVE &amp; SIMULATION</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Visual Communication" data-cursor="dot">VISUAL COMMUNICATION</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Editorial Design" data-cursor="dot">EDITORIAL DESIGN</button>
+                            <button type="button" class="sp-filter-pill" data-discipline="Experimental Design" data-cursor="dot">EXPERIMENTAL DESIGN</button>
+                        </div>
+                    </header>
+
+                    <!-- Clean 2-Column Visual-First Project Grid -->
+                    <div class="sp-projects-grid" id="sp-projects-grid" aria-live="polite"></div>
+
+                </div>
+            </section>
+
+            <!-- PROJECT DATA ARCHIVE STORE (Preserves all 12 project card attributes for modal reading without rendering a separate projects tab) -->
+            <div id="project-cards-store" class="projects-grid" style="display: none;" aria-hidden="true">
+                        
+                        <a id="card-emek-museum" href="./projects/emek-museum/" class="project-card span-2x2" data-num="01" data-year="2026" data-medium="Design" data-title="EMEK MUSEUM" data-question="How can we make this labour visible again?">
+                            <div class="card-img" style="background-image: url('./assets/emek-museum-wip.svg');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">How can we make this labour visible again?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">01 &mdash;</span>
+                                    <span class="card-title">EMEK MUSEUM</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-stray" href="./projects/stray/" class="project-card span-2x2" data-num="02" data-year="2025" data-medium="Interactive Installation" data-title="STRAY" data-question="Is doing nothing doing something?">
+                            <div class="card-img" style="background-image: url('./assets/stray-project.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Is doing nothing doing something?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">02 &mdash;</span>
+                                    <span class="card-title">STRAY</span>
+                                    <span class="card-award-tag">AWARD WINNER</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-chronoclines" href="./projects/chronoclines/" class="project-card span-1x2" data-num="04" data-year="2025" data-medium="Generative Art" data-title="CHRONOCLINES" data-question="Can a city exhibit itself?">
+                            <div class="card-img" style="background-image: url('./assets/chronoclines-cover.jpg');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Can a city exhibit itself?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">04 &mdash;</span>
+                                    <span class="card-title">CHRONOCLINES</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-millieu" href="./projects/millieu/" class="project-card span-1x2" data-num="05" data-year="2026" data-medium="Spatial Design &bull; Culinary Interior" data-title="MILLIEU" data-question="How does a culinary ritual shape a social atmosphere?">
+                            <div class="card-img" style="background-image: url('./assets/millieu-cover.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">How does a culinary ritual shape a social atmosphere?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">05 &mdash;</span>
+                                    <span class="card-title">MILLIEU</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-sprouting-garden" href="./projects/sprouting-garden/" class="project-card span-2x2" data-num="06" data-year="2024" data-medium="Bio-Materials" data-title="SPROUTING GARDEN" data-question="Can we build without displacing life?">
+                            <div class="card-img" style="background-image: url('./assets/sprouting-garden-cover.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Can we build without displacing life?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">06 &mdash;</span>
+                                    <span class="card-title">SPROUTING GARDEN</span>
+                                    <span class="card-award-tag">AWARD WINNER</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-bajo-la-fresca" href="./projects/bajo-la-fresca/" class="project-card span-1x2" data-num="07" data-year="2026" data-medium="Spatial Installation" data-title="BAJO LA FRESCA" data-question="How do you highlight beauty without stealing its spotlight?">
+                            <div class="card-img" style="background-image: url('./assets/bajo-la-fresca-hero.jpg');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">How do you highlight beauty without stealing its spotlight?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">07 &mdash;</span>
+                                    <span class="card-title">BAJO LA FRESCA</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-wood-weave" href="./projects/wood-weave/" class="project-card span-2x1" data-num="08" data-year="2024" data-medium="Spatial Design" data-title="WOOD WEAVE" data-question="When does waste become a place?">
+                            <div class="card-img" style="background-image: url('./assets/wood-weave-cover.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">When does waste become a place?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">08 &mdash;</span>
+                                    <span class="card-title">WOOD WEAVE</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-ara-sira" href="./projects/ara-sira/" class="project-card span-1x2" data-num="09" data-year="2024" data-medium="Editorial Design" data-title="ARA-SIRA" data-question="Can one space hold both play and quiet?">
+                            <div class="card-img" style="background-image: url('./assets/ara-sira-cover.jpg');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Can one space hold both play and quiet?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">09 &mdash;</span>
+                                    <span class="card-title">ARA-SIRA</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-the-earthen" href="./projects/the-earthen/" class="project-card span-2x1" data-num="10" data-year="2026" data-medium="Soil &amp; Clay" data-title="THE EARTHEN" data-question="Is there life because there is death?">
+                            <div class="card-img" style="background-image: url('./assets/the-earthen-cover.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Is there life because there is death?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">10 &mdash;</span>
+                                    <span class="card-title">THE EARTHEN</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-bio-decay" href="./projects/bio-decay/" class="project-card span-2x1" data-num="11" data-year="2025" data-medium="Bio-Materials" data-title="BIO-DECAY" data-question="How many microplastics can we eat in a day?">
+                            <div class="card-img" style="background-image: url('./assets/bio-decay-cover.png');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">How many microplastics can we eat in a day?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">11 &mdash;</span>
+                                    <span class="card-title">BIO-DECAY</span>
+                                    <span class="card-award-tag">AWARD WINNER</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a id="card-fire-escape-simulation" href="./projects/fire-escape-simulation/" class="project-card span-1x2" data-num="12" data-year="2026" data-medium="Simulation" data-title="FIRE ESCAPE SIMULATION" data-question="Can you escape the fire?">
+                            <div class="card-img" style="background-image: url('./assets/fire-escape-wip.svg');"></div>
+                            <div class="card-info">
+                                <h3 class="card-main-text">Can you escape the fire?</h3>
+                                <div class="card-footer">
+                                    <span class="card-num">12 &mdash;</span>
+                                    <span class="card-title">FIRE ESCAPE SIMULATION</span>
+                                </div>
+                            </div>
+                        </a>
+            </div>
+
+            <!-- DESIGN APPROACH / METHODOLOGY TAB -->
             <section class="tab-content page-centered-tab" id="tab-design-approach">
                 <div class="page-topbar">
                     <div class="page-topbar-inner approach-topbar-inner">
                         <div class="topbar-left">
-                            <a href="#main" class="back-to-index-btn" id="approach-back-btn" onclick="event.preventDefault(); goBack();">[ &larr; BACK TO PROJECTS ]</a>
-                            <div class="section-label">02 &mdash; METHODOLOGY AS SPATIAL INQUIRY &amp; THE &Uuml;LKER METAPHOR</div>
+                            <a href="#main" class="back-to-index-btn" id="approach-back-btn" onclick="event.preventDefault(); goBack();">[ BACK ]</a>
+                            <div class="section-label">METHODOLOGY &mdash; SPATIAL INQUIRY &amp; DESIGN FRAMEWORK</div>
                         </div>
                     </div>
                 </div>
@@ -249,22 +530,26 @@
 
                         <!-- HERO / HEADER -->
                         <header class="approach-header">
+
                             <h1 class="approach-name">METHODOLOGY AS SPATIAL INQUIRY</h1>
+
                             <div class="approach-lead-quote">
                                 &ldquo;Design does not always begin with a problem to solve or end with a definitive answer. Instead, it serves as an investigative instrument for asking questions, revealing invisible conditions, and opening spaces for collective reflection.&rdquo;
                             </div>
                         </header>
 
-                        <!-- ARCHITECTURAL RESEARCH APPROACH PLATE -->
+                        <!-- ARCHITECTURAL RESEARCH APPROACH (TEK BİR TÜMCÜL PARTİ GÖRSELİ) -->
                         <section class="approach-block">
                             <div class="approach-block-header">
-                                <h2 class="approach-block-title">01 // RESEARCH APPROACH &amp; FOUR-STAGE DESIGN FRAMEWORK</h2>
+                                <h2 class="approach-block-title">RESEARCH APPROACH // DESIGN METHODOLOGY</h2>
                                 <span class="approach-block-line"></span>
                             </div>
 
+                            <!-- CONTAINER: UNIFIED ARCHITECTURAL METHODOLOGY PLATE (TEK GÖRSEL) -->
                             <div class="arch-research-framework">
                                 <div class="arch-main-diagram-wrap">
                                     <svg class="arch-main-diagram-svg" viewBox="0 0 1200 354" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        
                                         <!-- Outer Blueprint Frame & Registration Marks -->
                                         <rect x="12" y="10" width="1176" height="334" rx="8" fill="#ffffff" stroke="rgba(37, 99, 235, 0.22)" stroke-width="1.5" />
                                         <path d="M 22,20 L 30,20 M 26,16 L 26,24 M 1170,20 L 1178,20 M 1174,16 L 1174,24 M 22,334 L 30,334 M 26,330 L 26,338 M 1170,334 L 1178,334 M 1174,330 L 1174,338" stroke="rgba(37, 99, 235, 0.45)" stroke-width="1.2" />
@@ -273,23 +558,32 @@
                                             <!-- ================= STATION 01: DECONSTRUCT THE NORM ================= -->
                                             <g class="arch-diag-node" data-target-pillar="01">
                                                 <text x="154" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="17" font-weight="700" fill="#0f172a">DECONSTRUCT NORM</text>
+                                                
+                                                <!-- Drawing Plate 01 -->
                                                 <rect x="40" y="104" width="228" height="160" rx="6" fill="#f8fafc" stroke="rgba(15, 23, 42, 0.14)" stroke-width="1.2" />
+                                                
+                                                <!-- Axonometric Room Frame -->
                                                 <polygon points="84,215 164,215 200,185 120,185" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-dasharray="3 3" />
                                                 <line x1="84" y1="215" x2="84" y2="150" stroke="#0f172a" stroke-width="2.2" />
                                                 <line x1="120" y1="185" x2="120" y2="120" stroke="#0f172a" stroke-width="1.8" />
                                                 <line x1="84" y1="150" x2="120" y2="120" stroke="#0f172a" stroke-width="2" />
                                                 <line x1="84" y1="215" x2="164" y2="215" stroke="#0f172a" stroke-width="2.2" />
                                                 <line x1="164" y1="215" x2="184" y2="198" stroke="#0f172a" stroke-width="1.8" />
+                                                
+                                                <!-- Fractured & Exploded Top-Right Corner Slab -->
                                                 <polygon points="155,145 205,145 230,125 180,125" fill="rgba(37, 99, 235, 0.16)" stroke="#2563eb" stroke-width="2.2" />
                                                 <line x1="164" y1="175" x2="190" y2="145" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="3 3" />
                                                 <line x1="200" y1="185" x2="225" y2="155" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="3 3" />
                                                 <polyline points="218,155 225,155 225,162" fill="none" stroke="#2563eb" stroke-width="1.6" />
+                                                
+                                                <!-- Center Inquiry Crosshair -->
                                                 <circle cx="145" cy="184" r="5" fill="#2563eb" />
                                                 <line x1="130" y1="184" x2="160" y2="184" stroke="#2563eb" stroke-width="1.4" />
                                                 <line x1="145" y1="169" x2="145" y2="199" stroke="#2563eb" stroke-width="1.4" />
                                                 <line x1="68" y1="150" x2="68" y2="215" stroke="#94a3b8" stroke-width="1.2" />
                                                 <polyline points="65,153 68,150 71,153" fill="none" stroke="#94a3b8" stroke-width="1.2" />
                                                 <polyline points="65,212 68,215 71,212" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+
                                                 <text x="154" y="292" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">Interrogate the Brief</text>
                                                 <text x="154" y="312" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10.5" fill="#64748b">Rejecting client defaults</text>
                                             </g>
@@ -304,7 +598,11 @@
                                             <!-- ================= STATION 02: EXCAVATE THE ARCHIVE ================= -->
                                             <g class="arch-diag-node" data-target-pillar="02">
                                                 <text x="447" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="17" font-weight="700" fill="#0f172a">EXCAVATE ARCHIVE</text>
+                                                
+                                                <!-- Drawing Plate 02 -->
                                                 <rect x="333" y="104" width="228" height="160" rx="6" fill="#f8fafc" stroke="rgba(15, 23, 42, 0.14)" stroke-width="1.2" />
+                                                
+                                                <!-- Stratified Ground Section -->
                                                 <path d="M 353,138 Q 395,130 447,138 T 541,133" fill="none" stroke="#0f172a" stroke-width="2.4" />
                                                 <rect x="375" y="142" width="36" height="16" fill="rgba(15,23,42,0.08)" stroke="#0f172a" stroke-width="1.4" />
                                                 <line x1="353" y1="164" x2="541" y2="164" stroke="#64748b" stroke-width="1.4" />
@@ -315,6 +613,8 @@
                                                 <circle cx="490" cy="178" r="1.5" fill="#94a3b8" />
                                                 <circle cx="525" cy="186" r="1.5" fill="#94a3b8" />
                                                 <line x1="353" y1="228" x2="541" y2="228" stroke="#0f172a" stroke-width="2.2" />
+                                                
+                                                <!-- Forensic Core Borehole -->
                                                 <line x1="447" y1="120" x2="447" y2="246" stroke="#2563eb" stroke-width="2.6" />
                                                 <circle cx="447" cy="138" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
                                                 <circle cx="447" cy="164" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
@@ -322,6 +622,7 @@
                                                 <circle cx="447" cy="228" r="3.5" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
                                                 <line x1="447" y1="194" x2="480" y2="194" stroke="#2563eb" stroke-width="1.5" />
                                                 <text x="485" y="198" font-family="'Space Grotesk', monospace" font-size="8.5" font-weight="700" fill="#2563eb">CORE_02</text>
+
                                                 <text x="447" y="292" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">Site as Material Archive</text>
                                                 <text x="447" y="312" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10.5" fill="#64748b">Excavating unseen strata</text>
                                             </g>
@@ -336,17 +637,26 @@
                                             <!-- ================= STATION 03: SPECULATE STRANGE ================= -->
                                             <g class="arch-diag-node" data-target-pillar="03">
                                                 <text x="740" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="17" font-weight="700" fill="#0f172a">SPECULATE STRANGE</text>
+                                                
+                                                <!-- Drawing Plate 03 -->
                                                 <rect x="626" y="104" width="228" height="160" rx="6" fill="#f8fafc" stroke="rgba(15, 23, 42, 0.14)" stroke-width="1.2" />
+                                                
+                                                <!-- Default Formula Track -->
                                                 <line x1="646" y1="226" x2="834" y2="226" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="5 5" />
                                                 <text x="650" y="244" font-family="'Space Grotesk', monospace" font-size="8.5" fill="#94a3b8" letter-spacing="0.05em">DEFAULT TEMPLATE / NORM &rarr;</text>
+                                                
+                                                <!-- Radical Cantilever Curve -->
                                                 <path d="M 656,226 L 686,226 C 725,226 710,148 765,148 C 800,148 815,180 790,200 C 765,218 745,180 775,160" fill="none" stroke="#2563eb" stroke-width="2.8" stroke-linecap="round" />
                                                 <circle cx="686" cy="226" r="4.5" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+                                                
+                                                <!-- Floating Strange Speculative Node -->
                                                 <ellipse cx="765" cy="148" rx="22" ry="11" fill="none" stroke="rgba(37,99,235,0.35)" stroke-width="1.4" transform="rotate(-15 765 148)" />
                                                 <circle cx="765" cy="148" r="8" fill="#ffffff" stroke="#2563eb" stroke-width="2.2" />
                                                 <circle cx="765" cy="148" r="3.5" fill="#2563eb" />
                                                 <line x1="765" y1="130" x2="765" y2="120" stroke="#2563eb" stroke-width="1.6" />
                                                 <line x1="785" y1="138" x2="795" y2="132" stroke="#2563eb" stroke-width="1.6" />
                                                 <text x="765" y="114" text-anchor="middle" font-family="'Space Grotesk', monospace" font-size="8" font-weight="700" fill="#2563eb" letter-spacing="0.08em">STRANGE SPECULATION</text>
+
                                                 <text x="740" y="292" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">Unconventional Solutions</text>
                                                 <text x="740" y="312" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10.5" fill="#64748b">Inventing strange realities</text>
                                             </g>
@@ -360,10 +670,16 @@
                                             <!-- ================= STATION 04: THE SYNTHESIS (THE HIDDEN SISTER) ================= -->
                                             <g class="arch-diag-node arch-diag-synthesis" data-target-pillar="all" style="cursor: pointer;" onclick="openMeropeStoryModal();">
                                                 <text x="1040" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="17" font-weight="700" fill="#0f172a">THE HIDDEN SISTER</text>
+                                                
+                                                <!-- Drawing Plate 04 -->
                                                 <rect x="920" y="104" width="240" height="160" rx="6" fill="rgba(37, 99, 235, 0.05)" stroke="#2563eb" stroke-width="1.8" />
+                                                
+                                                <!-- Integrated Synthesis Drawing -->
                                                 <rect x="955" y="148" width="70" height="50" fill="rgba(255,255,255,0.7)" stroke="#0f172a" stroke-width="1.4" />
                                                 <line x1="935" y1="210" x2="1145" y2="210" stroke="#0f172a" stroke-width="1.6" />
                                                 <path d="M 1010,148 C 1030,125 1070,128 1085,152" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" />
+                                                
+                                                <!-- Central Merope Core Star & Constellation Glow -->
                                                 <circle cx="1040" cy="184" r="38" fill="rgba(37, 99, 235, 0.12)" />
                                                 <circle cx="1040" cy="184" r="24" fill="none" stroke="#2563eb" stroke-width="1.4" stroke-dasharray="4 3" />
                                                 <circle cx="1040" cy="184" r="13" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
@@ -372,12 +688,15 @@
                                                 <line x1="1040" y1="220" x2="1040" y2="228" stroke="#2563eb" stroke-width="1.5" />
                                                 <line x1="996" y1="184" x2="1004" y2="184" stroke="#2563eb" stroke-width="1.5" />
                                                 <line x1="1076" y1="184" x2="1084" y2="184" stroke="#2563eb" stroke-width="1.5" />
+                                                
+                                                <!-- Pleiades Cluster Hint Dots -->
                                                 <circle cx="975" cy="135" r="2" fill="#2563eb" />
                                                 <circle cx="1115" cy="132" r="2" fill="#2563eb" />
                                                 <circle cx="960" cy="225" r="1.5" fill="#2563eb" />
                                                 <circle cx="1120" cy="220" r="2" fill="#2563eb" />
                                                 <circle cx="1090" cy="160" r="1.5" fill="#2563eb" />
                                                 <circle cx="990" cy="170" r="1.5" fill="#2563eb" />
+
                                                 <text x="1040" y="292" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0f172a">Revealing the Unseen</text>
                                                 <text x="1040" y="312" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10.5" font-weight="600" fill="#2563eb">Merope &bull; 1,000+ stars nexus</text>
                                             </g>
@@ -397,40 +716,15 @@
                             </div>
                         </section>
 
-                        <!-- SECTION 02: THE ÜLKER / PLEIADES METAPHOR & THREE METHODOLOGICAL POLES -->
-                        <section class="approach-block" style="margin-top: 48px;">
-                            <div class="approach-block-header">
-                                <h2 class="approach-block-title">02 // &Uuml;LKER (MESSIER 45) &amp; THE SEVENTH SISTER ALLEGORY</h2>
-                                <span class="approach-block-line"></span>
-                            </div>
-
-                            <div class="merope-sections-grid" style="margin-top: 20px;">
-                                <div class="merope-section">
-                                    <span class="merope-sec-num">01 // &Uuml;LKER &amp; THE THRESHOLD OF VISION</span>
-                                    <h3 class="merope-sec-title">WHAT EXISTS IN PLAIN SIGHT</h3>
-                                    <p class="merope-sec-text">
-                                        While only six or seven stars of the Pleiades (<strong>&Uuml;lker</strong>) are typically visible to the naked eye, the cluster actually contains over a thousand stars. In mythology, <strong>Merope</strong> is the hidden seventh sister who dimmed her light; in astronomy, she marks the threshold of human perception&mdash;what exists, but is easily overlooked.
-                                    </p>
-                                </div>
-                                <div class="merope-section">
-                                    <span class="merope-sec-num">02 // DESIGN AS REVELATION</span>
-                                    <h3 class="merope-sec-title">EXCAVATING THE OVERLOOKED</h3>
-                                    <p class="merope-sec-text">
-                                        Instead of loud monumentalism, Elifsu&rsquo;s projects investigate hidden spatial layers: invisible civic labor (<em>Emek Museum</em>), non-human urban agency (<em>Stray</em>), fragile earthen cycles (<em>The Earthen</em>), decomposing biopolymers (<em>Bio-Decay</em>), and silent digital traces (<em>You Were Here.</em>).
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-
                         <!-- NAVIGATION CALL-TO-ACTION -->
                         <section class="approach-nav-banner">
                             <div class="nav-banner-content">
-                                <h3 class="nav-banner-title">EXPLORE THE 12 PROJECTS THROUGH THIS METHODOLOGY</h3>
+                                <h3 class="nav-banner-title">SEE THE METHODOLOGY IN ACTION</h3>
                             </div>
                             <div class="nav-banner-actions">
-                                <a href="#main" class="approach-action-btn approach-btn-primary" onclick="event.preventDefault(); goToPage('main');">
-                                    <span>EXPLORE ALL 12 PROJECTS</span>
-                                    <span class="btn-arrow">&rarr;</span>
+                                <a href="#main" class="approach-action-btn approach-btn-primary" onclick="event.preventDefault(); goToProjects();">
+                                    <span>EXPLORE CONSTELLATION MAP</span>
+                                    <span class="btn-arrow">&#x2197;</span>
                                 </a>
                                 <a href="#about" class="approach-action-btn" onclick="event.preventDefault(); goToPage('about');">
                                     <span>ABOUT &amp; MANIFESTO</span>
@@ -443,15 +737,13 @@
                 </div>
             </section>
 
-            <!-- =========================================================
-                 TAB 03: ARCHIVE OF QUESTIONS & INTERNAL MONOLOGUE
-                 ========================================================= -->
+            <!-- ARCHIVE TAB -->
             <section class="tab-content page-centered-tab" id="tab-archive">
                 <div class="page-topbar">
                     <div class="page-topbar-inner archive-topbar-inner">
                         <div class="topbar-left">
-                            <a href="#main" class="back-to-index-btn" id="archive-back-btn" onclick="event.preventDefault(); goBack();">[ &larr; BACK TO PROJECTS ]</a>
-                            <div class="section-label">03 &mdash; ARCHIVE OF QUESTIONS &amp; INTERNAL MONOLOGUE</div>
+                            <a href="#main" class="back-to-index-btn" id="archive-back-btn" onclick="event.preventDefault(); goBack();">[ BACK ]</a>
+                            <div class="section-label">05 &mdash; ARCHIVE OF QUESTIONS &amp; INTERNAL MONOLOGUE</div>
                         </div>
                         <div class="topbar-right">
                             <span class="archive-counter-badge" id="archive-count-badge">20 INQUIRIES &bull; ISTANBUL TIME</span>
@@ -498,20 +790,48 @@
                                     </div>
                                     <div class="archive-filter-track-wrap">
                                         <div class="archive-tag-list" id="archive-filter-pills">
-                                            <button type="button" class="archive-tag-btn active" data-filter="all"><span class="tag-sq"></span><span class="tag-label">ALL</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="ai"><span class="tag-sq"></span><span class="tag-label">AI</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="body"><span class="tag-sq"></span><span class="tag-label">BODY</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="daily-life"><span class="tag-sq"></span><span class="tag-label">DAILY LIFE</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="decay"><span class="tag-sq"></span><span class="tag-label">DECAY</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="ecology"><span class="tag-sq"></span><span class="tag-label">ECOLOGY</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="materials"><span class="tag-sq"></span><span class="tag-label">MATERIALS</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="memory"><span class="tag-sq"></span><span class="tag-label">MEMORY</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="ritual"><span class="tag-sq"></span><span class="tag-label">RITUAL</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="simulation"><span class="tag-sq"></span><span class="tag-label">SIMULATION</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="space"><span class="tag-sq"></span><span class="tag-label">SPACE</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="threshold"><span class="tag-sq"></span><span class="tag-label">THRESHOLD</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="time"><span class="tag-sq"></span><span class="tag-label">TIME</span></button>
-                                            <button type="button" class="archive-tag-btn" data-filter="traces"><span class="tag-sq"></span><span class="tag-label">TRACES</span></button>
+                                        <button type="button" class="archive-tag-btn active" data-filter="all">
+                                            <span class="tag-sq"></span><span class="tag-label">ALL</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ai">
+                                            <span class="tag-sq"></span><span class="tag-label">AI</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="body">
+                                            <span class="tag-sq"></span><span class="tag-label">BODY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="daily-life">
+                                            <span class="tag-sq"></span><span class="tag-label">DAILY LIFE</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="decay">
+                                            <span class="tag-sq"></span><span class="tag-label">DECAY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ecology">
+                                            <span class="tag-sq"></span><span class="tag-label">ECOLOGY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="materials">
+                                            <span class="tag-sq"></span><span class="tag-label">MATERIALS</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="memory">
+                                            <span class="tag-sq"></span><span class="tag-label">MEMORY</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="ritual">
+                                            <span class="tag-sq"></span><span class="tag-label">RITUAL</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="simulation">
+                                            <span class="tag-sq"></span><span class="tag-label">SIMULATION</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="space">
+                                            <span class="tag-sq"></span><span class="tag-label">SPACE</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="threshold">
+                                            <span class="tag-sq"></span><span class="tag-label">THRESHOLD</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="time">
+                                            <span class="tag-sq"></span><span class="tag-label">TIME</span>
+                                        </button>
+                                        <button type="button" class="archive-tag-btn" data-filter="traces">
+                                            <span class="tag-sq"></span><span class="tag-label">TRACES</span>
+                                        </button>
                                         </div>
                                     </div>
                                 </div>
@@ -524,18 +844,42 @@
                                     </div>
                                     <div class="archive-filter-track-wrap">
                                         <div class="archive-tag-list" id="archive-filter-projects">
-                                            <button type="button" class="archive-project-btn active" data-project-filter="all"><span class="tag-sq"></span><span class="tag-label">ALL</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="emek-museum"><span class="tag-sq"></span><span class="tag-label">EMEK MUSEUM</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="fire-escape-simulation"><span class="tag-sq"></span><span class="tag-label">FIRE ESCAPE SIMULATION</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="the-earthen"><span class="tag-sq"></span><span class="tag-label">THE EARTHEN</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="bio-decay"><span class="tag-sq"></span><span class="tag-label">BIO-DECAY</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="bajo-la-fresca"><span class="tag-sq"></span><span class="tag-label">BAJO LA FRESCA</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="chronoclines"><span class="tag-sq"></span><span class="tag-label">CHRONOCLINES</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="stray"><span class="tag-sq"></span><span class="tag-label">STRAY</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="millieu"><span class="tag-sq"></span><span class="tag-label">MILLIEU</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="ara-sira"><span class="tag-sq"></span><span class="tag-label">ARA-SIRA</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="wood-weave"><span class="tag-sq"></span><span class="tag-label">WOOD WEAVE</span></button>
-                                            <button type="button" class="archive-project-btn" data-project-filter="sprouting-garden"><span class="tag-sq"></span><span class="tag-label">SPROUTING GARDEN</span></button>
+                                        <button type="button" class="archive-project-btn active" data-project-filter="all">
+                                            <span class="tag-sq"></span><span class="tag-label">ALL</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="emek-museum">
+                                            <span class="tag-sq"></span><span class="tag-label">EMEK MUSEUM</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="fire-escape-simulation">
+                                            <span class="tag-sq"></span><span class="tag-label">FIRE ESCAPE SIMULATION</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="the-earthen">
+                                            <span class="tag-sq"></span><span class="tag-label">THE EARTHEN</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="bio-decay">
+                                            <span class="tag-sq"></span><span class="tag-label">BIO-DECAY</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="bajo-la-fresca">
+                                            <span class="tag-sq"></span><span class="tag-label">BAJO LA FRESCA</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="chronoclines">
+                                            <span class="tag-sq"></span><span class="tag-label">CHRONOCLINES</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="stray">
+                                            <span class="tag-sq"></span><span class="tag-label">STRAY</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="millieu">
+                                            <span class="tag-sq"></span><span class="tag-label">MILLIEU</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="ara-sira">
+                                            <span class="tag-sq"></span><span class="tag-label">ARA-SIRA</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="wood-weave">
+                                            <span class="tag-sq"></span><span class="tag-label">WOOD WEAVE</span>
+                                        </button>
+                                        <button type="button" class="archive-project-btn" data-project-filter="sprouting-garden">
+                                            <span class="tag-sq"></span><span class="tag-label">SPROUTING GARDEN</span>
+                                        </button>
                                         </div>
                                     </div>
                                 </div>
@@ -549,19 +893,17 @@
                 </div>
             </section>
 
-            <!-- =========================================================
-                 TAB 04: ABOUT & CURRICULUM VITAE
-                 ========================================================= -->
+            <!-- ABOUT TAB -->
             <section class="tab-content page-centered-tab" id="tab-about">
                 <div class="page-topbar">
                     <div class="page-topbar-inner about-topbar-inner">
                         <div class="topbar-left">
-                            <a href="#main" class="back-to-index-btn" id="about-back-btn" onclick="event.preventDefault(); goBackFromAbout();">[ &larr; BACK TO PROJECTS ]</a>
-                            <div class="section-label">04 &mdash; ABOUT, MANIFESTO &amp; CURRICULUM VITAE</div>
+                            <a href="#main" class="back-to-index-btn" id="about-back-btn" onclick="event.preventDefault(); goBackFromAbout();">[ BACK ]</a>
+                            <div class="section-label">ABOUT &mdash; CURRICULUM VITAE &amp; MANIFESTO</div>
                         </div>
                         <div class="topbar-right">
                             <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="cv-download-topbar-btn">
-                                <span class="btn-icon">&darr;</span>
+                                <span class="btn-icon">↓</span>
                                 <span>DOWNLOAD CV (PDF)</span>
                             </a>
                         </div>
@@ -569,18 +911,18 @@
                 </div>
                 <div class="page-centered-content about-centered-content">
                     <div class="about-cv-wrapper">
-
+                        
                         <!-- HERO / HEADER -->
                         <header class="about-header">
                             <div class="about-meta-strip">
-                                <span class="meta-item"><span class="meta-dot">●</span> ISTANBUL, T&Uuml;RK&#304;YE</span>
+                                <span class="meta-item"><span class="meta-dot">●</span> ISTANBUL, TÜRKİYE</span>
                                 <span class="meta-sep">/</span>
                                 <span class="meta-item">MEF UNIVERSITY (DOUBLE MAJOR)</span>
                                 <span class="meta-sep">/</span>
                                 <span class="meta-item">DECEMBER 2026</span>
                             </div>
 
-                            <h1 class="about-name">ELIFSU GEN&Ccedil;</h1>
+                            <h1 class="about-name">ELIFSU GENÇ</h1>
 
                             <div class="about-roles-row">
                                 <span class="role-badge role-badge-accent">CRITICAL DESIGNER</span>
@@ -596,11 +938,11 @@
                                 </a>
                                 <a href="https://www.linkedin.com/in/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip">
                                     <span class="chip-label">LINKEDIN</span>
-                                    <span class="chip-val">linkedin.com/in/elifsugenc &nearr;</span>
+                                    <span class="chip-val">linkedin.com/in/elifsugenc ↗</span>
                                 </a>
                                 <a href="https://github.com/elifsugenc" target="_blank" rel="noopener noreferrer" class="contact-chip">
                                     <span class="chip-label">GITHUB</span>
-                                    <span class="chip-val">github.com/elifsugenc &nearr;</span>
+                                    <span class="chip-val">github.com/elifsugenc ↗</span>
                                 </a>
                                 <div class="contact-chip contact-chip-static">
                                     <span class="chip-label">PHONE</span>
@@ -622,7 +964,7 @@
                             </div>
 
                             <div class="manifesto-lead-quote">
-                                &ldquo;My practice begins with overlooked experiences and the questions they raise about everyday life.&rdquo;
+                                “My practice begins with overlooked experiences and the questions they raise about everyday life.”
                             </div>
 
                             <div class="manifesto-grid">
@@ -637,6 +979,7 @@
                                     </p>
                                 </div>
                             </div>
+
                         </section>
 
                         <!-- SECTION 02: EDUCATION -->
@@ -648,6 +991,7 @@
                             </div>
 
                             <div class="cv-timeline">
+                                
                                 <div class="cv-entry">
                                     <div class="cv-entry-date">
                                         <span class="date-badge ongoing">2024 &mdash; ON GOING</span>
@@ -655,9 +999,9 @@
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
                                             <h3 class="entry-title">MEF University</h3>
-                                            <span class="entry-loc">Istanbul, T&uuml;rkiye</span>
+                                            <span class="entry-loc">Istanbul, Türkiye</span>
                                         </div>
-                                        <div class="entry-subtitle">Bachelor&rsquo;s Degree in Architecture (Double Major)</div>
+                                        <div class="entry-subtitle">Bachelor’s Degree in Architecture (Double Major)</div>
                                         <div class="entry-meta-tags">
                                             <span class="meta-tag highlight-tag">CGPA: 3.96 / 4.00</span>
                                             <span class="meta-tag">Fully Funded Scholarship</span>
@@ -672,9 +1016,9 @@
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
                                             <h3 class="entry-title">MEF University</h3>
-                                            <span class="entry-loc">Istanbul, T&uuml;rkiye</span>
+                                            <span class="entry-loc">Istanbul, Türkiye</span>
                                         </div>
-                                        <div class="entry-subtitle">Bachelor&rsquo;s Degree in Interior Design</div>
+                                        <div class="entry-subtitle">Bachelor’s Degree in Interior Design</div>
                                         <div class="entry-meta-tags">
                                             <span class="meta-tag highlight-tag">CGPA: 3.96 / 4.00</span>
                                             <span class="meta-tag">Fully Funded Scholarship</span>
@@ -690,7 +1034,7 @@
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
                                             <h3 class="entry-title">Google Game &amp; App Academy</h3>
-                                            <span class="entry-loc">Online / T&uuml;rkiye</span>
+                                            <span class="entry-loc">Online / Türkiye</span>
                                         </div>
                                         <div class="entry-subtitle">Scholarship Recipient &bull; Game Development &amp; Level Design</div>
                                         <p class="entry-desc">
@@ -699,7 +1043,7 @@
                                         <div class="entry-meta-tags">
                                             <span class="meta-tag">Game Environment Design &amp; Level Design</span>
                                             <a href="https://egemenazay.itch.io/cat-keeper" target="_blank" rel="noopener noreferrer" class="meta-tag link-tag">
-                                                Catkeeper (itch.io) &nearr;
+                                                Catkeeper (itch.io) ↗
                                             </a>
                                         </div>
                                     </div>
@@ -711,8 +1055,8 @@
                                     </div>
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
-                                            <h3 class="entry-title">Deneyap T&uuml;rkiye Technology Workshops</h3>
-                                            <span class="entry-loc">Ankara, T&uuml;rkiye</span>
+                                            <h3 class="entry-title">Deneyap Türkiye Technology Workshops</h3>
+                                            <span class="entry-loc">Ankara, Türkiye</span>
                                         </div>
                                         <div class="entry-subtitle">Scholar &bull; Future Technologies Program</div>
                                         <p class="entry-desc">
@@ -723,6 +1067,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -735,6 +1080,7 @@
                             </div>
 
                             <div class="cv-timeline">
+                                
                                 <div class="cv-entry">
                                     <div class="cv-entry-date">
                                         <span class="date-badge">2026 SUMMER</span>
@@ -764,7 +1110,7 @@
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
                                             <h3 class="entry-title">HASKAN Engineering</h3>
-                                            <span class="entry-loc">Kanyon Shopping Mall, Istanbul, T&uuml;rkiye</span>
+                                            <span class="entry-loc">Kanyon Shopping Mall, Istanbul, Türkiye</span>
                                         </div>
                                         <div class="entry-subtitle">Interior Design Intern</div>
                                         <p class="entry-desc">
@@ -777,6 +1123,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -789,6 +1136,7 @@
                             </div>
 
                             <div class="cv-timeline">
+                                
                                 <div class="cv-entry">
                                     <div class="cv-entry-date">
                                         <span class="date-badge">2025 &mdash; 2026<br><small>SPRING SEMESTER</small></span>
@@ -803,7 +1151,7 @@
                                             Reviewed and graded assignments for DGD 101: Introduction to Game Design, evaluating student work according to course expectations and design guidelines.
                                         </p>
                                         <div class="entry-instructor">
-                                            <strong>Course Instructor:</strong> Assist. Prof. Dr. Kutay Tin&ccedil; <em>(Head of Digital Game Design Department)</em>
+                                            <strong>Course Instructor:</strong> Assist. Prof. Dr. Kutay Tinç <em>(Head of Digital Game Design Department)</em>
                                         </div>
                                     </div>
                                 </div>
@@ -826,6 +1174,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -838,11 +1187,12 @@
                             </div>
 
                             <div class="awards-grid">
+                                
                                 <div class="award-card award-card-featured">
                                     <div class="award-year">2026</div>
                                     <div class="award-badge-top">2ND PLACE</div>
                                     <h3 class="award-title">im2025 National Interior Design Students Awards</h3>
-                                    <div class="award-project">Project: <strong><a href="./projects/bio-decay/" class="cv-project-link">BIODECAY &nearr;</a></strong></div>
+                                    <div class="award-project">Project: <strong><a href="./projects/bio-decay/" class="cv-project-link">BIODECAY ↗</a></strong></div>
                                     <div class="award-studio">INT 202 2nd Year Design Studio</div>
                                 </div>
 
@@ -850,23 +1200,23 @@
                                     <div class="award-year">2026</div>
                                     <div class="award-badge-top">HONORARY MENTION</div>
                                     <h3 class="award-title">im2025 National Interior Design Students Awards</h3>
-                                    <div class="award-project">Project: <strong><a href="./projects/stray/" class="cv-project-link">STRAY &nearr;</a></strong></div>
+                                    <div class="award-project">Project: <strong><a href="./projects/stray/" class="cv-project-link">STRAY ↗</a></strong></div>
                                     <div class="award-studio">INT 201 2nd Year Design Studio</div>
                                 </div>
 
                                 <div class="award-card award-card-featured">
                                     <div class="award-year">2025</div>
-                                    <div class="award-badge-top">DEAN&rsquo;S AWARD</div>
-                                    <h3 class="award-title">MEF University Dean&rsquo;s Awards &bull; 2nd Year Category</h3>
-                                    <div class="award-project">Project: <strong><a href="./projects/bio-decay/" class="cv-project-link">BIODECAY &nearr;</a></strong></div>
+                                    <div class="award-badge-top">DEAN'S AWARD</div>
+                                    <h3 class="award-title">MEF University Dean’s Awards &bull; 2nd Year Category</h3>
+                                    <div class="award-project">Project: <strong><a href="./projects/bio-decay/" class="cv-project-link">BIODECAY ↗</a></strong></div>
                                     <div class="award-studio">INT 202 2nd Year Design Studio</div>
                                 </div>
 
                                 <div class="award-card award-card-featured">
                                     <div class="award-year">2024</div>
-                                    <div class="award-badge-top">DEAN&rsquo;S AWARD &bull; 1ST YEAR</div>
-                                    <h3 class="award-title">MEF University Dean&rsquo;s Awards &bull; 1st Year Category (Best Projects)</h3>
-                                    <div class="award-project">Project: <strong><a href="./projects/sprouting-garden/" class="cv-project-link">SPROUTING GARDEN &nearr;</a></strong></div>
+                                    <div class="award-badge-top">DEAN'S AWARD &bull; 1ST YEAR</div>
+                                    <h3 class="award-title">MEF University Dean’s Awards &bull; 1st Year Category (Best Projects)</h3>
+                                    <div class="award-project">Project: <strong><a href="./projects/sprouting-garden/" class="cv-project-link">SPROUTING GARDEN ↗</a></strong></div>
                                     <div class="award-studio">ARC 101 1st Year Design Studio &bull; Rituals of Otherworldly</div>
                                 </div>
 
@@ -877,6 +1227,7 @@
                                     <div class="award-project">Autonomous Underwater Systems</div>
                                     <div class="award-studio">Design Team &bull; Deneyap Technology Workshops</div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -889,13 +1240,14 @@
                             </div>
 
                             <div class="cv-timeline">
+                                
                                 <div class="cv-entry">
                                     <div class="cv-entry-date">
                                         <span class="date-badge ongoing">2026 &mdash; ON GOING</span>
                                     </div>
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
-                                            <h3 class="entry-title"><a href="./projects/fire-escape-simulation/" class="cv-project-link">Fire Evacuation Simulation Game Design &nearr;</a></h3>
+                                            <h3 class="entry-title"><a href="./projects/fire-escape-simulation/" class="cv-project-link">Fire Evacuation Simulation Game Design ↗</a></h3>
                                             <span class="entry-loc">MEF University</span>
                                         </div>
                                         <div class="entry-subtitle">Design Team Lead &bull; 3D Designer &bull; Level Designer</div>
@@ -903,7 +1255,7 @@
                                             Researching and documenting how fire reacts to different architectural materials and how it spreads dynamically through school buildings. Creating a 1:1 detailed 3D model of MEF University to implement realistic fire propagation and emergency evacuation simulations based on empirical data.
                                         </p>
                                         <div class="entry-instructor">
-                                            <strong>Project Instructors:</strong> Assist. Prof. Dr. Kutay Tin&ccedil; <em>(Head of Digital Game Design Department)</em>, Onur Ereren
+                                            <strong>Project Instructors:</strong> Assist. Prof. Dr. Kutay Tinç <em>(Head of Digital Game Design Department)</em>, Onur Ereren
                                         </div>
                                     </div>
                                 </div>
@@ -914,12 +1266,12 @@
                                     </div>
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
-                                            <h3 class="entry-title"><a href="./projects/bajo-la-fresca/" class="cv-project-link">Bajo La Fresca &nearr;</a></h3>
-                                            <span class="entry-loc">San Basilio 44, C&oacute;rdoba, Spain</span>
+                                            <h3 class="entry-title"><a href="./projects/bajo-la-fresca/" class="cv-project-link">Bajo La Fresca ↗</a></h3>
+                                            <span class="entry-loc">San Basilio 44, Córdoba, Spain</span>
                                         </div>
                                         <div class="entry-subtitle">Team Member</div>
                                         <p class="entry-desc">
-                                            Developed a proposal to address limited planting space in an existing patio, integrating new growing areas while preserving and highlighting the patio&rsquo;s existing character.
+                                            Developed a proposal to address limited planting space in an existing patio, integrating new growing areas while preserving and highlighting the patio’s existing character.
                                         </p>
                                         <div class="entry-meta-tags">
                                             <span class="meta-tag">AA Visiting School Cordoba</span>
@@ -934,20 +1286,21 @@
                                     </div>
                                     <div class="cv-entry-content">
                                         <div class="entry-title-row">
-                                            <h3 class="entry-title"><a href="./projects/ara-sira/" class="cv-project-link">ara-sıra &bull; Design &amp; Build! Studio &nearr;</a></h3>
-                                            <span class="entry-loc">L&uuml;tfi Banat Primary School, Istanbul</span>
+                                            <h3 class="entry-title"><a href="./projects/ara-sira/" class="cv-project-link">ara-sıra &bull; Design &amp; Build! Studio ↗</a></h3>
+                                            <span class="entry-loc">Lütfi Banat Primary School, Istanbul</span>
                                         </div>
                                         <div class="entry-subtitle">Team Member &bull; 1st-Year Design-Build Studio</div>
                                         <p class="entry-desc">
-                                            Contributed directly to the participatory design process and physical hands-on timber construction of a schoolyard resting, play, and reading area for L&uuml;tfi Banat Primary School.
+                                            Contributed directly to the participatory design process and physical hands-on timber construction of a schoolyard resting, play, and reading area for Lütfi Banat Primary School.
                                         </p>
                                         <div class="entry-meta-tags">
                                             <a href="https://fada.mef.edu.tr/Portfolio/ara-sıra" target="_blank" rel="noopener noreferrer" class="meta-tag link-tag">
-                                                MEF FADA Portfolio Documentation &nearr;
+                                                MEF FADA Portfolio Documentation ↗
                                             </a>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -960,6 +1313,7 @@
                             </div>
 
                             <div class="skills-matrix-grid">
+                                
                                 <div class="skill-category-card skill-cat-cad" data-cat="cad">
                                     <div class="skill-cat-header">
                                         <span class="cat-icon" aria-hidden="true">
@@ -1078,6 +1432,7 @@
                                         <span class="skill-pill lang-pill">Chinese <em>(HSK 3)</em></span>
                                     </div>
                                 </div>
+
                             </div>
                         </section>
 
@@ -1089,11 +1444,11 @@
                             <div class="banner-buttons">
                                 <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="btn-primary-action">
                                     <span>DOWNLOAD CV (PDF)</span>
-                                    <span class="arrow">&darr;</span>
+                                    <span class="arrow">↓</span>
                                 </a>
                                 <a href="mailto:elifsugenc44@gmail.com" class="btn-secondary-action">
                                     <span>GET IN TOUCH</span>
-                                    <span class="arrow">&rarr;</span>
+                                    <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -1102,11 +1457,11 @@
                 </div>
             </section>
 
-        </main>
+        </div>
     </div>
 
-    <!-- PROJECT QUICK-READ MODAL (Bilingual EN/TR Overview & Direct Link to Full Page) -->
-    <div id="project-modal" class="project-modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <!-- PROJECT PREVIEW MODAL (full screen above everything) -->
+    <div id="project-modal" class="project-modal hidden">
         <div class="modal-topbar">
             <div class="modal-topbar-inner">
                 <div class="modal-info">
@@ -1114,7 +1469,7 @@
                     <span id="modal-title" class="modal-title">TITLE</span>
                     <span id="modal-tag" class="modal-tag hidden">AWARD WINNER</span>
                 </div>
-                <button type="button" id="modal-close" class="modal-close">[ CLOSE &times; ]</button>
+                <button id="modal-close" class="modal-close">[ CLOSE ]</button>
             </div>
         </div>
         <div class="modal-scroll-area">
@@ -1127,7 +1482,7 @@
                     <span id="modal-year">Year</span>
                     <span id="modal-award-pill" class="card-award-pill hidden">&#x2605; AWARD WINNER</span>
                 </div>
-                <div class="modal-text" id="modal-text-body"></div>
+                <div class="modal-text"></div>
             </div>
         </div>
     </div>
@@ -1155,7 +1510,7 @@
                         <span class="merope-sec-num">01 // &Uuml;LKER &amp; THE SEVENTH SISTER</span>
                         <h4 class="merope-sec-title">THE THRESHOLD OF VISION</h4>
                         <p class="merope-sec-text">
-                            While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars. In the <strong>&Uuml;lker</strong> cluster (Pleiades), Merope is the hidden seventh sister&mdash;barely visible to the naked eye. In mythology, she dimmed her light; in astronomy, she marks the threshold of human perception: what exists, but is easily overlooked in plain sight.
+                            While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars. In the <strong>&Uuml;lker</strong> cluster (Pleiades), Merope is the hidden seventh sister—barely visible to the naked eye. In mythology, she dimmed her light; in astronomy, she marks the threshold of human perception: what exists, but is easily overlooked in plain sight.
                         </p>
                     </div>
 
@@ -1164,48 +1519,44 @@
                         <span class="merope-sec-num">02 // METHODOLOGY AS REVELATION</span>
                         <h4 class="merope-sec-title">THE PRACTICE CORE</h4>
                         <p class="merope-sec-text">
-                            This defines Elifsu&rsquo;s methodology: instead of loud monumentalism, projects investigate hidden spatial layers&mdash;invisible civic labor, non-human agency, fragile earthen cycles, and silent digital traces. Across the portfolio, this star anchors the central <strong>Design Approach</strong>.
+                            This defines Elifsu&rsquo;s methodology: instead of loud monumentalism, projects investigate hidden spatial layers—invisible civic labor, non-human agency, fragile earthen cycles, and silent digital traces. In the constellation, this star morphs into the central <strong>Design Approach</strong>.
                         </p>
                     </div>
 
-                    <!-- 03: The Core Cluster Inquiries -->
+                    <!-- 03: The 5 Core Cluster Inquiries -->
                     <div class="merope-section full-span">
                         <span class="merope-sec-num">03 // INVISIBLE LAYERS IN PRACTICE</span>
-                        <h4 class="merope-sec-title">THE &Uuml;LKER CORE INQUIRIES</h4>
+                        <h4 class="merope-sec-title">FIVE CLUSTER INQUIRIES</h4>
                         <div class="merope-inquiries-pills">
                             <div class="merope-pill-item">
-                                <span class="mpi-tag">01 &bull; EMEK MUSEUM (Maia)</span>
+                                <span class="mpi-tag">01 &bull; EMEK MUSEUM</span>
                                 <span class="mpi-text">Spatializing invisible civic labor into public memory.</span>
                             </div>
                             <div class="merope-pill-item">
-                                <span class="mpi-tag">02 &bull; STRAY (Electra)</span>
+                                <span class="mpi-tag">02 &bull; STRAY</span>
                                 <span class="mpi-text">Non-human agency, drift, and feline coexistence.</span>
                             </div>
                             <div class="merope-pill-item">
-                                <span class="mpi-tag">03 &bull; YOU WERE HERE. (Merope)</span>
+                                <span class="mpi-tag">03 &bull; YOU WERE HERE.</span>
                                 <span class="mpi-text">Digital traces recorded as collective memory.</span>
                             </div>
                             <div class="merope-pill-item">
-                                <span class="mpi-tag">10 &bull; THE EARTHEN (Taygeta)</span>
+                                <span class="mpi-tag">10 &bull; THE EARTHEN</span>
                                 <span class="mpi-text">Physical and spiritual wellbeing through earth&rsquo;s natural cycles.</span>
                             </div>
                             <div class="merope-pill-item">
-                                <span class="mpi-tag">11 &bull; BIO-DECAY (Celaeno)</span>
+                                <span class="mpi-tag">11 &bull; BIO-DECAY</span>
                                 <span class="mpi-text">Food-waste biopolymers decomposing into soil.</span>
-                            </div>
-                            <div class="merope-pill-item">
-                                <span class="mpi-tag">12 &bull; FIRE ESCAPE (Asterope)</span>
-                                <span class="mpi-text">Political ecology of survival and spatial egress bottlenecks.</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="merope-modal-footer">
-                    <span class="merope-foot-meta">MESSIER 45 // &Uuml;LKER CONCEPTUAL FOUNDATION</span>
+                    <span class="merope-foot-meta">MESSIER 45 // &Uuml;LKER OBSERVATORY</span>
                     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <button type="button" class="merope-foot-cta" id="merope-explore-cta">&larr; BACK TO PROJECTS</button>
-                        <a href="#design-approach" class="merope-foot-cta" onclick="closeMeropeStoryModal(); goToPage('design-approach');">FULL METHODOLOGY &rarr;</a>
+                        <button type="button" class="merope-foot-cta" id="merope-explore-cta">&larr; BACK TO CLUSTER</button>
+                        <a href="#design-approach" class="merope-foot-cta" onclick="closeMeropeStoryModal(); goToPage('design-approach');">METHODOLOGY &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -1213,7 +1564,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-minimal"></script>
+    <script src="./script.js?v=20261030-ulker"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>
