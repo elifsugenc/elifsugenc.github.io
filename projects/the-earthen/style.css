@@ -24,7 +24,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none !important;
+    cursor: auto;
 }
 
 /* Custom Cursor - Hardware 1:1 GPU Accelerated Transform */

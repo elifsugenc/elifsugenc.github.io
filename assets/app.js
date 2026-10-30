@@ -584,7 +584,7 @@ document.querySelectorAll('.project-tags img').forEach(img => {
 (function() {
   const style = document.createElement('style');
   style.textContent = `
-    * { cursor: none !important; }
+    /* native cursor preserved */
     .custom-cursor {
       width: 14px;
       height: 14px;

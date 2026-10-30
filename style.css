@@ -47,7 +47,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none !important; /* Force hide default cursor even on buttons */
+    cursor: auto; /* Force hide default cursor even on buttons */
 }
 
 /* Custom Cursor Styles */
@@ -1043,7 +1043,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     pointer-events: auto !important;
-    cursor: none !important;
+    cursor: auto;
     z-index: 40 !important;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
@@ -1059,7 +1059,7 @@ a:hover {
 
 .merope-star .cluster-star-pill {
     pointer-events: auto !important;
-    cursor: none !important;
+    cursor: auto;
     border-color: rgba(37, 99, 235, 0.35);
 }
 
@@ -5038,7 +5038,7 @@ body {
     font-size: 0.70rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.07em !important;
-    cursor: none !important;
+    cursor: auto;
     position: relative !important;
     box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.02) !important;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
@@ -7836,7 +7836,7 @@ body {
     border: 1px solid rgba(37, 99, 235, 0.28);
     background: rgba(37, 99, 235, 0.05);
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: none !important;
+    cursor: auto;
 }
 
 .wwh-btn-learn:hover {
@@ -7916,7 +7916,7 @@ body {
     gap: 8px;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 0 12px rgba(37, 99, 235, 0.12);
     pointer-events: auto !important;
-    cursor: none !important;
+    cursor: auto;
     user-select: none;
     animation: wwhFadeIn 0.3s ease;
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -8048,7 +8048,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 3px;
-    cursor: none !important;
+    cursor: auto;
     pointer-events: auto !important;
     z-index: 2147483640 !important;
     color: #ffffff;
@@ -8417,7 +8417,7 @@ body {
 #tab-main #hq-cluster-toggle-pill,
 #tab-main #hq-cluster-toggle-pill * {
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
 }
 #tab-main .cluster-transition-btn .ctb-icon,
 #tab-main .cluster-transition-btn .ctb-text,
@@ -8459,14 +8459,14 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .secondary-line,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .radial-line {
   pointer-events: none !important;
-  cursor: none !important;
+  cursor: auto;
 }
 
 /* Cluster mode: Ensure ONLY .cluster-star-visual .cs-core inside .is-cluster-star stays clickable */
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-core,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-core * {
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
 }
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual,
 #tab-main .pleiades-observatory-stage[data-state="cluster"] .pleiades-stage-mount .constellation-node.is-cluster-star .cluster-star-visual .cs-caption-block,
@@ -8511,7 +8511,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .node-visual * {
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
   clip-path: circle(50% at 50% 50%) !important;
 }
 
@@ -8522,7 +8522,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount #constellation-center-btn .center-core * {
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
 }
 
 #tab-main .pleiades-observatory-stage .pleiades-stage-mount .relation-theme-badge,
@@ -8541,7 +8541,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .cluster-star-visual * {
   pointer-events: none !important;
-  cursor: none !important;
+  cursor: auto;
 }
 
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star,
@@ -8549,7 +8549,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core,
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .pleiades-stage-mount .merope-star .c-approach-core * {
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
 }
 
 /* -------------------------------------------------------------
@@ -8607,7 +8607,7 @@ body {
 #tab-main .pleiades-observatory-stage[data-state="constellation"] .constellation-node.is-hovered .node-hover-card * {
   z-index: 500 !important;
   pointer-events: auto !important;
-  cursor: none !important;
+  cursor: auto;
   transition-delay: 0s !important;
 }
 
@@ -9425,7 +9425,7 @@ body {
     position: relative;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    cursor: none !important;
+    cursor: auto;
     padding: 3px 0;
     -webkit-overflow-scrolling: touch;
     mask-image: linear-gradient(to right, black calc(100% - 36px), transparent 100%);
@@ -9476,7 +9476,7 @@ body {
     font-weight: 500;
     letter-spacing: 0.07em;
     color: #64748b;
-    cursor: none !important;
+    cursor: auto;
     line-height: 1;
     text-transform: uppercase;
     transition: color 0.15s ease;
@@ -9536,7 +9536,7 @@ body {
     font-weight: 600;
     letter-spacing: 0.06em;
     color: #2563eb;
-    cursor: none !important;
+    cursor: auto;
     line-height: 1;
     text-transform: uppercase;
     transition: all 0.15s ease;
@@ -9632,7 +9632,7 @@ body {
     font-weight: 500;
     letter-spacing: 0.04em;
     color: #64748b;
-    cursor: none !important;
+    cursor: auto;
     line-height: 1;
     text-transform: uppercase;
     transition: all 0.15s ease;
@@ -9682,7 +9682,7 @@ body {
    Zero animation, zero color shift, pure plain text.
    Only mouse cursor turns into question mark. */
 .archive-entry-question.is-linked {
-    cursor: none !important;
+    cursor: auto;
     text-decoration: none !important;
     color: #0f172a !important;
     transition: none !important;
@@ -9693,7 +9693,7 @@ body {
 .archive-entry-question.is-linked:hover,
 .archive-entry-question.is-linked:focus,
 .archive-entry-question.is-linked:active {
-    cursor: none !important;
+    cursor: auto;
     text-decoration: none !important;
     color: #0f172a !important;
     background: transparent !important;
@@ -10122,7 +10122,7 @@ body {
 .constellation-center,
 .constellation-center:hover,
 #constellation-center-btn {
-    cursor: none !important;
+    cursor: auto;
     pointer-events: none !important;
     transform: translate(-50%, -50%) !important;
 }
@@ -10390,7 +10390,7 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    cursor: none !important;
+    cursor: auto;
     pointer-events: auto !important;
     user-select: none;
     z-index: 45;
@@ -10614,7 +10614,7 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    cursor: none !important;
+    cursor: auto;
     pointer-events: auto !important;
     user-select: none;
     z-index: 40;
@@ -10939,7 +10939,7 @@ body {
 #tab-main .pleiades-observatory-stage .merope-star,
 #tab-main .pleiades-observatory-stage .merope-star * {
     pointer-events: auto !important;
-    cursor: none !important;
+    cursor: auto;
 }
 
 /* =========================================================
@@ -10969,7 +10969,7 @@ summary, details,
 iframe,
 [role="button"], [role="link"], [tabindex],
 .node-visual, .visual-img, .project-card, .hq-card, .cluster-star-visual {
-    cursor: none !important;
+    cursor: auto;
     -webkit-user-drag: none !important;
     user-drag: none !important;
 }
@@ -11233,7 +11233,7 @@ iframe,
     justify-content: center !important;
     padding: 0 !important;
     margin: 0 !important;
-    cursor: none !important;
+    cursor: auto;
     user-select: none !important;
     -webkit-user-select: none !important;
 }
@@ -11265,7 +11265,7 @@ iframe,
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    cursor: none !important;
+    cursor: auto;
     pointer-events: auto !important;
 }
 
@@ -11286,7 +11286,7 @@ iframe,
     border: none !important;
     border-radius: 0 !important;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
-    cursor: none !important;
+    cursor: auto;
     pointer-events: auto !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -11325,7 +11325,7 @@ iframe,
 }
 
 img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]) {
-    cursor: none !important;
+    cursor: auto;
 }
 
 /* =========================================================
@@ -11340,7 +11340,7 @@ img, picture, figure, canvas, svg,
 .lightbox-content-box, .lightbox-dialog, .lightbox-stage, .lightbox-img-wrapper,
 #lightbox-img, .lightbox-img,
 .wwh-live-indicator, .wwh-reopen-circle, .tab-button {
-    cursor: none !important;
+    cursor: auto;
 }
 
 

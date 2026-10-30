@@ -50,7 +50,7 @@ body.project-detail-body {
 
 /* Custom Cursor */
 * {
-    cursor: none !important;
+    cursor: auto;
 }
 
 #cursor-wrapper {
