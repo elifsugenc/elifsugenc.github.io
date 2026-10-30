@@ -1712,7 +1712,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper to navigate to Projects / Constellation view on Main tab
     function goToProjects() {
         switchTab('main', false);
-        const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
+        const epAnchor = document.getElementById('projects-explorer') || document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
         if (epAnchor) {
             setActive('projects');
             history.replaceState(null, '', '#projects');
@@ -1733,7 +1733,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // There is no separate #projects page: project exploration lives directly in #tab-main
         if (targetTabId === 'projects') {
             switchTab('main', false);
-            const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
+            const epAnchor = document.getElementById('projects-explorer') || document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
             if (epAnchor) {
                 setActive('projects');
                 if (updateHash) {
@@ -1992,7 +1992,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (hash === 'constellation' || hash === 'projects') {
             switchTab('main', false);
-            const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
+            const epAnchor = document.getElementById('projects-explorer') || document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
             const homeSky = document.getElementById('hq-constellation-sky');
             if (epAnchor) {
                 if (!sessionStorage.getItem('portfolio_return_active')) {
@@ -4010,7 +4010,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchQuery = '';
 
     // DOM References
-    const disciplineButtons = Array.from(document.querySelectorAll('#ep-discipline-bar .ep-filter-pill'));
+    const disciplineButtons = Array.from(document.querySelectorAll('#ep-discipline-bar .ep-disc-pill, #ep-discipline-bar .ep-filter-pill'));
     const viewButtons = Array.from(document.querySelectorAll('.ep-view-btn'));
     const searchInput = document.getElementById('ep-project-search');
     const searchClearBtn = document.getElementById('ep-project-search-clear');
@@ -4020,36 +4020,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Compute and populate discipline counts in filter bar
     function updateDisciplineCounts() {
-        const countElMap = {
-            'all': document.getElementById('count-all'),
-            'cluster-core': document.getElementById('count-cluster'),
-            'Architectural Design': document.getElementById('count-arch'),
-            'Spatial Design': document.getElementById('count-spatial'),
-            'Bio-Material & Ecological': document.getElementById('count-bio'),
-            'Exhibition Design': document.getElementById('count-exhibition'),
-            'Interactive & Simulation': document.getElementById('count-interactive'),
-            'Visual Communication': document.getElementById('count-viscomm'),
-            'Editorial Design': document.getElementById('count-editorial'),
-            'Experimental Design': document.getElementById('count-experimental')
-        };
-
-        Object.keys(countElMap).forEach(key => {
-            const el = countElMap[key];
-            if (!el) return;
-            if (key === 'all') {
-                el.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.length);
-            } else if (key === 'cluster-core') {
-                el.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.isClusterCore).length);
+        disciplineButtons.forEach(btn => {
+            const disc = btn.getAttribute('data-discipline') || 'all';
+            const countSpan = btn.querySelector('.ep-disc-count, .ep-pill-count');
+            if (!countSpan) return;
+            if (disc === 'all') {
+                countSpan.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.length);
+            } else if (disc === 'ulker-cluster' || disc === 'cluster-core') {
+                countSpan.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.isClusterCore).length);
             } else {
-                const count = EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.disciplines.includes(key)).length;
-                el.textContent = String(count);
+                const count = EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.disciplines.includes(disc)).length;
+                countSpan.textContent = String(count);
             }
         });
     }
 
     function getFilteredProjects() {
         return EDITORIAL_PORTFOLIO_PROJECTS.filter(p => {
-            if (activeDiscipline === 'cluster-core') {
+            if (activeDiscipline === 'cluster-core' || activeDiscipline === 'ulker-cluster') {
                 if (!p.isClusterCore) return false;
             } else if (activeDiscipline && activeDiscipline !== 'all') {
                 if (!p.disciplines.includes(activeDiscipline)) return false;
@@ -4096,36 +4084,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeHeadingEl) {
             if (activePole && poleNames[activePole]) {
                 activeHeadingEl.textContent = poleNames[activePole];
-            } else if (activeDiscipline === 'cluster-core') {
+            } else if (activeDiscipline === 'cluster-core' || activeDiscipline === 'ulker-cluster') {
                 activeHeadingEl.textContent = '✦ Ülker (Pleiades) Core Cluster Works';
             } else if (activeDiscipline !== 'all') {
                 activeHeadingEl.textContent = activeDiscipline;
             } else if (searchQuery.trim().length > 0) {
                 activeHeadingEl.textContent = `Search Results: “${searchQuery.trim()}”`;
             } else {
-                activeHeadingEl.textContent = 'All Works (12 Projects)';
+                activeHeadingEl.textContent = 'Selected Works & Inquiries';
             }
         }
 
         if (statusTextEl) {
             const countStr = `${filteredList.length} of ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects`;
             if (!isFiltered) {
-                statusTextEl.textContent = `Showing all ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects across architectural, spatial, material, and computational inquiries — click any image or title to open the full project.`;
+                statusTextEl.textContent = `Showing all ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects — click any image or title to open the full project.`;
             } else {
-                statusTextEl.textContent = `Showing ${countStr} matching your active selection.`;
+                statusTextEl.textContent = `Showing ${countStr} matching your active filter.`;
             }
         }
 
         disciplineButtons.forEach(btn => {
             const d = btn.getAttribute('data-discipline');
-            btn.classList.toggle('active', d === activeDiscipline && !activePole);
+            const isClusterMatch = (d === 'ulker-cluster' || d === 'cluster-core') && (activeDiscipline === 'ulker-cluster' || activeDiscipline === 'cluster-core');
+            btn.classList.toggle('active', (d === activeDiscipline || isClusterMatch) && !activePole);
         });
     }
 
     // Render Editorial Monograph Card (View 1: Default)
     function renderEditorialCard(p, index) {
         const starBadgeHtml = p.star
-            ? `<span class="ep-star-badge" data-cursor="dot"><span class="ep-star-glyph">&#x2726;</span> ${p.star.name.toUpperCase()} (${p.star.bayer})</span>`
+            ? `<span class="ep-star-badge"><span class="ep-star-glyph">&#x2726;</span> ${p.star.name.toUpperCase()} (${p.star.bayer})</span>`
             : '';
 
         const awardsHtml = (p.awards && p.awards.length > 0)
@@ -4134,7 +4123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const disciplineTagsHtml = p.disciplines.map(d => {
             const isActive = (activeDiscipline === d);
-            return `<button type="button" class="ep-card-discipline-tag ${isActive ? 'is-active' : ''}" data-discipline-click="${d}" data-cursor="dot">${d}</button>`;
+            return `<button type="button" class="ep-card-discipline-tag ${isActive ? 'is-active' : ''}" data-discipline-click="${d}">${d}</button>`;
         }).join('');
 
         let galleryStripHtml = '';
@@ -4156,42 +4145,13 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
 
-        let strandsHtml = '';
-        if (p.researchStrands && p.researchStrands.length > 0) {
-            strandsHtml = `
-                <div class="ep-strands-grid">
-                    ${p.researchStrands.map(s => `
-                        <div class="ep-strand-item">
-                            <span class="ep-strand-label">${s.label}</span>
-                            <span class="ep-strand-val">${s.value}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        let relatedHtml = '';
-        if (p.relatedIds && p.relatedIds.length > 0) {
-            const relLinks = p.relatedIds
-                .map(rId => PROJECT_BY_ID[rId])
-                .filter(Boolean)
-                .map(relProj => `<button type="button" class="ep-rel-jump-btn" data-jump-project="${relProj.id}" data-cursor="dot">${relProj.num}. ${relProj.title}</button>`)
-                .join('');
-            relatedHtml = `
-                <div class="ep-card-relations">
-                    <span class="ep-rel-label">CLUSTER DIALOGUE:</span>
-                    <div class="ep-rel-pills">${relLinks}</div>
-                </div>
-            `;
-        }
-
         return `
             <article class="ep-project-monograph ep-style-${p.presentationStyle} ${index % 2 === 1 ? 'ep-layout-alt' : ''}"
                      id="ep-project-${p.id}"
                      data-project-id="${p.id}"
                      style="--proj-accent: ${p.color};">
                 
-                <!-- Left / Top: Prominent Visual Stage -->
+                <!-- Prominent Visual Stage -->
                 <div class="ep-media-column">
                     <div class="ep-main-figure">
                         <a href="${p.url}" class="ep-main-media-link" data-project-nav="${p.id}" aria-label="Open ${p.title} full project">
@@ -4212,12 +4172,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${galleryStripHtml}
                 </div>
 
-                <!-- Right / Bottom: Editorial Narrative, Question, Classification & Actions -->
+                <!-- Editorial Narrative, Question, Classification & Actions -->
                 <div class="ep-content-column">
                     <div class="ep-card-topline">
                         <span class="ep-proj-index">NO. ${p.num}</span>
                         <span class="ep-proj-year-loc">${p.year} &bull; ${p.location}</span>
-                        <button type="button" class="ep-pole-pill" data-pole-click="${p.pole}" data-cursor="dot">${p.poleLabel}</button>
+                        <button type="button" class="ep-pole-pill" data-pole-click="${p.pole}">${p.poleLabel}</button>
                         ${starBadgeHtml}
                     </div>
 
@@ -4229,25 +4189,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="ep-proj-subtitle">${p.subtitle}</p>
 
                     <blockquote class="ep-proj-question-box">
-                        <span class="ep-question-kicker">CORE INQUIRY</span>
                         <p class="ep-question-main">&ldquo;${p.question}&rdquo;</p>
                         ${p.subQuestion ? `<p class="ep-question-sub">${p.subQuestion}</p>` : ''}
                     </blockquote>
 
                     <p class="ep-proj-summary">${p.summary}</p>
 
-                    ${strandsHtml}
-
                     <div class="ep-card-disciplines-wrap">
-                        <span class="ep-disciplines-label">DISCIPLINES:</span>
                         <div class="ep-card-disciplines">${disciplineTagsHtml}</div>
                     </div>
 
-                    ${relatedHtml}
-
                     <div class="ep-card-actions">
                         <a href="${p.url}" class="ep-btn-open-project" data-project-nav="${p.id}">
-                            <span>EXPLORE FULL PROJECT</span>
+                            <span>EXPLORE PROJECT</span>
                             <span class="ep-btn-arrow">&rarr;</span>
                         </a>
                         <button type="button" class="ep-btn-quick-read" data-quick-read="${p.id}">
@@ -4266,7 +4220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : '';
 
         const disciplineTags = p.disciplines.map(d =>
-            `<button type="button" class="ep-card-discipline-tag" data-discipline-click="${d}" data-cursor="dot">${d}</button>`
+            `<button type="button" class="ep-card-discipline-tag" data-discipline-click="${d}">${d}</button>`
         ).join('');
 
         return `
@@ -4290,7 +4244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="ep-grid-summary">${p.summary}</p>
                     <div class="ep-grid-tags">${disciplineTags}</div>
                     <div class="ep-grid-footer">
-                        <a href="${p.url}" class="ep-grid-open-link" data-project-nav="${p.id}">OPEN PROJECT &rarr;</a>
+                        <a href="${p.url}" class="ep-grid-open-link" data-project-nav="${p.id}">EXPLORE PROJECT &rarr;</a>
                         <button type="button" class="ep-grid-quick-btn" data-quick-read="${p.id}">EN / TR</button>
                     </div>
                 </div>
@@ -4303,7 +4257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = list.map(p => {
             const starText = p.star ? `✦ ${p.star.name} (${p.star.bayer})` : 'Constellation Field';
             const tags = p.disciplines.map(d =>
-                `<button type="button" class="ep-index-tag" data-discipline-click="${d}" data-cursor="dot">${d}</button>`
+                `<button type="button" class="ep-index-tag" data-discipline-click="${d}">${d}</button>`
             ).join('');
 
             return `
@@ -4456,6 +4410,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openQuickReadModal = openQuickReadModal;
 
     function jumpToProjectCard(projectId) {
+        if (projectId === 'about') {
+            if (typeof window.goToPage === 'function') {
+                window.goToPage('about');
+            }
+            return;
+        }
         if (!PROJECT_BY_ID[projectId]) return;
         let targetEl = document.getElementById(`ep-project-${projectId}`);
         if (!targetEl) {
@@ -4478,7 +4438,7 @@ document.addEventListener('DOMContentLoaded', () => {
         activePole = poleKey;
         activeDiscipline = 'all';
         renderProjectsStage();
-        const anchor = document.getElementById('ep-projects-anchor');
+        const anchor = document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor');
         if (anchor) {
             anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -4503,10 +4463,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const v = btn.getAttribute('data-view') || 'editorial';
+            const v = btn.getAttribute('data-view-mode') || btn.getAttribute('data-view') || 'editorial';
             activeView = v;
             viewButtons.forEach(b => {
-                const isMatch = b.getAttribute('data-view') === v;
+                const bMode = b.getAttribute('data-view-mode') || b.getAttribute('data-view');
+                const isMatch = bMode === v;
                 b.classList.toggle('active', isMatch);
                 b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
             });
@@ -4530,6 +4491,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchInput) searchInput.value = '';
             searchClearBtn.classList.add('hidden');
             renderProjectsStage();
+        });
+    }
+
+    // Hero & Topbar smooth navigation helpers
+    const brandHomeEl = document.getElementById('ep-brand-home');
+    if (brandHomeEl) {
+        brandHomeEl.addEventListener('click', () => {
+            if (typeof window.switchTab === 'function') {
+                window.switchTab('main');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    const heroExploreBtn = document.getElementById('hero-explore-projects-btn');
+    if (heroExploreBtn) {
+        heroExploreBtn.addEventListener('click', (e) => {
+            const target = document.getElementById('projects-explorer');
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     }
 
@@ -4591,7 +4574,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 activePole = null;
                 activeDiscipline = (activeDiscipline === d) ? 'all' : d;
                 renderProjectsStage();
-                const anchor = document.getElementById('ep-projects-anchor');
+                const anchor = document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor');
                 if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
             return;
@@ -4619,22 +4602,26 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 7. Save active filter & view state when navigating to a project page
+        // 7. Save active filter, view & return scroll state when navigating to a project page
         const projNavLink = e.target.closest('[data-project-nav]');
         if (projNavLink) {
+            const pId = projNavLink.getAttribute('data-project-nav') || '';
             try {
                 sessionStorage.setItem('portfolio_return_discipline', activeDiscipline);
                 sessionStorage.setItem('portfolio_return_view', activeView);
                 sessionStorage.setItem('portfolio_return_pole', activePole || '');
+                sessionStorage.setItem('portfolio_return_project', pId);
+                sessionStorage.setItem('portfolio_return_scroll', String(window.scrollY));
+                sessionStorage.setItem('portfolio_return_url', window.location.pathname + (pId ? `#ep-project-${pId}` : ''));
             } catch (_) {}
         }
     });
 
     // Event Listeners: Ülker SVG Star Points & Cluster Jump Links in Hero
-    document.querySelectorAll('.ep-star-point[data-star-target], .ep-cluster-jump[data-jump-project]').forEach(el => {
+    document.querySelectorAll('.ep-star-point[data-scroll-target], .ep-star-point[data-star-target], .ep-cluster-jump[data-jump-project]').forEach(el => {
         el.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetId = el.getAttribute('data-star-target') || el.getAttribute('data-jump-project');
+            const targetId = el.getAttribute('data-scroll-target') || el.getAttribute('data-star-target') || el.getAttribute('data-jump-project');
             if (targetId) {
                 jumpToProjectCard(targetId);
             }
@@ -4642,10 +4629,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Restore saved discipline/view filter if returning from a project page
+    let restoredScrollY = null;
     try {
         const savedDisc = sessionStorage.getItem('portfolio_return_discipline');
         const savedView = sessionStorage.getItem('portfolio_return_view');
         const savedPole = sessionStorage.getItem('portfolio_return_pole');
+        const savedScroll = sessionStorage.getItem('portfolio_return_scroll');
         if (savedDisc) {
             activeDiscipline = savedDisc;
             sessionStorage.removeItem('portfolio_return_discipline');
@@ -4653,7 +4642,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedView && ['editorial', 'grid', 'index'].includes(savedView)) {
             activeView = savedView;
             viewButtons.forEach(b => {
-                const isMatch = b.getAttribute('data-view') === activeView;
+                const bMode = b.getAttribute('data-view-mode') || b.getAttribute('data-view');
+                const isMatch = bMode === activeView;
                 b.classList.toggle('active', isMatch);
                 b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
             });
@@ -4663,9 +4653,21 @@ document.addEventListener('DOMContentLoaded', () => {
             activePole = savedPole;
             sessionStorage.removeItem('portfolio_return_pole');
         }
+        if (savedScroll !== null) {
+            restoredScrollY = parseInt(savedScroll, 10);
+            sessionStorage.removeItem('portfolio_return_scroll');
+        }
+        sessionStorage.removeItem('portfolio_return_url');
+        sessionStorage.removeItem('portfolio_return_project');
     } catch (_) {}
 
     // Initial render
     updateDisciplineCounts();
     renderProjectsStage();
+
+    if (restoredScrollY !== null && !Number.isNaN(restoredScrollY)) {
+        setTimeout(() => {
+            window.scrollTo({ top: restoredScrollY, behavior: 'auto' });
+        }, 40);
+    }
 });
