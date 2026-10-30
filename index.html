@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=20261030-ulker">
+    <link rel="stylesheet" href="./style.css?v=20261030-ulker-v2">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -25,339 +25,113 @@
     
 
 
-    <div class="folder-container">
-        <!-- ARCHITECTURAL STICKY NAVIGATION BAR -->
-        <nav class="folder-tabs" id="main-nav" aria-label="Portfolio Sections">
-            
+    <div class="folder-container ulker-portfolio-shell">
+        <!-- CLEAN ARCHITECTURAL NAVIGATION BAR -->
+        <nav class="folder-tabs ulker-topnav" id="main-nav" aria-label="Portfolio Sections">
+            <a href="#main" class="ulker-brand" id="ulker-brand-home" data-cursor="dot">
+                <img src="./assets/logo-blue.gif" alt="Elifsu Genç" class="brand-logo-gif" width="28" height="28">
+                <span class="ulker-brand-name">elifsu genc<span class="ulker-dot">.</span></span>
+            </a>
 
-            <div class="nav-tabs-group">
-                <button type="button" class="tab-button active" data-tab="main" aria-label="Selected Works — Cluster View">
-                    <span class="nav-num">01</span>
+            <div class="nav-tabs-group ulker-nav-pills">
+                <button type="button" class="tab-button active" data-tab="main" data-cursor="dot">
+                    <span class="nav-num">&#x2726;</span>
                     <span class="nav-text">&Uuml;LKER CLUSTER</span>
                 </button>
-                <button type="button" class="tab-button" data-tab="projects" aria-label="Selected Works — Constellation View">
-                    <span class="nav-num">02</span>
+                <button type="button" class="tab-button" data-tab="projects" data-cursor="dot">
+                    <span class="nav-num">12</span>
                     <span class="nav-text">SEE ALL PROJECTS</span>
                 </button>
-                <button type="button" class="tab-button" data-tab="design-approach" aria-label="Go to Methodology">
-                    <span class="nav-num">03</span>
+                <button type="button" class="tab-button" data-tab="design-approach" data-cursor="dot">
                     <span class="nav-text">METHODOLOGY</span>
                 </button>
-                <button type="button" class="tab-button" data-tab="about" aria-label="Go to About and CV">
-                    <span class="nav-num">04</span>
-                    <span class="nav-text">ABOUT / CV</span>
-                </button>
-                <button type="button" class="tab-button" data-tab="archive" aria-label="Go to Archive Directory">
-                    <span class="nav-num">05</span>
+                <button type="button" class="tab-button" data-tab="archive" data-cursor="dot">
                     <span class="nav-text">ARCHIVE</span>
+                </button>
+                <button type="button" class="tab-button" data-tab="about" data-cursor="dot">
+                    <span class="nav-text">ABOUT / CV</span>
                 </button>
             </div>
 
-            <div class="nav-actions-group">
-                <a href="./projects/you-were-here/" class="nav-demo-badge" title="YOU WERE HERE. // Digital trace experiment">
-                    <span class="ndb-dot" aria-hidden="true"></span>
-                    <span class="ndb-label">YOU WERE HERE. // DEMO</span>
-                    <span class="ndb-arrow">&nearr;</span>
-                </a>
-                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn" title="Download Elifsu Genç's CV (PDF)">
-                    <span class="ncv-glyph">&darr;</span>
-                    <span>CV (PDF)</span>
+            <div class="nav-actions-group ulker-nav-right">
+                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn" data-cursor="dot">
+                    <span>CV (PDF) &darr;</span>
                 </a>
             </div>
         </nav>
 
         <div class="folder-body">
-            
-            <!-- MAIN TAB -->
+
+            <!-- =========================================================
+                 TAB 01: MAIN ENTRANCE — VISUAL ÜLKER (PLEIADES) CLUSTER
+                 (Large Project Visuals + Core Questions arranged in the
+                  Ülker Constellation with live celestial connection lines)
+                 ========================================================= -->
             <section class="tab-content active" id="tab-main">
-                <div class="main-intro-wrapper">
-                    
-                    <!-- ARCHITECTURAL SELECTED WORKS // CONSTELLATION OVERVIEW -->
-                    <!-- ARCHITECTURAL SELECTED WORKS // CURATED SPATIAL SHOWCASE -->
-                    <div class="home-selected-quad" id="home-selected-quad">
-                        <!-- Welcoming Architectural Studio Header -->
-                        <div class="hq-header">
-                            <div class="hq-header-meta">
-                                <span class="hq-eyebrow">&#x2726; MESSIER 45 // PLEIADES &rarr; ARCHITECTURAL CONSTELLATION</span>
-                                <span class="hq-header-coords">TAURUS &bull; RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY &bull; J2000.0</span>
-                            </div>
-                            <div class="hq-header-row">
-                                <h2 class="hq-title">SELECTED WORKS</h2>
-                                <p class="hq-lead">
-                                    While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars.
-                                </p>
-                            </div>
-                            <div class="hq-header-divider"></div>
-                        </div>
+                <div class="ulker-stage-wrapper" id="ulker-stage-wrapper">
+                    <!-- Atmospheric Pleiades Layers -->
+                    <div class="ulker-nebula-bg" aria-hidden="true"></div>
+                    <div class="ulker-grid-bg" aria-hidden="true"></div>
 
-                        <!-- Anchor target for #constellation navigation -->
-                        <div id="constellation" style="position: relative; top: -40px;"></div>
+                    <!-- Dynamic SVG Constellation Lines connecting the 6 Ülker Project Cards -->
+                    <svg class="ulker-constellation-svg" id="ulker-constellation-svg" aria-hidden="true"></svg>
 
-                        <!-- Architectural View Selector & State Controls -->
-                        <div class="hq-view-controls">
-                            <div class="hq-view-tabs">
-                                <button class="hq-view-btn active" data-mode="both" aria-label="Show both constellation observatory and project cards">
-                                    <span class="view-btn-glyph">&#x2726;</span>
-                                    <span class="view-btn-label">OBSERVATORY &amp; CARDS</span>
-                                </button>
-                                <button class="hq-view-btn" data-mode="sky" aria-label="Focus on interactive celestial observatory">
-                                    <span class="view-btn-glyph">&#x2605;</span>
-                                    <span class="view-btn-label">CELESTIAL OBSERVATORY (M45)</span>
-                                </button>
-                                <button class="hq-view-btn" data-mode="cards" aria-label="Focus on architectural photo cards">
-                                    <span class="view-btn-glyph">&#x2630;</span>
-                                    <span class="view-btn-label">PROJECT DIRECTORY (5 WORKS)</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- 1. PLEIADES / M45 -> CONSTELLATION ASTRONOMICAL OBSERVATORY STAGE -->
-                        <div class="hq-constellation-sky pleiades-observatory-stage" id="hq-constellation-sky" data-state="cluster" aria-label="Interactive Pleiades M45 to Constellation Stage">
-                            <!-- Background Universe Atmosphere Layers -->
-                            <div class="pleiades-nebula-layer" aria-hidden="true"></div>
-                            <div class="pleiades-grid-layer" aria-hidden="true"></div>
-                            <div class="pleiades-grain-layer" aria-hidden="true"></div>
-
-                            <!-- Astronomical Inscription / Observation Note -->
-                            <div class="cluster-astronomy-inscription" aria-label="Pleiades Cluster Note">
-                                &ldquo;While only six or seven stars of the Pleiades are typically visible to the naked eye, the cluster actually contains over a thousand stars.&rdquo;
-                            </div>
-
-                            <!-- Astronomical Coordinate References -->
-                            <div class="pleiades-coord-tag pct-tl" aria-hidden="true">MESSIER 45 // PLEIADES CLUSTER &bull; J2000.0</div>
-                            <div class="pleiades-coord-tag pct-tr" aria-hidden="true">RA 03h 47m 24s &bull; DEC +24&deg; 07&prime; 00&Prime; &bull; 444 LY</div>
-                            <div class="pleiades-coord-tag pct-bl" aria-hidden="true">DIGITAL OBSERVATORY &bull; SPATIAL TOPOLOGY</div>
-                            <div class="pleiades-coord-tag pct-br" aria-hidden="true">ALCYONE (&eta; TAURI) &bull; 7 SISTERS ASTERISM</div>
-
-                            <!-- Observatory Top Bar Controls -->
-                            <div class="pleiades-top-bar">
-                                <div class="pleiades-status-pill">
-                                    <span class="psp-dot"></span>
-                                    <span class="psp-text" id="pleiades-status-label">CLUSTER STATE &bull; PLEIADES / M45 (7 STARS)</span>
+                    <div class="ulker-stage-inner">
+                        <!-- Minimal Top Bar: Alcyone Identity + See All Projects CTA -->
+                        <header class="ulker-hero-bar">
+                            <div class="ulker-identity-block">
+                                <div class="ulker-kicker-row">
+                                    <span class="ulker-kicker-pill">&#x2726; MESSIER 45 // &Uuml;LKER (PLEIADES) CLUSTER</span>
+                                    <button type="button" class="ulker-story-trigger" id="ulker-story-trigger" data-cursor="dot">
+                                        Why &Uuml;lker? (The Hidden Sister) &nearr;
+                                    </button>
                                 </div>
-                                <button type="button" class="cluster-transition-btn" id="cluster-transition-btn" aria-label="Toggle between Pleiades cluster and all projects constellation">
-                                    <span class="ctb-icon">&#x2726;</span>
-                                    <span class="ctb-text">SEE ALL PROJECTS &#x2192;</span>
-                                </button>
+                                <h1 class="ulker-main-statement">
+                                    Design as a question<span class="ulker-blue-dot">.</span>
+                                    <span class="ulker-sub-statement">Six visible core works in the &Uuml;lker cluster &mdash; opening onto twelve architectural, spatial &amp; material inquiries.</span>
+                                </h1>
                             </div>
 
-                            <!-- Dynamic Stage Mount: renderConstellation() mounts here -->
-                            <div id="pleiades-stage-mount" class="pleiades-stage-mount"></div>
+                            <div class="ulker-hero-cta-group">
+                                <button type="button" class="ulker-see-all-btn" id="ulker-see-all-top-btn">
+                                    <span class="usa-star">&#x2726;</span>
+                                    <span>SEE ALL 12 PROJECTS</span>
+                                    <span class="usa-arrow">&rarr;</span>
+                                </button>
+                            </div>
+                        </header>
+
+                        <!-- THE 6 CORE ÜLKER STARS AS VISUAL-FIRST PROJECT CARDS IN STAGGERED CLUSTER FORMATION -->
+                        <div class="ulker-cluster-field" id="ulker-cluster-field">
+                            <!-- Populated by script.js with the 6 Ülker Core Projects (Image + Main Question + Star Node) -->
                         </div>
 
-                        <!-- 2. 5-Card Architectural Photo Grid (Configured as Constellation Elements) -->
-                        <div class="hq-grid" id="hq-grid">
-                            
-                            <!-- CARD 01: EMEK MUSEUM -->
-                            <article class="hq-card" data-id="emek-museum" data-num="01" data-title="EMEK MUSEUM" data-medium="Design" data-question="How can we make this labour visible again?">
-                                <a href="./projects/emek-museum/" class="hq-card-link" aria-label="Explore EMEK MUSEUM project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/emek-museum-wip.svg" alt="EMEK MUSEUM — Spatial Justice Blueprint" class="hq-card-img hq-blueprint-visual" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &alpha; // 01</span>
-                                            <span class="hq-pill hq-pill-status">RESEARCH &bull; 2026</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">EMEK MUSEUM</h3>
-                                            <span class="hq-card-year">2026</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;How can we make this labour visible again?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            A counter-monument and living civic archive spatializing the invisible bodily labor, collective memory, and forgotten human costs of urban infrastructure.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">LIVING ARCHIVE &bull; CIVIC TESTIMONY</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 02: STRAY -->
-                            <article class="hq-card" data-id="stray" data-num="02" data-title="STRAY" data-medium="Interactive Installation" data-question="Is doing nothing doing something?">
-                                <a href="./projects/stray/" class="hq-card-link" aria-label="Explore STRAY project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/stray-project.png" alt="STRAY — Interactive Installation" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &beta; // 02</span>
-                                            <span class="hq-pill hq-pill-award">&#x2605; AWARD WINNER</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">STRAY</h3>
-                                            <div style="display:flex;align-items:center;gap:6px;">
-                                                <span class="hq-card-year">2025</span>
-                                                <span class="card-award-pill" style="font-size:0.62rem;padding:1px 7px;">&#x2605; AWARD WINNER</span>
-                                            </div>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;Is doing nothing doing something?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            A responsive street-level sanctuary examining non-human feline agency, temporal pauses, and interspecies coexistence in urban Istanbul.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">INTERACTIVE &bull; URBAN SPATIAL</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 03: FIRE ESCAPE SIMULATION -->
-                            <article class="hq-card" data-id="fire-escape-simulation" data-num="12" data-title="FIRE ESCAPE SIMULATION" data-medium="Simulation" data-question="Can you escape the fire?">
-                                <a href="./projects/fire-escape-simulation/" class="hq-card-link" aria-label="Explore FIRE ESCAPE SIMULATION project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/fire-escape-wip.svg" alt="FIRE ESCAPE SIMULATION — Egress Dynamics &amp; Spatial Panic Blueprint" class="hq-card-img hq-blueprint-visual" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &gamma; // 12</span>
-                                            <span class="hq-pill hq-pill-status">SIMULATION &bull; 2026</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">FIRE ESCAPE SIMULATION</h3>
-                                            <span class="hq-card-year">2026</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;Can you escape the fire?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            An agent-based architectural simulation analyzing egress dynamics, behavioral panic thresholds, and bottleneck flow rates during emergency building evacuation scenarios.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">EGRESS DYNAMICS &bull; SIMULATION &bull; SPATIAL PANIC</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 04: THE EARTHEN -->
-                            <article class="hq-card" data-id="the-earthen" data-num="10" data-title="THE EARTHEN" data-medium="Soil &amp; Clay" data-question="Is there life because there is death?">
-                                <a href="./projects/the-earthen/" class="hq-card-link" aria-label="Explore THE EARTHEN project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/the-earthen-cover.png" alt="THE EARTHEN — Soil &amp; Clay Wellbeing Sanctuary" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &delta; // 10</span>
-                                            <span class="hq-pill hq-pill-craft">SOIL &amp; WELLBEING</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">THE EARTHEN</h3>
-                                            <span class="hq-card-year">2026</span>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;Is there life because there is death?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            A restorative sanctuary designed around soil and clay immersion, connecting natural earth cycles to human life to cultivate physical and spiritual wellbeing.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">SOIL HEALING &bull; CYCLICAL WELLBEING</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                            <!-- CARD 05: BIO-DECAY -->
-                            <article class="hq-card" data-id="bio-decay" data-num="11" data-title="BIO-DECAY" data-medium="Bio-Materials" data-question="How many microplastics can we eat in a day?">
-                                <a href="./projects/bio-decay/" class="hq-card-link" aria-label="Explore BIO-DECAY project">
-                                    <div class="hq-card-media">
-                                        <img src="./assets/bio-decay-cover.png" alt="BIO-DECAY — Bio-Materials &amp; Compostable Plastics" class="hq-card-img" loading="eager">
-                                        <div class="hq-media-overlay"></div>
-                                        <div class="hq-media-badges">
-                                            <span class="hq-pill hq-pill-id">&#x2726; STAR &epsilon; // 11</span>
-                                            <span class="hq-pill hq-pill-award">&#x2605; DEAN&rsquo;S AWARD</span>
-                                        </div>
-                                        <span class="hq-zoom-hint">EXPLORE &rarr;</span>
-                                    </div>
-                                    <div class="hq-card-body">
-                                        <div class="hq-card-topline">
-                                            <h3 class="hq-card-title">BIO-DECAY</h3>
-                                            <div style="display:flex;align-items:center;gap:6px;">
-                                                <span class="hq-card-year">2025</span>
-                                                <span class="card-award-pill" style="font-size:0.62rem;padding:1px 7px;">&#x2605; AWARD WINNER</span>
-                                            </div>
-                                        </div>
-                                        <p class="hq-card-question">&ldquo;How many microplastics can we eat in a day?&rdquo;</p>
-                                        <p class="hq-card-desc">
-                                            Fully biodegradable agar and starch bio-composite surfaces challenging petrochemical permanence and consumer packaging contamination.
-                                        </p>
-                                        <div class="hq-card-foot">
-                                            <span class="hq-foot-meta">CIRCULAR MATERIAL &bull; SPECULATIVE LAB</span>
-                                            <span class="hq-foot-action">VIEW PROJECT &rarr;</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-
-                        </div>
-
-                        <!-- Live Interactive Teletype Inquiry Bar -->
-                        <div class="hq-inquiry-bar">
-                            <div class="hq-inquiry-pulse"></div>
-                            <span class="hq-inquiry-tag">ACTIVE INQUIRY //</span>
-                            <span class="hq-inquiry-text" id="home-inquiry-display">&ldquo;HOVER A CONSTELLATION STAR OR PROJECT CARD TO TRACE ITS CORE SPATIAL QUESTION&rdquo;</span>
-                            <span id="matrix-project-name" style="display: none;">&mdash;</span>
-                        </div>
-
-                        <!-- Prominent Architectural Call-To-Action to Explore Full Constellation Map -->
-                        <div class="hq-cta-wrapper">
-                            <button type="button" class="hq-explore-all-btn" id="hq-explore-bottom-cta">
-                                <span class="hq-btn-star">&#x2726;</span>
-                                <span class="hq-btn-text">EXPLORE ALL PROJECTS &mdash; CONSTELLATION MAP</span>
-                                <span class="hq-btn-arrow">&rarr;</span>
+                        <!-- Bottom Cluster Footer Bar: Whisper Quote + See All Projects Button -->
+                        <footer class="ulker-stage-footer">
+                            <p class="ulker-whisper-quote">
+                                &ldquo;While only six or seven stars of the Pleiades are visible to the naked eye, the cluster holds over a thousand stars.&rdquo;
+                            </p>
+                            <button type="button" class="ulker-see-all-btn ulker-see-all-bottom" id="ulker-see-all-bottom-btn">
+                                <span>EXPLORE ALL 12 PROJECTS &amp; FILTER BY DISCIPLINE</span>
+                                <span class="usa-arrow">&rarr;</span>
                             </button>
-                            <span class="hq-cta-sub">12 INTERCONNECTED RESEARCH WORKS &bull; 3 RELATIONAL POLES &bull; FULL SCREEN ATLAS</span>
-                        </div>
+                        </footer>
                     </div>
-                    
-                    <!-- MINI APPROACH DIAGRAM -->
-                    <div class="mini-diagram-container" style="margin-top: 80px; display: flex; flex-direction: column; align-items: center;">
-                        <a href="#design-approach" class="md-label md-link" onclick="event.preventDefault(); goToPage('design-approach');">METHODOLOGY &mdash;</a>
-                        <div class="mini-diagram" style="justify-content: center; width: 100%;">
-                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
-                                <span class="step-num">01</span>
-                                <span class="step-label">QUESTION<br>THE FAMILIAR</span>
-                            </a>
-                            <div class="diagram-connector"></div>
-                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
-                                <span class="step-num">02</span>
-                                <span class="step-label">DESIGN AS<br>A QUESTION</span>
-                            </a>
-                            <div class="diagram-connector"></div>
-                            <a href="#design-approach" class="diagram-step" onclick="event.preventDefault(); goToPage('design-approach');">
-                                <span class="step-num">03</span>
-                                <span class="step-label">RETHINK<br>THE ORDINARY</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- ARCHIVE LINK -->
-                    <div class="mini-diagram-container" style="margin-top: 80px; display: flex; flex-direction: column; align-items: center;">
-                        <a href="#archive" class="md-label md-link" onclick="event.preventDefault(); goToPage('archive');">ARCHIVE &mdash;</a>
-                    </div>
-
                 </div>
             </section>
 
-            <!-- SEPARATE TAB 02: SEE ALL PROJECTS (MINIMALIST, VISUAL-LED, PERSONAL ARCHITECTURAL LANGUAGE) -->
+            <!-- =========================================================
+                 TAB 02: SEPARATE "SEE ALL PROJECTS" DIRECTORY
+                 (Fast Discipline Filtering + All 12 Projects with Large
+                  Visuals & Main Questions)
+                 ========================================================= -->
             <section class="tab-content" id="tab-projects" aria-label="All Projects Directory">
                 <div class="sp-wrapper">
 
-                    <!-- Minimal Architectural Top Bar inside All Projects -->
                     <header class="sp-header">
                         <div class="sp-header-top">
                             <div class="sp-title-group">
-                                <span class="sp-eyebrow">&#x2726; M45 // &Uuml;LKER CONSTELLATION DIRECTORY</span>
+                                <span class="sp-eyebrow">&#x2726; FULL PORTFOLIO DIRECTORY // 12 WORKS</span>
                                 <h1 class="sp-title">ALL PROJECTS <span class="sp-count-badge" id="sp-visible-count">12</span></h1>
                             </div>
                             <button type="button" class="sp-back-cluster-btn" id="sp-back-cluster-btn" data-cursor="dot">
@@ -367,7 +141,7 @@
 
                         <!-- Minimal Discipline Filter Bar -->
                         <div class="sp-filter-bar" id="sp-filter-bar" role="navigation" aria-label="Filter projects by discipline">
-                            <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL WORKS</button>
+                            <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL (12)</button>
                             <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;LKER CLUSTER (6)</button>
                             <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">ARCHITECTURAL DESIGN</button>
                             <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">SPATIAL DESIGN</button>
@@ -380,7 +154,7 @@
                         </div>
                     </header>
 
-                    <!-- Clean 2-Column Visual-First Project Grid -->
+                    <!-- Clean 2-Column Visual + Question Grid -->
                     <div class="sp-projects-grid" id="sp-projects-grid" aria-live="polite"></div>
 
                 </div>
@@ -1564,7 +1338,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-ulker"></script>
+    <script src="./script.js?v=20261030-ulker-v2"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>

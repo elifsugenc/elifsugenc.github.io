@@ -1598,7 +1598,11 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             e.stopPropagation();
         }
-        switchTab('projects');
+        const homeSky = document.getElementById('hq-constellation-sky');
+        if (homeSky) {
+            const mapEl = homeSky.querySelector('.constellation-map');
+            if (mapEl) toggleConstellationState(mapEl);
+        }
     }
 
     if (homeTransitionBtn) homeTransitionBtn.addEventListener('click', handleStageToggleClick);
@@ -1681,7 +1685,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedOrigin = sessionStorage.getItem('portfolio_return_origin');
         const savedState = sessionStorage.getItem('portfolio_return_state');
         const startInConstellation = (curHash === 'constellation' || curHash === 'projects' || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || portfolioProjectSlugs.includes(curHash) || savedOrigin === 'constellation' || savedState === 'constellation');
-        renderConstellation(pleiadesMount, 'cluster');
+        renderConstellation(pleiadesMount, startInConstellation ? 'constellation' : 'cluster');
     }
 
     // --- SINGLE PAGE NAVIGATION ---
@@ -3125,7 +3129,7 @@ window.toggleModalLang = function(lang) {
             return;
         }
 
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sp-card-img)');
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.uc-card-img):not(.sp-card-img)');
         if (clickedImg) {
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
@@ -3145,27 +3149,15 @@ window.toggleModalLang = function(lang) {
 
 
 // =========================================================================
-// SEPARATE "SEE ALL PROJECTS" TAB (#tab-projects) — Minimalist, Image-Led
-// Preserves personal architectural visual language & Ülker Cluster links.
+// VISUAL ÜLKER (PLEIADES) CLUSTER ENTRANCE + SEPARATE ALL PROJECTS ENGINE
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    const gridEl = document.getElementById('sp-projects-grid');
-    if (!gridEl) return;
+    const clusterField = document.getElementById('ulker-cluster-field');
+    const constellationSvg = document.getElementById('ulker-constellation-svg');
+    const stageWrapper = document.getElementById('ulker-stage-wrapper');
+    const allGrid = document.getElementById('sp-projects-grid');
 
-    const ALL_PROJECTS_DATA = [
-        {
-            id: 'emek-museum',
-            num: '01',
-            title: 'EMEK MUSEUM',
-            year: '2026',
-            location: 'Istanbul',
-            question: 'How can we make this labour visible again?',
-            img: './assets/emek-museum-wip.svg',
-            url: './projects/emek-museum/',
-            isCluster: true,
-            star: 'Maia · 20 Tauri',
-            disciplines: ['Architectural Design', 'Spatial Design', 'Exhibition Design']
-        },
+    const PORTFOLIO_PROJECTS = [
         {
             id: 'stray',
             num: '02',
@@ -3176,101 +3168,25 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/stray-project.png',
             url: './projects/stray/',
             isCluster: true,
-            star: 'Electra · 17 Tauri',
-            award: 'TOP 15 ARCHISEARCH',
-            disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation', 'Experimental Design']
+            starName: 'Electra',
+            starBayer: '17 Tauri',
+            clusterSlot: 'slot-electra',
+            disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation']
         },
         {
-            id: 'you-were-here',
-            num: '03',
-            title: 'YOU WERE HERE.',
+            id: 'emek-museum',
+            num: '01',
+            title: 'EMEK MUSEUM',
             year: '2026',
-            location: 'Digital Space',
-            question: 'Are you really here?',
-            img: './projects/you-were-here/assets/ywh- constellation.svg',
-            url: './projects/you-were-here/',
-            isCluster: true,
-            star: 'Merope · 23 Tauri',
-            disciplines: ['Interactive & Simulation', 'Experimental Design', 'Visual Communication']
-        },
-        {
-            id: 'chronoclines',
-            num: '04',
-            title: 'CHRONOCLINES',
-            year: '2025',
-            location: 'Haydarpaşa, Kadıköy',
-            question: 'Can a city exhibit itself?',
-            img: './assets/chronoclines-cover.jpg',
-            url: './projects/chronoclines/',
-            isCluster: false,
-            star: null,
-            disciplines: ['Architectural Design', 'Exhibition Design', 'Visual Communication']
-        },
-        {
-            id: 'millieu',
-            num: '05',
-            title: 'MILLIEU',
-            year: '2026',
-            location: 'Yeldeğirmeni, Kadıköy',
-            question: 'How does a culinary ritual shape a social atmosphere?',
-            img: './assets/millieu-cover.png',
-            url: './projects/millieu/',
-            isCluster: false,
-            star: null,
-            disciplines: ['Spatial Design', 'Architectural Design', 'Visual Communication']
-        },
-        {
-            id: 'sprouting-garden',
-            num: '06',
-            title: 'SPROUTING GARDEN',
-            year: '2024',
-            location: 'Kuzguncuk, Üsküdar',
-            question: 'Can we build without displacing life?',
-            img: './assets/sprouting-garden-cover.png',
-            url: './projects/sprouting-garden/',
-            isCluster: false,
-            star: null,
-            disciplines: ['Architectural Design', 'Bio-Material & Ecological', 'Spatial Design']
-        },
-        {
-            id: 'bajo-la-fresca',
-            num: '07',
-            title: 'BAJO LA FRESCA',
-            year: '2026',
-            location: 'Córdoba, Spain',
-            question: 'How do you highlight beauty without stealing its spotlight?',
-            img: './assets/bajo-la-fresca-hero.jpg',
-            url: './projects/bajo-la-fresca/',
-            isCluster: false,
-            star: null,
-            award: '1:1 BUILT INSTALLATION',
-            disciplines: ['Spatial Design', 'Exhibition Design', 'Bio-Material & Ecological', 'Experimental Design']
-        },
-        {
-            id: 'wood-weave',
-            num: '08',
-            title: 'WOOD WEAVE',
-            year: '2024',
-            location: 'Bursa',
-            question: 'When does waste become a place?',
-            img: './assets/wood-weave-cover.png',
-            url: './projects/wood-weave/',
-            isCluster: false,
-            star: null,
-            disciplines: ['Architectural Design', 'Spatial Design', 'Bio-Material & Ecological', 'Exhibition Design']
-        },
-        {
-            id: 'ara-sira',
-            num: '09',
-            title: 'ARA-SIRA',
-            year: '2024',
             location: 'Istanbul',
-            question: 'Can one space hold both play and quiet?',
-            img: './assets/ara-sira-cover.jpg',
-            url: './projects/ara-sira/',
-            isCluster: false,
-            star: null,
-            disciplines: ['Editorial Design', 'Spatial Design', 'Architectural Design', 'Visual Communication']
+            question: 'How can we make this labour visible again?',
+            img: './assets/emek-museum-wip.svg',
+            url: './projects/emek-museum/',
+            isCluster: true,
+            starName: 'Maia',
+            starBayer: '20 Tauri',
+            clusterSlot: 'slot-maia',
+            disciplines: ['Architectural Design', 'Spatial Design', 'Exhibition Design']
         },
         {
             id: 'the-earthen',
@@ -3278,11 +3194,13 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'THE EARTHEN',
             year: '2025',
             location: 'Earth & Wellbeing',
-            question: 'How can we link earth’s natural cycles to human physical and spiritual wellbeing?',
+            question: 'How can we link earth’s natural cycles to human wellbeing?',
             img: './assets/the-earthen-render-1.jpg',
             url: './projects/the-earthen/',
             isCluster: true,
-            star: 'Taygeta · 19 Tauri',
+            starName: 'Taygeta',
+            starBayer: '19 Tauri',
+            clusterSlot: 'slot-taygeta',
             disciplines: ['Architectural Design', 'Bio-Material & Ecological', 'Spatial Design']
         },
         {
@@ -3295,8 +3213,9 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/bio-decay-cover.jpg',
             url: './projects/bio-decay/',
             isCluster: true,
-            star: 'Celaeno · 16 Tauri',
-            award: '2ND PRIZE WINNER',
+            starName: 'Celaeno',
+            starBayer: '16 Tauri',
+            clusterSlot: 'slot-celaeno',
             disciplines: ['Bio-Material & Ecological', 'Experimental Design', 'Editorial Design']
         },
         {
@@ -3309,11 +3228,248 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/fire-escape-cover.png',
             url: './projects/fire-escape-simulation/',
             isCluster: true,
-            star: 'Asterope · 21 Tauri',
-            disciplines: ['Interactive & Simulation', 'Architectural Design', 'Experimental Design', 'Visual Communication']
+            starName: 'Asterope',
+            starBayer: '21 Tauri',
+            clusterSlot: 'slot-asterope',
+            disciplines: ['Interactive & Simulation', 'Architectural Design', 'Experimental Design']
+        },
+        {
+            id: 'you-were-here',
+            num: '03',
+            title: 'YOU WERE HERE.',
+            year: '2026',
+            location: 'Digital Space',
+            question: 'Are you really here?',
+            img: './projects/you-were-here/assets/ywh- constellation.svg',
+            url: './projects/you-were-here/',
+            isCluster: true,
+            starName: 'Merope',
+            starBayer: '23 Tauri',
+            clusterSlot: 'slot-merope',
+            disciplines: ['Interactive & Simulation', 'Experimental Design', 'Visual Communication']
+        },
+        {
+            id: 'sprouting-garden',
+            num: '06',
+            title: 'SPROUTING GARDEN',
+            year: '2024',
+            location: 'Kuzguncuk, Üsküdar',
+            question: 'Can we build without displacing life?',
+            img: './assets/sprouting-garden-cover.png',
+            url: './projects/sprouting-garden/',
+            isCluster: false,
+            disciplines: ['Architectural Design', 'Bio-Material & Ecological', 'Spatial Design']
+        },
+        {
+            id: 'bajo-la-fresca',
+            num: '07',
+            title: 'BAJO LA FRESCA',
+            year: '2026',
+            location: 'Córdoba, Spain',
+            question: 'How do you highlight beauty without stealing its spotlight?',
+            img: './assets/bajo-la-fresca-hero.jpg',
+            url: './projects/bajo-la-fresca/',
+            isCluster: false,
+            disciplines: ['Spatial Design', 'Exhibition Design', 'Bio-Material & Ecological', 'Experimental Design']
+        },
+        {
+            id: 'millieu',
+            num: '05',
+            title: 'MILLIEU',
+            year: '2026',
+            location: 'Yeldeğirmeni, Kadıköy',
+            question: 'How does a culinary ritual shape a social atmosphere?',
+            img: './assets/millieu-cover.png',
+            url: './projects/millieu/',
+            isCluster: false,
+            disciplines: ['Spatial Design', 'Architectural Design', 'Visual Communication']
+        },
+        {
+            id: 'chronoclines',
+            num: '04',
+            title: 'CHRONOCLINES',
+            year: '2025',
+            location: 'Haydarpaşa, Kadıköy',
+            question: 'Can a city exhibit itself?',
+            img: './assets/chronoclines-cover.jpg',
+            url: './projects/chronoclines/',
+            isCluster: false,
+            disciplines: ['Architectural Design', 'Exhibition Design', 'Visual Communication']
+        },
+        {
+            id: 'wood-weave',
+            num: '08',
+            title: 'WOOD WEAVE',
+            year: '2024',
+            location: 'Bursa',
+            question: 'When does waste become a place?',
+            img: './assets/wood-weave-cover.png',
+            url: './projects/wood-weave/',
+            isCluster: false,
+            disciplines: ['Architectural Design', 'Spatial Design', 'Bio-Material & Ecological', 'Exhibition Design']
+        },
+        {
+            id: 'ara-sira',
+            num: '09',
+            title: 'ARA-SIRA',
+            year: '2024',
+            location: 'Istanbul',
+            question: 'Can one space hold both play and quiet?',
+            img: './assets/ara-sira-cover.jpg',
+            url: './projects/ara-sira/',
+            isCluster: false,
+            disciplines: ['Editorial Design', 'Spatial Design', 'Architectural Design', 'Visual Communication']
         }
     ];
 
+    // 1. RENDER THE 6 CORE ÜLKER CLUSTER VISUAL CARDS ON #tab-main
+    const clusterProjects = PORTFOLIO_PROJECTS.filter(p => p.isCluster);
+
+    if (clusterField) {
+        clusterField.innerHTML = clusterProjects.map(p => `
+            <article class="uc-card ${p.clusterSlot}" data-uc-id="${p.id}">
+                <!-- Celestial Star Anchor Point -->
+                <div class="uc-star-bar">
+                    <span class="uc-star-dot" data-star-anchor="${p.id}"></span>
+                    <span class="uc-star-name">&#x2726; ${p.starName.toUpperCase()}</span>
+                    <span class="uc-star-bayer">${p.starBayer}</span>
+                </div>
+
+                <!-- Prominent Project Visual + Question -->
+                <a href="${p.url}" class="uc-card-link" data-origin-nav="main">
+                    <div class="uc-img-frame">
+                        <img src="${p.img}" alt="${p.title}" class="uc-card-img" loading="eager">
+                    </div>
+
+                    <div class="uc-card-body">
+                        <p class="uc-question">&ldquo;${p.question}&rdquo;</p>
+                        <div class="uc-meta-row">
+                            <span class="uc-title">${p.num} &mdash; ${p.title}</span>
+                            <span class="uc-year">${p.year}</span>
+                        </div>
+                        <div class="uc-tags-row">
+                            ${p.disciplines.slice(0, 2).map(d => `<span class="uc-mini-tag">${d}</span>`).join('')}
+                        </div>
+                    </div>
+                </a>
+            </article>
+        `).join('');
+    }
+
+    // Draw live Pleiades constellation lines connecting the 6 star anchor points
+    const CLUSTER_EDGES = [
+        ['stray', 'emek-museum'],
+        ['emek-museum', 'the-earthen'],
+        ['the-earthen', 'bio-decay'],
+        ['the-earthen', 'fire-escape-simulation'],
+        ['emek-museum', 'you-were-here'],
+        ['stray', 'you-were-here'],
+        ['bio-decay', 'fire-escape-simulation']
+    ];
+
+    function drawClusterConstellationLines(hoveredId = null) {
+        if (!constellationSvg || !stageWrapper) return;
+        const wrapRect = stageWrapper.getBoundingClientRect();
+        if (!wrapRect.width || !wrapRect.height) return;
+
+        constellationSvg.setAttribute('viewBox', `0 0 ${wrapRect.width} ${wrapRect.height}`);
+
+        const coords = {};
+        stageWrapper.querySelectorAll('[data-star-anchor]').forEach(el => {
+            const id = el.getAttribute('data-star-anchor');
+            const r = el.getBoundingClientRect();
+            coords[id] = {
+                x: r.left - wrapRect.left + r.width / 2,
+                y: r.top - wrapRect.top + r.height / 2
+            };
+        });
+
+        let svgHtml = '';
+        CLUSTER_EDGES.forEach(([a, b]) => {
+            const pA = coords[a];
+            const pB = coords[b];
+            if (!pA || !pB) return;
+            const isHighlighted = hoveredId && (hoveredId === a || hoveredId === b);
+            svgHtml += `
+                <line x1="${pA.x.toFixed(1)}" y1="${pA.y.toFixed(1)}"
+                      x2="${pB.x.toFixed(1)}" y2="${pB.y.toFixed(1)}"
+                      class="uc-svg-line ${isHighlighted ? 'is-active' : ''}" />
+            `;
+        });
+
+        Object.keys(coords).forEach(id => {
+            const c = coords[id];
+            const isHighlighted = hoveredId === id;
+            svgHtml += `
+                <circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}"
+                        r="${isHighlighted ? 14 : 8}"
+                        class="uc-svg-halo ${isHighlighted ? 'is-active' : ''}" />
+            `;
+        });
+
+        constellationSvg.innerHTML = svgHtml;
+    }
+
+    setTimeout(() => drawClusterConstellationLines(null), 80);
+    window.addEventListener('resize', () => drawClusterConstellationLines(null), { passive: true });
+
+    if (clusterField) {
+        clusterField.querySelectorAll('.uc-card').forEach(card => {
+            const id = card.getAttribute('data-uc-id');
+            card.addEventListener('mouseenter', () => {
+                clusterField.classList.add('has-card-hover');
+                card.classList.add('is-hovered');
+                drawClusterConstellationLines(id);
+            });
+            card.addEventListener('mouseleave', () => {
+                clusterField.classList.remove('has-card-hover');
+                card.classList.remove('is-hovered');
+                drawClusterConstellationLines(null);
+            });
+        });
+    }
+
+    // Wire "See All 12 Projects" & "Why Ülker?" buttons
+    const seeAllTop = document.getElementById('ulker-see-all-top-btn');
+    const seeAllBottom = document.getElementById('ulker-see-all-bottom-btn');
+    const storyTrigger = document.getElementById('ulker-story-trigger');
+    const brandHome = document.getElementById('ulker-brand-home');
+
+    if (seeAllTop) {
+        seeAllTop.addEventListener('click', () => {
+            if (typeof window.goToPage === 'function') window.goToPage('projects');
+        });
+    }
+    if (seeAllBottom) {
+        seeAllBottom.addEventListener('click', () => {
+            if (typeof window.goToPage === 'function') window.goToPage('projects');
+        });
+    }
+    if (storyTrigger) {
+        storyTrigger.addEventListener('click', () => {
+            const modal = document.getElementById('merope-story-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+    if (brandHome) {
+        brandHome.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (typeof window.goToPage === 'function') window.goToPage('main');
+            setTimeout(() => drawClusterConstellationLines(null), 60);
+        });
+    }
+
+    // Re-compute constellation lines whenever switching back to #tab-main
+    document.querySelectorAll('.tab-button[data-tab="main"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setTimeout(() => drawClusterConstellationLines(null), 80);
+        });
+    });
+
+    // 2. RENDER SEPARATE "SEE ALL PROJECTS" TAB (#tab-projects)
     let activeDisc = 'all';
     const filterBtns = Array.from(document.querySelectorAll('#sp-filter-bar .sp-filter-pill'));
     const countBadge = document.getElementById('sp-visible-count');
@@ -3324,28 +3480,28 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             if (typeof window.goToPage === 'function') {
                 window.goToPage('main');
+                setTimeout(() => drawClusterConstellationLines(null), 80);
             }
         });
     }
 
-    function renderGrid() {
-        const list = ALL_PROJECTS_DATA.filter(p => {
+    function renderAllProjectsGrid() {
+        if (!allGrid) return;
+        const list = PORTFOLIO_PROJECTS.filter(p => {
             if (activeDisc === 'all') return true;
             if (activeDisc === 'ulker-cluster') return p.isCluster;
             return p.disciplines.includes(activeDisc);
         });
 
-        if (countBadge) {
-            countBadge.textContent = String(list.length);
-        }
+        if (countBadge) countBadge.textContent = String(list.length);
 
         filterBtns.forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-discipline') === activeDisc);
         });
 
-        gridEl.innerHTML = list.map((p, idx) => {
-            const starHtml = p.star
-                ? `<span class="sp-star-tag">&#x2726; ${p.star.toUpperCase()}</span>`
+        allGrid.innerHTML = list.map((p, idx) => {
+            const starBadge = p.isCluster
+                ? `<span class="sp-star-tag">&#x2726; ${p.starName.toUpperCase()} (${p.starBayer})</span>`
                 : '';
 
             const tagsHtml = p.disciplines.map(d =>
@@ -3354,25 +3510,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return `
                 <article class="sp-card" data-project-id="${p.id}">
-                    <a href="${p.url}" class="sp-card-media-link" data-sp-nav="${p.id}">
+                    <a href="${p.url}" class="sp-card-media-link" data-origin-nav="projects">
                         <div class="sp-card-img-wrap">
                             <img src="${p.img}" alt="${p.title}" loading="${idx < 4 ? 'eager' : 'lazy'}" class="sp-card-img">
-                            ${starHtml}
+                            ${starBadge}
                         </div>
                     </a>
                     <div class="sp-card-body">
+                        <p class="sp-card-question">&ldquo;${p.question}&rdquo;</p>
                         <div class="sp-card-head">
                             <div class="sp-card-title-row">
                                 <span class="sp-card-num">${p.num} &mdash;</span>
                                 <h2 class="sp-card-title">
-                                    <a href="${p.url}" data-sp-nav="${p.id}">${p.title}</a>
+                                    <a href="${p.url}" data-origin-nav="projects">${p.title}</a>
                                 </h2>
                             </div>
                             <span class="sp-card-meta">${p.location} &bull; ${p.year}</span>
                         </div>
-
-                        <p class="sp-card-question">&ldquo;${p.question}&rdquo;</p>
-
                         <div class="sp-card-tags">
                             ${tagsHtml}
                         </div>
@@ -3386,31 +3540,36 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const d = btn.getAttribute('data-discipline') || 'all';
             activeDisc = (activeDisc === d && d !== 'all') ? 'all' : d;
-            renderGrid();
+            renderAllProjectsGrid();
         });
     });
 
-    gridEl.addEventListener('click', (e) => {
-        const tagBtn = e.target.closest('[data-disc-tag]');
-        if (tagBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const d = tagBtn.getAttribute('data-disc-tag');
-            activeDisc = (activeDisc === d) ? 'all' : d;
-            renderGrid();
-            return;
-        }
+    if (allGrid) {
+        allGrid.addEventListener('click', (e) => {
+            const tagBtn = e.target.closest('[data-disc-tag]');
+            if (tagBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const d = tagBtn.getAttribute('data-disc-tag');
+                activeDisc = (activeDisc === d) ? 'all' : d;
+                renderAllProjectsGrid();
+            }
+        });
+    }
 
-        const navLink = e.target.closest('[data-sp-nav]');
-        if (navLink) {
+    // Save originating tab ('main' vs 'projects') when clicking any project card
+    document.addEventListener('click', (e) => {
+        const navEl = e.target.closest('[data-origin-nav]');
+        if (navEl) {
+            const originTab = navEl.getAttribute('data-origin-nav') || 'main';
             try {
-                sessionStorage.setItem('portfolio_return_tab', 'projects');
-                sessionStorage.setItem('portfolio_return_origin', 'projects');
+                sessionStorage.setItem('portfolio_return_tab', originTab);
+                sessionStorage.setItem('portfolio_return_origin', originTab);
                 sessionStorage.setItem('portfolio_return_scroll', String(window.scrollY));
-                sessionStorage.setItem('portfolio_return_url', window.location.pathname + '#projects');
+                sessionStorage.setItem('portfolio_return_url', window.location.pathname + (originTab === 'projects' ? '#projects' : ''));
             } catch (_) {}
         }
     });
 
-    renderGrid();
+    renderAllProjectsGrid();
 });
