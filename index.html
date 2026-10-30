@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./style.css?v=20261030-cursorfix">
+    <link rel="stylesheet" href="./style.css?v=20261030-minimal">
     <style>
         html, body, *, *::before, *::after { cursor: auto !important; }
         a, a *, button, button *, [role="button"], [role="button"] *, summary, .ep-star-point, .ep-star-point * { cursor: pointer !important; }
@@ -30,455 +30,72 @@
     </div>
 
     <div class="ep-shell folder-container">
-        <!-- STICKY EDITORIAL NAVIGATION BAR -->
+        <!-- MINIMALIST STICKY HEADER -->
         <header class="ep-topbar">
             <div class="ep-topbar-inner">
                 <a href="#main" class="ep-brand" id="ep-brand-home" aria-label="Elifsu Genç — Portfolio Home">
-                    <img src="./assets/logo-blue.gif" alt="Elifsu Genç Logo" class="brand-logo-gif ep-brand-logo" width="32" height="32">
-                    <div class="ep-brand-text">
-                        <span class="ep-brand-name">elifsu genc<span class="ep-brand-dot">.</span></span>
-                        <span class="ep-brand-role">Architecture &bull; Spatial &amp; Experimental Design</span>
-                    </div>
+                    <span class="ep-brand-name">elifsu genç<span class="ep-brand-dot">.</span></span>
                 </a>
 
                 <nav class="folder-tabs ep-nav" id="main-nav" aria-label="Portfolio Navigation">
                     <div class="nav-tabs-group ep-nav-group">
-                        <button type="button" class="tab-button ep-nav-btn active" data-tab="main" aria-label="Projects Overview">
-                            <span class="nav-num">01</span>
-                            <span class="nav-text">PROJECTS</span>
-                            <span class="ep-nav-count">12</span>
-                        </button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="design-approach" aria-label="Ülker Concept and Design Methodology">
-                            <span class="nav-num">02</span>
-                            <span class="nav-text">METHODOLOGY &amp; &Uuml;LKER</span>
-                        </button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="archive" aria-label="Question Archive">
-                            <span class="nav-num">03</span>
-                            <span class="nav-text">QUESTION ARCHIVE</span>
-                            <span class="ep-nav-count">20</span>
-                        </button>
-                        <button type="button" class="tab-button ep-nav-btn" data-tab="about" aria-label="About and Curriculum Vitae">
-                            <span class="nav-num">04</span>
-                            <span class="nav-text">ABOUT / CV</span>
-                        </button>
+                        <button type="button" class="tab-button ep-nav-btn active" data-tab="main">Works</button>
+                        <button type="button" class="tab-button ep-nav-btn" data-tab="design-approach">&Uuml;lker &amp; Approach</button>
+                        <button type="button" class="tab-button ep-nav-btn" data-tab="archive">Archive</button>
+                        <button type="button" class="tab-button ep-nav-btn" data-tab="about">About &amp; CV</button>
                     </div>
                 </nav>
-
-                <div class="nav-actions-group ep-actions">
-                    <a href="./projects/you-were-here/" class="nav-demo-badge ep-trace-pill">
-                        <span class="ndb-dot" aria-hidden="true"></span>
-                        <span class="ndb-label">YOU WERE HERE.</span>
-                        <span class="ndb-arrow">&nearr;</span>
-                    </a>
-                    <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn ep-cv-btn">
-                        <span class="ncv-glyph">&darr;</span>
-                        <span>CV (PDF)</span>
-                    </a>
-                </div>
             </div>
         </header>
 
         <main class="folder-body ep-main">
 
             <!-- =========================================================
-                 TAB 01: MAIN PORTFOLIO — IDENTITY, ÜLKER KEY & ALL 12 PROJECTS
+                 TAB 01: MINIMALIST PROJECT-LED PORTFOLIO
                  ========================================================= -->
             <section class="tab-content active" id="tab-main">
                 <div class="ep-container">
 
-                    <!-- 1. FIRST SCREEN: EDITORIAL IDENTITY & ÜLKER (PLEIADES) CONCEPTUAL FOUNDATION -->
-                    <section class="ep-hero" aria-label="Introduction and Conceptual Foundation">
-                        <div class="ep-hero-grid">
-
-                            <!-- Left Column: Identity, Design Approach & Immediate Orientation -->
-                            <div class="ep-hero-intro">
-                                <div class="ep-eyebrow-row">
-                                    <span class="ep-eyebrow-pill"><span class="ep-dot"></span> ISTANBUL, T&Uuml;RK&#304;YE</span>
-                                    <span class="ep-eyebrow-sep">/</span>
-                                    <span class="ep-eyebrow-item">MEF UNIVERSITY &bull; ARCHITECTURE &amp; INTERIOR DESIGN (DOUBLE MAJOR)</span>
-                                </div>
-
-                                <h1 class="ep-hero-title">
-                                    Design begins with a question that makes the unseen visible<span class="ep-accent">.</span>
-                                </h1>
-
-                                <p class="ep-hero-lead">
-                                    I am <strong>Elifsu Gen&ccedil;</strong>, a critical spatial designer working across <strong>architectural design</strong>, <strong>spatial &amp; exhibition design</strong>, <strong>living bio-materials</strong>, and <strong>computational simulations</strong>. My practice investigates overlooked conditions in everyday life&mdash;from invisible civic labor and decomposing biopolymers to non-human urban rhythms and digital traces&mdash;translating philosophical inquiries into built and speculative environments.
-                                </p>
-
-                                <div class="ep-hero-highlights">
-                                    <div class="ep-stat-chip">
-                                        <span class="ep-stat-val">12</span>
-                                        <span class="ep-stat-lbl">Selected &amp; Archival Works (2024&ndash;2026)</span>
-                                    </div>
-                                    <div class="ep-stat-chip">
-                                        <span class="ep-stat-val">04</span>
-                                        <span class="ep-stat-lbl">National &amp; Academic Design Awards</span>
-                                    </div>
-                                    <div class="ep-stat-chip">
-                                        <span class="ep-stat-val">03</span>
-                                        <span class="ep-stat-lbl">1:1 Built &amp; Fabricated Pavilions</span>
-                                    </div>
-                                </div>
-
-                                <div class="ep-hero-actions">
-                                    <a href="#projects-explorer" class="ep-btn ep-btn-primary" id="hero-explore-projects-btn">
-                                        <span>Explore Projects</span>
-                                        <span class="ep-btn-arrow">&darr;</span>
-                                    </a>
-                                    <button type="button" class="ep-btn ep-btn-ghost" onclick="goToPage('design-approach');">
-                                        <span>Methodology</span>
-                                        <span class="ep-btn-arrow">&rarr;</span>
-                                    </button>
-                                    <button type="button" class="ep-btn ep-btn-ghost" onclick="goToPage('about');">
-                                        <span>About &amp; CV</span>
-                                        <span class="ep-btn-arrow">&rarr;</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Right Column: Restrained, Intuitive Ülker / Pleiades (M45) Cluster Key -->
-                            <aside class="ep-ulker-panel" aria-label="Ülker (Pleiades) Cluster Conceptual Guide">
-                                <div class="ep-ulker-header">
-                                    <div class="ep-ulker-meta">
-                                        <span class="ep-ulker-kicker">&#x2726; CONCEPTUAL FOUNDATION // &Uuml;LKER (PLEIADES &bull; M45)</span>
-                                        <span class="ep-ulker-coords">RA 03h 47m &bull; DEC +24&deg; 07&prime;</span>
-                                    </div>
-                                    <button type="button" class="ep-ulker-story-btn" onclick="openMeropeStoryModal();">
-                                        The 7th Sister Story &nearr;
-                                    </button>
-                                </div>
-
-                                <blockquote class="ep-ulker-quote">
-                                    &ldquo;While only six or seven stars of the Pleiades (&Uuml;lker) are visible to the naked eye, the cluster actually contains over a thousand stars.&rdquo;
-                                </blockquote>
-
-                                <p class="ep-ulker-explain">
-                                    In the <strong>&Uuml;lker</strong> star cluster, <strong>Merope</strong> (<em>The Hidden Sister</em>) marks the threshold of human perception: what exists in plain sight yet goes overlooked. This portfolio is structured around that threshold. Each project below is anchored by a spatial question that brings a hidden layer into focus.
-                                </p>
-
-                                <!-- Minimalist Editorial SVG Star Map & Interactive Project Key -->
-                                <div class="ep-ulker-diagram-box">
-                                    <svg class="ep-ulker-svg" viewBox="0 0 420 155" aria-label="Pleiades M45 Seven Sisters Minimal Map">
-                                        <!-- Subtle coordinate grid lines -->
-                                        <line x1="20" y1="35" x2="400" y2="35" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2 3" />
-                                        <line x1="20" y1="80" x2="400" y2="80" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2 3" />
-                                        <line x1="20" y1="125" x2="400" y2="125" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2 3" />
-
-                                        <!-- Constellation thread lines connecting the 7 sisters -->
-                                        <polyline points="62,92 142,115 198,64 214,32 288,46 340,70 326,112 198,64 62,92"
-                                                  fill="none" stroke="#93c5fd" stroke-width="1.2" />
-                                        <line x1="142" y1="115" x2="326" y2="112" stroke="#bfdbfe" stroke-width="1" stroke-dasharray="3 3" />
-
-                                        <!-- Background faint cluster dust (the 1,000+ unseen stars) -->
-                                        <circle cx="95" cy="52" r="1.3" fill="#cbd5e1" />
-                                        <circle cx="120" cy="78" r="1.1" fill="#cbd5e1" />
-                                        <circle cx="168" cy="44" r="1.4" fill="#cbd5e1" />
-                                        <circle cx="248" cy="68" r="1.2" fill="#cbd5e1" />
-                                        <circle cx="265" cy="98" r="1.4" fill="#cbd5e1" />
-                                        <circle cx="305" cy="84" r="1.1" fill="#cbd5e1" />
-                                        <circle cx="368" cy="48" r="1.3" fill="#cbd5e1" />
-                                        <circle cx="375" cy="96" r="1.2" fill="#cbd5e1" />
-
-                                        <!-- 1. Alcyone (Practice Nexus) -->
-                                        <g class="ep-star-point" data-scroll-target="about" tabindex="0" role="button" aria-label="Alcyone — Practice &amp; About">
-                                            <circle cx="62" cy="92" r="10" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="62" cy="92" r="4.5" fill="#2563eb" />
-                                            <text x="62" y="114" text-anchor="middle" class="ep-svg-star-lbl">Alcyone (EG.)</text>
-                                        </g>
-
-                                        <!-- 2. Merope (The Hidden Sister / Methodology & You Were Here) -->
-                                        <g class="ep-star-point ep-star-merope" data-scroll-target="you-were-here" tabindex="0" role="button" aria-label="Merope — 03 You Were Here &amp; The Hidden Sister">
-                                            <circle cx="142" cy="115" r="11" fill="rgba(37, 99, 235, 0.08)" stroke="#2563eb" stroke-width="1" stroke-dasharray="2 2" />
-                                            <circle cx="142" cy="115" r="4" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
-                                            <text x="142" y="136" text-anchor="middle" class="ep-svg-star-lbl ep-svg-merope-lbl">Merope &bull; 03</text>
-                                        </g>
-
-                                        <!-- 3. Maia (01 Emek Museum) -->
-                                        <g class="ep-star-point" data-scroll-target="emek-museum" tabindex="0" role="button" aria-label="Maia — 01 Emek Museum">
-                                            <circle cx="198" cy="64" r="9" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="198" cy="64" r="4" fill="#2563eb" />
-                                            <text x="198" y="83" text-anchor="middle" class="ep-svg-star-lbl">Maia &bull; 01</text>
-                                        </g>
-
-                                        <!-- 4. Asterope (12 Fire Escape Simulation) -->
-                                        <g class="ep-star-point" data-scroll-target="fire-escape-simulation" tabindex="0" role="button" aria-label="Asterope — 12 Fire Escape Simulation">
-                                            <circle cx="214" cy="32" r="8" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="214" cy="32" r="3.8" fill="#2563eb" />
-                                            <text x="214" y="19" text-anchor="middle" class="ep-svg-star-lbl">Asterope &bull; 12</text>
-                                        </g>
-
-                                        <!-- 5. Taygeta (10 The Earthen) -->
-                                        <g class="ep-star-point" data-scroll-target="the-earthen" tabindex="0" role="button" aria-label="Taygeta — 10 The Earthen">
-                                            <circle cx="288" cy="46" r="9" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="288" cy="46" r="4" fill="#2563eb" />
-                                            <text x="288" y="32" text-anchor="middle" class="ep-svg-star-lbl">Taygeta &bull; 10</text>
-                                        </g>
-
-                                        <!-- 6. Celaeno (11 Bio-Decay) -->
-                                        <g class="ep-star-point" data-scroll-target="bio-decay" tabindex="0" role="button" aria-label="Celaeno — 11 Bio-Decay">
-                                            <circle cx="340" cy="70" r="9" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="340" cy="70" r="4" fill="#2563eb" />
-                                            <text x="348" y="56" text-anchor="middle" class="ep-svg-star-lbl">Celaeno &bull; 11</text>
-                                        </g>
-
-                                        <!-- 7. Electra (02 Stray) -->
-                                        <g class="ep-star-point" data-scroll-target="stray" tabindex="0" role="button" aria-label="Electra — 02 Stray">
-                                            <circle cx="326" cy="112" r="9" fill="rgba(37, 99, 235, 0.08)" />
-                                            <circle cx="326" cy="112" r="4" fill="#2563eb" />
-                                            <text x="326" y="131" text-anchor="middle" class="ep-svg-star-lbl">Electra &bull; 02</text>
-                                        </g>
-                                    </svg>
-
-                                    <div class="ep-ulker-legend">
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="emek-museum">
-                                            <span class="ep-cj-star">&#x2726; Maia</span>
-                                            <span class="ep-cj-proj">01 Emek Museum</span>
-                                        </button>
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="stray">
-                                            <span class="ep-cj-star">&#x2726; Electra</span>
-                                            <span class="ep-cj-proj">02 Stray</span>
-                                        </button>
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="you-were-here">
-                                            <span class="ep-cj-star">&#x2726; Merope</span>
-                                            <span class="ep-cj-proj">03 You Were Here.</span>
-                                        </button>
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="the-earthen">
-                                            <span class="ep-cj-star">&#x2726; Taygeta</span>
-                                            <span class="ep-cj-proj">10 The Earthen</span>
-                                        </button>
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="bio-decay">
-                                            <span class="ep-cj-star">&#x2726; Celaeno</span>
-                                            <span class="ep-cj-proj">11 Bio-Decay</span>
-                                        </button>
-                                        <button type="button" class="ep-cluster-jump" data-jump-project="fire-escape-simulation">
-                                            <span class="ep-cj-star">&#x2726; Asterope</span>
-                                            <span class="ep-cj-proj">12 Fire Escape</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </aside>
-
+                    <!-- QUIET 2-LINE INTRO + MINIMAL FILTER BAR -->
+                    <header class="ep-minimal-header" id="projects-explorer">
+                        <div class="ep-minimal-intro">
+                            <h1 class="ep-minimal-title">
+                                Architecture, spatial &amp; material works shaped around questions.
+                            </h1>
+                            <p class="ep-minimal-sub">
+                                Structured around the <strong>&Uuml;lker (Pleiades)</strong> cluster &mdash; six core works and a wider field of spatial research.
+                                <button type="button" class="ep-ulker-inline-btn" onclick="openMeropeStoryModal();">&#x2726; Read the &Uuml;lker note</button>
+                            </p>
                         </div>
+
+                        <div class="ep-discipline-bar" id="ep-discipline-bar" role=" navigation" aria-label="Filter by discipline">
+                            <button type="button" class="ep-disc-pill active" data-discipline="all">All</button>
+                            <button type="button" class="ep-disc-pill ep-disc-pill-cluster" data-discipline="ulker-cluster">&#x2726; &Uuml;lker Cluster</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Architectural Design">Architectural Design</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Spatial Design">Spatial Design</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Bio-Material & Ecological">Bio-Material &amp; Ecological</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Exhibition Design">Exhibition Design</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Interactive & Simulation">Interactive &amp; Simulation</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Visual Communication">Visual Communication</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Editorial Design">Editorial Design</button>
+                            <button type="button" class="ep-disc-pill" data-discipline="Experimental Design">Experimental Design</button>
+                        </div>
+                    </header>
+
+                    <!-- LARGE-FORMAT VISUAL PROJECT GALLERY -->
+                    <section class="ep-projects-stage" id="ep-projects-stage" aria-live="polite">
+                        <!-- Populated cleanly by script.js -->
                     </section>
 
-                    <!-- Anchor target for #constellation and #projects-explorer -->
-                    <div id="constellation" style="position: relative; top: -60px;"></div>
-                    <div id="projects-explorer" style="position: relative; top: -24px;"></div>
-
-                    <!-- 2. DISCIPLINE CLASSIFICATION & FILTERING SYSTEM -->
-                    <section class="ep-filter-section" aria-label="Project Discipline Filters and View Options">
-                        <div class="ep-filter-header">
-                            <div class="ep-filter-title-group">
-                                <span class="ep-section-index">01 // SELECTED &amp; ARCHIVAL WORKS</span>
-                                <h2 class="ep-section-heading" id="ep-active-filter-heading">All Projects</h2>
-                                <span class="ep-filter-status" id="ep-filter-status-text">Showing all 12 projects across disciplines</span>
-                            </div>
-
-                            <!-- View Switcher & Quick Search -->
-                            <div class="ep-toolbar-right">
-                                <div class="ep-search-box">
-                                    <span class="ep-search-icon" aria-hidden="true">&#x26B2;</span>
-                                    <input type="text" id="ep-project-search" class="ep-search-input" placeholder="Search projects, questions, materials..." aria-label="Search projects">
-                                    <button type="button" id="ep-project-search-clear" class="ep-search-clear hidden" aria-label="Clear project search">&times;</button>
-                                </div>
-
-                                <div class="ep-view-switcher" role="group" aria-label="Layout View Switcher">
-                                    <button type="button" class="ep-view-btn active" data-view-mode="editorial" aria-label="Editorial Monograph View">
-                                        <span class="ep-vb-icon">&#x25EB;</span>
-                                        <span>Editorial</span>
-                                    </button>
-                                    <button type="button" class="ep-view-btn" data-view-mode="grid" aria-label="Compact Visual Grid View">
-                                        <span class="ep-vb-icon">&#x25A6;</span>
-                                        <span>Grid</span>
-                                    </button>
-                                    <button type="button" class="ep-view-btn" data-view-mode="index" aria-label="Relational Index and Constellation Table">
-                                        <span class="ep-vb-icon">&#x2726;</span>
-                                        <span>Index &amp; Relations</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Discipline Filter Bar -->
-                        <div class="ep-discipline-bar" id="ep-discipline-bar" role="tablist" aria-label="Filter projects by discipline">
-                            <button type="button" class="ep-disc-pill active" data-discipline="all">
-                                <span class="ep-disc-name">All Works</span>
-                                <span class="ep-disc-count">12</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill ep-disc-cluster" data-discipline="ulker-cluster">
-                                <span class="ep-disc-star">&#x2726;</span>
-                                <span class="ep-disc-name">&Uuml;lker Core Cluster</span>
-                                <span class="ep-disc-count">6</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Architectural Design">
-                                <span class="ep-disc-name">Architectural Design</span>
-                                <span class="ep-disc-count">9</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Spatial Design">
-                                <span class="ep-disc-name">Spatial Design</span>
-                                <span class="ep-disc-count">9</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Bio-Material & Ecological">
-                                <span class="ep-disc-name">Bio-Material &amp; Ecological</span>
-                                <span class="ep-disc-count">5</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Exhibition Design">
-                                <span class="ep-disc-name">Exhibition Design</span>
-                                <span class="ep-disc-count">4</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Interactive & Simulation">
-                                <span class="ep-disc-name">Interactive &amp; Simulation</span>
-                                <span class="ep-disc-count">4</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Visual Communication">
-                                <span class="ep-disc-name">Visual Communication</span>
-                                <span class="ep-disc-count">3</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Editorial Design">
-                                <span class="ep-disc-name">Editorial Design</span>
-                                <span class="ep-disc-count">2</span>
-                            </button>
-                            <button type="button" class="ep-disc-pill" data-discipline="Experimental Design">
-                                <span class="ep-disc-name">Experimental Design</span>
-                                <span class="ep-disc-count">8</span>
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- 3. MAIN CHARACTERS: THE 12 PROJECTS SHOWCASE -->
-                    <section class="ep-projects-stage" id="ep-projects-stage" data-view-mode="editorial" aria-label="Portfolio Projects">
-                        <!-- Dynamically rendered by script.js from the complete 12-project dataset -->
-                        <!-- Static fallback / initial SEO & noscript structure is also provided below -->
-                    </section>
-
-                    <!-- 4. RELATIONAL CONSTELLATION & METHODOLOGICAL BRIDGE (VISIBLE IN INDEX MODE OR BELOW PROJECTS) -->
-                    <section class="ep-relations-section" id="ep-relations-section" aria-label="Thematic Connections and Methodological Triad">
-                        <div class="ep-rel-header">
-                            <div>
-                                <span class="ep-section-index">02 // CONSTELLATION TOPOLOGY &amp; THEMATIC DIALOGUES</span>
-                                <h2 class="ep-section-heading">How the Projects Speak to Each Other</h2>
-                                <p class="ep-rel-sub">
-                                    Beyond individual typologies, the twelve projects form a relational network across three methodological poles&mdash;<strong>Critical Inquiry</strong>, <strong>Contextual Research</strong>, and <strong>Experimental Thinking</strong>&mdash;linked by five cross-project thematic dialogues.
-                                </p>
-                            </div>
-                            <button type="button" class="ep-btn ep-btn-ghost" onclick="goToPage('design-approach');">
-                                <span>Full Methodology Diagram</span>
-                                <span class="ep-btn-arrow">&rarr;</span>
-                            </button>
-                        </div>
-
-                        <!-- 3 Methodological Poles Grid -->
-                        <div class="ep-poles-grid">
-                            <div class="ep-pole-card">
-                                <div class="ep-pole-top">
-                                    <span class="ep-pole-code">VERTEX 01 // CRITICAL INQUIRY</span>
-                                    <span class="ep-pole-Action" onclick="filterByPole('critical-inquiry')">Filter Pole &rarr;</span>
-                                </div>
-                                <h3 class="ep-pole-title">Questioning the Norm &amp; Unseen Labor</h3>
-                                <p class="ep-pole-desc">
-                                    Interrogating whose presence, bodily labor, and daily rhythms conventional architecture erases or overlooks.
-                                </p>
-                                <div class="ep-pole-projects">
-                                    <a href="./projects/emek-museum/" class="ep-mini-proj-link">01 Emek Museum</a>
-                                    <a href="./projects/stray/" class="ep-mini-proj-link">02 Stray</a>
-                                    <a href="./projects/you-were-here/" class="ep-mini-proj-link">03 You Were Here.</a>
-                                    <a href="./projects/sprouting-garden/" class="ep-mini-proj-link">06 Sprouting Garden</a>
-                                </div>
-                            </div>
-
-                            <div class="ep-pole-card">
-                                <div class="ep-pole-top">
-                                    <span class="ep-pole-code">VERTEX 02 // CONTEXTUAL RESEARCH</span>
-                                    <span class="ep-pole-Action" onclick="filterByPole('contextual-research')">Filter Pole &rarr;</span>
-                                </div>
-                                <h3 class="ep-pole-title">Site as Material &amp; Social Archive</h3>
-                                <p class="ep-pole-desc">
-                                    Treating urban strata, historic courtyards, neighborhood rituals, and building thresholds as living physical archives.
-                                </p>
-                                <div class="ep-pole-projects">
-                                    <a href="./projects/chronoclines/" class="ep-mini-proj-link">04 Chronoclines</a>
-                                    <a href="./projects/millieu/" class="ep-mini-proj-link">05 Millieu</a>
-                                    <a href="./projects/bajo-la-fresca/" class="ep-mini-proj-link">07 Bajo La Fresca</a>
-                                    <a href="./projects/ara-sira/" class="ep-mini-proj-link">09 ara-sıra</a>
-                                    <a href="./projects/fire-escape-simulation/" class="ep-mini-proj-link">12 Fire Escape Simulation</a>
-                                </div>
-                            </div>
-
-                            <div class="ep-pole-card">
-                                <div class="ep-pole-top">
-                                    <span class="ep-pole-code">VERTEX 03 // EXPERIMENTAL THINKING</span>
-                                    <span class="ep-pole-Action" onclick="filterByPole('experimental-thinking')">Filter Pole &rarr;</span>
-                                </div>
-                                <h3 class="ep-pole-title">Material Cycles &amp; Speculative Systems</h3>
-                                <p class="ep-pole-desc">
-                                    Proposing unorthodox material life cycles—food-waste biopolymers, soil metabolism, and repurposed bazaar timber.
-                                </p>
-                                <div class="ep-pole-projects">
-                                    <a href="./projects/wood-weave/" class="ep-mini-proj-link">08 Wood Weave</a>
-                                    <a href="./projects/the-earthen/" class="ep-mini-proj-link">10 The Earthen</a>
-                                    <a href="./projects/bio-decay/" class="ep-mini-proj-link">11 Bio-Decay</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 5 Curated Thematic Dialogues -->
-                        <div class="ep-dialogues-strip">
-                            <div class="ep-dialogue-item">
-                                <span class="ep-dl-theme">DISASTER IS NEVER NATURAL</span>
-                                <div class="ep-dl-pair">
-                                    <a href="./projects/emek-museum/">01 Emek Museum</a>
-                                    <span class="ep-dl-arrow">&harr;</span>
-                                    <a href="./projects/fire-escape-simulation/">12 Fire Escape Simulation</a>
-                                </div>
-                            </div>
-                            <div class="ep-dialogue-item">
-                                <span class="ep-dl-theme">CARE &bull; PAUSE &bull; NONHUMAN AGENCY</span>
-                                <div class="ep-dl-pair">
-                                    <a href="./projects/stray/">02 Stray</a>
-                                    <span class="ep-dl-arrow">&harr;</span>
-                                    <a href="./projects/the-earthen/">10 The Earthen</a>
-                                </div>
-                            </div>
-                            <div class="ep-dialogue-item">
-                                <span class="ep-dl-theme">BIO-MATERIALS &bull; ECOLOGICAL CYCLES</span>
-                                <div class="ep-dl-pair">
-                                    <a href="./projects/sprouting-garden/">06 Sprouting Garden</a>
-                                    <span class="ep-dl-arrow">&harr;</span>
-                                    <a href="./projects/bio-decay/">11 Bio-Decay</a>
-                                </div>
-                            </div>
-                            <div class="ep-dialogue-item">
-                                <span class="ep-dl-theme">CLIMATIC COMFORT &bull; LIVING ECOLOGIES</span>
-                                <div class="ep-dl-pair">
-                                    <a href="./projects/sprouting-garden/">06 Sprouting Garden</a>
-                                    <span class="ep-dl-arrow">&harr;</span>
-                                    <a href="./projects/bajo-la-fresca/">07 Bajo La Fresca</a>
-                                </div>
-                            </div>
-                            <div class="ep-dialogue-item">
-                                <span class="ep-dl-theme">MAKING &bull; COMMUNITY &bull; CONSTRUCTION</span>
-                                <div class="ep-dl-pair">
-                                    <a href="./projects/wood-weave/">08 Wood Weave</a>
-                                    <span class="ep-dl-arrow">&harr;</span>
-                                    <a href="./projects/ara-sira/">09 ara-sıra</a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- 5. EDITORIAL FOOTER ON MAIN TAB -->
+                    <!-- QUIET ONE-LINE FOOTER -->
                     <footer class="ep-footer">
                         <div class="ep-footer-inner">
-                            <div class="ep-footer-left">
-                                <span class="ep-footer-brand">Elifsu Gen&ccedil; &mdash; Portfolio (2024&ndash;2026)</span>
-                                <span class="ep-footer-sub">Architecture &amp; Interior Design &bull; MEF University, Istanbul</span>
-                            </div>
+                            <span class="ep-footer-brand">Elifsu Gen&ccedil; &mdash; Architecture &amp; Spatial Design</span>
                             <div class="ep-footer-links">
-                                <button type="button" class="ep-footer-link" onclick="goToPage('design-approach');">Methodology &amp; &Uuml;lker</button>
-                                <button type="button" class="ep-footer-link" onclick="goToPage('archive');">Question Archive (20)</button>
-                                <button type="button" class="ep-footer-link" onclick="goToPage('about');">About &amp; CV</button>
-                                <a href="./projects/you-were-here/" class="ep-footer-link">You Were Here. (Live Demo) &nearr;</a>
+                                <button type="button" class="ep-footer-link" onclick="goToPage('design-approach');">&Uuml;lker &amp; Approach</button>
+                                <button type="button" class="ep-footer-link" onclick="goToPage('archive');">Archive</button>
+                                <button type="button" class="ep-footer-link" onclick="goToPage('about');">About</button>
+                                <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="ep-footer-link">CV (PDF)</a>
                                 <a href="mailto:elifsugenc44@gmail.com" class="ep-footer-link">elifsugenc44@gmail.com</a>
                             </div>
                         </div>
@@ -1596,7 +1213,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-cursorfix"></script>
+    <script src="./script.js?v=20261030-minimal"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>

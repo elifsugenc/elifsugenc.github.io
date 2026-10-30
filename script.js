@@ -3997,43 +3997,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.EDITORIAL_PORTFOLIO_PROJECTS = EDITORIAL_PORTFOLIO_PROJECTS;
 
-    // Map by slug for fast lookup
     const PROJECT_BY_ID = {};
     EDITORIAL_PORTFOLIO_PROJECTS.forEach(p => {
         PROJECT_BY_ID[p.id] = p;
     });
 
-    // State
     let activeDiscipline = 'all';
-    let activePole = null; // 'critical-inquiry' | 'contextual-research' | 'experimental-thinking' | null
-    let activeView = 'editorial'; // 'editorial' | 'grid' | 'index'
-    let searchQuery = '';
+    let activePole = null;
 
-    // DOM References
-    const disciplineButtons = Array.from(document.querySelectorAll('#ep-discipline-bar .ep-disc-pill, #ep-discipline-bar .ep-filter-pill'));
-    const viewButtons = Array.from(document.querySelectorAll('.ep-view-btn'));
-    const searchInput = document.getElementById('ep-project-search');
-    const searchClearBtn = document.getElementById('ep-project-search-clear');
-    const activeHeadingEl = document.getElementById('ep-active-filter-heading');
-    const statusTextEl = document.getElementById('ep-filter-status-text');
-    const resetFilterBtn = document.getElementById('ep-reset-filter-btn');
-
-    // Compute and populate discipline counts in filter bar
-    function updateDisciplineCounts() {
-        disciplineButtons.forEach(btn => {
-            const disc = btn.getAttribute('data-discipline') || 'all';
-            const countSpan = btn.querySelector('.ep-disc-count, .ep-pill-count');
-            if (!countSpan) return;
-            if (disc === 'all') {
-                countSpan.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.length);
-            } else if (disc === 'ulker-cluster' || disc === 'cluster-core') {
-                countSpan.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.isClusterCore).length);
-            } else {
-                const count = EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.disciplines.includes(disc)).length;
-                countSpan.textContent = String(count);
-            }
-        });
-    }
+    const disciplineButtons = Array.from(document.querySelectorAll('#ep-discipline-bar .ep-disc-pill'));
 
     function getFilteredProjects() {
         return EDITORIAL_PORTFOLIO_PROJECTS.filter(p => {
@@ -4042,68 +4014,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (activeDiscipline && activeDiscipline !== 'all') {
                 if (!p.disciplines.includes(activeDiscipline)) return false;
             }
-
-            if (activePole) {
-                if (p.pole !== activePole) return false;
+            if (activePole && p.pole !== activePole) {
+                return false;
             }
-
-            if (searchQuery.trim().length > 0) {
-                const q = searchQuery.toLowerCase().trim();
-                const haystack = [
-                    p.title,
-                    p.subtitle,
-                    p.question,
-                    p.subQuestion || '',
-                    p.summary,
-                    p.location,
-                    p.year,
-                    p.typology,
-                    p.disciplines.join(' '),
-                    p.keywords.join(' '),
-                    p.star ? `${p.star.name} ${p.star.bayer}` : ''
-                ].join(' ').toLowerCase();
-                if (!haystack.includes(q)) return false;
-            }
-
             return true;
         });
     }
 
-    function updateFilterStatusBanner(filteredList) {
-        const isFiltered = (activeDiscipline !== 'all') || !!activePole || (searchQuery.trim().length > 0);
-        if (resetFilterBtn) {
-            resetFilterBtn.classList.toggle('hidden', !isFiltered);
-        }
-
-        const poleNames = {
-            'critical-inquiry': 'Vertex 01 · Critical Inquiry',
-            'contextual-research': 'Vertex 02 · Contextual Research',
-            'experimental-thinking': 'Vertex 03 · Experimental Thinking'
-        };
-
-        if (activeHeadingEl) {
-            if (activePole && poleNames[activePole]) {
-                activeHeadingEl.textContent = poleNames[activePole];
-            } else if (activeDiscipline === 'cluster-core' || activeDiscipline === 'ulker-cluster') {
-                activeHeadingEl.textContent = '✦ Ülker (Pleiades) Core Cluster Works';
-            } else if (activeDiscipline !== 'all') {
-                activeHeadingEl.textContent = activeDiscipline;
-            } else if (searchQuery.trim().length > 0) {
-                activeHeadingEl.textContent = `Search Results: “${searchQuery.trim()}”`;
-            } else {
-                activeHeadingEl.textContent = 'Selected Works & Inquiries';
-            }
-        }
-
-        if (statusTextEl) {
-            const countStr = `${filteredList.length} of ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects`;
-            if (!isFiltered) {
-                statusTextEl.textContent = `Showing all ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects — click any image or title to open the full project.`;
-            } else {
-                statusTextEl.textContent = `Showing ${countStr} matching your active filter.`;
-            }
-        }
-
+    function updateFilterPills() {
         disciplineButtons.forEach(btn => {
             const d = btn.getAttribute('data-discipline');
             const isClusterMatch = (d === 'ulker-cluster' || d === 'cluster-core') && (activeDiscipline === 'ulker-cluster' || activeDiscipline === 'cluster-core');
@@ -4111,325 +4029,88 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Render Editorial Monograph Card (View 1: Default)
-    function renderEditorialCard(p, index) {
-        const starBadgeHtml = p.star
-            ? `<span class="ep-star-badge"><span class="ep-star-glyph">&#x2726;</span> ${p.star.name.toUpperCase()} (${p.star.bayer})</span>`
+    // Minimalist Visual-First Project Card
+    function renderMinimalCard(p, index) {
+        const starNote = p.star
+            ? `<span class="ep-min-star">&#x2726; ${p.star.name}</span><span class="ep-min-dot">&middot;</span>`
             : '';
 
-        const awardsHtml = (p.awards && p.awards.length > 0)
-            ? p.awards.map(a => `<span class="ep-award-badge">${a}</span>`).join('')
-            : '';
-
-        const disciplineTagsHtml = p.disciplines.map(d => {
+        const tagsHtml = p.disciplines.map(d => {
             const isActive = (activeDiscipline === d);
-            return `<button type="button" class="ep-card-discipline-tag ${isActive ? 'is-active' : ''}" data-discipline-click="${d}">${d}</button>`;
+            return `<button type="button" class="ep-min-tag ${isActive ? 'is-active' : ''}" data-discipline-click="${d}">${d}</button>`;
         }).join('');
 
-        let galleryStripHtml = '';
-        if (p.gallery && p.gallery.length > 1) {
-            const thumbs = p.gallery.map((g, gIdx) => `
-                <button type="button" class="ep-thumb-btn ${gIdx === 0 ? 'active' : ''}"
-                        data-proj-id="${p.id}"
-                        data-img-src="${g.src}"
-                        data-img-caption="${g.caption.replace(/"/g, '&quot;')}"
-                        aria-label="Preview ${g.label}">
-                    <img src="${g.src}" alt="${p.title} — ${g.label}" loading="lazy" class="ep-no-auto-lightbox">
-                    <span class="ep-thumb-label">${g.label}</span>
-                </button>
-            `).join('');
-            galleryStripHtml = `
-                <div class="ep-thumb-strip" role="region" aria-label="${p.title} visual plates">
-                    ${thumbs}
-                </div>
-            `;
-        }
-
         return `
-            <article class="ep-project-monograph ep-style-${p.presentationStyle} ${index % 2 === 1 ? 'ep-layout-alt' : ''}"
-                     id="ep-project-${p.id}"
-                     data-project-id="${p.id}"
-                     style="--proj-accent: ${p.color};">
-                
-                <!-- Prominent Visual Stage -->
-                <div class="ep-media-column">
-                    <div class="ep-main-figure">
-                        <a href="${p.url}" class="ep-main-media-link" data-project-nav="${p.id}" aria-label="Open ${p.title} full project">
-                            <img src="${p.heroImg}"
-                                 alt="${p.title} — ${p.subtitle}"
-                                 class="ep-main-img ep-no-auto-lightbox"
-                                 id="ep-main-img-${p.id}"
-                                 loading="${index < 2 ? 'eager' : 'lazy'}">
-                            <span class="ep-media-open-badge">OPEN FULL PROJECT &rarr;</span>
-                        </a>
-                        <div class="ep-figure-caption-bar">
-                            <span class="ep-figure-caption-text" id="ep-caption-${p.id}">${p.heroCaption}</span>
-                            <button type="button" class="ep-zoom-btn" data-zoom-project="${p.id}" aria-label="Enlarge current image fullscreen">
-                                &#x2922; FULLSCREEN
-                            </button>
-                        </div>
-                    </div>
-                    ${galleryStripHtml}
-                </div>
-
-                <!-- Editorial Narrative, Question, Classification & Actions -->
-                <div class="ep-content-column">
-                    <div class="ep-card-topline">
-                        <span class="ep-proj-index">NO. ${p.num}</span>
-                        <span class="ep-proj-year-loc">${p.year} &bull; ${p.location}</span>
-                        <button type="button" class="ep-pole-pill" data-pole-click="${p.pole}">${p.poleLabel}</button>
-                        ${starBadgeHtml}
-                    </div>
-
-                    ${awardsHtml ? `<div class="ep-awards-row">${awardsHtml}</div>` : ''}
-
-                    <h3 class="ep-proj-title">
-                        <a href="${p.url}" data-project-nav="${p.id}">${p.title}</a>
-                    </h3>
-                    <p class="ep-proj-subtitle">${p.subtitle}</p>
-
-                    <blockquote class="ep-proj-question-box">
-                        <p class="ep-question-main">&ldquo;${p.question}&rdquo;</p>
-                        ${p.subQuestion ? `<p class="ep-question-sub">${p.subQuestion}</p>` : ''}
-                    </blockquote>
-
-                    <p class="ep-proj-summary">${p.summary}</p>
-
-                    <div class="ep-card-disciplines-wrap">
-                        <div class="ep-card-disciplines">${disciplineTagsHtml}</div>
-                    </div>
-
-                    <div class="ep-card-actions">
-                        <a href="${p.url}" class="ep-btn-open-project" data-project-nav="${p.id}">
-                            <span>EXPLORE PROJECT</span>
-                            <span class="ep-btn-arrow">&rarr;</span>
-                        </a>
-                        <button type="button" class="ep-btn-quick-read" data-quick-read="${p.id}">
-                            QUICK READ (EN / TR)
-                        </button>
-                    </div>
-                </div>
-            </article>
-        `;
-    }
-
-    // Render Visual Grid Card (View 2: Compact Grid)
-    function renderGridCard(p) {
-        const starBadge = p.star
-            ? `<span class="ep-grid-star">&#x2726; ${p.star.name}</span>`
-            : '';
-
-        const disciplineTags = p.disciplines.map(d =>
-            `<button type="button" class="ep-card-discipline-tag" data-discipline-click="${d}">${d}</button>`
-        ).join('');
-
-        return `
-            <article class="ep-grid-card" id="ep-project-${p.id}" data-project-id="${p.id}" style="--proj-accent: ${p.color};">
-                <a href="${p.url}" class="ep-grid-card-link" data-project-nav="${p.id}">
-                    <div class="ep-grid-media-wrap">
-                        <img src="${p.heroImg}" alt="${p.title}" loading="lazy" class="ep-grid-img ep-no-auto-lightbox">
-                        <span class="ep-grid-num">${p.num}</span>
-                        ${starBadge}
+            <article class="ep-minimal-card" id="ep-project-${p.id}" data-project-id="${p.id}">
+                <a href="${p.url}" class="ep-min-image-link" data-project-nav="${p.id}" aria-label="${p.title}">
+                    <div class="ep-min-image-wrap">
+                        <img src="${p.heroImg}"
+                             alt="${p.title}"
+                             class="ep-min-img ep-no-auto-lightbox"
+                             loading="${index < 4 ? 'eager' : 'lazy'}">
                     </div>
                 </a>
-                <div class="ep-grid-body">
-                    <div class="ep-grid-meta">
-                        <span>${p.year} &bull; ${p.location}</span>
-                        <span class="ep-grid-pole">${p.poleLabel}</span>
+
+                <div class="ep-min-body">
+                    <div class="ep-min-header-row">
+                        <h2 class="ep-min-title">
+                            <a href="${p.url}" data-project-nav="${p.id}">${p.title}</a>
+                        </h2>
+                        <div class="ep-min-meta">
+                            ${starNote}<span>${p.year}</span>
+                        </div>
                     </div>
-                    <h3 class="ep-grid-title">
-                        <a href="${p.url}" data-project-nav="${p.id}">${p.title}</a>
-                    </h3>
-                    <p class="ep-grid-question">&ldquo;${p.question}&rdquo;</p>
-                    <p class="ep-grid-summary">${p.summary}</p>
-                    <div class="ep-grid-tags">${disciplineTags}</div>
-                    <div class="ep-grid-footer">
-                        <a href="${p.url}" class="ep-grid-open-link" data-project-nav="${p.id}">EXPLORE PROJECT &rarr;</a>
-                        <button type="button" class="ep-grid-quick-btn" data-quick-read="${p.id}">EN / TR</button>
+
+                    <p class="ep-min-subtitle">${p.subtitle}</p>
+                    <p class="ep-min-question">&ldquo;${p.question}&rdquo;</p>
+
+                    <div class="ep-min-tags">
+                        ${tagsHtml}
                     </div>
                 </div>
             </article>
-        `;
-    }
-
-    // Render Architectural Index Table (View 3: Index & Relations)
-    function renderIndexTable(list) {
-        const rows = list.map(p => {
-            const starText = p.star ? `✦ ${p.star.name} (${p.star.bayer})` : 'Constellation Field';
-            const tags = p.disciplines.map(d =>
-                `<button type="button" class="ep-index-tag" data-discipline-click="${d}">${d}</button>`
-            ).join('');
-
-            return `
-                <tr class="ep-index-row" id="ep-project-${p.id}" data-project-id="${p.id}" style="--proj-accent: ${p.color};">
-                    <td class="ep-idx-num">${p.num}</td>
-                    <td class="ep-idx-thumb">
-                        <a href="${p.url}" data-project-nav="${p.id}" class="ep-main-media-link">
-                            <img src="${p.heroImg}" alt="${p.title}" loading="lazy" class="ep-no-auto-lightbox">
-                        </a>
-                    </td>
-                    <td class="ep-idx-title">
-                        <a href="${p.url}" data-project-nav="${p.id}" class="ep-idx-title-link">${p.title}</a>
-                        <span class="ep-idx-sub">${p.subtitle}</span>
-                    </td>
-                    <td class="ep-idx-question">&ldquo;${p.question}&rdquo;</td>
-                    <td class="ep-idx-disciplines"><div class="ep-idx-tag-wrap">${tags}</div></td>
-                    <td class="ep-idx-cluster">
-                        <span class="ep-idx-star">${starText}</span>
-                        <span class="ep-idx-pole">${p.poleLabel}</span>
-                    </td>
-                    <td class="ep-idx-year">${p.year}<br><small>${p.location}</small></td>
-                    <td class="ep-idx-action">
-                        <a href="${p.url}" class="ep-idx-open-btn" data-project-nav="${p.id}">OPEN &rarr;</a>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-
-        return `
-            <div class="ep-index-table-wrap">
-                <table class="ep-index-table">
-                    <thead>
-                        <tr>
-                            <th>NO</th>
-                            <th>VISUAL</th>
-                            <th>PROJECT &amp; TYPOLOGY</th>
-                            <th>CORE SPATIAL QUESTION</th>
-                            <th>DISCIPLINES</th>
-                            <th>ÜLKER / POLE</th>
-                            <th>YEAR / SITE</th>
-                            <th>ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${rows}
-                    </tbody>
-                </table>
-            </div>
         `;
     }
 
     function renderProjectsStage() {
         const filtered = getFilteredProjects();
-        updateFilterStatusBanner(filtered);
-
-        stageEl.setAttribute('data-view-mode', activeView);
+        updateFilterPills();
 
         if (filtered.length === 0) {
             stageEl.innerHTML = `
                 <div class="ep-empty-state">
-                    <p class="ep-empty-title">No projects match the current filter or search query.</p>
-                    <button type="button" class="ep-btn-reset-empty" id="ep-empty-reset-btn">Show All 12 Projects</button>
+                    <button type="button" class="ep-btn-reset-empty" id="ep-empty-reset-btn">Show All Projects</button>
                 </div>
             `;
             const emptyResetBtn = document.getElementById('ep-empty-reset-btn');
             if (emptyResetBtn) {
-                emptyResetBtn.addEventListener('click', resetAllFilters);
+                emptyResetBtn.addEventListener('click', () => {
+                    activeDiscipline = 'all';
+                    activePole = null;
+                    renderProjectsStage();
+                });
             }
             return;
         }
 
-        if (activeView === 'editorial') {
-            stageEl.innerHTML = `<div class="ep-editorial-list">${filtered.map((p, i) => renderEditorialCard(p, i)).join('')}</div>`;
-        } else if (activeView === 'grid') {
-            stageEl.innerHTML = `<div class="ep-grid-list">${filtered.map(p => renderGridCard(p)).join('')}</div>`;
-        } else {
-            stageEl.innerHTML = renderIndexTable(filtered);
-        }
+        stageEl.innerHTML = `<div class="ep-minimal-grid">${filtered.map((p, i) => renderMinimalCard(p, i)).join('')}</div>`;
     }
-
-    function resetAllFilters() {
-        activeDiscipline = 'all';
-        activePole = null;
-        searchQuery = '';
-        if (searchInput) searchInput.value = '';
-        if (searchClearBtn) searchClearBtn.classList.add('hidden');
-        renderProjectsStage();
-    }
-
-    // Open Bilingual Quick Read Modal (#project-modal) without leaving the page
-    function openQuickReadModal(projectId) {
-        const p = PROJECT_BY_ID[projectId];
-        if (!p) return;
-
-        const modal = document.getElementById('project-modal');
-        if (!modal) return;
-
-        const mCat = document.getElementById('m-cat');
-        const mYear = document.getElementById('m-year');
-        const mTitle = document.getElementById('m-title');
-        const mQuestion = document.getElementById('m-question');
-        const mDescEn = document.getElementById('m-desc-en');
-        const mDescTr = document.getElementById('m-desc-tr');
-        const mTags = document.getElementById('m-tags');
-        const mLink = document.getElementById('m-link');
-        const mVisualStage = document.getElementById('m-visual-stage');
-
-        const cardStoreEl = document.querySelector(`#project-cards-store .project-card[data-id="${p.id}"]`);
-        const enHtml = cardStoreEl?.querySelector('.card-detail-en')?.innerHTML || `<p>${p.summary}</p>`;
-        const trHtml = cardStoreEl?.querySelector('.card-detail-tr')?.innerHTML || `<p>${p.summary}</p>`;
-
-        if (mCat) mCat.textContent = p.disciplines.join(' · ');
-        if (mYear) mYear.textContent = `${p.year} — ${p.location}`;
-        if (mTitle) mTitle.textContent = p.title;
-        if (mQuestion) mQuestion.textContent = `“${p.question}”`;
-        if (mDescEn) mDescEn.innerHTML = enHtml;
-        if (mDescTr) mDescTr.innerHTML = trHtml;
-
-        if (mTags) {
-            mTags.innerHTML = p.disciplines.map(d => `<span class="tag">${d}</span>`).join('') +
-                p.keywords.map(k => `<span class="tag">#${k}</span>`).join('');
-        }
-
-        if (mLink) {
-            mLink.setAttribute('href', p.url);
-        }
-
-        if (mVisualStage) {
-            const galleryImgs = (p.gallery && p.gallery.length > 0) ? p.gallery : [{ src: p.heroImg, caption: p.heroCaption }];
-            mVisualStage.innerHTML = `
-                <div class="ep-modal-gallery">
-                    ${galleryImgs.map(g => `
-                        <figure class="ep-modal-figure">
-                            <img src="${g.src}" alt="${p.title}" loading="lazy">
-                            <figcaption>${g.caption}</figcaption>
-                        </figure>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        window.lastOpenedProjectSlug = p.id;
-        if (typeof window.toggleModalLang === 'function') {
-            window.toggleModalLang('en');
-        }
-
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-    window.openQuickReadModal = openQuickReadModal;
 
     function jumpToProjectCard(projectId) {
         if (projectId === 'about') {
-            if (typeof window.goToPage === 'function') {
-                window.goToPage('about');
-            }
+            if (typeof window.goToPage === 'function') window.goToPage('about');
             return;
         }
         if (!PROJECT_BY_ID[projectId]) return;
         let targetEl = document.getElementById(`ep-project-${projectId}`);
         if (!targetEl) {
-            resetAllFilters();
+            activeDiscipline = 'all';
+            activePole = null;
+            renderProjectsStage();
             targetEl = document.getElementById(`ep-project-${projectId}`);
         }
         if (targetEl) {
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            targetEl.classList.remove('ep-flash-highlight');
-            void targetEl.offsetWidth;
-            targetEl.classList.add('ep-flash-highlight');
-            setTimeout(() => {
-                targetEl.classList.remove('ep-flash-highlight');
-            }, 2400);
         }
     }
     window.jumpToProjectCard = jumpToProjectCard;
@@ -4438,10 +4119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         activePole = poleKey;
         activeDiscipline = 'all';
         renderProjectsStage();
-        const anchor = document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor');
-        if (anchor) {
-            anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
     };
 
     disciplineButtons.forEach(btn => {
@@ -4457,114 +4134,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if (resetFilterBtn) {
-        resetFilterBtn.addEventListener('click', resetAllFilters);
-    }
-
-    viewButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const v = btn.getAttribute('data-view-mode') || btn.getAttribute('data-view') || 'editorial';
-            activeView = v;
-            viewButtons.forEach(b => {
-                const bMode = b.getAttribute('data-view-mode') || b.getAttribute('data-view');
-                const isMatch = bMode === v;
-                b.classList.toggle('active', isMatch);
-                b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
-            });
-            renderProjectsStage();
-        });
-    });
-
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value || '';
-            if (searchClearBtn) {
-                searchClearBtn.classList.toggle('hidden', searchQuery.trim().length === 0);
-            }
-            renderProjectsStage();
-        });
-    }
-
-    if (searchClearBtn) {
-        searchClearBtn.addEventListener('click', () => {
-            searchQuery = '';
-            if (searchInput) searchInput.value = '';
-            searchClearBtn.classList.add('hidden');
-            renderProjectsStage();
-        });
-    }
-
-    // Hero & Topbar smooth navigation helpers
     const brandHomeEl = document.getElementById('ep-brand-home');
     if (brandHomeEl) {
-        brandHomeEl.addEventListener('click', () => {
+        brandHomeEl.addEventListener('click', (e) => {
+            e.preventDefault();
             if (typeof window.switchTab === 'function') {
                 window.switchTab('main');
             }
+            activeDiscipline = 'all';
+            activePole = null;
+            renderProjectsStage();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
-    const heroExploreBtn = document.getElementById('hero-explore-projects-btn');
-    if (heroExploreBtn) {
-        heroExploreBtn.addEventListener('click', (e) => {
-            const target = document.getElementById('projects-explorer');
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-
     stageEl.addEventListener('click', (e) => {
-        // 1. Thumbnail switch
-        const thumbBtn = e.target.closest('.ep-thumb-btn');
-        if (thumbBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const projId = thumbBtn.getAttribute('data-proj-id');
-            const newSrc = thumbBtn.getAttribute('data-img-src');
-            const newCap = thumbBtn.getAttribute('data-img-caption');
-            const mainImg = document.getElementById(`ep-main-img-${projId}`);
-            const capEl = document.getElementById(`ep-caption-${projId}`);
-            if (mainImg && newSrc) {
-                mainImg.src = newSrc;
-            }
-            if (capEl && newCap) {
-                capEl.textContent = newCap;
-            }
-            const strip = thumbBtn.closest('.ep-thumb-strip');
-            if (strip) {
-                strip.querySelectorAll('.ep-thumb-btn').forEach(b => b.classList.remove('active'));
-            }
-            thumbBtn.classList.add('active');
-            return;
-        }
-
-        // 2. Fullscreen Zoom button
-        const zoomBtn = e.target.closest('.ep-zoom-btn');
-        if (zoomBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const projId = zoomBtn.getAttribute('data-zoom-project');
-            const mainImg = document.getElementById(`ep-main-img-${projId}`);
-            if (mainImg && typeof window.openUniversalFullscreenImage === 'function') {
-                window.openUniversalFullscreenImage(mainImg.currentSrc || mainImg.src);
-            }
-            return;
-        }
-
-        // 3. Quick Read (EN/TR) button
-        const quickBtn = e.target.closest('[data-quick-read]');
-        if (quickBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const projId = quickBtn.getAttribute('data-quick-read');
-            openQuickReadModal(projId);
-            return;
-        }
-
-        // 4. Inline discipline tag click
         const discBtn = e.target.closest('[data-discipline-click]');
         if (discBtn) {
             e.preventDefault();
@@ -4574,41 +4158,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 activePole = null;
                 activeDiscipline = (activeDiscipline === d) ? 'all' : d;
                 renderProjectsStage();
-                const anchor = document.getElementById('projects-explorer') || document.getElementById('ep-projects-anchor');
-                if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
             return;
         }
 
-        // 5. Pole pill click
-        const poleBtn = e.target.closest('[data-pole-click]');
-        if (poleBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const pole = poleBtn.getAttribute('data-pole-click');
-            if (pole) {
-                window.filterByPole(pole);
-            }
-            return;
-        }
-
-        // 6. Related project jump click
-        const relJumpBtn = e.target.closest('[data-jump-project]');
-        if (relJumpBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            const targetId = relJumpBtn.getAttribute('data-jump-project');
-            jumpToProjectCard(targetId);
-            return;
-        }
-
-        // 7. Save active filter, view & return scroll state when navigating to a project page
         const projNavLink = e.target.closest('[data-project-nav]');
         if (projNavLink) {
             const pId = projNavLink.getAttribute('data-project-nav') || '';
             try {
                 sessionStorage.setItem('portfolio_return_discipline', activeDiscipline);
-                sessionStorage.setItem('portfolio_return_view', activeView);
                 sessionStorage.setItem('portfolio_return_pole', activePole || '');
                 sessionStorage.setItem('portfolio_return_project', pId);
                 sessionStorage.setItem('portfolio_return_scroll', String(window.scrollY));
@@ -4617,37 +4175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event Listeners: Ülker SVG Star Points & Cluster Jump Links in Hero
-    document.querySelectorAll('.ep-star-point[data-scroll-target], .ep-star-point[data-star-target], .ep-cluster-jump[data-jump-project]').forEach(el => {
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = el.getAttribute('data-scroll-target') || el.getAttribute('data-star-target') || el.getAttribute('data-jump-project');
-            if (targetId) {
-                jumpToProjectCard(targetId);
-            }
-        });
-    });
-
-    // Restore saved discipline/view filter if returning from a project page
     let restoredScrollY = null;
     try {
         const savedDisc = sessionStorage.getItem('portfolio_return_discipline');
-        const savedView = sessionStorage.getItem('portfolio_return_view');
         const savedPole = sessionStorage.getItem('portfolio_return_pole');
         const savedScroll = sessionStorage.getItem('portfolio_return_scroll');
         if (savedDisc) {
             activeDiscipline = savedDisc;
             sessionStorage.removeItem('portfolio_return_discipline');
-        }
-        if (savedView && ['editorial', 'grid', 'index'].includes(savedView)) {
-            activeView = savedView;
-            viewButtons.forEach(b => {
-                const bMode = b.getAttribute('data-view-mode') || b.getAttribute('data-view');
-                const isMatch = bMode === activeView;
-                b.classList.toggle('active', isMatch);
-                b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
-            });
-            sessionStorage.removeItem('portfolio_return_view');
         }
         if (savedPole) {
             activePole = savedPole;
@@ -4661,8 +4196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.removeItem('portfolio_return_project');
     } catch (_) {}
 
-    // Initial render
-    updateDisciplineCounts();
     renderProjectsStage();
 
     if (restoredScrollY !== null && !Number.isNaN(restoredScrollY)) {
