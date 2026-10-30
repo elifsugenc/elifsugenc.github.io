@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function isImage(target) {
             if (!target || target === document.body || target === document.documentElement) return false;
             return !!target.closest(
-                'img:not(.brand-logo-gif):not([src*="favicon"]), ' +
+                'img:not(.brand-logo-gif):not([src*="favicon"]):not(.sq-tile-img), ' +
                 '.modal-img-wrap, .zoomable-image-container, ' +
                 '.image-lightbox, .lightbox-overlay, .lightbox-modal, #universal-lightbox, ' +
                 '.lightbox-content-box, .lightbox-img-wrapper, #lightbox-img, .lightbox-img'
@@ -3129,7 +3129,7 @@ window.toggleModalLang = function(lang) {
             return;
         }
 
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img)');
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
         if (clickedImg) {
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
@@ -3149,9 +3149,10 @@ window.toggleModalLang = function(lang) {
 
 
 // =========================================================================
-// SPATIAL SQUARE MATRIX ENGINE V2 (DUAL-LAYER SVG + BORDER-TO-BORDER ROUTING)
-// Ensures active connection lines, border anchor dots, and relationship labels
-// render in the foreground SVG layer (z-index: 30) and never hide behind cards.
+// SPATIAL SQUARE MATRIX ENGINE V3
+// - Exact original project questions & cover images from main
+// - Pure empty negative space cells (no background grid clutter, no dashed boxes)
+// - Dual-Layer SVG (ambient background lines + foreground active connection pills)
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const clusterGridEl = document.getElementById('ulker-cluster-grid');
@@ -3164,6 +3165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const allSvgFg = document.getElementById('all-projects-svg-fg');
     const allStageEl = document.getElementById('all-projects-matrix-stage');
 
+    // 100% VERBATIM QUESTIONS, IMAGES & YEARS FROM MAIN
     const PROJECTS = {
         'emek-museum': {
             id: 'emek-museum',
@@ -3174,7 +3176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/emek-museum-wip.svg',
             url: './projects/emek-museum/',
             isCluster: true,
-            star: 'Maia · 20 Tauri',
+            star: 'Maia',
             disciplines: ['Architectural Design', 'Spatial Design', 'Exhibition Design']
         },
         'stray': {
@@ -3186,20 +3188,20 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/stray-project.png',
             url: './projects/stray/',
             isCluster: true,
-            star: 'Electra · 17 Tauri',
-            disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation', 'Experimental Design']
+            star: 'Electra',
+            disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation']
         },
         'you-were-here': {
             id: 'you-were-here',
             num: '03',
             title: 'YOU WERE HERE.',
             year: '2026',
-            question: 'Are you really here?',
-            img: './projects/you-were-here/assets/ywh- constellation.svg',
+            question: 'What remains of the movements we forget in the attention economy?',
+            img: './assets/you-were-here-cover.png',
             url: './projects/you-were-here/',
-            isCluster: true,
-            star: 'Merope · 23 Tauri',
-            disciplines: ['Interactive & Simulation', 'Experimental Design', 'Visual Communication']
+            isCluster: false,
+            star: 'Merope',
+            disciplines: ['Interactive & Simulation', 'Spatial Design']
         },
         'chronoclines': {
             id: 'chronoclines',
@@ -3211,7 +3213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/chronoclines/',
             isCluster: false,
             star: null,
-            disciplines: ['Architectural Design', 'Exhibition Design', 'Visual Communication']
+            disciplines: ['Architectural Design', 'Exhibition Design']
         },
         'millieu': {
             id: 'millieu',
@@ -3223,7 +3225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/millieu/',
             isCluster: false,
             star: null,
-            disciplines: ['Spatial Design', 'Architectural Design', 'Visual Communication']
+            disciplines: ['Spatial Design', 'Architectural Design']
         },
         'sprouting-garden': {
             id: 'sprouting-garden',
@@ -3247,7 +3249,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/bajo-la-fresca/',
             isCluster: false,
             star: null,
-            disciplines: ['Spatial Design', 'Exhibition Design', 'Bio-Material & Ecological', 'Experimental Design']
+            disciplines: ['Spatial Design', 'Exhibition Design', 'Bio-Material & Ecological']
         },
         'wood-weave': {
             id: 'wood-weave',
@@ -3259,7 +3261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/wood-weave/',
             isCluster: false,
             star: null,
-            disciplines: ['Architectural Design', 'Spatial Design', 'Bio-Material & Ecological', 'Exhibition Design']
+            disciplines: ['Architectural Design', 'Spatial Design', 'Bio-Material & Ecological']
         },
         'ara-sira': {
             id: 'ara-sira',
@@ -3271,18 +3273,18 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/ara-sira/',
             isCluster: false,
             star: null,
-            disciplines: ['Editorial Design', 'Spatial Design', 'Architectural Design', 'Visual Communication']
+            disciplines: ['Editorial Design', 'Spatial Design', 'Architectural Design']
         },
         'the-earthen': {
             id: 'the-earthen',
             num: '10',
             title: 'THE EARTHEN',
-            year: '2025',
-            question: 'How can we link earth’s natural cycles to human wellbeing?',
-            img: './assets/the-earthen-render-1.jpg',
+            year: '2026',
+            question: 'Is there life because there is death?',
+            img: './assets/the-earthen-cover.png',
             url: './projects/the-earthen/',
             isCluster: true,
-            star: 'Taygeta · 19 Tauri',
+            star: 'Taygeta',
             disciplines: ['Architectural Design', 'Bio-Material & Ecological', 'Spatial Design']
         },
         'bio-decay': {
@@ -3290,117 +3292,111 @@ document.addEventListener('DOMContentLoaded', () => {
             num: '11',
             title: 'BIO-DECAY',
             year: '2025',
-            question: 'Should every material last forever?',
-            img: './assets/bio-decay-cover.jpg',
+            question: 'How many microplastics can we eat in a day?',
+            img: './assets/bio-decay-cover.png',
             url: './projects/bio-decay/',
             isCluster: true,
-            star: 'Celaeno · 16 Tauri',
-            disciplines: ['Bio-Material & Ecological', 'Experimental Design', 'Editorial Design']
+            star: 'Celaeno',
+            disciplines: ['Bio-Material & Ecological', 'Editorial Design']
         },
         'fire-escape-simulation': {
             id: 'fire-escape-simulation',
             num: '12',
             title: 'FIRE ESCAPE SIMULATION',
-            year: '2025',
-            question: 'Is a disaster ever truly natural?',
-            img: './assets/fire-escape-cover.png',
+            year: '2026',
+            question: 'Can you escape the fire?',
+            img: './assets/fire-escape-wip.svg',
             url: './projects/fire-escape-simulation/',
             isCluster: true,
-            star: 'Asterope · 21 Tauri',
-            disciplines: ['Interactive & Simulation', 'Architectural Design', 'Experimental Design', 'Visual Communication']
+            star: 'Asterope',
+            disciplines: ['Interactive & Simulation', 'Architectural Design']
         }
     };
 
+    // 4x2 Ülker Cluster Layout (5 Core Ülker Projects from main + 1 quiet Alcyone intro + 2 pure empty spaces)
     const CLUSTER_MATRIX_SLOTS = [
         { type: 'alcyone' },
         { type: 'project', id: 'emek-museum' },
-        { type: 'void', coord: 'RA 03h 47m', label: 'LABOR & TRACE' },
-        { type: 'project', id: 'the-earthen' },
+        { type: 'void' },
         { type: 'project', id: 'fire-escape-simulation' },
         { type: 'project', id: 'stray' },
-        { type: 'void', coord: 'DEC +24° 07′', label: 'PRESENCE & DRIFT' },
-        { type: 'project', id: 'you-were-here' },
-        { type: 'void', coord: 'M45 // 444 LY', label: 'MATTER & TIME' },
+        { type: 'void' },
+        { type: 'project', id: 'the-earthen' },
         { type: 'project', id: 'bio-decay' }
     ];
 
     const CLUSTER_RELATIONS = [
-        { a: 'stray', b: 'emek-museum', label: 'CIVIC PRESENCE' },
-        { a: 'emek-museum', b: 'you-were-here', label: 'COLLECTIVE MEMORY' },
-        { a: 'stray', b: 'you-were-here', label: 'TRACES OF DRIFT' },
-        { a: 'emek-museum', b: 'the-earthen', label: 'TACTILE GROUND' },
-        { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES' },
-        { a: 'the-earthen', b: 'fire-escape-simulation', label: 'SPATIAL THRESHOLD' },
-        { a: 'bio-decay', b: 'fire-escape-simulation', label: 'TEMPORAL URGENCY' },
-        { a: 'you-were-here', b: 'bio-decay', label: 'EPHEMERAL MATTER' }
+        { a: 'emek-museum', b: 'fire-escape-simulation', label: 'DISASTER IS NEVER NATURAL', ambient: true },
+        { a: 'emek-museum', b: 'stray', label: 'INVISIBLE URBAN RHYTHMS', ambient: true },
+        { a: 'stray', b: 'the-earthen', label: 'CARE · PAUSE · NONHUMAN AGENCY', ambient: true },
+        { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES · MATERIAL DECAY', ambient: true },
+        { a: 'fire-escape-simulation', b: 'the-earthen', label: 'BODILY THRESHOLDS', ambient: true },
+        { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: false }
     ];
 
+    // 4x5 Spatial Grid on See All Projects (12 Projects interspersed with 8 pure open negative-space squares)
     const ALL_PROJECTS_MATRIX_SLOTS = [
         { type: 'project', id: 'emek-museum' },
-        { type: 'void', label: 'DISASTER IS NEVER NATURAL' },
+        { type: 'void' },
         { type: 'project', id: 'fire-escape-simulation' },
-        { type: 'void', label: 'DIGITAL TRACES & MEMORY' },
-        { type: 'project', id: 'you-were-here' },
-        { type: 'void', label: 'URBAN COUNTER-MONUMENTS' },
-        { type: 'project', id: 'stray' },
-        { type: 'void', label: 'CARE · PAUSE · WELLBEING' },
-        { type: 'project', id: 'the-earthen' },
-        { type: 'void', label: 'REGENERATIVE CYCLES' },
         { type: 'project', id: 'chronoclines' },
-        { type: 'void', label: 'PALIMPSEST & RITUAL' },
+
+        { type: 'void' },
+        { type: 'project', id: 'stray' },
+        { type: 'void' },
+        { type: 'project', id: 'the-earthen' },
+
         { type: 'project', id: 'millieu' },
-        { type: 'void', label: 'BIOPOLYMER & SOIL' },
-        { type: 'project', id: 'bio-decay' },
-        { type: 'void', label: 'NON-DISPLACING ECOLOGY' },
+        { type: 'void' },
         { type: 'project', id: 'sprouting-garden' },
-        { type: 'void', label: 'SENSORY MICROCLIMATE' },
+        { type: 'void' },
+
+        { type: 'void' },
         { type: 'project', id: 'bajo-la-fresca' },
-        { type: 'void', label: 'EPHEMERAL TECTONICS' },
+        { type: 'void' },
+        { type: 'project', id: 'bio-decay' },
+
         { type: 'project', id: 'wood-weave' },
-        { type: 'void', label: 'MAKING & COMMUNITY' },
+        { type: 'void' },
         { type: 'project', id: 'ara-sira' },
-        { type: 'void', label: 'MODULAR THRESHOLDS' },
-        { type: 'cluster-return' }
+        { type: 'project', id: 'you-were-here' }
     ];
 
+    // Curated 1-to-1 thematic relations (preserving exact themes from main/script.js)
     const ALL_PROJECTS_RELATIONS = [
-        { a: 'emek-museum', b: 'fire-escape-simulation', label: 'DISASTER IS NEVER NATURAL' },
-        { a: 'fire-escape-simulation', b: 'you-were-here', label: 'SYSTEMS & TRACES' },
-        { a: 'emek-museum', b: 'stray', label: 'INVISIBLE RHYTHMS' },
-        { a: 'stray', b: 'you-were-here', label: 'PRESENCE & DRIFT' },
-        { a: 'stray', b: 'the-earthen', label: 'CARE & PAUSE' },
-        { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES' },
-        { a: 'emek-museum', b: 'chronoclines', label: 'URBAN MEMORY' },
-        { a: 'chronoclines', b: 'millieu', label: 'KADIKÖY CONTEXT' },
-        { a: 'millieu', b: 'sprouting-garden', label: 'CULINARY COMMONS' },
-        { a: 'sprouting-garden', b: 'bajo-la-fresca', label: 'LIVING MICROCLIMATE' },
-        { a: 'bajo-la-fresca', b: 'bio-decay', label: 'BOTANICAL MATTER' },
-        { a: 'sprouting-garden', b: 'bio-decay', label: 'ECOLOGICAL CYCLES' },
-        { a: 'sprouting-garden', b: 'wood-weave', label: 'TIMBER TECTONICS' },
-        { a: 'wood-weave', b: 'ara-sira', label: 'MAKING & COMMUNITY' },
-        { a: 'millieu', b: 'ara-sira', label: 'SOCIAL THRESHOLDS' }
+        { a: 'emek-museum', b: 'fire-escape-simulation', label: 'DISASTER IS NEVER NATURAL', ambient: true },
+        { a: 'stray', b: 'the-earthen', label: 'CARE · PAUSE · NONHUMAN AGENCY', ambient: true },
+        { a: 'sprouting-garden', b: 'bio-decay', label: 'BIO-MATERIALS · ECOLOGICAL CYCLES', ambient: true },
+        { a: 'sprouting-garden', b: 'bajo-la-fresca', label: 'CLIMATIC COMFORT · LIVING ECOLOGIES', ambient: true },
+        { a: 'wood-weave', b: 'ara-sira', label: 'MAKING · COMMUNITY · CONSTRUCTION', ambient: true },
+        { a: 'emek-museum', b: 'stray', label: 'INVISIBLE URBAN RHYTHMS', ambient: false },
+        { a: 'emek-museum', b: 'chronoclines', label: 'CIVIC ARCHIVE · URBAN MEMORY', ambient: false },
+        { a: 'fire-escape-simulation', b: 'chronoclines', label: 'URBAN FLOWS & THRESHOLDS', ambient: false },
+        { a: 'chronoclines', b: 'millieu', label: 'KADIKÖY · TEMPORAL PALIMPSEST', ambient: false },
+        { a: 'millieu', b: 'sprouting-garden', label: 'SHARED ECOLOGICAL COMMONS', ambient: false },
+        { a: 'millieu', b: 'ara-sira', label: 'SOCIAL ATMOSPHERE · PLAY & QUIET', ambient: false },
+        { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES · MATERIAL DECAY', ambient: false },
+        { a: 'bajo-la-fresca', b: 'wood-weave', label: 'TACTILE PAVILION CRAFT', ambient: false },
+        { a: 'stray', b: 'you-were-here', label: 'PRESENCE · TRACES · PARTICIPATION', ambient: false },
+        { a: 'ara-sira', b: 'you-were-here', label: 'PARTICIPATORY MEMORY', ambient: false }
     ];
 
     function renderSquareTile(p, originTab) {
-        const starBadge = p.star
-            ? `<span class="sq-star-pill">&#x2726; ${p.star}</span>`
-            : `<span class="sq-year-pill">${p.year}</span>`;
+        const starMeta = (originTab === 'main' && p.star)
+            ? `<span class="sq-star-tag">&#x2726; ${p.star}</span>`
+            : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
             <article class="sq-cell sq-project-tile" data-proj-id="${p.id}" data-origin-tab="${originTab}">
                 <a href="${p.url}" class="sq-tile-link" data-origin-nav="${originTab}">
                     <div class="sq-img-box" data-node-anchor="${p.id}">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="eager">
-                        <div class="sq-top-badges">
-                            <span class="sq-num-badge">${p.num}</span>
-                            ${starBadge}
-                        </div>
                     </div>
                     <div class="sq-caption">
-                        <p class="sq-question">&ldquo;${p.question}&rdquo;</p>
+                        <p class="sq-question">${p.question}</p>
                         <div class="sq-title-bar">
-                            <span class="sq-title">${p.title}</span>
-                            <span class="sq-disc">${p.disciplines[0]}</span>
+                            <span class="sq-title">${p.num} &mdash; ${p.title}</span>
+                            ${starMeta}
                         </div>
                     </div>
                 </a>
@@ -3413,10 +3409,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return `
                 <div class="sq-cell sq-void-cell sq-alcyone-cell">
                     <div class="sq-alcyone-inner">
-                        <span class="sq-alcyone-star">&#x2726; ALCYONE &bull; &eta; TAURI</span>
-                        <h2 class="sq-alcyone-title">Design begins with a question.</h2>
+                        <span class="sq-alcyone-star">&#x2726; ALCYONE &bull; PRACTICE CENTER</span>
+                        <h2 class="sq-alcyone-title">Every project begins with a question.</h2>
                         <p class="sq-alcyone-desc">
-                            Six visible stars in the &Uuml;lker cluster, connected across open space.
+                            Five core works in the &Uuml;lker (Pleiades) cluster. Hover any square to trace how its inquiry connects across space.
                         </p>
                         <button type="button" class="sq-alcyone-cta" onclick="goToPage('projects');" data-cursor="dot">
                             SEE ALL 12 PROJECTS &rarr;
@@ -3425,30 +3421,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }
-        if (slot.type === 'cluster-return') {
-            return `
-                <div class="sq-cell sq-void-cell sq-alcyone-cell">
-                    <div class="sq-alcyone-inner">
-                        <span class="sq-alcyone-star">&#x2726; M45 // PLEIADES</span>
-                        <p class="sq-alcyone-desc">
-                            Return to the 6 core works of the &Uuml;lker cluster entrance.
-                        </p>
-                        <button type="button" class="sq-alcyone-cta" onclick="goToPage('main');" data-cursor="dot">
-                            &larr; &Uuml;LKER CLUSTER
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        return `
-            <div class="sq-cell sq-void-cell" aria-hidden="true">
-                <div class="sq-void-crosshair">
-                    <span class="sq-cross-plus">+</span>
-                    ${slot.coord ? `<span class="sq-void-coord">${slot.coord}</span>` : ''}
-                    ${slot.label ? `<span class="sq-void-rel-label">${slot.label}</span>` : ''}
-                </div>
-            </div>
-        `;
+        // Pure, silent negative space — no borders, no crosshairs, no clutter
+        return `<div class="sq-cell sq-void-cell" aria-hidden="true"></div>`;
     }
 
     if (clusterGridEl) {
@@ -3465,7 +3439,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // Helper: compute intersection point where ray from center of rectA -> target (tx, ty) exits rectA's boundary
     function getRectBorderPoint(rectInfo, tx, ty) {
         const cx = rectInfo.cx;
         const cy = rectInfo.cy;
@@ -3484,7 +3457,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Draw Background Ambient Lines (svgBg) AND Foreground Active Connections & Readable Labels (svgFg)
     function drawMatrixConnections(stageEl, svgBg, svgFg, relations, hoveredId = null, activeFilterSet = null) {
         if (!stageEl || !svgBg || !svgFg) return;
         const stageRect = stageEl.getBoundingClientRect();
@@ -3496,7 +3468,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const tileRects = {};
         stageEl.querySelectorAll('.sq-project-tile').forEach(tile => {
             const id = tile.getAttribute('data-proj-id');
-            const r = tile.getBoundingClientRect();
+            const imgBox = tile.querySelector('.sq-img-box') || tile;
+            const r = imgBox.getBoundingClientRect();
             tileRects[id] = {
                 cx: r.left - stageRect.left + r.width / 2,
                 cy: r.top - stageRect.top + r.height / 2,
@@ -3519,22 +3492,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const isHighlighted = isHoverConnected || isFilterConnected;
             const isDimmed = (hoveredId && !isHoverConnected) || (!hoveredId && activeFilterSet && !isFilterConnected);
 
-            // Border-to-border anchor points so lines connect cleanly from card edge to card edge!
             const startPt = getRectBorderPoint(rA, rB.cx, rB.cy);
             const endPt = getRectBorderPoint(rB, rA.cx, rA.cy);
             const midX = (startPt.x + endPt.x) / 2;
             const midY = (startPt.y + endPt.y) / 2;
 
             if (!isHighlighted) {
-                bgHtml += `
-                    <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
-                          x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
-                          class="matrix-svg-line ${isDimmed ? 'is-dimmed' : ''}" />
-                    <circle cx="${midX.toFixed(1)}" cy="${midY.toFixed(1)}" r="3"
-                            class="matrix-svg-midpoint ${isDimmed ? 'is-dimmed' : ''}" />
-                `;
+                // Only draw subtle ambient lines for core constellation threads so the resting state stays calm and uncluttered
+                if (rel.ambient && !isDimmed) {
+                    bgHtml += `
+                        <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
+                              x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
+                              class="matrix-svg-line" />
+                    `;
+                }
             } else {
-                // Draw glowing active line + border anchor nodes in the Foreground SVG (on top of cards!)
                 fgLinesHtml += `
                     <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
                           x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
@@ -3542,8 +3514,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
                           x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
                           class="matrix-svg-line is-highlighted" />
-                    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="5" class="matrix-svg-anchor-dot" />
-                    <circle cx="${endPt.x.toFixed(1)}" cy="${endPt.y.toFixed(1)}" r="5" class="matrix-svg-anchor-dot" />
+                    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="4.5" class="matrix-svg-anchor-dot" />
+                    <circle cx="${endPt.x.toFixed(1)}" cy="${endPt.y.toFixed(1)}" r="4.5" class="matrix-svg-anchor-dot" />
                 `;
 
                 if (rel.label) {
@@ -3551,14 +3523,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         x: midX,
                         y: midY,
                         text: rel.label,
-                        w: Math.max(132, rel.label.length * 7.2 + 26),
+                        w: Math.max(136, rel.label.length * 6.8 + 28),
                         h: 24
                     });
                 }
             }
         });
 
-        // Simple collision-avoidance so two active connection labels never overlap each other
         for (let i = 0; i < activeLabels.length; i++) {
             for (let j = 0; j < i; j++) {
                 const a = activeLabels[i];
@@ -3575,7 +3546,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fgBadgesHtml += `
                 <g transform="translate(${lbl.x.toFixed(1)}, ${lbl.y.toFixed(1)})" class="matrix-svg-label-group">
                     <rect x="-${halfW}" y="-12" width="${lbl.w.toFixed(1)}" height="24" rx="12" class="matrix-svg-pill" />
-                    <text x="0" y="4" text-anchor="middle" class="matrix-svg-text">&#x2726; ${lbl.text}</text>
+                    <text x="0" y="3.5" text-anchor="middle" class="matrix-svg-text">&#x2726; ${lbl.text}</text>
                 </g>
             `;
         });

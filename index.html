@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=20261030-matrix-v2">
+    <link rel="stylesheet" href="./style.css?v=20261030-matrix-v3">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -36,11 +36,10 @@
             <div class="nav-tabs-group ulker-nav-pills">
                 <button type="button" class="tab-button active" data-tab="main" data-cursor="dot">
                     <span class="nav-num">&#x2726;</span>
-                    <span class="nav-text">&Uuml;LKER CLUSTER</span>
+                    <span class="nav-text">&Uuml;LKER</span>
                 </button>
                 <button type="button" class="tab-button" data-tab="projects" data-cursor="dot">
-                    <span class="nav-num">12</span>
-                    <span class="nav-text">SEE ALL PROJECTS</span>
+                    <span class="nav-text">ALL PROJECTS</span>
                 </button>
                 <button type="button" class="tab-button" data-tab="design-approach" data-cursor="dot">
                     <span class="nav-text">METHODOLOGY</span>
@@ -54,8 +53,13 @@
             </div>
 
             <div class="nav-actions-group ulker-nav-right">
+                <a href="./projects/you-were-here/" class="nav-demo-badge" data-cursor="dot">
+                    <span class="ndb-dot" aria-hidden="true"></span>
+                    <span class="ndb-label">YOU WERE HERE.</span>
+                    <span class="ndb-arrow">&nearr;</span>
+                </a>
                 <a href="./assets/Elifsu_Genc_CV.pdf" target="_blank" download="Elifsu_Genc_CV.pdf" class="nav-cv-quickbtn" data-cursor="dot">
-                    <span>CV (PDF) &darr;</span>
+                    <span>CV &darr;</span>
                 </a>
             </div>
         </nav>
@@ -64,11 +68,11 @@
 
             <!-- =========================================================
                  TAB 01: MAIN ENTRANCE — ÜLKER (PLEIADES) SQUARE MATRIX
+                 Calm, gallery-white spatial grid with true negative space.
                  ========================================================= -->
             <section class="tab-content active" id="tab-main">
                 <div class="matrix-stage-wrap" id="ulker-matrix-stage">
                     <div class="ulker-nebula-bg" aria-hidden="true"></div>
-                    <div class="ulker-grid-bg" aria-hidden="true"></div>
 
                     <!-- Background Ambient SVG Layer (Behind Cards) -->
                     <svg class="matrix-svg-layer matrix-svg-bg" id="ulker-cluster-svg-bg" aria-hidden="true"></svg>
@@ -76,23 +80,23 @@
                     <div class="matrix-inner">
                         <header class="matrix-topbar">
                             <div class="matrix-topbar-left">
-                                <span class="matrix-kicker">&#x2726; M45 // &Uuml;LKER (PLEIADES) CLUSTER</span>
+                                <span class="matrix-kicker">&#x2726; M45 // &Uuml;LKER CLUSTER</span>
                                 <p class="matrix-subtitle">
-                                    Six core works in the &Uuml;lker cluster &mdash; hover any square to trace its spatial question &amp; constellation links.
+                                    Design begins with a question &mdash; core works of the &Uuml;lker constellation.
                                 </p>
                             </div>
                             <div class="matrix-topbar-right">
                                 <button type="button" class="matrix-ghost-btn" id="ulker-story-trigger" data-cursor="dot">
-                                    &#x2726; The Hidden Sister (Merope)
+                                    &#x2726; Why &Uuml;lker?
                                 </button>
                                 <button type="button" class="matrix-primary-btn" id="ulker-see-all-top-btn">
-                                    <span>SEE ALL 12 PROJECTS</span>
+                                    <span>SEE ALL PROJECTS</span>
                                     <span>&rarr;</span>
                                 </button>
                             </div>
                         </header>
 
-                        <!-- 5x2 SPATIAL SQUARE GRID (6 Project Squares + 4 Breathing Constellation Void Squares) -->
+                        <!-- 4x2 SPATIAL SQUARE GRID (5 Core Ülker Projects + 1 Quiet Intro + 2 Pure Empty Spaces) -->
                         <div class="spatial-square-grid cluster-square-grid" id="ulker-cluster-grid"></div>
                     </div>
 
@@ -107,7 +111,6 @@
             <section class="tab-content" id="tab-projects" aria-label="All Projects Spatial Matrix">
                 <div class="matrix-stage-wrap" id="all-projects-matrix-stage">
                     <div class="ulker-nebula-bg" aria-hidden="true"></div>
-                    <div class="ulker-grid-bg" aria-hidden="true"></div>
 
                     <!-- Background Ambient SVG Layer (Behind Cards) -->
                     <svg class="matrix-svg-layer matrix-svg-bg" id="all-projects-svg-bg" aria-hidden="true"></svg>
@@ -116,32 +119,30 @@
                         <header class="matrix-topbar sp-matrix-header">
                             <div class="sp-header-top">
                                 <div class="matrix-topbar-left">
-                                    <span class="matrix-kicker">&#x2726; SPATIAL CONSTELLATION MATRIX // 12 PROJECTS</span>
+                                    <span class="matrix-kicker">&#x2726; ALL PROJECTS // SPATIAL MATRIX</span>
                                     <p class="matrix-subtitle">
-                                        Hover any square to illuminate connected inquiries across the grid, or filter by discipline below.
+                                        Hover any square to reveal its thematic connections across open space.
                                     </p>
                                 </div>
                                 <button type="button" class="matrix-ghost-btn" id="sp-back-cluster-btn" data-cursor="dot">
-                                    &larr; BACK TO &Uuml;LKER CLUSTER
+                                    &larr; &Uuml;LKER CLUSTER
                                 </button>
                             </div>
 
-                            <!-- Minimal Discipline Filter Pills -->
+                            <!-- Minimal Discipline Filter Bar -->
                             <div class="sp-filter-bar" id="sp-filter-bar" role="navigation" aria-label="Filter projects by discipline">
-                                <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL (12)</button>
-                                <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;LKER CLUSTER (6)</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">ARCHITECTURAL DESIGN</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">SPATIAL DESIGN</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Bio-Material & Ecological" data-cursor="dot">BIO-MATERIAL &amp; ECOLOGICAL</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Exhibition Design" data-cursor="dot">EXHIBITION DESIGN</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Interactive & Simulation" data-cursor="dot">INTERACTIVE &amp; SIMULATION</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Visual Communication" data-cursor="dot">VISUAL COMMUNICATION</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Editorial Design" data-cursor="dot">EDITORIAL DESIGN</button>
-                                <button type="button" class="sp-filter-pill" data-discipline="Experimental Design" data-cursor="dot">EXPERIMENTAL DESIGN</button>
+                                <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">All</button>
+                                <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;lker Cluster</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">Architectural</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">Spatial</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Bio-Material & Ecological" data-cursor="dot">Bio-Material &amp; Ecology</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Exhibition Design" data-cursor="dot">Exhibition</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Interactive & Simulation" data-cursor="dot">Interactive &amp; Simulation</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Editorial Design" data-cursor="dot">Editorial</button>
                             </div>
                         </header>
 
-                        <!-- 5x5 SPATIAL SQUARE MATRIX (12 Project Squares + 13 Empty Relational Void Squares) -->
+                        <!-- 4-COLUMN SPATIAL SQUARE MATRIX (12 Project Squares + 8 Pure Open Space Squares) -->
                         <div class="spatial-square-grid all-projects-square-grid" id="all-projects-grid"></div>
                     </div>
 
@@ -1328,7 +1329,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-matrix-v2"></script>
+    <script src="./script.js?v=20261030-matrix-v3"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>
