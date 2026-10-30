@@ -3149,18 +3149,19 @@ window.toggleModalLang = function(lang) {
 
 
 // =========================================================================
-// SPATIAL SQUARE MATRIX ENGINE (ÜLKER CLUSTER + ALL PROJECTS CHECKERBOARD)
-// Renders 1:1 Square Project Visual Tiles interspersed with intentional
-// empty blueprint grid cells and live SVG relational lines connecting
-// related works across the open grid spaces.
+// SPATIAL SQUARE MATRIX ENGINE V2 (DUAL-LAYER SVG + BORDER-TO-BORDER ROUTING)
+// Ensures active connection lines, border anchor dots, and relationship labels
+// render in the foreground SVG layer (z-index: 30) and never hide behind cards.
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     const clusterGridEl = document.getElementById('ulker-cluster-grid');
-    const clusterSvgEl = document.getElementById('ulker-cluster-svg');
+    const clusterSvgBg = document.getElementById('ulker-cluster-svg-bg');
+    const clusterSvgFg = document.getElementById('ulker-cluster-svg-fg');
     const clusterStageEl = document.getElementById('ulker-matrix-stage');
 
     const allGridEl = document.getElementById('all-projects-grid');
-    const allSvgEl = document.getElementById('all-projects-svg');
+    const allSvgBg = document.getElementById('all-projects-svg-bg');
+    const allSvgFg = document.getElementById('all-projects-svg-fg');
     const allStageEl = document.getElementById('all-projects-matrix-stage');
 
     const PROJECTS = {
@@ -3310,17 +3311,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // -------------------------------------------------------------------------
-    // A. TAB 01: ÜLKER CLUSTER 5x2 SQUARE MATRIX (6 Stars + 4 Empty Void Cells)
-    // -------------------------------------------------------------------------
     const CLUSTER_MATRIX_SLOTS = [
-        // Row 1 (5 cells)
         { type: 'alcyone' },
         { type: 'project', id: 'emek-museum' },
         { type: 'void', coord: 'RA 03h 47m', label: 'LABOR & TRACE' },
         { type: 'project', id: 'the-earthen' },
         { type: 'project', id: 'fire-escape-simulation' },
-        // Row 2 (5 cells)
         { type: 'project', id: 'stray' },
         { type: 'void', coord: 'DEC +24° 07′', label: 'PRESENCE & DRIFT' },
         { type: 'project', id: 'you-were-here' },
@@ -3339,37 +3335,27 @@ document.addEventListener('DOMContentLoaded', () => {
         { a: 'you-were-here', b: 'bio-decay', label: 'EPHEMERAL MATTER' }
     ];
 
-    // -------------------------------------------------------------------------
-    // B. TAB 02: ALL PROJECTS 5x5 CHECKERBOARD MATRIX (12 Projects + 13 Voids)
-    // Every alternating cell is an intentional empty grid square where relational
-    // lines and thematic labels connect neighboring projects!
-    // -------------------------------------------------------------------------
     const ALL_PROJECTS_MATRIX_SLOTS = [
-        // Row 1
         { type: 'project', id: 'emek-museum' },
         { type: 'void', label: 'DISASTER IS NEVER NATURAL' },
         { type: 'project', id: 'fire-escape-simulation' },
         { type: 'void', label: 'DIGITAL TRACES & MEMORY' },
         { type: 'project', id: 'you-were-here' },
-        // Row 2
         { type: 'void', label: 'URBAN COUNTER-MONUMENTS' },
         { type: 'project', id: 'stray' },
         { type: 'void', label: 'CARE · PAUSE · WELLBEING' },
         { type: 'project', id: 'the-earthen' },
         { type: 'void', label: 'REGENERATIVE CYCLES' },
-        // Row 3
         { type: 'project', id: 'chronoclines' },
         { type: 'void', label: 'PALIMPSEST & RITUAL' },
         { type: 'project', id: 'millieu' },
         { type: 'void', label: 'BIOPOLYMER & SOIL' },
         { type: 'project', id: 'bio-decay' },
-        // Row 4
         { type: 'void', label: 'NON-DISPLACING ECOLOGY' },
         { type: 'project', id: 'sprouting-garden' },
         { type: 'void', label: 'SENSORY MICROCLIMATE' },
         { type: 'project', id: 'bajo-la-fresca' },
         { type: 'void', label: 'EPHEMERAL TECTONICS' },
-        // Row 5
         { type: 'project', id: 'wood-weave' },
         { type: 'void', label: 'MAKING & COMMUNITY' },
         { type: 'project', id: 'ara-sira' },
@@ -3403,7 +3389,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <article class="sq-cell sq-project-tile" data-proj-id="${p.id}" data-origin-tab="${originTab}">
                 <a href="${p.url}" class="sq-tile-link" data-origin-nav="${originTab}">
-                    <!-- 1:1 SQUARE IMAGE CONTAINER -->
                     <div class="sq-img-box" data-node-anchor="${p.id}">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="eager">
                         <div class="sq-top-badges">
@@ -3411,8 +3396,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${starBadge}
                         </div>
                     </div>
-
-                    <!-- COMPACT QUESTION + TITLE BELOW SQUARE -->
                     <div class="sq-caption">
                         <p class="sq-question">&ldquo;${p.question}&rdquo;</p>
                         <div class="sq-title-bar">
@@ -3470,81 +3453,138 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (clusterGridEl) {
         clusterGridEl.innerHTML = CLUSTER_MATRIX_SLOTS.map(slot => {
-            if (slot.type === 'project') {
-                return renderSquareTile(PROJECTS[slot.id], 'main');
-            }
+            if (slot.type === 'project') return renderSquareTile(PROJECTS[slot.id], 'main');
             return renderVoidCell(slot);
         }).join('');
     }
 
     if (allGridEl) {
         allGridEl.innerHTML = ALL_PROJECTS_MATRIX_SLOTS.map(slot => {
-            if (slot.type === 'project') {
-                return renderSquareTile(PROJECTS[slot.id], 'projects');
-            }
+            if (slot.type === 'project') return renderSquareTile(PROJECTS[slot.id], 'projects');
             return renderVoidCell(slot);
         }).join('');
     }
 
-    // Draw SVG lines between [data-node-anchor] centers inside a stage
-    function drawMatrixConnections(stageEl, svgEl, relations, hoveredId = null, activeFilterSet = null) {
-        if (!stageEl || !svgEl) return;
+    // Helper: compute intersection point where ray from center of rectA -> target (tx, ty) exits rectA's boundary
+    function getRectBorderPoint(rectInfo, tx, ty) {
+        const cx = rectInfo.cx;
+        const cy = rectInfo.cy;
+        const dx = tx - cx;
+        const dy = ty - cy;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return { x: cx, y: cy };
+
+        const hw = rectInfo.w / 2 + 2;
+        const hh = rectInfo.h / 2 + 2;
+        const scaleX = Math.abs(dx) > 0.001 ? hw / Math.abs(dx) : Infinity;
+        const scaleY = Math.abs(dy) > 0.001 ? hh / Math.abs(dy) : Infinity;
+        const scale = Math.min(scaleX, scaleY);
+        return {
+            x: cx + dx * scale,
+            y: cy + dy * scale
+        };
+    }
+
+    // Draw Background Ambient Lines (svgBg) AND Foreground Active Connections & Readable Labels (svgFg)
+    function drawMatrixConnections(stageEl, svgBg, svgFg, relations, hoveredId = null, activeFilterSet = null) {
+        if (!stageEl || !svgBg || !svgFg) return;
         const stageRect = stageEl.getBoundingClientRect();
         if (!stageRect.width || !stageRect.height) return;
 
-        svgEl.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
+        svgBg.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
+        svgFg.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
 
-        const points = {};
-        stageEl.querySelectorAll('[data-node-anchor]').forEach(box => {
-            const id = box.getAttribute('data-node-anchor');
-            const r = box.getBoundingClientRect();
-            points[id] = {
-                x: r.left - stageRect.left + r.width / 2,
-                y: r.top - stageRect.top + r.height / 2
+        const tileRects = {};
+        stageEl.querySelectorAll('.sq-project-tile').forEach(tile => {
+            const id = tile.getAttribute('data-proj-id');
+            const r = tile.getBoundingClientRect();
+            tileRects[id] = {
+                cx: r.left - stageRect.left + r.width / 2,
+                cy: r.top - stageRect.top + r.height / 2,
+                w: r.width,
+                h: r.height
             };
         });
 
-        let linesHtml = '';
-        let badgesHtml = '';
+        let bgHtml = '';
+        let fgLinesHtml = '';
+        const activeLabels = [];
 
         relations.forEach(rel => {
-            const pA = points[rel.a];
-            const pB = points[rel.b];
-            if (!pA || !pB) return;
+            const rA = tileRects[rel.a];
+            const rB = tileRects[rel.b];
+            if (!rA || !rB) return;
 
             const isHoverConnected = hoveredId && (rel.a === hoveredId || rel.b === hoveredId);
-            const isFilterConnected = activeFilterSet && activeFilterSet.has(rel.a) && activeFilterSet.has(rel.b);
+            const isFilterConnected = !hoveredId && activeFilterSet && activeFilterSet.has(rel.a) && activeFilterSet.has(rel.b);
             const isHighlighted = isHoverConnected || isFilterConnected;
-            const isDimmed = (hoveredId && !isHoverConnected) || (activeFilterSet && !isFilterConnected);
+            const isDimmed = (hoveredId && !isHoverConnected) || (!hoveredId && activeFilterSet && !isFilterConnected);
 
-            const midX = (pA.x + pB.x) / 2;
-            const midY = (pA.y + pB.y) / 2;
+            // Border-to-border anchor points so lines connect cleanly from card edge to card edge!
+            const startPt = getRectBorderPoint(rA, rB.cx, rB.cy);
+            const endPt = getRectBorderPoint(rB, rA.cx, rA.cy);
+            const midX = (startPt.x + endPt.x) / 2;
+            const midY = (startPt.y + endPt.y) / 2;
 
-            linesHtml += `
-                <line x1="${pA.x.toFixed(1)}" y1="${pA.y.toFixed(1)}"
-                      x2="${pB.x.toFixed(1)}" y2="${pB.y.toFixed(1)}"
-                      class="matrix-svg-line ${isHighlighted ? 'is-highlighted' : ''} ${isDimmed ? 'is-dimmed' : ''}" />
-            `;
-
-            if (isHighlighted && rel.label) {
-                badgesHtml += `
-                    <g transform="translate(${midX.toFixed(1)}, ${midY.toFixed(1)})" class="matrix-svg-label-group">
-                        <rect x="-72" y="-10" width="144" height="20" rx="10" class="matrix-svg-pill" />
-                        <text x="0" y="3.5" text-anchor="middle" class="matrix-svg-text">${rel.label}</text>
-                    </g>
-                `;
-            } else {
-                badgesHtml += `
+            if (!isHighlighted) {
+                bgHtml += `
+                    <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
+                          x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
+                          class="matrix-svg-line ${isDimmed ? 'is-dimmed' : ''}" />
                     <circle cx="${midX.toFixed(1)}" cy="${midY.toFixed(1)}" r="3"
                             class="matrix-svg-midpoint ${isDimmed ? 'is-dimmed' : ''}" />
                 `;
+            } else {
+                // Draw glowing active line + border anchor nodes in the Foreground SVG (on top of cards!)
+                fgLinesHtml += `
+                    <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
+                          x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
+                          class="matrix-svg-line-glow" />
+                    <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
+                          x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
+                          class="matrix-svg-line is-highlighted" />
+                    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="5" class="matrix-svg-anchor-dot" />
+                    <circle cx="${endPt.x.toFixed(1)}" cy="${endPt.y.toFixed(1)}" r="5" class="matrix-svg-anchor-dot" />
+                `;
+
+                if (rel.label) {
+                    activeLabels.push({
+                        x: midX,
+                        y: midY,
+                        text: rel.label,
+                        w: Math.max(132, rel.label.length * 7.2 + 26),
+                        h: 24
+                    });
+                }
             }
         });
 
-        svgEl.innerHTML = linesHtml + badgesHtml;
+        // Simple collision-avoidance so two active connection labels never overlap each other
+        for (let i = 0; i < activeLabels.length; i++) {
+            for (let j = 0; j < i; j++) {
+                const a = activeLabels[i];
+                const b = activeLabels[j];
+                if (Math.abs(a.x - b.x) < (a.w + b.w) / 2 && Math.abs(a.y - b.y) < 28) {
+                    a.y += (a.y >= b.y ? 26 : -26);
+                }
+            }
+        }
+
+        let fgBadgesHtml = '';
+        activeLabels.forEach(lbl => {
+            const halfW = (lbl.w / 2).toFixed(1);
+            fgBadgesHtml += `
+                <g transform="translate(${lbl.x.toFixed(1)}, ${lbl.y.toFixed(1)})" class="matrix-svg-label-group">
+                    <rect x="-${halfW}" y="-12" width="${lbl.w.toFixed(1)}" height="24" rx="12" class="matrix-svg-pill" />
+                    <text x="0" y="4" text-anchor="middle" class="matrix-svg-text">&#x2726; ${lbl.text}</text>
+                </g>
+            `;
+        });
+
+        svgBg.innerHTML = bgHtml;
+        svgFg.innerHTML = fgLinesHtml + fgBadgesHtml;
     }
 
-    function setupMatrixHover(gridEl, stageEl, svgEl, relations, getActiveFilterSet) {
+    function setupMatrixHover(gridEl, stageEl, svgBg, svgFg, relations, getActiveFilterSet) {
         if (!gridEl) return;
         const tiles = Array.from(gridEl.querySelectorAll('.sq-project-tile'));
 
@@ -3566,7 +3606,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     t.classList.toggle('is-matrix-dim', !connectedIds.has(tId));
                 });
 
-                drawMatrixConnections(stageEl, svgEl, relations, id, getActiveFilterSet ? getActiveFilterSet() : null);
+                drawMatrixConnections(stageEl, svgBg, svgFg, relations, id, getActiveFilterSet ? getActiveFilterSet() : null);
             });
 
             tile.addEventListener('mouseleave', () => {
@@ -3574,12 +3614,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 tiles.forEach(t => {
                     t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
                 });
-                drawMatrixConnections(stageEl, svgEl, relations, null, getActiveFilterSet ? getActiveFilterSet() : null);
+                drawMatrixConnections(stageEl, svgBg, svgFg, relations, null, getActiveFilterSet ? getActiveFilterSet() : null);
             });
         });
     }
 
-    // Discipline Filter on #tab-projects (Highlights matching squares in place on the matrix!)
     let activeDiscipline = 'all';
     const filterBtns = Array.from(document.querySelectorAll('#sp-filter-bar .sp-filter-pill'));
 
@@ -3603,6 +3642,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (allGridEl) {
+            allGridEl.classList.toggle('has-active-filter', !!filterSet);
             const tiles = allGridEl.querySelectorAll('.sq-project-tile');
             tiles.forEach(tile => {
                 const id = tile.getAttribute('data-proj-id');
@@ -3616,7 +3656,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        drawMatrixConnections(allStageEl, allSvgEl, ALL_PROJECTS_RELATIONS, null, filterSet);
+        drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
     }
 
     filterBtns.forEach(btn => {
@@ -3627,18 +3667,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    setupMatrixHover(clusterGridEl, clusterStageEl, clusterSvgEl, CLUSTER_RELATIONS, null);
-    setupMatrixHover(allGridEl, allStageEl, allSvgEl, ALL_PROJECTS_RELATIONS, getActiveFilterSet);
+    setupMatrixHover(clusterGridEl, clusterStageEl, clusterSvgBg, clusterSvgFg, CLUSTER_RELATIONS, null);
+    setupMatrixHover(allGridEl, allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, getActiveFilterSet);
 
     function refreshAllSvgs() {
-        drawMatrixConnections(clusterStageEl, clusterSvgEl, CLUSTER_RELATIONS, null, null);
-        drawMatrixConnections(allStageEl, allSvgEl, ALL_PROJECTS_RELATIONS, null, getActiveFilterSet());
+        drawMatrixConnections(clusterStageEl, clusterSvgBg, clusterSvgFg, CLUSTER_RELATIONS, null, null);
+        drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, getActiveFilterSet());
     }
 
     setTimeout(refreshAllSvgs, 90);
     window.addEventListener('resize', refreshAllSvgs, { passive: true });
 
-    // Re-draw SVG connections whenever switching tabs
     document.querySelectorAll('.tab-button').forEach(btn => {
         btn.addEventListener('click', () => {
             setTimeout(refreshAllSvgs, 70);

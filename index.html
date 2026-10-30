@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=20261030-matrix">
+    <link rel="stylesheet" href="./style.css?v=20261030-matrix-v2">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -64,16 +64,14 @@
 
             <!-- =========================================================
                  TAB 01: MAIN ENTRANCE — ÜLKER (PLEIADES) SQUARE MATRIX
-                 6 Core Ülker Stars as 1:1 Square Visual Tiles + Empty
-                 Constellation Void Squares with Live SVG Star Connections
                  ========================================================= -->
             <section class="tab-content active" id="tab-main">
                 <div class="matrix-stage-wrap" id="ulker-matrix-stage">
                     <div class="ulker-nebula-bg" aria-hidden="true"></div>
                     <div class="ulker-grid-bg" aria-hidden="true"></div>
 
-                    <!-- Dynamic SVG Overlay connecting related squares across empty grid cells -->
-                    <svg class="matrix-svg-layer" id="ulker-cluster-svg" aria-hidden="true"></svg>
+                    <!-- Background Ambient SVG Layer (Behind Cards) -->
+                    <svg class="matrix-svg-layer matrix-svg-bg" id="ulker-cluster-svg-bg" aria-hidden="true"></svg>
 
                     <div class="matrix-inner">
                         <header class="matrix-topbar">
@@ -95,25 +93,24 @@
                         </header>
 
                         <!-- 5x2 SPATIAL SQUARE GRID (6 Project Squares + 4 Breathing Constellation Void Squares) -->
-                        <div class="spatial-square-grid cluster-square-grid" id="ulker-cluster-grid">
-                            <!-- Populated by script.js -->
-                        </div>
+                        <div class="spatial-square-grid cluster-square-grid" id="ulker-cluster-grid"></div>
                     </div>
+
+                    <!-- Foreground Active SVG Layer (Always in Front of Cards so Connection Lines & Labels are 100% Readable) -->
+                    <svg class="matrix-svg-layer matrix-svg-fg" id="ulker-cluster-svg-fg" aria-hidden="true"></svg>
                 </div>
             </section>
 
             <!-- =========================================================
                  TAB 02: SEPARATE "SEE ALL PROJECTS" — SPATIAL SQUARE MATRIX
-                 12 Project Squares (1:1) + Empty Grid Squares where SVG
-                 Relational Lines & Thematic Nodes connect related works
                  ========================================================= -->
             <section class="tab-content" id="tab-projects" aria-label="All Projects Spatial Matrix">
                 <div class="matrix-stage-wrap" id="all-projects-matrix-stage">
                     <div class="ulker-nebula-bg" aria-hidden="true"></div>
                     <div class="ulker-grid-bg" aria-hidden="true"></div>
 
-                    <!-- Dynamic SVG Overlay connecting related projects across the empty grid squares -->
-                    <svg class="matrix-svg-layer" id="all-projects-svg" aria-hidden="true"></svg>
+                    <!-- Background Ambient SVG Layer (Behind Cards) -->
+                    <svg class="matrix-svg-layer matrix-svg-bg" id="all-projects-svg-bg" aria-hidden="true"></svg>
 
                     <div class="matrix-inner">
                         <header class="matrix-topbar sp-matrix-header">
@@ -145,10 +142,11 @@
                         </header>
 
                         <!-- 5x5 SPATIAL SQUARE MATRIX (12 Project Squares + 13 Empty Relational Void Squares) -->
-                        <div class="spatial-square-grid all-projects-square-grid" id="all-projects-grid">
-                            <!-- Populated by script.js -->
-                        </div>
+                        <div class="spatial-square-grid all-projects-square-grid" id="all-projects-grid"></div>
                     </div>
+
+                    <!-- Foreground Active SVG Layer (Always in Front of Cards so Connection Lines & Labels are 100% Readable) -->
+                    <svg class="matrix-svg-layer matrix-svg-fg" id="all-projects-svg-fg" aria-hidden="true"></svg>
                 </div>
             </section>
 
@@ -1330,7 +1328,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-matrix"></script>
+    <script src="./script.js?v=20261030-matrix-v2"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>
