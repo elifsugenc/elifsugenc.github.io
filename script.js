@@ -1709,9 +1709,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let pageHistory = ['main'];
     let lastBackTimestamp = 0;
 
-    // Helper to navigate to Constellation view on Main tab
+    // Helper to navigate to Projects / Constellation view on Main tab
     function goToProjects() {
         switchTab('main', false);
+        const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
+        if (epAnchor) {
+            setActive('projects');
+            history.replaceState(null, '', '#projects');
+            epAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
         const homeSky = document.getElementById('hq-constellation-sky');
         if (homeSky) {
             const mapEl = homeSky.querySelector('.constellation-map');
@@ -1726,6 +1733,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // There is no separate #projects page: project exploration lives directly in #tab-main
         if (targetTabId === 'projects') {
             switchTab('main', false);
+            const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
+            if (epAnchor) {
+                setActive('projects');
+                if (updateHash) {
+                    history.replaceState(null, '', '#projects');
+                }
+                setTimeout(() => {
+                    epAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 40);
+                return;
+            }
             const homeSky = document.getElementById('hq-constellation-sky');
             if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
@@ -1890,6 +1908,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             setConstellationState(mapEl, 'cluster', true);
                         }
                         homeSky.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        history.replaceState(null, '', window.location.pathname);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 } else {
                     switchTab('main');
@@ -1971,8 +1992,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (hash === 'constellation' || hash === 'projects') {
             switchTab('main', false);
+            const epAnchor = document.getElementById('ep-projects-anchor') || document.getElementById('ep-projects-stage');
             const homeSky = document.getElementById('hq-constellation-sky');
-            if (homeSky) {
+            if (epAnchor) {
+                if (!sessionStorage.getItem('portfolio_return_active')) {
+                    setTimeout(() => {
+                        epAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 60);
+                }
+            } else if (homeSky) {
                 const mapEl = homeSky.querySelector('.constellation-map');
                 if (mapEl) setConstellationState(mapEl, 'constellation', false);
                 if (!sessionStorage.getItem('portfolio_return_active')) {
@@ -1982,9 +2010,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             setActive('projects');
-            if (hash === 'projects') {
-                history.replaceState(null, '', '#constellation');
-            }
             return;
         }
 
@@ -3168,7 +3193,7 @@ window.toggleModalLang = function(lang) {
             return;
         }
 
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.ep-no-auto-lightbox)');
         if (clickedImg) {
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
@@ -3185,3 +3210,1462 @@ window.toggleModalLang = function(lang) {
         }
     });
 })();
+
+
+// =========================================================================
+// EDITORIAL PROJECT-FOCUSED PORTFOLIO ENGINE (yeni-layout01)
+// Re-centers the 12 projects as the main characters while preserving
+// 100% of project data, assets, bilingual statements, and the Ülker (M45)
+// conceptual cluster foundation.
+// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const stageEl = document.getElementById('ep-projects-stage');
+    if (!stageEl) return;
+
+    const EDITORIAL_PORTFOLIO_PROJECTS = [
+        {
+            id: 'stray',
+            num: '02',
+            title: 'STRAY',
+            subtitle: 'Urban Sanctuary for Purposelessness, Drift & Presence',
+            year: '2025',
+            location: 'Moda Coast, Kadıköy, Istanbul',
+            studio: 'Architectural Design Studio VII',
+            typology: 'Public Cultural Building & Urban Interior',
+            medium: 'Architectural Design · Interactive Spatial Systems',
+            question: 'Is doing nothing doing something?',
+            subQuestion: 'Is it laziness to do (nothing)?',
+            summary: 'Situated along the coastal tree canopy of Moda, Kadıköy, STRAY challenges the utilitarian tyranny of urban efficiency. Grounded in 19th-century theories of the Flâneur, Situationist dérive (psychogeography), and the Slow City movement, the building operates as an open urban interior where pedestrians naturally drift inward from the seaside promenade along a continuous multi-level ramp—moving from magenta-mesh frontyards and mark-making surfaces to moveable-wall studios and the sensory stillness of The Dark Room.',
+            disciplines: [
+                'Architectural Design',
+                'Spatial Design',
+                'Interactive & Simulation',
+                'Experimental Design'
+            ],
+            keywords: ['Presence', 'Traces', 'Participation', 'Psychogeography', 'Flâneur'],
+            pole: 'critical-inquiry',
+            poleLabel: 'Critical Inquiry',
+            isClusterCore: true,
+            star: {
+                name: 'Electra',
+                bayer: '17 Tauri',
+                mag: '3.72 mag',
+                role: 'Ülker Core Star · Presence & Drift'
+            },
+            awards: [
+                '★ Archisearch Portfolio Challenge 2025 — Top 15 Selection'
+            ],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/stray/',
+            color: '#10b981',
+            heroImg: './assets/stray-project.png',
+            heroCaption: 'Perspective Section & Coastal Drift Sequence — Moda, Kadıköy',
+            gallery: [
+                {
+                    src: './assets/stray-project.png',
+                    label: 'Hero Section',
+                    caption: 'STRAY — Continuous Ramp Spine & Coastal Canopy Integration'
+                },
+                {
+                    src: './projects/stray/assets/axonometric_section_3d.jpg',
+                    label: '3D Axonometric',
+                    caption: 'Exploded Spatial Axonometric — Programmatic Drift & Structural Grid'
+                },
+                {
+                    src: './projects/stray/assets/render_the_frontyard_1.jpg',
+                    label: 'The Frontyard',
+                    caption: 'Semi-Outdoor Frontyard Framed by Magenta Mesh Lattices'
+                },
+                {
+                    src: './projects/stray/assets/render_the_ramp.jpg',
+                    label: 'The Ramp',
+                    caption: 'Continuous Multi-Level Ramp & Interactive Mark-Making Surfaces'
+                },
+                {
+                    src: './projects/stray/assets/render_the_dark_room.jpg',
+                    label: 'The Dark Room',
+                    caption: 'Contemplative Sensory Silence at the Culmination of the Drift'
+                },
+                {
+                    src: './projects/stray/assets/section_aa_longitudinal_100.jpg',
+                    label: 'Section A-A',
+                    caption: 'Longitudinal Architectural Section (1:100) — Topographical Continuity'
+                }
+            ],
+            researchStrands: [
+                { label: 'Theoretical Grounding', value: 'Flâneur · Situationist Dérive · Slow City' },
+                { label: 'Spatial Tectonics', value: 'Continuous Ramp Spine · Moveable Partitions · Mark-Making Walls' },
+                { label: 'Key Drawings & Assets', value: '3 Full Presentation Boards · 1:50 / 1:100 Plans & Sections · 6 Interior Renders' }
+            ],
+            relatedIds: ['the-earthen', 'you-were-here', 'bio-decay']
+        },
+        {
+            id: 'the-earthen',
+            num: '10',
+            title: 'THE EARTHEN',
+            subtitle: 'Tactile Soil & Clay Sanctuary for Regenerative Urban Wellbeing',
+            year: '2026',
+            location: 'Istanbul',
+            studio: 'Architectural & Spatial Design Studio',
+            typology: 'Healing Sanctuary, Material Lab & Mud Bathhouse',
+            medium: 'Architectural Design · Soil & Clay Tectonics',
+            question: 'Is there life because there is death?',
+            subQuestion: 'How can earth’s cycles of decomposition and renewal ground human wellbeing?',
+            summary: 'The Earthen is a healing sanctuary designed to cultivate physical and spiritual wellbeing through direct tactile contact with soil, water, and clay. Likening the regenerative cycles of the earth—resting, decomposing, and blooming—to the rhythms of human life, the architecture unfolds along a vertical journey: subterranean mineral mud-bathing pools for physical release, radial clay-shaping workshops in the Material Creator Lab, and a rooftop living terrace connected by a metabolic network of water, slurry, and seed conduits.',
+            disciplines: [
+                'Architectural Design',
+                'Spatial Design',
+                'Bio-Material & Ecological',
+                'Experimental Design'
+            ],
+            keywords: ['Earth & Wellbeing', 'Soil Cycles', 'Tactile Grounding', 'Regenerative Metabolism'],
+            pole: 'experimental-thinking',
+            poleLabel: 'Experimental Thinking',
+            isClusterCore: true,
+            star: {
+                name: 'Taygeta',
+                bayer: '19 Tauri',
+                mag: '4.30 mag',
+                role: 'Ülker Core Star · Tactile Soil & Renewal'
+            },
+            awards: [
+                '★ Terraviva Render Award 2025 — Finalist'
+            ],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/the-earthen/',
+            color: '#c2410c',
+            heroImg: './assets/the-earthen-cover.png',
+            heroCaption: 'The Earthen — Subterranean Mud Sanctuary & Living Conduit Metabolism',
+            gallery: [
+                {
+                    src: './assets/the-earthen-cover.png',
+                    label: 'Sanctuary View',
+                    caption: 'The Earthen — Atmospheric Section & Tactile Earth Interior'
+                },
+                {
+                    src: './projects/the-earthen/assets/diagram-exploded-axonometric.jpg',
+                    label: 'Axonometric',
+                    caption: 'Exploded Axonometric — Vertical Wellbeing Route & Conduit Network'
+                },
+                {
+                    src: './projects/the-earthen/assets/render-portal-bath.jpg',
+                    label: 'Mineral Mud Bath',
+                    caption: 'Subterranean Mineral Mud-Bathing Pools for Sensory Grounding'
+                },
+                {
+                    src: './projects/the-earthen/assets/render-earth-workshop.jpg',
+                    label: 'Material Lab',
+                    caption: 'Radial Clay-Shaping Workshops in the Material Creator Lab'
+                },
+                {
+                    src: './projects/the-earthen/assets/render-terrace-canopy.jpg',
+                    label: 'Living Terrace',
+                    caption: 'Rooftop Living Terrace & Seed/Water Conduit Canopy'
+                },
+                {
+                    src: './projects/the-earthen/assets/drawings-building-sections.jpg',
+                    label: 'Building Sections',
+                    caption: 'Architectural Sections & Metabolic Program Cycle'
+                }
+            ],
+            researchStrands: [
+                { label: 'Core Inquiry', value: 'Metabolic Soil Cycles · Decomposition as Regeneration' },
+                { label: 'Vertical Program', value: 'Subterranean Mud Baths → Material Creator Lab → Rooftop Living Terrace' },
+                { label: 'Key Drawings & Assets', value: '5 Architectural Sheets · Exploded Axonometric · Section & Plan Set' }
+            ],
+            relatedIds: ['stray', 'bajo-la-fresca', 'bio-decay']
+        },
+        {
+            id: 'bio-decay',
+            num: '11',
+            title: 'BIO-DECAY',
+            subtitle: 'Circular Biopolymer Archive & Living Material Laboratory',
+            year: '2025',
+            location: 'Milli Reasürans Passage, Nişantaşı, Istanbul',
+            studio: 'Interior & Material Research Studio',
+            typology: 'Bio-Materials Lab, Living Archive & Public Amphitheater',
+            medium: 'Bio-Material & Ecological · Spatial Design',
+            question: 'How many microplastics can we eat in a day?',
+            subQuestion: 'What happens when architecture embraces programmed decomposition instead of petrochemical permanence?',
+            summary: 'Situated in the historic Milli Reasürans Passage in Nişantaşı, BIO-DECAY confronts the invisible omnipresence of synthetic microplastics in everyday life. Structured around a permanent steel wire grid skeleton, the intervention establishes an organic archive, bio-materials fabrication lab, and civic amphitheater fueled by local restaurant food waste. Biopolymer panels cast from citrus peels, coffee grounds, and algae soften, darken, and biodegrade over time—inviting visitors to harvest, cast, and replace tiles in an ongoing cycle of material renewal.',
+            disciplines: [
+                'Bio-Material & Ecological',
+                'Spatial Design',
+                'Exhibition Design',
+                'Experimental Design'
+            ],
+            keywords: ['Time', 'Transformation', 'Microplastics', 'Circular Biopolymers', 'Food Waste'],
+            pole: 'experimental-thinking',
+            poleLabel: 'Experimental Thinking',
+            isClusterCore: true,
+            star: {
+                name: 'Celaeno',
+                bayer: '16 Tauri',
+                mag: '5.45 mag',
+                role: 'Ülker Core Star · Circular Biopolymers'
+            },
+            awards: [
+                '★ Biodesign Challenge 2025 — High Commendation'
+            ],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/bio-decay/',
+            color: '#65a30d',
+            heroImg: './assets/bio-decay-cover.png',
+            heroCaption: 'BIO-DECAY — Steel Wire Grid Tectonics & Biopolymer Panel Lifecycle in Milli Reasürans Passage',
+            gallery: [
+                {
+                    src: './assets/bio-decay-cover.png',
+                    label: 'Hero Section',
+                    caption: 'BIO-DECAY — Living Biopolymer Archive & Steel Grid Skeleton'
+                },
+                {
+                    src: './projects/bio-decay/assets/crop-decay-stages-physical.png',
+                    label: 'Material Samples',
+                    caption: 'Physical Biopolymer Samples & Programmed Temporal Decay Stages'
+                },
+                {
+                    src: './projects/bio-decay/assets/crop-exploded-axonometric.png',
+                    label: 'Axonometric',
+                    caption: 'Exploded Axonometric — Passage Integration, Lab & Amphitheater'
+                },
+                {
+                    src: './projects/bio-decay/assets/crop-recipes-flowchart.png',
+                    label: 'Waste Flowchart',
+                    caption: 'Food-Waste Harvesting & Biopolymer Recipe Matrix'
+                },
+                {
+                    src: './projects/bio-decay/assets/crop-render-view-a.png',
+                    label: 'Interior View',
+                    caption: 'Organic Archive & Modular Biopolymer Tile Replacement System'
+                },
+                {
+                    src: './projects/bio-decay/assets/crop-detail-plan-section-1-50.png',
+                    label: '1:50 Details',
+                    caption: '1:50 Plan, Section & 1:20 Drying Rack Tectonic Detail'
+                }
+            ],
+            researchStrands: [
+                { label: 'Material Fabrication', value: 'Food-Waste Biopolymers · Physical Decay Testing · 1:20 Tectonic Details' },
+                { label: 'Civic Ecology', value: 'Local Restaurant Waste Harvesting → On-Site Casting → Living Archive' },
+                { label: 'Key Drawings & Assets', value: '4 Full Presentation Boards + PDFs · Physical Material Matrix · 1:50 / 1:20 Drawings' }
+            ],
+            relatedIds: ['sprouting-garden', 'the-earthen', 'stray']
+        },
+        {
+            id: 'millieu',
+            num: '05',
+            title: 'MILLIEU',
+            subtitle: 'Culinary Ritual, Spatial Branding & Neighborhood Memory in Yeldeğirmeni',
+            year: '2026',
+            location: 'Yeldeğirmeni, Kadıköy, Istanbul',
+            studio: 'Interior Architecture & Spatial Branding Studio',
+            typology: 'Culinary Interior, Bakery-Bistro & Social Amphitheater',
+            medium: 'Spatial Design · Visual Communication · Custom Furniture',
+            question: 'How does a culinary ritual shape a social atmosphere?',
+            subQuestion: 'How can the historical memory of Yeldeğirmeni’s windmills translate into tectonic and graphic identity?',
+            summary: 'Millieu (/mɪl\'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in Kadıköy’s historic Yeldeğirmeni ("Windmill") district. Reinterpreting the district’s grain-to-flour heritage through the communal ritual of baking and slicing quiche, the project translates the geometric intersection of windmill blades, pastry wedges, and the letterform "M" into a cohesive spatial and visual language—spanning burgundy tubular steel pergolas, a stepped social amphitheater, custom triangular furniture joinery, packaging, and typography.',
+            disciplines: [
+                'Spatial Design',
+                'Architectural Design',
+                'Visual Communication',
+                'Exhibition Design'
+            ],
+            keywords: ['Culinary Interior', 'Spatial Branding', 'Amphitheatre', 'Custom Joinery', 'Yeldeğirmeni'],
+            pole: 'contextual-research',
+            poleLabel: 'Contextual Research',
+            isClusterCore: false,
+            star: null,
+            awards: [],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/millieu/',
+            color: '#e11d48',
+            heroImg: './assets/millieu-cover.png',
+            heroCaption: 'Millieu — Stepped Social Amphitheater & Burgundy Steel Tectonics in Yeldeğirmeni',
+            gallery: [
+                {
+                    src: './assets/millieu-cover.png',
+                    label: 'Interior Hero',
+                    caption: 'Millieu — Main Dining Hall & Burgundy Tubular Steel Structure'
+                },
+                {
+                    src: './projects/millieu/assets/crop-sheet4-axonometric-section-cutaway.jpg',
+                    label: 'Cutaway Axon',
+                    caption: 'Axonometric Section Cutaway — Spatial Sequence & Mezzanine'
+                },
+                {
+                    src: './projects/millieu/assets/crop-sheet1-branding-packaging-menu.jpg',
+                    label: 'Spatial Branding',
+                    caption: 'Visual Identity, Wedge Packaging System & Editorial Menu Design'
+                },
+                {
+                    src: './projects/millieu/assets/crop-sheet2-render-view-l-amphitheater.jpg',
+                    label: 'Amphitheater',
+                    caption: 'Stepped Social Amphitheater for Communal Gathering'
+                },
+                {
+                    src: './projects/millieu/assets/crop-sheet4-custom-furniture-lighting.jpg',
+                    label: 'Custom Furniture',
+                    caption: 'Custom Triangular Table Bases, Arched Lighting & Joinery Details'
+                },
+                {
+                    src: './projects/millieu/assets/crop-sheet3-section-aa-transverse.jpg',
+                    label: 'Section & Plan',
+                    caption: 'Transverse Architectural Section A-A & Material Palette'
+                }
+            ],
+            researchStrands: [
+                { label: 'Contextual Translation', value: 'Yeldeğirmeni Windmill History × Quiche Wedge Geometry × "M" Grid' },
+                { label: 'Cross-Disciplinary Scope', value: 'Interior Architecture · Custom Steel/Timber Furniture · Brand & Packaging System' },
+                { label: 'Key Drawings & Assets', value: '5 Comprehensive Design Sheets · 1:50 Plans & Reflected Ceiling · Joinery Details' }
+            ],
+            relatedIds: ['bajo-la-fresca', 'sprouting-garden', 'ara-sira']
+        },
+        {
+            id: 'bajo-la-fresca',
+            num: '07',
+            title: 'BAJO LA FRESCA',
+            subtitle: 'Ephemeral Olfactory & Microclimatic Courtyard Installation in Córdoba',
+            year: '2026',
+            location: 'Patio San Basilio 44, Córdoba, Spain',
+            studio: 'International Workshop & Realized Spatial Installation',
+            typology: 'Ephemeral Courtyard Installation & Sensory Microclimate',
+            medium: 'Spatial Installation · Bio-Sensory Textiles',
+            question: 'How do you highlight beauty without stealing its spotlight?',
+            subQuestion: 'How can a lightweight overhead intervention honor a UNESCO historic courtyard while reviving the evening ritual of tomar el fresco?',
+            summary: 'Realized in Patio San Basilio 44 during the Fiesta de los Patios in Córdoba, Spain, Bajo la Fresca investigates the Andalusian socio-climatic ritual of tomar el fresco (gathering outdoors in the evening cool). Respecting strict heritage constraints on the historic walls and pebble floor, the installation suspends an undulating pleated canopy carrying gradient-dyed cotton petals infused with dried Andalusian orange and lemon peels and natural citronella—diffusing gentle citrus notes on evening convective breezes.',
+            disciplines: [
+                'Spatial Design',
+                'Exhibition Design',
+                'Bio-Material & Ecological',
+                'Experimental Design'
+            ],
+            keywords: ['Climatic Comfort', 'Ephemeral Space', 'Ecology', 'Córdoba Patios', 'Olfactory Design'],
+            pole: 'contextual-research',
+            poleLabel: 'Contextual Research',
+            isClusterCore: false,
+            star: null,
+            awards: [
+                '✦ Realized 1:1 Installation — Fiesta de los Patios, Córdoba, Spain'
+            ],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/bajo-la-fresca/',
+            color: '#ea580c',
+            heroImg: './assets/bajo-la-fresca-hero.jpg',
+            heroCaption: 'Bajo la Fresca — Realized Suspended Canopy in Patio San Basilio 44, Córdoba',
+            gallery: [
+                {
+                    src: './assets/bajo-la-fresca-hero.jpg',
+                    label: 'Courtyard View',
+                    caption: 'Installed Pleated Canopy in Patio San Basilio 44, Córdoba'
+                },
+                {
+                    src: './projects/bajo-la-fresca/assets/installation-hanging-scent-canopy.jpg',
+                    label: 'Canopy Detail',
+                    caption: 'Undulating Cotton Canopy Infused with Andalusian Citrus Peels & Citronella'
+                },
+                {
+                    src: './projects/bajo-la-fresca/assets/concept-gradient-dot-matrix.jpg',
+                    label: 'Color Matrix',
+                    caption: 'Bougainvillea & Citrus Botanical Gradient Matrix'
+                },
+                {
+                    src: './projects/bajo-la-fresca/assets/process-frayed-cotton-petals-tray.jpg',
+                    label: 'Material Process',
+                    caption: 'Hand-Dyed Cotton Petals & Botanical Infusion Fabrication'
+                },
+                {
+                    src: './projects/bajo-la-fresca/assets/installation-patio-wide-team.jpg',
+                    label: '1:1 Fabrication',
+                    caption: 'On-Site Assembly & Community Gathering in Patio San Basilio 44'
+                },
+                {
+                    src: './projects/bajo-la-fresca/assets/slide-04-tomar-el-fresco-community.jpg',
+                    label: 'Tomar el Fresco',
+                    caption: 'Socio-Climatic Research on the Evening Courtyard Ritual'
+                }
+            ],
+            researchStrands: [
+                { label: 'Heritage Sensitivity', value: 'Zero-Footprint Suspended Rigging in UNESCO Courtyard (1923)' },
+                { label: 'Sensory Tectonics', value: 'Natural Dye Gradients · Citrus Peel & Citronella Olfactory Diffusion' },
+                { label: 'Key Documentation', value: '30+ Fabrication, Site Forensics & Realized Installation Photographs' }
+            ],
+            relatedIds: ['sprouting-garden', 'the-earthen', 'millieu']
+        },
+        {
+            id: 'sprouting-garden',
+            num: '06',
+            title: 'SPROUTING GARDEN',
+            subtitle: 'Porous Timber Waffle Pavilion & Living Bean Trellis by Kuzguncuk Bostanı',
+            year: '2024',
+            location: 'Kuzguncuk, Üsküdar, Istanbul',
+            studio: 'Architectural Design Studio',
+            typology: 'Community Culinary Pavilion & Urban Agriculture Trellis',
+            medium: 'Architectural Design · Timber Tectonics · Ecology',
+            question: 'Can we build without displacing life?',
+            subQuestion: 'How can a community pavilion cultivate, cook, and share native Kuzguncuk beans while weaving around existing trees and footpaths?',
+            summary: 'Situated in a sloped public park beside the historic Kuzguncuk Bostanı in Üsküdar, Sprouting Garden is a shared-use community pavilion dedicated to cultivating, preparing, and serving a ritual culinary dish made from native bean varieties adapted to Kuzguncuk’s microclimate. Built as an open, perforated timber waffle structure bridging a 4.5-meter topographical shift (+18.00m to +22.50m), its porous skin acts as a living trellis for climbing bean vines while curving respectfully around mature park trees.',
+            disciplines: [
+                'Architectural Design',
+                'Bio-Material & Ecological',
+                'Spatial Design'
+            ],
+            keywords: ['Ecology', 'Living Architecture', 'Nonhuman', 'Timber Waffle', 'Kuzguncuk Bostanı'],
+            pole: 'critical-inquiry',
+            poleLabel: 'Critical Inquiry',
+            isClusterCore: false,
+            star: null,
+            awards: [],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/sprouting-garden/',
+            color: '#16a34a',
+            heroImg: './assets/sprouting-garden-cover.png',
+            heroCaption: 'Sprouting Garden — Perforated Timber Waffle Pavilion & Living Bean Trellis in Kuzguncuk',
+            gallery: [
+                {
+                    src: './assets/sprouting-garden-cover.png',
+                    label: 'Atmosphere',
+                    caption: 'Sprouting Garden — Porous Timber Pavilion Integrated with Park Canopy'
+                },
+                {
+                    src: './projects/sprouting-garden/assets/diagram-exploded-axonometric.jpg',
+                    label: 'Axonometric',
+                    caption: 'Exploded Axonometric — Timber Waffle Grid & Climbing Bean Envelope'
+                },
+                {
+                    src: './projects/sprouting-garden/assets/photo-physical-models.jpg',
+                    label: 'Physical Model',
+                    caption: 'Handcrafted Structural Timber Waffle & Topographical Site Model'
+                },
+                {
+                    src: './projects/sprouting-garden/assets/diagram-culinary-ritual.jpg',
+                    label: 'Culinary Cycle',
+                    caption: 'Seed-to-Table Ritual: Cultivating, Harvesting, Cooking & Composting'
+                },
+                {
+                    src: './projects/sprouting-garden/assets/drawing-sections.jpg',
+                    label: 'Sections',
+                    caption: 'Architectural Sections Bridging +18.00m to +22.50m Street Levels'
+                },
+                {
+                    src: './projects/sprouting-garden/assets/drawing-floor-plans.jpg',
+                    label: 'Floor Plans',
+                    caption: 'Floor Plans — Permeable Pedestrian Passage & Communal Kitchen'
+                }
+            ],
+            researchStrands: [
+                { label: 'Non-Displacing Siting', value: 'Preserves All Existing Mature Trees & Street-to-Street Footpaths' },
+                { label: 'Living Envelope', value: 'Perforated Timber Waffle Structure Serving as Seasonal Bean Trellis' },
+                { label: 'Key Drawings & Assets', value: '2 Full Presentation Sheets · Physical Basswood Models · Ecological Diagrams' }
+            ],
+            relatedIds: ['bio-decay', 'bajo-la-fresca', 'wood-weave']
+        },
+        {
+            id: 'wood-weave',
+            num: '08',
+            title: 'WOOD WEAVE',
+            subtitle: 'Interlocking Market-Waste Timber Pavilion & Civic Workshop in Bursa',
+            year: '2024',
+            location: 'Historic Market District, Bursa',
+            studio: 'Architectural & Participatory Design Studio',
+            typology: 'Modular Civic Pavilion & Upcycling Workshop',
+            medium: 'Spatial Design · Waste Architecture · Timber Joinery',
+            question: 'When does waste become a place?',
+            subQuestion: 'How can discarded market crates and agricultural surplus be woven into a customizable civic commons?',
+            summary: 'Located beside the historic bazaar in Bursa, WOOD WEAVE transforms post-market waste into a participatory civic structure. Every Thursday morning following Wednesday’s bazaar, students and residents gather discarded wooden fruit crates and agricultural surplus—experimenting with interlocking 2-meter timber joinery, botanical drying, textile sewing, and sculpting to build a porous framework where vendors and neighbors can claim, adapt, and exhibit their own spatial territories.',
+            disciplines: [
+                'Architectural Design',
+                'Spatial Design',
+                'Bio-Material & Ecological',
+                'Exhibition Design'
+            ],
+            keywords: ['Waste Architecture', 'Community', 'Making', 'Modular Timber', 'Bursa Bazaar'],
+            pole: 'experimental-thinking',
+            poleLabel: 'Experimental Thinking',
+            isClusterCore: false,
+            star: null,
+            awards: [],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/wood-weave/',
+            color: '#d97706',
+            heroImg: './assets/wood-weave-cover.png',
+            heroCaption: 'WOOD WEAVE — Interlocking 2-Meter Timber Modules & Civic Exhibition Commons',
+            gallery: [
+                {
+                    src: './assets/wood-weave-cover.png',
+                    label: 'Pavilion View',
+                    caption: 'WOOD WEAVE — Interlocking Timber Framework & Market Integration'
+                },
+                {
+                    src: './projects/wood-weave/assets/sections-aa-bb.jpg',
+                    label: 'Sections A-A / B-B',
+                    caption: 'Architectural Sections Showing Multi-Level Exhibition & Workshop Zones'
+                },
+                {
+                    src: './projects/wood-weave/assets/bubble-diagram.jpg',
+                    label: 'Program Logic',
+                    caption: 'Spatial Program & Post-Bazaar Upcycling Workflow Diagram'
+                },
+                {
+                    src: './projects/wood-weave/assets/sheet_detail_3.jpg',
+                    label: 'Tectonic Detail',
+                    caption: 'Interlocking 2m Timber Module & Crate Repurposing Details'
+                },
+                {
+                    src: './projects/wood-weave/assets/wood-weave-board-1.jpg',
+                    label: 'Board 01',
+                    caption: 'Full Architectural Presentation Board 01 — Site & Tectonic Strategy'
+                },
+                {
+                    src: './projects/wood-weave/assets/wood-weave-board-2.jpg',
+                    label: 'Board 02',
+                    caption: 'Full Architectural Presentation Board 02 — Plans, Sections & Details'
+                }
+            ],
+            researchStrands: [
+                { label: 'Temporal Materiality', value: 'Wednesday Market Day → Thursday Crate Harvesting → Weekly Fabrication' },
+                { label: 'Structural System', value: 'Interlocking 2.00m Timber Elements Creating Adaptable Spatial Intervals' },
+                { label: 'Key Drawings & Assets', value: '2 Full Presentation Boards · Sections A-A, B-B, D-D · 10 Detail Plates' }
+            ],
+            relatedIds: ['ara-sira', 'sprouting-garden', 'bio-decay']
+        },
+        {
+            id: 'ara-sira',
+            num: '09',
+            title: 'ARA-SIRA',
+            subtitle: 'Dual-State Community Architecture & Editorial Spatial Publication',
+            year: '2024',
+            location: 'Istanbul',
+            studio: 'Spatial & Editorial Design Studio',
+            typology: 'Community Space, Modular Timber Thresholds & Editorial Book',
+            medium: 'Editorial Design · Spatial Design · 1:1 Prototyping',
+            question: 'Can one space hold both play and quiet?',
+            subQuestion: 'How do modular timber thresholds negotiate collective energy and introverted solitude without permanent walls?',
+            summary: 'ARA-SIRA ("From Time to Time / In-Between Rows") investigates dual-state spatial dynamics within community architecture: how a single architectural envelope can hold both exuberant collective play and quiet solitary reading. Documented through an editorial publication and full-scale timber joinery prototypes, the project designs porous seating-and-shade thresholds that let users recalibrate acoustic and visual intimacy throughout the day.',
+            disciplines: [
+                'Editorial Design',
+                'Spatial Design',
+                'Architectural Design',
+                'Visual Communication'
+            ],
+            keywords: ['Play', 'Community', 'Construction', 'Editorial Publication', 'Timber Thresholds'],
+            pole: 'contextual-research',
+            poleLabel: 'Contextual Research',
+            isClusterCore: false,
+            star: null,
+            awards: [],
+            presentationStyle: 'architectural-gallery',
+            url: './projects/ara-sira/',
+            color: '#6366f1',
+            heroImg: './assets/ara-sira-cover.jpg',
+            heroCaption: 'ARA-SIRA — Modular Timber Thresholds Balancing Collective Play & Quiet Solitude',
+            gallery: [
+                {
+                    src: './assets/ara-sira-cover.jpg',
+                    label: 'Cover View',
+                    caption: 'ARA-SIRA — Spatial Thresholds Between Active Play and Quiet Reading'
+                },
+                {
+                    src: './projects/ara-sira/assets/ara-sira-hero-overview.jpg',
+                    label: 'Overview',
+                    caption: 'Overall Spatial Configuration & Modular Timber Frames'
+                },
+                {
+                    src: './projects/ara-sira/assets/ara-sira-playground-facade.jpg',
+                    label: 'Play Facade',
+                    caption: 'Active Playground Facade & Climbing/Perching Timber Structure'
+                },
+                {
+                    src: './projects/ara-sira/assets/ara-sira-reading-niche.jpg',
+                    label: 'Reading Niche',
+                    caption: 'Acoustic & Visual Refuge for Solitary Reading and Pause'
+                },
+                {
+                    src: './projects/ara-sira/assets/ara-sira-timber-detail.jpg',
+                    label: 'Timber Joinery',
+                    caption: 'Tactile Timber Joinery & 1:1 Construction Assembly Detail'
+                },
+                {
+                    src: './projects/ara-sira/assets/ara-sira-seating-shade.jpg',
+                    label: 'Seating & Shade',
+                    caption: 'Shared Seating Bench & Filtered Daylight Canopy'
+                }
+            ],
+            researchStrands: [
+                { label: 'Dual-State Spatiality', value: 'Negotiating Collective Play × Quiet Solitude in One Envelope' },
+                { label: 'Mediums Explored', value: 'Editorial Design Publication · 1:1 Timber Construction · Spatial Thresholds' },
+                { label: 'Key Documentation', value: '6 High-Resolution Tectonic, Facade & Interior Niche Studies' }
+            ],
+            relatedIds: ['wood-weave', 'millieu', 'stray']
+        },
+        {
+            id: 'chronoclines',
+            num: '04',
+            title: 'CHRONOCLINES',
+            subtitle: 'Generative Cartography & Urban Temporal Stratification',
+            year: '2025',
+            location: 'Urban Research / Generative Cartography',
+            studio: 'Computational & Experimental Media Inquiry',
+            typology: 'Generative Art, Urban Forensics & Exhibition Media',
+            medium: 'Visual Communication · Generative Art · Exhibition Design',
+            question: 'Can a city exhibit itself?',
+            subQuestion: 'Can architectural representation function not as a static blueprint, but as an evolving geological and societal clock?',
+            summary: 'CHRONOCLINES interrogates how an urban territory registers and exhibits its own temporal transformations. Combining algorithmic stratification, digital forensics, and archival cartography, the project translates historical topographical sedimentations, erased urban layers, and contemporary mobility flows into high-density visual artifacts—proposing the city itself as a self-curating exhibition.',
+            disciplines: [
+                'Visual Communication',
+                'Exhibition Design',
+                'Interactive & Simulation',
+                'Experimental Design'
+            ],
+            keywords: ['Time', 'Transformation', 'Memory', 'Generative Cartography', 'Urban Strata'],
+            pole: 'contextual-research',
+            poleLabel: 'Contextual Research',
+            isClusterCore: false,
+            star: null,
+            awards: [],
+            presentationStyle: 'research-forensics',
+            url: './projects/chronoclines/',
+            color: '#ea580c',
+            heroImg: './assets/chronoclines-cover.jpg',
+            heroCaption: 'CHRONOCLINES — Generative Stratification of Urban Time & Topographical Memory',
+            gallery: [
+                {
+                    src: './assets/chronoclines-cover.jpg',
+                    label: 'Stratigraphy Map',
+                    caption: 'CHRONOCLINES — Superimposition of Historical Urban Strata & Temporal Contours'
+                }
+            ],
+            researchStrands: [
+                { label: 'Core Method', value: 'Algorithmic Stratification · Archival Cartography · Temporal Contours' },
+                { label: 'Exhibition Thesis', value: 'The City as Self-Exhibiting Palimpsest Rather Than Static Artifact' },
+                { label: 'Visual Language', value: 'High-Density Topographical Linework & Temporal Isochrones' }
+            ],
+            relatedIds: ['you-were-here', 'emek-museum', 'fire-escape-simulation']
+        },
+        {
+            id: 'you-were-here',
+            num: '03',
+            title: 'YOU WERE HERE.',
+            subtitle: 'Live Participatory Digital Palimpsest & Cursor Telemetry Archive',
+            year: '2026',
+            location: 'Live Cloud Archive & Interactive Web Space',
+            studio: 'Independent Experimental Spatial-Digital Inquiry',
+            typology: 'Participatory Digital Monument & Live Cloud Archive',
+            medium: 'Interactive & Simulation · Experimental Design · Visual Communication',
+            question: 'What stays after we leave?',
+            subQuestion: 'Can an anonymous digital cursor line possess the weight of physical presence and collective memory?',
+            summary: 'YOU WERE HERE. transforms this portfolio website itself into an active topological sensorium. When a visitor grants consent, their involuntary cursor movements across the viewport are recorded as normalized coordinate vectors: kinetic velocity is inverted into stroke weight, while moments of reading hesitation bloom into translucent cerulean halos. Stored in a live Cloud Firebase Firestore archive, every visitor’s path is superimposed into an evolving collective palimpsest.',
+            disciplines: [
+                'Interactive & Simulation',
+                'Experimental Design',
+                'Visual Communication',
+                'Exhibition Design'
+            ],
+            keywords: ['Digital Palimpsest', 'Presence', 'Collective Memory', 'Live Telemetry', 'Participatory Archive'],
+            pole: 'critical-inquiry',
+            poleLabel: 'Critical Inquiry',
+            isClusterCore: true,
+            star: {
+                name: 'Alcyone / Practice Trace',
+                bayer: 'η Tauri · Live Layer',
+                mag: '2.87 mag',
+                role: 'Ülker Living Palimpsest · Participatory Trace'
+            },
+            awards: [
+                '✦ Live Participatory Cloud Archive — Active Across This Website'
+            ],
+            presentationStyle: 'live-participatory',
+            url: './projects/you-were-here/',
+            color: '#2563eb',
+            heroImg: './assets/you-were-here-cover.png',
+            heroCaption: 'YOU WERE HERE. — Superimposed Visitor Cursor Trajectories & Hesitation Halos (1:1 Vector-Raster Artifact)',
+            gallery: [
+                {
+                    src: './assets/you-were-here-cover.png',
+                    label: 'Trace Palimpsest',
+                    caption: 'YOU WERE HERE. — Collective Superimposition of Anonymous Visitor Journeys'
+                }
+            ],
+            researchStrands: [
+                { label: 'Telemetry Encoding', value: 'Velocity → Inverted Stroke Weight · Cognitive Pause → Cerulean Halo' },
+                { label: 'Architecture of Memory', value: 'Real-Time Cloud Firestore Sync + 1:1 Transparent PNG Artifact Export' },
+                { label: 'Interactive Layer', value: 'Consent-Based Live Recording Running Directly on This Portfolio' }
+            ],
+            relatedIds: ['stray', 'chronoclines', 'emek-museum']
+        },
+        {
+            id: 'emek-museum',
+            num: '01',
+            title: 'EMEK MUSEUM',
+            subtitle: 'Counter-Monument & Spatial Forensics of Unseen Labor',
+            year: '2026',
+            location: 'Türkiye (Ongoing Spatial Research)',
+            studio: 'Architectural Thesis & Critical Spatial Research',
+            typology: 'Counter-Monument, Public Archive & Memorial Architecture',
+            medium: 'Architectural Design · Exhibition Design · Spatial Justice',
+            question: 'How can we make this labour visible again?',
+            subQuestion: 'When workers lose their lives, why does the public narrative end with the accident while their labor and time vanish from view?',
+            summary: 'Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, public memory often reduces them to statistical casualties—erasing the hours they gave, the craft they practiced, and the worlds shaped through their labor. Emek Museum is an architectural counter-monument and spatial research initiative investigating how built space can restore visibility, dignity, and collective presence to unseen civic labor.',
+            disciplines: [
+                'Architectural Design',
+                'Exhibition Design',
+                'Spatial Design',
+                'Experimental Design'
+            ],
+            keywords: ['Collective Memory', 'Narratives', 'Spatial Justice', 'Counter-Monument', 'Labor Forensics'],
+            pole: 'critical-inquiry',
+            poleLabel: 'Critical Inquiry',
+            isClusterCore: true,
+            star: {
+                name: 'Maia',
+                bayer: '20 Tauri',
+                mag: '3.87 mag',
+                role: 'Ülker Core Star · Spatial Justice & Memory'
+            },
+            awards: [
+                '◈ Ongoing Architectural Research & Counter-Monument Initiative'
+            ],
+            presentationStyle: 'research-forensics',
+            url: './projects/emek-museum/',
+            color: '#0284c7',
+            heroImg: './assets/emek-museum-wip.svg',
+            heroCaption: 'EMEK MUSEUM — Spatial Research & Counter-Monument Framework (In Progress)',
+            gallery: [
+                {
+                    src: './assets/emek-museum-wip.svg',
+                    label: 'Research Dossier',
+                    caption: 'EMEK MUSEUM — Ongoing Architectural Forensics & Counter-Monument Inquiry'
+                }
+            ],
+            researchStrands: [
+                { label: 'Critical Premise', value: 'Shifting Memorial Architecture from Passive Grief to Active Labor Visibility' },
+                { label: 'Spatial Typology', value: 'Counter-Monument · Living Oral & Material Archive · Civic Forum' },
+                { label: 'Dialectical Axis', value: 'Paired with Fire Escape Simulation (“Disaster Is Never Natural”)' }
+            ],
+            relatedIds: ['fire-escape-simulation', 'stray', 'you-were-here']
+        },
+        {
+            id: 'fire-escape-simulation',
+            num: '12',
+            title: 'FIRE ESCAPE SIMULATION',
+            subtitle: 'Agent-Based Behavioral Inquiry into Spatial Panic & Emergency Egress',
+            year: '2026',
+            location: 'Computational Spatial Research',
+            studio: 'Behavioral Simulation & Spatial Forensics',
+            typology: 'Agent-Based Evacuation Simulation & Code Critique',
+            medium: 'Interactive & Simulation · Architectural Research',
+            question: 'Can you escape the fire?',
+            subQuestion: 'Do standardized building egress codes account for cognitive hesitation, smoke occlusion, and collective panic?',
+            summary: 'FIRE ESCAPE SIMULATION is a computational behavioral inquiry investigating emergency crowd dynamics, exit route choices, and spatial panic under hazardous conditions. By modeling individual agent behaviors, visibility occlusions, corridor bottlenecks, and velocity drops during high-stress evacuation, the project critiques purely geometric building codes and exposes how spatial thresholds can either mitigate or amplify catastrophe.',
+            disciplines: [
+                'Interactive & Simulation',
+                'Architectural Design',
+                'Experimental Design'
+            ],
+            keywords: ['Egress Dynamics', 'Simulation', 'Spatial Panic', 'Agent-Based Modeling', 'Building Codes'],
+            pole: 'contextual-research',
+            poleLabel: 'Contextual Research',
+            isClusterCore: true,
+            star: {
+                name: 'Asterope',
+                bayer: '21 Tauri',
+                mag: '5.76 mag',
+                role: 'Ülker Core Star · Egress & Behavioral Forensics'
+            },
+            awards: [
+                '◈ Ongoing Computational Simulation & Egress Forensics'
+            ],
+            presentationStyle: 'research-forensics',
+            url: './projects/fire-escape-simulation/',
+            color: '#dc2626',
+            heroImg: './assets/fire-escape-wip.svg',
+            heroCaption: 'FIRE ESCAPE SIMULATION — Agent-Based Egress & Bottleneck Forensics (In Progress)',
+            gallery: [
+                {
+                    src: './assets/fire-escape-wip.svg',
+                    label: 'Simulation Frame',
+                    caption: 'FIRE ESCAPE SIMULATION — Multi-Agent Evacuation & Bottleneck Modeling'
+                }
+            ],
+            researchStrands: [
+                { label: 'Simulation Parameters', value: 'Multi-Agent Crowd Physics · Smoke Occlusion · Bottleneck Hesitation' },
+                { label: 'Architectural Critique', value: 'Testing Static Regulatory Exit Ratios Against Real Human Panic Behavior' },
+                { label: 'Dialectical Axis', value: 'Paired with Emek Museum (“Disaster Is Never Natural”)' }
+            ],
+            relatedIds: ['emek-museum', 'chronoclines', 'you-were-here']
+        }
+    ];
+
+    window.EDITORIAL_PORTFOLIO_PROJECTS = EDITORIAL_PORTFOLIO_PROJECTS;
+
+    // Map by slug for fast lookup
+    const PROJECT_BY_ID = {};
+    EDITORIAL_PORTFOLIO_PROJECTS.forEach(p => {
+        PROJECT_BY_ID[p.id] = p;
+    });
+
+    // State
+    let activeDiscipline = 'all';
+    let activePole = null; // 'critical-inquiry' | 'contextual-research' | 'experimental-thinking' | null
+    let activeView = 'editorial'; // 'editorial' | 'grid' | 'index'
+    let searchQuery = '';
+
+    // DOM References
+    const disciplineButtons = Array.from(document.querySelectorAll('#ep-discipline-bar .ep-filter-pill'));
+    const viewButtons = Array.from(document.querySelectorAll('.ep-view-btn'));
+    const searchInput = document.getElementById('ep-project-search');
+    const searchClearBtn = document.getElementById('ep-project-search-clear');
+    const activeHeadingEl = document.getElementById('ep-active-filter-heading');
+    const statusTextEl = document.getElementById('ep-filter-status-text');
+    const resetFilterBtn = document.getElementById('ep-reset-filter-btn');
+
+    // Compute and populate discipline counts in filter bar
+    function updateDisciplineCounts() {
+        const countElMap = {
+            'all': document.getElementById('count-all'),
+            'cluster-core': document.getElementById('count-cluster'),
+            'Architectural Design': document.getElementById('count-arch'),
+            'Spatial Design': document.getElementById('count-spatial'),
+            'Bio-Material & Ecological': document.getElementById('count-bio'),
+            'Exhibition Design': document.getElementById('count-exhibition'),
+            'Interactive & Simulation': document.getElementById('count-interactive'),
+            'Visual Communication': document.getElementById('count-viscomm'),
+            'Editorial Design': document.getElementById('count-editorial'),
+            'Experimental Design': document.getElementById('count-experimental')
+        };
+
+        Object.keys(countElMap).forEach(key => {
+            const el = countElMap[key];
+            if (!el) return;
+            if (key === 'all') {
+                el.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.length);
+            } else if (key === 'cluster-core') {
+                el.textContent = String(EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.isClusterCore).length);
+            } else {
+                const count = EDITORIAL_PORTFOLIO_PROJECTS.filter(p => p.disciplines.includes(key)).length;
+                el.textContent = String(count);
+            }
+        });
+    }
+
+    function getFilteredProjects() {
+        return EDITORIAL_PORTFOLIO_PROJECTS.filter(p => {
+            if (activeDiscipline === 'cluster-core') {
+                if (!p.isClusterCore) return false;
+            } else if (activeDiscipline && activeDiscipline !== 'all') {
+                if (!p.disciplines.includes(activeDiscipline)) return false;
+            }
+
+            if (activePole) {
+                if (p.pole !== activePole) return false;
+            }
+
+            if (searchQuery.trim().length > 0) {
+                const q = searchQuery.toLowerCase().trim();
+                const haystack = [
+                    p.title,
+                    p.subtitle,
+                    p.question,
+                    p.subQuestion || '',
+                    p.summary,
+                    p.location,
+                    p.year,
+                    p.typology,
+                    p.disciplines.join(' '),
+                    p.keywords.join(' '),
+                    p.star ? `${p.star.name} ${p.star.bayer}` : ''
+                ].join(' ').toLowerCase();
+                if (!haystack.includes(q)) return false;
+            }
+
+            return true;
+        });
+    }
+
+    function updateFilterStatusBanner(filteredList) {
+        const isFiltered = (activeDiscipline !== 'all') || !!activePole || (searchQuery.trim().length > 0);
+        if (resetFilterBtn) {
+            resetFilterBtn.classList.toggle('hidden', !isFiltered);
+        }
+
+        const poleNames = {
+            'critical-inquiry': 'Vertex 01 · Critical Inquiry',
+            'contextual-research': 'Vertex 02 · Contextual Research',
+            'experimental-thinking': 'Vertex 03 · Experimental Thinking'
+        };
+
+        if (activeHeadingEl) {
+            if (activePole && poleNames[activePole]) {
+                activeHeadingEl.textContent = poleNames[activePole];
+            } else if (activeDiscipline === 'cluster-core') {
+                activeHeadingEl.textContent = '✦ Ülker (Pleiades) Core Cluster Works';
+            } else if (activeDiscipline !== 'all') {
+                activeHeadingEl.textContent = activeDiscipline;
+            } else if (searchQuery.trim().length > 0) {
+                activeHeadingEl.textContent = `Search Results: “${searchQuery.trim()}”`;
+            } else {
+                activeHeadingEl.textContent = 'All Works (12 Projects)';
+            }
+        }
+
+        if (statusTextEl) {
+            const countStr = `${filteredList.length} of ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects`;
+            if (!isFiltered) {
+                statusTextEl.textContent = `Showing all ${EDITORIAL_PORTFOLIO_PROJECTS.length} projects across architectural, spatial, material, and computational inquiries — click any image or title to open the full project.`;
+            } else {
+                statusTextEl.textContent = `Showing ${countStr} matching your active selection.`;
+            }
+        }
+
+        disciplineButtons.forEach(btn => {
+            const d = btn.getAttribute('data-discipline');
+            btn.classList.toggle('active', d === activeDiscipline && !activePole);
+        });
+    }
+
+    // Render Editorial Monograph Card (View 1: Default)
+    function renderEditorialCard(p, index) {
+        const starBadgeHtml = p.star
+            ? `<span class="ep-star-badge" data-cursor="dot"><span class="ep-star-glyph">&#x2726;</span> ${p.star.name.toUpperCase()} (${p.star.bayer})</span>`
+            : '';
+
+        const awardsHtml = (p.awards && p.awards.length > 0)
+            ? p.awards.map(a => `<span class="ep-award-badge">${a}</span>`).join('')
+            : '';
+
+        const disciplineTagsHtml = p.disciplines.map(d => {
+            const isActive = (activeDiscipline === d);
+            return `<button type="button" class="ep-card-discipline-tag ${isActive ? 'is-active' : ''}" data-discipline-click="${d}" data-cursor="dot">${d}</button>`;
+        }).join('');
+
+        let galleryStripHtml = '';
+        if (p.gallery && p.gallery.length > 1) {
+            const thumbs = p.gallery.map((g, gIdx) => `
+                <button type="button" class="ep-thumb-btn ${gIdx === 0 ? 'active' : ''}"
+                        data-proj-id="${p.id}"
+                        data-img-src="${g.src}"
+                        data-img-caption="${g.caption.replace(/"/g, '&quot;')}"
+                        aria-label="Preview ${g.label}">
+                    <img src="${g.src}" alt="${p.title} — ${g.label}" loading="lazy" class="ep-no-auto-lightbox">
+                    <span class="ep-thumb-label">${g.label}</span>
+                </button>
+            `).join('');
+            galleryStripHtml = `
+                <div class="ep-thumb-strip" role="region" aria-label="${p.title} visual plates">
+                    ${thumbs}
+                </div>
+            `;
+        }
+
+        let strandsHtml = '';
+        if (p.researchStrands && p.researchStrands.length > 0) {
+            strandsHtml = `
+                <div class="ep-strands-grid">
+                    ${p.researchStrands.map(s => `
+                        <div class="ep-strand-item">
+                            <span class="ep-strand-label">${s.label}</span>
+                            <span class="ep-strand-val">${s.value}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        let relatedHtml = '';
+        if (p.relatedIds && p.relatedIds.length > 0) {
+            const relLinks = p.relatedIds
+                .map(rId => PROJECT_BY_ID[rId])
+                .filter(Boolean)
+                .map(relProj => `<button type="button" class="ep-rel-jump-btn" data-jump-project="${relProj.id}" data-cursor="dot">${relProj.num}. ${relProj.title}</button>`)
+                .join('');
+            relatedHtml = `
+                <div class="ep-card-relations">
+                    <span class="ep-rel-label">CLUSTER DIALOGUE:</span>
+                    <div class="ep-rel-pills">${relLinks}</div>
+                </div>
+            `;
+        }
+
+        return `
+            <article class="ep-project-monograph ep-style-${p.presentationStyle} ${index % 2 === 1 ? 'ep-layout-alt' : ''}"
+                     id="ep-project-${p.id}"
+                     data-project-id="${p.id}"
+                     style="--proj-accent: ${p.color};">
+                
+                <!-- Left / Top: Prominent Visual Stage -->
+                <div class="ep-media-column">
+                    <div class="ep-main-figure">
+                        <a href="${p.url}" class="ep-main-media-link" data-project-nav="${p.id}" aria-label="Open ${p.title} full project">
+                            <img src="${p.heroImg}"
+                                 alt="${p.title} — ${p.subtitle}"
+                                 class="ep-main-img ep-no-auto-lightbox"
+                                 id="ep-main-img-${p.id}"
+                                 loading="${index < 2 ? 'eager' : 'lazy'}">
+                            <span class="ep-media-open-badge">OPEN FULL PROJECT &rarr;</span>
+                        </a>
+                        <div class="ep-figure-caption-bar">
+                            <span class="ep-figure-caption-text" id="ep-caption-${p.id}">${p.heroCaption}</span>
+                            <button type="button" class="ep-zoom-btn" data-zoom-project="${p.id}" aria-label="Enlarge current image fullscreen">
+                                &#x2922; FULLSCREEN
+                            </button>
+                        </div>
+                    </div>
+                    ${galleryStripHtml}
+                </div>
+
+                <!-- Right / Bottom: Editorial Narrative, Question, Classification & Actions -->
+                <div class="ep-content-column">
+                    <div class="ep-card-topline">
+                        <span class="ep-proj-index">NO. ${p.num}</span>
+                        <span class="ep-proj-year-loc">${p.year} &bull; ${p.location}</span>
+                        <button type="button" class="ep-pole-pill" data-pole-click="${p.pole}" data-cursor="dot">${p.poleLabel}</button>
+                        ${starBadgeHtml}
+                    </div>
+
+                    ${awardsHtml ? `<div class="ep-awards-row">${awardsHtml}</div>` : ''}
+
+                    <h3 class="ep-proj-title">
+                        <a href="${p.url}" data-project-nav="${p.id}">${p.title}</a>
+                    </h3>
+                    <p class="ep-proj-subtitle">${p.subtitle}</p>
+
+                    <blockquote class="ep-proj-question-box">
+                        <span class="ep-question-kicker">CORE INQUIRY</span>
+                        <p class="ep-question-main">&ldquo;${p.question}&rdquo;</p>
+                        ${p.subQuestion ? `<p class="ep-question-sub">${p.subQuestion}</p>` : ''}
+                    </blockquote>
+
+                    <p class="ep-proj-summary">${p.summary}</p>
+
+                    ${strandsHtml}
+
+                    <div class="ep-card-disciplines-wrap">
+                        <span class="ep-disciplines-label">DISCIPLINES:</span>
+                        <div class="ep-card-disciplines">${disciplineTagsHtml}</div>
+                    </div>
+
+                    ${relatedHtml}
+
+                    <div class="ep-card-actions">
+                        <a href="${p.url}" class="ep-btn-open-project" data-project-nav="${p.id}">
+                            <span>EXPLORE FULL PROJECT</span>
+                            <span class="ep-btn-arrow">&rarr;</span>
+                        </a>
+                        <button type="button" class="ep-btn-quick-read" data-quick-read="${p.id}">
+                            QUICK READ (EN / TR)
+                        </button>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
+    // Render Visual Grid Card (View 2: Compact Grid)
+    function renderGridCard(p) {
+        const starBadge = p.star
+            ? `<span class="ep-grid-star">&#x2726; ${p.star.name}</span>`
+            : '';
+
+        const disciplineTags = p.disciplines.map(d =>
+            `<button type="button" class="ep-card-discipline-tag" data-discipline-click="${d}" data-cursor="dot">${d}</button>`
+        ).join('');
+
+        return `
+            <article class="ep-grid-card" id="ep-project-${p.id}" data-project-id="${p.id}" style="--proj-accent: ${p.color};">
+                <a href="${p.url}" class="ep-grid-card-link" data-project-nav="${p.id}">
+                    <div class="ep-grid-media-wrap">
+                        <img src="${p.heroImg}" alt="${p.title}" loading="lazy" class="ep-grid-img ep-no-auto-lightbox">
+                        <span class="ep-grid-num">${p.num}</span>
+                        ${starBadge}
+                    </div>
+                </a>
+                <div class="ep-grid-body">
+                    <div class="ep-grid-meta">
+                        <span>${p.year} &bull; ${p.location}</span>
+                        <span class="ep-grid-pole">${p.poleLabel}</span>
+                    </div>
+                    <h3 class="ep-grid-title">
+                        <a href="${p.url}" data-project-nav="${p.id}">${p.title}</a>
+                    </h3>
+                    <p class="ep-grid-question">&ldquo;${p.question}&rdquo;</p>
+                    <p class="ep-grid-summary">${p.summary}</p>
+                    <div class="ep-grid-tags">${disciplineTags}</div>
+                    <div class="ep-grid-footer">
+                        <a href="${p.url}" class="ep-grid-open-link" data-project-nav="${p.id}">OPEN PROJECT &rarr;</a>
+                        <button type="button" class="ep-grid-quick-btn" data-quick-read="${p.id}">EN / TR</button>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
+    // Render Architectural Index Table (View 3: Index & Relations)
+    function renderIndexTable(list) {
+        const rows = list.map(p => {
+            const starText = p.star ? `✦ ${p.star.name} (${p.star.bayer})` : 'Constellation Field';
+            const tags = p.disciplines.map(d =>
+                `<button type="button" class="ep-index-tag" data-discipline-click="${d}" data-cursor="dot">${d}</button>`
+            ).join('');
+
+            return `
+                <tr class="ep-index-row" id="ep-project-${p.id}" data-project-id="${p.id}" style="--proj-accent: ${p.color};">
+                    <td class="ep-idx-num">${p.num}</td>
+                    <td class="ep-idx-thumb">
+                        <a href="${p.url}" data-project-nav="${p.id}" class="ep-main-media-link">
+                            <img src="${p.heroImg}" alt="${p.title}" loading="lazy" class="ep-no-auto-lightbox">
+                        </a>
+                    </td>
+                    <td class="ep-idx-title">
+                        <a href="${p.url}" data-project-nav="${p.id}" class="ep-idx-title-link">${p.title}</a>
+                        <span class="ep-idx-sub">${p.subtitle}</span>
+                    </td>
+                    <td class="ep-idx-question">&ldquo;${p.question}&rdquo;</td>
+                    <td class="ep-idx-disciplines"><div class="ep-idx-tag-wrap">${tags}</div></td>
+                    <td class="ep-idx-cluster">
+                        <span class="ep-idx-star">${starText}</span>
+                        <span class="ep-idx-pole">${p.poleLabel}</span>
+                    </td>
+                    <td class="ep-idx-year">${p.year}<br><small>${p.location}</small></td>
+                    <td class="ep-idx-action">
+                        <a href="${p.url}" class="ep-idx-open-btn" data-project-nav="${p.id}">OPEN &rarr;</a>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        return `
+            <div class="ep-index-table-wrap">
+                <table class="ep-index-table">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>VISUAL</th>
+                            <th>PROJECT &amp; TYPOLOGY</th>
+                            <th>CORE SPATIAL QUESTION</th>
+                            <th>DISCIPLINES</th>
+                            <th>ÜLKER / POLE</th>
+                            <th>YEAR / SITE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderProjectsStage() {
+        const filtered = getFilteredProjects();
+        updateFilterStatusBanner(filtered);
+
+        stageEl.setAttribute('data-view-mode', activeView);
+
+        if (filtered.length === 0) {
+            stageEl.innerHTML = `
+                <div class="ep-empty-state">
+                    <p class="ep-empty-title">No projects match the current filter or search query.</p>
+                    <button type="button" class="ep-btn-reset-empty" id="ep-empty-reset-btn">Show All 12 Projects</button>
+                </div>
+            `;
+            const emptyResetBtn = document.getElementById('ep-empty-reset-btn');
+            if (emptyResetBtn) {
+                emptyResetBtn.addEventListener('click', resetAllFilters);
+            }
+            return;
+        }
+
+        if (activeView === 'editorial') {
+            stageEl.innerHTML = `<div class="ep-editorial-list">${filtered.map((p, i) => renderEditorialCard(p, i)).join('')}</div>`;
+        } else if (activeView === 'grid') {
+            stageEl.innerHTML = `<div class="ep-grid-list">${filtered.map(p => renderGridCard(p)).join('')}</div>`;
+        } else {
+            stageEl.innerHTML = renderIndexTable(filtered);
+        }
+    }
+
+    function resetAllFilters() {
+        activeDiscipline = 'all';
+        activePole = null;
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        if (searchClearBtn) searchClearBtn.classList.add('hidden');
+        renderProjectsStage();
+    }
+
+    // Open Bilingual Quick Read Modal (#project-modal) without leaving the page
+    function openQuickReadModal(projectId) {
+        const p = PROJECT_BY_ID[projectId];
+        if (!p) return;
+
+        const modal = document.getElementById('project-modal');
+        if (!modal) return;
+
+        const mCat = document.getElementById('m-cat');
+        const mYear = document.getElementById('m-year');
+        const mTitle = document.getElementById('m-title');
+        const mQuestion = document.getElementById('m-question');
+        const mDescEn = document.getElementById('m-desc-en');
+        const mDescTr = document.getElementById('m-desc-tr');
+        const mTags = document.getElementById('m-tags');
+        const mLink = document.getElementById('m-link');
+        const mVisualStage = document.getElementById('m-visual-stage');
+
+        const cardStoreEl = document.querySelector(`#project-cards-store .project-card[data-id="${p.id}"]`);
+        const enHtml = cardStoreEl?.querySelector('.card-detail-en')?.innerHTML || `<p>${p.summary}</p>`;
+        const trHtml = cardStoreEl?.querySelector('.card-detail-tr')?.innerHTML || `<p>${p.summary}</p>`;
+
+        if (mCat) mCat.textContent = p.disciplines.join(' · ');
+        if (mYear) mYear.textContent = `${p.year} — ${p.location}`;
+        if (mTitle) mTitle.textContent = p.title;
+        if (mQuestion) mQuestion.textContent = `“${p.question}”`;
+        if (mDescEn) mDescEn.innerHTML = enHtml;
+        if (mDescTr) mDescTr.innerHTML = trHtml;
+
+        if (mTags) {
+            mTags.innerHTML = p.disciplines.map(d => `<span class="tag">${d}</span>`).join('') +
+                p.keywords.map(k => `<span class="tag">#${k}</span>`).join('');
+        }
+
+        if (mLink) {
+            mLink.setAttribute('href', p.url);
+        }
+
+        if (mVisualStage) {
+            const galleryImgs = (p.gallery && p.gallery.length > 0) ? p.gallery : [{ src: p.heroImg, caption: p.heroCaption }];
+            mVisualStage.innerHTML = `
+                <div class="ep-modal-gallery">
+                    ${galleryImgs.map(g => `
+                        <figure class="ep-modal-figure">
+                            <img src="${g.src}" alt="${p.title}" loading="lazy">
+                            <figcaption>${g.caption}</figcaption>
+                        </figure>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        window.lastOpenedProjectSlug = p.id;
+        if (typeof window.toggleModalLang === 'function') {
+            window.toggleModalLang('en');
+        }
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    window.openQuickReadModal = openQuickReadModal;
+
+    function jumpToProjectCard(projectId) {
+        if (!PROJECT_BY_ID[projectId]) return;
+        let targetEl = document.getElementById(`ep-project-${projectId}`);
+        if (!targetEl) {
+            resetAllFilters();
+            targetEl = document.getElementById(`ep-project-${projectId}`);
+        }
+        if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetEl.classList.remove('ep-flash-highlight');
+            void targetEl.offsetWidth;
+            targetEl.classList.add('ep-flash-highlight');
+            setTimeout(() => {
+                targetEl.classList.remove('ep-flash-highlight');
+            }, 2400);
+        }
+    }
+    window.jumpToProjectCard = jumpToProjectCard;
+
+    window.filterByPole = function(poleKey) {
+        activePole = poleKey;
+        activeDiscipline = 'all';
+        renderProjectsStage();
+        const anchor = document.getElementById('ep-projects-anchor');
+        if (anchor) {
+            anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    disciplineButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selected = btn.getAttribute('data-discipline') || 'all';
+            activePole = null;
+            if (activeDiscipline === selected && selected !== 'all') {
+                activeDiscipline = 'all';
+            } else {
+                activeDiscipline = selected;
+            }
+            renderProjectsStage();
+        });
+    });
+
+    if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', resetAllFilters);
+    }
+
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const v = btn.getAttribute('data-view') || 'editorial';
+            activeView = v;
+            viewButtons.forEach(b => {
+                const isMatch = b.getAttribute('data-view') === v;
+                b.classList.toggle('active', isMatch);
+                b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+            renderProjectsStage();
+        });
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value || '';
+            if (searchClearBtn) {
+                searchClearBtn.classList.toggle('hidden', searchQuery.trim().length === 0);
+            }
+            renderProjectsStage();
+        });
+    }
+
+    if (searchClearBtn) {
+        searchClearBtn.addEventListener('click', () => {
+            searchQuery = '';
+            if (searchInput) searchInput.value = '';
+            searchClearBtn.classList.add('hidden');
+            renderProjectsStage();
+        });
+    }
+
+    stageEl.addEventListener('click', (e) => {
+        // 1. Thumbnail switch
+        const thumbBtn = e.target.closest('.ep-thumb-btn');
+        if (thumbBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const projId = thumbBtn.getAttribute('data-proj-id');
+            const newSrc = thumbBtn.getAttribute('data-img-src');
+            const newCap = thumbBtn.getAttribute('data-img-caption');
+            const mainImg = document.getElementById(`ep-main-img-${projId}`);
+            const capEl = document.getElementById(`ep-caption-${projId}`);
+            if (mainImg && newSrc) {
+                mainImg.src = newSrc;
+            }
+            if (capEl && newCap) {
+                capEl.textContent = newCap;
+            }
+            const strip = thumbBtn.closest('.ep-thumb-strip');
+            if (strip) {
+                strip.querySelectorAll('.ep-thumb-btn').forEach(b => b.classList.remove('active'));
+            }
+            thumbBtn.classList.add('active');
+            return;
+        }
+
+        // 2. Fullscreen Zoom button
+        const zoomBtn = e.target.closest('.ep-zoom-btn');
+        if (zoomBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const projId = zoomBtn.getAttribute('data-zoom-project');
+            const mainImg = document.getElementById(`ep-main-img-${projId}`);
+            if (mainImg && typeof window.openUniversalFullscreenImage === 'function') {
+                window.openUniversalFullscreenImage(mainImg.currentSrc || mainImg.src);
+            }
+            return;
+        }
+
+        // 3. Quick Read (EN/TR) button
+        const quickBtn = e.target.closest('[data-quick-read]');
+        if (quickBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const projId = quickBtn.getAttribute('data-quick-read');
+            openQuickReadModal(projId);
+            return;
+        }
+
+        // 4. Inline discipline tag click
+        const discBtn = e.target.closest('[data-discipline-click]');
+        if (discBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const d = discBtn.getAttribute('data-discipline-click');
+            if (d) {
+                activePole = null;
+                activeDiscipline = (activeDiscipline === d) ? 'all' : d;
+                renderProjectsStage();
+                const anchor = document.getElementById('ep-projects-anchor');
+                if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            return;
+        }
+
+        // 5. Pole pill click
+        const poleBtn = e.target.closest('[data-pole-click]');
+        if (poleBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const pole = poleBtn.getAttribute('data-pole-click');
+            if (pole) {
+                window.filterByPole(pole);
+            }
+            return;
+        }
+
+        // 6. Related project jump click
+        const relJumpBtn = e.target.closest('[data-jump-project]');
+        if (relJumpBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetId = relJumpBtn.getAttribute('data-jump-project');
+            jumpToProjectCard(targetId);
+            return;
+        }
+
+        // 7. Save active filter & view state when navigating to a project page
+        const projNavLink = e.target.closest('[data-project-nav]');
+        if (projNavLink) {
+            try {
+                sessionStorage.setItem('portfolio_return_discipline', activeDiscipline);
+                sessionStorage.setItem('portfolio_return_view', activeView);
+                sessionStorage.setItem('portfolio_return_pole', activePole || '');
+            } catch (_) {}
+        }
+    });
+
+    // Event Listeners: Ülker SVG Star Points & Cluster Jump Links in Hero
+    document.querySelectorAll('.ep-star-point[data-star-target], .ep-cluster-jump[data-jump-project]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = el.getAttribute('data-star-target') || el.getAttribute('data-jump-project');
+            if (targetId) {
+                jumpToProjectCard(targetId);
+            }
+        });
+    });
+
+    // Restore saved discipline/view filter if returning from a project page
+    try {
+        const savedDisc = sessionStorage.getItem('portfolio_return_discipline');
+        const savedView = sessionStorage.getItem('portfolio_return_view');
+        const savedPole = sessionStorage.getItem('portfolio_return_pole');
+        if (savedDisc) {
+            activeDiscipline = savedDisc;
+            sessionStorage.removeItem('portfolio_return_discipline');
+        }
+        if (savedView && ['editorial', 'grid', 'index'].includes(savedView)) {
+            activeView = savedView;
+            viewButtons.forEach(b => {
+                const isMatch = b.getAttribute('data-view') === activeView;
+                b.classList.toggle('active', isMatch);
+                b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+            sessionStorage.removeItem('portfolio_return_view');
+        }
+        if (savedPole) {
+            activePole = savedPole;
+            sessionStorage.removeItem('portfolio_return_pole');
+        }
+    } catch (_) {}
+
+    // Initial render
+    updateDisciplineCounts();
+    renderProjectsStage();
+});
