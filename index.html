@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css?v=20261030-ulker-v2">
+    <link rel="stylesheet" href="./style.css?v=20261030-matrix">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -63,100 +63,92 @@
         <div class="folder-body">
 
             <!-- =========================================================
-                 TAB 01: MAIN ENTRANCE — VISUAL ÜLKER (PLEIADES) CLUSTER
-                 (Large Project Visuals + Core Questions arranged in the
-                  Ülker Constellation with live celestial connection lines)
+                 TAB 01: MAIN ENTRANCE — ÜLKER (PLEIADES) SQUARE MATRIX
+                 6 Core Ülker Stars as 1:1 Square Visual Tiles + Empty
+                 Constellation Void Squares with Live SVG Star Connections
                  ========================================================= -->
             <section class="tab-content active" id="tab-main">
-                <div class="ulker-stage-wrapper" id="ulker-stage-wrapper">
-                    <!-- Atmospheric Pleiades Layers -->
+                <div class="matrix-stage-wrap" id="ulker-matrix-stage">
                     <div class="ulker-nebula-bg" aria-hidden="true"></div>
                     <div class="ulker-grid-bg" aria-hidden="true"></div>
 
-                    <!-- Dynamic SVG Constellation Lines connecting the 6 Ülker Project Cards -->
-                    <svg class="ulker-constellation-svg" id="ulker-constellation-svg" aria-hidden="true"></svg>
+                    <!-- Dynamic SVG Overlay connecting related squares across empty grid cells -->
+                    <svg class="matrix-svg-layer" id="ulker-cluster-svg" aria-hidden="true"></svg>
 
-                    <div class="ulker-stage-inner">
-                        <!-- Minimal Top Bar: Alcyone Identity + See All Projects CTA -->
-                        <header class="ulker-hero-bar">
-                            <div class="ulker-identity-block">
-                                <div class="ulker-kicker-row">
-                                    <span class="ulker-kicker-pill">&#x2726; MESSIER 45 // &Uuml;LKER (PLEIADES) CLUSTER</span>
-                                    <button type="button" class="ulker-story-trigger" id="ulker-story-trigger" data-cursor="dot">
-                                        Why &Uuml;lker? (The Hidden Sister) &nearr;
-                                    </button>
-                                </div>
-                                <h1 class="ulker-main-statement">
-                                    Design as a question<span class="ulker-blue-dot">.</span>
-                                    <span class="ulker-sub-statement">Six visible core works in the &Uuml;lker cluster &mdash; opening onto twelve architectural, spatial &amp; material inquiries.</span>
-                                </h1>
+                    <div class="matrix-inner">
+                        <header class="matrix-topbar">
+                            <div class="matrix-topbar-left">
+                                <span class="matrix-kicker">&#x2726; M45 // &Uuml;LKER (PLEIADES) CLUSTER</span>
+                                <p class="matrix-subtitle">
+                                    Six core works in the &Uuml;lker cluster &mdash; hover any square to trace its spatial question &amp; constellation links.
+                                </p>
                             </div>
-
-                            <div class="ulker-hero-cta-group">
-                                <button type="button" class="ulker-see-all-btn" id="ulker-see-all-top-btn">
-                                    <span class="usa-star">&#x2726;</span>
+                            <div class="matrix-topbar-right">
+                                <button type="button" class="matrix-ghost-btn" id="ulker-story-trigger" data-cursor="dot">
+                                    &#x2726; The Hidden Sister (Merope)
+                                </button>
+                                <button type="button" class="matrix-primary-btn" id="ulker-see-all-top-btn">
                                     <span>SEE ALL 12 PROJECTS</span>
-                                    <span class="usa-arrow">&rarr;</span>
+                                    <span>&rarr;</span>
                                 </button>
                             </div>
                         </header>
 
-                        <!-- THE 6 CORE ÜLKER STARS AS VISUAL-FIRST PROJECT CARDS IN STAGGERED CLUSTER FORMATION -->
-                        <div class="ulker-cluster-field" id="ulker-cluster-field">
-                            <!-- Populated by script.js with the 6 Ülker Core Projects (Image + Main Question + Star Node) -->
+                        <!-- 5x2 SPATIAL SQUARE GRID (6 Project Squares + 4 Breathing Constellation Void Squares) -->
+                        <div class="spatial-square-grid cluster-square-grid" id="ulker-cluster-grid">
+                            <!-- Populated by script.js -->
                         </div>
-
-                        <!-- Bottom Cluster Footer Bar: Whisper Quote + See All Projects Button -->
-                        <footer class="ulker-stage-footer">
-                            <p class="ulker-whisper-quote">
-                                &ldquo;While only six or seven stars of the Pleiades are visible to the naked eye, the cluster holds over a thousand stars.&rdquo;
-                            </p>
-                            <button type="button" class="ulker-see-all-btn ulker-see-all-bottom" id="ulker-see-all-bottom-btn">
-                                <span>EXPLORE ALL 12 PROJECTS &amp; FILTER BY DISCIPLINE</span>
-                                <span class="usa-arrow">&rarr;</span>
-                            </button>
-                        </footer>
                     </div>
                 </div>
             </section>
 
             <!-- =========================================================
-                 TAB 02: SEPARATE "SEE ALL PROJECTS" DIRECTORY
-                 (Fast Discipline Filtering + All 12 Projects with Large
-                  Visuals & Main Questions)
+                 TAB 02: SEPARATE "SEE ALL PROJECTS" — SPATIAL SQUARE MATRIX
+                 12 Project Squares (1:1) + Empty Grid Squares where SVG
+                 Relational Lines & Thematic Nodes connect related works
                  ========================================================= -->
-            <section class="tab-content" id="tab-projects" aria-label="All Projects Directory">
-                <div class="sp-wrapper">
+            <section class="tab-content" id="tab-projects" aria-label="All Projects Spatial Matrix">
+                <div class="matrix-stage-wrap" id="all-projects-matrix-stage">
+                    <div class="ulker-nebula-bg" aria-hidden="true"></div>
+                    <div class="ulker-grid-bg" aria-hidden="true"></div>
 
-                    <header class="sp-header">
-                        <div class="sp-header-top">
-                            <div class="sp-title-group">
-                                <span class="sp-eyebrow">&#x2726; FULL PORTFOLIO DIRECTORY // 12 WORKS</span>
-                                <h1 class="sp-title">ALL PROJECTS <span class="sp-count-badge" id="sp-visible-count">12</span></h1>
+                    <!-- Dynamic SVG Overlay connecting related projects across the empty grid squares -->
+                    <svg class="matrix-svg-layer" id="all-projects-svg" aria-hidden="true"></svg>
+
+                    <div class="matrix-inner">
+                        <header class="matrix-topbar sp-matrix-header">
+                            <div class="sp-header-top">
+                                <div class="matrix-topbar-left">
+                                    <span class="matrix-kicker">&#x2726; SPATIAL CONSTELLATION MATRIX // 12 PROJECTS</span>
+                                    <p class="matrix-subtitle">
+                                        Hover any square to illuminate connected inquiries across the grid, or filter by discipline below.
+                                    </p>
+                                </div>
+                                <button type="button" class="matrix-ghost-btn" id="sp-back-cluster-btn" data-cursor="dot">
+                                    &larr; BACK TO &Uuml;LKER CLUSTER
+                                </button>
                             </div>
-                            <button type="button" class="sp-back-cluster-btn" id="sp-back-cluster-btn" data-cursor="dot">
-                                <span>&larr; BACK TO &Uuml;LKER CLUSTER</span>
-                            </button>
+
+                            <!-- Minimal Discipline Filter Pills -->
+                            <div class="sp-filter-bar" id="sp-filter-bar" role="navigation" aria-label="Filter projects by discipline">
+                                <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL (12)</button>
+                                <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;LKER CLUSTER (6)</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">ARCHITECTURAL DESIGN</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">SPATIAL DESIGN</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Bio-Material & Ecological" data-cursor="dot">BIO-MATERIAL &amp; ECOLOGICAL</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Exhibition Design" data-cursor="dot">EXHIBITION DESIGN</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Interactive & Simulation" data-cursor="dot">INTERACTIVE &amp; SIMULATION</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Visual Communication" data-cursor="dot">VISUAL COMMUNICATION</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Editorial Design" data-cursor="dot">EDITORIAL DESIGN</button>
+                                <button type="button" class="sp-filter-pill" data-discipline="Experimental Design" data-cursor="dot">EXPERIMENTAL DESIGN</button>
+                            </div>
+                        </header>
+
+                        <!-- 5x5 SPATIAL SQUARE MATRIX (12 Project Squares + 13 Empty Relational Void Squares) -->
+                        <div class="spatial-square-grid all-projects-square-grid" id="all-projects-grid">
+                            <!-- Populated by script.js -->
                         </div>
-
-                        <!-- Minimal Discipline Filter Bar -->
-                        <div class="sp-filter-bar" id="sp-filter-bar" role="navigation" aria-label="Filter projects by discipline">
-                            <button type="button" class="sp-filter-pill active" data-discipline="all" data-cursor="dot">ALL (12)</button>
-                            <button type="button" class="sp-filter-pill sp-pill-cluster" data-discipline="ulker-cluster" data-cursor="dot">&#x2726; &Uuml;LKER CLUSTER (6)</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Architectural Design" data-cursor="dot">ARCHITECTURAL DESIGN</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Spatial Design" data-cursor="dot">SPATIAL DESIGN</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Bio-Material & Ecological" data-cursor="dot">BIO-MATERIAL &amp; ECOLOGICAL</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Exhibition Design" data-cursor="dot">EXHIBITION DESIGN</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Interactive & Simulation" data-cursor="dot">INTERACTIVE &amp; SIMULATION</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Visual Communication" data-cursor="dot">VISUAL COMMUNICATION</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Editorial Design" data-cursor="dot">EDITORIAL DESIGN</button>
-                            <button type="button" class="sp-filter-pill" data-discipline="Experimental Design" data-cursor="dot">EXPERIMENTAL DESIGN</button>
-                        </div>
-                    </header>
-
-                    <!-- Clean 2-Column Visual + Question Grid -->
-                    <div class="sp-projects-grid" id="sp-projects-grid" aria-live="polite"></div>
-
+                    </div>
                 </div>
             </section>
 
@@ -1338,7 +1330,7 @@
     </div>
 
     <script src="./archive-data.js"></script>
-    <script src="./script.js?v=20261030-ulker-v2"></script>
+    <script src="./script.js?v=20261030-matrix"></script>
     <script src="./assets/traces-tracker.js" defer></script>
 </body>
 </html>
