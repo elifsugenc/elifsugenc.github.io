@@ -11253,9 +11253,9 @@ iframe,
     inset: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(0, 0, 0, 0.72) !important;
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     z-index: 2147483640 !important;
     display: none !important;
     align-items: center !important;
@@ -11314,7 +11314,8 @@ iframe,
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: none !important;
+    filter: drop-shadow(0 16px 36px rgba(15, 23, 42, 0.14)) !important;
     cursor: none !important;
     pointer-events: auto !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
