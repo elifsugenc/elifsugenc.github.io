@@ -97,7 +97,7 @@
             title: 'ARA-SIRA',
             year: '2024',
             question: 'Can one space hold both play and quiet?',
-            img: '../../assets/ara-sira-cover.jpg',
+            img: '../../assets/ara-sira-cover.jpg?v=20261104-hq',
             url: '../ara-sira/',
             related: ['wood-weave', 'you-were-here', 'bajo-la-fresca']
         },
