@@ -94,8 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper to check if element is an image or image container
         function isImage(target) {
             if (!target || target === document.body || target === document.documentElement) return false;
+            if (target.closest('a[href], .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node')) {
+                return false;
+            }
             return !!target.closest(
-                'img:not(.brand-logo-gif):not([src*="favicon"]), ' +
+                'img:not(.brand-logo-gif):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img), ' +
                 '.modal-img-wrap, .zoomable-image-container, ' +
                 '.image-lightbox, .lightbox-overlay, .lightbox-modal, #universal-lightbox, ' +
                 '.lightbox-content-box, .lightbox-img-wrapper, #lightbox-img, .lightbox-img'
@@ -3168,8 +3171,11 @@ window.toggleModalLang = function(lang) {
             return;
         }
 
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img)');
         if (clickedImg) {
+            if (clickedImg.closest('a[href], .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node')) {
+                return;
+            }
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
                 e.preventDefault();
