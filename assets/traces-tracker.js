@@ -1,1476 +1,1512 @@
-/**
- * YOU WERE HERE. — Website-Wide Mouse Trace Recording & Archive System
- * Elifsu Genç Portfolio
- * 
- * Features:
- * - Subtle bottom consent popup (YES / NO) with session persistence
- * - Live fixed indicator in bottom-right: recording.xxx
- * - Website-wide normalized mouse tracking with dwell & click sampling
- * - Atomic sequential trace numbering (TRACE_0001, TRACE_0002...) via Cloud Firebase Firestore
- * - Preserves existing Firestore database (traces-together) and historical traces
- * - Lightweight HTML5 Canvas PNG trace generation (replacing heavyweight PDFs)
- */
-
-(function () {
-    'use strict';
-
-    // Configuration & Storage Keys
-    const CONSENT_KEY = 'wwh_consent';
-    const SESSION_KEY = 'wwh_current_trace';
-    const FIREBASE_CONFIG = {
-        apiKey: "AIzaSyAfU5_2JMufKlGFa5WBDO_kpdp38jV6A5s",
-        authDomain: "traces-together.firebaseapp.com",
-        projectId: "traces-together",
-        storageBucket: "traces-together.firebasestorage.app",
-        messagingSenderId: "537119213522",
-        appId: "1:537119213522:web:35ab67f62add69968e6a0b"
-    };
-
-    function getConsent() {
-        try {
-            // Strictly per-session consent as requested: each new tab/window prompts separately
-            return sessionStorage.getItem(CONSENT_KEY) || null;
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function setConsent(val) {
-        try {
-            if (val) {
-                sessionStorage.setItem(CONSENT_KEY, val);
-            } else {
-                sessionStorage.removeItem(CONSENT_KEY);
-            }
-            // Clear any lingering persistent consent from localStorage
-            localStorage.removeItem(CONSENT_KEY);
-        } catch (e) {}
-    }
-
-    // Global in-memory state
-    let db = null;
-    let docFn = null;
-    let setDocFn = null;
-    let runTransactionFn = null;
-    let initFirebasePromise = null;
-
-    let activeTrace = null;
-    let isTracking = false;
-    let lastPointTime = 0;
-    let lastPointCoord = { x: 0, y: 0 };
-    let anchorPoint = null;
-    let anchorStartTime = 0;
-    let saveTimer = null;
-    let dwellTimer = null;
-    let hasUnsavedChanges = false;
-    let isCloudSaving = false;
-
-    const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-
-    // Format Point Count to recording.xxx (at least 3 digits, no upper limit)
-    function formatCount(count) {
-        const numStr = count < 1000 ? String(count).padStart(3, '0') : String(count);
-        return 'recording.' + numStr;
-    }
-
-    // Initialize Firebase Firestore SDK modularly
-    function initFirebase() {
-        if (db && docFn && setDocFn) return Promise.resolve(true);
-        if (initFirebasePromise) return initFirebasePromise;
-
-        initFirebasePromise = (async () => {
-            try {
-                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
-                const { getFirestore, doc, setDoc, runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
-                const app = initializeApp(FIREBASE_CONFIG);
-                db = getFirestore(app);
-                docFn = doc;
-                setDocFn = setDoc;
-                runTransactionFn = runTransaction;
-                return true;
-            } catch (err) {
-                console.warn('[YOU WERE HERE] Firebase initialization fallback to local session:', err);
-                return false;
-            }
-        })();
-
-        return initFirebasePromise;
-    }
-
-    // Trial and test documents from development to exclude so the new site starts completely fresh from TRACE_0001
-    const EXCLUDED_TRIAL_DOC_IDS = new Set([
-        '242420ef-a7b2-4567-aa1c-b29303d7d794', // TRACE_0059
-        '2f5d6bf7-1a56-45c5-bcd2-02206721b82a', // TRACE_2422
-        '55ca2320-d07b-4ca3-a581-ada083c36145', // TRACE_0057
-        'a8683653-8339-4e05-af32-3bf72f93d8ae', // TRACE_0001
-        'b6ac5b7b-695f-441e-86d6-0cef8988ce99', // TRACE_0058
-        'cf606e17-7506-4f86-833d-b9f22bfebf66', // TRACE_7373
-        'd17c29b6-075f-4379-8bf3-2b383fcc841c', // TRACE_8137
-        'df09ec24-9979-4f18-aecd-1a303675f717', // TRACE_0056
-        'eb584b62-34c4-4e49-aa51-63f67a05ffb3'  // TRACE_4696
-    ]);
-
-    function isTrialTestDoc(id) {
-        if (!id) return false;
-        if (id.startsWith('test_')) return true;
-        return EXCLUDED_TRIAL_DOC_IDS.has(id);
-    }
-
-    // Allocate sequential trace number for new site sessions (TRACE_0001, TRACE_0002...)
-    async function allocateTraceNumber() {
-        let currentEraTraces = [];
-        if (cachedTracesList && cachedTracesList.length > 0) {
-            currentEraTraces = getCurrentTraces(cachedTracesList);
-        } else {
-            try {
-                const all = await fetchAllTraces();
-                currentEraTraces = getCurrentTraces(all);
-            } catch (e) {}
-        }
-        const nextNum = currentEraTraces.length + 1;
-        return 'TRACE_' + String(nextNum).padStart(4, '0');
-    }
-
-    // Load or initialize trace session
-    async function loadOrCreateTrace() {
-        let stored = null;
-        try {
-            stored = JSON.parse(sessionStorage.getItem(SESSION_KEY));
-        } catch (e) {}
-
-        if (stored && stored.id && Array.isArray(stored.points)) {
-            activeTrace = stored;
-            return activeTrace;
-        }
-
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-        const traceNumber = await allocateTraceNumber();
-
-        activeTrace = {
-            id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'trace_' + Date.now(),
-            traceNumber: traceNumber,
-            date: dateStr,
-            time: timeStr,
-            started: Date.now(),
-            points: [],
-            dwells: [],
-            clicks: [],
-            viewport: {
-                initialWidth: window.innerWidth,
-                initialHeight: window.innerHeight
-            }
-        };
-
-        saveTraceToSession();
-        return activeTrace;
-    }
-
-    function saveTraceToSession() {
-        if (!activeTrace) return;
-        try {
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(activeTrace));
-        } catch (e) {}
-    }
-
-    // Convert plain JS object to Firestore REST API typed fields format
-    function toFirestoreFields(obj) {
-        const fields = {};
-        for (const [k, v] of Object.entries(obj)) {
-            if (v === null || v === undefined) continue;
-            if (typeof v === 'string') {
-                fields[k] = { stringValue: v };
-            } else if (typeof v === 'number') {
-                if (Number.isInteger(v)) {
-                    fields[k] = { integerValue: String(v) };
-                } else {
-                    fields[k] = { doubleValue: v };
-                }
-            } else if (typeof v === 'boolean') {
-                fields[k] = { booleanValue: v };
-            } else if (Array.isArray(v)) {
-                fields[k] = {
-                    arrayValue: {
-                        values: v.map(item => {
-                            if (typeof item === 'object' && item !== null) {
-                                return { mapValue: { fields: toFirestoreFields(item) } };
-                            } else if (typeof item === 'string') {
-                                return { stringValue: item };
-                            } else if (typeof item === 'number') {
-                                return { integerValue: String(item) };
-                            }
-                            return {};
-                        })
-                    }
-                };
-            } else if (typeof v === 'object') {
-                fields[k] = { mapValue: { fields: toFirestoreFields(v) } };
-            }
-        }
-        return fields;
-    }
-
-    // Direct REST API write with keepalive support (immune to SDK WebSocket hangs & page exit aborts)
-    async function sendTraceToFirestoreREST(traceData, keepalive = false) {
-        if (!traceData || !traceData.id) return false;
-        let docId = traceData.id;
-        let url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
-        let payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
-
-        // Note: Browsers reject fetch with keepalive:true if payload exceeds 64KB (65536 bytes)
-        // A trace with ~600+ points is >65KB, so keepalive must ONLY be enabled if under 60KB.
-        const canUseKeepalive = keepalive && payload.length < 60000;
-
-        try {
-            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-            const timeoutId = controller ? setTimeout(() => controller.abort(), 8000) : null;
-
-            const fetchOptions = {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: payload,
-                signal: controller ? controller.signal : undefined
-            };
-            if (canUseKeepalive) {
-                fetchOptions.keepalive = true;
-            }
-
-            let res = await fetch(url, fetchOptions);
-
-            // If 403 Forbidden (document already exists and Firestore rules only allow CREATE, not UPDATE):
-            // Retry with a fresh unique document ID so Firestore treats it as a brand-new CREATE!
-            if (res.status === 403) {
-                console.warn('[YOU WERE HERE] Doc ID already written; retrying with fresh ID to guarantee full save...');
-                const retryId = traceData.id + '_' + Date.now().toString().slice(-4);
-                traceData.id = retryId;
-                const retryUrl = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${retryId}`;
-                const retryPayload = JSON.stringify({ fields: toFirestoreFields(traceData) });
-                fetchOptions.body = retryPayload;
-                res = await fetch(retryUrl, fetchOptions);
-            }
-
-            if (timeoutId) clearTimeout(timeoutId);
-            return res.ok;
-        } catch (e) {
-            console.warn('[YOU WERE HERE] Direct REST write note:', e);
-            return false;
-        }
-    }
-
-    // Incremental batch save to Firebase Firestore
-    async function saveTraceToCloud(force = false, isFinal = false) {
-        if (!activeTrace) return;
-        saveTraceToSession();
-
-        // Require at least 2 points to avoid empty cloud records
-        if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
-        if (!hasUnsavedChanges && !force) return;
-        if (isCloudSaving && !force) return;
-
-        isCloudSaving = true;
-
-        const cloudPayload = {
-            id: activeTrace.id,
-            traceNumber: activeTrace.traceNumber,
-            date: activeTrace.date,
-            time: activeTrace.time,
-            started: activeTrace.started,
-            duration: Date.now() - activeTrace.started,
-            pointCount: activeTrace.points.length,
-            points: activeTrace.points,
-            dwells: activeTrace.dwells,
-            clicks: activeTrace.clicks,
-            lastUpdated: new Date().toISOString()
-        };
-
-        // Cache last completed/saved trace locally so views immediately show the full dataset
-        try {
-            sessionStorage.setItem('wwh_last_completed_trace', JSON.stringify(cloudPayload));
-        } catch (e) {}
-
-        try {
-            const ok = await sendTraceToFirestoreREST(cloudPayload, isFinal);
-            if (ok) {
-                hasUnsavedChanges = false;
-            } else if (db && setDocFn && docFn) {
-                await setDocFn(docFn(db, 'traces', activeTrace.id), cloudPayload, { merge: true });
-                hasUnsavedChanges = false;
-            }
-        } catch (err) {
-            console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
-        } finally {
-            isCloudSaving = false;
-        }
-    }
-
-    // Explicit User Trigger: Finish & Permanently Save Current Trace
-    async function finishAndSaveCurrentTrace() {
-        if (!activeTrace && !isTracking) return;
-
-        const currentCount = activeTrace ? activeTrace.points.length : 0;
-        const currentNum = activeTrace ? (activeTrace.traceNumber || 'TRACE') : 'TRACE';
-
-        // 1. Stop tracking immediately so no further points or auto-sync run
-        stopRecording(false);
-
-        // 2. Lock consent to 'finished' so reload or navigation NEVER records again in this session
-        setConsent('finished');
-
-        // 3. Force final cloud save of all accumulated points
-        if (activeTrace && activeTrace.points.length >= 2) {
-            hasUnsavedChanges = true;
-            try {
-                await saveTraceToCloud(true, false);
-            } catch (e) {
-                console.warn('[YOU WERE HERE] Final cloud save note:', e);
-            }
-        }
-
-        // 4. Clear session storage so reloads do not continue appending into this trace
-        try {
-            sessionStorage.removeItem(SESSION_KEY);
-        } catch (e) {}
-        activeTrace = null;
-
-        // 5. Update Live Indicator UI to celebrate completion
-        const el = document.getElementById('wwh-live-indicator');
-        if (el) {
-            el.classList.add('wwh-saved-state');
-            el.innerHTML = `
-                <span class="wwh-live-check" style="color: #16a34a; font-weight: 800; font-size: 0.9rem;">&check;</span>
-                <span class="wwh-live-tag" style="color: #16a34a;">${currentNum} SAVED</span>
-                <span class="wwh-live-sep">&bull;</span>
-                <span class="wwh-live-label">${currentCount} pts</span>
-                <a href="./projects/you-were-here/" class="wwh-view-archive-link" style="color: #2563eb; text-decoration: underline; font-weight: 700; font-size: 0.72rem; margin-left: 6px;">VIEW ARCHIVE &nearr;</a>
-            `;
-            setTimeout(() => {
-                if (el) el.remove();
-                showReopenCircle();
-            }, 8000);
-        } else {
-            showReopenCircle();
-        }
-    }
-
-    // Helper to get safe mount root (documentElement avoids body scroll/transform containment)
-    function getMountRoot() {
-        return document.documentElement || document.body;
-    }
-
-    // Live Indicator UI
-    function ensureLiveIndicator() {
-        let el = document.getElementById('wwh-live-indicator');
-        const mount = getMountRoot();
-        if (!el) {
-            el = document.createElement('div');
-            el.id = 'wwh-live-indicator';
-            el.className = 'wwh-live-indicator';
-            el.setAttribute('aria-live', 'polite');
-            el.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Apparatus');
-            el.innerHTML = `
-                <span class="wwh-live-dot" aria-hidden="true"></span>
-                <span class="wwh-live-tag">RESEARCH DEMO</span>
-                <span class="wwh-live-sep">&bull;</span>
-                <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
-                <button type="button" class="wwh-finish-btn" id="wwh-finish-btn" title="Complete drawing and permanently save to archive">FINISH &amp; SAVE &check;</button>
-            `;
-            mount.appendChild(el);
-
-            const finishBtn = el.querySelector('#wwh-finish-btn');
-            if (finishBtn) {
-                finishBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    finishAndSaveCurrentTrace();
-                });
-            }
-
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showConsentPopup();
-            });
-        } else if (el.parentElement !== mount) {
-            mount.appendChild(el);
-        }
-        return el;
-    }
-
-    function updateLiveCount() {
-        const countEl = document.getElementById('wwh-live-count');
-        if (countEl && activeTrace) {
-            countEl.textContent = formatCount(activeTrace.points.length);
-        }
-    }
-
-    function hideLiveIndicator() {
-        const el = document.getElementById('wwh-live-indicator');
-        if (el) el.remove();
-    }
-
-    // Floating "you are here." Reopen Circle on the Right Side
-    function showReopenCircle() {
-        let circle = document.getElementById('wwh-reopen-circle');
-        const mount = getMountRoot();
-        if (circle) {
-            circle.classList.remove('wwh-circle-exit');
-            if (circle.parentElement !== mount) {
-                mount.appendChild(circle);
-            }
-            return;
-        }
-
-        circle = document.createElement('button');
-        circle.type = 'button';
-        circle.id = 'wwh-reopen-circle';
-        circle.className = 'wwh-reopen-circle';
-        circle.setAttribute('aria-label', 'YOU WERE HERE. — Reopen Attention Economy research demo prompt');
-        circle.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Demo');
-
-        circle.innerHTML = `
-            <span class="wwh-circle-dot" aria-hidden="true"></span>
-            <span class="wwh-circle-text">you are<br>here.</span>
-        `;
-
-        mount.appendChild(circle);
-
-        circle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hideReopenCircle();
-            showConsentPopup();
-        });
-        circle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                e.stopPropagation();
-                hideReopenCircle();
-                showConsentPopup();
-            }
-        });
-    }
-
-    function hideReopenCircle() {
-        const circle = document.getElementById('wwh-reopen-circle');
-        if (circle) {
-            circle.classList.add('wwh-circle-exit');
-            setTimeout(() => circle.remove(), 250);
-        }
-    }
-
-    // Helper to resolve the project URL relative to current location
-    function getLearnMoreUrl() {
-        const path = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
-        if (path.includes('/projects/you-were-here/')) {
-            return '#overview';
-        } else if (path.includes('/projects/')) {
-            return '../you-were-here/';
-        } else {
-            return 'projects/you-were-here/';
-        }
-    }
-
-    // Consent Popup UI
-    function showConsentPopup() {
-        hideReopenCircle();
-        const mount = getMountRoot();
-        let popup = document.getElementById('wwh-consent-popup');
-        if (popup) {
-            popup.classList.remove('wwh-exit', 'wwh-shrinking');
-            if (popup.parentElement !== mount) {
-                mount.appendChild(popup);
-            }
-            void popup.offsetWidth;
-            popup.classList.add('wwh-visible');
-            return;
-        }
-
-        popup = document.createElement('div');
-        popup.id = 'wwh-consent-popup';
-        popup.className = 'wwh-consent-popup';
-        popup.setAttribute('role', 'dialog');
-        popup.setAttribute('aria-modal', 'false');
-        popup.setAttribute('aria-labelledby', 'wwh-consent-title');
-
-        const learnUrl = getLearnMoreUrl();
-
-        popup.innerHTML = `
-            <button type="button" id="wwh-btn-close" class="wwh-popup-close-btn" aria-label="Minimize prompt" title="Küçült / Minimize">&times;</button>
-            <div class="wwh-consent-inner">
-                <div class="wwh-consent-text-col">
-                    <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
-                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can a digital portfolio register physical presence?</h4>
-                    <p class="wwh-consent-desc">
-                        This website functions as the live experimental testbed for <strong>YOU WERE HERE.</strong>, an architectural research project investigating the attention economy and digital dwell time. With your consent, anonymous cursor velocities and hesitation pauses are recorded as spatial vectors in our open collective archive.
-                    </p>
-                </div>
-                <div class="wwh-consent-actions">
-                    <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
-                        <span class="wwh-learn-icon">&#x2726;</span>
-                        <span class="wwh-learn-text">RESEARCH THESIS &amp; DEMO &nearr;</span>
-                    </a>
-                    <div class="wwh-consent-choice-group">
-                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">AGREE &amp; RECORD</button>
-                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">DECLINE</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        mount.appendChild(popup);
-
-        // Immediate entrance animation trigger
-        void popup.offsetWidth;
-        popup.classList.add('wwh-visible');
-
-        // Event listeners
-        const btnYes = document.getElementById('wwh-btn-yes');
-        const btnNo = document.getElementById('wwh-btn-no');
-        const btnClose = document.getElementById('wwh-btn-close');
-        const btnLearn = document.getElementById('wwh-btn-learn');
-
-        function shrinkPopupToCircle(p) {
-            if (!p) return;
-            p.classList.remove('wwh-visible');
-            p.classList.add('wwh-shrinking');
-            setTimeout(() => {
-                p.remove();
-                showReopenCircle();
-            }, 360);
-        }
-
-        if (btnLearn) {
-            btnLearn.addEventListener('mouseenter', () => {
-                const cur = document.getElementById('custom-cursor');
-                if (cur) {
-                    cur.classList.remove('cursor-hover');
-                    cur.classList.add('cursor-project');
-                }
-            });
-            btnLearn.addEventListener('mouseleave', () => {
-                const cur = document.getElementById('custom-cursor');
-                if (cur) {
-                    cur.classList.remove('cursor-project');
-                }
-            });
-            btnLearn.addEventListener('click', (e) => {
-                const dest = getLearnMoreUrl();
-                if (dest === '#overview') {
-                    e.preventDefault();
-                    const ov = document.getElementById('overview');
-                    if (ov) {
-                        ov.scrollIntoView({ behavior: 'smooth' });
-                    } else {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                } else {
-                    // Navigate directly to projects/you-were-here/
-                    e.preventDefault();
-                    window.location.href = dest;
-                }
-            });
-        }
-
-        if (btnYes) {
-            btnYes.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                setConsent('yes');
-                dismissPopup(popup);
-                hideReopenCircle();
-                await startRecording();
-            });
-        }
-
-        if (btnNo) {
-            btnNo.addEventListener('click', (e) => {
-                e.stopPropagation();
-                shrinkPopupToCircle(popup);
-                stopRecording(true);
-                activeTrace = null;
-                try {
-                    sessionStorage.removeItem(SESSION_KEY);
-                } catch(e) {}
-            });
-        }
-
-        if (btnClose) {
-            btnClose.addEventListener('click', (e) => {
-                e.stopPropagation();
-                shrinkPopupToCircle(popup);
-                stopRecording(true);
-                activeTrace = null;
-                try {
-                    sessionStorage.removeItem(SESSION_KEY);
-                } catch(e) {}
-            });
-        }
-    }
-
-    function dismissPopup(popup) {
-        if (!popup) return;
-        popup.classList.remove('wwh-visible');
-        popup.classList.add('wwh-exit');
-        setTimeout(() => popup.remove(), 400);
-    }
-
-    // Mouse, Stylus & Touch Pointer Tracking Logic
-    function handlePointerMove(e) {
-        if (!isTracking || !activeTrace) return;
-
-        const now = Date.now();
-        // High-fidelity sampling: 18ms interval (~55 fps) with generous 25,000 points limit
-        if (now - lastPointTime < 18 || activeTrace.points.length >= 25000) return;
-
-        // Privacy guard: ignore when interacting with form inputs
-        const targetTag = e.target ? e.target.tagName : '';
-        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
-
-        // Get coordinates across mouse, pointer, and touch
-        let cx = e.clientX;
-        let cy = e.clientY;
-        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
-            cx = e.touches[0].clientX;
-            cy = e.touches[0].clientY;
-        }
-        if (cx == null || cy == null || isNaN(cx) || isNaN(cy)) return;
-
-        // Normalized viewport coordinates (0 to 1000)
-        const winW = window.innerWidth || 1000;
-        const winH = window.innerHeight || 1000;
-        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
-        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
-
-        // Fluid distance threshold to preserve every subtle curve and hesitation
-        const dist = Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y);
-        if (dist < 0.8 && activeTrace.points.length > 0 && (now - lastPointTime < 75)) {
-            return;
-        }
-
-        lastPointTime = now;
-        lastPointCoord = { x: nx, y: ny };
-
-        const point = {
-            x: nx,
-            y: ny,
-            t: now - activeTrace.started
-        };
-
-        activeTrace.points.push(point);
-        hasUnsavedChanges = true;
-        updateLiveCount();
-
-        // Frequently sync to sessionStorage (every 5 points) so page navigation never drops points
-        if (activeTrace.points.length % 5 === 0) {
-            saveTraceToSession();
-        }
-
-        if (activeTrace.points.length % 15 === 0) {
-            updateLivingPalimpsests();
-            try {
-                window.dispatchEvent(new CustomEvent('traces:live_point', { detail: activeTrace }));
-            } catch (e) {}
-        }
-
-        // Dwell pause tracking
-        if (!anchorPoint || Math.hypot(point.x - anchorPoint.x, point.y - anchorPoint.y) > 10) {
-            anchorPoint = point;
-            anchorStartTime = now;
-        }
-    }
-
-    function handleClick(e) {
-        if (!isTracking || !activeTrace) return;
-        const targetTag = e.target ? e.target.tagName : '';
-        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
-
-        let cx = e.clientX;
-        let cy = e.clientY;
-        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
-            cx = e.touches[0].clientX;
-            cy = e.touches[0].clientY;
-        }
-        if (cx == null || cy == null) return;
-
-        const winW = window.innerWidth || 1000;
-        const winH = window.innerHeight || 1000;
-        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
-        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
-
-        activeTrace.clicks.push({
-            x: nx,
-            y: ny,
-            t: Date.now() - activeTrace.started
-        });
-        hasUnsavedChanges = true;
-        saveTraceToSession();
-    }
-
-    function checkDwellPauses() {
-        if (!isTracking || !activeTrace || !anchorPoint) return;
-        const now = Date.now();
-        const duration = now - anchorStartTime;
-        if (duration >= 420) {
-            const dwell = {
-                x: anchorPoint.x,
-                y: anchorPoint.y,
-                t: anchorPoint.t,
-                duration: duration
-            };
-            const lastDwell = activeTrace.dwells[activeTrace.dwells.length - 1];
-            if (lastDwell && lastDwell.t === dwell.t) {
-                lastDwell.duration = duration;
-            } else {
-                activeTrace.dwells.push(dwell);
-                hasUnsavedChanges = true;
-            }
-        }
-    }
-
-    // Start Recording Lifecycle
-    async function startRecording() {
-        if (isTracking) return;
-        await loadOrCreateTrace();
-
-        isTracking = true;
-        ensureLiveIndicator();
-        updateLiveCount();
-
-        window.removeEventListener('pointermove', handlePointerMove);
-        window.removeEventListener('touchmove', handlePointerMove);
-        window.removeEventListener('click', handleClick);
-
-        window.addEventListener('pointermove', handlePointerMove, { passive: true });
-        window.addEventListener('touchmove', handlePointerMove, { passive: true });
-        window.addEventListener('click', handleClick, { passive: true });
-
-        if (dwellTimer) clearInterval(dwellTimer);
-        dwellTimer = setInterval(checkDwellPauses, 180);
-    }
-
-    function stopRecording(removeIndicator = true) {
-        isTracking = false;
-        if (removeIndicator) {
-            hideLiveIndicator();
-        }
-
-        window.removeEventListener('pointermove', handlePointerMove);
-        window.removeEventListener('touchmove', handlePointerMove);
-        window.removeEventListener('click', handleClick);
-
-        if (dwellTimer) clearInterval(dwellTimer);
-        if (saveTimer) clearInterval(saveTimer);
-        dwellTimer = null;
-        saveTimer = null;
-        lastPointTime = 0;
-        lastPointCoord = { x: 0, y: 0 };
-        anchorPoint = null;
-    }
-
-    // Lightweight HTML5 Canvas PNG Generator (replaces PDF export for fast, compact size)
-    function renderTraceToCanvas(traceData, width = 800, height = 800) {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-
-        // Crisp white architectural background
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, width, height);
-
-        // Subtle architectural grid
-        ctx.strokeStyle = '#f1f5f9';
-        ctx.lineWidth = 1;
-        const gridSize = width / 20;
-        for (let x = 0; x <= width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-        for (let y = 0; y <= height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-        }
-
-        const pts = traceData.points || [];
-        const scaleX = width / 1000;
-        const scaleY = height / 1000;
-
-        // 1. Draw Dwell Pauses
-        (traceData.dwells || []).forEach(d => {
-            const dx = Number(d.x);
-            const dy = Number(d.y);
-            const dur = Number(d.duration || 300);
-            if (isNaN(dx) || isNaN(dy)) return;
-
-            const r = clamp(dur / 120, 6, 40) * scaleX;
-            ctx.beginPath();
-            ctx.arc(dx * scaleX, dy * scaleY, r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.arc(dx * scaleX, dy * scaleY, r * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.22)';
-            ctx.fill();
-        });
-
-        // 2. Draw Movement Lines
-        if (pts.length > 1) {
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            for (let i = 1; i < pts.length; i++) {
-                const prev = pts[i - 1];
-                const curr = pts[i];
-                const px = Number(prev.x);
-                const py = Number(prev.y);
-                const cx = Number(curr.x);
-                const cy = Number(curr.y);
-                if (isNaN(px) || isNaN(py) || isNaN(cx) || isNaN(cy)) continue;
-
-                const pt = Number(prev.t || 0);
-                const ct = Number(curr.t || (pt + 25));
-                const dt = Math.max(16, ct - pt);
-
-                // Skip long pauses / cross-page jump lines
-                if (dt > 6000) continue;
-
-                const dist = Math.hypot(cx - px, cy - py);
-                const speed = (dist / dt) * 1000;
-                const strokeWidth = clamp(8 - speed * 0.03, 1.8, 8.5) * scaleX;
-
-                ctx.beginPath();
-                ctx.moveTo(px * scaleX, py * scaleY);
-                ctx.lineTo(cx * scaleX, cy * scaleY);
-                ctx.strokeStyle = 'rgba(37, 99, 235, 0.78)';
-                ctx.lineWidth = strokeWidth;
-                ctx.stroke();
-            }
-        }
-
-        // 3. Draw Click Glyphs
-        (traceData.clicks || []).forEach(c => {
-            const cx = Number(c.x);
-            const cy = Number(c.y);
-            if (isNaN(cx) || isNaN(cy)) return;
-
-            const px = cx * scaleX;
-            const py = cy * scaleY;
-            const starRadius = 6 * scaleX;
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 1.8;
-            for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
-                ctx.beginPath();
-                ctx.moveTo(px, py);
-                ctx.lineTo(px + Math.cos(angle) * starRadius, py + Math.sin(angle) * starRadius);
-                ctx.stroke();
-            }
-        });
-
-        // 4. Architectural Title Block Footer
-        ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 14px monospace';
-        ctx.fillText(traceData.traceNumber || 'TRACE_0000', 28, height - 38);
-
-        ctx.fillStyle = '#64748b';
-        ctx.font = '11px monospace';
-        ctx.fillText(`DATE: ${traceData.date || '—'}  TIME: ${traceData.time || '—'}  POINTS: ${pts.length}`, 28, height - 20);
-
-        return canvas;
-    }
-
-    // Export Trace as lightweight PNG file download (1200x1200 crisp high-res)
-    function downloadTraceAsPNG(traceData) {
-        const canvas = renderTraceToCanvas(traceData, 1200, 1200);
-        canvas.toBlob(blob => {
-            if (!blob) return;
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${traceData.traceNumber || 'trace'}.png`;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                a.remove();
-                URL.revokeObjectURL(url);
-            }, 1000);
-        }, 'image/png');
-    }
-
-    // In-memory cache for historical and live traces
-    let cachedTracesList = [];
-    let lastPalimpsestRenderTime = 0;
-
-    /**
-     * Render the Living Collective Palimpsest (All historical traces + active live trace)
-     * with uniform 16:10 aspect-ratio mapping to eliminate all stretching and distortion.
-     */
-    function renderCollectivePalimpsest(targetCanvas, tracesList, options = {}) {
-        const traces = (tracesList && tracesList.length > 0) ? tracesList : (cachedTracesList || []);
-        const canvas = targetCanvas || document.createElement('canvas');
-
-        const width = options.width || (canvas.clientWidth > 0 ? canvas.clientWidth : (canvas.width || 1200));
-        const height = options.height || (canvas.clientHeight > 0 ? canvas.clientHeight : (canvas.height || 750));
-
-        const dpr = options.dpr || (targetCanvas ? Math.min(window.devicePixelRatio || 1, 2) : 1);
-
-        canvas.width = Math.round(width * dpr);
-        canvas.height = Math.round(height * dpr);
-
-        const ctx = canvas.getContext('2d');
-        if (dpr !== 1) {
-            ctx.scale(dpr, dpr);
-        }
-
-        // Crisp architectural off-white background
-        ctx.fillStyle = '#fafbfc';
-        ctx.fillRect(0, 0, width, height);
-
-        // Architectural drafting grid
-        ctx.strokeStyle = 'rgba(26, 54, 93, 0.04)';
-        ctx.lineWidth = 1;
-        const step = 40;
-        for (let x = 0; x <= width; x += step) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-        for (let y = 0; y <= height; y += step) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-        }
-
-        // UNIFORM 16:10 DESKTOP PROPORTIONS (Zero Distortion / Stretches eliminated)
-        const targetAspect = 16 / 10;
-        const padX = options.paddingX !== undefined ? options.paddingX : 28;
-        const padY = options.paddingY !== undefined ? options.paddingY : 24;
-        const availW = Math.max(100, width - padX * 2);
-        const availH = Math.max(100, height - padY * 2);
-
-        const virtualW = 1000;
-        const virtualH = 1000 / targetAspect; // 625
-
-        const scale = Math.min(availW / virtualW, availH / virtualH);
-        const sheetW = virtualW * scale;
-        const sheetH = virtualH * scale;
-
-        const originX = padX + (availW - sheetW) / 2;
-        const originY = padY + (availH - sheetH) / 2;
-
-        const toX = (nx) => originX + (Number(nx) / 1000) * sheetW;
-        const toY = (ny) => originY + (Number(ny) / 1000) * sheetH;
-
-        // Subtle architectural sheet boundary & corner marks
-        ctx.strokeStyle = 'rgba(37, 99, 235, 0.12)';
-        ctx.setLineDash([4, 4]);
-        ctx.lineWidth = 1;
-        ctx.strokeRect(originX, originY, sheetW, sheetH);
-        ctx.setLineDash([]);
-
-        const drawCross = (cx, cy) => {
-            ctx.strokeStyle = 'rgba(26, 54, 93, 0.28)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(cx - 5, cy); ctx.lineTo(cx + 5, cy);
-            ctx.moveTo(cx, cy - 5); ctx.lineTo(cx, cy + 5);
-            ctx.stroke();
-        };
-        drawCross(originX, originY);
-        drawCross(originX + sheetW, originY);
-        drawCross(originX, originY + sheetH);
-        drawCross(originX + sheetW, originY + sheetH);
-
-        // Ensure chronological ordering: oldest first (drawn behind in background), newest last (drawn on top in front)
-        traces.sort((a, b) => (a.started || 0) - (b.started || 0));
-        const totalTraceCount = traces.length;
-
-        // 1. Layer 1: Render All Dwell Pauses Across Visitors + Active Trace (Halos: older fainter, newer clearer)
-        const includeActive = !options.excludeActive;
-
-        traces.forEach((tr, idx) => {
-            if (!tr.dwells || !tr.dwells.length) return;
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-            const dAlpha = 0.02 + progress * 0.07;
-            tr.dwells.forEach(d => {
-                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(37, 99, 235, ${dAlpha.toFixed(3)})`;
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(26, 54, 93, ${(dAlpha * 1.5).toFixed(3)})`;
-                ctx.fill();
-            });
-        });
-
-        if (includeActive && activeTrace && activeTrace.dwells) {
-            activeTrace.dwells.forEach(d => {
-                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(37, 99, 235, 0.12)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(26, 54, 93, 0.22)';
-                ctx.fill();
-            });
-        }
-
-        // 2. Layer 2: Render Movement Trajectories
-        // Older traces: faint translucent underdrawings (opacity ~0.10, soft blue, fine stroke)
-        // Newer traces: progressively darker, bolder, and drawn ON TOP in front (opacity up to 0.78, deep navy, bolder line)
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        traces.forEach((tr, idx) => {
-            const pts = tr.points || [];
-            if (pts.length < 2) return;
-
-            // Normalized chronological progress from 0 (oldest) to 1 (newest)
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-
-            // Progressive opacity curve: older traces are faint (0.10), newest traces are bold & rich (0.78)
-            const opacity = 0.10 + Math.pow(progress, 1.35) * 0.68;
-
-            // Color gradient: softer cerulean for older traces -> deep architectural navy/indigo for newest traces
-            const r = Math.round(75 + (20 - 75) * progress);
-            const g = Math.round(145 + (45 - 145) * progress);
-            const b = Math.round(245 + (120 - 245) * progress);
-
-            const lineWidth = (1.1 + progress * 0.8) * Math.max(0.8, scale * 1.1);
-
-            ctx.beginPath();
-            ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
-            for (let i = 1; i < pts.length; i++) {
-                ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
-            }
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(3)})`;
-            ctx.lineWidth = lineWidth;
-            ctx.stroke();
-        });
-
-        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse at the very front / top)
-        if (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1) {
-            const livePts = activeTrace.points;
-            ctx.beginPath();
-            ctx.moveTo(toX(livePts[0].x), toY(livePts[0].y));
-            for (let i = 1; i < livePts.length; i++) {
-                ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
-            }
-            ctx.strokeStyle = 'rgba(20, 45, 120, 0.90)';
-            ctx.lineWidth = 2.4 * Math.max(0.8, scale * 1.1);
-            ctx.stroke();
-
-            // Glowing cursor tip
-            const lastPt = livePts[livePts.length - 1];
-            ctx.beginPath();
-            ctx.arc(toX(lastPt.x), toY(lastPt.y), 4.5 * scale, 0, Math.PI * 2);
-            ctx.fillStyle = '#22c55e';
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(toX(lastPt.x), toY(lastPt.y), 8 * scale, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
-            ctx.fill();
-        }
-
-        // 4. Layer 4: Click Glyphs (Older are softer, newest are vibrant crimson crosses)
-        traces.forEach((tr, idx) => {
-            if (!tr.clicks || !tr.clicks.length) return;
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-            const cAlpha = 0.22 + progress * 0.65;
-            const starRadius = (3.5 + progress * 1.5) * scale;
-            const cWidth = 1.0 + progress * 0.5;
-
-            tr.clicks.forEach(c => {
-                const cx = toX(c.x);
-                const cy = toY(c.y);
-                ctx.strokeStyle = `rgba(220, 38, 38, ${cAlpha.toFixed(3)})`;
-                ctx.lineWidth = cWidth;
-                ctx.beginPath();
-                ctx.moveTo(cx - starRadius, cy);
-                ctx.lineTo(cx + starRadius, cy);
-                ctx.moveTo(cx, cy - starRadius);
-                ctx.lineTo(cx, cy + starRadius);
-                ctx.stroke();
-            });
-        });
-
-        if (includeActive && activeTrace && activeTrace.clicks) {
-            activeTrace.clicks.forEach(c => {
-                const cx = toX(c.x);
-                const cy = toY(c.y);
-                const starRadius = 5.5 * scale;
-                ctx.strokeStyle = 'rgba(220, 38, 38, 0.92)';
-                ctx.lineWidth = 1.8;
-                ctx.beginPath();
-                ctx.moveTo(cx - starRadius, cy);
-                ctx.lineTo(cx + starRadius, cy);
-                ctx.moveTo(cx, cy - starRadius);
-                ctx.lineTo(cx, cy + starRadius);
-                ctx.stroke();
-            });
-        }
-
-        // 5. Layer 5: Technical Title Block
-        const activeCount = (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 5) ? 1 : 0;
-        const totalTracesCount = traces.length + activeCount;
-        const totalPoints = traces.reduce((acc, t) => acc + (t.pointCount || (t.points ? t.points.length : 0)), 0) + (includeActive && activeTrace && activeTrace.points ? activeTrace.points.length : 0);
-
-        ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 11px monospace';
-        const titleText = options.title || 'YOU WERE HERE. // SHARED DRAWINGS';
-        ctx.fillText(titleText, originX + 4, height - 12);
-
-        ctx.fillStyle = '#64748b';
-        ctx.font = '10px monospace';
-        const rightText = options.rightText || `${totalTracesCount} DRAWINGS LAYERED • ${totalPoints.toLocaleString()} PTS`;
-        const textWidth = ctx.measureText(rightText).width;
-        ctx.fillText(rightText, Math.max(originX + 220, originX + sheetW - textWidth - 4), height - 12);
-
-        return canvas;
-    }
-
-    // Historical legacy classification (08.10.2026 and prior)
-    function isLegacyTrace(trace) {
-        if (!trace) return false;
-        if (trace.date && typeof trace.date === 'string') {
-            const parts = trace.date.split('.');
-            if (parts.length === 3) {
-                const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10);
-                const year = parseInt(parts[2], 10);
-                if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                    if (year < 2026) return true;
-                    if (year === 2026) {
-                        if (month < 10) return true;
-                        if (month === 10 && day <= 8) return true;
-                        return false;
-                    }
-                    return false;
-                }
-            }
-        }
-        if (trace.started && trace.started > 0) {
-            const cutoff = new Date('2026-10-08T23:59:59+03:00').getTime();
-            return trace.started <= cutoff;
-        }
-        return false;
-    }
-
-    function getLegacyTraces(list) {
-        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
-        return src.filter(isLegacyTrace);
-    }
-
-    function getCurrentTraces(list) {
-        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
-        return src.filter(t => !isLegacyTrace(t));
-    }
-
-    function getLivingPalimpsestDataURL(width = 1200, height = 750) {
-        const offscreen = document.createElement('canvas');
-        renderCollectivePalimpsest(offscreen, cachedTracesList, { width, height, dpr: 1 });
-        return offscreen.toDataURL('image/png');
-    }
-
-    // Automatically update living palimpsest image across the entire website
-    function updateLivingPalimpsests() {
-        if (!cachedTracesList || cachedTracesList.length === 0) return;
-        const now = Date.now();
-        if (now - lastPalimpsestRenderTime < 1000) return; // Throttle
-        lastPalimpsestRenderTime = now;
-
-        const dataURL = getLivingPalimpsestDataURL(1200, 750);
-        if (!dataURL) return;
-
-        // 1. Update Project Card image on main portfolio page
-        const projectCardImg = document.querySelector('#card-you-were-here .card-img');
-        if (projectCardImg) {
-            projectCardImg.style.backgroundImage = `url("${dataURL}")`;
-            projectCardImg.style.backgroundSize = 'cover';
-        }
-
-        // 2. Update Constellation Node visual circle
-        const constellationVisual = document.querySelector('.constellation-node[data-id="you-were-here"] .visual-img');
-        if (constellationVisual) {
-            constellationVisual.style.backgroundImage = `url("${dataURL}")`;
-        }
-
-        // 3. Update Modal Hero and Gallery image if Project Modal is open
-        const modalHero = document.getElementById('modal-hero');
-        if (modalHero && window.lastOpenedProjectSlug === 'you-were-here') {
-            modalHero.style.backgroundImage = `url("${dataURL}")`;
-            modalHero.style.backgroundSize = 'contain';
-            modalHero.style.backgroundRepeat = 'no-repeat';
-            modalHero.style.backgroundPosition = 'center';
-            modalHero.style.backgroundColor = '#fafbfc';
-            
-            let badge = modalHero.querySelector('.m-living-hero-badge');
-            if (!badge) {
-                badge = document.createElement('div');
-                badge.className = 'm-living-hero-badge';
-                modalHero.appendChild(badge);
-            }
-            badge.innerHTML = `<span class="live-pulse-dot"></span> SHARED DRAWING &bull; ${cachedTracesList.length} SESSIONS`;
-        }
-
-        const modalGalImg = document.getElementById('modal-palimpsest-img');
-        if (modalGalImg) {
-            modalGalImg.src = dataURL;
-        }
-
-        // 4. Update collective canvas on dedicated project page if open
-        const collectiveCanvas = document.getElementById('collective-canvas-overlay');
-        if (collectiveCanvas) {
-            const era = window.collectiveEraMode || 'CURRENT';
-            if (era === 'LEGACY') {
-                renderCollectivePalimpsest(collectiveCanvas, getLegacyTraces(), {
-                    title: 'PREVIOUS WEBSITE ARCHIVE (≤ 2026)',
-                    excludeActive: true
-                });
-            } else if (era === 'ALL') {
-                renderCollectivePalimpsest(collectiveCanvas, cachedTracesList, {
-                    title: 'ALL DRAWINGS SUPERIMPOSED'
-                });
-            } else {
-                renderCollectivePalimpsest(collectiveCanvas, getCurrentTraces(), {
-                    title: 'CURRENT WEBSITE SESSIONS (2026)'
-                });
-            }
-        }
-
-        // 5. Update legacy canvas in folder if present
-        const legacyCanvas = document.getElementById('legacy-collective-canvas');
-        if (legacyCanvas) {
-            renderCollectivePalimpsest(legacyCanvas, getLegacyTraces(), {
-                title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
-                excludeActive: true
-            });
-        }
-    }
-
-    // Fetch all historical and new traces from Cloud Firebase Firestore
-    async function fetchAllTraces() {
-        if (!db) await initFirebase();
-        if (!db) return [];
-        try {
-            const { collection, getDocs, query, limit } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
-            const q = query(collection(db, 'traces'), limit(500));
-            const snap = await getDocs(q);
-            const list = [];
-            let fallbackIdx = 1;
-
-            snap.forEach(docSnap => {
-                const docId = docSnap.id;
-                if (isTrialTestDoc(docId)) return; // Exclude new site trial/test traces so new sessions start fresh!
-                const data = docSnap.data();
-                const pts = data.points || [];
-                let dateStr = data.date;
-                let timeStr = data.time;
-
-                let startedTs = (typeof data.started === 'number' && data.started > 0) ? data.started : 0;
-
-                if (dateStr && dateStr.includes('T')) {
-                    const d = new Date(dateStr);
-                    if (!isNaN(d.getTime())) {
-                        if (!startedTs) startedTs = d.getTime();
-                        dateStr = d.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                        timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                    }
-                } else if (dateStr && !startedTs) {
-                    const parts = String(dateStr).split('.');
-                    if (parts.length === 3) {
-                        const d = parseInt(parts[0], 10);
-                        const m = parseInt(parts[1], 10) - 1;
-                        const y = parseInt(parts[2], 10);
-                        let h = 0, min = 0, s = 0;
-                        if (timeStr) {
-                            const tp = String(timeStr).split(':');
-                            if (tp.length >= 2) {
-                                h = parseInt(tp[0], 10) || 0;
-                                min = parseInt(tp[1], 10) || 0;
-                                s = parseInt(tp[2], 10) || 0;
-                            }
-                        }
-                        const parsed = new Date(y, m, d, h, min, s).getTime();
-                        if (!isNaN(parsed)) startedTs = parsed;
-                    }
-                }
-
-                list.push({
-                    id: data.id || docSnap.id,
-                    savedTraceNumber: data.traceNumber || null,
-                    date: dateStr || '—',
-                    time: timeStr || '—',
-                    started: startedTs,
-                    duration: data.duration || 0,
-                    pointCount: data.pointCount || pts.length,
-                    points: pts,
-                    dwells: data.dwells || [],
-                    clicks: data.clicks || []
-                });
-            });
-
-            // Merge last completed trace so freshly finished sessions are never missing or truncated
-            try {
-                const completedRaw = sessionStorage.getItem('wwh_last_completed_trace');
-                if (completedRaw) {
-                    const completedTrace = JSON.parse(completedRaw);
-                    if (completedTrace && completedTrace.id && Array.isArray(completedTrace.points)) {
-                        const existingIdx = list.findIndex(t => t.id === completedTrace.id);
-                        const cPts = completedTrace.points;
-                        const cItem = {
-                            id: completedTrace.id,
-                            savedTraceNumber: completedTrace.traceNumber || null,
-                            date: completedTrace.date || '—',
-                            time: completedTrace.time || '—',
-                            started: completedTrace.started || Date.now(),
-                            duration: completedTrace.duration || 0,
-                            pointCount: cPts.length,
-                            points: cPts,
-                            dwells: completedTrace.dwells || [],
-                            clicks: completedTrace.clicks || []
-                        };
-                        if (existingIdx >= 0) {
-                            if (cPts.length >= (list[existingIdx].points || []).length) {
-                                list[existingIdx] = cItem;
-                            }
-                        } else if (cPts.length > 0) {
-                            list.push(cItem);
-                        }
-                    }
-                }
-            } catch (e) {}
-
-            // Merge active live visitor session so it is never missing or truncated
-            const currentActive = activeTrace || (function() {
-                try {
-                    return JSON.parse(sessionStorage.getItem(SESSION_KEY));
-                } catch(e) { return null; }
-            })();
-
-            if (currentActive && currentActive.id) {
-                const existingIdx = list.findIndex(t => t.id === currentActive.id);
-                const activeItem = {
-                    id: currentActive.id,
-                    savedTraceNumber: currentActive.traceNumber || null,
-                    date: currentActive.date || '—',
-                    time: currentActive.time || '—',
-                    started: currentActive.started || Date.now(),
-                    duration: (Date.now() - (currentActive.started || Date.now())),
-                    pointCount: currentActive.points ? currentActive.points.length : 0,
-                    points: currentActive.points || [],
-                    dwells: currentActive.dwells || [],
-                    clicks: currentActive.clicks || [],
-                    isActiveSession: true
-                };
-
-                if (existingIdx >= 0) {
-                    list[existingIdx] = activeItem;
-                } else if (currentActive.points && currentActive.points.length > 0) {
-                    list.push(activeItem);
-                }
-            }
-
-            // Number legacy and current traces logically:
-            // Legacy traces (preserved folder) are numbered chronologically
-            // Current era traces start cleanly from TRACE_0001
-            list.sort((a, b) => (a.started || 0) - (b.started || 0));
-
-            let currentCounter = 1;
-            let legacyCounter = 1;
-            list.forEach((item) => {
-                if (isLegacyTrace(item)) {
-                    item.traceNumber = item.savedTraceNumber || ('TRACE_' + String(legacyCounter++).padStart(4, '0'));
-                } else {
-                    item.traceNumber = 'TRACE_' + String(currentCounter++).padStart(4, '0');
-                }
-            });
-
-            cachedTracesList = list;
-            setTimeout(updateLivingPalimpsests, 30);
-            return list;
-        } catch (err) {
-            console.error('[YOU WERE HERE] Error fetching archive traces:', err);
-            return [];
-        }
-    }
-
-    // Public API exposed on window for YOU WERE HERE. archive views
-    window.YouWereHereTracker = {
-        getTrace: () => activeTrace,
-        saveNow: saveTraceToCloud,
-        renderToCanvas: renderTraceToCanvas,
-        renderCollectivePalimpsest: renderCollectivePalimpsest,
-        getLivingPalimpsestDataURL: getLivingPalimpsestDataURL,
-        updateLivingPalimpsests: updateLivingPalimpsests,
-        getCachedTraces: () => cachedTracesList,
-        isLegacyTrace: isLegacyTrace,
-        getLegacyTraces: getLegacyTraces,
-        getCurrentTraces: getCurrentTraces,
-        traceToPNGDataURL: (traceData, w = 400, h = 400) => renderTraceToCanvas(traceData, w, h).toDataURL('image/png'),
-        downloadAsPNG: downloadTraceAsPNG,
-        fetchAllTraces: fetchAllTraces,
-        formatCount: formatCount
-    };
-    window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
-
-    function handlePageExit() {
-        if (activeTrace && isTracking && getConsent() === 'yes') {
-            if (activeTrace.points.length >= 2) {
-                saveTraceToCloud(true, true);
-            }
-            stopRecording(true);
-            setConsent('finished');
-        }
-        try {
-            sessionStorage.removeItem(SESSION_KEY);
-        } catch (e) {}
-    }
-
-    // Auto-save to session storage on page visibility changes
-    window.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden' && activeTrace && isTracking) {
-            saveTraceToSession();
-        }
-    });
-    window.addEventListener('pagehide', handlePageExit);
-    window.addEventListener('beforeunload', handlePageExit);
-
-    // Bootstrap on DOM Ready — Always open popup on entrance or refresh as requested!
-    async function init() {
-        // Clear any previous session or local consent so every page load or refresh starts with popup open
-        try {
-            localStorage.removeItem(CONSENT_KEY);
-            localStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(CONSENT_KEY);
-            sessionStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem('wwh_last_completed_trace');
-        } catch (e) {}
-
-        // Siteye girişte veya sayfa yenilemede popup daima açık başlar:
-        hideReopenCircle();
-        showConsentPopup();
-
-        // Initialize Firebase SDK and fetch historical traces in background
-        initFirebase().then(() => {
-            fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
-        }).catch(err => {
-            console.warn('[YOU WERE HERE] Firebase init:', err);
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+/**
+ * YOU WERE HERE. — Website-Wide Mouse Trace Recording & Archive System
+ * Elifsu Genç Portfolio
+ * 
+ * Features:
+ * - Subtle bottom consent popup (YES / NO) with session persistence
+ * - Live fixed indicator in bottom-right: recording.xxx
+ * - Website-wide normalized mouse tracking with dwell & click sampling
+ * - Atomic sequential trace numbering (TRACE_0001, TRACE_0002...) via Cloud Firebase Firestore
+ * - Preserves existing Firestore database (traces-together) and historical traces
+ * - Lightweight HTML5 Canvas PNG trace generation (replacing heavyweight PDFs)
+ */
+
+(function () {
+    'use strict';
+
+    // Configuration & Storage Keys
+    const CONSENT_KEY = 'wwh_consent';
+    const SESSION_KEY = 'wwh_current_trace';
+    const FIREBASE_CONFIG = {
+        apiKey: "AIzaSyAfU5_2JMufKlGFa5WBDO_kpdp38jV6A5s",
+        authDomain: "traces-together.firebaseapp.com",
+        projectId: "traces-together",
+        storageBucket: "traces-together.firebasestorage.app",
+        messagingSenderId: "537119213522",
+        appId: "1:537119213522:web:35ab67f62add69968e6a0b"
+    };
+
+    function getConsent() {
+        try {
+            // Strictly per-session consent as requested: each new tab/window prompts separately
+            return sessionStorage.getItem(CONSENT_KEY) || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function setConsent(val) {
+        try {
+            if (val) {
+                sessionStorage.setItem(CONSENT_KEY, val);
+            } else {
+                sessionStorage.removeItem(CONSENT_KEY);
+            }
+            // Clear any lingering persistent consent from localStorage
+            localStorage.removeItem(CONSENT_KEY);
+        } catch (e) {}
+    }
+
+    // Global in-memory state
+    let db = null;
+    let docFn = null;
+    let setDocFn = null;
+    let runTransactionFn = null;
+    let initFirebasePromise = null;
+
+    let activeTrace = null;
+    let isTracking = false;
+    let lastPointTime = 0;
+    let lastPointCoord = { x: 0, y: 0 };
+    let anchorPoint = null;
+    let anchorStartTime = 0;
+    let saveTimer = null;
+    let dwellTimer = null;
+    let hasUnsavedChanges = false;
+    let isCloudSaving = false;
+
+    const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+
+    // Format Point Count to recording.xxx (at least 3 digits, no upper limit)
+    function formatCount(count) {
+        const numStr = count < 1000 ? String(count).padStart(3, '0') : String(count);
+        return 'recording.' + numStr;
+    }
+
+    // Initialize Firebase Firestore SDK modularly
+    function initFirebase() {
+        if (db && docFn && setDocFn) return Promise.resolve(true);
+        if (initFirebasePromise) return initFirebasePromise;
+
+        initFirebasePromise = (async () => {
+            try {
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
+                const { getFirestore, doc, setDoc, runTransaction } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+                const app = initializeApp(FIREBASE_CONFIG);
+                db = getFirestore(app);
+                docFn = doc;
+                setDocFn = setDoc;
+                runTransactionFn = runTransaction;
+                return true;
+            } catch (err) {
+                console.warn('[YOU WERE HERE] Firebase initialization fallback to local session:', err);
+                return false;
+            }
+        })();
+
+        return initFirebasePromise;
+    }
+
+    // Trial and test documents from development to exclude so the new site starts completely fresh from TRACE_0001
+    const EXCLUDED_TRIAL_DOC_IDS = new Set([
+        '242420ef-a7b2-4567-aa1c-b29303d7d794', // TRACE_0059
+        '2f5d6bf7-1a56-45c5-bcd2-02206721b82a', // TRACE_2422
+        '55ca2320-d07b-4ca3-a581-ada083c36145', // TRACE_0057
+        'a8683653-8339-4e05-af32-3bf72f93d8ae', // TRACE_0001
+        'b6ac5b7b-695f-441e-86d6-0cef8988ce99', // TRACE_0058
+        'cf606e17-7506-4f86-833d-b9f22bfebf66', // TRACE_7373
+        'd17c29b6-075f-4379-8bf3-2b383fcc841c', // TRACE_8137
+        'df09ec24-9979-4f18-aecd-1a303675f717', // TRACE_0056
+        'eb584b62-34c4-4e49-aa51-63f67a05ffb3'  // TRACE_4696
+    ]);
+
+    function isTrialTestDoc(id) {
+        if (!id) return false;
+        if (id.startsWith('test_')) return true;
+        return EXCLUDED_TRIAL_DOC_IDS.has(id);
+    }
+
+    // Allocate sequential trace number for new site sessions (TRACE_0001, TRACE_0002...)
+    async function allocateTraceNumber() {
+        let currentEraTraces = [];
+        if (cachedTracesList && cachedTracesList.length > 0) {
+            currentEraTraces = getCurrentTraces(cachedTracesList);
+        } else {
+            try {
+                const all = await fetchAllTraces();
+                currentEraTraces = getCurrentTraces(all);
+            } catch (e) {}
+        }
+        const nextNum = currentEraTraces.length + 1;
+        return 'TRACE_' + String(nextNum).padStart(4, '0');
+    }
+
+    // Load or initialize trace session
+    async function loadOrCreateTrace() {
+        let stored = null;
+        try {
+            stored = JSON.parse(sessionStorage.getItem(SESSION_KEY));
+        } catch (e) {}
+
+        if (stored && stored.id && Array.isArray(stored.points)) {
+            activeTrace = stored;
+            return activeTrace;
+        }
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+        const traceNumber = await allocateTraceNumber();
+
+        activeTrace = {
+            id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'trace_' + Date.now(),
+            traceNumber: traceNumber,
+            date: dateStr,
+            time: timeStr,
+            started: Date.now(),
+            points: [],
+            dwells: [],
+            clicks: [],
+            viewport: {
+                initialWidth: window.innerWidth,
+                initialHeight: window.innerHeight
+            }
+        };
+
+        saveTraceToSession();
+        return activeTrace;
+    }
+
+    function saveTraceToSession() {
+        if (!activeTrace) return;
+        try {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(activeTrace));
+        } catch (e) {}
+    }
+
+    // Convert plain JS object to Firestore REST API typed fields format
+    function toFirestoreFields(obj) {
+        const fields = {};
+        for (const [k, v] of Object.entries(obj)) {
+            if (v === null || v === undefined) continue;
+            if (typeof v === 'string') {
+                fields[k] = { stringValue: v };
+            } else if (typeof v === 'number') {
+                if (Number.isInteger(v)) {
+                    fields[k] = { integerValue: String(v) };
+                } else {
+                    fields[k] = { doubleValue: v };
+                }
+            } else if (typeof v === 'boolean') {
+                fields[k] = { booleanValue: v };
+            } else if (Array.isArray(v)) {
+                fields[k] = {
+                    arrayValue: {
+                        values: v.map(item => {
+                            if (typeof item === 'object' && item !== null) {
+                                return { mapValue: { fields: toFirestoreFields(item) } };
+                            } else if (typeof item === 'string') {
+                                return { stringValue: item };
+                            } else if (typeof item === 'number') {
+                                return { integerValue: String(item) };
+                            }
+                            return {};
+                        })
+                    }
+                };
+            } else if (typeof v === 'object') {
+                fields[k] = { mapValue: { fields: toFirestoreFields(v) } };
+            }
+        }
+        return fields;
+    }
+
+    // Direct REST API write with keepalive support (immune to SDK WebSocket hangs & page exit aborts)
+    async function sendTraceToFirestoreREST(traceData, keepalive = false) {
+        if (!traceData || !traceData.id) return false;
+        let docId = traceData.id;
+        let url = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${docId}`;
+        let payload = JSON.stringify({ fields: toFirestoreFields(traceData) });
+
+        // Note: Browsers reject fetch with keepalive:true if payload exceeds 64KB (65536 bytes)
+        // A trace with ~600+ points is >65KB, so keepalive must ONLY be enabled if under 60KB.
+        const canUseKeepalive = keepalive && payload.length < 60000;
+
+        try {
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 8000) : null;
+
+            const fetchOptions = {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                signal: controller ? controller.signal : undefined
+            };
+            if (canUseKeepalive) {
+                fetchOptions.keepalive = true;
+            }
+
+            let res = await fetch(url, fetchOptions);
+
+            // If 403 Forbidden (document already exists and Firestore rules only allow CREATE, not UPDATE):
+            // Retry with a fresh unique document ID so Firestore treats it as a brand-new CREATE!
+            if (res.status === 403) {
+                console.warn('[YOU WERE HERE] Doc ID already written; retrying with fresh ID to guarantee full save...');
+                const retryId = traceData.id + '_' + Date.now().toString().slice(-4);
+                traceData.id = retryId;
+                const retryUrl = `https://firestore.googleapis.com/v1/projects/traces-together/databases/(default)/documents/traces/${retryId}`;
+                const retryPayload = JSON.stringify({ fields: toFirestoreFields(traceData) });
+                fetchOptions.body = retryPayload;
+                res = await fetch(retryUrl, fetchOptions);
+            }
+
+            if (timeoutId) clearTimeout(timeoutId);
+            return res.ok;
+        } catch (e) {
+            console.warn('[YOU WERE HERE] Direct REST write note:', e);
+            return false;
+        }
+    }
+
+    // Incremental batch save to Firebase Firestore
+    async function saveTraceToCloud(force = false, isFinal = false) {
+        if (!activeTrace) return;
+        saveTraceToSession();
+
+        // Require at least 2 points to avoid empty cloud records
+        if (activeTrace.points.length < 2 && !activeTrace.clicks.length) return;
+        if (!hasUnsavedChanges && !force) return;
+        if (isCloudSaving && !force) return;
+
+        isCloudSaving = true;
+
+        const cloudPayload = {
+            id: activeTrace.id,
+            traceNumber: activeTrace.traceNumber,
+            date: activeTrace.date,
+            time: activeTrace.time,
+            started: activeTrace.started,
+            duration: Date.now() - activeTrace.started,
+            pointCount: activeTrace.points.length,
+            points: activeTrace.points,
+            dwells: activeTrace.dwells,
+            clicks: activeTrace.clicks,
+            lastUpdated: new Date().toISOString()
+        };
+
+        // Cache last completed/saved trace locally so views immediately show the full dataset
+        try {
+            sessionStorage.setItem('wwh_last_completed_trace', JSON.stringify(cloudPayload));
+        } catch (e) {}
+
+        try {
+            const ok = await sendTraceToFirestoreREST(cloudPayload, isFinal);
+            if (ok) {
+                hasUnsavedChanges = false;
+            } else if (db && setDocFn && docFn) {
+                await setDocFn(docFn(db, 'traces', activeTrace.id), cloudPayload, { merge: true });
+                hasUnsavedChanges = false;
+            }
+        } catch (err) {
+            console.warn('[YOU WERE HERE] Cloud save buffer synced locally:', err);
+        } finally {
+            isCloudSaving = false;
+        }
+    }
+
+    // Explicit User Trigger: Finish & Permanently Save Current Trace
+    async function finishAndSaveCurrentTrace() {
+        if (!activeTrace && !isTracking) return;
+
+        const currentCount = activeTrace ? activeTrace.points.length : 0;
+        const currentNum = activeTrace ? (activeTrace.traceNumber || 'TRACE') : 'TRACE';
+
+        // 1. Stop tracking immediately so no further points or auto-sync run
+        stopRecording(false);
+
+        // 2. Lock consent to 'finished' so reload or navigation NEVER records again in this session
+        setConsent('finished');
+
+        // 3. Force final cloud save of all accumulated points
+        if (activeTrace && activeTrace.points.length >= 2) {
+            hasUnsavedChanges = true;
+            try {
+                await saveTraceToCloud(true, false);
+            } catch (e) {
+                console.warn('[YOU WERE HERE] Final cloud save note:', e);
+            }
+        }
+
+        // 4. Clear session storage so reloads do not continue appending into this trace
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+        activeTrace = null;
+
+        // 5. Update Live Indicator UI to celebrate completion
+        const el = document.getElementById('wwh-live-indicator');
+        if (el) {
+            el.classList.add('wwh-saved-state');
+            el.innerHTML = `
+                <span class="wwh-live-check" style="color: #16a34a; font-weight: 800; font-size: 0.9rem;">&check;</span>
+                <span class="wwh-live-tag" style="color: #16a34a;">${currentNum} SAVED</span>
+                <span class="wwh-live-sep">&bull;</span>
+                <span class="wwh-live-label">${currentCount} pts</span>
+                <a href="./projects/you-were-here/" class="wwh-view-archive-link" style="color: #2563eb; text-decoration: underline; font-weight: 700; font-size: 0.72rem; margin-left: 6px;">VIEW ARCHIVE &nearr;</a>
+            `;
+            setTimeout(() => {
+                if (el) el.remove();
+                showReopenCircle();
+            }, 8000);
+        } else {
+            showReopenCircle();
+        }
+    }
+
+    // Helper to get safe mount root (documentElement avoids body scroll/transform containment)
+    function getMountRoot() {
+        return document.documentElement || document.body;
+    }
+
+    // Live Indicator UI
+    function ensureLiveIndicator() {
+        let el = document.getElementById('wwh-live-indicator');
+        const mount = getMountRoot();
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'wwh-live-indicator';
+            el.className = 'wwh-live-indicator';
+            el.setAttribute('aria-live', 'polite');
+            el.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Apparatus');
+            el.innerHTML = `
+                <span class="wwh-live-dot" aria-hidden="true"></span>
+                <span class="wwh-live-tag">RESEARCH DEMO</span>
+                <span class="wwh-live-sep">&bull;</span>
+                <span class="wwh-live-label" id="wwh-live-count">recording.000</span>
+                <button type="button" class="wwh-finish-btn" id="wwh-finish-btn" title="Complete drawing and permanently save to archive">FINISH &amp; SAVE &check;</button>
+            `;
+            mount.appendChild(el);
+
+            const finishBtn = el.querySelector('#wwh-finish-btn');
+            if (finishBtn) {
+                finishBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    finishAndSaveCurrentTrace();
+                });
+            }
+
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showConsentPopup();
+            });
+        } else if (el.parentElement !== mount) {
+            mount.appendChild(el);
+        }
+        return el;
+    }
+
+    function updateLiveCount() {
+        const countEl = document.getElementById('wwh-live-count');
+        if (countEl && activeTrace) {
+            countEl.textContent = formatCount(activeTrace.points.length);
+        }
+    }
+
+    function hideLiveIndicator() {
+        const el = document.getElementById('wwh-live-indicator');
+        if (el) el.remove();
+    }
+
+    // Floating "you are here." Reopen Circle on the Right Side
+    function showReopenCircle() {
+        let circle = document.getElementById('wwh-reopen-circle');
+        const mount = getMountRoot();
+        if (circle) {
+            circle.classList.remove('wwh-circle-exit');
+            if (circle.parentElement !== mount) {
+                mount.appendChild(circle);
+            }
+            return;
+        }
+
+        circle = document.createElement('button');
+        circle.type = 'button';
+        circle.id = 'wwh-reopen-circle';
+        circle.className = 'wwh-reopen-circle';
+        circle.setAttribute('aria-label', 'YOU WERE HERE. — Reopen Attention Economy research demo prompt');
+        circle.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Demo');
+
+        circle.innerHTML = `
+            <span class="wwh-circle-dot" aria-hidden="true"></span>
+            <span class="wwh-circle-text">you are<br>here.</span>
+        `;
+
+        mount.appendChild(circle);
+
+        circle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hideReopenCircle();
+            showConsentPopup();
+        });
+        circle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                hideReopenCircle();
+                showConsentPopup();
+            }
+        });
+    }
+
+    function hideReopenCircle() {
+        const circle = document.getElementById('wwh-reopen-circle');
+        if (circle) {
+            circle.classList.add('wwh-circle-exit');
+            setTimeout(() => circle.remove(), 250);
+        }
+    }
+
+    // Helper to resolve the project URL relative to current location
+    function getLearnMoreUrl() {
+        const path = (window.location.pathname || '').replace(/\\/g, '/').toLowerCase();
+        if (path.includes('/projects/you-were-here/')) {
+            return '#overview';
+        } else if (path.includes('/projects/')) {
+            return '../you-were-here/';
+        } else {
+            return 'projects/you-were-here/';
+        }
+    }
+
+    // Consent Popup UI
+    function showConsentPopup() {
+        hideReopenCircle();
+        const mount = getMountRoot();
+        let popup = document.getElementById('wwh-consent-popup');
+        if (popup) {
+            popup.classList.remove('wwh-exit', 'wwh-shrinking');
+            if (popup.parentElement !== mount) {
+                mount.appendChild(popup);
+            }
+            void popup.offsetWidth;
+            popup.classList.add('wwh-visible');
+            return;
+        }
+
+        popup = document.createElement('div');
+        popup.id = 'wwh-consent-popup';
+        popup.className = 'wwh-consent-popup';
+        popup.setAttribute('role', 'dialog');
+        popup.setAttribute('aria-modal', 'false');
+        popup.setAttribute('aria-labelledby', 'wwh-consent-title');
+
+        const learnUrl = getLearnMoreUrl();
+
+        popup.innerHTML = `
+            <button type="button" id="wwh-btn-close" class="wwh-popup-close-btn" aria-label="Minimize prompt" title="Küçült / Minimize">&times;</button>
+            <div class="wwh-consent-inner">
+                <div class="wwh-consent-text-col">
+                    <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
+                    <h4 id="wwh-consent-title" class="wwh-consent-title">Can a digital portfolio register physical presence?</h4>
+                    <p class="wwh-consent-desc">
+                        This website functions as the live experimental testbed for <strong>YOU WERE HERE.</strong>, an architectural research project investigating the attention economy and digital dwell time. With your consent, anonymous cursor velocities and hesitation pauses are recorded as spatial vectors in our open collective archive.
+                    </p>
+                </div>
+                <div class="wwh-consent-actions">
+                    <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
+                        <span class="wwh-learn-icon">&#x2726;</span>
+                        <span class="wwh-learn-text">RESEARCH THESIS &amp; DEMO &nearr;</span>
+                    </a>
+                    <div class="wwh-consent-choice-group">
+                        <button type="button" id="wwh-btn-yes" class="wwh-btn wwh-btn-yes">AGREE &amp; RECORD</button>
+                        <button type="button" id="wwh-btn-no" class="wwh-btn wwh-btn-no">DECLINE</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        mount.appendChild(popup);
+
+        // Immediate entrance animation trigger
+        void popup.offsetWidth;
+        popup.classList.add('wwh-visible');
+
+        // Event listeners
+        const btnYes = document.getElementById('wwh-btn-yes');
+        const btnNo = document.getElementById('wwh-btn-no');
+        const btnClose = document.getElementById('wwh-btn-close');
+        const btnLearn = document.getElementById('wwh-btn-learn');
+
+        function shrinkPopupToCircle(p) {
+            if (!p) return;
+            p.classList.remove('wwh-visible');
+            p.classList.add('wwh-shrinking');
+            setTimeout(() => {
+                p.remove();
+                showReopenCircle();
+            }, 360);
+        }
+
+        if (btnLearn) {
+            btnLearn.addEventListener('mouseenter', () => {
+                const cur = document.getElementById('custom-cursor');
+                if (cur) {
+                    cur.classList.remove('cursor-hover');
+                    cur.classList.add('cursor-project');
+                }
+            });
+            btnLearn.addEventListener('mouseleave', () => {
+                const cur = document.getElementById('custom-cursor');
+                if (cur) {
+                    cur.classList.remove('cursor-project');
+                }
+            });
+            btnLearn.addEventListener('click', (e) => {
+                const dest = getLearnMoreUrl();
+                if (dest === '#overview') {
+                    e.preventDefault();
+                    const ov = document.getElementById('overview');
+                    if (ov) {
+                        ov.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                } else {
+                    // Navigate directly to projects/you-were-here/
+                    e.preventDefault();
+                    window.location.href = dest;
+                }
+            });
+        }
+
+        if (btnYes) {
+            btnYes.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                setConsent('yes');
+                dismissPopup(popup);
+                hideReopenCircle();
+                await startRecording();
+            });
+        }
+
+        if (btnNo) {
+            btnNo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setConsent('no');
+                shrinkPopupToCircle(popup);
+                stopRecording(true);
+                activeTrace = null;
+                try {
+                    sessionStorage.removeItem(SESSION_KEY);
+                } catch(e) {}
+            });
+        }
+
+        if (btnClose) {
+            btnClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setConsent('no');
+                shrinkPopupToCircle(popup);
+                stopRecording(true);
+                activeTrace = null;
+                try {
+                    sessionStorage.removeItem(SESSION_KEY);
+                } catch(e) {}
+            });
+        }
+    }
+
+    function dismissPopup(popup) {
+        if (!popup) return;
+        popup.classList.remove('wwh-visible');
+        popup.classList.add('wwh-exit');
+        setTimeout(() => popup.remove(), 400);
+    }
+
+    // Mouse, Stylus & Touch Pointer Tracking Logic
+    function handlePointerMove(e) {
+        if (!isTracking || !activeTrace) return;
+
+        const now = Date.now();
+        // High-fidelity sampling: 18ms interval (~55 fps) with generous 25,000 points limit
+        if (now - lastPointTime < 18 || activeTrace.points.length >= 25000) return;
+
+        // Privacy guard: ignore when interacting with form inputs
+        const targetTag = e.target ? e.target.tagName : '';
+        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+
+        // Get coordinates across mouse, pointer, and touch
+        let cx = e.clientX;
+        let cy = e.clientY;
+        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
+            cx = e.touches[0].clientX;
+            cy = e.touches[0].clientY;
+        }
+        if (cx == null || cy == null || isNaN(cx) || isNaN(cy)) return;
+
+        // Normalized viewport coordinates (0 to 1000)
+        const winW = window.innerWidth || 1000;
+        const winH = window.innerHeight || 1000;
+        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
+        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
+
+        // Fluid distance threshold to preserve every subtle curve and hesitation
+        const dist = Math.hypot(nx - lastPointCoord.x, ny - lastPointCoord.y);
+        if (dist < 0.8 && activeTrace.points.length > 0 && (now - lastPointTime < 75)) {
+            return;
+        }
+
+        lastPointTime = now;
+        lastPointCoord = { x: nx, y: ny };
+
+        const point = {
+            x: nx,
+            y: ny,
+            t: now - activeTrace.started
+        };
+
+        activeTrace.points.push(point);
+        hasUnsavedChanges = true;
+        updateLiveCount();
+
+        // Frequently sync to sessionStorage (every 5 points) so page navigation never drops points
+        if (activeTrace.points.length % 5 === 0) {
+            saveTraceToSession();
+        }
+
+        if (activeTrace.points.length % 15 === 0) {
+            updateLivingPalimpsests();
+            try {
+                window.dispatchEvent(new CustomEvent('traces:live_point', { detail: activeTrace }));
+            } catch (e) {}
+        }
+
+        // Dwell pause tracking
+        if (!anchorPoint || Math.hypot(point.x - anchorPoint.x, point.y - anchorPoint.y) > 10) {
+            anchorPoint = point;
+            anchorStartTime = now;
+        }
+    }
+
+    function handleClick(e) {
+        if (!isTracking || !activeTrace) return;
+        const targetTag = e.target ? e.target.tagName : '';
+        if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+
+        let cx = e.clientX;
+        let cy = e.clientY;
+        if ((cx == null || cy == null) && e.touches && e.touches.length > 0) {
+            cx = e.touches[0].clientX;
+            cy = e.touches[0].clientY;
+        }
+        if (cx == null || cy == null) return;
+
+        const winW = window.innerWidth || 1000;
+        const winH = window.innerHeight || 1000;
+        const nx = clamp(Math.round((cx / winW) * 1000), 0, 1000);
+        const ny = clamp(Math.round((cy / winH) * 1000), 0, 1000);
+
+        activeTrace.clicks.push({
+            x: nx,
+            y: ny,
+            t: Date.now() - activeTrace.started
+        });
+        hasUnsavedChanges = true;
+        saveTraceToSession();
+    }
+
+    function checkDwellPauses() {
+        if (!isTracking || !activeTrace || !anchorPoint) return;
+        const now = Date.now();
+        const duration = now - anchorStartTime;
+        if (duration >= 420) {
+            const dwell = {
+                x: anchorPoint.x,
+                y: anchorPoint.y,
+                t: anchorPoint.t,
+                duration: duration
+            };
+            const lastDwell = activeTrace.dwells[activeTrace.dwells.length - 1];
+            if (lastDwell && lastDwell.t === dwell.t) {
+                lastDwell.duration = duration;
+            } else {
+                activeTrace.dwells.push(dwell);
+                hasUnsavedChanges = true;
+            }
+        }
+    }
+
+    // Start Recording Lifecycle
+    async function startRecording() {
+        if (isTracking) return;
+        await loadOrCreateTrace();
+
+        isTracking = true;
+        ensureLiveIndicator();
+        updateLiveCount();
+
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('touchmove', handlePointerMove);
+        window.removeEventListener('click', handleClick);
+
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('touchmove', handlePointerMove, { passive: true });
+        window.addEventListener('click', handleClick, { passive: true });
+
+        if (dwellTimer) clearInterval(dwellTimer);
+        dwellTimer = setInterval(checkDwellPauses, 180);
+    }
+
+    function stopRecording(removeIndicator = true) {
+        isTracking = false;
+        if (removeIndicator) {
+            hideLiveIndicator();
+        }
+
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('touchmove', handlePointerMove);
+        window.removeEventListener('click', handleClick);
+
+        if (dwellTimer) clearInterval(dwellTimer);
+        if (saveTimer) clearInterval(saveTimer);
+        dwellTimer = null;
+        saveTimer = null;
+        lastPointTime = 0;
+        lastPointCoord = { x: 0, y: 0 };
+        anchorPoint = null;
+    }
+
+    // Lightweight HTML5 Canvas PNG Generator (replaces PDF export for fast, compact size)
+    function renderTraceToCanvas(traceData, width = 800, height = 800) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        // Crisp white architectural background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+
+        // Subtle architectural grid
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 1;
+        const gridSize = width / 20;
+        for (let x = 0; x <= width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+
+        const pts = traceData.points || [];
+        const scaleX = width / 1000;
+        const scaleY = height / 1000;
+
+        // 1. Draw Dwell Pauses
+        (traceData.dwells || []).forEach(d => {
+            const dx = Number(d.x);
+            const dy = Number(d.y);
+            const dur = Number(d.duration || 300);
+            if (isNaN(dx) || isNaN(dy)) return;
+
+            const r = clamp(dur / 120, 6, 40) * scaleX;
+            ctx.beginPath();
+            ctx.arc(dx * scaleX, dy * scaleY, r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(dx * scaleX, dy * scaleY, r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.22)';
+            ctx.fill();
+        });
+
+        // 2. Draw Movement Lines
+        if (pts.length > 1) {
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            for (let i = 1; i < pts.length; i++) {
+                const prev = pts[i - 1];
+                const curr = pts[i];
+                const px = Number(prev.x);
+                const py = Number(prev.y);
+                const cx = Number(curr.x);
+                const cy = Number(curr.y);
+                if (isNaN(px) || isNaN(py) || isNaN(cx) || isNaN(cy)) continue;
+
+                const pt = Number(prev.t || 0);
+                const ct = Number(curr.t || (pt + 25));
+                const dt = Math.max(16, ct - pt);
+
+                // Skip long pauses / cross-page jump lines
+                if (dt > 6000) continue;
+
+                const dist = Math.hypot(cx - px, cy - py);
+                const speed = (dist / dt) * 1000;
+                const strokeWidth = clamp(8 - speed * 0.03, 1.8, 8.5) * scaleX;
+
+                ctx.beginPath();
+                ctx.moveTo(px * scaleX, py * scaleY);
+                ctx.lineTo(cx * scaleX, cy * scaleY);
+                ctx.strokeStyle = 'rgba(37, 99, 235, 0.78)';
+                ctx.lineWidth = strokeWidth;
+                ctx.stroke();
+            }
+        }
+
+        // 3. Draw Click Glyphs
+        (traceData.clicks || []).forEach(c => {
+            const cx = Number(c.x);
+            const cy = Number(c.y);
+            if (isNaN(cx) || isNaN(cy)) return;
+
+            const px = cx * scaleX;
+            const py = cy * scaleY;
+            const starRadius = 6 * scaleX;
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 1.8;
+            for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+                ctx.beginPath();
+                ctx.moveTo(px, py);
+                ctx.lineTo(px + Math.cos(angle) * starRadius, py + Math.sin(angle) * starRadius);
+                ctx.stroke();
+            }
+        });
+
+        // 4. Architectural Title Block Footer
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 14px monospace';
+        ctx.fillText(traceData.traceNumber || 'TRACE_0000', 28, height - 38);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px monospace';
+        ctx.fillText(`DATE: ${traceData.date || '—'}  TIME: ${traceData.time || '—'}  POINTS: ${pts.length}`, 28, height - 20);
+
+        return canvas;
+    }
+
+    // Export Trace as lightweight PNG file download (1200x1200 crisp high-res)
+    function downloadTraceAsPNG(traceData) {
+        const canvas = renderTraceToCanvas(traceData, 1200, 1200);
+        canvas.toBlob(blob => {
+            if (!blob) return;
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${traceData.traceNumber || 'trace'}.png`;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                a.remove();
+                URL.revokeObjectURL(url);
+            }, 1000);
+        }, 'image/png');
+    }
+
+    // In-memory cache for historical and live traces
+    let cachedTracesList = [];
+    let lastPalimpsestRenderTime = 0;
+
+    /**
+     * Render the Living Collective Palimpsest (All historical traces + active live trace)
+     * with uniform 16:10 aspect-ratio mapping to eliminate all stretching and distortion.
+     */
+    function renderCollectivePalimpsest(targetCanvas, tracesList, options = {}) {
+        const traces = (tracesList && tracesList.length > 0) ? tracesList : (cachedTracesList || []);
+        const canvas = targetCanvas || document.createElement('canvas');
+
+        const width = options.width || (canvas.clientWidth > 0 ? canvas.clientWidth : (canvas.width || 1200));
+        const height = options.height || (canvas.clientHeight > 0 ? canvas.clientHeight : (canvas.height || 750));
+
+        const dpr = options.dpr || (targetCanvas ? Math.min(window.devicePixelRatio || 1, 2) : 1);
+
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+
+        const ctx = canvas.getContext('2d');
+        if (dpr !== 1) {
+            ctx.scale(dpr, dpr);
+        }
+
+        // Crisp architectural off-white background
+        ctx.fillStyle = '#fafbfc';
+        ctx.fillRect(0, 0, width, height);
+
+        // Architectural drafting grid
+        ctx.strokeStyle = 'rgba(26, 54, 93, 0.04)';
+        ctx.lineWidth = 1;
+        const step = 40;
+        for (let x = 0; x <= width; x += step) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += step) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+
+        // UNIFORM 16:10 DESKTOP PROPORTIONS (Zero Distortion / Stretches eliminated)
+        const targetAspect = 16 / 10;
+        const padX = options.paddingX !== undefined ? options.paddingX : 28;
+        const padY = options.paddingY !== undefined ? options.paddingY : 24;
+        const availW = Math.max(100, width - padX * 2);
+        const availH = Math.max(100, height - padY * 2);
+
+        const virtualW = 1000;
+        const virtualH = 1000 / targetAspect; // 625
+
+        const scale = Math.min(availW / virtualW, availH / virtualH);
+        const sheetW = virtualW * scale;
+        const sheetH = virtualH * scale;
+
+        const originX = padX + (availW - sheetW) / 2;
+        const originY = padY + (availH - sheetH) / 2;
+
+        const toX = (nx) => originX + (Number(nx) / 1000) * sheetW;
+        const toY = (ny) => originY + (Number(ny) / 1000) * sheetH;
+
+        // Subtle architectural sheet boundary & corner marks
+        ctx.strokeStyle = 'rgba(37, 99, 235, 0.12)';
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1;
+        ctx.strokeRect(originX, originY, sheetW, sheetH);
+        ctx.setLineDash([]);
+
+        const drawCross = (cx, cy) => {
+            ctx.strokeStyle = 'rgba(26, 54, 93, 0.28)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(cx - 5, cy); ctx.lineTo(cx + 5, cy);
+            ctx.moveTo(cx, cy - 5); ctx.lineTo(cx, cy + 5);
+            ctx.stroke();
+        };
+        drawCross(originX, originY);
+        drawCross(originX + sheetW, originY);
+        drawCross(originX, originY + sheetH);
+        drawCross(originX + sheetW, originY + sheetH);
+
+        // Ensure chronological ordering: oldest first (drawn behind in background), newest last (drawn on top in front)
+        traces.sort((a, b) => (a.started || 0) - (b.started || 0));
+        const totalTraceCount = traces.length;
+
+        // 1. Layer 1: Render All Dwell Pauses Across Visitors + Active Trace (Halos: older fainter, newer clearer)
+        const includeActive = !options.excludeActive;
+
+        traces.forEach((tr, idx) => {
+            if (!tr.dwells || !tr.dwells.length) return;
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+            const dAlpha = 0.02 + progress * 0.07;
+            tr.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(37, 99, 235, ${dAlpha.toFixed(3)})`;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(26, 54, 93, ${(dAlpha * 1.5).toFixed(3)})`;
+                ctx.fill();
+            });
+        });
+
+        if (includeActive && activeTrace && activeTrace.dwells) {
+            activeTrace.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(37, 99, 235, 0.12)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(26, 54, 93, 0.22)';
+                ctx.fill();
+            });
+        }
+
+        // 2. Layer 2: Render Movement Trajectories
+        // Older traces: faint translucent underdrawings (opacity ~0.10, soft blue, fine stroke)
+        // Newer traces: progressively darker, bolder, and drawn ON TOP in front (opacity up to 0.78, deep navy, bolder line)
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        traces.forEach((tr, idx) => {
+            const pts = tr.points || [];
+            if (pts.length < 2) return;
+
+            // Normalized chronological progress from 0 (oldest) to 1 (newest)
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+
+            // Progressive opacity curve: older traces are faint (0.10), newest traces are bold & rich (0.78)
+            const opacity = 0.10 + Math.pow(progress, 1.35) * 0.68;
+
+            // Color gradient: softer cerulean for older traces -> deep architectural navy/indigo for newest traces
+            const r = Math.round(75 + (20 - 75) * progress);
+            const g = Math.round(145 + (45 - 145) * progress);
+            const b = Math.round(245 + (120 - 245) * progress);
+
+            const lineWidth = (1.1 + progress * 0.8) * Math.max(0.8, scale * 1.1);
+
+            ctx.beginPath();
+            ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
+            for (let i = 1; i < pts.length; i++) {
+                ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
+            }
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(3)})`;
+            ctx.lineWidth = lineWidth;
+            ctx.stroke();
+        });
+
+        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse at the very front / top)
+        if (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1) {
+            const livePts = activeTrace.points;
+            ctx.beginPath();
+            ctx.moveTo(toX(livePts[0].x), toY(livePts[0].y));
+            for (let i = 1; i < livePts.length; i++) {
+                ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
+            }
+            ctx.strokeStyle = 'rgba(20, 45, 120, 0.90)';
+            ctx.lineWidth = 2.4 * Math.max(0.8, scale * 1.1);
+            ctx.stroke();
+
+            // Glowing cursor tip
+            const lastPt = livePts[livePts.length - 1];
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 4.5 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = '#22c55e';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 8 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+            ctx.fill();
+        }
+
+        // 4. Layer 4: Click Glyphs (Older are softer, newest are vibrant crimson crosses)
+        traces.forEach((tr, idx) => {
+            if (!tr.clicks || !tr.clicks.length) return;
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+            const cAlpha = 0.22 + progress * 0.65;
+            const starRadius = (3.5 + progress * 1.5) * scale;
+            const cWidth = 1.0 + progress * 0.5;
+
+            tr.clicks.forEach(c => {
+                const cx = toX(c.x);
+                const cy = toY(c.y);
+                ctx.strokeStyle = `rgba(220, 38, 38, ${cAlpha.toFixed(3)})`;
+                ctx.lineWidth = cWidth;
+                ctx.beginPath();
+                ctx.moveTo(cx - starRadius, cy);
+                ctx.lineTo(cx + starRadius, cy);
+                ctx.moveTo(cx, cy - starRadius);
+                ctx.lineTo(cx, cy + starRadius);
+                ctx.stroke();
+            });
+        });
+
+        if (includeActive && activeTrace && activeTrace.clicks) {
+            activeTrace.clicks.forEach(c => {
+                const cx = toX(c.x);
+                const cy = toY(c.y);
+                const starRadius = 5.5 * scale;
+                ctx.strokeStyle = 'rgba(220, 38, 38, 0.92)';
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.moveTo(cx - starRadius, cy);
+                ctx.lineTo(cx + starRadius, cy);
+                ctx.moveTo(cx, cy - starRadius);
+                ctx.lineTo(cx, cy + starRadius);
+                ctx.stroke();
+            });
+        }
+
+        // 5. Layer 5: Technical Title Block
+        const activeCount = (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 5) ? 1 : 0;
+        const totalTracesCount = traces.length + activeCount;
+        const totalPoints = traces.reduce((acc, t) => acc + (t.pointCount || (t.points ? t.points.length : 0)), 0) + (includeActive && activeTrace && activeTrace.points ? activeTrace.points.length : 0);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 11px monospace';
+        const titleText = options.title || 'YOU WERE HERE. // SHARED DRAWINGS';
+        ctx.fillText(titleText, originX + 4, height - 12);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px monospace';
+        const rightText = options.rightText || `${totalTracesCount} DRAWINGS LAYERED • ${totalPoints.toLocaleString()} PTS`;
+        const textWidth = ctx.measureText(rightText).width;
+        ctx.fillText(rightText, Math.max(originX + 220, originX + sheetW - textWidth - 4), height - 12);
+
+        return canvas;
+    }
+
+    // Historical legacy classification (08.10.2026 and prior)
+    function isLegacyTrace(trace) {
+        if (!trace) return false;
+        if (trace.date && typeof trace.date === 'string') {
+            const parts = trace.date.split('.');
+            if (parts.length === 3) {
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+                if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+                    if (year < 2026) return true;
+                    if (year === 2026) {
+                        if (month < 10) return true;
+                        if (month === 10 && day <= 8) return true;
+                        return false;
+                    }
+                    return false;
+                }
+            }
+        }
+        if (trace.started && trace.started > 0) {
+            const cutoff = new Date('2026-10-08T23:59:59+03:00').getTime();
+            return trace.started <= cutoff;
+        }
+        return false;
+    }
+
+    function getLegacyTraces(list) {
+        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
+        return src.filter(isLegacyTrace);
+    }
+
+    function getCurrentTraces(list) {
+        const src = (list && list.length > 0) ? list : (cachedTracesList || []);
+        return src.filter(t => !isLegacyTrace(t));
+    }
+
+    function getLivingPalimpsestDataURL(width = 1200, height = 750) {
+        const offscreen = document.createElement('canvas');
+        renderCollectivePalimpsest(offscreen, cachedTracesList, { width, height, dpr: 1 });
+        return offscreen.toDataURL('image/png');
+    }
+
+    // Automatically update living palimpsest image across the entire website
+    function updateLivingPalimpsests() {
+        if (!cachedTracesList || cachedTracesList.length === 0) return;
+        const now = Date.now();
+        if (now - lastPalimpsestRenderTime < 1000) return; // Throttle
+        lastPalimpsestRenderTime = now;
+
+        const dataURL = getLivingPalimpsestDataURL(1200, 750);
+        if (!dataURL) return;
+
+        // 1. Update Project Card image on main portfolio page
+        const projectCardImg = document.querySelector('#card-you-were-here .card-img');
+        if (projectCardImg) {
+            projectCardImg.style.backgroundImage = `url("${dataURL}")`;
+            projectCardImg.style.backgroundSize = 'cover';
+        }
+
+        // 2. Update Constellation Node visual circle
+        const constellationVisual = document.querySelector('.constellation-node[data-id="you-were-here"] .visual-img');
+        if (constellationVisual) {
+            constellationVisual.style.backgroundImage = `url("${dataURL}")`;
+        }
+
+        // 3. Update Modal Hero and Gallery image if Project Modal is open
+        const modalHero = document.getElementById('modal-hero');
+        if (modalHero && window.lastOpenedProjectSlug === 'you-were-here') {
+            modalHero.style.backgroundImage = `url("${dataURL}")`;
+            modalHero.style.backgroundSize = 'contain';
+            modalHero.style.backgroundRepeat = 'no-repeat';
+            modalHero.style.backgroundPosition = 'center';
+            modalHero.style.backgroundColor = '#fafbfc';
+            
+            let badge = modalHero.querySelector('.m-living-hero-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.className = 'm-living-hero-badge';
+                modalHero.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="live-pulse-dot"></span> SHARED DRAWING &bull; ${cachedTracesList.length} SESSIONS`;
+        }
+
+        const modalGalImg = document.getElementById('modal-palimpsest-img');
+        if (modalGalImg) {
+            modalGalImg.src = dataURL;
+        }
+
+        // 4. Update collective canvas on dedicated project page if open
+        const collectiveCanvas = document.getElementById('collective-canvas-overlay');
+        if (collectiveCanvas) {
+            const era = window.collectiveEraMode || 'CURRENT';
+            if (era === 'LEGACY') {
+                renderCollectivePalimpsest(collectiveCanvas, getLegacyTraces(), {
+                    title: 'PREVIOUS WEBSITE ARCHIVE (≤ 2026)',
+                    excludeActive: true
+                });
+            } else if (era === 'ALL') {
+                renderCollectivePalimpsest(collectiveCanvas, cachedTracesList, {
+                    title: 'ALL DRAWINGS SUPERIMPOSED'
+                });
+            } else {
+                renderCollectivePalimpsest(collectiveCanvas, getCurrentTraces(), {
+                    title: 'CURRENT WEBSITE SESSIONS (2026)'
+                });
+            }
+        }
+
+        // 5. Update legacy canvas in folder if present
+        const legacyCanvas = document.getElementById('legacy-collective-canvas');
+        if (legacyCanvas) {
+            renderCollectivePalimpsest(legacyCanvas, getLegacyTraces(), {
+                title: 'PREVIOUS WEBSITE ARCHIVE // TRACES TOGETHER (≤ 08.10.2026)',
+                excludeActive: true
+            });
+        }
+    }
+
+    // Fetch all historical and new traces from Cloud Firebase Firestore
+    async function fetchAllTraces() {
+        if (!db) await initFirebase();
+        if (!db) return [];
+        try {
+            const { collection, getDocs, query, limit } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
+            const q = query(collection(db, 'traces'), limit(500));
+            const snap = await getDocs(q);
+            const list = [];
+            let fallbackIdx = 1;
+
+            snap.forEach(docSnap => {
+                const docId = docSnap.id;
+                if (isTrialTestDoc(docId)) return; // Exclude new site trial/test traces so new sessions start fresh!
+                const data = docSnap.data();
+                const pts = data.points || [];
+                let dateStr = data.date;
+                let timeStr = data.time;
+
+                let startedTs = (typeof data.started === 'number' && data.started > 0) ? data.started : 0;
+
+                if (dateStr && dateStr.includes('T')) {
+                    const d = new Date(dateStr);
+                    if (!isNaN(d.getTime())) {
+                        if (!startedTs) startedTs = d.getTime();
+                        dateStr = d.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                        timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    }
+                } else if (dateStr && !startedTs) {
+                    const parts = String(dateStr).split('.');
+                    if (parts.length === 3) {
+                        const d = parseInt(parts[0], 10);
+                        const m = parseInt(parts[1], 10) - 1;
+                        const y = parseInt(parts[2], 10);
+                        let h = 0, min = 0, s = 0;
+                        if (timeStr) {
+                            const tp = String(timeStr).split(':');
+                            if (tp.length >= 2) {
+                                h = parseInt(tp[0], 10) || 0;
+                                min = parseInt(tp[1], 10) || 0;
+                                s = parseInt(tp[2], 10) || 0;
+                            }
+                        }
+                        const parsed = new Date(y, m, d, h, min, s).getTime();
+                        if (!isNaN(parsed)) startedTs = parsed;
+                    }
+                }
+
+                list.push({
+                    id: data.id || docSnap.id,
+                    savedTraceNumber: data.traceNumber || null,
+                    date: dateStr || '—',
+                    time: timeStr || '—',
+                    started: startedTs,
+                    duration: data.duration || 0,
+                    pointCount: data.pointCount || pts.length,
+                    points: pts,
+                    dwells: data.dwells || [],
+                    clicks: data.clicks || []
+                });
+            });
+
+            // Merge last completed trace so freshly finished sessions are never missing or truncated
+            try {
+                const completedRaw = sessionStorage.getItem('wwh_last_completed_trace');
+                if (completedRaw) {
+                    const completedTrace = JSON.parse(completedRaw);
+                    if (completedTrace && completedTrace.id && Array.isArray(completedTrace.points)) {
+                        const existingIdx = list.findIndex(t => t.id === completedTrace.id);
+                        const cPts = completedTrace.points;
+                        const cItem = {
+                            id: completedTrace.id,
+                            savedTraceNumber: completedTrace.traceNumber || null,
+                            date: completedTrace.date || '—',
+                            time: completedTrace.time || '—',
+                            started: completedTrace.started || Date.now(),
+                            duration: completedTrace.duration || 0,
+                            pointCount: cPts.length,
+                            points: cPts,
+                            dwells: completedTrace.dwells || [],
+                            clicks: completedTrace.clicks || []
+                        };
+                        if (existingIdx >= 0) {
+                            if (cPts.length >= (list[existingIdx].points || []).length) {
+                                list[existingIdx] = cItem;
+                            }
+                        } else if (cPts.length > 0) {
+                            list.push(cItem);
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            // Merge active live visitor session so it is never missing or truncated
+            const currentActive = activeTrace || (function() {
+                try {
+                    return JSON.parse(sessionStorage.getItem(SESSION_KEY));
+                } catch(e) { return null; }
+            })();
+
+            if (currentActive && currentActive.id) {
+                const existingIdx = list.findIndex(t => t.id === currentActive.id);
+                const activeItem = {
+                    id: currentActive.id,
+                    savedTraceNumber: currentActive.traceNumber || null,
+                    date: currentActive.date || '—',
+                    time: currentActive.time || '—',
+                    started: currentActive.started || Date.now(),
+                    duration: (Date.now() - (currentActive.started || Date.now())),
+                    pointCount: currentActive.points ? currentActive.points.length : 0,
+                    points: currentActive.points || [],
+                    dwells: currentActive.dwells || [],
+                    clicks: currentActive.clicks || [],
+                    isActiveSession: true
+                };
+
+                if (existingIdx >= 0) {
+                    list[existingIdx] = activeItem;
+                } else if (currentActive.points && currentActive.points.length > 0) {
+                    list.push(activeItem);
+                }
+            }
+
+            // Number legacy and current traces logically:
+            // Legacy traces (preserved folder) are numbered chronologically
+            // Current era traces start cleanly from TRACE_0001
+            list.sort((a, b) => (a.started || 0) - (b.started || 0));
+
+            let currentCounter = 1;
+            let legacyCounter = 1;
+            list.forEach((item) => {
+                if (isLegacyTrace(item)) {
+                    item.traceNumber = item.savedTraceNumber || ('TRACE_' + String(legacyCounter++).padStart(4, '0'));
+                } else {
+                    item.traceNumber = 'TRACE_' + String(currentCounter++).padStart(4, '0');
+                }
+            });
+
+            cachedTracesList = list;
+            setTimeout(updateLivingPalimpsests, 30);
+            return list;
+        } catch (err) {
+            console.error('[YOU WERE HERE] Error fetching archive traces:', err);
+            return [];
+        }
+    }
+
+    // Public API exposed on window for YOU WERE HERE. archive views
+    window.YouWereHereTracker = {
+        getTrace: () => activeTrace,
+        saveNow: saveTraceToCloud,
+        renderToCanvas: renderTraceToCanvas,
+        renderCollectivePalimpsest: renderCollectivePalimpsest,
+        getLivingPalimpsestDataURL: getLivingPalimpsestDataURL,
+        updateLivingPalimpsests: updateLivingPalimpsests,
+        getCachedTraces: () => cachedTracesList,
+        isLegacyTrace: isLegacyTrace,
+        getLegacyTraces: getLegacyTraces,
+        getCurrentTraces: getCurrentTraces,
+        traceToPNGDataURL: (traceData, w = 400, h = 400) => renderTraceToCanvas(traceData, w, h).toDataURL('image/png'),
+        downloadAsPNG: downloadTraceAsPNG,
+        fetchAllTraces: fetchAllTraces,
+        formatCount: formatCount
+    };
+    window.WeWereHereTracker = window.YouWereHereTracker; // Backward compatibility alias
+
+    function handlePageExit() {
+        if (activeTrace && isTracking && getConsent() === 'yes') {
+            if (activeTrace.points.length >= 2) {
+                saveTraceToCloud(true, true);
+            }
+            stopRecording(true);
+            setConsent('finished');
+        }
+        try {
+            sessionStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+    }
+
+    // Auto-save to session storage on page visibility changes
+    window.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden' && activeTrace && isTracking) {
+            saveTraceToSession();
+        }
+    });
+    window.addEventListener('pagehide', handlePageExit);
+    window.addEventListener('beforeunload', handlePageExit);
+
+    // Helper to detect if current page load is an explicit reload / refresh (F5 / Ctrl+R)
+    function isPageReload() {
+        try {
+            const navEntries = performance.getEntriesByType('navigation');
+            if (navEntries && navEntries.length > 0) {
+                return navEntries[0].type === 'reload';
+            }
+            if (performance.navigation) {
+                return performance.navigation.type === 1; // PerformanceNavigation.TYPE_RELOAD
+            }
+        } catch (e) {}
+        return false;
+    }
+
+    // Bootstrap on DOM Ready — Session-scoped popup logic:
+    // - New entrance / initial tab visit OR page refresh (F5): popup starts OPEN
+    // - Internal navigation between project pages: respects user's choice (does NOT reopen!)
+    async function init() {
+        const isReload = isPageReload();
+
+        if (isReload) {
+            // Siteyi yenilemek siteye girişi sıfırlar:
+            try {
+                sessionStorage.removeItem(CONSENT_KEY);
+                sessionStorage.removeItem(SESSION_KEY);
+                sessionStorage.removeItem('wwh_last_completed_trace');
+            } catch (e) {}
+        }
+
+        try {
+            localStorage.removeItem(CONSENT_KEY);
+            localStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+
+        const consent = getConsent();
+
+        if (!consent) {
+            // Yeni siteye giriş veya sayfa yenileme: popup açık başlar
+            hideReopenCircle();
+            showConsentPopup();
+        } else if (consent === 'yes') {
+            // Projeler arasında gezerken onay verilmişse kayda devam et, popup açma
+            hideReopenCircle();
+            await startRecording();
+        } else {
+            // Projeler arasında gezerken hayır denmişse popup açma, küçülmüş daireyi koru
+            showReopenCircle();
+        }
+
+        // Initialize Firebase SDK and fetch historical traces in background
+        initFirebase().then(() => {
+            fetchAllTraces().catch(e => console.warn('[YOU WERE HERE] Background archive fetch:', e));
+        }).catch(err => {
+            console.warn('[YOU WERE HERE] Firebase init:', err);
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
