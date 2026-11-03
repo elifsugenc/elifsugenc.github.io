@@ -10,6 +10,14 @@
     if (window.__portfolioProjectCursorInitialized) return;
     window.__portfolioProjectCursorInitialized = true;
 
+    // Dynamically ensure project-related.js is loaded
+    if (!document.querySelector('script[src*="project-related.js"]')) {
+        const relScript = document.createElement('script');
+        relScript.src = '../project-related.js';
+        relScript.defer = true;
+        document.head.appendChild(relScript);
+    }
+
     // Ensure clean URLs on all project pages (strip trailing /index.html and any ?from=... parameters)
     try {
         const searchParams = new URLSearchParams(window.location.search);
