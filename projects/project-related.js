@@ -1,7 +1,7 @@
 // =========================================================
 // ELIFSU GENÇ PORTFOLIO — RELATED PROJECTS & MORE PROJECTS PROGRESSIVE SCROLL
-// Curated 3 related projects with thematic keyword phrases on top,
-// separate MORE PROJECTS section populated progressively on deliberate scroll.
+// Distinct Related Projects Block with relation phrases on top,
+// separate MORE PROJECTS section with visible spatial square grid (All Projects style).
 // =========================================================
 
 (function() {
@@ -219,7 +219,7 @@
             <article class="sq-cell sq-project-tile sq-related-tile" data-proj-id="${p.id}">
                 <a href="${p.url}" class="sq-tile-link">
                     <div class="sq-relation-phrase-wrap">
-                        <span class="sq-relation-phrase">${phrase}</span>
+                        <span class="sq-relation-phrase">✦ ${phrase}</span>
                     </div>
                     <div class="sq-img-box">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="lazy">
@@ -236,7 +236,7 @@
         `;
     }
 
-    // Render More Projects tile (All Projects spatial grid style)
+    // Render More Projects tile (All Projects spatial square grid style)
     function renderMoreProjectTile(p, isAnimated = false) {
         const starMeta = p.isCluster
             ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
@@ -260,84 +260,99 @@
         `;
     }
 
-    function initRelatedAndMoreProjects() {
+    function initBottomNavigationArea() {
         const currentSlug = getCurrentSlug();
         const currentData = ALL_PROJECTS_DATA[currentSlug];
         if (!currentData) return;
 
-        if (document.getElementById('related-projects-section')) return;
+        if (document.getElementById('project-bottom-navigation-area')) return;
 
         const mainContainer = document.querySelector('.project-page-container') || document.querySelector('main');
         if (!mainContainer) return;
 
-        // 1. Get Curated Related Projects (exactly 3)
+        // 1. Curated Related Projects (exactly 3)
         const curatedRelations = PROJECT_RELATIONS_MAP[currentSlug] || [];
         const relatedSet = new Set(curatedRelations.map(r => r.id));
 
-        // 2. Remaining 8 projects for MORE PROJECTS (in canonical sequence)
+        // 2. Remaining 8 projects for MORE PROJECTS (canonical sequence)
         const moreProjects = CANONICAL_SLUG_ORDER
             .filter(s => s !== currentSlug && !relatedSet.has(s))
             .map(s => ALL_PROJECTS_DATA[s])
             .filter(Boolean);
 
-        const section = document.createElement('section');
-        section.className = 'project-section related-projects-section';
-        section.id = 'related-projects-section';
+        // Initial visible count in More Projects: 3 projects already visible!
+        const initialMoreCount = Math.min(3, moreProjects.length);
+        const initialMoreBatch = moreProjects.slice(0, initialMoreCount);
 
-        section.innerHTML = `
-            <!-- RELATED PROJECTS (Plain header as requested) -->
-            <div class="section-badge-header">
-                <span class="sec-index">//</span>
-                <span class="sec-title">RELATED PROJECTS</span>
+        const container = document.createElement('section');
+        container.className = 'project-bottom-navigation-area';
+        container.id = 'project-bottom-navigation-area';
+
+        container.innerHTML = `
+            <!-- BLOCK 1: RELATED PROJECTS -->
+            <div class="bottom-nav-block related-projects-block">
+                <div class="section-badge-header">
+                    <span class="sec-index">//</span>
+                    <span class="sec-title">RELATED PROJECTS</span>
+                </div>
+                <p class="section-sub-label">Direct thematic and conceptual resonances with this project</p>
+
+                <!-- 3 Curated Related Projects with Thematic Phrases -->
+                <div class="spatial-square-grid related-projects-square-grid" id="relatedProjectsGrid">
+                    ${curatedRelations.map(rel => {
+                        const p = ALL_PROJECTS_DATA[rel.id];
+                        return p ? renderRelatedProjectTile(p, rel.phrase) : '';
+                    }).join('')}
+                </div>
             </div>
 
-            <!-- Curated Related Projects Grid with Thematic Phrases -->
-            <div class="related-projects-grid" id="relatedProjectsGrid">
-                ${curatedRelations.map(rel => {
-                    const p = ALL_PROJECTS_DATA[rel.id];
-                    return p ? renderRelatedProjectTile(p, rel.phrase) : '';
-                }).join('')}
+            <!-- ARCHITECTURAL SEPARATOR -->
+            <div class="bottom-nav-separator" aria-hidden="true">
+                <div class="sep-line"></div>
+                <div class="sep-badge">&#x2726; EXPLORE FURTHER &#x2726;</div>
+                <div class="sep-line"></div>
             </div>
 
-            <!-- MORE PROJECTS SECTION (Separate section underneath) -->
-            <div class="more-projects-wrapper" id="moreProjectsWrapper">
-                <div class="section-badge-header more-projects-header">
+            <!-- BLOCK 2: MORE PROJECTS (All Projects Grid Style) -->
+            <div class="bottom-nav-block more-projects-block" id="moreProjectsBlock">
+                <div class="section-badge-header">
                     <span class="sec-index">//</span>
                     <span class="sec-title">MORE PROJECTS</span>
                 </div>
+                <p class="section-sub-label">Further stars across the spatial archive &mdash; scroll down to reveal more</p>
 
-                <!-- More Projects Grid: Populated progressively on scroll -->
-                <div class="more-projects-grid" id="moreProjectsGrid"></div>
-            </div>
+                <!-- More Projects Grid: Initial 3 loaded, remaining loaded on scroll -->
+                <div class="spatial-square-grid more-projects-square-grid" id="moreProjectsGrid">
+                    ${initialMoreBatch.map(p => renderMoreProjectTile(p, false)).join('')}
+                </div>
 
-            <!-- Progressive Deliberate Scroll Cue Pill -->
-            <div class="scroll-to-all-zone" id="scrollToAllZone">
-                <button type="button" class="scroll-to-all-pill" id="relatedScrollPill">
-                    <span class="scroll-to-all-dot"></span>
-                    <span class="scroll-to-all-text" id="relatedScrollText">SCROLL DOWN FOR MORE PROJECTS (0/${moreProjects.length})</span>
-                    <span class="scroll-cue-progress-track">
-                        <span class="scroll-cue-progress-bar" id="relatedProgressBar" style="width: 0%;"></span>
-                    </span>
-                    <span class="scroll-to-all-arrow">&darr;</span>
-                </button>
+                <!-- Progressive Deliberate Scroll Cue Pill -->
+                <div class="scroll-to-all-zone" id="scrollToAllZone">
+                    <button type="button" class="scroll-to-all-pill" id="relatedScrollPill">
+                        <span class="scroll-to-all-dot"></span>
+                        <span class="scroll-to-all-text" id="relatedScrollText">SCROLL DOWN FOR MORE PROJECTS (${initialMoreCount}/${moreProjects.length})</span>
+                        <span class="scroll-cue-progress-track">
+                            <span class="scroll-cue-progress-bar" id="relatedProgressBar" style="width: ${(initialMoreCount / moreProjects.length) * 100}%;"></span>
+                        </span>
+                        <span class="scroll-to-all-arrow">&darr;</span>
+                    </button>
+                </div>
             </div>
         `;
 
-        mainContainer.appendChild(section);
-
-        setupDeliberateMoreProjectsReveal(moreProjects);
+        mainContainer.appendChild(container);
+        setupDeliberateMoreProjectsReveal(moreProjects, initialMoreCount);
     }
 
-    function setupDeliberateMoreProjectsReveal(moreProjects) {
-        let revealedMoreCount = 0;
-        const totalMoreCount = moreProjects.length; // usually 8
+    function setupDeliberateMoreProjectsReveal(moreProjects, initialCount) {
+        let revealedMoreCount = initialCount;
+        const totalMoreCount = moreProjects.length; // 8
         const moreGridEl = document.getElementById('moreProjectsGrid');
         const pillEl = document.getElementById('relatedScrollPill');
         const textEl = document.getElementById('relatedScrollText');
         const progressBar = document.getElementById('relatedProgressBar');
         const arrowEl = pillEl ? pillEl.querySelector('.scroll-to-all-arrow') : null;
 
-        // Deliberate effort threshold: Requires a few conscious scroll wheel / swipe gestures
         const EFFORT_THRESHOLD = 260;
         let accumulatedEffort = 0;
         let decayTimer = null;
@@ -349,10 +364,7 @@
             const progress = (revealedMoreCount / totalMoreCount) * 100;
             progressBar.style.width = `${progress}%`;
 
-            if (revealedMoreCount === 0) {
-                textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (0/${totalMoreCount})`;
-                if (arrowEl) arrowEl.innerHTML = '&darr;';
-            } else if (revealedMoreCount < totalMoreCount) {
+            if (revealedMoreCount < totalMoreCount) {
                 textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (${revealedMoreCount}/${totalMoreCount})`;
                 if (arrowEl) arrowEl.innerHTML = '&darr;';
             } else {
@@ -370,7 +382,7 @@
             }
 
             isRevealing = true;
-            // Batches: 3, then 3, then remainder (2)
+            // Batches: next 3, then remainder
             const batchSize = Math.min(3, totalMoreCount - revealedMoreCount);
             const nextProjects = moreProjects.slice(revealedMoreCount, revealedMoreCount + batchSize);
 
@@ -386,7 +398,6 @@
             revealedMoreCount += batchSize;
             updatePillState();
 
-            // Give the user a short breathing room before allowing another batch
             setTimeout(() => {
                 accumulatedEffort = 0;
                 isRevealing = false;
@@ -411,7 +422,6 @@
             }, 450);
         }
 
-        // Pill click triggers instant batch reveal or navigation
         if (pillEl) {
             pillEl.addEventListener('click', () => {
                 if (revealedMoreCount < totalMoreCount) {
@@ -422,7 +432,6 @@
             });
         }
 
-        // Multi-scroll effort detection: only triggers when user is near bottom
         function onScrollAttempt(deltaY) {
             if (deltaY <= 0 || isRevealing || isTransitioning) return;
 
@@ -431,12 +440,11 @@
             const docHeight = document.documentElement.scrollHeight;
             const distFromBottom = docHeight - (scrollY + windowHeight);
 
-            // Trigger only when user is within 360px of page bottom
-            if (distFromBottom > 360) return;
+            // Within 400px of page bottom
+            if (distFromBottom > 400) return;
 
             accumulatedEffort += Math.min(deltaY, 140);
 
-            // Visual feedback on progress bar while scrolling
             if (progressBar && revealedMoreCount < totalMoreCount) {
                 const subProgress = Math.min(100, (accumulatedEffort / EFFORT_THRESHOLD) * 100);
                 const baseProgress = (revealedMoreCount / totalMoreCount) * 100;
@@ -457,14 +465,12 @@
             }
         }
 
-        // Desktop mouse wheel
         window.addEventListener('wheel', (e) => {
             if (e.deltaY > 0) {
                 onScrollAttempt(e.deltaY);
             }
         }, { passive: true });
 
-        // Mobile touch swipe
         let touchStartY = 0;
         window.addEventListener('touchstart', (e) => {
             if (e.touches && e.touches.length > 0) {
@@ -485,8 +491,8 @@
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initRelatedAndMoreProjects);
+        document.addEventListener('DOMContentLoaded', initBottomNavigationArea);
     } else {
-        initRelatedAndMoreProjects();
+        initBottomNavigationArea();
     }
 })();
