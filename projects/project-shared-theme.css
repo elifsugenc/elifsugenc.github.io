@@ -2443,3 +2443,46 @@ img,
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(3px); }
 }
+
+
+/* Progress Track & Bar inside deliberate scroll cue pill */
+.scroll-cue-progress-track {
+    display: inline-block !important;
+    width: 36px !important;
+    height: 4px !important;
+    background: #e2e8f0 !important;
+    border-radius: 999px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    vertical-align: middle !important;
+}
+
+.scroll-cue-progress-bar {
+    display: block !important;
+    height: 100% !important;
+    background: #2563eb !important;
+    border-radius: 999px !important;
+    transition: width 0.15s ease !important;
+}
+
+/* Smooth tile reveal on scroll */
+@keyframes tileRevealUp {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.related-projects-grid .sq-project-tile.is-revealed {
+    animation: tileRevealUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.scroll-to-all-pill.is-all-loaded {
+    border-color: #2563eb !important;
+    background: #f8faff !important;
+    color: #2563eb !important;
+}
