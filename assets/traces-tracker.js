@@ -987,123 +987,134 @@
         drawCross(originX + sheetW, originY + sheetH);
 
         // Ensure chronological ordering: oldest first (drawn behind in background), newest last (drawn on top in front)
-        traces.sort((a, b) => (a.started || 0) - (b.started || 0));
-        const totalTraceCount = traces.length;
-
-        // 1. Layer 1: Render All Dwell Pauses Across Visitors + Active Trace (Halos: older fainter, newer clearer)
-        const includeActive = !options.excludeActive;
-
-        traces.forEach((tr, idx) => {
-            if (!tr.dwells || !tr.dwells.length) return;
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-            const dAlpha = 0.02 + progress * 0.07;
-            tr.dwells.forEach(d => {
-                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(37, 99, 235, ${dAlpha.toFixed(3)})`;
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(26, 54, 93, ${(dAlpha * 1.5).toFixed(3)})`;
-                ctx.fill();
-            });
-        });
-
-        if (includeActive && activeTrace && activeTrace.dwells) {
-            activeTrace.dwells.forEach(d => {
-                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(37, 99, 235, 0.12)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(26, 54, 93, 0.22)';
-                ctx.fill();
-            });
-        }
-
-        // 2. Layer 2: Render Movement Trajectories
-        // Older traces: faint translucent underdrawings (opacity ~0.10, soft blue, fine stroke)
-        // Newer traces: progressively darker, bolder, and drawn ON TOP in front (opacity up to 0.78, deep navy, bolder line)
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        traces.forEach((tr, idx) => {
-            const pts = tr.points || [];
-            if (pts.length < 2) return;
-
-            // Normalized chronological progress from 0 (oldest) to 1 (newest)
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-
-            // Progressive opacity curve: older traces are faint (0.10), newest traces are bold & rich (0.78)
-            const opacity = 0.10 + Math.pow(progress, 1.35) * 0.68;
-
-            // Color gradient: softer cerulean for older traces -> deep architectural navy/indigo for newest traces
-            const r = Math.round(75 + (20 - 75) * progress);
-            const g = Math.round(145 + (45 - 145) * progress);
-            const b = Math.round(245 + (120 - 245) * progress);
-
-            const lineWidth = (1.1 + progress * 0.8) * Math.max(0.8, scale * 1.1);
-
-            ctx.beginPath();
-            ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
-            for (let i = 1; i < pts.length; i++) {
-                ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
-            }
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(3)})`;
-            ctx.lineWidth = lineWidth;
-            ctx.stroke();
-        });
-
-        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse at the very front / top)
-        if (includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1) {
-            const livePts = activeTrace.points;
-            ctx.beginPath();
-            ctx.moveTo(toX(livePts[0].x), toY(livePts[0].y));
-            for (let i = 1; i < livePts.length; i++) {
-                ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
-            }
-            ctx.strokeStyle = 'rgba(20, 45, 120, 0.90)';
-            ctx.lineWidth = 2.4 * Math.max(0.8, scale * 1.1);
-            ctx.stroke();
-
-            // Glowing cursor tip
-            const lastPt = livePts[livePts.length - 1];
-            ctx.beginPath();
-            ctx.arc(toX(lastPt.x), toY(lastPt.y), 4.5 * scale, 0, Math.PI * 2);
-            ctx.fillStyle = '#22c55e';
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(toX(lastPt.x), toY(lastPt.y), 8 * scale, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
-            ctx.fill();
-        }
-
-        // 4. Layer 4: Click Glyphs (Older are softer, newest are vibrant crimson crosses)
-        traces.forEach((tr, idx) => {
-            if (!tr.clicks || !tr.clicks.length) return;
-            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
-            const cAlpha = 0.22 + progress * 0.65;
-            const starRadius = (3.5 + progress * 1.5) * scale;
-            const cWidth = 1.0 + progress * 0.5;
-
-            tr.clicks.forEach(c => {
-                const cx = toX(c.x);
-                const cy = toY(c.y);
-                ctx.strokeStyle = `rgba(220, 38, 38, ${cAlpha.toFixed(3)})`;
-                ctx.lineWidth = cWidth;
-                ctx.beginPath();
-                ctx.moveTo(cx - starRadius, cy);
-                ctx.lineTo(cx + starRadius, cy);
-                ctx.moveTo(cx, cy - starRadius);
-                ctx.lineTo(cx, cy + starRadius);
-                ctx.stroke();
-            });
-        });
+        // Ensure chronological ordering: oldest first (drawn behind in background), newest last (drawn on top in front)
+        traces.sort((a, b) => (a.started || 0) - (b.started || 0));
+        const totalTraceCount = traces.length;
+
+        const includeActive = !options.excludeActive;
+        const hasLiveActive = !!(includeActive && activeTrace && activeTrace.points && activeTrace.points.length > 1);
+        const activeOffset = hasLiveActive ? 1 : 0;
+
+        // 1. Layer 1: Render All Dwell Pauses Across Visitors + Active Trace (Halos)
+        traces.forEach((tr, idx) => {
+            if (!tr.dwells || !tr.dwells.length) return;
+            // Opacity formula: en son gelen veri %100, ondan önceki %98, %96... her eski veri %2 azalarak gider
+            const stepsFromNewest = (totalTraceCount - 1 - idx) + activeOffset;
+            const traceOpacity = Math.max(0.02, (100 - stepsFromNewest * 2) / 100);
+            const dAlpha = Math.max(0.015, 0.16 * traceOpacity);
+
+            tr.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(37, 99, 235, ${dAlpha.toFixed(3)})`;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(26, 54, 93, ${(dAlpha * 1.5).toFixed(3)})`;
+                ctx.fill();
+            });
+        });
+
+        if (hasLiveActive && activeTrace.dwells) {
+            activeTrace.dwells.forEach(d => {
+                const r = clamp((d.duration || 100) / 140, 5, 34) * scale;
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(37, 99, 235, 0.16)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(toX(d.x), toY(d.y), r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(26, 54, 93, 0.24)';
+                ctx.fill();
+            });
+        }
+
+        // 2. Layer 2: Render Movement Trajectories
+        // Opacity rule requested by user:
+        // En son gelen veri: %100 (1.00)
+        // Ondan önceki: %98 (0.98)
+        // Ondan önceki: %96 (0.96)
+        // Yeni veri geldikçe her bir eski veri %2 azalarak gider.
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        traces.forEach((tr, idx) => {
+            const pts = tr.points || [];
+            if (pts.length < 2) return;
+
+            // stepsFromNewest = 0 (newest: 1.00), 1 (prev: 0.98), 2 (prev: 0.96)...
+            const stepsFromNewest = (totalTraceCount - 1 - idx) + activeOffset;
+            const opacity = Math.max(0.02, (100 - stepsFromNewest * 2) / 100);
+
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+
+            // Color gradient: softer cerulean for older traces -> deep architectural navy/indigo for newest traces
+            const r = Math.round(75 + (20 - 75) * progress);
+            const g = Math.round(145 + (45 - 145) * progress);
+            const b = Math.round(245 + (120 - 245) * progress);
+
+            const lineWidth = (1.1 + progress * 0.8) * Math.max(0.8, scale * 1.1);
+
+            ctx.beginPath();
+            ctx.moveTo(toX(pts[0].x), toY(pts[0].y));
+            for (let i = 1; i < pts.length; i++) {
+                ctx.lineTo(toX(pts[i].x), toY(pts[i].y));
+            }
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(3)})`;
+            ctx.lineWidth = lineWidth;
+            ctx.stroke();
+        });
+
+        // 3. Layer 3: Render Active Visitor's Real-Time Trace (Living Pulse: En son gelen anlık veri: %100 opasite)
+        if (hasLiveActive) {
+            const livePts = activeTrace.points;
+            ctx.beginPath();
+            ctx.moveTo(toX(livePts[0].x), toY(livePts[0].y));
+            for (let i = 1; i < livePts.length; i++) {
+                ctx.lineTo(toX(livePts[i].x), toY(livePts[i].y));
+            }
+            ctx.strokeStyle = 'rgba(20, 45, 120, 1.00)';
+            ctx.lineWidth = 2.4 * Math.max(0.8, scale * 1.1);
+            ctx.stroke();
+
+            // Glowing cursor tip
+            const lastPt = livePts[livePts.length - 1];
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 4.5 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = '#22c55e';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toX(lastPt.x), toY(lastPt.y), 8 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+            ctx.fill();
+        }
+
+        // 4. Layer 4: Click Glyphs (Older are softer, newest are vibrant crimson crosses)
+        traces.forEach((tr, idx) => {
+            if (!tr.clicks || !tr.clicks.length) return;
+            const stepsFromNewest = (totalTraceCount - 1 - idx) + activeOffset;
+            const traceOpacity = Math.max(0.02, (100 - stepsFromNewest * 2) / 100);
+            const progress = (totalTraceCount > 1) ? (idx / (totalTraceCount - 1)) : 1;
+            const cAlpha = Math.max(0.05, 0.95 * traceOpacity);
+            const starRadius = (3.5 + progress * 1.5) * scale;
+            const cWidth = 1.0 + progress * 0.5;
+
+            tr.clicks.forEach(c => {
+                const cx = toX(c.x);
+                const cy = toY(c.y);
+                ctx.strokeStyle = `rgba(220, 38, 38, ${cAlpha.toFixed(3)})`;
+                ctx.lineWidth = cWidth;
+                ctx.beginPath();
+                ctx.moveTo(cx - starRadius, cy);
+                ctx.lineTo(cx + starRadius, cy);
+                ctx.moveTo(cx, cy - starRadius);
+                ctx.lineTo(cx, cy + starRadius);
+                ctx.stroke();
+            });
+        });
 
         if (includeActive && activeTrace && activeTrace.clicks) {
             activeTrace.clicks.forEach(c => {
