@@ -1144,7 +1144,7 @@ body.project-detail-body {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.72);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     z-index: 999999;
@@ -1184,7 +1184,8 @@ body.project-detail-body {
     display: block;
     margin: auto;
     border: none;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    box-shadow: none;
+    filter: drop-shadow(0 16px 36px rgba(15, 23, 42, 0.14));
     background: transparent;
     cursor: pointer;
 }

@@ -1510,9 +1510,9 @@ figcaption,
 .lightbox-overlay,
 .lightbox-modal,
 #universal-lightbox {
-    background: rgba(0, 0, 0, 0.72) !important;
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
@@ -1579,7 +1579,8 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: none !important;
+    filter: drop-shadow(0 16px 36px rgba(15, 23, 42, 0.14)) !important;
     cursor: none !important;
     pointer-events: auto !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
