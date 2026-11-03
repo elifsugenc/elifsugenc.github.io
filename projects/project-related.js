@@ -1,7 +1,7 @@
 // =========================================================
-// ELIFSU GENÇ PORTFOLIO — RELATED PROJECTS & SEAMLESS SCROLL TO ALL PROJECTS
-// Dynamically renders related projects in All Projects spatial tile format
-// and seamlessly navigates to All Projects when user scrolls past them
+// ELIFSU GENÇ PORTFOLIO — RELATED PROJECTS & PROGRESSIVE SCROLL REVEAL
+// Progressively loads more projects upon deliberate scroll gestures,
+// preventing abrupt redirects and allowing intuitive browsing.
 // =========================================================
 
 (function() {
@@ -133,21 +133,27 @@
         }
     };
 
+    const CANONICAL_SLUG_ORDER = [
+        'emek-museum', 'stray', 'you-were-here', 'chronoclines',
+        'millieu', 'sprouting-garden', 'bajo-la-fresca', 'wood-weave',
+        'ara-sira', 'the-earthen', 'bio-decay', 'fire-escape-simulation'
+    ];
+
     function getCurrentSlug() {
         const path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
         const segments = path.split('/');
         const lastSegment = segments[segments.length - 1] || '';
         if (ALL_PROJECTS_DATA[lastSegment]) return lastSegment;
-        
+
         for (const slug of Object.keys(ALL_PROJECTS_DATA)) {
             if (window.location.pathname.includes('/' + slug)) return slug;
         }
         return 'ara-sira';
     }
 
-    function renderRelatedProjectsTile(p) {
+    function renderRelatedProjectsTile(p, isAnimated = false) {
         return `
-            <article class="sq-cell sq-project-tile" data-proj-id="${p.id}">
+            <article class="sq-cell sq-project-tile ${isAnimated ? 'is-revealed' : ''}" data-proj-id="${p.id}">
                 <a href="${p.url}" class="sq-tile-link">
                     <div class="sq-img-box">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="lazy">
@@ -169,15 +175,27 @@
         const currentData = ALL_PROJECTS_DATA[currentSlug];
         if (!currentData) return;
 
-        // Ensure we don't inject twice
         if (document.getElementById('related-projects-section')) return;
 
         const mainContainer = document.querySelector('.project-page-container') || document.querySelector('main');
         if (!mainContainer) return;
 
-        const relatedSlugs = currentData.related || [];
-        const relatedItems = relatedSlugs.map(slug => ALL_PROJECTS_DATA[slug]).filter(Boolean);
-        if (relatedItems.length === 0) return;
+        // Build the ordered list of all 11 other projects:
+        // 1. First 3 are the curated related projects
+        // 2. Next are remaining projects in canonical order
+        const relatedSet = new Set(currentData.related || []);
+        const firstBatch = Array.from(relatedSet).map(s => ALL_PROJECTS_DATA[s]).filter(Boolean);
+
+        const remainingProjects = CANONICAL_SLUG_ORDER
+            .filter(s => s !== currentSlug && !relatedSet.has(s))
+            .map(s => ALL_PROJECTS_DATA[s])
+            .filter(Boolean);
+
+        // All 11 projects in presentation order
+        const allOtherProjects = [...firstBatch, ...remainingProjects];
+        
+        // Initial state: show first 3
+        let revealedCount = Math.min(3, allOtherProjects.length);
 
         const section = document.createElement('section');
         section.className = 'project-section related-projects-section';
@@ -189,20 +207,22 @@
                 <span class="sec-title">RELATED PROJECTS // EXPLORE THE CONSTELLATION</span>
             </div>
 
-            <div class="related-projects-grid">
-                ${relatedItems.map(renderRelatedProjectsTile).join('')}
+            <div class="related-projects-grid" id="relatedProjectsGrid">
+                ${allOtherProjects.slice(0, revealedCount).map(p => renderRelatedProjectsTile(p, false)).join('')}
             </div>
 
             <div class="scroll-to-all-zone" id="scrollToAllZone">
-                <a href="../../#projects" class="scroll-to-all-pill" id="scrollToAllBtn">
+                <button type="button" class="scroll-to-all-pill" id="relatedScrollPill">
                     <span class="scroll-to-all-dot"></span>
-                    <span class="scroll-to-all-text">SCROLL DOWN TO EXPLORE ALL PROJECTS</span>
+                    <span class="scroll-to-all-text" id="relatedScrollText">SCROLL DOWN FOR MORE PROJECTS (${revealedCount}/${allOtherProjects.length})</span>
+                    <span class="scroll-cue-progress-track">
+                        <span class="scroll-cue-progress-bar" id="relatedProgressBar" style="width: 0%;"></span>
+                    </span>
                     <span class="scroll-to-all-arrow">&darr;</span>
-                </a>
+                </button>
             </div>
         `;
 
-        // Insert before footer nav or at end of main container
         const footerNav = mainContainer.querySelector('.footer-nav-btn')?.closest('div') ||
                           mainContainer.querySelector('.project-footer') ||
                           mainContainer.querySelector('footer');
@@ -213,57 +233,122 @@
             mainContainer.appendChild(section);
         }
 
-        setupScrollToAllTrigger();
+        setupDeliberateScrollReveal(allOtherProjects, revealedCount);
     }
 
-    function setupScrollToAllTrigger() {
-        let isRedirecting = false;
-        let accumulatedDeltaY = 0;
-        let lastWheelTime = 0;
+    function setupDeliberateScrollReveal(allOtherProjects, initialCount) {
+        let currentCount = initialCount;
+        const total = allOtherProjects.length;
+        const gridEl = document.getElementById('relatedProjectsGrid');
+        const pillEl = document.getElementById('relatedScrollPill');
+        const textEl = document.getElementById('relatedScrollText');
+        const progressEl = document.getElementById('relatedProgressBar');
+
+        let scrollEffort = 0;
+        const EFFORT_THRESHOLD = 320; // Requires multiple deliberate scroll actions to fill
+        let lastScrollTime = 0;
+        let isTransitioning = false;
+
+        function updatePillState() {
+            if (!pillEl || !textEl) return;
+
+            if (currentCount < total) {
+                textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (${currentCount}/${total})`;
+                if (progressEl) {
+                    const pct = Math.min(100, Math.round((scrollEffort / EFFORT_THRESHOLD) * 100));
+                    progressEl.style.width = pct + '%';
+                }
+            } else {
+                pillEl.classList.add('is-all-loaded');
+                textEl.textContent = `ALL 12 STARS DISPLAYED • ENTER ALL PROJECTS`;
+                if (progressEl) progressEl.style.width = '100%';
+                const arrowEl = pillEl.querySelector('.scroll-to-all-arrow');
+                if (arrowEl) arrowEl.innerHTML = '&rarr;';
+            }
+        }
+
+        function revealNextBatch() {
+            if (currentCount >= total || isTransitioning) return;
+            isTransitioning = true;
+            scrollEffort = 0;
+
+            // Load next batch: 3 projects
+            const nextCount = Math.min(total, currentCount + 3);
+            const newProjects = allOtherProjects.slice(currentCount, nextCount);
+            currentCount = nextCount;
+
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = newProjects.map(p => renderRelatedProjectsTile(p, true)).join('');
+
+            while (tempContainer.firstElementChild) {
+                gridEl.appendChild(tempContainer.firstElementChild);
+            }
+
+            updatePillState();
+
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 350);
+        }
 
         function navigateToAllProjects() {
-            if (isRedirecting) return;
-            isRedirecting = true;
+            if (isTransitioning) return;
+            isTransitioning = true;
 
             try {
                 sessionStorage.setItem('portfolio_return_tab', 'projects');
                 sessionStorage.setItem('portfolio_return_origin', 'projects');
             } catch (_) {}
 
-            const pill = document.getElementById('scrollToAllBtn') || document.querySelector('.scroll-to-all-pill');
-            if (pill) {
-                pill.classList.add('is-triggering');
-                const textEl = pill.querySelector('.scroll-to-all-text');
-                if (textEl) textEl.textContent = 'ENTERING ALL PROJECTS...';
-            }
+            if (textEl) textEl.textContent = 'ENTERING ALL PROJECTS...';
+            if (pillEl) pillEl.classList.add('is-triggering');
 
-            document.body.style.transition = 'opacity 0.24s ease';
+            document.body.style.transition = 'opacity 0.26s ease';
             document.body.style.opacity = '0.5';
 
             setTimeout(() => {
                 window.location.href = '../../#projects';
-            }, 240);
+            }, 260);
         }
 
-        // 1. Wheel event when user is already at the bottom of the page and continues scrolling down
+        // DELIBERATE SCROLL LISTENER:
+        // Requires multiple scroll inputs when near the bottom of the page
         window.addEventListener('wheel', (e) => {
-            if (isRedirecting) return;
             const scrollBottom = window.innerHeight + window.scrollY;
             const docHeight = document.documentElement.scrollHeight;
+            const isNearBottom = scrollBottom >= docHeight - 120;
 
-            if (scrollBottom >= docHeight - 40 && e.deltaY > 0) {
-                accumulatedDeltaY += e.deltaY;
+            if (isNearBottom && e.deltaY > 0) {
                 const now = Date.now();
-                if (accumulatedDeltaY > 80 || (now - lastWheelTime < 350 && accumulatedDeltaY > 35)) {
-                    navigateToAllProjects();
+                // Decay old effort if user paused for more than 1.4 seconds
+                if (now - lastScrollTime > 1400) {
+                    scrollEffort = 0;
                 }
-                lastWheelTime = now;
-            } else {
-                accumulatedDeltaY = 0;
+                lastScrollTime = now;
+
+                // Add bounded delta
+                scrollEffort += Math.min(100, Math.max(20, e.deltaY));
+
+                if (currentCount < total) {
+                    updatePillState();
+                    if (scrollEffort >= EFFORT_THRESHOLD) {
+                        revealNextBatch();
+                    }
+                } else {
+                    // All are already loaded! If they deliberately scroll down multiple times past the end:
+                    updatePillState();
+                    if (scrollEffort >= EFFORT_THRESHOLD + 120) {
+                        navigateToAllProjects();
+                    }
+                }
+            } else if (e.deltaY < 0) {
+                // Scrolling up resets the effort smoothly
+                scrollEffort = Math.max(0, scrollEffort - 80);
+                updatePillState();
             }
         }, { passive: true });
 
-        // 2. Touch event for mobile swipe up when at bottom of page
+        // Touch handling on mobile
         let touchStartY = 0;
         window.addEventListener('touchstart', (e) => {
             if (e.touches && e.touches.length > 0) {
@@ -272,37 +357,42 @@
         }, { passive: true });
 
         window.addEventListener('touchmove', (e) => {
-            if (isRedirecting) return;
             const scrollBottom = window.innerHeight + window.scrollY;
             const docHeight = document.documentElement.scrollHeight;
-            if (scrollBottom >= docHeight - 25 && e.touches && e.touches.length > 0) {
+            const isNearBottom = scrollBottom >= docHeight - 80;
+
+            if (isNearBottom && e.touches && e.touches.length > 0) {
                 const delta = touchStartY - e.touches[0].clientY;
-                if (delta > 60) {
-                    navigateToAllProjects();
+                if (delta > 25) {
+                    scrollEffort += delta;
+                    touchStartY = e.touches[0].clientY;
+
+                    if (currentCount < total) {
+                        updatePillState();
+                        if (scrollEffort >= EFFORT_THRESHOLD) {
+                            revealNextBatch();
+                        }
+                    } else {
+                        updatePillState();
+                        if (scrollEffort >= EFFORT_THRESHOLD + 100) {
+                            navigateToAllProjects();
+                        }
+                    }
                 }
             }
         }, { passive: true });
 
-        // 3. Keyboard navigation at bottom (ArrowDown / PageDown / Space)
-        window.addEventListener('keydown', (e) => {
-            if (isRedirecting) return;
-            const scrollBottom = window.innerHeight + window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            if (scrollBottom >= docHeight - 20) {
-                if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        // Click on the pill to manually trigger next batch or navigate
+        if (pillEl) {
+            pillEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentCount < total) {
+                    revealNextBatch();
+                } else {
                     navigateToAllProjects();
                 }
-            }
-        });
-
-        // 4. Click event on pill
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('#scrollToAllBtn, .scroll-to-all-pill');
-            if (btn) {
-                e.preventDefault();
-                navigateToAllProjects();
-            }
-        });
+            });
+        }
     }
 
     if (document.readyState === 'loading') {
