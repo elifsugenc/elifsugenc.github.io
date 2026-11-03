@@ -2268,6 +2268,11 @@ img,
    RELATED PROJECTS SECTION & SCROLL-TO-ALL TRANSITION
    Matching All Projects Spatial Grid Aesthetics
    ========================================================= */
+/* =========================================================
+   RELATED & MORE PROJECTS SPATIAL GRIDS
+   Curated 3 related projects with relation phrases on top,
+   separate MORE PROJECTS section populated progressively on deliberate scroll.
+   ========================================================= */
 .related-projects-section {
     margin-top: 72px !important;
     margin-bottom: 32px !important;
@@ -2275,36 +2280,41 @@ img,
     border-top: 1px solid #e2e8f0 !important;
 }
 
-.related-projects-grid {
+.related-projects-grid,
+.more-projects-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 28px !important;
     margin-top: 24px !important;
-    margin-bottom: 48px !important;
+    margin-bottom: 32px !important;
 }
 
 @media (max-width: 860px) {
-    .related-projects-grid {
+    .related-projects-grid,
+    .more-projects-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 20px !important;
     }
 }
 
 @media (max-width: 580px) {
-    .related-projects-grid {
+    .related-projects-grid,
+    .more-projects-grid {
         grid-template-columns: 1fr !important;
         gap: 24px !important;
     }
 }
 
-.related-projects-grid .sq-project-tile {
+.related-projects-grid .sq-project-tile,
+.more-projects-grid .sq-project-tile {
     position: relative !important;
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
 }
 
-.related-projects-grid .sq-tile-link {
+.related-projects-grid .sq-tile-link,
+.more-projects-grid .sq-tile-link {
     display: flex !important;
     flex-direction: column !important;
     gap: 0.65rem !important;
@@ -2313,7 +2323,8 @@ img,
     transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.related-projects-grid .sq-img-box {
+.related-projects-grid .sq-img-box,
+.more-projects-grid .sq-img-box {
     position: relative !important;
     width: 100% !important;
     aspect-ratio: 1 / 1 !important;
@@ -2324,7 +2335,8 @@ img,
     transition: border-color 0.22s ease, box-shadow 0.22s ease !important;
 }
 
-.related-projects-grid .sq-tile-img {
+.related-projects-grid .sq-tile-img,
+.more-projects-grid .sq-tile-img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -2332,23 +2344,27 @@ img,
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.related-projects-grid .sq-project-tile:hover .sq-tile-img {
+.related-projects-grid .sq-project-tile:hover .sq-tile-img,
+.more-projects-grid .sq-project-tile:hover .sq-tile-img {
     transform: scale(1.035) !important;
 }
 
-.related-projects-grid .sq-project-tile:hover .sq-img-box {
+.related-projects-grid .sq-project-tile:hover .sq-img-box,
+.more-projects-grid .sq-project-tile:hover .sq-img-box {
     border-color: #2563eb !important;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.6), 0 16px 32px -10px rgba(37, 99, 235, 0.2) !important;
 }
 
-.related-projects-grid .sq-caption {
+.related-projects-grid .sq-caption,
+.more-projects-grid .sq-caption {
     display: flex !important;
     flex-direction: column !important;
     gap: 0.3rem !important;
     padding: 0 0.1rem !important;
 }
 
-.related-projects-grid .sq-question {
+.related-projects-grid .sq-question,
+.more-projects-grid .sq-question {
     font-size: 0.88rem !important;
     font-weight: 600 !important;
     line-height: 1.34 !important;
@@ -2356,14 +2372,16 @@ img,
     margin: 0 !important;
 }
 
-.related-projects-grid .sq-title-bar {
+.related-projects-grid .sq-title-bar,
+.more-projects-grid .sq-title-bar {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 0.5rem !important;
 }
 
-.related-projects-grid .sq-title {
+.related-projects-grid .sq-title,
+.more-projects-grid .sq-title {
     font-family: var(--font-mono, monospace) !important;
     font-size: 0.72rem !important;
     letter-spacing: 0.08em !important;
@@ -2373,15 +2391,60 @@ img,
     transition: color 0.2s ease !important;
 }
 
-.related-projects-grid .sq-project-tile:hover .sq-title {
+.related-projects-grid .sq-project-tile:hover .sq-title,
+.more-projects-grid .sq-project-tile:hover .sq-title {
     color: #2563eb !important;
 }
 
-.related-projects-grid .sq-year-tag {
+.related-projects-grid .sq-year-tag,
+.more-projects-grid .sq-year-tag {
     font-family: var(--font-mono, monospace) !important;
     font-size: 0.72rem !important;
     color: #94a3b8 !important;
     font-weight: 500 !important;
+}
+
+/* Related Project Thematic Relation Phrase Badge */
+.sq-relation-phrase-wrap {
+    display: flex !important;
+    align-items: flex-start !important;
+    margin-bottom: 4px !important;
+    min-height: 28px !important;
+}
+
+.sq-relation-phrase {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-family: var(--font-primary, 'Space Grotesk', -apple-system, sans-serif) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #0284c7 !important;
+    background: rgba(2, 132, 199, 0.07) !important;
+    border: 1px solid rgba(2, 132, 199, 0.24) !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    line-height: 1.3 !important;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.sq-tile-link:hover .sq-relation-phrase {
+    background: rgba(2, 132, 199, 0.14) !important;
+    border-color: rgba(2, 132, 199, 0.5) !important;
+    color: #0369a1 !important;
+}
+
+/* More Projects Separate Section */
+.more-projects-wrapper {
+    margin-top: 48px !important;
+    padding-top: 36px !important;
+    border-top: 1px dashed #cbd5e1 !important;
+}
+
+.more-projects-header {
+    margin-bottom: 24px !important;
 }
 
 /* Scroll-to-All-Projects Trigger Zone */
@@ -2444,7 +2507,6 @@ img,
     50% { transform: translateY(3px); }
 }
 
-
 /* Progress Track & Bar inside deliberate scroll cue pill */
 .scroll-cue-progress-track {
     display: inline-block !important;
@@ -2477,11 +2539,12 @@ img,
     }
 }
 
+.more-projects-grid .sq-project-tile.is-revealed,
 .related-projects-grid .sq-project-tile.is-revealed {
     animation: tileRevealUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
-.scroll-to-all-pill.is-all-loaded {
+.scroll-to-all-pill.is-complete {
     border-color: #2563eb !important;
     background: #f8faff !important;
     color: #2563eb !important;

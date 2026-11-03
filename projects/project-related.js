@@ -1,7 +1,7 @@
 // =========================================================
-// ELIFSU GENÇ PORTFOLIO — RELATED PROJECTS & PROGRESSIVE SCROLL REVEAL
-// Progressively loads more projects upon deliberate scroll gestures,
-// preventing abrupt redirects and allowing intuitive browsing.
+// ELIFSU GENÇ PORTFOLIO — RELATED PROJECTS & MORE PROJECTS PROGRESSIVE SCROLL
+// Curated 3 related projects with thematic keyword phrases on top,
+// separate MORE PROJECTS section populated progressively on deliberate scroll.
 // =========================================================
 
 (function() {
@@ -19,7 +19,7 @@
             question: 'How can we make this labour visible again?',
             img: '../../assets/emek-museum-wip.svg',
             url: '../emek-museum/',
-            related: ['chronoclines', 'fire-escape-simulation', 'stray']
+            isCluster: true
         },
         'stray': {
             id: 'stray',
@@ -29,7 +29,7 @@
             question: 'Is doing nothing doing something?',
             img: '../../assets/stray-project.png',
             url: '../stray/',
-            related: ['the-earthen', 'you-were-here', 'emek-museum']
+            isCluster: true
         },
         'you-were-here': {
             id: 'you-were-here',
@@ -39,7 +39,7 @@
             question: 'What remains of the movements we forget in the attention economy?',
             img: '../../assets/you-were-here-cover.png',
             url: '../you-were-here/',
-            related: ['stray', 'fire-escape-simulation', 'ara-sira']
+            isCluster: false
         },
         'chronoclines': {
             id: 'chronoclines',
@@ -49,7 +49,7 @@
             question: 'Can a city exhibit itself?',
             img: '../../assets/chronoclines-cover.jpg',
             url: '../chronoclines/',
-            related: ['emek-museum', 'millieu', 'fire-escape-simulation']
+            isCluster: false
         },
         'millieu': {
             id: 'millieu',
@@ -59,78 +59,142 @@
             question: 'How does a culinary ritual shape a social atmosphere?',
             img: '../../assets/millieu-cover.png',
             url: '../millieu/',
-            related: ['bajo-la-fresca', 'wood-weave', 'chronoclines']
+            isCluster: false
         },
         'sprouting-garden': {
             id: 'sprouting-garden',
             num: '06',
             title: 'SPROUTING GARDEN',
             year: '2024',
-            question: 'Can we build without displacing life?',
+            question: 'How can architecture nourish instead of consume?',
             img: '../../assets/sprouting-garden-cover.png',
             url: '../sprouting-garden/',
-            related: ['bio-decay', 'bajo-la-fresca', 'the-earthen']
+            isCluster: false
         },
         'bajo-la-fresca': {
             id: 'bajo-la-fresca',
             num: '07',
             title: 'BAJO LA FRESCA',
-            year: '2026',
-            question: 'How do you highlight beauty without stealing its spotlight?',
+            year: '2025',
+            question: 'How can we design a microclimate of care in extreme heat?',
             img: '../../assets/bajo-la-fresca-hero.jpg',
             url: '../bajo-la-fresca/',
-            related: ['wood-weave', 'sprouting-garden', 'millieu']
+            isCluster: true
         },
         'wood-weave': {
             id: 'wood-weave',
             num: '08',
             title: 'WOOD WEAVE',
             year: '2024',
-            question: 'When does waste become a place?',
+            question: 'How can rigid timber learn to bend like cloth?',
             img: '../../assets/wood-weave-cover.png',
             url: '../wood-weave/',
-            related: ['ara-sira', 'bajo-la-fresca', 'the-earthen']
+            isCluster: true
         },
         'ara-sira': {
             id: 'ara-sira',
             num: '09',
-            title: 'ARA-SIRA',
+            title: 'ARA SIRA',
             year: '2024',
-            question: 'Can one space hold both play and quiet?',
+            question: 'How can schoolyard furniture transform childhood play and pause?',
             img: '../../assets/ara-sira-cover.jpg?v=20261104-hq',
             url: '../ara-sira/',
-            related: ['wood-weave', 'you-were-here', 'bajo-la-fresca']
+            isCluster: true
         },
         'the-earthen': {
             id: 'the-earthen',
             num: '10',
             title: 'THE EARTHEN',
-            year: '2026',
-            question: 'Is there life because there is death?',
+            year: '2024',
+            question: 'How can soil be both structure and skin?',
             img: '../../assets/the-earthen-cover.png',
             url: '../the-earthen/',
-            related: ['stray', 'bio-decay', 'emek-museum']
+            isCluster: true
         },
         'bio-decay': {
             id: 'bio-decay',
             num: '11',
-            title: 'BIO-DECAY',
+            title: 'BIO DECAY',
             year: '2025',
-            question: 'How many microplastics can we eat in a day?',
+            question: 'What if buildings were designed to rot gracefully?',
             img: '../../assets/bio-decay-cover.png',
             url: '../bio-decay/',
-            related: ['sprouting-garden', 'the-earthen', 'fire-escape-simulation']
+            isCluster: true
         },
         'fire-escape-simulation': {
             id: 'fire-escape-simulation',
             num: '12',
             title: 'FIRE ESCAPE SIMULATION',
-            year: '2026',
-            question: 'Can you escape the fire?',
+            year: '2024',
+            question: 'How do bodies navigate panic in architectural thresholds?',
             img: '../../assets/fire-escape-wip.svg',
             url: '../fire-escape-simulation/',
-            related: ['you-were-here', 'emek-museum', 'chronoclines']
+            isCluster: false
         }
+    };
+
+    // Curated 3 related projects per project with authentic thematic relation phrases
+    const PROJECT_RELATIONS_MAP = {
+        'emek-museum': [
+            { id: 'chronoclines', phrase: 'CIVIC ARCHIVE · URBAN MEMORY' },
+            { id: 'fire-escape-simulation', phrase: 'DISASTER IS NEVER NATURAL' },
+            { id: 'stray', phrase: 'INVISIBLE URBAN RHYTHMS' }
+        ],
+        'stray': [
+            { id: 'the-earthen', phrase: 'CARE · PAUSE · NONHUMAN AGENCY' },
+            { id: 'you-were-here', phrase: 'PRESENCE · TRACES · PARTICIPATION' },
+            { id: 'emek-museum', phrase: 'INVISIBLE URBAN RHYTHMS' }
+        ],
+        'you-were-here': [
+            { id: 'stray', phrase: 'PRESENCE · TRACES · PARTICIPATION' },
+            { id: 'ara-sira', phrase: 'PARTICIPATORY MEMORY' },
+            { id: 'fire-escape-simulation', phrase: 'SPATIAL FLOW & ATTENTION' }
+        ],
+        'chronoclines': [
+            { id: 'emek-museum', phrase: 'CIVIC ARCHIVE · URBAN MEMORY' },
+            { id: 'millieu', phrase: 'TEMPORAL THRESHOLDS' },
+            { id: 'fire-escape-simulation', phrase: 'URBAN FLOWS & THRESHOLDS' }
+        ],
+        'millieu': [
+            { id: 'bajo-la-fresca', phrase: 'SPATIAL ATMOSPHERE & RITUAL' },
+            { id: 'wood-weave', phrase: 'TACTILE MATERIAL INTERIOR' },
+            { id: 'chronoclines', phrase: 'TEMPORAL THRESHOLDS' }
+        ],
+        'sprouting-garden': [
+            { id: 'bio-decay', phrase: 'BIO-MATERIALS · ECOLOGICAL CYCLES' },
+            { id: 'bajo-la-fresca', phrase: 'CLIMATIC COMFORT · LIVING ECOLOGIES' },
+            { id: 'the-earthen', phrase: 'LIVING ECOSYSTEMS & SOIL' }
+        ],
+        'bio-decay': [
+            { id: 'sprouting-garden', phrase: 'BIO-MATERIALS · ECOLOGICAL CYCLES' },
+            { id: 'the-earthen', phrase: 'EARTH CYCLES · MATERIAL DECAY' },
+            { id: 'fire-escape-simulation', phrase: 'TEMPORAL URGENCY' }
+        ],
+        'the-earthen': [
+            { id: 'stray', phrase: 'CARE · PAUSE · NONHUMAN AGENCY' },
+            { id: 'bio-decay', phrase: 'EARTH CYCLES · MATERIAL DECAY' },
+            { id: 'fire-escape-simulation', phrase: 'BODILY THRESHOLDS' }
+        ],
+        'wood-weave': [
+            { id: 'ara-sira', phrase: 'MAKING · COMMUNITY · CONSTRUCTION' },
+            { id: 'bajo-la-fresca', phrase: 'TACTILE PAVILION CRAFT' },
+            { id: 'millieu', phrase: 'TACTILE MATERIAL JOINERY' }
+        ],
+        'ara-sira': [
+            { id: 'wood-weave', phrase: 'MAKING · COMMUNITY · CONSTRUCTION' },
+            { id: 'you-were-here', phrase: 'PARTICIPATORY MEMORY' },
+            { id: 'bajo-la-fresca', phrase: 'TACTILE PAVILION CRAFT' }
+        ],
+        'bajo-la-fresca': [
+            { id: 'wood-weave', phrase: 'TACTILE PAVILION CRAFT' },
+            { id: 'sprouting-garden', phrase: 'CLIMATIC COMFORT · LIVING ECOLOGIES' },
+            { id: 'ara-sira', phrase: 'PAVILION STRUCTURE · SHADE & COMMUNITY' }
+        ],
+        'fire-escape-simulation': [
+            { id: 'emek-museum', phrase: 'DISASTER IS NEVER NATURAL' },
+            { id: 'chronoclines', phrase: 'URBAN FLOWS & THRESHOLDS' },
+            { id: 'the-earthen', phrase: 'BODILY THRESHOLDS' }
+        ]
     };
 
     const CANONICAL_SLUG_ORDER = [
@@ -141,19 +205,45 @@
 
     function getCurrentSlug() {
         const path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-        const segments = path.split('/');
-        const lastSegment = segments[segments.length - 1] || '';
-        if (ALL_PROJECTS_DATA[lastSegment]) return lastSegment;
-
-        for (const slug of Object.keys(ALL_PROJECTS_DATA)) {
-            if (window.location.pathname.includes('/' + slug)) return slug;
-        }
-        return 'ara-sira';
+        const segments = path.split('/').filter(Boolean);
+        return segments[segments.length - 1] || 'ara-sira';
     }
 
-    function renderRelatedProjectsTile(p, isAnimated = false) {
+    // Render Related Project tile (with thematic relation phrase above)
+    function renderRelatedProjectTile(p, phrase) {
+        const starMeta = p.isCluster
+            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
+            : `<span class="sq-year-tag">${p.year}</span>`;
+
         return `
-            <article class="sq-cell sq-project-tile ${isAnimated ? 'is-revealed' : ''}" data-proj-id="${p.id}">
+            <article class="sq-cell sq-project-tile sq-related-tile" data-proj-id="${p.id}">
+                <a href="${p.url}" class="sq-tile-link">
+                    <div class="sq-relation-phrase-wrap">
+                        <span class="sq-relation-phrase">${phrase}</span>
+                    </div>
+                    <div class="sq-img-box">
+                        <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="lazy">
+                    </div>
+                    <div class="sq-caption">
+                        <p class="sq-question">${p.question}</p>
+                        <div class="sq-title-bar">
+                            <span class="sq-title">${p.num} &mdash; ${p.title}</span>
+                            ${starMeta}
+                        </div>
+                    </div>
+                </a>
+            </article>
+        `;
+    }
+
+    // Render More Projects tile (All Projects spatial grid style)
+    function renderMoreProjectTile(p, isAnimated = false) {
+        const starMeta = p.isCluster
+            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
+            : `<span class="sq-year-tag">${p.year}</span>`;
+
+        return `
+            <article class="sq-cell sq-project-tile sq-more-tile ${isAnimated ? 'is-revealed' : ''}" data-proj-id="${p.id}">
                 <a href="${p.url}" class="sq-tile-link">
                     <div class="sq-img-box">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="lazy">
@@ -162,7 +252,7 @@
                         <p class="sq-question">${p.question}</p>
                         <div class="sq-title-bar">
                             <span class="sq-title">${p.num} &mdash; ${p.title}</span>
-                            <span class="sq-year-tag">${p.year}</span>
+                            ${starMeta}
                         </div>
                     </div>
                 </a>
@@ -170,7 +260,7 @@
         `;
     }
 
-    function initRelatedProjects() {
+    function initRelatedAndMoreProjects() {
         const currentSlug = getCurrentSlug();
         const currentData = ALL_PROJECTS_DATA[currentSlug];
         if (!currentData) return;
@@ -180,41 +270,51 @@
         const mainContainer = document.querySelector('.project-page-container') || document.querySelector('main');
         if (!mainContainer) return;
 
-        // Build the ordered list of all 11 other projects:
-        // 1. First 3 are the curated related projects
-        // 2. Next are remaining projects in canonical order
-        const relatedSet = new Set(currentData.related || []);
-        const firstBatch = Array.from(relatedSet).map(s => ALL_PROJECTS_DATA[s]).filter(Boolean);
+        // 1. Get Curated Related Projects (exactly 3)
+        const curatedRelations = PROJECT_RELATIONS_MAP[currentSlug] || [];
+        const relatedSet = new Set(curatedRelations.map(r => r.id));
 
-        const remainingProjects = CANONICAL_SLUG_ORDER
+        // 2. Remaining 8 projects for MORE PROJECTS (in canonical sequence)
+        const moreProjects = CANONICAL_SLUG_ORDER
             .filter(s => s !== currentSlug && !relatedSet.has(s))
             .map(s => ALL_PROJECTS_DATA[s])
             .filter(Boolean);
-
-        // All 11 projects in presentation order
-        const allOtherProjects = [...firstBatch, ...remainingProjects];
-        
-        // Initial state: show first 3
-        let revealedCount = Math.min(3, allOtherProjects.length);
 
         const section = document.createElement('section');
         section.className = 'project-section related-projects-section';
         section.id = 'related-projects-section';
 
         section.innerHTML = `
+            <!-- RELATED PROJECTS (Plain header as requested) -->
             <div class="section-badge-header">
                 <span class="sec-index">//</span>
-                <span class="sec-title">RELATED PROJECTS // EXPLORE THE CONSTELLATION</span>
+                <span class="sec-title">RELATED PROJECTS</span>
             </div>
 
+            <!-- Curated Related Projects Grid with Thematic Phrases -->
             <div class="related-projects-grid" id="relatedProjectsGrid">
-                ${allOtherProjects.slice(0, revealedCount).map(p => renderRelatedProjectsTile(p, false)).join('')}
+                ${curatedRelations.map(rel => {
+                    const p = ALL_PROJECTS_DATA[rel.id];
+                    return p ? renderRelatedProjectTile(p, rel.phrase) : '';
+                }).join('')}
             </div>
 
+            <!-- MORE PROJECTS SECTION (Separate section underneath) -->
+            <div class="more-projects-wrapper" id="moreProjectsWrapper">
+                <div class="section-badge-header more-projects-header">
+                    <span class="sec-index">//</span>
+                    <span class="sec-title">MORE PROJECTS</span>
+                </div>
+
+                <!-- More Projects Grid: Populated progressively on scroll -->
+                <div class="more-projects-grid" id="moreProjectsGrid"></div>
+            </div>
+
+            <!-- Progressive Deliberate Scroll Cue Pill -->
             <div class="scroll-to-all-zone" id="scrollToAllZone">
                 <button type="button" class="scroll-to-all-pill" id="relatedScrollPill">
                     <span class="scroll-to-all-dot"></span>
-                    <span class="scroll-to-all-text" id="relatedScrollText">SCROLL DOWN FOR MORE PROJECTS (${revealedCount}/${allOtherProjects.length})</span>
+                    <span class="scroll-to-all-text" id="relatedScrollText">SCROLL DOWN FOR MORE PROJECTS (0/${moreProjects.length})</span>
                     <span class="scroll-cue-progress-track">
                         <span class="scroll-cue-progress-bar" id="relatedProgressBar" style="width: 0%;"></span>
                     </span>
@@ -233,122 +333,146 @@
             mainContainer.appendChild(section);
         }
 
-        setupDeliberateScrollReveal(allOtherProjects, revealedCount);
+        setupDeliberateMoreProjectsReveal(moreProjects);
     }
 
-    function setupDeliberateScrollReveal(allOtherProjects, initialCount) {
-        let currentCount = initialCount;
-        const total = allOtherProjects.length;
-        const gridEl = document.getElementById('relatedProjectsGrid');
+    function setupDeliberateMoreProjectsReveal(moreProjects) {
+        let revealedMoreCount = 0;
+        const totalMoreCount = moreProjects.length; // usually 8
+        const moreGridEl = document.getElementById('moreProjectsGrid');
         const pillEl = document.getElementById('relatedScrollPill');
         const textEl = document.getElementById('relatedScrollText');
-        const progressEl = document.getElementById('relatedProgressBar');
+        const progressBar = document.getElementById('relatedProgressBar');
+        const arrowEl = pillEl ? pillEl.querySelector('.scroll-to-all-arrow') : null;
 
-        let scrollEffort = 0;
-        const EFFORT_THRESHOLD = 320; // Requires multiple deliberate scroll actions to fill
-        let lastScrollTime = 0;
+        // Deliberate effort threshold: Requires a few conscious scroll wheel / swipe gestures
+        const EFFORT_THRESHOLD = 260;
+        let accumulatedEffort = 0;
+        let decayTimer = null;
+        let isRevealing = false;
         let isTransitioning = false;
 
         function updatePillState() {
-            if (!pillEl || !textEl) return;
+            if (!textEl || !progressBar) return;
+            const progress = (revealedMoreCount / totalMoreCount) * 100;
+            progressBar.style.width = `${progress}%`;
 
-            if (currentCount < total) {
-                textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (${currentCount}/${total})`;
-                if (progressEl) {
-                    const pct = Math.min(100, Math.round((scrollEffort / EFFORT_THRESHOLD) * 100));
-                    progressEl.style.width = pct + '%';
-                }
+            if (revealedMoreCount === 0) {
+                textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (0/${totalMoreCount})`;
+                if (arrowEl) arrowEl.innerHTML = '&darr;';
+            } else if (revealedMoreCount < totalMoreCount) {
+                textEl.textContent = `SCROLL DOWN FOR MORE PROJECTS (${revealedMoreCount}/${totalMoreCount})`;
+                if (arrowEl) arrowEl.innerHTML = '&darr;';
             } else {
-                pillEl.classList.add('is-all-loaded');
                 textEl.textContent = `ALL 12 STARS DISPLAYED • ENTER ALL PROJECTS`;
-                if (progressEl) progressEl.style.width = '100%';
-                const arrowEl = pillEl.querySelector('.scroll-to-all-arrow');
                 if (arrowEl) arrowEl.innerHTML = '&rarr;';
+                if (pillEl) pillEl.classList.add('is-complete');
             }
         }
 
         function revealNextBatch() {
-            if (currentCount >= total || isTransitioning) return;
-            isTransitioning = true;
-            scrollEffort = 0;
-
-            // Load next batch: 3 projects
-            const nextCount = Math.min(total, currentCount + 3);
-            const newProjects = allOtherProjects.slice(currentCount, nextCount);
-            currentCount = nextCount;
-
-            const tempContainer = document.createElement('div');
-            tempContainer.innerHTML = newProjects.map(p => renderRelatedProjectsTile(p, true)).join('');
-
-            while (tempContainer.firstElementChild) {
-                gridEl.appendChild(tempContainer.firstElementChild);
+            if (isRevealing || isTransitioning) return;
+            if (revealedMoreCount >= totalMoreCount) {
+                navigateToAllProjects();
+                return;
             }
 
+            isRevealing = true;
+            // Batches: 3, then 3, then remainder (2)
+            const batchSize = Math.min(3, totalMoreCount - revealedMoreCount);
+            const nextProjects = moreProjects.slice(revealedMoreCount, revealedMoreCount + batchSize);
+
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = nextProjects.map(p => renderMoreProjectTile(p, true)).join('');
+
+            const newCards = Array.from(tempContainer.children);
+            newCards.forEach((card, idx) => {
+                card.style.animationDelay = `${idx * 80}ms`;
+                moreGridEl.appendChild(card);
+            });
+
+            revealedMoreCount += batchSize;
             updatePillState();
 
+            // Give the user a short breathing room before allowing another batch
             setTimeout(() => {
-                isTransitioning = false;
-            }, 350);
+                accumulatedEffort = 0;
+                isRevealing = false;
+            }, 600);
         }
 
         function navigateToAllProjects() {
             if (isTransitioning) return;
             isTransitioning = true;
+            if (pillEl) pillEl.classList.add('is-launching');
 
-            try {
-                sessionStorage.setItem('portfolio_return_tab', 'projects');
-                sessionStorage.setItem('portfolio_return_origin', 'projects');
-            } catch (_) {}
+            const overlay = document.createElement('div');
+            overlay.className = 'page-transition-portal-overlay';
+            document.body.appendChild(overlay);
 
-            if (textEl) textEl.textContent = 'ENTERING ALL PROJECTS...';
-            if (pillEl) pillEl.classList.add('is-triggering');
-
-            document.body.style.transition = 'opacity 0.26s ease';
-            document.body.style.opacity = '0.5';
+            requestAnimationFrame(() => {
+                overlay.classList.add('is-active');
+            });
 
             setTimeout(() => {
                 window.location.href = '../../#projects';
-            }, 260);
+            }, 450);
         }
 
-        // DELIBERATE SCROLL LISTENER:
-        // Requires multiple scroll inputs when near the bottom of the page
-        window.addEventListener('wheel', (e) => {
-            const scrollBottom = window.innerHeight + window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            const isNearBottom = scrollBottom >= docHeight - 120;
-
-            if (isNearBottom && e.deltaY > 0) {
-                const now = Date.now();
-                // Decay old effort if user paused for more than 1.4 seconds
-                if (now - lastScrollTime > 1400) {
-                    scrollEffort = 0;
-                }
-                lastScrollTime = now;
-
-                // Add bounded delta
-                scrollEffort += Math.min(100, Math.max(20, e.deltaY));
-
-                if (currentCount < total) {
-                    updatePillState();
-                    if (scrollEffort >= EFFORT_THRESHOLD) {
-                        revealNextBatch();
-                    }
+        // Pill click triggers instant batch reveal or navigation
+        if (pillEl) {
+            pillEl.addEventListener('click', () => {
+                if (revealedMoreCount < totalMoreCount) {
+                    revealNextBatch();
                 } else {
-                    // All are already loaded! If they deliberately scroll down multiple times past the end:
-                    updatePillState();
-                    if (scrollEffort >= EFFORT_THRESHOLD + 120) {
-                        navigateToAllProjects();
-                    }
+                    navigateToAllProjects();
                 }
-            } else if (e.deltaY < 0) {
-                // Scrolling up resets the effort smoothly
-                scrollEffort = Math.max(0, scrollEffort - 80);
+            });
+        }
+
+        // Multi-scroll effort detection: only triggers when user is near bottom
+        function onScrollAttempt(deltaY) {
+            if (deltaY <= 0 || isRevealing || isTransitioning) return;
+
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const distFromBottom = docHeight - (scrollY + windowHeight);
+
+            // Trigger only when user is within 360px of page bottom
+            if (distFromBottom > 360) return;
+
+            accumulatedEffort += Math.min(deltaY, 140);
+
+            // Visual feedback on progress bar while scrolling
+            if (progressBar && revealedMoreCount < totalMoreCount) {
+                const subProgress = Math.min(100, (accumulatedEffort / EFFORT_THRESHOLD) * 100);
+                const baseProgress = (revealedMoreCount / totalMoreCount) * 100;
+                const totalProgress = baseProgress + (subProgress * (Math.min(3, totalMoreCount - revealedMoreCount) / totalMoreCount));
+                progressBar.style.width = `${totalProgress}%`;
+            }
+
+            clearTimeout(decayTimer);
+            decayTimer = setTimeout(() => {
+                accumulatedEffort = 0;
                 updatePillState();
+            }, 1200);
+
+            if (accumulatedEffort >= EFFORT_THRESHOLD) {
+                clearTimeout(decayTimer);
+                accumulatedEffort = 0;
+                revealNextBatch();
+            }
+        }
+
+        // Desktop mouse wheel
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY > 0) {
+                onScrollAttempt(e.deltaY);
             }
         }, { passive: true });
 
-        // Touch handling on mobile
+        // Mobile touch swipe
         let touchStartY = 0;
         window.addEventListener('touchstart', (e) => {
             if (e.touches && e.touches.length > 0) {
@@ -357,47 +481,20 @@
         }, { passive: true });
 
         window.addEventListener('touchmove', (e) => {
-            const scrollBottom = window.innerHeight + window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            const isNearBottom = scrollBottom >= docHeight - 80;
-
-            if (isNearBottom && e.touches && e.touches.length > 0) {
-                const delta = touchStartY - e.touches[0].clientY;
-                if (delta > 25) {
-                    scrollEffort += delta;
-                    touchStartY = e.touches[0].clientY;
-
-                    if (currentCount < total) {
-                        updatePillState();
-                        if (scrollEffort >= EFFORT_THRESHOLD) {
-                            revealNextBatch();
-                        }
-                    } else {
-                        updatePillState();
-                        if (scrollEffort >= EFFORT_THRESHOLD + 100) {
-                            navigateToAllProjects();
-                        }
-                    }
+            if (e.touches && e.touches.length > 0) {
+                const currentY = e.touches[0].clientY;
+                const deltaY = touchStartY - currentY;
+                if (deltaY > 20) {
+                    onScrollAttempt(deltaY * 1.5);
+                    touchStartY = currentY;
                 }
             }
         }, { passive: true });
-
-        // Click on the pill to manually trigger next batch or navigate
-        if (pillEl) {
-            pillEl.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (currentCount < total) {
-                    revealNextBatch();
-                } else {
-                    navigateToAllProjects();
-                }
-            });
-        }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initRelatedProjects);
+        document.addEventListener('DOMContentLoaded', initRelatedAndMoreProjects);
     } else {
-        initRelatedProjects();
+        initRelatedAndMoreProjects();
     }
 })();
