@@ -3412,6 +3412,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { a: 'the-earthen', b: 'fire-escape-simulation', label: 'BODILY THRESHOLDS', ambient: false },
         { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: false }
     ];
+    // Project connection lines turned off exclusively for All Projects section as requested:
+    const ENABLE_ALL_PROJECTS_CONNECTIONS = false;
+    const activeAllProjectsRelations = ENABLE_ALL_PROJECTS_CONNECTIONS ? ALL_PROJECTS_RELATIONS : [];
+
 
         function renderSquareTile(p, originTab) {
         const starMeta = (originTab === 'main' && p.isCluster)
@@ -3886,6 +3890,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupMatrixHover(gridEl, stageEl, svgBg, svgFg, relations, getActiveFilterSet) {
         if (!gridEl) return;
         const tiles = Array.from(gridEl.querySelectorAll('.sq-project-tile'));
+        const hasRelations = relations && relations.length > 0;
 
         tiles.forEach(tile => {
             const id = tile.getAttribute('data-proj-id');
@@ -3894,26 +3899,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 const activeFilterSet = getActiveFilterSet ? getActiveFilterSet() : null;
                 if (activeFilterSet && !activeFilterSet.has(id)) return;
 
-                const connectedIds = new Set([id]);
+                if (hasRelations) {
+                    const connectedIds = new Set([id]);
+                    relations.forEach(r => {
+                        if (activeFilterSet && (!activeFilterSet.has(r.a) || !activeFilterSet.has(r.b))) return;
+                        if (r.a === id) connectedIds.add(r.b);
+                        if (r.b === id) connectedIds.add(r.a);
+                    });
 
-                relations.forEach(r => {
-                    if (activeFilterSet && (!activeFilterSet.has(r.a) || !activeFilterSet.has(r.b))) return;
-                    if (r.a === id) connectedIds.add(r.b);
-                    if (r.b === id) connectedIds.add(r.a);
-                });
-
-                gridEl.classList.add('is-hovering-matrix');
-                tiles.forEach(t => {
-                    const tId = t.getAttribute('data-proj-id');
-                    if (activeFilterSet && !activeFilterSet.has(tId)) {
-                        t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
-                        t.classList.add('is-filter-muted');
-                        return;
-                    }
-                    t.classList.toggle('is-matrix-focus', tId === id);
-                    t.classList.toggle('is-matrix-partner', tId !== id && connectedIds.has(tId));
-                    t.classList.toggle('is-matrix-dim', !connectedIds.has(tId));
-                });
+                    gridEl.classList.add('is-hovering-matrix');
+                    tiles.forEach(t => {
+                        const tId = t.getAttribute('data-proj-id');
+                        if (activeFilterSet && !activeFilterSet.has(tId)) {
+                            t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
+                            t.classList.add('is-filter-muted');
+                            return;
+                        }
+                        t.classList.toggle('is-matrix-focus', tId === id);
+                        t.classList.toggle('is-matrix-partner', tId !== id && connectedIds.has(tId));
+                        t.classList.toggle('is-matrix-dim', !connectedIds.has(tId));
+                    });
+                } else {
+                    // When connections are disabled: calm focus on hovered card only, no other cards dimmed
+                    tiles.forEach(t => {
+                        const tId = t.getAttribute('data-proj-id');
+                        if (activeFilterSet && !activeFilterSet.has(tId)) {
+                            t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
+                            t.classList.add('is-filter-muted');
+                            return;
+                        }
+                        t.classList.toggle('is-matrix-focus', tId === id);
+                        t.classList.remove('is-matrix-partner', 'is-matrix-dim');
+                    });
+                }
 
                 drawMatrixConnections(stageEl, svgBg, svgFg, relations, id, activeFilterSet);
             });
@@ -4019,11 +4037,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const startTime = performance.now();
         const duration = 460;
         function updateStep(now) {
-            drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
+            drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, activeAllProjectsRelations, null, filterSet);
             if (now - startTime < duration) {
                 requestAnimationFrame(updateStep);
             } else {
-                drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
+                drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, activeAllProjectsRelations, null, filterSet);
             }
         }
         requestAnimationFrame(updateStep);
@@ -4042,11 +4060,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setupMatrixHover(clusterGridEl, clusterStageEl, clusterSvgBg, clusterSvgFg, CLUSTER_RELATIONS, null);
-    setupMatrixHover(allGridEl, allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, getActiveFilterSet);
+    setupMatrixHover(allGridEl, allStageEl, allSvgBg, allSvgFg, activeAllProjectsRelations, getActiveFilterSet);
 
     function refreshAllSvgs() {
         drawMatrixConnections(clusterStageEl, clusterSvgBg, clusterSvgFg, CLUSTER_RELATIONS, null, null);
-        drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, getActiveFilterSet());
+        drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, activeAllProjectsRelations, null, getActiveFilterSet());
     }
 
     setTimeout(refreshAllSvgs, 90);
