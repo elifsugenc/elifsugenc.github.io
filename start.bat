@@ -1,14 +1,14 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul 2>&1
-title Elifsu Genc Portfolio — YENI LAYOUT 01 (Local Server)
+title Elifsu Genc Portfolio (Local Server)
 color 0B
 
 :: Ensure working directory is the directory containing this script
 cd /d "%~dp0"
 
 echo ===============================================================================
-echo   ELIFSU GENC — PORTFOLIO [BRANCH: yeni-layout01]
+echo   ELIFSU GENC - PORTFOLIO [MAIN BRANCH]
 echo   Project-Focused Editorial Layout (Local Preview Launcher)
 echo ===============================================================================
 echo.
