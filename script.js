@@ -70,6 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!target || target === document.body || target === document.documentElement) return false;
             if (isSpatialInteractive(target)) return true;
 
+            // Never treat filter-muted tiles or non-matching tiles under an active filter as clickable/hoverable
+            if (target.closest('.is-filter-muted, .has-active-filter .sq-project-tile:not(.is-filter-match)')) {
+                return false;
+            }
+
             // When hovering over tags, keep cursor as plain blue dot (do not turn into question mark)
             if (target.closest('.archive-tag-btn, .archive-project-btn, .a-tag, .a-project-pill, .archive-pill, .archive-tag-list, .archive-filter-track-wrap, .archive-filter-row, .archive-filter-bar, .archive-entry-tags, .tag, .detail-tag, .filter-chip, [data-cursor="dot"]')) {
                 return false;
@@ -94,8 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper to check if element is an image or image container
         function isImage(target) {
             if (!target || target === document.body || target === document.documentElement) return false;
+            if (target.closest('.is-filter-muted, .has-active-filter .sq-project-tile:not(.is-filter-match)')) {
+                return false;
+            }
+            if (target.closest('a[href], .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node')) {
+                return false;
+            }
             return !!target.closest(
-                'img:not(.brand-logo-gif):not([src*="favicon"]):not(.sq-tile-img), ' +
+                'img:not(.brand-logo-gif):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img), ' +
                 '.modal-img-wrap, .zoomable-image-container, ' +
                 '.image-lightbox, .lightbox-overlay, .lightbox-modal, #universal-lightbox, ' +
                 '.lightbox-content-box, .lightbox-img-wrapper, #lightbox-img, .lightbox-img'
@@ -105,6 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add hover effect for clickable elements and images
         document.addEventListener('mouseover', (e) => {
             if (!e.target) return;
+
+            // If hovering over a muted tile or non-matching tile, reset cursor and exit immediately
+            if (e.target.closest && e.target.closest('.is-filter-muted, .has-active-filter .sq-project-tile:not(.is-filter-match)')) {
+                customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project', 'cursor-img-hover');
+                cursorWrapper.classList.remove('cursor-spatial');
+                return;
+            }
 
             if (isImage(e.target)) {
                 customCursor.classList.remove('cursor-hover', 'cursor-question', 'cursor-project');
@@ -3043,7 +3061,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Global language toggle for project modal
-window.toggleModalLang = function(lang) {
+
+    window.toggleModalLang = function(lang) {
     const btns = document.querySelectorAll('.m-lang-btn');
     const panes = document.querySelectorAll('.m-desc-pane');
     btns.forEach(b => b.classList.remove('active'));
@@ -3129,8 +3148,11 @@ window.toggleModalLang = function(lang) {
             return;
         }
 
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img)');
         if (clickedImg) {
+            if (clickedImg.closest('a[href], .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node')) {
+                return;
+            }
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
                 e.preventDefault();
@@ -3176,7 +3198,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/emek-museum-wip.svg',
             url: './projects/emek-museum/',
             isCluster: true,
-            star: 'Maia',
+            star: 'Unseen Star',
             disciplines: ['Architectural Design', 'Spatial Design', 'Exhibition Design']
         },
         'stray': {
@@ -3188,7 +3210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/stray-project.png',
             url: './projects/stray/',
             isCluster: true,
-            star: 'Electra',
+            star: 'Unseen Star',
             disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation']
         },
         'you-were-here': {
@@ -3200,7 +3222,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/you-were-here-cover.png',
             url: './projects/you-were-here/',
             isCluster: false,
-            star: 'Merope',
+            star: 'Unseen Star',
             disciplines: ['Interactive & Simulation', 'Spatial Design']
         },
         'chronoclines': {
@@ -3284,7 +3306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/the-earthen-cover.png',
             url: './projects/the-earthen/',
             isCluster: true,
-            star: 'Taygeta',
+            star: 'Unseen Star',
             disciplines: ['Architectural Design', 'Bio-Material & Ecological', 'Spatial Design']
         },
         'bio-decay': {
@@ -3296,7 +3318,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/bio-decay-cover.png',
             url: './projects/bio-decay/',
             isCluster: true,
-            star: 'Celaeno',
+            star: 'Unseen Star',
             disciplines: ['Bio-Material & Ecological', 'Editorial Design']
         },
         'fire-escape-simulation': {
@@ -3308,21 +3330,23 @@ document.addEventListener('DOMContentLoaded', () => {
             img: './assets/fire-escape-wip.svg',
             url: './projects/fire-escape-simulation/',
             isCluster: true,
-            star: 'Asterope',
+            star: 'Unseen Star',
             disciplines: ['Interactive & Simulation', 'Architectural Design']
         }
     };
 
-    // 4x2 Ülker Cluster Layout (5 Core Ülker Projects from main + 1 quiet Alcyone intro + 2 pure empty spaces)
+    // 4x2 Ülker Cluster Layout (5 Core Ülker Projects + 1 quiet Alcyone intro + 2 pure empty spaces)
+    // Ordered chronologically: Newest projects in top row, older projects in bottom row
     const CLUSTER_MATRIX_SLOTS = [
-        { type: 'alcyone' },
-        { type: 'project', id: 'emek-museum' },
-        { type: 'void' },
-        { type: 'project', id: 'fire-escape-simulation' },
-        { type: 'project', id: 'stray' },
-        { type: 'void' },
-        { type: 'project', id: 'the-earthen' },
-        { type: 'project', id: 'bio-decay' }
+        { type: 'alcyone' },                             // (0, 0)
+        { type: 'project', id: 'emek-museum' },          // (1, 0) #1 newest
+        { type: 'project', id: 'the-earthen' },          // (2, 0) #6
+        { type: 'project', id: 'fire-escape-simulation' }, // (3, 0) #2
+
+        { type: 'diagram' },                         // (0, 1) Vector Unseen Stars Plate
+        { type: 'project', id: 'stray' },                 // (1, 1) #9
+        { type: 'star', name: 'Atlas & Pleione', spec: 'Parent Stars \u2022 M45' }, // (2, 1) Celestial Star
+        { type: 'project', id: 'bio-decay' }              // (3, 1) #8
     ];
 
     const CLUSTER_RELATIONS = [
@@ -3330,36 +3354,45 @@ document.addEventListener('DOMContentLoaded', () => {
         { a: 'emek-museum', b: 'stray', label: 'INVISIBLE URBAN RHYTHMS', ambient: true },
         { a: 'stray', b: 'the-earthen', label: 'CARE · PAUSE · NONHUMAN AGENCY', ambient: true },
         { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES · MATERIAL DECAY', ambient: true },
-        { a: 'fire-escape-simulation', b: 'the-earthen', label: 'BODILY THRESHOLDS', ambient: true },
-        { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: false }
+        { a: 'the-earthen', b: 'fire-escape-simulation', label: 'BODILY THRESHOLDS', ambient: true },
+        { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: true }
     ];
-
-    // 4x5 Spatial Grid on See All Projects (12 Projects interspersed with 8 pure open negative-space squares)
+    // 4x5 Spatial Grid on See All Projects
+    // Strictly ordered according to Elif's exact creation chronology:
+    // Newest at the top (Row 0) down to the first made at the bottom (Row 4)
+    // 1. Emek Museum -> 2. Fire Escape Simulation -> 3. You Were Here. -> 4. Bajo La Fresca -> 
+    // 5. Millieu -> 6. The Earthen -> 7. Chronoclines -> 8. Bio-Decay -> 
+    // 9. Stray -> 10. Ara-Sira -> 11. Wood Weave -> 12. Sprouting Garden
     const ALL_PROJECTS_MATRIX_SLOTS = [
-        { type: 'project', id: 'emek-museum' },
-        { type: 'void' },
-        { type: 'project', id: 'fire-escape-simulation' },
-        { type: 'project', id: 'chronoclines' },
+        // Row 0 (Newest: #1, #2, #3):
+        { type: 'project', id: 'emek-museum' },           // #1 Newest
+        { type: 'star', name: 'Maia', spec: '20 Tauri \u2022 M45' }, // Ülker Star
+        { type: 'project', id: 'fire-escape-simulation' }, // #2
+        { type: 'project', id: 'you-were-here' },          // #3
 
-        { type: 'void' },
-        { type: 'project', id: 'stray' },
-        { type: 'void' },
-        { type: 'project', id: 'the-earthen' },
+        // Row 1 (Recent: #4, #5):
+        { type: 'project', id: 'millieu' },               // Col 0 (#5)
+        { type: 'star', name: 'Electra', spec: '17 Tauri \u2022 M45' }, // Ülker Star
+        { type: 'project', id: 'bajo-la-fresca' },        // Col 2 (#4)
+        { type: 'star', name: 'Taygeta', spec: '19 Tauri \u2022 M45' }, // Ülker Star
 
-        { type: 'project', id: 'millieu' },
-        { type: 'void' },
-        { type: 'project', id: 'sprouting-garden' },
-        { type: 'void' },
+        // Row 2 (Middle: #6, #7):
+        { type: 'star', name: 'Alcyone', spec: '\u03B7 Tauri \u2022 Core Star' }, // Ülker Star Core
+        { type: 'project', id: 'the-earthen' },           // #6
+        { type: 'project', id: 'chronoclines' },          // #7
+        { type: 'star', name: 'Merope', spec: '23 Tauri \u2022 M45' }, // Ülker Star
 
-        { type: 'void' },
-        { type: 'project', id: 'bajo-la-fresca' },
-        { type: 'void' },
-        { type: 'project', id: 'bio-decay' },
+        // Row 3 (Earlier: #8, #9):
+        { type: 'project', id: 'stray' },                 // #9
+        { type: 'star', name: 'Celaeno', spec: '16 Tauri \u2022 M45' }, // Ülker Star
+        { type: 'star', name: 'Asterope', spec: '21 Tauri \u2022 M45' }, // Ülker Star
+        { type: 'project', id: 'bio-decay' },             // #8
 
-        { type: 'project', id: 'wood-weave' },
-        { type: 'void' },
-        { type: 'project', id: 'ara-sira' },
-        { type: 'project', id: 'you-were-here' }
+        // Row 4 (Earliest/First Made: #10, #11, #12):
+        { type: 'project', id: 'wood-weave' },            // #11
+        { type: 'star', name: 'Atlas & Pleione', spec: 'Parent Stars \u2022 M45' }, // Ülker Star
+        { type: 'project', id: 'ara-sira' },              // #10
+        { type: 'project', id: 'sprouting-garden' }       // #12 First made
     ];
 
     // Curated 1-to-1 thematic relations (preserving exact themes from main/script.js)
@@ -3372,18 +3405,17 @@ document.addEventListener('DOMContentLoaded', () => {
         { a: 'emek-museum', b: 'stray', label: 'INVISIBLE URBAN RHYTHMS', ambient: false },
         { a: 'emek-museum', b: 'chronoclines', label: 'CIVIC ARCHIVE · URBAN MEMORY', ambient: false },
         { a: 'fire-escape-simulation', b: 'chronoclines', label: 'URBAN FLOWS & THRESHOLDS', ambient: false },
-        { a: 'chronoclines', b: 'millieu', label: 'KADIKÖY · TEMPORAL PALIMPSEST', ambient: false },
-        { a: 'millieu', b: 'sprouting-garden', label: 'SHARED ECOLOGICAL COMMONS', ambient: false },
-        { a: 'millieu', b: 'ara-sira', label: 'SOCIAL ATMOSPHERE · PLAY & QUIET', ambient: false },
         { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES · MATERIAL DECAY', ambient: false },
         { a: 'bajo-la-fresca', b: 'wood-weave', label: 'TACTILE PAVILION CRAFT', ambient: false },
         { a: 'stray', b: 'you-were-here', label: 'PRESENCE · TRACES · PARTICIPATION', ambient: false },
-        { a: 'ara-sira', b: 'you-were-here', label: 'PARTICIPATORY MEMORY', ambient: false }
+        { a: 'ara-sira', b: 'you-were-here', label: 'PARTICIPATORY MEMORY', ambient: false },
+        { a: 'the-earthen', b: 'fire-escape-simulation', label: 'BODILY THRESHOLDS', ambient: false },
+        { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: false }
     ];
 
-    function renderSquareTile(p, originTab) {
-        const starMeta = (originTab === 'main' && p.star)
-            ? `<span class="sq-star-tag">&#x2726; ${p.star}</span>`
+        function renderSquareTile(p, originTab) {
+        const starMeta = (originTab === 'main' && p.isCluster)
+            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
@@ -3404,30 +3436,130 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    
+    function getConceptDiagramSvgMarkup() {
+        return `
+            <svg viewBox="0 0 360 360" class="unseen-diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- 0. MINIMAL HEADER -->
+                <text x="180" y="32" text-anchor="middle"
+                      font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
+                      font-size="9.5" font-weight="700" letter-spacing="0.14em" fill="#0f172a">
+                    &#x2726; M45 // &Uuml;LKER CONSTELLATION
+                </text>
+
+                <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde hafif silik çizgisel mavi ile birbirine bağlı 7 bilinen yıldız) -->
+                <g class="diag-visible-core">
+                    <polyline points="120,135 145,115 165,138 135,175 170,210 190,175 165,138"
+                              stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.85" />
+                    <line x1="190" y1="175" x2="235" y2="168" stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
+                    <line x1="235" y1="168" x2="238" y2="152" stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
+
+                    <circle cx="190" cy="175" r="3.5" fill="#93c5fd" />
+                    <circle cx="170" cy="210" r="3" fill="#93c5fd" />
+                    <circle cx="135" cy="175" r="3" fill="#93c5fd" />
+                    <circle cx="165" cy="138" r="3" fill="#93c5fd" />
+                    <circle cx="145" cy="115" r="2.5" fill="#93c5fd" />
+                    <circle cx="120" cy="135" r="2.5" fill="#93c5fd" />
+                    <circle cx="235" cy="168" r="3" fill="#93c5fd" />
+                    <circle cx="238" cy="152" r="2.5" fill="#93c5fd" />
+                </g>
+
+                <!-- 2. PROJELER (Etrafta 12 Görünmeyen Yıldız - net, sade mavi odaklar) -->
+                <g class="diag-unseen-projects">
+                    <circle cx="216" cy="85" r="6" fill="#2563eb" />
+                    <circle cx="255" cy="130" r="6" fill="#2563eb" />
+                    <circle cx="305" cy="175" r="6" fill="#2563eb" />
+                    <circle cx="300" cy="245" r="6" fill="#2563eb" />
+                    <circle cx="205" cy="168" r="5.5" fill="#2563eb" />
+                    <circle cx="230" cy="215" r="6" fill="#2563eb" />
+                    <circle cx="180" cy="275" r="6.5" fill="#2563eb" />
+                    <circle cx="122" cy="295" r="6" fill="#2563eb" />
+                    <circle cx="130" cy="215" r="6" fill="#2563eb" />
+                    <circle cx="75" cy="175" r="6" fill="#2563eb" />
+                    <circle cx="140" cy="95" r="6" fill="#2563eb" />
+                    <circle cx="75" cy="110" r="6" fill="#2563eb" />
+                </g>
+
+                <!-- 3. DETAYSIZ BASİT LEJANT (Silik olan = Ana Küme / Mavi olan = 12 Görünmeyen Yıldız) -->
+                <g class="diag-legend">
+                    <!-- Ülker Ana Küme (Silik Çizgili) -->
+                    <line x1="54" y1="334" x2="72" y2="334" stroke="#93c5fd" stroke-width="1.6" stroke-linecap="round" />
+                    <circle cx="63" cy="334" r="2.8" fill="#93c5fd" />
+                    <text x="78" y="337.5"
+                          font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
+                          font-size="8.5" font-weight="600" letter-spacing="0.08em" fill="#64748b">
+                        &Uuml;LKER (MAIN CLUSTER)
+                    </text>
+
+                    <!-- 12 Görünmeyen Yıldız (Mavi Noktalar) -->
+                    <circle cx="218" cy="334" r="4.5" fill="#2563eb" />
+                    <text x="228" y="337.5"
+                          font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
+                          font-size="8.5" font-weight="700" letter-spacing="0.08em" fill="#2563eb">
+                        12 UNSEEN STARS
+                    </text>
+                </g>
+            </svg>
+        `;
+    }
+
+    function renderConceptDiagramCell() {
+        return `
+            <div class="sq-cell sq-diagram-cell" id="unseen-diagram-cell" aria-hidden="true">
+                <div class="sq-diagram-plate" id="unseen-diagram-plate">
+                    ${getConceptDiagramSvgMarkup()}
+                </div>
+            </div>
+        `;
+    }
+
     function renderVoidCell(slot) {
         if (slot.type === 'alcyone') {
             return `
                 <div class="sq-cell sq-void-cell sq-alcyone-cell">
                     <div class="sq-alcyone-inner">
-                        <span class="sq-alcyone-star">&#x2726; ALCYONE &bull; PRACTICE CENTER</span>
-                        <h2 class="sq-alcyone-title">Every project begins with a question.</h2>
+                        <span class="sq-alcyone-star">&#x2726; M45 &bull; THE UNSEEN CLUSTER</span>
+                        <h2 class="sq-alcyone-title">Not the stars already visible, but the ones I saw in the dark.</h2>
                         <p class="sq-alcyone-desc">
-                            Five core works in the &Uuml;lker (Pleiades) cluster. Hover any square to trace how its inquiry connects across space.
+                            Beyond the few prominent stars of &Uuml;lker, each project is an unseen star &mdash; tracing hidden spatial layers and silent inquiries across open space.
                         </p>
                         <button type="button" class="sq-alcyone-cta" onclick="goToPage('projects');" data-cursor="dot">
-                            SEE ALL 12 PROJECTS &rarr;
+                            SEE ALL 12 UNSEEN STARS &rarr;
                         </button>
                     </div>
                 </div>
             `;
         }
-        // Pure, silent negative space — no borders, no crosshairs, no clutter
+        if (slot.type === 'star') {
+            return `
+                <div class="sq-cell sq-void-cell sq-celestial-cell" aria-hidden="true">
+                    <div class="sq-celestial-inner">
+                        <svg viewBox="0 0 80 80" class="sq-celestial-svg" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Faint Blueprint Crosshairs -->
+                            <line x1="40" y1="10" x2="40" y2="70" stroke="rgba(37, 99, 235, 0.16)" stroke-width="1" stroke-dasharray="2 3" />
+                            <line x1="10" y1="40" x2="70" y2="40" stroke="rgba(37, 99, 235, 0.16)" stroke-width="1" stroke-dasharray="2 3" />
+                            <!-- Faint Concentric Celestial Ring -->
+                            <circle cx="40" cy="40" r="14" fill="none" stroke="rgba(37, 99, 235, 0.12)" stroke-width="0.8" />
+                            <!-- Crisp 4-Pointed Star Center -->
+                            <path d="M 40,24 Q 40,40 56,40 Q 40,40 40,56 Q 40,40 24,40 Q 40,40 40,24 Z"
+                                  fill="rgba(37, 99, 235, 0.20)" stroke="#2563eb" stroke-width="1.2" />
+                            <circle cx="40" cy="40" r="2.2" fill="#2563eb" />
+                        </svg>
+                        <div class="sq-celestial-meta">
+                            <span class="sq-celestial-star-name">&#x2726; ${slot.name}</span>
+                            <span class="sq-celestial-star-spec">${slot.spec}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
         return `<div class="sq-cell sq-void-cell" aria-hidden="true"></div>`;
     }
 
     if (clusterGridEl) {
         clusterGridEl.innerHTML = CLUSTER_MATRIX_SLOTS.map(slot => {
             if (slot.type === 'project') return renderSquareTile(PROJECTS[slot.id], 'main');
+            if (slot.type === 'diagram') return renderConceptDiagramCell();
             return renderVoidCell(slot);
         }).join('');
     }
@@ -3457,6 +3589,181 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    function renderArchitecturalGridLines(stageEl, gridEl) {
+        if (!stageEl || !gridEl) return '';
+        const stageRect = stageEl.getBoundingClientRect();
+        if (!stageRect.width || !stageRect.height) return '';
+
+        const cells = Array.from(gridEl.children);
+        if (!cells.length) return '';
+
+        const rects = cells.map(cell => {
+            const r = cell.getBoundingClientRect();
+            return {
+                left: r.left - stageRect.left,
+                right: r.right - stageRect.left,
+                top: r.top - stageRect.top,
+                bottom: r.bottom - stageRect.top,
+                width: r.width,
+                height: r.height
+            };
+        }).filter(r => r.width > 10 && r.height > 10);
+
+        if (!rects.length) return '';
+
+        // 1. Cluster cells into distinct column bands (based on left coordinate)
+        const colClusters = [];
+        const colTolerance = 18;
+        rects.forEach(r => {
+            let col = colClusters.find(c => Math.abs(c.avgLeft - r.left) < colTolerance);
+            if (!col) {
+                col = { lefts: [], rights: [], avgLeft: r.left };
+                colClusters.push(col);
+            }
+            col.lefts.push(r.left);
+            col.rights.push(r.right);
+            col.avgLeft = col.lefts.reduce((a, b) => a + b, 0) / col.lefts.length;
+        });
+        colClusters.sort((a, b) => a.avgLeft - b.avgLeft);
+
+        if (colClusters.length < 2) return '';
+
+        const cols = colClusters.map(c => ({
+            left: c.lefts.reduce((a, b) => a + b, 0) / c.lefts.length,
+            right: c.rights.reduce((a, b) => a + b, 0) / c.rights.length
+        }));
+
+        // 2. Cluster cells into distinct row bands (based on top coordinate)
+        const rowClusters = [];
+        const rowTolerance = 22;
+        rects.forEach(r => {
+            let row = rowClusters.find(rw => Math.abs(rw.avgTop - r.top) < rowTolerance);
+            if (!row) {
+                row = { tops: [], bottoms: [], avgTop: r.top };
+                rowClusters.push(row);
+            }
+            row.tops.push(r.top);
+            row.bottoms.push(r.bottom);
+            row.avgTop = row.tops.reduce((a, b) => a + b, 0) / row.tops.length;
+        });
+        rowClusters.sort((a, b) => a.avgTop - b.avgTop);
+
+        const rows = rowClusters.map(rw => ({
+            top: rw.tops.reduce((a, b) => a + b, 0) / rw.tops.length,
+            bottom: Math.max(...rw.bottoms)
+        }));
+
+        // 3. Compute half-gap dimensions
+        let totalGapX = 0;
+        for (let i = 0; i < cols.length - 1; i++) {
+            totalGapX += (cols[i + 1].left - cols[i].right);
+        }
+        const halfGapX = totalGapX / (cols.length - 1) / 2;
+
+        let totalGapY = 0;
+        for (let j = 0; j < rows.length - 1; j++) {
+            totalGapY += (rows[j + 1].top - rows[j].bottom);
+        }
+        const halfGapY = rows.length > 1 ? (totalGapY / (rows.length - 1) / 2) : 20;
+
+        // 4. Calculate vertical line X positions (outer bounds + internal column dividers)
+        const vLines = [];
+        vLines.push(cols[0].left - halfGapX);
+        for (let i = 0; i < cols.length - 1; i++) {
+            vLines.push((cols[i].right + cols[i + 1].left) / 2);
+        }
+        vLines.push(cols[cols.length - 1].right + halfGapX);
+
+        // 5. Calculate horizontal line Y positions (outer bounds + internal row dividers)
+        const hLines = [];
+        hLines.push(rows[0].top - halfGapY);
+        for (let j = 0; j < rows.length - 1; j++) {
+            hLines.push((rows[j].bottom + rows[j + 1].top) / 2);
+        }
+        hLines.push(rows[rows.length - 1].bottom + halfGapY);
+
+        const minX = vLines[0];
+        const maxX = vLines[vLines.length - 1];
+        const minY = hLines[0];
+        const maxY = hLines[hLines.length - 1];
+        const overshoot = 6;
+
+        let svgMarkup = '<g class="matrix-arch-grid-group">';
+
+        // Continuous Vertical lines
+        vLines.forEach(x => {
+            svgMarkup += `<line x1="${x.toFixed(1)}" y1="${(minY - overshoot).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(maxY + overshoot).toFixed(1)}" class="matrix-arch-grid-line" />`;
+        });
+
+        // Continuous Horizontal lines
+        hLines.forEach(y => {
+            svgMarkup += `<line x1="${(minX - overshoot).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(maxX + overshoot).toFixed(1)}" y2="${y.toFixed(1)}" class="matrix-arch-grid-line" />`;
+        });
+
+        // Precision Crosshairs at every intersection
+        vLines.forEach(x => {
+            hLines.forEach(y => {
+                svgMarkup += `
+                    <line x1="${(x - 5).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x + 5).toFixed(1)}" y2="${y.toFixed(1)}" class="matrix-arch-crosshair" />
+                    <line x1="${x.toFixed(1)}" y1="${(y - 5).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y + 5).toFixed(1)}" class="matrix-arch-crosshair" />
+                `;
+            });
+        });
+
+        svgMarkup += `
+            <text x="${(minX + 8).toFixed(1)}" y="${(minY - 14).toFixed(1)}" class="matrix-arch-blueprint-text">&#x2726; M45 // &Uuml;LKER CLUSTER CELESTIAL PROJECTION &bull; OPEN SPATIAL SURFACE</text>
+        `;
+        svgMarkup += '</g>';
+        return svgMarkup;
+    }
+
+    
+    function getCardAnchorPoint(cardInfo, targetX, targetY) {
+        const cx = cardInfo.imgCx;
+        const cy = cardInfo.imgCy;
+        const dx = targetX - cx;
+        const dy = targetY - cy;
+
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return { x: cx, y: cy };
+
+        const hw = cardInfo.imgW / 2 + 1;
+        const hhTop = cardInfo.imgH / 2 + 1;
+        const hhBottom = cardInfo.fullBottom - cardInfo.imgCy + 3;
+
+        // If target is predominantly below (dy > 0 and steep downward):
+        if (dy > 0 && Math.abs(dy) >= Math.abs(dx) * 0.7) {
+            const x = cx + dx * (hhBottom / dy);
+            return {
+                x: Math.max(cardInfo.imgLeft + 14, Math.min(cardInfo.imgRight - 14, x)),
+                y: cardInfo.fullBottom + 1
+            };
+        }
+
+        // If target is predominantly above (dy < 0 and steep upward):
+        if (dy < 0 && Math.abs(dy) >= Math.abs(dx) * 0.7) {
+            const x = cx + dx * (-hhTop / dy);
+            return {
+                x: Math.max(cardInfo.imgLeft + 14, Math.min(cardInfo.imgRight - 14, x)),
+                y: cardInfo.imgTop - 1
+            };
+        }
+
+        // Horizontal connections: exit from left or right edge of image box
+        if (dx > 0) {
+            const y = cy + dy * (hw / dx);
+            return {
+                x: cardInfo.imgRight + 1,
+                y: Math.max(cardInfo.imgTop + 14, Math.min(cardInfo.imgBottom - 14, y))
+            };
+        } else {
+            const y = cy + dy * (-hw / dx);
+            return {
+                x: cardInfo.imgLeft - 1,
+                y: Math.max(cardInfo.imgTop + 14, Math.min(cardInfo.imgBottom - 14, y))
+            };
+        }
+    }
+
     function drawMatrixConnections(stageEl, svgBg, svgFg, relations, hoveredId = null, activeFilterSet = null) {
         if (!stageEl || !svgBg || !svgFg) return;
         const stageRect = stageEl.getBoundingClientRect();
@@ -3465,41 +3772,58 @@ document.addEventListener('DOMContentLoaded', () => {
         svgBg.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
         svgFg.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
 
-        const tileRects = {};
+        const gridEl = stageEl.querySelector('.spatial-square-grid');
+        let bgHtml = renderArchitecturalGridLines(stageEl, gridEl);
+
+        const cardData = {};
         stageEl.querySelectorAll('.sq-project-tile').forEach(tile => {
             const id = tile.getAttribute('data-proj-id');
             const imgBox = tile.querySelector('.sq-img-box') || tile;
-            const r = imgBox.getBoundingClientRect();
-            tileRects[id] = {
-                cx: r.left - stageRect.left + r.width / 2,
-                cy: r.top - stageRect.top + r.height / 2,
-                w: r.width,
-                h: r.height
-            };
+            const imgR = imgBox.getBoundingClientRect();
+            const fullR = tile.getBoundingClientRect();
+            if (fullR.width > 0 && fullR.height > 0) {
+                cardData[id] = {
+                    imgCx: imgR.left - stageRect.left + imgR.width / 2,
+                    imgCy: imgR.top - stageRect.top + imgR.height / 2,
+                    imgW: imgR.width,
+                    imgH: imgR.height,
+                    imgLeft: imgR.left - stageRect.left,
+                    imgRight: imgR.right - stageRect.left,
+                    imgTop: imgR.top - stageRect.top,
+                    imgBottom: imgR.bottom - stageRect.top,
+                    fullBottom: fullR.bottom - stageRect.top
+                };
+            }
         });
 
-        let bgHtml = '';
         let fgLinesHtml = '';
         const activeLabels = [];
 
         relations.forEach(rel => {
-            const rA = tileRects[rel.a];
-            const rB = tileRects[rel.b];
-            if (!rA || !rB) return;
+            const cA = cardData[rel.a];
+            const cB = cardData[rel.b];
+            if (!cA || !cB) return;
 
-            const isHoverConnected = hoveredId && (rel.a === hoveredId || rel.b === hoveredId);
-            const isFilterConnected = !hoveredId && activeFilterSet && activeFilterSet.has(rel.a) && activeFilterSet.has(rel.b);
-            const isHighlighted = isHoverConnected || isFilterConnected;
-            const isDimmed = (hoveredId && !isHoverConnected) || (!hoveredId && activeFilterSet && !isFilterConnected);
+            const inFilter = !activeFilterSet || (activeFilterSet.has(rel.a) && activeFilterSet.has(rel.b));
+            const isHoverConnected = hoveredId && inFilter && (rel.a === hoveredId || rel.b === hoveredId);
+            const isFilterConnected = !hoveredId && activeFilterSet && inFilter;
+            const isHighlighted = isHoverConnected;
+            const isDimmed = (hoveredId && !isHoverConnected) || (activeFilterSet && !inFilter);
 
-            const startPt = getRectBorderPoint(rA, rB.cx, rB.cy);
-            const endPt = getRectBorderPoint(rB, rA.cx, rA.cy);
-            const midX = (startPt.x + endPt.x) / 2;
-            const midY = (startPt.y + endPt.y) / 2;
+            // Calculate clean border exit points
+            const startPt = getCardAnchorPoint(cA, cB.imgCx, cB.imgCy);
+            const endPt = getCardAnchorPoint(cB, cA.imgCx, cA.imgCy);
 
             if (!isHighlighted) {
-                // Only draw subtle ambient lines for core constellation threads so the resting state stays calm and uncluttered
-                if (rel.ambient && !isDimmed) {
+                if (isFilterConnected) {
+                    // Filter tag active: show as subtle dotted background line (NO automatic badge!)
+                    bgHtml += `
+                        <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
+                              x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
+                              class="matrix-svg-line-filter-dotted" />
+                    `;
+                } else if (rel.ambient && !isDimmed && !activeFilterSet) {
+                    // Resting ambient line in full matrix
                     bgHtml += `
                         <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
                               x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
@@ -3507,6 +3831,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                 }
             } else {
+                // Hovered: glowing foreground line + anchor dots
                 fgLinesHtml += `
                     <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
                           x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
@@ -3519,17 +3844,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 if (rel.label) {
+                    // Position connection badge directly ON the connected partner project
+                    const partner = (rel.a === hoveredId) ? cB : cA;
                     activeLabels.push({
-                        x: midX,
-                        y: midY,
+                        x: partner.imgCx,
+                        y: partner.imgTop + 18,
                         text: rel.label,
-                        w: Math.max(136, rel.label.length * 6.8 + 28),
+                        w: Math.max(126, rel.label.length * 6.6 + 22),
                         h: 24
                     });
                 }
             }
         });
 
+        // De-duplicate / de-overlap multiple active label badges
         for (let i = 0; i < activeLabels.length; i++) {
             for (let j = 0; j < i; j++) {
                 const a = activeLabels[i];
@@ -3563,8 +3891,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = tile.getAttribute('data-proj-id');
 
             tile.addEventListener('mouseenter', () => {
+                const activeFilterSet = getActiveFilterSet ? getActiveFilterSet() : null;
+                if (activeFilterSet && !activeFilterSet.has(id)) return;
+
                 const connectedIds = new Set([id]);
+
                 relations.forEach(r => {
+                    if (activeFilterSet && (!activeFilterSet.has(r.a) || !activeFilterSet.has(r.b))) return;
                     if (r.a === id) connectedIds.add(r.b);
                     if (r.b === id) connectedIds.add(r.a);
                 });
@@ -3572,20 +3905,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 gridEl.classList.add('is-hovering-matrix');
                 tiles.forEach(t => {
                     const tId = t.getAttribute('data-proj-id');
+                    if (activeFilterSet && !activeFilterSet.has(tId)) {
+                        t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
+                        t.classList.add('is-filter-muted');
+                        return;
+                    }
                     t.classList.toggle('is-matrix-focus', tId === id);
                     t.classList.toggle('is-matrix-partner', tId !== id && connectedIds.has(tId));
                     t.classList.toggle('is-matrix-dim', !connectedIds.has(tId));
                 });
 
-                drawMatrixConnections(stageEl, svgBg, svgFg, relations, id, getActiveFilterSet ? getActiveFilterSet() : null);
+                drawMatrixConnections(stageEl, svgBg, svgFg, relations, id, activeFilterSet);
             });
 
             tile.addEventListener('mouseleave', () => {
                 gridEl.classList.remove('is-hovering-matrix');
+                const activeFilterSet = getActiveFilterSet ? getActiveFilterSet() : null;
                 tiles.forEach(t => {
                     t.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
+                    if (activeFilterSet) {
+                        t.classList.toggle('is-filter-match', activeFilterSet.has(t.getAttribute('data-proj-id')));
+                        t.classList.toggle('is-filter-muted', !activeFilterSet.has(t.getAttribute('data-proj-id')));
+                    }
                 });
-                drawMatrixConnections(stageEl, svgBg, svgFg, relations, null, getActiveFilterSet ? getActiveFilterSet() : null);
+                drawMatrixConnections(stageEl, svgBg, svgFg, relations, null, activeFilterSet);
             });
         });
     }
@@ -3599,7 +3942,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.values(PROJECTS).forEach(p => {
             if (activeDiscipline === 'ulker-cluster') {
                 if (p.isCluster) matched.add(p.id);
-            } else if (p.disciplines.includes(activeDiscipline)) {
+            } else if (p.disciplines && p.disciplines.includes(activeDiscipline)) {
                 matched.add(p.id);
             }
         });
@@ -3612,31 +3955,91 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', btn.getAttribute('data-discipline') === activeDiscipline);
         });
 
-        if (allGridEl) {
-            allGridEl.classList.toggle('has-active-filter', !!filterSet);
-            const tiles = allGridEl.querySelectorAll('.sq-project-tile');
-            tiles.forEach(tile => {
-                const id = tile.getAttribute('data-proj-id');
-                if (!filterSet) {
-                    tile.classList.remove('is-filter-match', 'is-filter-muted');
-                } else {
-                    const isMatch = filterSet.has(id);
-                    tile.classList.toggle('is-filter-match', isMatch);
-                    tile.classList.toggle('is-filter-muted', !isMatch);
-                }
-            });
-        }
+        if (!allGridEl) return;
 
-        drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
+        allGridEl.classList.remove('is-hovering-matrix');
+        const tiles = Array.from(allGridEl.querySelectorAll('.sq-project-tile'));
+
+        // 1. FIRST: Record bounding rects of all visible tiles before layout change
+        const firstRects = new Map();
+        tiles.forEach(tile => {
+            const r = tile.getBoundingClientRect();
+            if (r.width > 0 && r.height > 0) {
+                firstRects.set(tile, r);
+            }
+        });
+
+        // 2. APPLY DOM CLASSES (Packs matching tiles up to the top and hides voids/non-matches)
+        allGridEl.classList.toggle('has-active-filter', !!filterSet);
+        tiles.forEach(tile => {
+            const id = tile.getAttribute('data-proj-id');
+            tile.classList.remove('is-matrix-focus', 'is-matrix-partner', 'is-matrix-dim');
+            if (!filterSet) {
+                tile.classList.remove('is-filter-match', 'is-filter-muted');
+            } else {
+                const isMatch = filterSet.has(id);
+                tile.classList.toggle('is-filter-match', isMatch);
+                tile.classList.toggle('is-filter-muted', !isMatch);
+            }
+        });
+
+        // 3. LAST: Record new bounding rects of all visible matching tiles
+        const lastRects = new Map();
+        tiles.forEach(tile => {
+            const r = tile.getBoundingClientRect();
+            if (r.width > 0 && r.height > 0) {
+                lastRects.set(tile, r);
+            }
+        });
+
+        // 4. INVERT & PLAY: Smooth FLIP slide animation
+        tiles.forEach(tile => {
+            const first = firstRects.get(tile);
+            const last = lastRects.get(tile);
+
+            if (first && last && (Math.abs(first.left - last.left) > 1 || Math.abs(first.top - last.top) > 1)) {
+                const dx = first.left - last.left;
+                const dy = first.top - last.top;
+
+                tile.style.transform = `translate(${dx}px, ${dy}px)`;
+                tile.style.transition = 'none';
+
+                // Force layout reflow
+                void tile.offsetWidth;
+
+                tile.style.transition = 'transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease';
+                tile.style.transform = '';
+            } else {
+                tile.style.transform = '';
+                tile.style.transition = '';
+            }
+        });
+
+        // Track and redraw SVG lines during and after the slide animation
+        const startTime = performance.now();
+        const duration = 460;
+        function updateStep(now) {
+            drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
+            if (now - startTime < duration) {
+                requestAnimationFrame(updateStep);
+            } else {
+                drawMatrixConnections(allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, null, filterSet);
+            }
+        }
+        requestAnimationFrame(updateStep);
     }
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    const spFilterBarEl = document.getElementById('sp-filter-bar');
+    if (spFilterBarEl) {
+        spFilterBarEl.addEventListener('click', (e) => {
+            const btn = e.target.closest('.sp-filter-pill');
+            if (!btn) return;
+            e.preventDefault();
             const d = btn.getAttribute('data-discipline') || 'all';
             activeDiscipline = (activeDiscipline === d && d !== 'all') ? 'all' : d;
             applyDisciplineFilter();
         });
-    });
+    }
 
     setupMatrixHover(clusterGridEl, clusterStageEl, clusterSvgBg, clusterSvgFg, CLUSTER_RELATIONS, null);
     setupMatrixHover(allGridEl, allStageEl, allSvgBg, allSvgFg, ALL_PROJECTS_RELATIONS, getActiveFilterSet);
@@ -3672,15 +4075,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const storyTrigger = document.getElementById('ulker-story-trigger');
-    if (storyTrigger) {
-        storyTrigger.addEventListener('click', () => {
-            const modal = document.getElementById('merope-story-modal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        });
+    function openUnseenStoryModal() {
+        const modal = document.getElementById('merope-story-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
     }
+    if (storyTrigger) {
+        storyTrigger.addEventListener('click', openUnseenStoryModal);
+    }
+    
 
     const brandHome = document.getElementById('ulker-brand-home');
     if (brandHome) {

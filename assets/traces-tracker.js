@@ -475,7 +475,7 @@
         const mount = getMountRoot();
         let popup = document.getElementById('wwh-consent-popup');
         if (popup) {
-            popup.classList.remove('wwh-exit');
+            popup.classList.remove('wwh-exit', 'wwh-shrinking');
             if (popup.parentElement !== mount) {
                 mount.appendChild(popup);
             }
@@ -494,6 +494,7 @@
         const learnUrl = getLearnMoreUrl();
 
         popup.innerHTML = `
+            <button type="button" id="wwh-btn-close" class="wwh-popup-close-btn" aria-label="Minimize prompt" title="Küçült / Minimize">&times;</button>
             <div class="wwh-consent-inner">
                 <div class="wwh-consent-text-col">
                     <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
@@ -524,7 +525,18 @@
         // Event listeners
         const btnYes = document.getElementById('wwh-btn-yes');
         const btnNo = document.getElementById('wwh-btn-no');
+        const btnClose = document.getElementById('wwh-btn-close');
         const btnLearn = document.getElementById('wwh-btn-learn');
+
+        function shrinkPopupToCircle(p) {
+            if (!p) return;
+            p.classList.remove('wwh-visible');
+            p.classList.add('wwh-shrinking');
+            setTimeout(() => {
+                p.remove();
+                showReopenCircle();
+            }, 360);
+        }
 
         if (btnLearn) {
             btnLearn.addEventListener('mouseenter', () => {
@@ -571,14 +583,24 @@
         if (btnNo) {
             btnNo.addEventListener('click', (e) => {
                 e.stopPropagation();
-                setConsent('no');
-                dismissPopup(popup);
+                shrinkPopupToCircle(popup);
                 stopRecording(true);
                 activeTrace = null;
                 try {
                     sessionStorage.removeItem(SESSION_KEY);
                 } catch(e) {}
-                showReopenCircle();
+            });
+        }
+
+        if (btnClose) {
+            btnClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                shrinkPopupToCircle(popup);
+                stopRecording(true);
+                activeTrace = null;
+                try {
+                    sessionStorage.removeItem(SESSION_KEY);
+                } catch(e) {}
             });
         }
     }
@@ -1423,28 +1445,20 @@
     window.addEventListener('pagehide', handlePageExit);
     window.addEventListener('beforeunload', handlePageExit);
 
-    // Bootstrap on DOM Ready
+    // Bootstrap on DOM Ready — Always open popup on entrance or refresh as requested!
     async function init() {
-        // Clear any old persistent consent from localStorage so new tabs always ask fresh
+        // Clear any previous session or local consent so every page load or refresh starts with popup open
         try {
             localStorage.removeItem(CONSENT_KEY);
             localStorage.removeItem(SESSION_KEY);
+            sessionStorage.removeItem(CONSENT_KEY);
+            sessionStorage.removeItem(SESSION_KEY);
             sessionStorage.removeItem('wwh_last_completed_trace');
         } catch (e) {}
 
-        const consent = getConsent();
-
-        // Strictly per-session consent handling:
-        if (consent === 'yes') {
-            hideReopenCircle();
-            await startRecording();
-        } else if (consent === 'finished' || consent === 'no') {
-            // Already finished or declined: remain completely stopped, do not record!
-            showReopenCircle();
-        } else {
-            // New tab or fresh visit: show consent popup without recording
-            showConsentPopup();
-        }
+        // Siteye girişte veya sayfa yenilemede popup daima açık başlar:
+        hideReopenCircle();
+        showConsentPopup();
 
         // Initialize Firebase SDK and fetch historical traces in background
         initFirebase().then(() => {
