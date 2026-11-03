@@ -323,15 +323,7 @@
             </div>
         `;
 
-        const footerNav = mainContainer.querySelector('.footer-nav-btn')?.closest('div') ||
-                          mainContainer.querySelector('.project-footer') ||
-                          mainContainer.querySelector('footer');
-
-        if (footerNav && footerNav.parentNode === mainContainer) {
-            mainContainer.insertBefore(section, footerNav);
-        } else {
-            mainContainer.appendChild(section);
-        }
+        mainContainer.appendChild(section);
 
         setupDeliberateMoreProjectsReveal(moreProjects);
     }
