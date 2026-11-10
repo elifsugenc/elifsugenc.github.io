@@ -1,3 +1,7 @@
+html {
+    scrollbar-gutter: stable;
+}
+
 :root {
     --bg-color: #ffffff; /* Clean architectural white */
     --folder-bg: #ffffff; /* Crisp white paper */
@@ -11253,7 +11257,7 @@ iframe,
     inset: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(255, 255, 255, 0.94) !important;
+    background: rgba(10, 15, 28, 0.88) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     z-index: 2147483640 !important;
@@ -11304,8 +11308,8 @@ iframe,
 .lightbox-img-wrapper img,
 #lightbox-img,
 .lightbox-img {
-    max-width: 94vw !important;
-    max-height: 94vh !important;
+    max-width: 95vw !important;
+    max-height: 92vh !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain !important;
@@ -11313,12 +11317,23 @@ iframe,
     margin: auto !important;
     background: transparent !important;
     border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    filter: drop-shadow(0 16px 36px rgba(15, 23, 42, 0.14)) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255, 255, 255, 0.15) !important;
+    filter: none !important;
     cursor: none !important;
     pointer-events: auto !important;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    animation: lightboxZoomIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes lightboxZoomIn {
+    from {
+        transform: scale(0.96);
+        opacity: 0.85;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .lightbox-close-btn,
