@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" href="./style.css">
 
-    <link rel="stylesheet" href="../project-shared-theme.css?v=20261110-v5">
+    <link rel="stylesheet" href="../project-shared-theme.css?v=20261110-v6">
 
     <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
 
@@ -996,8 +996,8 @@
 
     <!-- Scripts -->
 
-    <script src="../project-cursor.js"></script>
-    <script src="../project-related.js?v=20261110-v5" defer></script>
+    <script src="../project-cursor.js?v=20261110-v6"></script>
+    <script src="../project-related.js?v=20261110-v6" defer></script>
 
     <script>
 
@@ -1107,7 +1107,7 @@
 
                 lightbox.classList.add('active');
 
-                document.body.style.overflow = 'hidden';
+                if (window.lockBodyScroll) window.lockBodyScroll(); else document.body.style.overflow = 'hidden'; window.__lastLightboxOpenedTime = Date.now();
 
             }
 
@@ -1127,7 +1127,7 @@
 
                 lightbox.classList.add('active');
 
-                document.body.style.overflow = 'hidden';
+                if (window.lockBodyScroll) window.lockBodyScroll(); else document.body.style.overflow = 'hidden'; window.__lastLightboxOpenedTime = Date.now();
 
             }
 
@@ -1145,7 +1145,7 @@
 
             activeSheetIndex = -1;
 
-            document.body.style.overflow = '';
+            if (window.unlockBodyScroll) window.unlockBodyScroll(); else document.body.style.overflow = '';
 
         }
 

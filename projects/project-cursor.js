@@ -318,8 +318,17 @@
     // =========================================================
     // UNIVERSAL LIGHTBOX CONTROLLER (CLICK ANYWHERE TO CLOSE)
     // Pure minimal fullscreen image viewer, zero text, dark translucent overlay
+    // Zero layout shift via stable scroll locking + padding compensation
     // =========================================================
     let lastLightboxOpenedTime = 0;
+
+    window.lockBodyScroll = function() {
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.unlockBodyScroll = function() {
+        document.body.style.overflow = '';
+    };
 
     try {
         const lightboxObserver = new MutationObserver(mutations => {
@@ -327,6 +336,13 @@
                 if (m.type === 'attributes' && m.attributeName === 'class') {
                     if (m.target && m.target.classList && m.target.classList.contains('active')) {
                         lastLightboxOpenedTime = Date.now();
+                        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
+                        window.lockBodyScroll();
+                    } else if (m.target && m.target.classList && !m.target.classList.contains('active')) {
+                        const anyActive = document.querySelector('.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #universal-lightbox.active');
+                        if (!anyActive) {
+                            window.unlockBodyScroll();
+                        }
                     }
                 }
             }
@@ -363,8 +379,9 @@
         if (img) img.src = src;
         modal.classList.remove('hidden');
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        window.lockBodyScroll();
         lastLightboxOpenedTime = Date.now();
+        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
     };
 
     function closeAnyActiveLightbox() {
@@ -380,7 +397,7 @@
             closed = true;
         });
         if (closed) {
-            document.body.style.overflow = '';
+            window.unlockBodyScroll();
         }
         if (typeof window.closeLightbox === 'function') {
             try { window.closeLightbox(); } catch(_) {}
@@ -395,12 +412,14 @@
     // 1. If lightbox is currently open: clicking ANYWHERE on the screen closes it
     // 2. If lightbox is closed: clicking ANY image across the project zooms it to fullscreen!
     document.addEventListener('click', function(e) {
+        const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
+
         // CASE 1: Close active lightbox
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
-            if (Date.now() - lastLightboxOpenedTime < 180) {
+            if (Date.now() - openedAt < 280) {
                 return;
             }
             e.preventDefault();
@@ -409,8 +428,13 @@
             return;
         }
 
-        // CASE 2: Click on any content image or diagram or plate
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"])');
+        // CASE 2: Don't trigger lightbox on navigation links, interactive buttons, or consent popups
+        if (e.target.closest('a, button, .sq-tile-link, .sq-project-tile, .project-crumb, .back-btn, .footer-nav-btn, .wwh-consent-popup, #wwh-consent-popup')) {
+            return;
+        }
+
+        // Click directly on an image
+        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img)');
         if (clickedImg) {
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
             if (fullSrc) {
@@ -421,11 +445,17 @@
             }
         }
 
+        // Click on any card or media wrapper containing an image
         const zoomContainer = e.target.closest(
-            '.zoomable-image-container, .board-compact-card, .tech-card, .dual-card, .render-quad-card, .hero-visual-card, .visual-feature-plate, .visual-plate, .tectonic-image-panel, .recipe-diagram-card, .diag-card, .board-item, .visual-frame'
+            '.zoomable-image-container, .board-compact-card, .tech-card, .dual-card, .render-quad-card, ' +
+            '.hero-visual-card, .visual-feature-plate, .visual-plate, .tectonic-image-panel, .recipe-diagram-card, ' +
+            '.diag-card, .board-item, .visual-frame, .drawing-card, .drawing-item, .drawing-frame, ' +
+            '.content-card, .content-card-img-wrap, .visual-plate-media, .visual-feature-media, .board-thumb-frame, ' +
+            '.tectonics-img-wrap, .recipe-img-wrap, .blueprint-canvas-box, .perspective-card, .model-card, ' +
+            '.prog-card, .render-gal-card, .cases-diagram-card, .detail-card'
         );
-        if (zoomContainer && !e.target.closest('a, button')) {
-            const innerImg = zoomContainer.querySelector('img');
+        if (zoomContainer) {
+            const innerImg = zoomContainer.querySelector('img:not(#lightbox-img):not(.lightbox-img):not(.sq-tile-img)');
             if (innerImg) {
                 const fullSrc = innerImg.getAttribute('data-full-src') || innerImg.currentSrc || innerImg.src || innerImg.getAttribute('src');
                 if (fullSrc) {

@@ -3083,9 +3083,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // =========================================================
 // UNIVERSAL FULLSCREEN IMAGE LIGHTBOX FOR WEBSITE
 // Minimalist architectural viewer, dark translucent overlay, click anywhere to close
+// Zero layout shift via stable scroll locking + padding compensation
 // =========================================================
 (function() {
     let lastLightboxOpenedTime = 0;
+
+    function lockBodyScroll() {
+        document.body.style.overflow = 'hidden';
+    }px`;
+        }
+        document.body.style.overflow = 'hidden';
+    }
+
+    function unlockBodyScroll() {
+        document.body.style.overflow = '';
+    }
 
     function ensureUniversalLightbox() {
         let modal = document.querySelector(
@@ -3112,12 +3124,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let closed = false;
         activeModals.forEach(modal => {
             modal.classList.remove('active');
+            modal.classList.add('hidden');
             const img = modal.querySelector('img');
             if (img) img.src = '';
             closed = true;
         });
         if (closed) {
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
         return closed;
     }
@@ -3129,19 +3142,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (img) img.src = src;
         modal.classList.remove('hidden');
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        lockBodyScroll();
         lastLightboxOpenedTime = Date.now();
+        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
     };
 
     // Capture-phase click delegator:
     // 1. If lightbox is open: clicking ANYWHERE closes it!
     // 2. If lightbox is closed: clicking ANY content image opens it full screen!
     document.addEventListener('click', function(e) {
+        const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
-            if (Date.now() - lastLightboxOpenedTime < 180) return;
+            if (Date.now() - openedAt < 280) return;
             e.preventDefault();
             e.stopPropagation();
             closeAnyActiveLightbox();
@@ -3150,7 +3165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img)');
         if (clickedImg) {
-            if (clickedImg.closest('a[href], .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node')) {
+            if (clickedImg.closest('a, button, .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node, .wwh-consent-popup, #wwh-consent-popup')) {
                 return;
             }
             const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
