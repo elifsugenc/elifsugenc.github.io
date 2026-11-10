@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="../project-shared-theme.css?v=20261104-v4">
+    <link rel="stylesheet" href="../project-shared-theme.css?v=20261110-v5">
     <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
     <script>
         window.handleProjectReturn = function(e) {
@@ -258,25 +258,25 @@
             <!-- Recipes Flowchart & Urban Harvesting Showcase -->
             <div class="recipes-showcase-grid">
                 <div class="recipe-diagram-card zoomable-image-container" onclick="openLightbox('./assets/crop-recipes-flowchart.png', 'How to Make Bioplastics? — Matrix flowchart showing spatial stations and fabrication pathways for Sugar, Cellulose, Protein, and Starch recipes.')">
-                    <div class="recipe-img-wrap">
-                        <img src="./assets/crop-recipes-flowchart.png" alt="How to Make Bioplastics Matrix Flowchart">
-                    </div>
                     <div>
                         <span class="caption-tag">FABRICATION STATION MATRIX</span>
                         <h4 style="font-size: 1rem; margin-top: 4px;">Chemical Pathways &amp; Equipment Stations</h4>
                         <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 4px;">Mapping the journey of raw kitchen scraps through Cleaning Stations, Main Stations, Homogenizing Stoves, Molding Areas, and Drying Shelves.</p>
                     </div>
+                    <div class="recipe-img-wrap">
+                        <img src="./assets/crop-recipes-flowchart.png" alt="How to Make Bioplastics Matrix Flowchart">
+                    </div>
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
 
                 <div class="recipe-diagram-card zoomable-image-container" onclick="openLightbox('./assets/crop-waste-harvesting.png', 'Urban Food Waste Harvesting Diagram — Mapping restaurant waste collection in Milli Reasürans passage and bio-transformable classification.')">
-                    <div class="recipe-img-wrap">
-                        <img src="./assets/crop-waste-harvesting.png" alt="Urban Food Waste Harvesting Diagram">
-                    </div>
                     <div>
                         <span class="caption-tag">URBAN HARVESTING INFRASTRUCTURE</span>
                         <h4 style="font-size: 1rem; margin-top: 4px;">Nişantaşı Restaurant Scrap Typology</h4>
                         <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 4px;">Exploded isometric analysis tracing waste flows from neighbouring establishments, classifying organic substrates that can yield architectural biopolymers.</p>
+                    </div>
+                    <div class="recipe-img-wrap">
+                        <img src="./assets/crop-waste-harvesting.png" alt="Urban Food Waste Harvesting Diagram">
                     </div>
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
@@ -357,7 +357,6 @@
 
             <!-- Physical Specimen Degradation Banner -->
             <div class="physical-specimen-card zoomable-image-container" onclick="openLightbox('./assets/crop-decay-stages-physical.png', 'Physical Bioplastic Specimen Lifecycle — Photographic tracking of newly prepared green gel, fully dried amber disk, and terminal decayed brown specimen.')">
-                <img src="./assets/crop-decay-stages-physical.png" alt="Physical Bioplastic Degradation Timeline" class="physical-specimen-img">
                 <div class="physical-specimen-text">
                     <span class="caption-tag">EMPIRICAL MATERIAL RESEARCH</span>
                     <h3>Physical Specimen Degradation Tracking</h3>
@@ -371,6 +370,7 @@
                     </p>
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
+                <img src="./assets/crop-decay-stages-physical.png" alt="Physical Bioplastic Degradation Timeline" class="physical-specimen-img">
             </div>
         </section>
 
@@ -383,9 +383,6 @@
 
             <!-- Central Exploded Axonometric Card -->
             <div class="tectonics-hero-card zoomable-image-container" onclick="openLightbox('./assets/crop-exploded-axonometric.png', 'Exploded Axonometric Assembly — Amphitheatre wire ceiling, public waste triage chute, stepped amphitheatre seating, and research laboratories.')">
-                <div class="tectonics-img-wrap">
-                    <img src="./assets/crop-exploded-axonometric.png" alt="Exploded Axonometric Overview">
-                </div>
                 <div class="visual-card-footer">
                     <span class="caption-tag">CENTRAL TECTONIC SYSTEM</span>
                     <h3 style="font-size: 1.25rem;">Spatial Hierarchy &amp; Public Circulation Framework</h3>
@@ -399,42 +396,45 @@
             <!-- Tectonic Sub-Cards Grid -->
             <div class="tectonics-grid-sub">
                 <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-grid-tectonics.png', '1/10 Grid Axonometric, 1/5 Wire Connection Detail & Physical Model Photos — Standardized wire cube cells holding curing bioplastic skins.')">
-                    <img src="./assets/crop-grid-tectonics.png" alt="1/10 Grid Axonometric and 1/5 Detail" class="tectonic-sub-img">
                     <div>
                         <span class="caption-tag">1/10 GRID &bull; 1/5 CONNECTION DETAIL</span>
                         <h4 style="font-size: 0.98rem; margin-top: 4px;">Wire Cube Scaffolding &amp; Model Proofs</h4>
                         <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Modular wire grid assembly allowing individual bioplastic specimens to slide into coded library slots with chronological date tags.</p>
                     </div>
+                <div class="tectonics-img-wrap">
+                    <img src="./assets/crop-exploded-axonometric.png" alt="Exploded Axonometric Overview">
+                </div>
+                    <img src="./assets/crop-grid-tectonics.png" alt="1/10 Grid Axonometric and 1/5 Detail" class="tectonic-sub-img">
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
 
                 <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-drying-section-1-20.png', '1/20 Section — Drying Shelves, Material Library, and Natural Cross-Ventilation Airflow saturated with fruit aromas.')">
-                    <img src="./assets/crop-drying-section-1-20.png" alt="1/20 Section Drying Shelves" class="tectonic-sub-img">
                     <div>
                         <span class="caption-tag">1/20 SECTION DETAIL</span>
                         <h4 style="font-size: 0.98rem; margin-top: 4px;">Drying Shelves &amp; Microclimatic Airflow</h4>
                         <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Open-air drying racks harness passage stack currents to cure freshly molded bioplastics while diffusing natural citrus scents throughout the building.</p>
                     </div>
+                    <img src="./assets/crop-drying-section-1-20.png" alt="1/20 Section Drying Shelves" class="tectonic-sub-img">
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
 
                 <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-library-drying-diagram.png', 'Material Library and Drying Shelves Axonometric Diagram — Public observation terrace and perforated drying racks.')">
-                    <img src="./assets/crop-library-drying-diagram.png" alt="Material Library Diagram" class="tectonic-sub-img">
                     <div>
                         <span class="caption-tag">MATERIAL LIBRARY DIAGRAM</span>
                         <h4 style="font-size: 0.98rem; margin-top: 4px;">Visible Degradation Archive</h4>
                         <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Positioned directly opposite amphitheatre seating, allowing visitors to visually inspect aging bioplastic tiles during lectures and performances.</p>
                     </div>
+                    <img src="./assets/crop-library-drying-diagram.png" alt="Material Library Diagram" class="tectonic-sub-img">
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
 
                 <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-workspace-axonometric.png', 'Workspace Wire Assembly Station & Public Waste Bins Axonometric — Tool benches for bending wire hangers and testing samples.')">
-                    <img src="./assets/crop-workspace-axonometric.png" alt="Workspace Axonometric" class="tectonic-sub-img">
                     <div>
                         <span class="caption-tag">FABRICATION WORKSPACE</span>
                         <h4 style="font-size: 0.98rem; margin-top: 4px;">Wire Assembly &amp; Waste Chutes</h4>
                         <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Hands-on benches equipped with wire benders, pliers, and hanging vices for public participants crafting custom bioplastic frames.</p>
                     </div>
+                    <img src="./assets/crop-workspace-axonometric.png" alt="Workspace Axonometric" class="tectonic-sub-img">
                     <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
                 </div>
             </div>
@@ -489,57 +489,57 @@
             <!-- Realistic Perspectives & Renders Showcase -->
             <div class="renders-gallery-grid">
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-facade-render.png', 'Facade View Render — Pedestrians walking alongside the glowing bioplastic screen wall in Milli Reasürans passage.')">
-                    <img src="./assets/crop-facade-render.png" alt="Facade View Render">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">FACADE VIEW</span>
                         <span class="render-gal-title">Passage Urban Interface</span>
                         <span class="render-gal-desc">Translucent red and amber biopolymer panels illuminating the Nişantaşı arcade corridor with warm organic light.</span>
                     </div>
+                    <img src="./assets/crop-facade-render.png" alt="Facade View Render">
                 </div>
 
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-ceiling-render.png', 'Ceiling of the Amphitheatre Render — Looking upward at hung bioplastic tensile membranes filtering natural skylight.')">
-                    <img src="./assets/crop-ceiling-render.png" alt="Ceiling Render">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">TENSILE CANOPY</span>
                         <span class="render-gal-title">Amphitheatre Wire Ceiling</span>
                         <span class="render-gal-desc">Suspended bioplastic catenary sheets shading the stepped seating while casting living daylight patterns below.</span>
                     </div>
+                    <img src="./assets/crop-ceiling-render.png" alt="Ceiling Render">
                 </div>
 
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-render-view-a.png', 'View A Render — Public waste collection bins overlooking the central amphitheatre below.')">
-                    <img src="./assets/crop-render-view-a.png" alt="View A Render">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">VIEW A &bull; OVERLOOK</span>
                         <span class="render-gal-title">Public Waste Chutes &amp; Void</span>
                         <span class="render-gal-desc">Pedestrians look down into the multi-level archive while depositing sorted kitchen waste into collection bins.</span>
                     </div>
+                    <img src="./assets/crop-render-view-a.png" alt="View A Render">
                 </div>
 
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-render-view-b.png', 'View B Render — Material library aisle and open-air drying shelves with researchers cataloging samples.')">
-                    <img src="./assets/crop-render-view-b.png" alt="View B Render">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">VIEW B &bull; ARCHIVE AISLE</span>
                         <span class="render-gal-title">Material Library &amp; Drying Racks</span>
                         <span class="render-gal-desc">Researchers and visitors interact with thousands of tagged bioplastic tiles undergoing natural degradation.</span>
                     </div>
+                    <img src="./assets/crop-render-view-b.png" alt="View B Render">
                 </div>
 
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-renders-workshops.png', 'Views C, D, E Renders — Amphitheatre civic gathering (View C), Workshop Lab 1 (View D), and cooking station under steps (View E).')">
-                    <img src="./assets/crop-renders-workshops.png" alt="Views C, D, E Renders">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">VIEWS C, D, E &bull; WORKSHOP SPACES</span>
                         <span class="render-gal-title">Labs, Cooking &amp; Civic Forum</span>
                         <span class="render-gal-desc">Weekly public masterclasses, thermal biopolymer cooking beneath amphitheatre stairs, and vibrant communal gathering.</span>
                     </div>
+                    <img src="./assets/crop-renders-workshops.png" alt="Views C, D, E Renders">
                 </div>
 
                 <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-atmosphere-collage.png', 'Atmosphere Collage — Curators and pedestrians handling monumental curing bioplastic skins in the sunlit atrium.')">
-                    <img src="./assets/crop-atmosphere-collage.png" alt="Atmosphere Collage">
                     <div class="render-gal-info">
                         <span class="render-gal-tag">ATMOSPHERE COLLAGE</span>
                         <span class="render-gal-title">Tactile Ephemerality in Space</span>
                         <span class="render-gal-desc">Celebrates the tactile relationship between human hands, falling daylight, and living architectural matter.</span>
                     </div>
+                    <img src="./assets/crop-atmosphere-collage.png" alt="Atmosphere Collage">
                 </div>
             </div>
         </section>
@@ -638,7 +638,7 @@
         });
     </script>
     <script src="../project-cursor.js"></script>
-    <script src="../project-related.js?v=20261104-v4" defer></script>
+    <script src="../project-related.js?v=20261110-v5" defer></script>
     <script src=../../assets/traces-tracker.js?v=20261103-decay-v30 defer></script>
 </body>
 </html>
