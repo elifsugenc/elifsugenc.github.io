@@ -2581,3 +2581,56 @@ img,
     background: #f8faff !important;
     color: #2563eb !important;
 }
+
+
+/* =========================================================
+   TEXT-FIRST EDITORIAL PAIRING
+   Whenever text and visuals work together in cards / plates:
+   Text (title, tag, description) precedes the visual.
+   ========================================================= */
+.content-card-body,
+.visual-plate-caption,
+.board-compact-body,
+.perspective-content,
+.diag-meta,
+.quad-meta,
+.model-caption,
+.prog-meta,
+.render-gal-info,
+.physical-specimen-text,
+.cases-footer {
+    order: 1 !important;
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+}
+
+.content-card-img-wrap,
+.visual-plate-media,
+.visual-feature-media,
+.board-compact-thumb-wrap,
+.perspective-img-box,
+.perspective-img,
+.cases-img-wrap,
+.cases-diagram-img,
+.diag-img-box,
+.quad-img,
+.model-card img,
+.prog-img-box,
+.render-gal-card img,
+.physical-specimen-img,
+.recipe-img-wrap,
+.tectonics-img-wrap,
+.tectonic-sub-img {
+    order: 2 !important;
+    margin-top: 0 !important;
+}
+
+.board-compact-card {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.board-compact-card .board-compact-thumb-wrap {
+    border-bottom: none !important;
+    border-top: 1px solid var(--border-light, #e2e8f0) !important;
+}
