@@ -212,14 +212,14 @@
     // Render Related Project tile (with thematic relation phrase above)
     function renderRelatedProjectTile(p, phrase) {
         const starMeta = p.isCluster
-            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
             <article class="sq-cell sq-project-tile sq-related-tile" data-proj-id="${p.id}">
                 <a href="${p.url}" class="sq-tile-link">
                     <div class="sq-relation-phrase-wrap">
-                        <span class="sq-relation-phrase">✦ ${phrase}</span>
+                        <span class="sq-relation-phrase">${phrase}</span>
                     </div>
                     <div class="sq-img-box">
                         <img src="${p.img}" alt="${p.title}" class="sq-tile-img" loading="lazy">
@@ -239,7 +239,7 @@
     // Render More Projects tile (All Projects spatial square grid style)
     function renderMoreProjectTile(p, isAnimated = false) {
         const starMeta = p.isCluster
-            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
@@ -292,7 +292,7 @@
             <!-- BLOCK 1: RELATED PROJECTS -->
             <div class="bottom-nav-block related-projects-block">
                 <div class="section-badge-header">
-                    <span class="sec-index">//</span>
+                    <span class="sec-index">REL.</span>
                     <span class="sec-title">RELATED PROJECTS</span>
                 </div>
                 <p class="section-sub-label">Direct thematic and conceptual resonances with this project</p>
@@ -309,14 +309,14 @@
             <!-- ARCHITECTURAL SEPARATOR -->
             <div class="bottom-nav-separator" aria-hidden="true">
                 <div class="sep-line"></div>
-                <div class="sep-badge">&#x2726; EXPLORE FURTHER &#x2726;</div>
+                <div class="sep-badge">EXPLORE FURTHER</div>
                 <div class="sep-line"></div>
             </div>
 
             <!-- BLOCK 2: MORE PROJECTS (All Projects Grid Style) -->
             <div class="bottom-nav-block more-projects-block" id="moreProjectsBlock">
                 <div class="section-badge-header">
-                    <span class="sec-index">//</span>
+                    <span class="sec-index">ARC.</span>
                     <span class="sec-title">MORE PROJECTS</span>
                 </div>
                 <p class="section-sub-label">Further stars across the spatial archive &mdash; scroll down to reveal more</p>
