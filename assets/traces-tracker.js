@@ -497,7 +497,7 @@
             <button type="button" id="wwh-btn-close" class="wwh-popup-close-btn" aria-label="Minimize prompt" title="Küçült / Minimize">&times;</button>
             <div class="wwh-consent-inner">
                 <div class="wwh-consent-text-col">
-                    <span class="wwh-consent-tag">&#x2726; LIVE RESEARCH EXPERIMENT // SPATIALIZING THE ATTENTION ECONOMY</span>
+                    <span class="wwh-consent-tag">LIVE RESEARCH EXPERIMENT &bull; SPATIALIZING THE ATTENTION ECONOMY</span>
                     <h4 id="wwh-consent-title" class="wwh-consent-title">Can a digital portfolio register physical presence?</h4>
                     <p class="wwh-consent-desc">
                         This website functions as the live experimental testbed for <strong>YOU WERE HERE.</strong>, an architectural research project investigating the attention economy and digital dwell time. With your consent, anonymous cursor velocities and hesitation pauses are recorded as spatial vectors in our open collective archive.
@@ -505,7 +505,7 @@
                 </div>
                 <div class="wwh-consent-actions">
                     <a href="${learnUrl}" id="wwh-btn-learn" class="wwh-btn-learn modal-open-standalone-btn" data-cursor="question">
-                        <span class="wwh-learn-icon">&#x2726;</span>
+                        <span class="wwh-learn-icon">&#9632;</span>
                         <span class="wwh-learn-text">RESEARCH THESIS &amp; DEMO &nearr;</span>
                     </a>
                     <div class="wwh-consent-choice-group">

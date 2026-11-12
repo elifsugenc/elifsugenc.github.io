@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (icon) icon.innerHTML = '&#x2190;';
                 if (label) label.textContent = 'BACK TO CLUSTER';
             } else {
-                if (icon) icon.innerHTML = '&#x2726;';
+                if (icon) icon.innerHTML = '&#x2b;';
                 if (label) label.textContent = 'EXPLORE CONSTELLATION ↗';
             }
         });
@@ -983,7 +983,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="cs-orbit-ring ring-spin-slow"></div>
                         <div class="cs-orbit-ring ring-dashed"></div>
                         <div class="cs-core">
-                            <span class="cs-symbol">&#x2726;</span>
+                            <span class="cs-symbol">+</span>
                         </div>
                         <div class="cs-caption-block">
                             <span class="cs-project-name">${p.num} &mdash; ${p.title}</span>
@@ -1088,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="merope-cluster-view">
                     <div class="cs-orbit-ring ring-dashed" style="width: 56px; height: 56px;"></div>
                     <div class="cs-core">
-                        <span class="cs-symbol">&#x2726;</span>
+                        <span class="cs-symbol">+</span>
                     </div>
                     <div class="cs-caption-block">
                         <span class="cs-project-name">The Hidden Sister</span>
@@ -3090,9 +3090,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function lockBodyScroll() {
         document.body.style.overflow = 'hidden';
-    }px`;
-        }
-        document.body.style.overflow = 'hidden';
     }
 
     function unlockBodyScroll() {
@@ -3434,7 +3431,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function renderSquareTile(p, originTab) {
         const starMeta = (originTab === 'main' && p.isCluster)
-            ? `<span class="sq-star-tag">&#x2726; UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
@@ -3459,62 +3456,67 @@ document.addEventListener('DOMContentLoaded', () => {
     function getConceptDiagramSvgMarkup() {
         return `
             <svg viewBox="0 0 360 360" class="unseen-diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <!-- 0. MINIMAL HEADER -->
-                <text x="180" y="32" text-anchor="middle"
+                <!-- 0. ASTRONOMICAL SURVEY PLATE HEADER -->
+                <text x="180" y="30" text-anchor="middle"
                       font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                      font-size="9.5" font-weight="700" letter-spacing="0.14em" fill="#0f172a">
-                    &#x2726; M45 // &Uuml;LKER CONSTELLATION
+                      font-size="9" font-weight="600" letter-spacing="0.16em" fill="#111111">
+                    M45 // &Uuml;LKER CONSTELLATION
                 </text>
 
-                <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde hafif silik çizgisel mavi ile birbirine bağlı 7 bilinen yıldız) -->
+                <!-- Faint Celestial Astrolabe Ring & Coordinate Axes -->
+                <circle cx="182" cy="182" r="118" fill="none" stroke="rgba(17, 17, 17, 0.08)" stroke-width="0.7" stroke-dasharray="2 3" />
+                <circle cx="182" cy="182" r="64" fill="none" stroke="rgba(17, 17, 17, 0.07)" stroke-width="0.6" />
+                <line x1="54" y1="182" x2="310" y2="182" stroke="rgba(17, 17, 17, 0.06)" stroke-width="0.6" />
+                <line x1="182" y1="54" x2="182" y2="310" stroke="rgba(17, 17, 17, 0.06)" stroke-width="0.6" />
+
+                <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde ince çizgisel 7 bilinen yıldız) -->
                 <g class="diag-visible-core">
                     <polyline points="120,135 145,115 165,138 135,175 170,210 190,175 165,138"
-                              stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.85" />
-                    <line x1="190" y1="175" x2="235" y2="168" stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
-                    <line x1="235" y1="168" x2="238" y2="152" stroke="#93c5fd" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
+                              stroke="#a1a1aa" stroke-width="0.9" stroke-linecap="square" stroke-linejoin="miter" fill="none" />
+                    <line x1="190" y1="175" x2="235" y2="168" stroke="#a1a1aa" stroke-width="0.9" />
+                    <line x1="235" y1="168" x2="238" y2="152" stroke="#a1a1aa" stroke-width="0.9" />
 
-                    <circle cx="190" cy="175" r="3.5" fill="#93c5fd" />
-                    <circle cx="170" cy="210" r="3" fill="#93c5fd" />
-                    <circle cx="135" cy="175" r="3" fill="#93c5fd" />
-                    <circle cx="165" cy="138" r="3" fill="#93c5fd" />
-                    <circle cx="145" cy="115" r="2.5" fill="#93c5fd" />
-                    <circle cx="120" cy="135" r="2.5" fill="#93c5fd" />
-                    <circle cx="235" cy="168" r="3" fill="#93c5fd" />
-                    <circle cx="238" cy="152" r="2.5" fill="#93c5fd" />
+                    <circle cx="190" cy="175" r="2.2" fill="#a1a1aa" />
+                    <circle cx="170" cy="210" r="2" fill="#a1a1aa" />
+                    <circle cx="135" cy="175" r="2" fill="#a1a1aa" />
+                    <circle cx="165" cy="138" r="2" fill="#a1a1aa" />
+                    <circle cx="145" cy="115" r="1.8" fill="#a1a1aa" />
+                    <circle cx="120" cy="135" r="1.8" fill="#a1a1aa" />
+                    <circle cx="235" cy="168" r="2" fill="#a1a1aa" />
+                    <circle cx="238" cy="152" r="1.8" fill="#a1a1aa" />
                 </g>
 
-                <!-- 2. PROJELER (Etrafta 12 Görünmeyen Yıldız - net, sade mavi odaklar) -->
+                <!-- 2. PROJELER (12 Görünmeyen Yıldız - keskin mürekkep odak noktaları ve nişangah halkaları) -->
                 <g class="diag-unseen-projects">
-                    <circle cx="216" cy="85" r="6" fill="#2563eb" />
-                    <circle cx="255" cy="130" r="6" fill="#2563eb" />
-                    <circle cx="305" cy="175" r="6" fill="#2563eb" />
-                    <circle cx="300" cy="245" r="6" fill="#2563eb" />
-                    <circle cx="205" cy="168" r="5.5" fill="#2563eb" />
-                    <circle cx="230" cy="215" r="6" fill="#2563eb" />
-                    <circle cx="180" cy="275" r="6.5" fill="#2563eb" />
-                    <circle cx="122" cy="295" r="6" fill="#2563eb" />
-                    <circle cx="130" cy="215" r="6" fill="#2563eb" />
-                    <circle cx="75" cy="175" r="6" fill="#2563eb" />
-                    <circle cx="140" cy="95" r="6" fill="#2563eb" />
-                    <circle cx="75" cy="110" r="6" fill="#2563eb" />
+                    <circle cx="216" cy="85" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="216" cy="85" r="2.4" fill="#111111" />
+                    <circle cx="255" cy="130" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="255" cy="130" r="2.4" fill="#111111" />
+                    <circle cx="305" cy="175" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="305" cy="175" r="2.4" fill="#111111" />
+                    <circle cx="300" cy="245" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="300" cy="245" r="2.4" fill="#111111" />
+                    <circle cx="205" cy="168" r="5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="205" cy="168" r="2.2" fill="#1a365d" />
+                    <circle cx="230" cy="215" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="230" cy="215" r="2.4" fill="#111111" />
+                    <circle cx="180" cy="275" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="180" cy="275" r="2.5" fill="#1a365d" />
+                    <circle cx="122" cy="295" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="122" cy="295" r="2.4" fill="#111111" />
+                    <circle cx="130" cy="215" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="130" cy="215" r="2.4" fill="#111111" />
+                    <circle cx="75" cy="175" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="75" cy="175" r="2.4" fill="#111111" />
+                    <circle cx="140" cy="95" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="140" cy="95" r="2.4" fill="#111111" />
+                    <circle cx="75" cy="110" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="75" cy="110" r="2.4" fill="#111111" />
                 </g>
 
-                <!-- 3. DETAYSIZ BASİT LEJANT (Silik olan = Ana Küme / Mavi olan = 12 Görünmeyen Yıldız) -->
+                <!-- 3. YALIN ARŞİV LEJANTI -->
                 <g class="diag-legend">
-                    <!-- Ülker Ana Küme (Silik Çizgili) -->
-                    <line x1="54" y1="334" x2="72" y2="334" stroke="#93c5fd" stroke-width="1.6" stroke-linecap="round" />
-                    <circle cx="63" cy="334" r="2.8" fill="#93c5fd" />
-                    <text x="78" y="337.5"
+                    <line x1="54" y1="334" x2="72" y2="334" stroke="#a1a1aa" stroke-width="1" />
+                    <circle cx="63" cy="334" r="2" fill="#a1a1aa" />
+                    <text x="78" y="337"
                           font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                          font-size="8.5" font-weight="600" letter-spacing="0.08em" fill="#64748b">
+                          font-size="8" font-weight="600" letter-spacing="0.09em" fill="#71717a">
                         &Uuml;LKER (MAIN CLUSTER)
                     </text>
 
-                    <!-- 12 Görünmeyen Yıldız (Mavi Noktalar) -->
-                    <circle cx="218" cy="334" r="4.5" fill="#2563eb" />
-                    <text x="228" y="337.5"
+                    <circle cx="218" cy="334" r="4.5" fill="none" stroke="#1a365d" stroke-width="0.8" />
+                    <circle cx="218" cy="334" r="2" fill="#111111" />
+                    <text x="228" y="337"
                           font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                          font-size="8.5" font-weight="700" letter-spacing="0.08em" fill="#2563eb">
+                          font-size="8" font-weight="600" letter-spacing="0.09em" fill="#111111">
                         12 UNSEEN STARS
                     </text>
                 </g>
@@ -3537,7 +3539,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return `
                 <div class="sq-cell sq-void-cell sq-alcyone-cell">
                     <div class="sq-alcyone-inner">
-                        <span class="sq-alcyone-star">&#x2726; M45 &bull; THE UNSEEN CLUSTER</span>
+                        <span class="sq-alcyone-star">M45 &bull; THE UNSEEN CLUSTER</span>
                         <h2 class="sq-alcyone-title">Not the stars already visible, but the ones I saw in the dark.</h2>
                         <p class="sq-alcyone-desc">
                             Beyond the few prominent stars of &Uuml;lker, each project is an unseen star &mdash; tracing hidden spatial layers and silent inquiries across open space.
@@ -3554,18 +3556,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="sq-cell sq-void-cell sq-celestial-cell" aria-hidden="true">
                     <div class="sq-celestial-inner">
                         <svg viewBox="0 0 80 80" class="sq-celestial-svg" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Faint Blueprint Crosshairs -->
-                            <line x1="40" y1="10" x2="40" y2="70" stroke="rgba(37, 99, 235, 0.16)" stroke-width="1" stroke-dasharray="2 3" />
-                            <line x1="10" y1="40" x2="70" y2="40" stroke="rgba(37, 99, 235, 0.16)" stroke-width="1" stroke-dasharray="2 3" />
-                            <!-- Faint Concentric Celestial Ring -->
-                            <circle cx="40" cy="40" r="14" fill="none" stroke="rgba(37, 99, 235, 0.12)" stroke-width="0.8" />
-                            <!-- Crisp 4-Pointed Star Center -->
-                            <path d="M 40,24 Q 40,40 56,40 Q 40,40 40,56 Q 40,40 24,40 Q 40,40 40,24 Z"
-                                  fill="rgba(37, 99, 235, 0.20)" stroke="#2563eb" stroke-width="1.2" />
-                            <circle cx="40" cy="40" r="2.2" fill="#2563eb" />
+                            <!-- Precision Astronomical Vernier Reticle -->
+                            <line x1="40" y1="14" x2="40" y2="31" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
+                            <line x1="40" y1="49" x2="40" y2="66" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
+                            <line x1="14" y1="40" x2="31" y2="40" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
+                            <line x1="49" y1="40" x2="66" y2="40" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
+                            <circle cx="40" cy="40" r="12" fill="none" stroke="rgba(26, 54, 93, 0.35)" stroke-width="0.8" stroke-dasharray="2 2" />
+                            <circle cx="40" cy="40" r="2" fill="#1a365d" />
                         </svg>
                         <div class="sq-celestial-meta">
-                            <span class="sq-celestial-star-name">&#x2726; ${slot.name}</span>
+                            <span class="sq-celestial-star-name">${slot.name}</span>
                             <span class="sq-celestial-star-spec">${slot.spec}</span>
                         </div>
                     </div>
@@ -3730,7 +3730,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         svgMarkup += `
-            <text x="${(minX + 8).toFixed(1)}" y="${(minY - 14).toFixed(1)}" class="matrix-arch-blueprint-text">&#x2726; M45 // &Uuml;LKER CLUSTER CELESTIAL PROJECTION &bull; OPEN SPATIAL SURFACE</text>
+            <text x="${(minX + 8).toFixed(1)}" y="${(minY - 14).toFixed(1)}" class="matrix-arch-blueprint-text">M45 // &Uuml;LKER CLUSTER CELESTIAL PROJECTION &bull; OPEN SPATIAL SURFACE</text>
         `;
         svgMarkup += '</g>';
         return svgMarkup;
@@ -3892,8 +3892,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const halfW = (lbl.w / 2).toFixed(1);
             fgBadgesHtml += `
                 <g transform="translate(${lbl.x.toFixed(1)}, ${lbl.y.toFixed(1)})" class="matrix-svg-label-group">
-                    <rect x="-${halfW}" y="-12" width="${lbl.w.toFixed(1)}" height="24" rx="12" class="matrix-svg-pill" />
-                    <text x="0" y="3.5" text-anchor="middle" class="matrix-svg-text">&#x2726; ${lbl.text}</text>
+                    <rect x="-${halfW}" y="-11" width="${lbl.w.toFixed(1)}" height="22" rx="1" class="matrix-svg-pill" />
+                    <text x="0" y="3.5" text-anchor="middle" class="matrix-svg-text">${lbl.text}</text>
                 </g>
             `;
         });
