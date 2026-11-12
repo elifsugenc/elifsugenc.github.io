@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
   <defs>
     <pattern id="emGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#eceae4" stroke-width="0.7"/>
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#eceae4" stroke-width="0.6"/>
     </pattern>
   </defs>
 
@@ -9,30 +9,16 @@
   <rect width="600" height="600" fill="#faf9f6" />
   <rect width="600" height="600" fill="url(#emGrid)" />
 
-  <!-- Sheet Border & Crop Marks -->
-  <rect x="24" y="24" width="552" height="552" fill="none" stroke="#d4d2cb" stroke-width="1" />
-  <path d="M 24 44 L 24 24 L 44 24 M 576 44 L 576 24 L 556 24 M 24 556 L 24 576 L 44 576 M 576 556 L 576 576 L 556 576" fill="none" stroke="#71717a" stroke-width="1.2" />
+  <!-- Sheet Border & Hairline Corner Marks -->
+  <rect x="24" y="24" width="552" height="552" fill="none" stroke="#d4d2cb" stroke-width="0.8" />
+  <path d="M 24 44 L 24 24 L 44 24 M 576 44 L 576 24 L 556 24 M 24 556 L 24 576 L 44 576 M 576 556 L 576 576 L 556 576" fill="none" stroke="#71717a" stroke-width="1" />
 
-  <!-- Technical Reticle & Alignment Crosshairs -->
-  <circle cx="300" cy="300" r="230" fill="none" stroke="#e2e0d8" stroke-width="1" stroke-dasharray="4 4" />
-  <circle cx="300" cy="300" r="140" fill="none" stroke="#d4d2cb" stroke-width="0.8" />
-  <line x1="300" y1="40" x2="300" y2="560" stroke="#d4d2cb" stroke-width="0.8" stroke-dasharray="3 3" />
-  <line x1="40" y1="300" x2="560" y2="300" stroke="#d4d2cb" stroke-width="0.8" stroke-dasharray="3 3" />
+  <!-- Subtle Center Reticle -->
+  <circle cx="300" cy="300" r="180" fill="none" stroke="#e4e2db" stroke-width="0.8" stroke-dasharray="3 3" />
+  <line x1="300" y1="90" x2="300" y2="510" stroke="#eceae4" stroke-width="0.8" />
+  <line x1="90" y1="300" x2="510" y2="300" stroke="#eceae4" stroke-width="0.8" />
 
-  <!-- Corner Coordinates / Archival Spec -->
-  <text x="44" y="52" font-family="monospace" font-size="10" font-weight="600" fill="#71717a" letter-spacing="1.5">PROJECT 01 &#8226; ARCHIVAL FOLIO</text>
-  <text x="556" y="52" font-family="monospace" font-size="10" font-weight="600" fill="#71717a" text-anchor="end" letter-spacing="1">MEF &#8226; 2026</text>
-  <text x="44" y="556" font-family="monospace" font-size="9" font-weight="500" fill="#a1a1aa" letter-spacing="1.2">SPATIAL JUSTICE &#8226; LIVING ARCHIVE</text>
-  <text x="556" y="556" font-family="monospace" font-size="9" font-weight="500" fill="#a1a1aa" text-anchor="end" letter-spacing="1">STATUS: IN PROGRESS</text>
-
-  <!-- Central Architectural Spec Block -->
-  <rect x="90" y="200" width="420" height="200" fill="#ffffff" stroke="#111111" stroke-width="1.5" />
-  <rect x="90" y="200" width="420" height="4" fill="#1a365d" />
-
-  <text x="300" y="250" font-family="'Space Grotesk', system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#1a365d" text-anchor="middle">RESEARCH IN PROGRESS</text>
-  <text x="300" y="302" font-family="'Space Grotesk', system-ui, sans-serif" font-size="30" font-weight="700" letter-spacing="1.5" fill="#111111" text-anchor="middle">EMEK MUSEUM</text>
-  
-  <line x1="150" y1="330" x2="450" y2="330" stroke="#e4e4e0" stroke-width="1" />
-  <text x="300" y="358" font-family="monospace" font-size="10.5" font-weight="500" letter-spacing="1.6" fill="#52525b" text-anchor="middle">COUNTER-MONUMENT &amp; LIVING ARCHIVE</text>
-  <text x="300" y="378" font-family="monospace" font-size="9" font-weight="500" letter-spacing="1.2" fill="#71717a" text-anchor="middle">İSTANBUL &#8226; TÜRKİYE</text>
+  <!-- Clean Center Plate: Sadece WORK IN PROGRESS -->
+  <text x="300" y="286" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="4" fill="#111111" text-anchor="middle">WORK IN</text>
+  <text x="300" y="326" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="4" fill="#1a365d" text-anchor="middle">PROGRESS</text>
 </svg>
