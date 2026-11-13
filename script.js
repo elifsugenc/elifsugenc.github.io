@@ -3990,6 +3990,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (activeDiscipline === 'ulker-cluster') {
                 if (p.isCluster) matched.add(p.id);
             } else if (p.disciplines && p.disciplines.includes(activeDiscipline)) {
+                // Bio-Decay is never in Editorial Design
+                if (activeDiscipline === 'Editorial Design' && p.id === 'bio-decay') return;
                 matched.add(p.id);
             }
         });
