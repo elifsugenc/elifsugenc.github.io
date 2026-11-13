@@ -415,7 +415,7 @@
         return modal;
     }
 
-    window.openLightbox = function(src, caption) {
+    function realOpenLightbox(src, caption) {
         if (!src) return;
         const modal = ensureUniversalLightbox();
         const img = modal.querySelector('img');
@@ -432,10 +432,11 @@
         window.lockBodyScroll();
         lastLightboxOpenedTime = Date.now();
         window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
-    };
-    window.openUniversalFullscreenImage = window.openLightbox;
+    }
 
-    function closeAnyActiveLightbox() {
+    function closeAnyActiveLightbox(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         const activeModals = document.querySelectorAll(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
@@ -452,23 +453,35 @@
         if (closed) {
             window.unlockBodyScroll();
         }
-        if (typeof window.closeLightbox === 'function' && window.closeLightbox !== closeAnyActiveLightbox) {
-            try { window.closeLightbox(); } catch(_) {}
-        }
-        if (typeof window.closeLightboxDirect === 'function') {
-            try { window.closeLightboxDirect(); } catch(_) {}
-        }
         return closed;
     }
-    window.closeLightbox = closeAnyActiveLightbox;
+
+    // Protect window.openLightbox and window.closeLightbox against recursive overwrite
+    try {
+        Object.defineProperty(window, 'openLightbox', {
+            get() { return realOpenLightbox; },
+            set(fn) { /* prevent recursive inline function from overwriting master */ },
+            configurable: true
+        });
+        Object.defineProperty(window, 'closeLightbox', {
+            get() { return closeAnyActiveLightbox; },
+            set(fn) { /* protect */ },
+            configurable: true
+        });
+    } catch (_) {
+        window.openLightbox = realOpenLightbox;
+        window.closeLightbox = closeAnyActiveLightbox;
+    }
+    window.openUniversalFullscreenImage = realOpenLightbox;
+    window.closeLightboxDirect = closeAnyActiveLightbox;
 
     // Capture-phase click:
-    // 1. If lightbox is currently open: clicking close button or anywhere on the backdrop closes it
+    // 1. If lightbox is currently open: clicking close button or anywhere on screen (image, wrapper, backdrop) closes it
     // 2. If lightbox is closed: clicking ANY image or drawing card across the project zooms it to fullscreen!
     document.addEventListener('click', function(e) {
         const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
 
-        // CASE 1: Close active lightbox
+        // CASE 1: Close active lightbox on any click (backdrop, image itself, wrapper, or close button)
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
@@ -477,16 +490,16 @@
             if (e.target.closest('.lightbox-close-btn, #lightbox-close-btn')) {
                 e.preventDefault();
                 e.stopPropagation();
-                closeAnyActiveLightbox();
+                closeAnyActiveLightbox(e);
                 return;
             }
-            // Debounce accidental immediate dismissal
-            if (Date.now() - openedAt < 220) {
+            // Debounce accidental immediate dismissal from the opening click
+            if (Date.now() - openedAt < 120) {
                 return;
             }
             e.preventDefault();
             e.stopPropagation();
-            closeAnyActiveLightbox();
+            closeAnyActiveLightbox(e);
             return;
         }
 
