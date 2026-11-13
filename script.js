@@ -3331,7 +3331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/bio-decay/',
             isCluster: true,
             star: 'Unseen Star',
-            disciplines: ['Bio-Material & Ecological', 'Editorial Design']
+            disciplines: ['Bio-Material & Ecological', 'Spatial Design', 'Architectural Design']
         },
         'fire-escape-simulation': {
             id: 'fire-escape-simulation',
