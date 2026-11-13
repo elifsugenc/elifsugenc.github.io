@@ -11,18 +11,496 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="../project-shared-theme.css?v=20261113-v4">
-        <!-- Universal Project Lightbox Modal -->
-    <div id="image-lightbox" class="image-lightbox lightbox-overlay" onclick="closeLightbox(event)">
+    <link rel="stylesheet" href="../project-shared-theme.css?v=20261113-v2">
+    <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
+    <script>
+        window.handleProjectReturn = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            try {
+                sessionStorage.setItem('portfolio_return_active', 'true');
+                var ret = sessionStorage.getItem('portfolio_return_url');
+                if (ret) { window.location.href = ret; return false; }
+            } catch (_) {}
+            try {
+                var p = new URLSearchParams(window.location.search).get('from');
+                if (p === 'constellation') { window.location.href = '../../#constellation'; return false; }
+                if (p === 'about') { window.location.href = '../../#about'; return false; }
+                if (p === 'archive') { window.location.href = '../../#archive'; return false; }
+                if (p === 'design-approach') { window.location.href = '../../#design-approach'; return false; }
+            } catch (_) {}
+            if (window.history && window.history.length > 1) { window.history.back(); return false; }
+            window.location.href = '../../';
+            return false;
+        };
+    </script>
+</head>
+<body class="project-detail-body" style="--proj-color: #10b981; --proj-rgb: 16, 185, 129; --proj-accent2: #f43f5e; --proj-accent2-rgb: 244, 63, 94;">
+    <!-- Architectural Grid Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">RETURN</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-title">STRAY</span>
+                <span class="crumb-tag">AWARD WINNER</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT &amp; ORIGIN</a>
+                <a href="#psychogeography">PSYCHOGEOGRAPHY</a>
+                <a href="#tectonics">TECTONICS &amp; SURFACES</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#perspectives">PERSPECTIVES</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- =========================================================
+             HERO SECTION
+             ========================================================= -->
+        <section id="overview" class="project-hero">
+            <!-- Architectural Monograph Header -->
+            <div class="project-editorial-header">
+                <div class="editorial-header-grid">
+                    <!-- Left: Title and Description -->
+                    <div class="editorial-main-col">
+                        <h1 class="editorial-project-title">STRAY</h1>
+                        <div class="editorial-narrative-grid">
+                            <div class="narrative-col">
+                                <span class="editorial-col-label">Project Manifesto</span>
+                                <p class="editorial-col-text">
+                                    STRAY investigates the boundaries between purposelessness and presence in contemporary urban life. Grounded in 19th-century theories of the <em>Flâneur</em>, Situationist <em>dérive</em> (psychogeography), and the Slow City philosophy, the project questions the <span class="vocab-term">utilitarian<span class="vocab-tip"><span class="vocab-ipa">/ˌjuː.tɪ.lɪˈteə.ri.ən/</span> <span class="vocab-def">designed for utility over contemplation</span></span></span> <span class="vocab-term">tyranny<span class="vocab-tip"><span class="vocab-ipa">/ˈtɪr.ə.ni/</span> <span class="vocab-def">oppressive, relentless dominance</span></span></span> of efficiency.
+                                </p>
+                            </div>
+                            <div class="narrative-col inquiry-col">
+                                <span class="editorial-col-label">Core Question</span>
+                                <blockquote class="editorial-quote">
+                                    &ldquo;Is doing nothing doing something?&rdquo;<br>
+                                    &ldquo;Is not doing anything even possible?&rdquo;
+                                </blockquote>
+                                <p class="editorial-col-text sub-inquiry">
+                                    Why do we label street animals <span class="vocab-term">&ldquo;stray&rdquo;<span class="vocab-tip"><span class="vocab-ipa">/streɪ/</span> <span class="vocab-def">wandering freely from a fixed path</span></span></span> for roaming freely without a calendar, while we consider ourselves purposeful? Doing nothing is not an absence of action&mdash;it is a heightened state of perception.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Hairline Divider -->
+                    <div class="editorial-divider" aria-hidden="true"></div>
+
+                    <!-- Right: Structured Metadata Grid -->
+                    <div class="editorial-meta-col">
+                        <div class="meta-item">
+                            <span class="meta-label">Author</span>
+                            <span class="meta-value"><strong>Elifsu Genç</strong></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Institution</span>
+                            <span class="meta-value">MEF University</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Studio</span>
+                            <span class="meta-value">INT 201 Studio</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Year</span>
+                            <span class="meta-value">2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Location</span>
+                            <span class="meta-value">Moda, İstanbul</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Honors</span>
+                            <span class="meta-value">★ Honorary Mention<br>im2025 National Awards</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Brief</span>
+                            <span class="meta-value">Encounters at Seaside</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Tools</span>
+                            <span class="meta-value">Rhino 3D, V-Ray, Enscape</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary Hero Visual: The Ramp Experience (View Q) -->
+            <div class="hero-visual-card">
+                <img src="./assets/perspective_ramp_interior.jpg" alt="STRAY — The Ramp Experience (View Q)" class="hero-visual-img">
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 01: CONCEPT & THE STORY BEHIND STRAY
+             ========================================================= -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; THE STORY BEHIND STRAY &mdash;</span>
+            </div>
+
+            <!-- Research Statement -->
+            <div class="statement-wrapper">
+                <div id="pane-en" class="lang-pane active">
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
+                        Responding to the studio brief, <em>&ldquo;Encounters at the Seaside: Intersection of Two Actions&rdquo;</em>, STRAY translates the encounter between purposeful metropolitan routines and conscious wandering into spatial form. Positioned behind the coastal tree canopy of Moda, Kadıköy, the architecture unfolds as a continuous ascending ramp rather than a closed pavilion—inviting passersby to drift inward from the shoreline, engage with tactile mark-making surfaces, and discover <em>The Dark Room</em>, a quiet <span class="vocab-term">sanctuary<span class="vocab-tip"><span class="vocab-ipa">/ˈsæŋk.tʃu.ə.ri/</span> <span class="vocab-def">a quiet space of refuge and contemplation</span></span></span> illuminated solely by natural light slits.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Conceptual Diagram Visual Card -->
+            <div class="hero-visual-card" style="margin-top: 24px;">
+                <img src="./assets/b1_crop_title_header.jpg" alt="STRAY Theoretical Vocabulary &amp; Inquiry" class="hero-visual-img" style="width: 100%; height: auto; max-height: 820px; object-fit: contain; background: #ffffff;">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">THEORETICAL VOCABULARY &amp; INQUIRY</span>
+                    <span class="caption-text">Deconstructing the terms: <em>wander off, go astray, lose the thread, idle, roam</em> &mdash; from questioning the running cat to defining action vs. idleness.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 02: PSYCHOGEOGRAPHY & SITUATIONIST DRIFT
+             ========================================================= -->
+        <section id="psychogeography" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">PSYCHOGEOGRAPHY &amp; SITUATIONIST DRIFT &mdash;</span>
+            </div>
+
+            <!-- 4-Stage Behavioral Loop -->
+            <div class="drift-loop-grid">
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 01</span>
+                    <h4 class="drift-step-title">DISCONNECTION</h4>
+                    <p class="drift-step-desc">Detaching from the prescribed velocity, schedule, and linear paths of the city. Crossing the Moda tree threshold.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 02</span>
+                    <h4 class="drift-step-title">DRIFTING (<span class="vocab-term">DÉRIVE<span class="vocab-tip"><span class="vocab-ipa">/deɪˈriːv/</span> <span class="vocab-def">spontaneous drifting through urban space</span></span></span>)</h4>
+                    <p class="drift-step-desc">Allowing spatial curiosity and subtle light/shadow conditions to steer movement rather than functional destinations.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 03</span>
+                    <h4 class="drift-step-title">CURIOSITY &amp; TRACE</h4>
+                    <p class="drift-step-desc">Engaging with rotating tactile surfaces on the ramp, scribbling thoughts, creating physical records of passing presence.</p>
+                </div>
+                <div class="drift-step-card">
+                    <span class="drift-step-num">STAGE 04</span>
+                    <h4 class="drift-step-title">DISCOVERY &amp; STILLNESS</h4>
+                    <p class="drift-step-desc">Arriving at The Dark Room; transitioning from outer spatial drift into deep internal mindfulness and sensory pause.</p>
+                </div>
+            </div>
+
+            <!-- Context Elevation Card -->
+            <div class="hero-visual-card">
+                <img src="./assets/b1_crop_facade_elevation.jpg" alt="Facade Elevation in Historic Context" class="hero-visual-img" style="height: 440px; object-fit: contain; background: #fafbfa;">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">FACADE ELEVATION &amp; HISTORIC CONTEXT</span>
+                    <span class="caption-text">Contextual dialogue: The contemporary intervention with perforated magenta screens, <span class="vocab-term">cumba<span class="vocab-tip"><span class="vocab-ipa">/dʒʊmˈbɑː/</span> <span class="vocab-def">traditional cantilevered bay observation window</span></span></span> nooks, and a transparent circulation tower set against the historic masonry balconies of Moda.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 03: TECTONICS, SURFACES & MOVEABLE SCREENS
+             ========================================================= -->
+        <section id="tectonics" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">TECTONICS, SURFACES &amp; MOVEABLE SCREENS &mdash;</span>
+            </div>
+
+            <!-- Moveable Wall System Diagram -->
+            <div class="cases-diagram-card">
+                
+                <div class="cases-footer">
+                    <span class="caption-tag">THE 4-CASE MOVEABLE WALL SYSTEM</span>
+                    <p class="caption-text" style="margin-top: 4px;">Suspended from a modular 1/50 ceiling track system, sliding woven magenta wall panels allow the ground and workshop levels to metamorphose dynamically:</p>
+                    <div class="cases-grid-desc">
+                        <div class="case-item">
+                            <span class="case-tag">CASE 01</span>
+                            <div class="case-name">CONTINUOUS FLOW</div>
+                            <p class="case-p">Panels retracted to allow completely seamless, unobstructed circulation between the frontyard and research archive.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 02</span>
+                            <div class="case-name">PRIVATE ALCOVES</div>
+                            <p class="case-p">Partitions deployed diagonally to form intimate study alcoves and quiet reading pods for solitary visitors.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 03</span>
+                            <div class="case-name">WORKSHOP &amp; EXHIBIT</div>
+                            <p class="case-p">Panels arranged perpendicular to daylight to form exhibition pin-up surfaces and collaborative workshop zones.</p>
+                        </div>
+                        <div class="case-item">
+                            <span class="case-tag">CASE 04</span>
+                            <div class="case-name">STRUCTURAL STORAGE</div>
+                            <p class="case-p">All 4 moveable plaques nest fully flush within the thickness of the structural column grid, completely disappearing.</p>
+                        </div>
+                <img src="./assets/diagram_moveable_walls.jpg" alt="Moveable Wall System Diagrams" class="cases-diagram-img">
+            </div>
+                </div>
+            </div>
+
+            <!-- Tactile Surfaces Dual Visual -->
+            <div class="surfaces-dual-grid">
+                <div class="hero-visual-card">
+                    <img src="./assets/diagram_interactive_surfaces.jpg" alt="Interactive Surfaces Diagram" class="hero-visual-img" style="height: 420px; object-fit: contain; background: #fafbfa;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">ROTATING MATERIAL DISPENSER</span>
+                        <span class="caption-text">Surfaces along the ramp are wrapped weekly in rotating materials (kraft paper, raw canvas, touch-sensitive sheets, chalk coatings) allowing visitors to leave tactile traces of their presence.</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual-card">
+                    <img src="./assets/perspective_ramp_interior.jpg" alt="The Ramp Interior Mark-Making" class="hero-visual-img" style="height: 420px; object-fit: cover;">
+                    <div class="visual-card-footer">
+                        <span class="caption-tag">THE RAMP EXPERIENCE (VIEW Q)</span>
+                        <span class="caption-text">Ascending through the vibrant magenta ramp volume; visitors stop spontaneously to draw, write ("i love scribbling!"), and engage in unscripted creative dialogues.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 04: ARCHITECTURAL DRAWINGS & SCALES
+             ========================================================= -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">ARCHITECTURAL DRAWINGS &amp; TECHNICAL SCALES &mdash;</span>
+            </div>
+
+            <div class="drawings-grid">
+                <!-- 3D Perspective Section -->
+                <div class="drawing-card">
+                    <img src="./assets/axonometric_section_3d.jpg" alt="3D Perspective Section" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- Exploded Axonometric Drawing -->
+                <div class="drawing-card">
+                    <img src="./assets/b1_crop_exploded_axonometric.jpg" alt="Exploded Axonometric Drawing" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/100 Ground Floor Plan -->
+                <div class="drawing-card">
+                    <img src="./assets/plan_ground_floor_100.jpg" alt="1/100 Ground Floor Plan" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/50 Ground Detailed Plan -->
+                <div class="drawing-card">
+                    <img src="./assets/plan_ground_floor_50.jpg" alt="1/50 Ground Detailed Plan" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/100 First Floor Plan -->
+                <div class="drawing-card">
+                    <img src="./assets/plan_first_floor_100.jpg" alt="1/100 First Floor Plan" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/100 Second Floor Plan -->
+                <div class="drawing-card">
+                    <img src="./assets/plan_second_floor_100.jpg" alt="1/100 Second Floor Plan" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/100 Longitudinal Section AA' -->
+                <div class="drawing-card">
+                    <img src="./assets/section_aa_longitudinal_100.jpg" alt="1/100 AA' Longitudinal Section" class="drawing-img" loading="lazy">
+                </div>
+
+                <!-- 1/100 Cross Section BB' -->
+                <div class="drawing-card">
+                    <img src="./assets/section_bb_cross_100.jpg" alt="1/100 BB' Cross Section" class="drawing-img" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 05: EXPERIENTIAL PERSPECTIVES & ATMOSPHERE
+             ========================================================= -->
+        <section id="perspectives" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">EXPERIENTIAL PERSPECTIVES &amp; ATMOSPHERE &mdash;</span>
+            </div>
+
+            <div class="perspectives-grid">
+                <!-- View A: The Ramp (Seaside Approach) -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW A &bull; COASTAL THRESHOLD</span>
+                        <h4 class="persp-title">Seaside Approach &amp; Trees</h4>
+                        <p class="persp-desc">The surrounding mature trees create a natural visual barrier between Moda Seaside and the building; passersby discover the entrance serendipitously while wandering along the coast.</p>
+                    </div>
+                    <img src="./assets/render_the_ramp.jpg" alt="View A: The Ramp" class="perspective-img">
+                </div>
+
+                <!-- View B: The Frontyard Porch -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW B &bull; SEMI-OUTDOOR PORCH</span>
+                        <h4 class="persp-title">The Frontyard Lattice Screens</h4>
+                        <p class="persp-desc">Perforated magenta steel mesh screens filter sunlight into dappled geometric patterns, softly buffering the transition from public street to inner sanctuary.</p>
+                    </div>
+                    <img src="./assets/render_the_frontyard_1.jpg" alt="View B: The Frontyard" class="perspective-img">
+                </div>
+
+                <!-- View C: The Frontyard Courtyard -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW C &bull; COURTYARD THRESHOLD</span>
+                        <h4 class="persp-title">Courtyard Looking Inward</h4>
+                        <p class="persp-desc">Layered view through timber studs and pink mesh screens, teasing glimpses of interior activity and drawing curious wanderers into the ramp ascent.</p>
+                    </div>
+                    <img src="./assets/render_the_frontyard_2.jpg" alt="View C: The Frontyard Courtyard" class="perspective-img">
+                </div>
+
+                <!-- View D: The Research Area -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW D &bull; GROUND LEVEL STUDIO</span>
+                        <h4 class="persp-title">The Research Archive &amp; Kitchenette</h4>
+                        <p class="persp-desc">Ground floor communal hub where recorded mark-making surfaces are brought after each cycle to be studied, cataloged, and archived alongside informal coffee stations.</p>
+                    </div>
+                    <img src="./assets/render_the_research_area.jpg" alt="View D: The Research Area" class="perspective-img">
+                </div>
+
+                <!-- View E: The Dark Room -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW E &bull; SENSORY ENCLAVE</span>
+                        <h4 class="persp-title">The Dark Room (+6.00)</h4>
+                        <p class="persp-desc">Free of artificial interior lighting; lit solely by natural morning daylight entering through floor-level slits, casting moving shadows of people ascending the ramp outside.</p>
+                    </div>
+                    <img src="./assets/render_the_dark_room.jpg" alt="View E: The Dark Room" class="perspective-img">
+                </div>
+
+                <!-- View F: The Workshop Area -->
+                <div class="perspective-card">
+                    
+                    <div class="perspective-content">
+                        <span class="persp-view-tag">VIEW F &bull; FIRST FLOOR VOID</span>
+                        <h4 class="persp-title">The Workshop Area (+3.00)</h4>
+                        <p class="persp-desc">Dynamic double-height workshop and gathering space framed by moveable perforated wall screens, pink ceiling beams, and visual apertures connecting to the ramp.</p>
+                    </div>
+                    <img src="./assets/render_the_workshop_area.jpg" alt="View F: The Workshop Area" class="perspective-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 06: MASTER JURY SHEETS & POSTERS (5000×2857PX)
+             ========================================================= -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">MASTER JURY PRESENTATION SHEETS (5000&times;2857PX) &mdash;</span>
+            </div>
+
+            <div class="boards-compact-gallery">
+                <!-- Board 1 -->
+                <div class="board-compact-card" onclick="openBoardLightbox(0)">
+                    <div class="board-compact-thumb-wrap">
+                        <img src="./assets/stray_board_1_full.jpg" alt="Master Board 01" class="board-compact-img" loading="lazy">
+                        <span class="board-compact-badge">BOARD 01 / 03</span>
+                        <div class="board-compact-overlay">
+                            <span class="board-expand-indicator">⤢ BÜYÜT</span>
+                        </div>
+                    </div>
+                    <div class="board-compact-body">
+                        <div class="board-compact-meta-row">
+                            <span class="board-compact-tag">THEORY &amp; AXONOMETRIC</span>
+                            <span class="board-compact-dim">5000&times;2857</span>
+                        </div>
+                        <h4 class="board-compact-name">Manifesto, Psychogeography &amp; Exploded Axo</h4>
+                        <div class="board-compact-actions" onclick="event.stopPropagation()">
+                            <button type="button" class="board-action-btn btn-view" onclick="openBoardLightbox(0)" title="Tam Ekran Görüntüle">
+                                <span>BÜYÜT</span> ↗
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Board 2 -->
+                <div class="board-compact-card" onclick="openBoardLightbox(1)">
+                    <div class="board-compact-thumb-wrap">
+                        <img src="./assets/stray_board_2_full.jpg" alt="Master Board 02" class="board-compact-img" loading="lazy">
+                        <span class="board-compact-badge">BOARD 02 / 03</span>
+                        <div class="board-compact-overlay">
+                            <span class="board-expand-indicator">⤢ BÜYÜT</span>
+                        </div>
+                    </div>
+                    <div class="board-compact-body">
+                        <div class="board-compact-meta-row">
+                            <span class="board-compact-tag">GROUND TECTONICS</span>
+                            <span class="board-compact-dim">5000&times;2857</span>
+                        </div>
+                        <h4 class="board-compact-name">Ground Plans, Moveable Walls &amp; Renders</h4>
+                        <div class="board-compact-actions" onclick="event.stopPropagation()">
+                            <button type="button" class="board-action-btn btn-view" onclick="openBoardLightbox(1)" title="Tam Ekran Görüntüle">
+                                <span>BÜYÜT</span> ↗
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Board 3 -->
+                <div class="board-compact-card" onclick="openBoardLightbox(2)">
+                    <div class="board-compact-thumb-wrap">
+                        <img src="./assets/stray_board_3_full.jpg" alt="Master Board 03" class="board-compact-img" loading="lazy">
+                        <span class="board-compact-badge">BOARD 03 / 03</span>
+                        <div class="board-compact-overlay">
+                            <span class="board-expand-indicator">⤢ BÜYÜT</span>
+                        </div>
+                    </div>
+                    <div class="board-compact-body">
+                        <div class="board-compact-meta-row">
+                            <span class="board-compact-tag">UPPER LEVELS &amp; DARK ROOM</span>
+                            <span class="board-compact-dim">5000&times;2857</span>
+                        </div>
+                        <h4 class="board-compact-name">Upper Plans, Perspective Sections &amp; Dark Room</h4>
+                        <div class="board-compact-actions" onclick="event.stopPropagation()">
+                            <button type="button" class="board-action-btn btn-view" onclick="openBoardLightbox(2)" title="Tam Ekran Görüntüle">
+                                <span>BÜYÜT</span> ↗
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+    </main>
+
+    <!-- Fullscreen Lightbox Modal -->
+    <div id="lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
         <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
-        <div class="lightbox-content-box lightbox-img-wrapper" onclick="closeLightbox(event)">
-            <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged architectural drawing" onclick="closeLightbox(event)">
+        <div class="lightbox-img-wrapper" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Enlarged view" onclick="closeLightbox(event)">
             <p id="lightbox-caption" class="lightbox-caption"></p>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="../project-cursor.js?v=20261113-v4"></script>
+    <script src="../project-cursor.js?v=20261113-v2"></script>
     <script src="../project-related.js?v=20261113-v2" defer></script>
     <script>
         // Master Presentation Sheets Data
@@ -60,6 +538,22 @@
                 window.openLightbox(item.src, item.caption || item.title);
             }
         }
+
+        function openLightbox(src, caption) {
+            activeSheetIndex = -1;
+            if (window.openLightbox) {
+                window.openLightbox(src, caption);
+            }
+        }
+
+        function closeLightbox(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            activeSheetIndex = -1;
+            if (window.closeLightbox) {
+                window.closeLightbox();
+            }
+        }
+        window.closeLightboxDirect = closeLightbox;
     </script>
         });
 

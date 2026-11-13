@@ -435,9 +435,7 @@
     };
     window.openUniversalFullscreenImage = window.openLightbox;
 
-    function closeAnyActiveLightbox(e) {
-        if (e && e.preventDefault) e.preventDefault();
-        if (e && e.stopPropagation) e.stopPropagation();
+    function closeAnyActiveLightbox() {
         const activeModals = document.querySelectorAll(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
@@ -454,6 +452,12 @@
         if (closed) {
             window.unlockBodyScroll();
         }
+        if (typeof window.closeLightbox === 'function' && window.closeLightbox !== closeAnyActiveLightbox) {
+            try { window.closeLightbox(); } catch(_) {}
+        }
+        if (typeof window.closeLightboxDirect === 'function') {
+            try { window.closeLightboxDirect(); } catch(_) {}
+        }
         return closed;
     }
     window.closeLightbox = closeAnyActiveLightbox;
@@ -464,7 +468,7 @@
     document.addEventListener('click', function(e) {
         const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
 
-        // CASE 1: Close active lightbox on any click (backdrop, image itself, wrapper, or close button)
+        // CASE 1: Close active lightbox
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
@@ -473,16 +477,16 @@
             if (e.target.closest('.lightbox-close-btn, #lightbox-close-btn')) {
                 e.preventDefault();
                 e.stopPropagation();
-                closeAnyActiveLightbox(e);
+                closeAnyActiveLightbox();
                 return;
             }
-            // Debounce accidental immediate dismissal from the opening click
-            if (Date.now() - openedAt < 120) {
+            // Debounce accidental immediate dismissal
+            if (Date.now() - openedAt < 220) {
                 return;
             }
             e.preventDefault();
             e.stopPropagation();
-            closeAnyActiveLightbox(e);
+            closeAnyActiveLightbox();
             return;
         }
 
