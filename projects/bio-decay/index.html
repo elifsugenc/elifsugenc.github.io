@@ -11,17 +11,625 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="../project-shared-theme.css?v=20261113-v4">
-        <!-- Universal Project Lightbox Modal -->
-    <div id="image-lightbox" class="image-lightbox lightbox-overlay" onclick="closeLightbox(event)">
+    <link rel="stylesheet" href="../project-shared-theme.css?v=20261113-v2">
+    <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
+    <script>
+        window.handleProjectReturn = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            try {
+                sessionStorage.setItem('portfolio_return_active', 'true');
+                var ret = sessionStorage.getItem('portfolio_return_url');
+                if (ret) { window.location.href = ret; return false; }
+            } catch (_) {}
+            try {
+                var p = new URLSearchParams(window.location.search).get('from');
+                if (p === 'constellation') { window.location.href = '../../#constellation'; return false; }
+                if (p === 'about') { window.location.href = '../../#about'; return false; }
+                if (p === 'archive') { window.location.href = '../../#archive'; return false; }
+                if (p === 'design-approach') { window.location.href = '../../#design-approach'; return false; }
+            } catch (_) {}
+            if (window.history && window.history.length > 1) { window.history.back(); return false; }
+            window.location.href = '../../';
+            return false;
+        };
+    </script>
+</head>
+<body class="project-detail-body" style="--proj-color: #84cc16; --proj-rgb: 132, 204, 22; --proj-accent2: #eab308; --proj-accent2-rgb: 234, 179, 8;">
+    <!-- Architectural Grid Background -->
+    <div class="blueprint-bg"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-wrapper"><div id="custom-cursor"></div></div>
+
+    <!-- Top Sticky Architectural Navigation Bar -->
+    <header class="project-nav">
+        <div class="nav-container">
+            <a href="../../" class="back-link" onclick="if(window.handleProjectReturn){handleProjectReturn(event);}else if(window.history.length>1){window.history.back();return false;}">
+                <span class="nav-arrow">&larr;</span>
+                <span class="nav-label">RETURN</span>
+            </a>
+            <div class="project-crumb">
+                <span class="crumb-title">BIO-DECAY</span>
+                <span class="crumb-tag">AWARD WINNER</span>
+            </div>
+            <nav class="section-quicklinks">
+                <a href="#overview">OVERVIEW</a>
+                <a href="#concept">CONCEPT</a>
+                <a href="#chemistry">CHEMISTRY</a>
+                <a href="#decay-cycle">DECAY CYCLE</a>
+                <a href="#tectonics">TECTONICS</a>
+                <a href="#drawings">DRAWINGS</a>
+                <a href="#boards">BOARDS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="project-page-container">
+        
+        <!-- HERO SECTION -->
+        <section id="overview" class="project-hero">
+            <!-- Architectural Monograph Header -->
+            <div class="project-editorial-header">
+                <div class="editorial-header-grid">
+                    <!-- Left: Title and Description -->
+                    <div class="editorial-main-col">
+                        <h1 class="editorial-project-title">BIO-DECAY</h1>
+                        <div class="editorial-narrative-grid">
+                            <div class="narrative-col">
+                                <span class="editorial-col-label">Project Manifesto</span>
+                                <p class="editorial-col-text">
+                                    Investigating microplastic consumption and circular bio-material systems. Transforming everyday organic waste into temporal architectural membranes and biopolymers that degrade and nourish the soil over deliberate cycles.
+                                </p>
+                            </div>
+                            <div class="narrative-col inquiry-col">
+                                <span class="editorial-col-label">Core Question</span>
+                                <blockquote class="editorial-quote">
+                                    &ldquo;How many microplastics can we eat in a day?&rdquo;
+                                </blockquote>
+                                <p class="editorial-col-text sub-inquiry">
+                                    Can architecture dissolve the boundary between consumption and construction? By choreographing material lifespan, the pavilion transitions from envelope to soil nutrient, celebrating decay as fertile ecological continuity.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Hairline Divider -->
+                    <div class="editorial-divider" aria-hidden="true"></div>
+
+                    <!-- Right: Structured Metadata Grid -->
+                    <div class="editorial-meta-col">
+                        <div class="meta-item">
+                            <span class="meta-label">Author</span>
+                            <span class="meta-value"><strong>Elifsu Genç</strong></span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Institution</span>
+                            <span class="meta-value">MEF University</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Studio</span>
+                            <span class="meta-value">INT 202 Design Studio</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Year</span>
+                            <span class="meta-value">2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Location</span>
+                            <span class="meta-value">Nişantaşı, İstanbul</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Honors</span>
+                            <span class="meta-value">★ 2nd Place &bull; im2025<br>★ MEF Dean's Award</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Medium</span>
+                            <span class="meta-value">Food Waste Biopolymers</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Tools</span>
+                            <span class="meta-value">Rhino 3D, V-Ray, Enscape</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Dual Visuals: 3D Section Perspective & Exploded Axonometric -->
+            <div class="hero-dual-visual-grid">
+                <div class="hero-visual-card">
+                    <img src="./assets/crop-section-perspective-3d.png" alt="3D Section Perspective" class="hero-visual-img">
+                </div>
+
+                <div class="hero-visual-card">
+                    <img src="./assets/crop-exploded-axonometric.png" alt="Exploded Axonometric Drawing" class="hero-visual-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPT & MANIFESTO SECTION (BILINGUAL) -->
+        <section id="concept" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">01</span>
+                <span class="sec-title">CONCEPT &amp; MANIFESTO &mdash;</span>
+            </div>
+
+            <!-- Research Strands -->
+            <div class="manifesto-grid">
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>The Space is Never Finished</h3>
+                    <p>The archive does not aim to preserve perfection, but to document transformation. Each layer carries traces of human interaction and weathering, celebrating material decay as active ecological continuity.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Waste to <span class="vocab-term">Ephemeral<span class="vocab-tip"><span class="vocab-ipa">/ɪˈfem.ər.əl/</span> <span class="vocab-def">lasting for a short time; transient</span></span></span> Matter</h3>
+                    <p>Inverting the petrochemical cycle: everyday food waste is collected from restaurants and reconstituted into biodegradable panels that return harmlessly to the ground.</p>
+                </div>
+                <div class="manifesto-card">
+                    <span class="manifesto-num">&ldquo;</span>
+                    <h3>Enduring Frame vs. Living Skin</h3>
+                    <p>A precision steel wire grid acts as a permanent armature, while <span class="vocab-term">biopolymer<span class="vocab-tip"><span class="vocab-ipa">/ˌbaɪ.oʊˈpɒl.ɪ.mər/</span> <span class="vocab-def">natural polymeric material from organic waste</span></span></span> skins weather, shed, and are remade through collective public workshops.</p>
+                </div>
+            </div>
+
+            <!-- Research Statement -->
+            <div class="bilingual-container">
+                <div id="statement-en" class="statement-pane active">
+                    <p class="lead-text">
+                        Situated inside the iconic Milli Reas&uuml;rans passage in Nişantaşı, Istanbul, <strong>Bio-Decay</strong> operates as an open circular bio-refinery. Harvesting organic waste—citrus peels, starch residues, and coffee grounds—from surrounding urban cafes, the project fabricates seasonal architectural membranes mounted to a modular steel grid.
+                    </p>
+                    <p>
+                        The bioplastic panels undergo a controlled 6-week lifecycle—transitioning from soft amber translucency to matte stiffening and brittle <span class="vocab-term">desiccation<span class="vocab-tip"><span class="vocab-ipa">/ˌdes.ɪˈkeɪ.ʃən/</span> <span class="vocab-def">complete drying out of organic matter</span></span></span>. As degraded panels detach, visitors and researchers harvest the fallen matter, cook fresh batches in open lab kitchens, and clip renewed panels back onto the living frame.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CIRCULAR METABOLISM & BIOPLASTIC CHEMISTRY SECTION -->
+        <section id="chemistry" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">02</span>
+                <span class="sec-title">CIRCULAR METABOLISM &amp; BIOPLASTIC CHEMISTRY &mdash;</span>
+            </div>
+
+            <!-- 4 Bioplastic Recipe Cards -->
+            <div class="recipe-matrix-cards">
+                <div class="recipe-type-card type-sugar">
+                    <div class="recipe-type-header">
+                        <span class="recipe-type-title">SUGAR BASED</span>
+                        <span class="recipe-type-tag">ORANGE &bull; CITRUS</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Extracted from fruit residues and citrus waste for high initial optical transparency and radiant amber color.</p>
+                    <ul class="recipe-steps-list">
+                        <li><strong>Cleaning:</strong> Squeezing fruit residues &amp; separating liquid sugars</li>
+                        <li><strong>Dilution:</strong> Diluting extracted sugars with filtered water</li>
+                        <li><strong>Main Station:</strong> Mixing with glycerol &amp; natural binders</li>
+                        <li><strong>Stove:</strong> Controlled thermal activation</li>
+                        <li><strong>Molding &amp; Drying:</strong> Pouring into wire trays &amp; shelf curing</li>
+                    </ul>
+                </div>
+
+                <div class="recipe-type-card type-cellulose">
+                    <div class="recipe-type-header">
+                        <span class="recipe-type-title">CELLULOSE BASED</span>
+                        <span class="recipe-type-tag">VEGGIES &bull; FIBERS</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Harvested from fibrous vegetables and plant stalks providing tensile reinforcement and textural stiffness.</p>
+                    <ul class="recipe-steps-list">
+                        <li><strong>Cleaning:</strong> Solar desiccation on open drying racks</li>
+                        <li><strong>Pulverizing:</strong> Grinding into micron-grade bio-powder</li>
+                        <li><strong>Separation:</strong> Chemical separation of plant cellulose fibers</li>
+                        <li><strong>Stove:</strong> Homogenizing with bio-polymers at 85°C</li>
+                        <li><strong>Molding:</strong> High-density flat pressing into structural skins</li>
+                    </ul>
+                </div>
+
+                <div class="recipe-type-card type-protein">
+                    <div class="recipe-type-header">
+                        <span class="recipe-type-title">PROTEIN BASED</span>
+                        <span class="recipe-type-tag">DAIRY &bull; GELATIN</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Derived from dairy and protein kitchen by-products to achieve elastic flexibility and moisture sensitivity.</p>
+                    <ul class="recipe-steps-list">
+                        <li><strong>Filtration:</strong> Multi-stage membrane filtration</li>
+                        <li><strong>Acid Coagulation:</strong> Precision acid curdling</li>
+                        <li><strong>Main Station:</strong> Intensive blending and binder infusion</li>
+                        <li><strong>Stove:</strong> Controlled thickening under low heat</li>
+                        <li><strong>Casting:</strong> Viscous pouring onto catenary wire frames</li>
+                    </ul>
+                </div>
+
+                <div class="recipe-type-card type-starch">
+                    <div class="recipe-type-header">
+                        <span class="recipe-type-title">STARCH BASED</span>
+                        <span class="recipe-type-tag">POTATO &bull; RICE &bull; CORN</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Obtained from rice, potatoes, and bread scraps producing durable opaque panels with structured weathering lines.</p>
+                    <ul class="recipe-steps-list">
+                        <li><strong>Cleaning:</strong> Grating and mechanical blending of starch solids</li>
+                        <li><strong>Boiling:</strong> High-temperature aqueous boiling</li>
+                        <li><strong>Straining:</strong> Extracting pure starch slurry</li>
+                        <li><strong>Heating:</strong> Thermal gelatinization with vinegar and plasticizer</li>
+                        <li><strong>Shelf Curing:</strong> Uniform air-drying on ventilated racks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Recipes Flowchart & Urban Harvesting Showcase -->
+            <div class="recipes-showcase-grid">
+                <div class="recipe-diagram-card zoomable-image-container" onclick="openLightbox('./assets/crop-recipes-flowchart.png', 'How to Make Bioplastics? — Matrix flowchart showing spatial stations and fabrication pathways for Sugar, Cellulose, Protein, and Starch recipes.')">
+                    <div>
+                        <span class="caption-tag">FABRICATION STATION MATRIX</span>
+                        <h4 style="font-size: 1rem; margin-top: 4px;">Chemical Pathways &amp; Equipment Stations</h4>
+                        <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 4px;">Mapping the journey of raw kitchen scraps through Cleaning Stations, Main Stations, Homogenizing Stoves, Molding Areas, and Drying Shelves.</p>
+                    </div>
+                    <div class="recipe-img-wrap">
+                        <img src="./assets/crop-recipes-flowchart.png" alt="How to Make Bioplastics Matrix Flowchart">
+                    </div>
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+
+                <div class="recipe-diagram-card zoomable-image-container" onclick="openLightbox('./assets/crop-waste-harvesting.png', 'Urban Food Waste Harvesting Diagram — Mapping restaurant waste collection in Milli Reasürans passage and bio-transformable classification.')">
+                    <div>
+                        <span class="caption-tag">URBAN HARVESTING INFRASTRUCTURE</span>
+                        <h4 style="font-size: 1rem; margin-top: 4px;">Nişantaşı Restaurant Scrap Typology</h4>
+                        <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 4px;">Exploded isometric analysis tracing waste flows from neighbouring establishments, classifying organic substrates that can yield architectural biopolymers.</p>
+                    </div>
+                    <div class="recipe-img-wrap">
+                        <img src="./assets/crop-waste-harvesting.png" alt="Urban Food Waste Harvesting Diagram">
+                    </div>
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+            </div>
+
+            <!-- Restaurant Sourcing Table -->
+            <div class="harvest-table-card">
+                <div class="harvest-table-header">
+                    <span>MİLLİ REASÜRANS NEIGHBORHOOD HARVESTING NETWORK</span>
+                    <span style="font-size: 0.72rem; color: var(--accent-bio); font-weight: 700;">DAILY PASSAGE CIRCUIT</span>
+                </div>
+                <div class="harvest-grid">
+                    <div class="harvest-item">
+                        <span class="harvest-restaurant">LAVIE CAFE</span>
+                        <span class="harvest-scraps">Oranges, apples, citrus rinds, wheat scraps, and cooked rice &rarr; <em>Sugar &amp; Starch Substrates</em></span>
+                    </div>
+                    <div class="harvest-item">
+                        <span class="harvest-restaurant">RANCHERO</span>
+                        <span class="harvest-scraps">Corn, tomatoes, cucumber, lettuce, bell peppers, sour cream, basil, mint, parsley, onions, garlic &rarr; <em>Cellulose &amp; Protein</em></span>
+                    </div>
+                    <div class="harvest-item">
+                        <span class="harvest-restaurant">MIDPOINT</span>
+                        <span class="harvest-scraps">Used tea leaves, espresso coffee grounds, bean hulls, stale artisanal bread &rarr; <em>Cellulose &amp; Color Tints</em></span>
+                    </div>
+                    <div class="harvest-item">
+                        <span class="harvest-restaurant">SALTBAE</span>
+                        <span class="harvest-scraps">Cooked rice, bone/marrow broth residues, protein collagen scraps &rarr; <em>Structural Protein &amp; Starch Binders</em></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEMPORAL DEGRADATION & OPACITY LIFECYCLE SECTION -->
+        <section id="decay-cycle" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">03</span>
+                <span class="sec-title">TEMPORAL DEGRADATION &amp; OPACITY LIFECYCLE &mdash;</span>
+            </div>
+
+            <!-- 4 Optical Degradation Stages -->
+            <div class="opacity-timeline-grid">
+                <div class="opacity-stage-card stage-1">
+                    <div class="opacity-swatch">10 &ndash; 30% OPACITY</div>
+                    <div class="stage-info">
+                        <span class="stage-week">0 &ndash; 1 WEEK &bull; NEWLY PREPARED</span>
+                        <span class="stage-title">Translucent &amp; Pliant</span>
+                        <p class="stage-desc">Freshly cast bioplastic skin. High optical transparency, flexible tensile response, radiant surface sheen, and soft citrus aroma.</p>
+                    </div>
+                </div>
+
+                <div class="opacity-stage-card stage-2">
+                    <div class="opacity-swatch">30 &ndash; 50% OPACITY</div>
+                    <div class="stage-info">
+                        <span class="stage-week">1 &ndash; 3 WEEKS &bull; INITIAL CURING</span>
+                        <span class="stage-title">Hardening Membrane</span>
+                        <p class="stage-desc">Moisture evaporates into the passage air. Texture hardens, transparency drops, and diffuse golden amber shadows appear inside.</p>
+                    </div>
+                </div>
+
+                <div class="opacity-stage-card stage-3">
+                    <div class="opacity-swatch">50 &ndash; 70% OPACITY</div>
+                    <div class="stage-info">
+                        <span class="stage-week">3 &ndash; 6 WEEKS &bull; ACTIVE WEATHERING</span>
+                        <span class="stage-title">Matte &amp; Micro-Fissuring</span>
+                        <p class="stage-desc">Stiffened surface loses elasticity. Deepening terracotta tone with fine micro-cracks reacting to foot traffic, humidity, and touch.</p>
+                    </div>
+                </div>
+
+                <div class="opacity-stage-card stage-4">
+                    <div class="opacity-swatch">70 &ndash; 90% OPACITY</div>
+                    <div class="stage-info">
+                        <span class="stage-week">6+ WEEKS &bull; TERMINAL OBSOLESCENCE</span>
+                        <span class="stage-title">Fragile &amp; Organic Harvest</span>
+                        <p class="stage-desc">Nearly opaque, desiccated, and dark umber. Panels begin curling and fracturing, harvested for composting or re-cooking into new panels.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physical Specimen Degradation Banner -->
+            <div class="physical-specimen-card zoomable-image-container" onclick="openLightbox('./assets/crop-decay-stages-physical.png', 'Physical Bioplastic Specimen Lifecycle — Photographic tracking of newly prepared green gel, fully dried amber disk, and terminal decayed brown specimen.')">
+                <div class="physical-specimen-text">
+                    <span class="caption-tag">EMPIRICAL MATERIAL RESEARCH</span>
+                    <h3>Physical Specimen Degradation Tracking</h3>
+                    <p>
+                        Photographic macro-investigation of bioplastic discs tested under ambient gallery conditions:
+                    </p>
+                    <p>
+                        <strong>1. Newly Prepared:</strong> Saturated emerald gel disc with 95% moisture content.<br>
+                        <strong>2. Fully Dried:</strong> Translucent amber lens with 40% volumetric shrinkage and firm flexural strength.<br>
+                        <strong>3. Decayed:</strong> Desiccated umber relic with crystalline surface cracks, ready for re-grinding into new biopolymer mixtures.
+                    </p>
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+                <img src="./assets/crop-decay-stages-physical.png" alt="Physical Bioplastic Degradation Timeline" class="physical-specimen-img">
+            </div>
+        </section>
+
+        <!-- SPATIAL AXONOMETRIC & TECTONIC ASSEMBLY SECTION -->
+        <section id="tectonics" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">04</span>
+                <span class="sec-title">SPATIAL AXONOMETRIC &amp; TECTONIC ASSEMBLY &mdash;</span>
+            </div>
+
+            <!-- Central Exploded Axonometric Card -->
+            <div class="tectonics-hero-card zoomable-image-container" onclick="openLightbox('./assets/crop-exploded-axonometric.png', 'Exploded Axonometric Assembly — Amphitheatre wire ceiling, public waste triage chute, stepped amphitheatre seating, and research laboratories.')">
+                <div class="visual-card-footer">
+                    <span class="caption-tag">CENTRAL TECTONIC SYSTEM</span>
+                    <h3 style="font-size: 1.25rem;">Spatial Hierarchy &amp; Public Circulation Framework</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                        The architectural volume weaves vertically through the Reasürans passage. Pedestrians deposit waste at street level into public sorting chutes. Below, an amphitheatre forms a public lecture and gathering venue surrounded by drying shelves, while research laboratories and live-work accommodation occupy the lowest levels.
+                    </p>
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+            </div>
+
+            <!-- Tectonic Sub-Cards Grid -->
+            <div class="tectonics-grid-sub">
+                <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-grid-tectonics.png', '1/10 Grid Axonometric, 1/5 Wire Connection Detail & Physical Model Photos — Standardized wire cube cells holding curing bioplastic skins.')">
+                    <div>
+                        <span class="caption-tag">1/10 GRID &bull; 1/5 CONNECTION DETAIL</span>
+                        <h4 style="font-size: 0.98rem; margin-top: 4px;">Wire Cube Scaffolding &amp; Model Proofs</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Modular wire grid assembly allowing individual bioplastic specimens to slide into coded library slots with chronological date tags.</p>
+                    </div>
+                <div class="tectonics-img-wrap">
+                    <img src="./assets/crop-exploded-axonometric.png" alt="Exploded Axonometric Overview">
+                </div>
+                    <img src="./assets/crop-grid-tectonics.png" alt="1/10 Grid Axonometric and 1/5 Detail" class="tectonic-sub-img">
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+
+                <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-drying-section-1-20.png', '1/20 Section — Drying Shelves, Material Library, and Natural Cross-Ventilation Airflow saturated with fruit aromas.')">
+                    <div>
+                        <span class="caption-tag">1/20 SECTION DETAIL</span>
+                        <h4 style="font-size: 0.98rem; margin-top: 4px;">Drying Shelves &amp; Microclimatic Airflow</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Open-air drying racks harness passage stack currents to cure freshly molded bioplastics while diffusing natural citrus scents throughout the building.</p>
+                    </div>
+                    <img src="./assets/crop-drying-section-1-20.png" alt="1/20 Section Drying Shelves" class="tectonic-sub-img">
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+
+                <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-library-drying-diagram.png', 'Material Library and Drying Shelves Axonometric Diagram — Public observation terrace and perforated drying racks.')">
+                    <div>
+                        <span class="caption-tag">MATERIAL LIBRARY DIAGRAM</span>
+                        <h4 style="font-size: 0.98rem; margin-top: 4px;">Visible Degradation Archive</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Positioned directly opposite amphitheatre seating, allowing visitors to visually inspect aging bioplastic tiles during lectures and performances.</p>
+                    </div>
+                    <img src="./assets/crop-library-drying-diagram.png" alt="Material Library Diagram" class="tectonic-sub-img">
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+
+                <div class="tectonic-sub-card zoomable-image-container" onclick="openLightbox('./assets/crop-workspace-axonometric.png', 'Workspace Wire Assembly Station & Public Waste Bins Axonometric — Tool benches for bending wire hangers and testing samples.')">
+                    <div>
+                        <span class="caption-tag">FABRICATION WORKSPACE</span>
+                        <h4 style="font-size: 0.98rem; margin-top: 4px;">Wire Assembly &amp; Waste Chutes</h4>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Hands-on benches equipped with wire benders, pliers, and hanging vices for public participants crafting custom bioplastic frames.</p>
+                    </div>
+                    <img src="./assets/crop-workspace-axonometric.png" alt="Workspace Axonometric" class="tectonic-sub-img">
+                    <span class="zoom-hint">[ CLICK TO EXPAND ↗ ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURAL DRAWINGS & PERSPECTIVES SECTION -->
+        <section id="drawings" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">05</span>
+                <span class="sec-title">ARCHITECTURAL DRAWINGS &amp; PERSPECTIVES &mdash;</span>
+            </div>
+
+            <!-- Floor Plans & Technical Sections Grid -->
+            <div class="drawings-grid">
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-plans-ground-mezzanine.png" alt="1/100 Ground and Mezzanine Plans">
+                    </div>
+                </div>
+
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-plan-sublevel-5-20.png" alt="1/100 Sub-Level Plan">
+                    </div>
+                </div>
+
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-section-aa.png" alt="1/100 Section AA'">
+                    </div>
+                </div>
+
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-section-bb.png" alt="1/100 Section BB'">
+                    </div>
+                </div>
+
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-detail-plan-section-1-50.png" alt="1/50 Plan and Section CC'">
+                    </div>
+                </div>
+
+                <div class="drawing-item">
+                    <div class="drawing-frame">
+                        <img src="./assets/crop-facade-elevation.png" alt="1/100 Facade Elevation">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Realistic Perspectives & Renders Showcase -->
+            <div class="renders-gallery-grid">
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-facade-render.png', 'Facade View Render — Pedestrians walking alongside the glowing bioplastic screen wall in Milli Reasürans passage.')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">FACADE VIEW</span>
+                        <span class="render-gal-title">Passage Urban Interface</span>
+                        <span class="render-gal-desc">Translucent red and amber biopolymer panels illuminating the Nişantaşı arcade corridor with warm organic light.</span>
+                    </div>
+                    <img src="./assets/crop-facade-render.png" alt="Facade View Render">
+                </div>
+
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-ceiling-render.png', 'Ceiling of the Amphitheatre Render — Looking upward at hung bioplastic tensile membranes filtering natural skylight.')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">TENSILE CANOPY</span>
+                        <span class="render-gal-title">Amphitheatre Wire Ceiling</span>
+                        <span class="render-gal-desc">Suspended bioplastic catenary sheets shading the stepped seating while casting living daylight patterns below.</span>
+                    </div>
+                    <img src="./assets/crop-ceiling-render.png" alt="Ceiling Render">
+                </div>
+
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-render-view-a.png', 'View A Render — Public waste collection bins overlooking the central amphitheatre below.')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">VIEW A &bull; OVERLOOK</span>
+                        <span class="render-gal-title">Public Waste Chutes &amp; Void</span>
+                        <span class="render-gal-desc">Pedestrians look down into the multi-level archive while depositing sorted kitchen waste into collection bins.</span>
+                    </div>
+                    <img src="./assets/crop-render-view-a.png" alt="View A Render">
+                </div>
+
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-render-view-b.png', 'View B Render — Material library aisle and open-air drying shelves with researchers cataloging samples.')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">VIEW B &bull; ARCHIVE AISLE</span>
+                        <span class="render-gal-title">Material Library &amp; Drying Racks</span>
+                        <span class="render-gal-desc">Researchers and visitors interact with thousands of tagged bioplastic tiles undergoing natural degradation.</span>
+                    </div>
+                    <img src="./assets/crop-render-view-b.png" alt="View B Render">
+                </div>
+
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-renders-workshops.png', 'Views C, D, E Renders — Amphitheatre civic gathering (View C), Workshop Lab 1 (View D), and cooking station under steps (View E).')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">VIEWS C, D, E &bull; WORKSHOP SPACES</span>
+                        <span class="render-gal-title">Labs, Cooking &amp; Civic Forum</span>
+                        <span class="render-gal-desc">Weekly public masterclasses, thermal biopolymer cooking beneath amphitheatre stairs, and vibrant communal gathering.</span>
+                    </div>
+                    <img src="./assets/crop-renders-workshops.png" alt="Views C, D, E Renders">
+                </div>
+
+                <div class="render-gal-card zoomable-image-container" onclick="openLightbox('./assets/crop-atmosphere-collage.png', 'Atmosphere Collage — Curators and pedestrians handling monumental curing bioplastic skins in the sunlit atrium.')">
+                    <div class="render-gal-info">
+                        <span class="render-gal-tag">ATMOSPHERE COLLAGE</span>
+                        <span class="render-gal-title">Tactile Ephemerality in Space</span>
+                        <span class="render-gal-desc">Celebrates the tactile relationship between human hands, falling daylight, and living architectural matter.</span>
+                    </div>
+                    <img src="./assets/crop-atmosphere-collage.png" alt="Atmosphere Collage">
+                </div>
+            </div>
+        </section>
+
+        <!-- FULL JURY PRESENTATION BOARDS SECTION -->
+        <section id="boards" class="project-section">
+            <div class="section-badge-header">
+                <span class="sec-index">06</span>
+                <span class="sec-title">FULL JURY PRESENTATION BOARDS &mdash;</span>
+            </div>
+
+            <p class="boards-intro">
+                Complete competition and jury presentation panels for Bio-Decay (awarded 2nd Place at im2025 National Interior Design Students Awards). Click any board to examine all drawings, details, and texts in ultra-high resolution.
+            </p>
+
+            <div class="boards-grid">
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sheet-1.png', 'Exhibition Sheet 01 — Title, Microplastics inquiry, Restaurant waste harvesting exploded diagram, 4 Bioplastic recipes flowchart, 1/100 Facade, Regular program, and Physical decay specimen timeline.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sheet-1.png" alt="Bio-Decay Presentation Sheet 01">
+                        <span class="board-pill">SHEET 01 &bull; CONCEPT &amp; RECIPES</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 01 &mdash; RECIPES &amp; URBAN HARVESTING</h3>
+                        <p>Origin inquiry, restaurant waste mapping, 4-recipe chemistry matrix (Sugar, Cellulose, Protein, Starch), and physical specimen photo tracking.</p>
+                    </div>
+                </div>
+
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sheet-2.png', 'Exhibition Sheet 02 — 1/200 Site Plan, Exploded Axonometric, Facade view render, Amphitheatre ceiling render, 1/100 Ceiling plan, Perspective section, 1/20 Section drying shelves, and 1/10 Grid / 1/5 Connection details.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sheet-2.png" alt="Bio-Decay Presentation Sheet 02">
+                        <span class="board-pill">SHEET 02 &bull; AXONOMETRIC &amp; TECTONICS</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 02 &mdash; AXONOMETRIC &amp; JOINERY DETAILS</h3>
+                        <p>Central deconstructed axonometric, 1/10 wire grid joinery, 1/20 airflow section, perspective section, and realistic 3D renders.</p>
+                    </div>
+                </div>
+
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sheet-3.png', 'Exhibition Sheet 03 — 1/100 ±0.00 Ground Plan, 1/100 -2.20 Plan, View A render, View B render, 1/100 Sections AA\' & BB\', and Views C, D, E workshop spaces.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sheet-3.png" alt="Bio-Decay Presentation Sheet 03">
+                        <span class="board-pill">SHEET 03 &bull; PLANS &amp; SECTIONS</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 03 &mdash; ARCHITECTURAL PLANS &amp; LABS</h3>
+                        <p>Floor plans at ±0.00 and -2.20, longitudinal and transverse sections, and interior renders of amphitheatre, labs, and cooking stations.</p>
+                    </div>
+                </div>
+
+                <div class="board-item zoomable-image-container" onclick="openLightbox('./assets/sheet-4.png', 'Exhibition Sheet 04 — 1/100 -5.20 Plan, Workspace axonometric, 3D Section Perspective through amphitheatre, 4 Opacity degradation stages (10% to 90%), and 1/50 Plan & Section CC\' workflow.')">
+                    <div class="board-thumb-frame">
+                        <img src="./assets/sheet-4.png" alt="Bio-Decay Presentation Sheet 04">
+                        <span class="board-pill">SHEET 04 &bull; LIVING ARCHIVE &amp; DECAY</span>
+                    </div>
+                    <div class="board-info">
+                        <h3>SHEET 04 &mdash; THE LIVING ARCHIVE &amp; DECAY</h3>
+                        <p>Monolithic 3D section perspective, 4-stage opacity transformation (10%&ndash;90%), subterranean -5.20 plan, and 1/50 fabrication workflow.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+    </main>
+
+    <!-- Fullscreen Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal hidden" onclick="closeLightbox(event)">
         <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
-        <div class="lightbox-content-box lightbox-img-wrapper" onclick="closeLightbox(event)">
-            <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged architectural drawing" onclick="closeLightbox(event)">
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <img id="lightbox-img" class="lightbox-img" src="" alt="Zoomed Architectural Drawing" onclick="closeLightbox(event)">
             <p id="lightbox-caption" class="lightbox-caption"></p>
         </div>
     </div>
 
     <!-- Interactive Script -->
-    <script src="../project-cursor.js?v=20261113-v4"></script>
+    <script>
+        function openLightbox(src, caption) {
+            if (window.openLightbox) {
+                window.openLightbox(src, caption);
+            }
+        }
+
+        function closeLightbox(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            if (window.closeLightbox) {
+                window.closeLightbox();
+            }
+        }
+    </script>
+    <script src="../project-cursor.js?v=20261113-v2"></script>
     <script src="../project-related.js?v=20261113-v2" defer></script>
     <script src=../../assets/traces-tracker.js?v=20261113-v2

@@ -1511,9 +1511,9 @@ figcaption,
 .lightbox-overlay,
 .lightbox-modal,
 #universal-lightbox {
-    background: rgba(0, 0, 0, 0.68) !important;
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
+    background: rgba(10, 15, 28, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
@@ -1524,7 +1524,7 @@ figcaption,
     justify-content: center !important;
     padding: 0 !important;
     margin: 0 !important;
-    cursor: pointer !important;
+    cursor: none !important;
     user-select: none !important;
     -webkit-user-select: none !important;
 }
@@ -1560,7 +1560,7 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
 }
 
@@ -1570,8 +1570,8 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
 .lightbox-img-wrapper img,
 #lightbox-img,
 .lightbox-img {
-    max-width: 92vw !important;
-    max-height: 86vh !important;
+    max-width: 95vw !important;
+    max-height: 92vh !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain !important;
@@ -1580,9 +1580,9 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     background: transparent !important;
     border: none !important;
     border-radius: 4px !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255, 255, 255, 0.15) !important;
     filter: none !important;
-    cursor: pointer !important;
+    cursor: none !important;
     pointer-events: auto !important;
     animation: lightboxZoomIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -1644,10 +1644,10 @@ img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favico
     left: 50% !important;
     transform: translateX(-50%) !important;
     max-width: min(85vw, 840px) !important;
-    background: rgba(0, 0, 0, 0.72) !important;
-    backdrop-filter: blur(6px) !important;
-    -webkit-backdrop-filter: blur(6px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(10, 15, 28, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
     border-radius: 24px !important;
     padding: 8px 22px !important;
     font-family: var(--font-mono, 'Space Grotesk', monospace) !important;
@@ -2347,14 +2347,11 @@ a, button, input, select, textarea, [role="button"],
 img, picture, figure, canvas, svg,
 .zoomable-image-container, .board-compact-card, .tech-card, .dual-card,
 .render-quad-card, .hero-visual-card, .visual-feature-plate, .visual-plate,
-.tectonic-image-panel, .recipe-diagram-card, .diag-card, .board-item, .visual-frame {
-    cursor: none !important;
-}
-
+.tectonic-image-panel, .recipe-diagram-card, .diag-card, .board-item, .visual-frame,
 .image-lightbox, .lightbox-modal, .lightbox-overlay, #universal-lightbox,
 .lightbox-content-box, .lightbox-dialog, .lightbox-stage, .lightbox-img-wrapper,
 #lightbox-img, .lightbox-img {
-    cursor: pointer !important;
+    cursor: none !important;
 }
 
 /* =========================================================
