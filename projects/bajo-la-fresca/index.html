@@ -535,33 +535,18 @@
     <script src="../project-cursor.js?v=20261110-v6"></script>
     <script src="../project-related.js?v=20261112-arch-v1" defer></script>
     <script>
-        // Lightbox Functions
-        const lightbox = document.getElementById('image-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCap = document.getElementById('lightbox-caption');
-
         function openLightbox(src, caption) {
-            if (lightboxImg) lightboxImg.src = src;
-            if (lightboxCap) lightboxCap.innerText = caption || '';
-            if (lightbox) {
-                lightbox.classList.remove('hidden');
-                lightbox.classList.add('active');
-                if (window.lockBodyScroll) window.lockBodyScroll(); else document.body.style.overflow = 'hidden'; window.__lastLightboxOpenedTime = Date.now();
+            if (window.openLightbox) {
+                window.openLightbox(src, caption);
             }
         }
 
         function closeLightbox(e) {
             if (e && e.preventDefault) e.preventDefault();
-            if (lightbox) { lightbox.classList.remove('active'); lightbox.classList.add('hidden'); }
-            if (lightboxImg) lightboxImg.src = '';
-            if (window.unlockBodyScroll) window.unlockBodyScroll(); else document.body.style.overflow = '';
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-                closeLightbox();
+            if (window.closeLightbox) {
+                window.closeLightbox();
             }
-        });
+        }
     </script>
     <script src=../../assets/traces-tracker.js?v=20261112-arch-v1 defer></script>
 </body>
