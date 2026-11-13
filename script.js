@@ -3087,13 +3087,25 @@ document.addEventListener('DOMContentLoaded', () => {
 // =========================================================
 (function() {
     let lastLightboxOpenedTime = 0;
+    let isBodyScrollLocked = false;
 
     function lockBodyScroll() {
+        if (isBodyScrollLocked) return;
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        if (scrollbarWidth > 0) {
+            document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+        }
+        document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
+        isBodyScrollLocked = true;
     }
 
     function unlockBodyScroll() {
+        if (!isBodyScrollLocked) return;
+        document.documentElement.style.paddingRight = '';
+        document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
+        isBodyScrollLocked = false;
     }
 
     function ensureUniversalLightbox() {
@@ -3105,9 +3117,11 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.id = 'universal-lightbox';
             modal.className = 'lightbox-overlay';
             modal.innerHTML = `
-                <div class="lightbox-img-wrapper">
+                <button id="lightbox-close-btn" class="lightbox-close-btn" aria-label="Close enlarged view">&times;</button>
+                <div class="lightbox-img-wrapper lightbox-content-box">
                     <img id="lightbox-img" src="" alt="Enlarged view">
                 </div>
+                <p id="lightbox-caption" class="lightbox-caption"></p>
             `;
             document.body.appendChild(modal);
         }
