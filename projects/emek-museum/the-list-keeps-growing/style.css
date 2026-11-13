@@ -166,9 +166,9 @@ body.memorial-body {
 
 /* 4. MEMORIAL HEADER */
 .memorial-header {
-    margin-bottom: 56px;
+    margin-bottom: 48px;
     border-bottom: 1px solid var(--border-hairline);
-    padding-bottom: 40px;
+    padding-bottom: 36px;
 }
 
 .memorial-badge-row {
@@ -293,7 +293,330 @@ body.memorial-body {
     letter-spacing: 0.06em;
 }
 
-/* 6. TIMELINE & PERIOD CONTROLS */
+/* ==========================================================================
+   6. CONTINUOUS MEMORIAL NAME STREAM (SELF-SCROLLING ARCHIVE PANEL)
+   ========================================================================== */
+.name-stream-section {
+    margin-bottom: 56px;
+    background: #ffffff;
+    border: 1px solid var(--border-hairline);
+    border-radius: 8px;
+    padding: 28px 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.name-stream-section .section-label-bar {
+    margin-bottom: 16px;
+}
+
+.stream-control-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.stream-control-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.stream-toggle-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--text-primary);
+    color: #ffffff;
+    border: 1px solid var(--text-primary);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.stream-toggle-btn:hover {
+    background: var(--accent-memorial-dark);
+    border-color: var(--accent-memorial-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
+}
+
+.stream-toggle-btn:focus-visible {
+    outline: 2px solid var(--accent-memorial);
+    outline-offset: 2px;
+}
+
+.stream-toggle-btn[aria-pressed="true"] {
+    background: #ffffff;
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.stream-toggle-btn[aria-pressed="true"]:hover {
+    background: var(--bg-surface);
+}
+
+.stream-btn-icon {
+    font-size: 0.75rem;
+}
+
+.stream-status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-subtle);
+}
+
+.stream-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+    transition: background-color 0.2s ease;
+}
+
+.stream-status-tag.is-paused .stream-status-dot {
+    background: #f59e0b;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+}
+
+.stream-hint-text {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+}
+
+/* Bounded Scrollable Viewport Container */
+.stream-viewport-wrapper {
+    position: relative;
+    border: 1px solid var(--border-hairline);
+    border-radius: 6px;
+    background: #fafafc;
+    overflow: hidden;
+}
+
+.stream-viewport {
+    height: 380px;
+    max-height: 52vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: auto; /* Managed via JS requestAnimationFrame */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-hairline) transparent;
+}
+
+.stream-viewport::-webkit-scrollbar {
+    width: 6px;
+}
+
+.stream-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stream-viewport::-webkit-scrollbar-thumb {
+    background-color: rgba(17, 20, 24, 0.18);
+    border-radius: 3px;
+}
+
+.stream-viewport::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(17, 20, 24, 0.35);
+}
+
+.stream-viewport:focus-visible {
+    outline: 2px solid var(--accent-memorial);
+    outline-offset: -2px;
+}
+
+/* Feathered Atmospheric Top/Bottom Gradient Masks */
+.stream-fade-top,
+.stream-fade-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 36px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.stream-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(250, 250, 252, 0.96) 0%, rgba(250, 250, 252, 0) 100%);
+}
+
+.stream-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(250, 250, 252, 0.96) 0%, rgba(250, 250, 252, 0) 100%);
+}
+
+/* Stream Inner & List Rows */
+.stream-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.stream-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 12px 0;
+}
+
+.stream-item {
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color 0.15s ease;
+}
+
+.stream-item:last-child {
+    border-bottom: none;
+}
+
+.stream-row-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+    border-left: 3px solid transparent;
+}
+
+.stream-row-btn:hover {
+    background-color: #ffffff;
+    border-left-color: var(--accent-memorial);
+}
+
+.stream-row-btn:focus-visible {
+    outline: 2px solid var(--accent-memorial);
+    outline-offset: -2px;
+    background-color: #ffffff;
+}
+
+.stream-row-btn.is-selected-row {
+    background-color: #f0f7fc;
+    border-left-color: var(--accent-memorial-dark);
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 0;
+}
+
+.item-index {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--accent-memorial-dark);
+    letter-spacing: 0.05em;
+    min-width: 42px;
+}
+
+.item-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+
+.item-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.item-ref-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    background: var(--bg-surface);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-subtle);
+}
+
+.item-status-pill {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent-memorial-dark);
+    background: var(--accent-glow);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.item-action-hint {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    transition: color 0.15s ease;
+}
+
+.stream-row-btn:hover .item-action-hint,
+.stream-row-btn:focus-visible .item-action-hint {
+    color: var(--accent-memorial-dark);
+}
+
+.stream-footer-meta {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.sf-divider {
+    color: var(--text-faint);
+}
+
+/* 7. TIMELINE & PERIOD CONTROLS */
 .timeline-section {
     margin-bottom: 56px;
 }
@@ -388,7 +711,7 @@ body.memorial-body {
     background: var(--accent-memorial);
 }
 
-/* 7. ARCHIVE HOLDINGS & RECORD CARDS */
+/* 8. ARCHIVE HOLDINGS & RECORD CARDS */
 .archive-holding-section {
     margin-bottom: 64px;
 }
@@ -528,7 +851,7 @@ body.memorial-body {
     transform: rotate(180deg);
 }
 
-/* 8. DISCLOSURE EXPANDED CONTENT */
+/* 9. DISCLOSURE EXPANDED CONTENT */
 .card-disclosure-panel {
     border-top: 1px dashed var(--border-hairline);
     background: #fafbfe;
@@ -604,7 +927,7 @@ body.memorial-body {
     font-size: 0.7rem;
 }
 
-/* 9. EMPTY HOLDING CARD */
+/* 10. EMPTY HOLDING CARD */
 .empty-holding-card {
     background: #ffffff;
     border: 1px dashed var(--border-hairline);
@@ -648,7 +971,7 @@ body.memorial-body {
     letter-spacing: 0.06em;
 }
 
-/* 10. FOOTER & ETHICAL DISCLAIMER */
+/* 11. FOOTER & ETHICAL DISCLAIMER */
 .memorial-footer {
     border-top: 1px solid var(--border-hairline);
     padding-top: 40px;
@@ -729,7 +1052,7 @@ body.memorial-body {
     outline-offset: 2px;
 }
 
-/* 11. RESPONSIVENESS */
+/* 12. RESPONSIVENESS */
 @media (max-width: 720px) {
     .memorial-container {
         padding: 32px 16px 60px;
@@ -737,6 +1060,22 @@ body.memorial-body {
 
     .memorial-main-title {
         font-size: 2.2rem;
+    }
+
+    .stream-control-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stream-row-btn {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .item-right {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .dossier-row {
@@ -765,7 +1104,7 @@ body.memorial-body {
     }
 }
 
-/* 12. PREFERS-REDUCED-MOTION */
+/* 13. PREFERS-REDUCED-MOTION */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -775,7 +1114,8 @@ body.memorial-body {
     }
     
     .timeline-period-btn:hover,
-    .reveal-btn:hover {
+    .reveal-btn:hover,
+    .stream-toggle-btn:hover {
         transform: none !important;
     }
 }

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css?v=20261113-v1">
+    <link rel="stylesheet" href="./style.css?v=20261113-v2">
 </head>
 <body class="memorial-body">
     <!-- Accessibility: Skip Link -->
@@ -63,10 +63,81 @@
             </div>
         </header>
 
-        <!-- Timeline / Growing Archive Period Navigation -->
-        <section class="timeline-section" aria-labelledby="timeline-heading">
+        <!-- =========================================================================
+             SECTION 01: CONTINUOUS MEMORIAL NAME STREAM (SELF-SCROLLING ARCHIVE PANEL)
+             ========================================================================= -->
+        <section class="name-stream-section" aria-labelledby="stream-heading">
             <div class="section-label-bar">
                 <span class="sec-prefix" aria-hidden="true">&sect; 01</span>
+                <h2 id="stream-heading" class="sec-title">CONTINUOUS MEMORIAL STREAM // NAMES OF THE DEPARTED</h2>
+                <span class="sec-note">AUTOMATIC SLOW-SCROLL PANEL</span>
+            </div>
+
+            <!-- Controls & Live Accessibility Status Bar -->
+            <div class="stream-control-bar">
+                <div class="stream-control-left">
+                    <button type="button" 
+                            class="stream-toggle-btn" 
+                            id="stream-toggle-btn" 
+                            aria-pressed="false" 
+                            aria-label="Pause automatic name scroll">
+                        <span class="stream-btn-icon" aria-hidden="true">&#9646;&#9646;</span>
+                        <span class="stream-btn-text">Pause names</span>
+                    </button>
+                    
+                    <div class="stream-status-tag" id="stream-status-tag" role="status" aria-live="polite">
+                        <span class="stream-status-dot" aria-hidden="true"></span>
+                        <span class="stream-status-text">Stream: Active (Slow Scroll)</span>
+                    </div>
+                </div>
+
+                <div class="stream-hint-text">
+                    Hover, touch, or focus to pause &bull; Select a row to inspect record dossier
+                </div>
+            </div>
+
+            <!-- Bounded Scrollable Stream Viewport Container -->
+            <div class="stream-viewport-wrapper">
+                <div class="stream-viewport" 
+                     id="stream-viewport" 
+                     tabindex="0" 
+                     role="region" 
+                     aria-label="Continuous list of memorial records. Scroll manually or use keyboard arrows."
+                     aria-describedby="stream-heading">
+                    
+                    <div class="stream-inner" id="stream-inner">
+                        <!-- Canonical List for Screen Readers & Keyboard Access -->
+                        <ul class="stream-list" id="stream-list" role="list">
+                            <!-- Populated dynamically via archive.js with accessible buttons -->
+                        </ul>
+
+                        <!-- Seamless Looping Clone List (Strictly aria-hidden to protect accessibility tree) -->
+                        <ul class="stream-list stream-list-clone" id="stream-list-clone" role="presentation" aria-hidden="true">
+                            <!-- Populated dynamically via archive.js as aria-hidden visual mirror -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Top & Bottom Gradient Masks for Architectural Atmosphere -->
+                <div class="stream-fade-top" aria-hidden="true"></div>
+                <div class="stream-fade-bottom" aria-hidden="true"></div>
+            </div>
+            
+            <div class="stream-footer-meta">
+                <span class="sf-item">ENTRY CAPACITY // INFINITE EXPANDING SEQUENCE</span>
+                <span class="sf-item sf-divider">&bull;</span>
+                <span class="sf-item">SPEED: 0.45 PX/FRAME (READABLE DRIFT)</span>
+                <span class="sf-item sf-divider">&bull;</span>
+                <span class="sf-item">INTERACTION RECOVERY: 1.8S AFTER INACTIVITY</span>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             SECTION 02: TIMELINE / GROWING ARCHIVE PERIOD NAVIGATION
+             ========================================================================= -->
+        <section class="timeline-section" aria-labelledby="timeline-heading">
+            <div class="section-label-bar">
+                <span class="sec-prefix" aria-hidden="true">&sect; 02</span>
                 <h2 id="timeline-heading" class="sec-title">ACCUMULATION TIMELINE &amp; INQUIRY PHASES</h2>
                 <span class="sec-note">TEMPORAL STRIP CONTROLS</span>
             </div>
@@ -80,10 +151,12 @@
             </div>
         </section>
 
-        <!-- Records Holding Container -->
-        <section class="archive-holding-section" aria-labelledby="holding-heading">
+        <!-- =========================================================================
+             SECTION 03: RECORDS HOLDING CONTAINER & DOSSIER DISCLOSURE
+             ========================================================================= -->
+        <section class="archive-holding-section" id="archive-holding-section" aria-labelledby="holding-heading">
             <div class="section-label-bar">
-                <span class="sec-prefix" aria-hidden="true">&sect; 02</span>
+                <span class="sec-prefix" aria-hidden="true">&sect; 03</span>
                 <h2 id="holding-heading" class="sec-title">ARCHIVAL RECORD HOLDINGS</h2>
                 <span id="holding-count" class="sec-note">1 RECORD IN CURRENT PHASE</span>
             </div>
@@ -116,6 +189,6 @@
 
     </main>
 
-    <script src="./archive.js?v=20261113-v1"></script>
+    <script src="./archive.js?v=20261113-v2"></script>
 </body>
 </html>
