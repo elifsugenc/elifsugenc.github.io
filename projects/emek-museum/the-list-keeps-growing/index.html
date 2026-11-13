@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE LIST KEEPS GROWING. | Emek Museum Memorial Archive | Elifsu Genç</title>
+    <link rel="icon" type="image/png" href="../../../assets/favicon.png?v=blue">
+    <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg?v=blue">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css?v=20261113-v1">
+</head>
+<body class="memorial-body">
+    <!-- Accessibility: Skip Link -->
+    <a href="#main-content" class="skip-to-content">Skip to archive content</a>
+
+    <!-- Sticky Architectural Navigation Bar -->
+    <header class="memorial-nav" role="banner">
+        <div class="memorial-nav-inner">
+            <a href="../" class="back-link" aria-label="Back to Emek Museum project overview">
+                <span class="nav-arrow" aria-hidden="true">&larr;</span>
+                <span class="nav-label">Back to Emek Museum</span>
+            </a>
+            <div class="archive-sys-meta" aria-hidden="true">
+                <span class="sys-dot"></span>
+                <span class="sys-code">ARCHIVE REF // EMEK-TLKG-01</span>
+                <span class="sys-tag">DIGITAL MEMORIAL</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Memorial Dossier Container -->
+    <main id="main-content" class="memorial-container" role="main">
+
+        <!-- Header Section -->
+        <header class="memorial-header">
+            <div class="memorial-badge-row">
+                <span class="memorial-badge">AN ONGOING MEMORIAL ARCHIVE</span>
+                <span class="memorial-case-num">DOSSIER // PUBLIC CIVIC REPOSITORY</span>
+            </div>
+
+            <h1 class="memorial-main-title">THE LIST KEEPS GROWING.</h1>
+
+            <div class="memorial-intro-block">
+                <p class="memorial-intro-lead">A growing archive of lives lost in mining disasters.</p>
+                <p class="memorial-intro-support">Every name represents a life. Every life leaves someone behind.</p>
+            </div>
+
+            <div class="memorial-meta-bar" aria-label="Archive parameters">
+                <div class="meta-cell">
+                    <span class="m-label">CLASSIFICATION</span>
+                    <span class="m-val">Civic Memorial Archive</span>
+                </div>
+                <div class="meta-cell">
+                    <span class="m-label">DOCUMENTATION PROTOCOL</span>
+                    <span class="m-val">Independent Spatial Counter-Monument</span>
+                </div>
+                <div class="meta-cell">
+                    <span class="m-label">ARCHIVE INTEGRITY</span>
+                    <span class="m-val">Conceptual Interaction Preview</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Timeline / Growing Archive Period Navigation -->
+        <section class="timeline-section" aria-labelledby="timeline-heading">
+            <div class="section-label-bar">
+                <span class="sec-prefix" aria-hidden="true">&sect; 01</span>
+                <h2 id="timeline-heading" class="sec-title">ACCUMULATION TIMELINE &amp; INQUIRY PHASES</h2>
+                <span class="sec-note">TEMPORAL STRIP CONTROLS</span>
+            </div>
+
+            <p class="timeline-context-note">
+                Memorial records accumulate over successive inquiry periods. Select an archive period below to inspect registered holdings:
+            </p>
+
+            <div id="timeline-strip" class="timeline-strip" role="tablist" aria-label="Archive periods">
+                <!-- Dynamically rendered and accessible via archive.js -->
+            </div>
+        </section>
+
+        <!-- Records Holding Container -->
+        <section class="archive-holding-section" aria-labelledby="holding-heading">
+            <div class="section-label-bar">
+                <span class="sec-prefix" aria-hidden="true">&sect; 02</span>
+                <h2 id="holding-heading" class="sec-title">ARCHIVAL RECORD HOLDINGS</h2>
+                <span id="holding-count" class="sec-note">1 RECORD IN CURRENT PHASE</span>
+            </div>
+
+            <div id="records-container" class="records-container" role="region" aria-live="polite">
+                <!-- Record cards or verified records placeholders rendered via archive.js -->
+            </div>
+        </section>
+
+        <!-- Protocol & Ethical Disclaimer Footer -->
+        <footer class="memorial-footer" role="contentinfo">
+            <div class="disclaimer-card">
+                <div class="disclaimer-header">
+                    <span class="disclaimer-icon" aria-hidden="true">&#9632;</span>
+                    <span class="disclaimer-title">ARCHIVAL PROTOCOL &amp; VERIFICATION ETHICS</span>
+                </div>
+                <p class="disclaimer-text">Historical records will be added only when verified.</p>
+                <p class="disclaimer-subtext">
+                    This memorial archive operates as an independent architectural counter-monument. In respect to the dignity of victims and their families, zero speculative, simulated, or artificially generated names and casualty statistics are deployed. Records will be inducted exclusively through verified industrial health audits, court findings, and corroborated testimonies.
+                </p>
+            </div>
+
+            <div class="footer-return-bar">
+                <a href="../" class="return-button">
+                    <span aria-hidden="true">&larr;</span>
+                    <span>Back to Emek Museum</span>
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="./archive.js?v=20261113-v1"></script>
+</body>
+</html>
