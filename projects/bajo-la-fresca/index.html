@@ -59,6 +59,7 @@
                 <a href="#scent">SCENT &amp; PETALS</a>
                 <a href="#installation">INSTALLATION</a>
                 <a href="#statement">STATEMENT</a>
+                <a href="#presentation">ARCHIVE</a>
             </nav>
         </div>
     </header>
@@ -118,6 +119,10 @@
                         <div class="meta-item">
                             <span class="meta-label">Studio</span>
                             <span class="meta-value">MuDD Architects Workshop</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Festival</span>
+                            <span class="meta-value"><a href="https://www.explorecordoba.com/articles/cordoba-efimera-festival" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; text-underline-offset: 3px;">Córdoba Efímera &nearr;</a></span>
                         </div>
                         <div class="meta-item">
                             <span class="meta-label">Year</span>
@@ -468,7 +473,7 @@
 
                 <div id="statement-en" class="statement-panel active">
                     <p>
-                        <strong>Bajo la Fresca</strong> is a contextual research and spatial installation realized in Patio San Basilio 44 during the traditional courtyard festivities of Córdoba, Spain. The work explores the socio-climatic tradition of <em>tomar el fresco</em>—an Andalusian custom where neighbors migrate into shaded courtyards and open thresholds at sunset to relax, converse, and bathe in the restorative evening breeze.
+                        <strong>Bajo la Fresca</strong> is a contextual research and spatial installation realized in Patio San Basilio 44 during the <a href="https://www.explorecordoba.com/articles/cordoba-efimera-festival" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">Córdoba Efímera Festival &nearr;</a> and the traditional courtyard festivities of Córdoba, Spain. The work explores the socio-climatic tradition of <em>tomar el fresco</em>—an Andalusian custom where neighbors migrate into shaded courtyards and open thresholds at sunset to relax, converse, and bathe in the restorative evening breeze.
                     </p>
                     <p>
                         In a city where summer temperatures regularly cross 40°C, the courtyard acts as an ecological sanctuary of coexistence: thick whitewashed masonry, evaporative foliage, and shared water wells form a microclimatic oasis. Yet, in these tightly conserved historic spaces, floor and wall surfaces are already saturated with centuries of domestic life. <em>Bajo la Fresca</em> addresses this paradox by activating the courtyard's overhead airspace through a suspended, pleated textile canopy that expands the garden upward without occupying scarce ground.
@@ -481,12 +486,50 @@
             </div>
         </section>
 
-        <!-- SECTION 07: PRESENTATION ARCHIVE -->
+        <!-- SECTION 07: FESTIVAL FEATURE & RESEARCH ARCHIVE -->
         <section id="presentation" class="project-section">
             <div class="section-badge-header">
                 <span class="sec-index">07</span>
-                <span class="sec-title">RESEARCH BOOKLET &amp; PRESENTATION ARCHIVE</span>
+                <span class="sec-title">FESTIVAL FEATURE &amp; RESEARCH ARCHIVE</span>
             </div>
+
+            <!-- Published Festival Article Banner -->
+            <div class="document-dl-banner" style="margin-bottom: 24px;">
+                <div class="doc-info">
+                    <span class="caption-tag" style="margin-bottom: 4px;">EXPLORE CÓRDOBA // EDITORIAL FEATURE</span>
+                    <h4 class="doc-title">Córdoba Efímera: Reimagining the Historic Patios Through Ephemeral Architecture</h4>
+                    <p class="doc-desc">Read the published article on Explore Córdoba exploring the contemporary festival, community courtyard rituals, and spatial installations in Alcázar Viejo.</p>
+                </div>
+                <a href="https://www.explorecordoba.com/articles/cordoba-efimera-festival" target="_blank" rel="noopener noreferrer" class="doc-action-btn">
+                    <span>READ ARTICLE</span>
+                    <span>&nearr;</span>
+                </a>
+            </div>
+
+            <!-- Project Dossier / Presentation PDF Download Banner -->
+            <div class="document-dl-banner" style="background: rgba(255, 255, 255, 0.6); border: 1px solid var(--border-light);">
+                <div class="doc-info">
+                    <span class="caption-tag" style="margin-bottom: 4px; color: var(--text-muted);">ACADEMIC DOSSIER // AA VISITING SCHOOL</span>
+                    <h4 class="doc-title">Bajo La Fresca — Research Dossier &amp; Presentation</h4>
+                    <p class="doc-desc">Complete studio portfolio documentation, microclimate analysis, pleated textile prototyping, and installation photography (PDF, 9.8 MB).</p>
+                </div>
+                <a href="./assets/bajo-la-fresca-presentation.pdf" target="_blank" rel="noopener noreferrer" class="doc-action-btn" style="background: var(--text-primary); color: #ffffff;">
+                    <span>VIEW DOSSIER (PDF)</span>
+                    <span>&darr;</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fullscreen Lightbox Modal -->
+    <div id="image-lightbox" class="image-lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Close lightbox">&times;</button>
+            <img id="lightbox-img" class="lightbox-img" src="" alt="Fullscreen Lightbox Image" onclick="closeLightbox(event)">
+            <p id="lightbox-caption" class="lightbox-caption-text"></p>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="../project-cursor.js?v=20261110-v6"></script>
@@ -495,9 +538,11 @@
         // Lightbox Functions
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCap = document.getElementById('lightbox-caption');
 
-        function openLightbox(src) {
+        function openLightbox(src, caption) {
             if (lightboxImg) lightboxImg.src = src;
+            if (lightboxCap) lightboxCap.innerText = caption || '';
             if (lightbox) {
                 lightbox.classList.remove('hidden');
                 lightbox.classList.add('active');
