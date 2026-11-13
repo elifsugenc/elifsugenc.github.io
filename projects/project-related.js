@@ -17,7 +17,7 @@
             title: 'EMEK MUSEUM',
             year: '2026',
             question: 'How can we make this labour visible again?',
-            img: '../../assets/emek-museum-wip.svg',
+            img: '../../assets/emek-museum-hero.jpg',
             url: '../emek-museum/',
             isCluster: true
         },
