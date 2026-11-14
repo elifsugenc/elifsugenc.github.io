@@ -712,7 +712,7 @@ Recep Çolakoğlu`.trim().split('\n'),
         ));
     }
 
-    list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${displayName(name)}</li>`).join('');
+    list.innerHTML = ARCHIVE_NAMES.map((name, index) => `<li data-list-index="${index}">${displayName(name)}</li>`).join('');
     const mosaic = document.getElementById('name-mosaic');
     if (mosaic) {
         mosaic.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
@@ -721,38 +721,31 @@ Recep Çolakoğlu`.trim().split('\n'),
         }).join(' ');
     }
 
-    const detailPanel = document.getElementById('memorial-detail');
-    const detailName = document.getElementById('detail-name');
-    const detailEvent = document.getElementById('detail-event');
-    const detailDate = document.getElementById('detail-date');
-    const detailYear = document.getElementById('detail-year');
-    const detailAge = document.getElementById('detail-age');
-    const detailTime = document.getElementById('detail-time');
-    const detailNameSource = document.getElementById('detail-name-source');
-    const detailTimeSource = document.getElementById('detail-time-source');
+    const readingDetail = document.getElementById('reading-detail');
+    const wallDetail = document.getElementById('wall-detail');
 
-    function showRecord(index) {
+    function showRecord(index, panel) {
         const record = ARCHIVE_RECORDS[index];
-        if (!record || !detailPanel) return;
+        if (!record || !panel) return;
 
         const deathDate = new Date(`${record.deathDate}T12:00:00`);
-        detailName.textContent = displayName(record.name);
-        detailEvent.textContent = record.eventName;
-        detailDate.textContent = new Intl.DateTimeFormat('en', {
+        panel.querySelector('[data-detail-field="name"]').textContent = displayName(record.name);
+        panel.querySelector('[data-detail-field="event"]').textContent = record.eventName;
+        panel.querySelector('[data-detail-field="date"]').textContent = new Intl.DateTimeFormat('en', {
             day: 'numeric', month: 'long', year: 'numeric',
         }).format(deathDate);
-        detailYear.textContent = String(deathDate.getFullYear());
-        detailAge.textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
-        detailTime.textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
-        detailNameSource.href = record.namesSource;
-        detailTimeSource.href = record.timeSource;
-        detailPanel.setAttribute('aria-hidden', 'false');
-        mosaicStage?.classList.add('has-selection');
+        panel.querySelector('[data-detail-field="year"]').textContent = String(deathDate.getFullYear());
+        panel.querySelector('[data-detail-field="age"]').textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
+        panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
+        panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
+        panel.querySelector('[data-detail-source="time"]').href = record.timeSource;
+        panel.setAttribute('aria-hidden', 'false');
+        panel.closest('.archive-reading, .archive-mosaic-stage')?.classList.add('has-selection');
     }
 
     function recordFromEvent(event) {
         const item = event.target.closest('[data-record-index]');
-        if (item) showRecord(Number(item.dataset.recordIndex));
+        if (item) showRecord(Number(item.dataset.recordIndex), wallDetail);
     }
 
     mosaic?.addEventListener('pointerover', recordFromEvent);
@@ -825,7 +818,7 @@ Recep Çolakoğlu`.trim().split('\n'),
         mosaic?.setAttribute('aria-hidden', isInteractive ? 'false' : 'true');
         if (!isInteractive) {
             mosaicStage.classList.remove('has-selection');
-            detailPanel?.setAttribute('aria-hidden', 'true');
+            wallDetail?.setAttribute('aria-hidden', 'true');
         }
     }
 
@@ -841,85 +834,128 @@ Recep Çolakoğlu`.trim().split('\n'),
     scheduleMosaicTransition();
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const speed = 0.8; // pixels per second: deliberately almost imperceptible
-    const startDelay = 1800;
-    const resumeAfter = 4000;
-    let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + startDelay;
-    let lastFrame = 0;
-    let reachedEnd = false;
-    let isDragging = false;
-    let dragPointerId = null;
-    let dragStartY = 0;
-    let dragStartScrollY = 0;
+    const readingSection = document.getElementById('archive-reading');
+    const resumeAfter = 5000;
+    const nameStepDelay = 6000;
+    let activeIndex = 0;
+    let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + 1800;
+    let autoTimer = 0;
+    let wheelLocked = false;
+    let programmaticScroll = false;
+    let wallDriftFrame = 0;
 
-    function pauseTemporarily() {
-        if (reducedMotion.matches || reachedEnd) return;
-        pausedUntil = performance.now() + resumeAfter;
+    function moveToName(index, userInitiated = false) {
+        activeIndex = Math.max(0, Math.min(ARCHIVE_RECORDS.length - 1, index));
+        showRecord(activeIndex, readingDetail);
+        programmaticScroll = true;
+        list.children[activeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        window.setTimeout(() => { programmaticScroll = false; }, 900);
+        if (userInitiated) {
+            pausedUntil = performance.now() + resumeAfter;
+            scheduleAuto(resumeAfter);
+        }
     }
 
-    window.addEventListener('wheel', pauseTemporarily, { passive: true });
-    window.addEventListener('touchmove', pauseTemporarily, { passive: true });
-    window.addEventListener('pointerdown', (event) => {
-        // Pause when the visitor grabs the browser's vertical scrollbar.
-        if (event.clientX >= document.documentElement.clientWidth) pauseTemporarily();
+    function inReadingSection() {
+        const bounds = readingSection.getBoundingClientRect();
+        return bounds.top < window.innerHeight / 2 && bounds.bottom > window.innerHeight / 2;
+    }
+
+    function stepName(direction, userInitiated = true) {
+        const next = activeIndex + direction;
+        if (next < 0 || next >= ARCHIVE_RECORDS.length) return false;
+        moveToName(next, userInitiated);
+        return true;
+    }
+
+    readingSection?.addEventListener('wheel', (event) => {
+        if (!inReadingSection() || event.target.closest('a')) return;
+        const direction = Math.sign(event.deltaY);
+        if (!direction || (direction < 0 && activeIndex === 0)
+            || (direction > 0 && activeIndex === ARCHIVE_RECORDS.length - 1)) return;
+        event.preventDefault();
+        if (wheelLocked) return;
+        wheelLocked = true;
+        stepName(direction);
+        window.setTimeout(() => { wheelLocked = false; }, 520);
+    }, { passive: false });
+
+    let touchStartY = null;
+    readingSection?.addEventListener('touchstart', (event) => {
+        touchStartY = event.touches[0]?.clientY ?? null;
+    }, { passive: true });
+    readingSection?.addEventListener('touchend', (event) => {
+        if (touchStartY === null || event.target.closest('a')) return;
+        const delta = touchStartY - (event.changedTouches[0]?.clientY ?? touchStartY);
+        touchStartY = null;
+        if (Math.abs(delta) < 28) return;
+        const direction = Math.sign(delta);
+        if (stepName(direction)) {
+            event.preventDefault();
+        } else {
+            window.scrollBy({ top: direction * window.innerHeight, behavior: 'smooth' });
+        }
+    }, { passive: false });
+
+    readingSection?.addEventListener('keydown', (event) => {
+        if (!['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '].includes(event.key)) return;
+        const direction = ['ArrowDown', 'PageDown', ' '].includes(event.key) ? 1 : -1;
+        if (stepName(direction)) event.preventDefault();
+    });
+
+    window.addEventListener('scroll', () => {
+        if (programmaticScroll || !inReadingSection()) return;
+        // Keep the focused name in sync when visitors drag the browser scrollbar.
+        const listTop = list.getBoundingClientRect().top + window.scrollY;
+        const nearest = Math.max(0, Math.min(ARCHIVE_RECORDS.length - 1,
+            Math.round((window.scrollY + window.innerHeight / 2 - listTop) / window.innerHeight)));
+        if (nearest !== activeIndex) {
+            activeIndex = nearest;
+            showRecord(activeIndex, readingDetail);
+        }
     }, { passive: true });
 
-    const archiveMain = document.querySelector('main');
-    archiveMain?.addEventListener('pointerdown', (event) => {
-        if (event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('a')) return;
-        isDragging = true;
-        dragPointerId = event.pointerId;
-        dragStartY = event.clientY;
-        dragStartScrollY = window.scrollY;
-        archiveMain.setPointerCapture(event.pointerId);
-        document.body.classList.add('is-dragging');
-        event.preventDefault();
-    });
-
-    archiveMain?.addEventListener('pointermove', (event) => {
-        if (!isDragging || event.pointerId !== dragPointerId) return;
-        window.scrollTo(0, dragStartScrollY - (event.clientY - dragStartY));
-    });
-
-    function finishDrag(event) {
-        if (!isDragging || (event && event.pointerId !== dragPointerId)) return;
-        isDragging = false;
-        dragPointerId = null;
-        document.body.classList.remove('is-dragging');
-        if (!reducedMotion.matches && !reachedEnd) pausedUntil = performance.now() + resumeAfter;
+    function startWallDrift() {
+        if (reducedMotion.matches || wallDriftFrame) return;
+        let last = 0;
+        const drift = (timestamp) => {
+            if (!last) last = timestamp;
+            const elapsed = Math.min((timestamp - last) / 1000, 0.05);
+            last = timestamp;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (window.scrollY >= maxScroll - 0.5) { wallDriftFrame = 0; return; }
+            if (timestamp >= pausedUntil) window.scrollBy(0, 0.8 * elapsed);
+            wallDriftFrame = requestAnimationFrame(drift);
+        };
+        wallDriftFrame = requestAnimationFrame(drift);
     }
 
-    archiveMain?.addEventListener('pointerup', finishDrag);
-    archiveMain?.addEventListener('pointercancel', finishDrag);
-    archiveMain?.addEventListener('lostpointercapture', finishDrag);
-    window.addEventListener('keydown', (event) => {
-        if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
-            pauseTemporarily();
-        }
-    });
+    function scheduleAuto(delay) {
+        window.clearTimeout(autoTimer);
+        if (reducedMotion.matches) return;
+        autoTimer = window.setTimeout(() => {
+            if (performance.now() < pausedUntil) return scheduleAuto(pausedUntil - performance.now());
+            if (activeIndex < ARCHIVE_RECORDS.length - 1) {
+                moveToName(activeIndex + 1);
+                scheduleAuto(nameStepDelay);
+            } else {
+                archiveEnd?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                window.setTimeout(startWallDrift, 1800);
+            }
+        }, delay);
+    }
+
+    readingSection?.setAttribute('tabindex', '0');
+    if (!reducedMotion.matches) scheduleAuto(1800);
     reducedMotion.addEventListener('change', (event) => {
-        if (event.matches) pausedUntil = Infinity;
-        else if (!reachedEnd) pausedUntil = performance.now() + startDelay;
+        if (event.matches) {
+            window.clearTimeout(autoTimer);
+            if (wallDriftFrame) cancelAnimationFrame(wallDriftFrame);
+            wallDriftFrame = 0;
+            pausedUntil = Infinity;
+        } else {
+            pausedUntil = performance.now() + 1800;
+            scheduleAuto(1800);
+        }
     });
-
-    function drift(timestamp) {
-        if (!lastFrame) lastFrame = timestamp;
-        const elapsed = Math.min((timestamp - lastFrame) / 1000, 0.05);
-        lastFrame = timestamp;
-
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (maxScroll <= 0) return requestAnimationFrame(drift);
-
-        if (window.scrollY >= maxScroll - 0.5) {
-            reachedEnd = true;
-            return;
-        }
-
-        if (!isDragging && timestamp >= pausedUntil) {
-            window.scrollBy(0, Math.min(speed * elapsed, maxScroll - window.scrollY));
-        }
-        requestAnimationFrame(drift);
-    }
-
-    requestAnimationFrame(drift);
 })();

@@ -19,16 +19,9 @@ body {
 }
 
 main {
-    width: min(100%, 1040px);
-    margin: 0 auto;
-    padding: 132px clamp(24px, 10vw, 140px) 24vh;
-    cursor: grab;
-}
-
-body.is-dragging {
-    cursor: grabbing;
-    user-select: none;
-    -webkit-user-select: none;
+    width: 100%;
+    margin: 0;
+    padding: 90px 0 0;
 }
 
 .archive-back {
@@ -70,9 +63,21 @@ body.is-dragging {
     place-items: center;
     border: 1px solid currentColor;
     border-radius: 50%;
-    font-size: 1.2rem;
-    line-height: 1;
     transition: transform 220ms ease;
+}
+
+.archive-back-arrow svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+.archive-back-arrow path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .archive-back:hover .archive-back-arrow,
@@ -97,16 +102,32 @@ body.is-dragging {
     letter-spacing: 0.12em;
 }
 
+.archive-reading {
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-height: 100svh;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 25vw);
+    align-items: start;
+    gap: clamp(18px, 3vw, 48px);
+    padding: 0 clamp(20px, 4vw, 64px);
+    touch-action: none;
+}
+
 #name-list {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
-    gap: clamp(26px, 5.2vh, 58px);
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 #name-list li {
+    display: grid;
+    min-height: 100svh;
+    place-items: center;
     color: #f5f5f2;
     font-family: Georgia, 'Times New Roman', serif;
     font-size: clamp(1.65rem, 4.5vw, 3.5rem);
@@ -115,6 +136,21 @@ body.is-dragging {
     letter-spacing: -0.035em;
     text-align: center;
     overflow-wrap: anywhere;
+    scroll-snap-align: center;
+}
+
+#reading-detail {
+    position: sticky;
+    top: 38vh;
+    grid-column: 2;
+    align-self: start;
+    margin-top: 38vh;
+}
+
+.archive-reading.has-selection #reading-detail {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .archive-mosaic {
@@ -278,8 +314,8 @@ body.is-dragging {
 }
 
 .archive-end {
-    margin-top: clamp(84px, 16vh, 180px);
-    padding: 30px 0 12vh;
+    margin-top: clamp(48px, 10vh, 100px);
+    padding: 30px 0 7vh;
     color: rgba(245, 245, 242, 0.74);
     font-family: Georgia, 'Times New Roman', serif;
     font-size: clamp(1.15rem, 2.4vw, 1.65rem);
@@ -290,7 +326,12 @@ body.is-dragging {
 
 @media (max-width: 600px) {
     main {
-        padding: 112px 22px 20vh;
+        padding: 90px 0 0;
+    }
+
+    .archive-reading {
+        display: block;
+        padding: 0 16px;
     }
 
     .archive-back {
@@ -302,6 +343,21 @@ body.is-dragging {
     .archive-back-arrow {
         width: 34px;
         height: 34px;
+    }
+
+    #reading-detail {
+        position: fixed;
+        z-index: 1;
+        top: auto;
+        right: 10px;
+        bottom: 10px;
+        width: min(220px, 64vw);
+        max-height: 42svh;
+        overflow-y: auto;
+        margin: 0;
+        padding: 12px;
+        border-left: 1px solid rgba(245, 245, 242, 0.45);
+        background: rgba(5, 5, 5, 0.96);
     }
 
     .archive-mosaic-stage {
