@@ -12229,3 +12229,25 @@ img, picture, figure, canvas, svg,
 .spatial-square-grid.is-hovering-matrix .sq-celestial-inner {
     opacity: 0.18;
 }
+
+/* Methodology sequence: warm paper, fine ink, and a restrained blue signal. */
+.arch-research-framework { background: transparent; border: 0; padding: 0; overflow-x: auto; }
+.arch-main-diagram-svg { min-width: 0; }
+.arch-step-card { fill: #fffefa; stroke: #e4dfd6; stroke-width: 1; transition: fill .22s ease, stroke .22s ease, transform .22s ease; }
+.arch-step-index { fill: #d07660; font: 600 11px 'Space Grotesk', sans-serif; letter-spacing: .12em; }
+.arch-step-kicker { fill: #6f7b86; font: 600 10px 'Space Grotesk', sans-serif; letter-spacing: .16em; }
+.arch-step-drawing { stroke: #34495c; stroke-width: 1.5; }
+.arch-step-accent-line { stroke: #557b9c; }
+.arch-step-soft-line { stroke: #aab4bc; }
+.arch-step-accent-fill { fill: #e9f0f4; stroke: #557b9c; stroke-width: 1.5; }
+.arch-step-title { fill: #202a33; font: 500 15px 'Space Grotesk', sans-serif; letter-spacing: -.02em; }
+.arch-step-copy { fill: #69737c; font: 400 11px 'Space Grotesk', sans-serif; }
+.arch-step-link { fill: #557b9c; font: 600 9px 'Space Grotesk', sans-serif; letter-spacing: .11em; }
+.arch-diag-node:hover .arch-step-card,
+.arch-diag-node:focus .arch-step-card { fill: #f8f5ee; stroke: #bac6cf; }
+.arch-diag-synthesis { cursor: pointer; }
+.arch-diag-synthesis:hover .arch-step-card-final,
+.arch-diag-synthesis:focus .arch-step-card-final { fill: #f2f6f7; stroke: #557b9c; }
+@media (max-width: 900px) {
+  .arch-main-diagram-svg { min-width: 960px; }
+}
