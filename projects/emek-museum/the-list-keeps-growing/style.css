@@ -143,7 +143,7 @@ body.is-dragging {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    gap: 0.12em 0.28em;
+    gap: 0.38em 0.58em;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -173,7 +173,7 @@ body.is-dragging {
 
 #name-mosaic li:not(:last-child)::after {
     content: '.';
-    margin-left: 0.22em;
+    margin-left: 0.16em;
     color: rgba(245, 245, 242, 0.38);
 }
 
