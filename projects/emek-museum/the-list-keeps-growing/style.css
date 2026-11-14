@@ -20,7 +20,26 @@ body {
 main {
     width: min(100%, 900px);
     margin: 0 auto;
-    padding: 7vh clamp(24px, 8vw, 112px) 15vh;
+    padding: 104px clamp(24px, 8vw, 112px) 15vh;
+}
+
+.archive-back {
+    position: fixed;
+    z-index: 1;
+    top: 20px;
+    left: 20px;
+    padding: 8px 12px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.archive-back:hover,
+.archive-back:focus-visible {
+    background: #111;
+    color: #fff;
 }
 
 #name-list {
