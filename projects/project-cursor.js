@@ -484,6 +484,18 @@
     window.openUniversalFullscreenImage = realOpenLightbox;
     window.closeLightboxDirect = closeAnyActiveLightbox;
 
+    // Close from the earliest pointer event so clicks always dismiss the viewer,
+    // even when a project page has another click handler that stops propagation.
+    window.addEventListener('pointerdown', function(e) {
+        const activeModal = document.querySelector(
+            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
+        );
+        if (!activeModal) return;
+        e.preventDefault();
+        e.stopPropagation();
+        closeAnyActiveLightbox(e);
+    }, true);
+
     // Capture-phase click:
     // 1. If lightbox is currently open: clicking close button or anywhere on screen (image, wrapper, backdrop) closes it
     // 2. If lightbox is closed: clicking ANY image or drawing card across the project zooms it to fullscreen!

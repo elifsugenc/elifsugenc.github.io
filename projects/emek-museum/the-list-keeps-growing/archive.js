@@ -962,7 +962,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     const readingSection = document.getElementById('archive-reading');
     const resumeAfter = 5000;
     const nameStepDelay = 6000;
-    let activeIndex = 0;
+    let activeIndex = -1;
     let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + 1800;
     let autoTimer = 0;
     let wheelLocked = false;
@@ -1032,8 +1032,15 @@ Recep Çolakoğlu`.trim().split('\n'),
         if (programmaticScroll || !inReadingSection()) return;
         // Keep the focused name in sync when visitors drag the browser scrollbar.
         const listTop = list.getBoundingClientRect().top + window.scrollY;
+        const viewportCenter = window.scrollY + window.innerHeight / 2;
+        if (viewportCenter < listTop) {
+            activeIndex = -1;
+            readingSection.classList.remove('has-selection');
+            readingDetail?.setAttribute('aria-hidden', 'true');
+            return;
+        }
         const nearest = Math.max(0, Math.min(ARCHIVE_RECORDS.length - 1,
-            Math.round((window.scrollY + window.innerHeight / 2 - listTop) / window.innerHeight)));
+            Math.round((viewportCenter - listTop) / window.innerHeight)));
         if (nearest !== activeIndex) {
             activeIndex = nearest;
             showRecord(activeIndex, readingDetail);

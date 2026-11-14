@@ -139,6 +139,21 @@ main {
     scroll-snap-align: center;
 }
 
+.archive-opening {
+    display: grid;
+    min-height: calc(100svh - 90px);
+    grid-column: 1;
+    place-items: center;
+    color: #f5f5f2;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.65rem, 4.5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
 #reading-detail {
     position: sticky;
     top: 38vh;
