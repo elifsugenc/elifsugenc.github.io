@@ -12251,3 +12251,13 @@ img, picture, figure, canvas, svg,
 @media (max-width: 900px) {
   .arch-main-diagram-svg { min-width: 960px; }
 }
+
+/* Keep the methodology plate and every step card explicitly white. */
+.arch-research-framework,
+.arch-main-diagram-wrap { background: #ffffff !important; }
+.arch-main-diagram-svg .arch-step-card,
+.arch-main-diagram-svg .arch-step-card-final { fill: #ffffff !important; }
+.arch-diag-node:hover .arch-step-card,
+.arch-diag-node:focus .arch-step-card,
+.arch-diag-synthesis:hover .arch-step-card-final,
+.arch-diag-synthesis:focus .arch-step-card-final { fill: #ffffff !important; }
