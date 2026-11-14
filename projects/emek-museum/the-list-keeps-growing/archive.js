@@ -375,7 +375,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join('');
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const speed = 5; // pixels per second
+    const speed = 0.8; // pixels per second: deliberately almost imperceptible
     const resumeAfter = 2500;
     let pausedUntil = reducedMotion.matches ? Infinity : 0;
     let lastFrame = 0;
