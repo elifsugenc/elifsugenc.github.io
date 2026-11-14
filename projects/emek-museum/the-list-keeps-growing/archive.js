@@ -376,18 +376,23 @@ Recep Çolakoğlu`.trim().split('\n'),
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const speed = 0.8; // pixels per second: deliberately almost imperceptible
-    const resumeAfter = 2500;
-    let pausedUntil = reducedMotion.matches ? Infinity : 0;
+    const startDelay = 1800;
+    const resumeAfter = 4000;
+    let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + startDelay;
     let lastFrame = 0;
+    let reachedEnd = false;
 
     function pauseTemporarily() {
-        if (reducedMotion.matches) return;
+        if (reducedMotion.matches || reachedEnd) return;
         pausedUntil = performance.now() + resumeAfter;
     }
 
     window.addEventListener('wheel', pauseTemporarily, { passive: true });
-    window.addEventListener('touchstart', pauseTemporarily, { passive: true });
-    window.addEventListener('pointerdown', pauseTemporarily, { passive: true });
+    window.addEventListener('touchmove', pauseTemporarily, { passive: true });
+    window.addEventListener('pointerdown', (event) => {
+        // Pause when the visitor grabs the browser's vertical scrollbar.
+        if (event.clientX >= document.documentElement.clientWidth) pauseTemporarily();
+    }, { passive: true });
     window.addEventListener('keydown', (event) => {
         if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
             pauseTemporarily();
@@ -395,7 +400,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     });
     reducedMotion.addEventListener('change', (event) => {
         if (event.matches) pausedUntil = Infinity;
-        else pausedUntil = performance.now() + resumeAfter;
+        else if (!reachedEnd) pausedUntil = performance.now() + startDelay;
     });
 
     function drift(timestamp) {
@@ -404,15 +409,16 @@ Recep Çolakoğlu`.trim().split('\n'),
         lastFrame = timestamp;
 
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (maxScroll <= 0) {
-            requestAnimationFrame(drift);
+        if (maxScroll <= 0) return requestAnimationFrame(drift);
+
+        if (window.scrollY >= maxScroll - 0.5) {
+            reachedEnd = true;
             return;
         }
 
-        if (timestamp >= pausedUntil && window.scrollY < maxScroll) {
-            window.scrollBy(0, speed * elapsed);
+        if (timestamp >= pausedUntil) {
+            window.scrollBy(0, Math.min(speed * elapsed, maxScroll - window.scrollY));
         }
-
         requestAnimationFrame(drift);
     }
 
