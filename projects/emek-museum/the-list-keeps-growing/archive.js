@@ -373,6 +373,8 @@ Recep Çolakoğlu`.trim().split('\n'),
     if (!list) return;
 
     list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join('');
+    const mosaic = document.getElementById('name-mosaic');
+    if (mosaic) mosaic.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join('');
     const archiveEnd = document.getElementById('archive-end');
     if (archiveEnd) {
         archiveEnd.textContent = `${ARCHIVE_NAMES.length} names recorded. Countless more remain unrecorded.`;
@@ -385,6 +387,10 @@ Recep Çolakoğlu`.trim().split('\n'),
     let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + startDelay;
     let lastFrame = 0;
     let reachedEnd = false;
+    let isDragging = false;
+    let dragPointerId = null;
+    let dragStartY = 0;
+    let dragStartScrollY = 0;
 
     function pauseTemporarily() {
         if (reducedMotion.matches || reachedEnd) return;
@@ -397,6 +403,35 @@ Recep Çolakoğlu`.trim().split('\n'),
         // Pause when the visitor grabs the browser's vertical scrollbar.
         if (event.clientX >= document.documentElement.clientWidth) pauseTemporarily();
     }, { passive: true });
+
+    const archiveMain = document.querySelector('main');
+    archiveMain?.addEventListener('pointerdown', (event) => {
+        if (event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('a')) return;
+        isDragging = true;
+        dragPointerId = event.pointerId;
+        dragStartY = event.clientY;
+        dragStartScrollY = window.scrollY;
+        archiveMain.setPointerCapture(event.pointerId);
+        document.body.classList.add('is-dragging');
+        event.preventDefault();
+    });
+
+    archiveMain?.addEventListener('pointermove', (event) => {
+        if (!isDragging || event.pointerId !== dragPointerId) return;
+        window.scrollTo(0, dragStartScrollY - (event.clientY - dragStartY));
+    });
+
+    function finishDrag(event) {
+        if (!isDragging || (event && event.pointerId !== dragPointerId)) return;
+        isDragging = false;
+        dragPointerId = null;
+        document.body.classList.remove('is-dragging');
+        if (!reducedMotion.matches && !reachedEnd) pausedUntil = performance.now() + resumeAfter;
+    }
+
+    archiveMain?.addEventListener('pointerup', finishDrag);
+    archiveMain?.addEventListener('pointercancel', finishDrag);
+    archiveMain?.addEventListener('lostpointercapture', finishDrag);
     window.addEventListener('keydown', (event) => {
         if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
             pauseTemporarily();
@@ -420,7 +455,7 @@ Recep Çolakoğlu`.trim().split('\n'),
             return;
         }
 
-        if (timestamp >= pausedUntil) {
+        if (!isDragging && timestamp >= pausedUntil) {
             window.scrollBy(0, Math.min(speed * elapsed, maxScroll - window.scrollY));
         }
         requestAnimationFrame(drift);

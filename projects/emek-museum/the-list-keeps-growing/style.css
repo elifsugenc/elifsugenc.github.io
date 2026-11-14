@@ -22,6 +22,13 @@ main {
     width: min(100%, 1040px);
     margin: 0 auto;
     padding: 132px clamp(24px, 10vw, 140px) 24vh;
+    cursor: grab;
+}
+
+body.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .archive-back {
@@ -110,6 +117,49 @@ main {
     overflow-wrap: anywhere;
 }
 
+.archive-mosaic {
+    display: grid;
+    width: 100vw;
+    min-height: 100svh;
+    margin: 0 0 0 calc(50% - 50vw);
+    padding: 30px clamp(12px, 2vw, 28px);
+    place-items: center;
+}
+
+#name-mosaic {
+    display: grid;
+    width: min(100%, 1800px);
+    height: calc(100svh - 60px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(29, minmax(0, 1fr));
+    gap: clamp(2px, 0.45vw, 7px) clamp(3px, 0.65vw, 10px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#name-mosaic li {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    place-items: center;
+    color: rgba(245, 245, 242, 0.68);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(0.48rem, 0.72vw, 0.72rem);
+    line-height: 1.05;
+    text-align: center;
+    overflow-wrap: anywhere;
+    transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+#name-mosaic li:hover {
+    z-index: 1;
+    background: #f5f5f2;
+    color: #050505;
+    transform: scale(1.15);
+}
+
 .archive-end {
     margin-top: clamp(84px, 16vh, 180px);
     padding: 30px 0 12vh;
@@ -135,6 +185,17 @@ main {
     .archive-back-arrow {
         width: 34px;
         height: 34px;
+    }
+
+    #name-mosaic {
+        height: calc(100svh - 32px);
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        grid-template-rows: repeat(43, minmax(0, 1fr));
+        gap: 2px;
+    }
+
+    #name-mosaic li {
+        font-size: clamp(0.34rem, 1.6vw, 0.48rem);
     }
 }
 
