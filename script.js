@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Strip trailing /index.html from URL bar so the URL is always clean (e.g. https://elifsugenc.github.io/ or /#constellation)
-    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('index.html')) {
-        const cleanPath = window.location.pathname.replace(/(^|\/)index\.html$/, '$1') || '/';
-        history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
-    }
+    try {
+        if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('index.html')) {
+            const cleanPath = window.location.pathname.replace(/(^|\/)index\.html$/, '$1') || '/';
+            history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+        }
+    } catch (_) {}
 
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -675,15 +677,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Synchronize browser URL hash: clean root for cluster, #constellation for constellation
         if (updateHash) {
-            if (isTargetConstellation) {
-                if (window.location.hash !== '#constellation') {
-                    history.pushState(null, '', '#constellation');
+            try {
+                if (isTargetConstellation) {
+                    if (window.location.hash !== '#constellation') {
+                        history.pushState(null, '', '#constellation');
+                    }
+                } else {
+                    if (window.location.hash === '#constellation' || window.location.hash === '#projects') {
+                        history.pushState(null, '', window.location.pathname + window.location.search);
+                    }
                 }
-            } else {
-                if (window.location.hash === '#constellation' || window.location.hash === '#projects') {
-                    history.pushState(null, '', window.location.pathname + window.location.search);
-                }
-            }
+            } catch (_) {}
         }
 
         // Manage 3-corner gentle pulse emphasis (3-4 times on entering Constellation)
@@ -1790,7 +1794,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (updateHash) {
-            history.pushState(null, '', targetTabId === 'main' ? window.location.pathname : `#${targetTabId}`);
+            try {
+                history.pushState(null, '', targetTabId === 'main' ? window.location.pathname : `#${targetTabId}`);
+            } catch (_) {
+                try {
+                    window.location.hash = targetTabId === 'main' ? '' : `#${targetTabId}`;
+                } catch (_) {}
+            }
         }
 
         // Close project modal or merope story modal if open
@@ -2592,7 +2602,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
             const curHash = window.location.hash.replace(/^#/, '').trim();
             if (portfolioProjectSlugs.includes(curHash) || curHash.startsWith('project-') || curHash.startsWith('modal-') || curHash.startsWith('card-') || curHash === 'projects') {
-                history.replaceState(null, '', '#constellation');
+                try {
+                    history.replaceState(null, '', '#constellation');
+                } catch (_) {}
             }
         }
         window.closeProjectModal = closeProjectModal;
@@ -2632,7 +2644,9 @@ document.addEventListener('DOMContentLoaded', () => {
         projectModal.addEventListener('click', (e) => {
             const standaloneBtn = e.target.closest('.modal-open-standalone-btn');
             if (standaloneBtn && window.lastOpenedProjectSlug) {
-                history.replaceState(null, '', '#' + window.lastOpenedProjectSlug);
+                try {
+                    history.replaceState(null, '', '#' + window.lastOpenedProjectSlug);
+                } catch (_) {}
             }
         });
 
