@@ -964,10 +964,11 @@ Recep Çolakoğlu`.trim().split('\n'),
     const readingSection = document.getElementById('archive-reading');
     const resumeAfter = 5000;
     const nameStepDelay = 6000;
+    const nameScrollDuration = 950;
     let activeIndex = -1;
     let pausedUntil = reducedMotion.matches ? Infinity : performance.now() + 1800;
     let autoTimer = 0;
-    let wheelLocked = false;
+    let navigationLocked = false;
     let programmaticScroll = false;
     let finishTimer = 0;
 
@@ -975,8 +976,12 @@ Recep Çolakoğlu`.trim().split('\n'),
         activeIndex = Math.max(0, Math.min(ARCHIVE_RECORDS.length - 1, index));
         showRecord(activeIndex, readingDetail);
         programmaticScroll = true;
+        navigationLocked = true;
         list.children[activeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        window.setTimeout(() => { programmaticScroll = false; }, 900);
+        window.setTimeout(() => {
+            programmaticScroll = false;
+            navigationLocked = false;
+        }, nameScrollDuration);
         if (userInitiated) {
             pausedUntil = performance.now() + resumeAfter;
             scheduleAuto(resumeAfter);
@@ -1001,10 +1006,8 @@ Recep Çolakoğlu`.trim().split('\n'),
         if (!direction || (direction < 0 && activeIndex === 0)
             || (direction > 0 && activeIndex === ARCHIVE_RECORDS.length - 1)) return;
         event.preventDefault();
-        if (wheelLocked) return;
-        wheelLocked = true;
+        if (navigationLocked) return;
         stepName(direction);
-        window.setTimeout(() => { wheelLocked = false; }, 520);
     }, { passive: false });
 
     let touchStartY = null;
@@ -1016,6 +1019,10 @@ Recep Çolakoğlu`.trim().split('\n'),
         const delta = touchStartY - (event.changedTouches[0]?.clientY ?? touchStartY);
         touchStartY = null;
         if (Math.abs(delta) < 28) return;
+        if (navigationLocked) {
+            event.preventDefault();
+            return;
+        }
         const direction = Math.sign(delta);
         if (stepName(direction)) {
             event.preventDefault();
@@ -1027,6 +1034,10 @@ Recep Çolakoğlu`.trim().split('\n'),
     readingSection?.addEventListener('keydown', (event) => {
         if (!['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '].includes(event.key)) return;
         const direction = ['ArrowDown', 'PageDown', ' '].includes(event.key) ? 1 : -1;
+        if (navigationLocked) {
+            event.preventDefault();
+            return;
+        }
         if (stepName(direction)) event.preventDefault();
     });
 
