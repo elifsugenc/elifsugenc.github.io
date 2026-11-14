@@ -11,6 +11,8 @@
             incidentTime: '19:50',
             namesSource: 'https://www.zhaber.com.tr/3-mart-1992-kozlu-faciasinda-sehit-olan-263-maden-isçisinin-isimleri',
             timeSource: 'https://www.zhaber.com.tr/3-mart-1992-kozlu-faciasinda-sehit-olan-263-maden-isçisinin-isimleri',
+            ageContext: 'Individual age not verified · event range 25–47 years, average 35',
+            ageContextSource: 'https://www.elmas67.com/kozlu-grizu-patlamasinda-hayatini-kaybeden-maden-iscileri',
             names: `
 Celal KAPLANGİL
 Muzaffer TURKÖLÇ
@@ -746,6 +748,8 @@ Recep Çolakoğlu`.trim().split('\n'),
         incidentTime: group.incidentTime,
         age: group.ages?.[name] ?? null,
         ageSource: group.ageSources?.[name] || group.personSources?.[name] || null,
+        ageContext: group.ageContext || null,
+        ageContextSource: group.ageContextSource || null,
         namesSource: group.personSources?.[name] || group.namesSource,
         timeSource: group.timeSource,
     })));
@@ -783,12 +787,15 @@ Recep Çolakoğlu`.trim().split('\n'),
         panel.querySelector('[data-detail-field="date"]').textContent = new Intl.DateTimeFormat('en', {
             day: 'numeric', month: 'long', year: 'numeric',
         }).format(deathDate);
-        panel.querySelector('[data-detail-field="age"]').textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
+        panel.querySelector('[data-detail-field="age"]').textContent = record.age
+            ? `${record.age} years`
+            : record.ageContext || 'Not verified in this archive';
         panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
         panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
         const ageSource = panel.querySelector('[data-detail-source="age"]');
-        ageSource.hidden = !record.ageSource;
-        if (record.ageSource) ageSource.href = record.ageSource;
+        const ageSourceHref = record.ageSource || record.ageContextSource;
+        ageSource.hidden = !ageSourceHref;
+        if (ageSourceHref) ageSource.href = ageSourceHref;
         panel.querySelector('[data-detail-source="time"]').href = record.timeSource;
         panel.setAttribute('aria-hidden', 'false');
         panel.closest('.archive-reading, .archive-mosaic-stage')?.classList.add('has-selection');
