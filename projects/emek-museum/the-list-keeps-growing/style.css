@@ -118,12 +118,22 @@ body.is-dragging {
 }
 
 .archive-mosaic {
-    display: grid;
+    position: relative;
+    display: block;
     width: 100vw;
-    min-height: 100svh;
-    margin: 0 0 0 calc(50% - 50vw);
+    height: 200svh;
+    margin-left: calc(50% - 50vw);
+}
+
+.archive-mosaic-stage {
+    position: sticky;
+    top: 0;
+    display: grid;
+    width: 100%;
+    height: 100svh;
     padding: 30px clamp(12px, 2vw, 28px);
     place-items: center;
+    overflow: hidden;
 }
 
 #name-mosaic {
@@ -136,6 +146,15 @@ body.is-dragging {
     margin: 0;
     padding: 0;
     list-style: none;
+    opacity: var(--wall-opacity, 0);
+    transform: translateY(var(--wall-shift, 48px)) scale(var(--wall-scale, 0.9));
+    filter: blur(var(--wall-blur, 7px));
+    pointer-events: none;
+    will-change: opacity, transform, filter;
+}
+
+.archive-mosaic-stage.is-interactive #name-mosaic {
+    pointer-events: auto;
 }
 
 #name-mosaic li {

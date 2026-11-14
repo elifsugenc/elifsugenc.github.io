@@ -380,6 +380,34 @@ Recep Çolakoğlu`.trim().split('\n'),
         archiveEnd.textContent = `${ARCHIVE_NAMES.length} names recorded. Countless more remain unrecorded.`;
     }
 
+    const mosaicSection = document.getElementById('archive-mosaic');
+    const mosaicStage = document.getElementById('archive-mosaic-stage');
+    let wallFrame = 0;
+
+    function updateMosaicTransition() {
+        wallFrame = 0;
+        if (!mosaicSection || !mosaicStage) return;
+        const travel = mosaicSection.offsetHeight - window.innerHeight;
+        const progress = travel > 0
+            ? Math.max(0, Math.min(1, -mosaicSection.getBoundingClientRect().top / travel))
+            : 1;
+        const reveal = Math.max(0, Math.min(1, progress / 0.7));
+
+        mosaicStage.style.setProperty('--wall-opacity', reveal.toFixed(3));
+        mosaicStage.style.setProperty('--wall-scale', (0.9 + reveal * 0.1).toFixed(3));
+        mosaicStage.style.setProperty('--wall-shift', `${(1 - reveal) * 48}px`);
+        mosaicStage.style.setProperty('--wall-blur', `${(1 - reveal) * 7}px`);
+        mosaicStage.classList.toggle('is-interactive', reveal > 0.92);
+    }
+
+    function scheduleMosaicTransition() {
+        if (!wallFrame) wallFrame = requestAnimationFrame(updateMosaicTransition);
+    }
+
+    window.addEventListener('scroll', scheduleMosaicTransition, { passive: true });
+    window.addEventListener('resize', scheduleMosaicTransition, { passive: true });
+    scheduleMosaicTransition();
+
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const speed = 0.8; // pixels per second: deliberately almost imperceptible
     const startDelay = 1800;
