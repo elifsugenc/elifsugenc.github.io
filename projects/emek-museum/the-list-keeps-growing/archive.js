@@ -783,7 +783,6 @@ Recep Çolakoğlu`.trim().split('\n'),
         panel.querySelector('[data-detail-field="date"]').textContent = new Intl.DateTimeFormat('en', {
             day: 'numeric', month: 'long', year: 'numeric',
         }).format(deathDate);
-        panel.querySelector('[data-detail-field="year"]').textContent = String(deathDate.getFullYear());
         panel.querySelector('[data-detail-field="age"]').textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
         panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
         panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
