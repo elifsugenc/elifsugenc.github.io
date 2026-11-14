@@ -282,6 +282,24 @@ Latif KANGAL`.trim().split('\n'),
             incidentTime: '15:10',
             namesSource: 'https://bianet.org/haber/21-durusmada-301-somali-madenciyi-isimleriyle-aniyoruz-195528',
             timeSource: 'https://www.barobirlik.org.tr/dosyalar/duyurular/20141112_somamadenfaciasipdf.pdf',
+            ages: {
+                'İbrahim Sungur': 34,
+                'Mehmet Azman': 27,
+                'Uğur Çolak': 26,
+                'Ali Şahin': 23,
+                'İbrahim Duman': 26,
+                'Saadettin Yılmaz': 41,
+                'Zühtü Yıldırım': 28,
+            },
+            ageSources: {
+                'İbrahim Sungur': 'https://www.aa.com.tr/tr/turkiye/turkiye-maden-faciasinda-hayatini-kaybeden-evlatlarini-ugurluyor/159370',
+                'Mehmet Azman': 'https://www.aa.com.tr/tr/turkiye/o-gun-maden-degil-bizim-icimiz-goctu/1475763',
+                'Uğur Çolak': 'https://www.aa.com.tr/tr/turkiye/o-gun-maden-degil-bizim-icimiz-goctu/1475763',
+                'Ali Şahin': 'https://www.aa.com.tr/tr/yasam/somada-acilar-ilk-gunku-gibi/816057',
+                'İbrahim Duman': 'https://h.aa.com.tr/tr/turkiye/soma-sehitleri-aniliyor/571523',
+                'Saadettin Yılmaz': 'https://www.aa.com.tr/tr/yasam/somali-kadinlarin-acisi-ilk-gunku-gibi/814390',
+                'Zühtü Yıldırım': 'https://www.aa.com.tr/tr/yasam/somada-acilar-ilk-gunku-gibi/816057',
+            },
             names: `
 Abdullah İnal
 Abdullah Özdemir
@@ -591,6 +609,8 @@ Zühtü Yıldırım`.trim().split('\n'),
             incidentTime: '12:15',
             namesSource: 'https://bianet.org/haber/ermenek-davasinda-saniklara-ceza-degil-odul-verildi-176950',
             timeSource: 'https://www.karaman.gov.tr/ermenek-te-maden-kazasi',
+            ages: { 'Ömer Cansu': 22 },
+            ageSources: { 'Ömer Cansu': 'https://www.haberturk.com/gundem/haber/1015364-o-madencinin-kimligi-belirlendi' },
             names: `
 Tezcan Gökçe
 Hasan Tuncer
@@ -628,6 +648,28 @@ Bahir Üzer`.trim().split('\n'),
             ages: {
                 'Taner Şen': 30,
                 'Ayhan Akgül': 38,
+                'Murat Ergin': 37,
+                'Deniz Baykal': 38,
+                'Soner Ak': 32,
+                'Serhat Kahraman': 34,
+                'Öner Yıldız': 38,
+                'Şuayip Okul': 28,
+                'Rahman Özçelik': 22,
+                'Gürdal Serenli': 24,
+                'Aziz Köse': 28,
+            },
+            ageSources: {
+                'Taner Şen': 'https://genelmadenis.org.tr/sehidimiz-taner-seni-ugurladik/',
+                'Ayhan Akgül': 'https://www5.tbmm.gov.tr/tutanaklar/TUTANAK/TBMM/d27/c129/tbmm27129086.pdf',
+                'Murat Ergin': 'https://www.trthaber.com/foto-galeri/bir-madencinin-sehitlik-mertebesinde-biten-hikayesi-matematigin-tuttugu-murat/51137.html',
+                'Deniz Baykal': 'https://www.karar.com/guncel-haberler/maden-faciasinda-hayatini-kaybedenler-ugurlaniyor-ayni-koyde-iki-cenaze-1696697',
+                'Soner Ak': 'https://www.haberturk.com/tarifsiz-aci-her-bir-madencinin-hikayesi-yuregimizi-dagladi-3530701',
+                'Serhat Kahraman': 'https://www.haberturk.com/tarifsiz-aci-her-bir-madencinin-hikayesi-yuregimizi-dagladi-3530701',
+                'Öner Yıldız': 'https://www.haberturk.com/30-yil-once-grizu-patlamasindan-kurtulan-emekli-madenci-oglunun-acisini-yasadi-3530344',
+                'Şuayip Okul': 'https://artigercek.com/emek/faciada-olen-madencinin-akrabasi-1-hafta-once-bakim-zamani-geldigini-soylemisti-226945h',
+                'Rahman Özçelik': 'https://www.trthaber.com/foto-galeri/maden-iscilerine-veda/51070.html',
+                'Gürdal Serenli': 'https://www.trthaber.com/foto-galeri/maden-iscilerine-veda/51070.html',
+                'Aziz Köse': 'https://openaccess.firat.edu.tr/xmlui/bitstream/handle/11508/21025/TAM%20MET%C4%B0N-AMASRADA%20MEYDANA%20GELEN%20MADEN%20OCA%C4%9EI%20PATLAMASININ%20T%C3%9CRK%20YAZILI%20BASININDA%20YANSIMALARI.pdf?isAllowed=y&sequence=1',
             },
             names: `
 Murat Ergin
@@ -685,6 +727,11 @@ Ayhan Akgül`.trim().split('\n'),
                 'Murat Kaya': 38,
                 'Recep Çolakoğlu': 45,
             },
+            ageSources: {
+                'Cengizhan Bükrübaş': 'https://www.haberturk.com/gundem/maden-sehitlerine-veda-10-yasindaki-elif-defalarca-tabutu-optu-zonguldak-haberleri-3922251',
+                'Murat Kaya': 'https://www.haberturk.com/gundem/maden-sehitlerine-veda-10-yasindaki-elif-defalarca-tabutu-optu-zonguldak-haberleri-3922251',
+                'Recep Çolakoğlu': 'https://www.haberturk.com/gundem/maden-sehitlerine-veda-10-yasindaki-elif-defalarca-tabutu-optu-zonguldak-haberleri-3922251',
+            },
             names: `
 Cengizhan Bükrübaş
 Murat Kaya
@@ -698,6 +745,7 @@ Recep Çolakoğlu`.trim().split('\n'),
         deathDate: group.deathDates?.[name] || group.date,
         incidentTime: group.incidentTime,
         age: group.ages?.[name] ?? null,
+        ageSource: group.ageSources?.[name] || group.personSources?.[name] || null,
         namesSource: group.personSources?.[name] || group.namesSource,
         timeSource: group.timeSource,
     })));
@@ -739,6 +787,9 @@ Recep Çolakoğlu`.trim().split('\n'),
         panel.querySelector('[data-detail-field="age"]').textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
         panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
         panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
+        const ageSource = panel.querySelector('[data-detail-source="age"]');
+        ageSource.hidden = !record.ageSource;
+        if (record.ageSource) ageSource.href = record.ageSource;
         panel.querySelector('[data-detail-source="time"]').href = record.timeSource;
         panel.setAttribute('aria-hidden', 'false');
         panel.closest('.archive-reading, .archive-mosaic-stage')?.classList.add('has-selection');
