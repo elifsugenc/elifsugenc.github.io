@@ -390,6 +390,17 @@ Recep Çolakoğlu`.trim().split('\n'),
     const mosaicStage = document.getElementById('archive-mosaic-stage');
     let wallFrame = 0;
 
+    function fitMosaicToViewport() {
+        if (!mosaic) return;
+        const baseCount = 341;
+        const baseSize = Math.min(14.4, Math.max(5.2, window.innerWidth * 0.0095));
+        const countScale = Math.sqrt(baseCount / Math.max(baseCount, ARCHIVE_NAMES.length));
+        const minimumSize = window.innerWidth <= 600 ? 3.8 : 5.2;
+        mosaic.style.fontSize = `${Math.max(minimumSize, baseSize * countScale)}px`;
+    }
+
+    fitMosaicToViewport();
+
     function updateMosaicTransition() {
         wallFrame = 0;
         if (!mosaicSection || !mosaicStage) return;
@@ -411,7 +422,10 @@ Recep Çolakoğlu`.trim().split('\n'),
     }
 
     window.addEventListener('scroll', scheduleMosaicTransition, { passive: true });
-    window.addEventListener('resize', scheduleMosaicTransition, { passive: true });
+    window.addEventListener('resize', () => {
+        fitMosaicToViewport();
+        scheduleMosaicTransition();
+    }, { passive: true });
     scheduleMosaicTransition();
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
