@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="../project-shared-theme.css?v=20261113-v5">
+    <link rel="stylesheet" href="../project-shared-theme.css?v=20261114-image-only-v2">
     <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
     <script>
         window.handleProjectReturn = function(e) {
@@ -500,7 +500,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../project-cursor.js?v=20261113-v5"></script>
+    <script src="../project-cursor.js?v=20261114-image-only-v4"></script>
     <script src="../project-related.js?v=20261113-v2" defer></script>
     <script>
         // Master Presentation Sheets Data
@@ -534,28 +534,12 @@
             if (index < 0 || index >= straySheets.length) return;
             activeSheetIndex = index;
             const item = straySheets[index];
-            if (window.openLightbox) {
+            if (window.openUniversalFullscreenImage) {
+                window.openUniversalFullscreenImage(item.src, item.caption || item.title);
+            } else if (window.openLightbox) {
                 window.openLightbox(item.src, item.caption || item.title);
             }
         }
-
-        function openLightbox(src, caption) {
-            activeSheetIndex = -1;
-            if (window.openLightbox) {
-                window.openLightbox(src, caption);
-            }
-        }
-
-        function closeLightbox(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            activeSheetIndex = -1;
-            if (window.closeLightbox) {
-                window.closeLightbox();
-            }
-        }
-        window.closeLightboxDirect = closeLightbox;
-    </script>
-        });
 
         // Quicklinks active observer on scroll
         const sections = document.querySelectorAll('section[id]');

@@ -3159,15 +3159,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Capture-phase click delegator:
-    // 1. If lightbox is open: clicking ANYWHERE closes it!
+    // 1. If lightbox is open: clicking ANYWHERE (backdrop, image itself, close button) closes it!
     // 2. If lightbox is closed: clicking ANY content image opens it full screen!
     document.addEventListener('click', function(e) {
-        const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
-            if (Date.now() - openedAt < 280) return;
+            if (Date.now() - lastLightboxOpenedTime < 180) return;
             e.preventDefault();
             e.stopPropagation();
             closeAnyActiveLightbox();
