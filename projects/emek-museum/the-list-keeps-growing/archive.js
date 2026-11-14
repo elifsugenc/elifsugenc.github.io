@@ -7,6 +7,10 @@
     const ARCHIVE_GROUPS = [
         {
             date: '1992-03-03',
+            eventName: 'Kozlu mine disaster',
+            incidentTime: '19:50',
+            namesSource: 'https://www.zhaber.com.tr/3-mart-1992-kozlu-faciasinda-sehit-olan-263-maden-isçisinin-isimleri',
+            timeSource: 'https://www.zhaber.com.tr/3-mart-1992-kozlu-faciasinda-sehit-olan-263-maden-isçisinin-isimleri',
             names: `
 Celal KAPLANGİL
 Muzaffer TURKÖLÇ
@@ -274,6 +278,10 @@ Latif KANGAL`.trim().split('\n'),
         },
         {
             date: '2014-05-13',
+            eventName: 'Soma mine disaster',
+            incidentTime: '15:10',
+            namesSource: 'https://bianet.org/haber/21-durusmada-301-somali-madenciyi-isimleriyle-aniyoruz-195528',
+            timeSource: 'https://www.barobirlik.org.tr/dosyalar/duyurular/20141112_somamadenfaciasipdf.pdf',
             names: `
 Abdullah İnal
 Abdullah Özdemir
@@ -579,6 +587,10 @@ Zühtü Yıldırım`.trim().split('\n'),
         },
         {
             date: '2014-10-28',
+            eventName: 'Ermenek mine flooding',
+            incidentTime: '12:15',
+            namesSource: 'https://bianet.org/haber/ermenek-davasinda-saniklara-ceza-degil-odul-verildi-176950',
+            timeSource: 'https://www.karaman.gov.tr/ermenek-te-maden-kazasi',
             names: `
 Tezcan Gökçe
 Hasan Tuncer
@@ -601,6 +613,22 @@ Bahir Üzer`.trim().split('\n'),
         },
         {
             date: '2022-10-14',
+            eventName: 'Amasra mine explosion',
+            incidentTime: '18:15',
+            namesSource: 'https://bartinstar.com/bartinda-selalar-pes-pese-iste-maden-sehitlerimizin-isimleri/',
+            timeSource: 'https://www.aa.com.tr/tr/gundem/bartinda-maden-ocaginda-patlama/2712051',
+            deathDates: {
+                'Taner Şen': '2022-11-04',
+                'Ayhan Akgül': '2023-04-05',
+            },
+            personSources: {
+                'Taner Şen': 'https://genelmadenis.org.tr/sehidimiz-taner-seni-ugurladik/',
+                'Ayhan Akgül': 'https://www5.tbmm.gov.tr/tutanaklar/TUTANAK/TBMM/d27/c129/tbmm27129086.pdf',
+            },
+            ages: {
+                'Taner Şen': 30,
+                'Ayhan Akgül': 38,
+            },
             names: `
 Murat Ergin
 Enes Aydın
@@ -648,13 +676,32 @@ Ayhan Akgül`.trim().split('\n'),
         },
         {
             date: '2026-10-23',
+            eventName: 'Gelik mine explosion',
+            incidentTime: '10:00',
+            namesSource: 'https://www.aa.com.tr/tr/gundem/zonguldakta-maden-ocagindaki-grizu-patlamasinda-olen-3-isci-defnedildi/4099439',
+            timeSource: 'https://www.aa.com.tr/tr/gundem/zonguldakta-maden-ocagindaki-grizu-patlamasinda-3-kisi-oldu-5-kisi-yaralandi/4098203',
+            ages: {
+                'Cengizhan Bükrübaş': 25,
+                'Murat Kaya': 38,
+                'Recep Çolakoğlu': 45,
+            },
             names: `
 Cengizhan Bükrübaş
 Murat Kaya
 Recep Çolakoğlu`.trim().split('\n'),
         },
     ];
-    const ARCHIVE_NAMES = ARCHIVE_GROUPS.flatMap((group) => group.names);
+    const ARCHIVE_RECORDS = ARCHIVE_GROUPS.flatMap((group) => group.names.map((name) => ({
+        name,
+        eventName: group.eventName,
+        eventDate: group.date,
+        deathDate: group.deathDates?.[name] || group.date,
+        incidentTime: group.incidentTime,
+        age: group.ages?.[name] ?? null,
+        namesSource: group.personSources?.[name] || group.namesSource,
+        timeSource: group.timeSource,
+    })));
+    const ARCHIVE_NAMES = ARCHIVE_RECORDS.map((record) => record.name);
 
     const list = document.getElementById('name-list');
     if (!list) return;
@@ -667,7 +714,67 @@ Recep Çolakoğlu`.trim().split('\n'),
 
     list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${displayName(name)}</li>`).join('');
     const mosaic = document.getElementById('name-mosaic');
-    if (mosaic) mosaic.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${displayName(name)}</li>`).join(' ');
+    if (mosaic) {
+        mosaic.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
+            const name = displayName(record.name);
+            return `<li tabindex="${index === 0 ? '0' : '-1'}" data-record-index="${index}" aria-label="${name}; memorial record">${name}</li>`;
+        }).join(' ');
+    }
+
+    const detailPanel = document.getElementById('memorial-detail');
+    const detailName = document.getElementById('detail-name');
+    const detailEvent = document.getElementById('detail-event');
+    const detailDate = document.getElementById('detail-date');
+    const detailYear = document.getElementById('detail-year');
+    const detailAge = document.getElementById('detail-age');
+    const detailTime = document.getElementById('detail-time');
+    const detailNameSource = document.getElementById('detail-name-source');
+    const detailTimeSource = document.getElementById('detail-time-source');
+
+    function showRecord(index) {
+        const record = ARCHIVE_RECORDS[index];
+        if (!record || !detailPanel) return;
+
+        const deathDate = new Date(`${record.deathDate}T12:00:00`);
+        detailName.textContent = displayName(record.name);
+        detailEvent.textContent = record.eventName;
+        detailDate.textContent = new Intl.DateTimeFormat('en', {
+            day: 'numeric', month: 'long', year: 'numeric',
+        }).format(deathDate);
+        detailYear.textContent = String(deathDate.getFullYear());
+        detailAge.textContent = record.age ? `${record.age} years` : 'Not verified in this archive';
+        detailTime.textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
+        detailNameSource.href = record.namesSource;
+        detailTimeSource.href = record.timeSource;
+        detailPanel.setAttribute('aria-hidden', 'false');
+        mosaicStage?.classList.add('has-selection');
+    }
+
+    function recordFromEvent(event) {
+        const item = event.target.closest('[data-record-index]');
+        if (item) showRecord(Number(item.dataset.recordIndex));
+    }
+
+    mosaic?.addEventListener('pointerover', recordFromEvent);
+    mosaic?.addEventListener('focusin', recordFromEvent);
+    mosaic?.addEventListener('click', recordFromEvent);
+    mosaic?.addEventListener('keydown', (event) => {
+        const current = event.target.closest('[data-record-index]');
+        if (!current) return;
+        const currentIndex = Number(current.dataset.recordIndex);
+        let nextIndex = currentIndex;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = Math.min(ARCHIVE_RECORDS.length - 1, currentIndex + 1);
+        else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = Math.max(0, currentIndex - 1);
+        else if (event.key === 'Home') nextIndex = 0;
+        else if (event.key === 'End') nextIndex = ARCHIVE_RECORDS.length - 1;
+        else return;
+
+        event.preventDefault();
+        current.tabIndex = -1;
+        const next = mosaic.querySelector(`[data-record-index="${nextIndex}"]`);
+        next.tabIndex = 0;
+        next.focus();
+    });
     const archiveEnd = document.getElementById('archive-end');
     if (archiveEnd) {
         archiveEnd.textContent = `${ARCHIVE_NAMES.length} names recorded. Countless more remain unrecorded.`;
@@ -678,12 +785,24 @@ Recep Çolakoğlu`.trim().split('\n'),
     let wallFrame = 0;
 
     function fitMosaicToViewport() {
-        if (!mosaic) return;
-        const baseCount = 341;
-        const baseSize = Math.min(14.4, Math.max(5.2, window.innerWidth * 0.0095));
-        const countScale = Math.sqrt(baseCount / Math.max(baseCount, ARCHIVE_NAMES.length));
-        const minimumSize = window.innerWidth <= 600 ? 3.8 : 5.2;
-        mosaic.style.fontSize = `${Math.max(minimumSize, baseSize * countScale)}px`;
+        if (!mosaic || !mosaicStage) return;
+        const stageStyle = getComputedStyle(mosaicStage);
+        const availableHeight = mosaicStage.clientHeight
+            - parseFloat(stageStyle.paddingTop)
+            - parseFloat(stageStyle.paddingBottom);
+        const baseSize = Math.min(20, Math.max(5, mosaic.clientWidth * 0.015));
+        const minimumSize = window.innerWidth <= 600 ? 3.2 : 5;
+        let low = minimumSize;
+        let high = baseSize;
+
+        for (let attempt = 0; attempt < 14; attempt += 1) {
+            const size = (low + high) / 2;
+            mosaic.style.fontSize = `${size}px`;
+            if (mosaic.scrollHeight <= availableHeight) low = size;
+            else high = size;
+        }
+
+        mosaic.style.fontSize = `${low}px`;
     }
 
     fitMosaicToViewport();
@@ -701,7 +820,13 @@ Recep Çolakoğlu`.trim().split('\n'),
         mosaicStage.style.setProperty('--wall-scale', (0.9 + reveal * 0.1).toFixed(3));
         mosaicStage.style.setProperty('--wall-shift', `${(1 - reveal) * 48}px`);
         mosaicStage.style.setProperty('--wall-blur', `${(1 - reveal) * 7}px`);
-        mosaicStage.classList.toggle('is-interactive', reveal > 0.92);
+        const isInteractive = reveal > 0.92;
+        mosaicStage.classList.toggle('is-interactive', isInteractive);
+        mosaic?.setAttribute('aria-hidden', isInteractive ? 'false' : 'true');
+        if (!isInteractive) {
+            mosaicStage.classList.remove('has-selection');
+            detailPanel?.setAttribute('aria-hidden', 'true');
+        }
     }
 
     function scheduleMosaicTransition() {

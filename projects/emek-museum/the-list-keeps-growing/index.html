@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#050505">
     <title>Emek Museum — Name Archive</title>
-    <link rel="stylesheet" href="./style.css?v=20261114-dark-9">
+    <link rel="stylesheet" href="./style.css?v=20261114-dark-11">
 </head>
 <body>
     <a class="archive-back" href="../" aria-label="Return to Emek Museum">
@@ -17,10 +17,25 @@
         <footer id="archive-end" class="archive-end" aria-live="polite"></footer>
         <section id="archive-mosaic" class="archive-mosaic" aria-label="Names arranged as a full-screen archive wall">
             <div id="archive-mosaic-stage" class="archive-mosaic-stage">
-                <ul id="name-mosaic" aria-label="Memorial names wall"></ul>
+                <ul id="name-mosaic" aria-label="Memorial names wall" aria-hidden="true"></ul>
+                <aside id="memorial-detail" class="memorial-detail" aria-live="polite" aria-atomic="true" aria-hidden="true">
+                    <p class="detail-kicker">MEMORIAL RECORD</p>
+                    <h2 id="detail-name"></h2>
+                    <dl>
+                        <div><dt>EVENT</dt><dd id="detail-event"></dd></div>
+                        <div><dt>DATE OF DEATH</dt><dd id="detail-date"></dd></div>
+                        <div><dt>YEAR</dt><dd id="detail-year"></dd></div>
+                        <div><dt>AGE</dt><dd id="detail-age"></dd></div>
+                        <div><dt>TIME</dt><dd id="detail-time"></dd></div>
+                    </dl>
+                    <div class="detail-sources">
+                        <a id="detail-name-source" target="_blank" rel="noopener noreferrer">NAME SOURCE ↗</a>
+                        <a id="detail-time-source" target="_blank" rel="noopener noreferrer">EVENT TIME ↗</a>
+                    </div>
+                </aside>
             </div>
         </section>
     </main>
-    <script src="./archive.js?v=20261114-names-10" defer></script>
+    <script src="./archive.js?v=20261114-names-12" defer></script>
 </body>
 </html>
