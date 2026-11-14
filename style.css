@@ -10546,6 +10546,8 @@ body {
     object-fit: contain;
     mix-blend-mode: multiply;
     transition: transform 0.25s ease;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .cluster-brand-node:hover .brand-logo-gif {

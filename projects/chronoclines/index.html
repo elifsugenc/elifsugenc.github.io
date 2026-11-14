@@ -121,7 +121,7 @@
 
             <!-- Hero Showcase Image -->
             <div class="hero-visual-card zoomable-image-container" style="margin-top: 28px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); cursor: pointer;" onclick="openLightbox('./assets/chronoclines-hero-render.jpg')">
-                <img src="./assets/chronoclines-hero-render.jpg" alt="Chronoclines Museum Exterior Render over Historic Balat Walls" class="hero-visual-img" style="width: 100%; height: auto; display: block;">
+                <img src="./assets/chronoclines-hero-render.jpg" alt="Chronoclines Museum Exterior Render over Historic Balat Walls" class="hero-visual-img" style="width: 100%; height: auto; display: block;" loading="eager" decoding="async">
             </div>
         </section>
 
@@ -146,14 +146,14 @@
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 20px;">
                 <div class="detail-card zoomable-image-container" style="padding: 14px; cursor: pointer;" onclick="openLightbox('./assets/chronoclines-sheet-01.jpg')">
-                    <img src="./assets/chronoclines-sheet-01.jpg" alt="Chronoclines Sheet 01 — Balat Site Analysis, Temporal Ramp &amp; Isometric Diagrams" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy">
+                    <img src="./assets/chronoclines-sheet-01.jpg" alt="Chronoclines Sheet 01 — Balat Site Analysis, Temporal Ramp &amp; Isometric Diagrams" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy" decoding="async">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: #475569;">
                         <span>SHEET 01 // BALAT SITE ANALYSIS &amp; TEMPORAL INCLINE</span>
                         <span>[ BÜYÜT &nearr; ]</span>
                     </div>
                 </div>
                 <div class="detail-card zoomable-image-container" style="padding: 14px; cursor: pointer;" onclick="openLightbox('./assets/chronoclines-sheet-02.jpg')">
-                    <img src="./assets/chronoclines-sheet-02.jpg" alt="Chronoclines Sheet 02 — Floor Plans, Public Bazaar Plaza &amp; Interior Ramp Perspectives" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy">
+                    <img src="./assets/chronoclines-sheet-02.jpg" alt="Chronoclines Sheet 02 — Floor Plans, Public Bazaar Plaza &amp; Interior Ramp Perspectives" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy" decoding="async">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: #475569;">
                         <span>SHEET 02 // FLOOR PLANS, PUBLIC PLAZA &amp; SPATIAL RENDERS</span>
                         <span>[ BÜYÜT &nearr; ]</span>
@@ -169,7 +169,7 @@
     <div id="image-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
         <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
         <div class="lightbox-img-wrapper" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" alt="Enlarged view" onclick="closeLightbox(event)">
+            <img id="lightbox-img" src="" alt="Enlarged view" onclick="closeLightbox(event)" decoding="async">
             <p id="lightbox-caption" class="lightbox-caption"></p>
         </div>
     </div>

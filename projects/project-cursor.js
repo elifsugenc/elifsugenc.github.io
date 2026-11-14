@@ -156,16 +156,9 @@
             }
         }
 
-        // On scroll: maintain exact viewport position and re-evaluate hover element
+        // On scroll: position:fixed keeps cursor locked to screen. Zero forced layout reflows!
         window.addEventListener('scroll', () => {
-            if (cursorX >= 0 && cursorY >= 0) {
-                if (!ticking) {
-                    requestAnimationFrame(updatePosition);
-                    ticking = true;
-                }
-                const el = document.elementFromPoint(cursorX, cursorY);
-                updateCursorHoverState(el);
-            }
+            // Hover states update naturally via mouseover/mousemove without layout thrashing
         }, { passive: true });
 
         // Hide when mouse exits window
