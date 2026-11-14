@@ -372,9 +372,15 @@ Recep Çolakoğlu`.trim().split('\n'),
     const list = document.getElementById('name-list');
     if (!list) return;
 
-    list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join('');
+    function displayName(name) {
+        return name.toLocaleLowerCase('tr-TR').replace(/(^|[\s.-])(\p{L})/gu, (_, separator, letter) => (
+            separator + letter.toLocaleUpperCase('tr-TR')
+        ));
+    }
+
+    list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${displayName(name)}</li>`).join('');
     const mosaic = document.getElementById('name-mosaic');
-    if (mosaic) mosaic.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join(' ');
+    if (mosaic) mosaic.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${displayName(name)}</li>`).join(' ');
     const archiveEnd = document.getElementById('archive-end');
     if (archiveEnd) {
         archiveEnd.textContent = `${ARCHIVE_NAMES.length} names recorded. Countless more remain unrecorded.`;
