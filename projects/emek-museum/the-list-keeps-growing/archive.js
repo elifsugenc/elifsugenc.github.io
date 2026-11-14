@@ -882,7 +882,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     let autoTimer = 0;
     let wheelLocked = false;
     let programmaticScroll = false;
-    let wallDriftFrame = 0;
+    let finishTimer = 0;
 
     function moveToName(index, userInitiated = false) {
         activeIndex = Math.max(0, Math.min(ARCHIVE_RECORDS.length - 1, index));
@@ -955,21 +955,6 @@ Recep Çolakoğlu`.trim().split('\n'),
         }
     }, { passive: true });
 
-    function startWallDrift() {
-        if (reducedMotion.matches || wallDriftFrame) return;
-        let last = 0;
-        const drift = (timestamp) => {
-            if (!last) last = timestamp;
-            const elapsed = Math.min((timestamp - last) / 1000, 0.05);
-            last = timestamp;
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            if (window.scrollY >= maxScroll - 0.5) { wallDriftFrame = 0; return; }
-            if (timestamp >= pausedUntil) window.scrollBy(0, 0.8 * elapsed);
-            wallDriftFrame = requestAnimationFrame(drift);
-        };
-        wallDriftFrame = requestAnimationFrame(drift);
-    }
-
     function scheduleAuto(delay) {
         window.clearTimeout(autoTimer);
         if (reducedMotion.matches) return;
@@ -980,7 +965,10 @@ Recep Çolakoğlu`.trim().split('\n'),
                 scheduleAuto(nameStepDelay);
             } else {
                 archiveEnd?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                window.setTimeout(startWallDrift, 1800);
+                finishTimer = window.setTimeout(() => {
+                    const endPosition = document.documentElement.scrollHeight - window.innerHeight;
+                    window.scrollTo({ top: endPosition, behavior: 'smooth' });
+                }, 1800);
             }
         }, delay);
     }
@@ -990,8 +978,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     reducedMotion.addEventListener('change', (event) => {
         if (event.matches) {
             window.clearTimeout(autoTimer);
-            if (wallDriftFrame) cancelAnimationFrame(wallDriftFrame);
-            wallDriftFrame = 0;
+            window.clearTimeout(finishTimer);
             pausedUntil = Infinity;
         } else {
             pausedUntil = performance.now() + 1800;
