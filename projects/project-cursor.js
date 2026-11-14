@@ -348,211 +348,24 @@
         isBodyScrollLocked = false;
     };
 
-    try {
-        const lightboxObserver = new MutationObserver(mutations => {
-            for (const m of mutations) {
-                if (m.type === 'attributes' && m.attributeName === 'class') {
-                    if (m.target && m.target.classList && m.target.classList.contains('active')) {
-                        document.documentElement.classList.add('project-image-viewer-open');
-                        lastLightboxOpenedTime = Date.now();
-                        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
-                        window.lockBodyScroll();
-                    } else if (m.target && m.target.classList && !m.target.classList.contains('active')) {
-                        const anyActive = document.querySelector('.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #universal-lightbox.active');
-                        if (!anyActive) {
-                            document.documentElement.classList.remove('project-image-viewer-open');
-                            window.unlockBodyScroll();
-                        }
-                    }
-                }
-            }
-        });
-        lightboxObserver.observe(document.documentElement, {
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['class']
-        });
-    } catch (_) {}
+    // Image click zoom completely disabled per user preference
+    window.openLightbox = function() {};
+    window.closeLightbox = function() {};
+    window.openUniversalFullscreenImage = function() {};
+    window.closeLightboxDirect = function() {};
+    window.openBoardLightbox = function() {};
 
-    function ensureUniversalLightbox() {
-        let modal = document.querySelector(
-            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
-        );
-        if (!modal) {
-            modal = document.createElement('div');
-            modal.id = 'universal-lightbox';
-            modal.className = 'lightbox-overlay image-lightbox';
-            modal.innerHTML = `
-                <button id="lightbox-close-btn" class="lightbox-close-btn" aria-label="Close enlarged image">&times;</button>
-                <div class="lightbox-img-wrapper lightbox-content-box">
-                    <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged architectural drawing">
-                </div>
-                <p id="lightbox-caption" class="lightbox-caption"></p>
-            `;
-            document.body.appendChild(modal);
-        } else {
-            // Guarantee essential sub-elements exist in existing modals
-            if (!modal.querySelector('img')) {
-                const box = modal.querySelector('.lightbox-content-box, .lightbox-img-wrapper') || modal;
-                const newImg = document.createElement('img');
-                newImg.id = 'lightbox-img';
-                newImg.className = 'lightbox-img';
-                box.appendChild(newImg);
-            }
-            if (!modal.querySelector('.lightbox-close-btn, #lightbox-close-btn')) {
-                const btn = document.createElement('button');
-                btn.id = 'lightbox-close-btn';
-                btn.className = 'lightbox-close-btn';
-                btn.setAttribute('aria-label', 'Close enlarged image');
-                btn.innerHTML = '&times;';
-                modal.appendChild(btn);
-            }
-            if (!modal.querySelector('.lightbox-caption, .lightbox-caption-text, #lightbox-caption')) {
-                const cap = document.createElement('p');
-                cap.id = 'lightbox-caption';
-                cap.className = 'lightbox-caption';
-                modal.appendChild(cap);
-            }
-        }
-        // Ensure lightbox is in document.body so transformed project sections cannot
-        // constrain its fixed viewport positioning or clip its backdrop.
-        if (modal.parentElement !== document.body && document.body) {
-            document.body.appendChild(modal);
-        }
-        return modal;
-    }
-
-    function realOpenLightbox(src, caption) {
-        if (!src) return;
-        const modal = ensureUniversalLightbox();
-        const img = modal.querySelector('img');
-        const cap = modal.querySelector('.lightbox-caption, .lightbox-caption-text, #lightbox-caption');
-        if (img) {
-            img.src = src;
-            img.alt = caption || 'Enlarged architectural drawing';
-        }
-        if (cap) {
-            cap.innerText = caption ? caption.trim() : '';
-        }
-        modal.classList.remove('hidden');
-        modal.classList.add('active');
-        document.documentElement.classList.add('project-image-viewer-open');
-        window.lockBodyScroll();
-        lastLightboxOpenedTime = Date.now();
-        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
-    }
-
-    function closeAnyActiveLightbox(e) {
-        if (e && e.preventDefault) e.preventDefault();
-        if (e && e.stopPropagation) e.stopPropagation();
-        const viewerWasOpen = document.documentElement.classList.contains('project-image-viewer-open');
-        const activeModals = document.querySelectorAll(
-            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
-        );
-        let closed = viewerWasOpen;
-        activeModals.forEach(modal => {
-            if (!viewerWasOpen && !modal.classList.contains('active')) return;
-            modal.classList.remove('active');
-            modal.classList.add('hidden');
-            const img = modal.querySelector('img');
-            if (img) img.src = '';
-            const cap = modal.querySelector('.lightbox-caption, .lightbox-caption-text, #lightbox-caption');
-            if (cap) cap.innerText = '';
-            closed = true;
-        });
-        if (closed) {
-            document.documentElement.classList.remove('project-image-viewer-open');
-            window.unlockBodyScroll();
-        }
-        return closed;
-    }
-
-    // Expose helpers globally
-    window.openLightbox = realOpenLightbox;
-    window.closeLightbox = closeAnyActiveLightbox;
-    window.openUniversalFullscreenImage = realOpenLightbox;
-    window.closeLightboxDirect = closeAnyActiveLightbox;
-
-    // Capture-phase click:
-    // 1. If lightbox is currently open: clicking close button or anywhere on screen (image, wrapper, backdrop) closes it
-    // 2. If lightbox is closed: clicking ANY image or drawing card across the project zooms it to fullscreen!
+    // Prevent any clicks on images or zoom containers from triggering lightbox
     document.addEventListener('click', function(e) {
-        // CASE 1: Close active lightbox on any click (backdrop, image itself, wrapper, or close button)
-        const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
-        );
-        if (activeModal) {
-            // Respect opening debounce so the click that opened the viewer doesn't instantly close it
-            if (Date.now() - lastLightboxOpenedTime < 180) return;
-            e.preventDefault();
-            e.stopPropagation();
-            closeAnyActiveLightbox(e);
-            return;
-        }
-
-        // CASE 2: Don't trigger lightbox on navigation links, interactive buttons, or consent popups
-        if (e.target.closest('a, button, .sq-tile-link, .sq-project-tile, .project-crumb, .back-btn, .footer-nav-btn, .wwh-consent-popup, #wwh-consent-popup')) {
-            return;
-        }
-
-        // CASE 3: Image or Zoomable Media Container Click
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img)');
-        const zoomContainer = e.target.closest(
-            '.zoomable-image-container, .board-compact-card, .tech-card, .dual-card, .render-quad-card, ' +
-            '.hero-visual-card, .visual-feature-plate, .visual-plate, .tectonic-image-panel, .recipe-diagram-card, ' +
-            '.diag-card, .board-item, .visual-frame, .drawing-card, .drawing-item, .drawing-frame, ' +
-            '.content-card, .content-card-img-wrap, .visual-plate-media, .visual-feature-media, .board-thumb-frame, ' +
-            '.tectonics-img-wrap, .recipe-img-wrap, .blueprint-canvas-box, .perspective-card, .model-card, ' +
-            '.prog-card, .render-gal-card, .cases-diagram-card, .detail-card, .refuge-item-card, .gallery-card, .pillar-card'
-        );
-
-        if (clickedImg || zoomContainer) {
-            const targetEl = zoomContainer || clickedImg;
-            const onclickAttr = targetEl.getAttribute('onclick') || (clickedImg && clickedImg.getAttribute('onclick'));
-
-            let targetSrc = '';
-            let targetCaption = '';
-
-            // Check if element has an explicit openLightbox call in onclick
-            if (onclickAttr && /openLightbox\(/i.test(onclickAttr)) {
-                const match = onclickAttr.match(/openLightbox\(\s*['"]([^'"]+)['"](?:\s*,\s*['"]([^'"]*)['"])?/);
-                if (match) {
-                    targetSrc = match[1];
-                    targetCaption = match[2] || '';
-                }
-            } else if (onclickAttr && /openBoardLightbox\(/i.test(onclickAttr)) {
-                // If it's a board lightbox call, let the inline board function handle it
-                return;
-            }
-
-            // Fallback: extract from image element
-            if (!targetSrc) {
-                const img = clickedImg || (zoomContainer && zoomContainer.querySelector('img:not(#lightbox-img):not(.lightbox-img):not(.sq-tile-img)'));
-                if (img) {
-                    targetSrc = img.getAttribute('data-full-src') || img.currentSrc || img.src || img.getAttribute('src');
-                    targetCaption = img.getAttribute('data-caption') || img.getAttribute('alt') || '';
-                }
-            }
-
-            // Fallback caption: extract from container header/caption
-            if (!targetCaption && zoomContainer) {
-                const capEl = zoomContainer.querySelector('.caption-desc, .caption-title, figcaption, h3, h4');
-                if (capEl) targetCaption = capEl.innerText.trim();
-            }
-
-            if (targetSrc) {
+        const clickedImg = e.target.closest('img, .zoomable-image-container, .board-compact-card');
+        if (clickedImg && !clickedImg.closest('a, button, input, textarea, select, [role="button"]')) {
+            const onclickAttr = clickedImg.getAttribute('onclick');
+            if (onclickAttr && /lightbox/i.test(onclickAttr)) {
                 e.preventDefault();
                 e.stopPropagation();
-                realOpenLightbox(targetSrc, targetCaption);
             }
         }
     }, true);
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeAnyActiveLightbox();
-        }
-    });
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
