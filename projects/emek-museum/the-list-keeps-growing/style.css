@@ -110,6 +110,17 @@ main {
     overflow-wrap: anywhere;
 }
 
+.archive-end {
+    margin-top: clamp(84px, 16vh, 180px);
+    padding: 30px 0 12vh;
+    color: rgba(245, 245, 242, 0.74);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+    font-style: italic;
+    line-height: 1.5;
+    text-align: center;
+}
+
 @media (max-width: 600px) {
     main {
         padding: 112px 22px 20vh;

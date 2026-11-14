@@ -373,6 +373,10 @@ Recep Çolakoğlu`.trim().split('\n'),
     if (!list) return;
 
     list.innerHTML = ARCHIVE_NAMES.map((name) => `<li>${name}</li>`).join('');
+    const archiveEnd = document.getElementById('archive-end');
+    if (archiveEnd) {
+        archiveEnd.textContent = `${ARCHIVE_NAMES.length} names recorded. Countless more remain unrecorded.`;
+    }
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const speed = 0.8; // pixels per second: deliberately almost imperceptible
