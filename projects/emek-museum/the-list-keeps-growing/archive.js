@@ -769,7 +769,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     if (mosaic) {
         mosaic.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
             const name = displayName(record.name);
-            return `<li tabindex="${index === 0 ? '0' : '-1'}" data-record-index="${index}" aria-label="${name}; memorial record">${name}</li>`;
+            return `<li tabindex="${index === 0 ? '0' : '-1'}" data-record-index="${index}" style="--name-index:${index}" aria-label="${name}; memorial record">${name}</li>`;
         }).join(' ');
     }
 
@@ -931,6 +931,8 @@ Recep Çolakoğlu`.trim().split('\n'),
             ? Math.max(0, Math.min(1, -mosaicSection.getBoundingClientRect().top / travel))
             : 1;
         const reveal = Math.max(0, Math.min(1, progress / 0.7));
+
+        if (progress > 0.02) mosaicStage.classList.add('has-streamed');
 
         mosaicStage.style.setProperty('--wall-opacity', reveal.toFixed(3));
         mosaicStage.style.setProperty('--wall-scale', (0.9 + reveal * 0.1).toFixed(3));
