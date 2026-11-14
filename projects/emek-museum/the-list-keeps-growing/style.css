@@ -137,16 +137,16 @@ body.is-dragging {
 }
 
 #name-mosaic {
-    display: flex;
+    display: block;
     width: min(100%, 1800px);
-    min-height: calc(100svh - 60px);
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    gap: 0.38em 0.58em;
+    height: calc(100svh - 60px);
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: clamp(0.36rem, 0.95vw, 0.9rem);
+    line-height: 1.2;
+    text-align: justify;
+    text-align-last: justify;
     opacity: var(--wall-opacity, 0);
     transform: translateY(var(--wall-shift, 48px)) scale(var(--wall-scale, 0.9));
     filter: blur(var(--wall-blur, 7px));
@@ -159,28 +159,24 @@ body.is-dragging {
 }
 
 #name-mosaic li {
-    position: relative;
-    flex: 0 0 auto;
+    display: inline;
     color: rgba(245, 245, 242, 0.68);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(0.36rem, 0.95vw, 0.9rem);
     font-weight: 700;
-    line-height: 1.15;
     letter-spacing: 0.015em;
     white-space: nowrap;
-    transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+    transition: color 150ms ease, font-size 150ms ease;
 }
 
 #name-mosaic li:not(:last-child)::after {
     content: '.';
-    margin-left: 0.16em;
+    margin-right: 0.3em;
     color: rgba(245, 245, 242, 0.38);
 }
 
 .archive-mosaic-stage.is-interactive #name-mosaic li:hover {
-    z-index: 1;
     color: #4da3ff;
-    transform: scale(1.08);
+    font-size: 1.08em;
 }
 
 .archive-end {
@@ -211,11 +207,7 @@ body.is-dragging {
     }
 
     #name-mosaic {
-        min-height: calc(100svh - 32px);
-        gap: 0.08em 0.2em;
-    }
-
-    #name-mosaic li {
+        height: calc(100svh - 32px);
         font-size: clamp(0.32rem, 1.65vw, 0.62rem);
     }
 }
