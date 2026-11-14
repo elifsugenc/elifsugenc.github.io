@@ -222,7 +222,7 @@ main {
 #wall-detail {
     position: absolute;
     top: var(--wall-detail-top, 50%);
-    right: clamp(16px, 3vw, 42px);
+    left: var(--wall-detail-left, 50%);
     width: min(320px, 27vw);
     padding: 24px 24px 22px;
     border: 1px solid rgba(245, 245, 242, 0.2);
@@ -230,16 +230,11 @@ main {
     background: rgba(15, 15, 15, 0.97);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(14px);
-    transform: translate(12px, -50%);
-}
-
-#wall-detail.opens-left {
-    right: auto;
-    left: clamp(16px, 3vw, 42px);
+    transform: translate(-50%, 12px);
 }
 
 .archive-mosaic-stage.has-selection #wall-detail {
-    transform: translate(0, -50%);
+    transform: translate(-50%, 0);
 }
 
 .wall-detail-close {
@@ -445,25 +440,13 @@ main {
     }
 
     #wall-detail {
-        top: auto;
-        right: 14px;
-        left: 14px;
-        width: auto;
-        transform: translateY(12px);
-    }
-
-    #wall-detail.opens-top {
-        top: 14px;
         bottom: auto;
-    }
-
-    #wall-detail.opens-left {
-        right: 14px;
-        left: 14px;
+        width: min(320px, calc(100vw - 28px));
+        transform: translate(-50%, 12px);
     }
 
     .archive-mosaic-stage.has-selection #wall-detail {
-        transform: translateY(0);
+        transform: translate(-50%, 0);
     }
 
     .memorial-detail dl {

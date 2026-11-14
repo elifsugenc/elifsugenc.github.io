@@ -748,18 +748,24 @@ Recep Çolakoğlu`.trim().split('\n'),
         if (!item || !wallDetail || !mosaicStage) return;
         const itemBounds = item.getBoundingClientRect();
         const stageBounds = mosaicStage.getBoundingClientRect();
-        const onRight = itemBounds.left + itemBounds.width / 2 > window.innerWidth / 2;
-        wallDetail.classList.toggle('opens-left', onRight);
+        const panelWidth = wallDetail.offsetWidth;
+        const panelHeight = wallDetail.offsetHeight;
+        const itemCenterX = itemBounds.left + itemBounds.width / 2 - stageBounds.left;
+        const minX = panelWidth / 2 + 12;
+        const maxX = stageBounds.width - panelWidth / 2 - 12;
+        const centerX = Math.max(minX, Math.min(maxX, itemCenterX));
+        wallDetail.style.setProperty('--wall-detail-left', `${centerX}px`);
 
-        if (window.innerWidth <= 600) {
-            wallDetail.classList.toggle('opens-top', itemBounds.top + itemBounds.height / 2 > window.innerHeight / 2);
-            return;
-        }
-
-        const halfPanel = wallDetail.offsetHeight / 2;
-        const y = itemBounds.top + itemBounds.height / 2 - stageBounds.top;
-        const safeY = Math.max(halfPanel + 12, Math.min(stageBounds.height - halfPanel - 12, y));
-        wallDetail.style.setProperty('--wall-detail-top', `${safeY}px`);
+        const gap = 12;
+        const itemTop = itemBounds.top - stageBounds.top;
+        const itemBottom = itemBounds.bottom - stageBounds.top;
+        const aboveSpace = itemTop - 12;
+        const belowSpace = stageBounds.height - itemBottom - 12;
+        const placeAbove = aboveSpace >= panelHeight + gap || aboveSpace >= belowSpace;
+        const top = placeAbove
+            ? Math.max(12, itemTop - panelHeight - gap)
+            : Math.min(stageBounds.height - panelHeight - 12, itemBottom + gap);
+        wallDetail.style.setProperty('--wall-detail-top', `${top}px`);
     }
 
     function recordFromEvent(event) {
