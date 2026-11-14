@@ -3095,118 +3095,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // =========================================================
-// UNIVERSAL FULLSCREEN IMAGE LIGHTBOX FOR WEBSITE
-// Minimalist architectural viewer, dark translucent overlay, click anywhere to close
-// Zero layout shift via stable scroll locking + padding compensation
+// IMAGE CLICK ZOOM: DISABLED BY DESIGN
+// Images are static visual media; clicking does not trigger lightbox.
 // =========================================================
-(function() {
-    let lastLightboxOpenedTime = 0;
-    let isBodyScrollLocked = false;
-
-    function lockBodyScroll() {
-        if (isBodyScrollLocked) return;
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        if (scrollbarWidth > 0) {
-            document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
-        }
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-        isBodyScrollLocked = true;
-    }
-
-    function unlockBodyScroll() {
-        if (!isBodyScrollLocked) return;
-        document.documentElement.style.paddingRight = '';
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        isBodyScrollLocked = false;
-    }
-
-    function ensureUniversalLightbox() {
-        let modal = document.querySelector(
-            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
-        );
-        if (!modal) {
-            modal = document.createElement('div');
-            modal.id = 'universal-lightbox';
-            modal.className = 'lightbox-overlay';
-            modal.innerHTML = `
-                <button id="lightbox-close-btn" class="lightbox-close-btn" aria-label="Close enlarged view">&times;</button>
-                <div class="lightbox-img-wrapper lightbox-content-box">
-                    <img id="lightbox-img" src="" alt="Enlarged view">
-                </div>
-                <p id="lightbox-caption" class="lightbox-caption"></p>
-            `;
-            document.body.appendChild(modal);
-        }
-        return modal;
-    }
-
-    function closeAnyActiveLightbox() {
-        const activeModals = document.querySelectorAll(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
-        );
-        let closed = false;
-        activeModals.forEach(modal => {
-            modal.classList.remove('active');
-            modal.classList.add('hidden');
-            const img = modal.querySelector('img');
-            if (img) img.src = '';
-            closed = true;
-        });
-        if (closed) {
-            unlockBodyScroll();
-        }
-        return closed;
-    }
-
-    window.openUniversalFullscreenImage = function(src) {
-        if (!src) return;
-        const modal = ensureUniversalLightbox();
-        const img = modal.querySelector('img');
-        if (img) img.src = src;
-        modal.classList.remove('hidden');
-        modal.classList.add('active');
-        lockBodyScroll();
-        lastLightboxOpenedTime = Date.now();
-        window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
-    };
-
-    // Capture-phase click delegator:
-    // 1. If lightbox is open: clicking ANYWHERE (backdrop, image itself, close button) closes it!
-    // 2. If lightbox is closed: clicking ANY content image opens it full screen!
-    document.addEventListener('click', function(e) {
-        const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
-        );
-        if (activeModal) {
-            if (Date.now() - lastLightboxOpenedTime < 180) return;
-            e.preventDefault();
-            e.stopPropagation();
-            closeAnyActiveLightbox();
-            return;
-        }
-
-        const clickedImg = e.target.closest('img:not(.brand-logo-gif):not(#lightbox-img):not(.lightbox-img):not([src*="favicon"]):not(.sq-tile-img):not(.hq-card-img)');
-        if (clickedImg) {
-            if (clickedImg.closest('a, button, .sq-project-tile, .sq-tile-link, .hq-card, .hq-card-link, .project-card, .constellation-node, .wwh-consent-popup, #wwh-consent-popup')) {
-                return;
-            }
-            const fullSrc = clickedImg.getAttribute('data-full-src') || clickedImg.currentSrc || clickedImg.src || clickedImg.getAttribute('src');
-            if (fullSrc) {
-                e.preventDefault();
-                e.stopPropagation();
-                window.openUniversalFullscreenImage(fullSrc);
-            }
-        }
-    }, true);
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeAnyActiveLightbox();
-        }
-    });
-})();
+window.openUniversalFullscreenImage = function() {};
+window.openLightbox = function() {};
+window.closeLightbox = function() {};
 
 
 // =========================================================================

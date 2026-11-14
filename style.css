@@ -11291,7 +11291,9 @@ iframe,
 .lightbox-modal.active,
 .lightbox-overlay.active,
 #universal-lightbox.active {
-    display: flex !important;
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 .lightbox-content-box,
