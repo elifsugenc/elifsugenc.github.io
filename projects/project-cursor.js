@@ -445,11 +445,13 @@
     function closeAnyActiveLightbox(e) {
         if (e && e.preventDefault) e.preventDefault();
         if (e && e.stopPropagation) e.stopPropagation();
+        const viewerWasOpen = document.documentElement.classList.contains('project-image-viewer-open');
         const activeModals = document.querySelectorAll(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
+            '.lightbox-overlay, .image-lightbox, .lightbox-modal, #image-lightbox, #lightbox, #lightbox-modal, #universal-lightbox'
         );
-        let closed = false;
+        let closed = viewerWasOpen;
         activeModals.forEach(modal => {
+            if (!viewerWasOpen && !modal.classList.contains('active')) return;
             modal.classList.remove('active');
             modal.classList.add('hidden');
             const img = modal.querySelector('img');
@@ -487,10 +489,14 @@
     // Close from the earliest pointer event so clicks always dismiss the viewer,
     // even when a project page has another click handler that stops propagation.
     window.addEventListener('pointerdown', function(e) {
-        const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
-        );
-        if (!activeModal) return;
+        if (!document.documentElement.classList.contains('project-image-viewer-open')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        closeAnyActiveLightbox(e);
+    }, true);
+
+    window.addEventListener('click', function(e) {
+        if (!document.documentElement.classList.contains('project-image-viewer-open')) return;
         e.preventDefault();
         e.stopPropagation();
         closeAnyActiveLightbox(e);
