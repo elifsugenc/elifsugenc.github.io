@@ -12293,3 +12293,16 @@ img, picture, figure, canvas, svg,
   .merope-title-block { grid-template-columns: 1fr; }
   .merope-constellation-mark { width: 112px; justify-self: end; margin-top: -8px; }
 }
+
+/* Blue signal for the Ülker mark and selected navigation state. */
+.ulker-dot,
+.ulker-nav-star { color: #2563eb !important; }
+.ulker-nav-star { margin-right: .38em; font-size: .9em; }
+.ulker-nav-pills.nav-tabs-group .tab-button:hover:not(.active),
+.ulker-nav-pills.nav-tabs-group .tab-button:focus-visible { color: #2563eb !important; border-bottom-color: #2563eb !important; }
+.ulker-nav-pills.nav-tabs-group .tab-button.active,
+.ulker-nav-pills.nav-tabs-group .tab-button:active { color: #2563eb !important; border-bottom-color: #2563eb !important; }
+.nav-demo-badge:hover,
+.nav-demo-badge:focus-visible { color: #2563eb !important; border-color: #2563eb !important; background: #f7faff !important; }
+.nav-cv-quickbtn:hover,
+.nav-cv-quickbtn:focus-visible { background: #2563eb !important; color: #ffffff !important; }
