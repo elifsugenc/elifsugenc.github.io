@@ -353,12 +353,14 @@
             for (const m of mutations) {
                 if (m.type === 'attributes' && m.attributeName === 'class') {
                     if (m.target && m.target.classList && m.target.classList.contains('active')) {
+                        document.documentElement.classList.add('project-image-viewer-open');
                         lastLightboxOpenedTime = Date.now();
                         window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
                         window.lockBodyScroll();
                     } else if (m.target && m.target.classList && !m.target.classList.contains('active')) {
                         const anyActive = document.querySelector('.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #universal-lightbox.active');
                         if (!anyActive) {
+                            document.documentElement.classList.remove('project-image-viewer-open');
                             window.unlockBodyScroll();
                         }
                     }
@@ -412,6 +414,11 @@
                 modal.appendChild(cap);
             }
         }
+        // Put the viewer at the document root so transformed project sections cannot
+        // constrain its fixed viewport positioning or clip its backdrop.
+        if (modal.parentElement !== document.documentElement) {
+            document.documentElement.appendChild(modal);
+        }
         return modal;
     }
 
@@ -429,6 +436,7 @@
         }
         modal.classList.remove('hidden');
         modal.classList.add('active');
+        document.documentElement.classList.add('project-image-viewer-open');
         window.lockBodyScroll();
         lastLightboxOpenedTime = Date.now();
         window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
@@ -451,6 +459,7 @@
             closed = true;
         });
         if (closed) {
+            document.documentElement.classList.remove('project-image-viewer-open');
             window.unlockBodyScroll();
         }
         return closed;
