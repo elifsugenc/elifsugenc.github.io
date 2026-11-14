@@ -146,7 +146,7 @@ body.is-dragging {
     font-size: clamp(0.36rem, 0.95vw, 0.9rem);
     line-height: 1.2;
     text-align: justify;
-    text-align-last: justify;
+    text-align-last: center;
     opacity: var(--wall-opacity, 0);
     transform: translateY(var(--wall-shift, 48px)) scale(var(--wall-scale, 0.9));
     filter: blur(var(--wall-blur, 7px));
@@ -159,13 +159,15 @@ body.is-dragging {
 }
 
 #name-mosaic li {
-    display: inline;
+    display: inline-block;
+    position: relative;
     color: rgba(245, 245, 242, 0.68);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     letter-spacing: 0.015em;
     white-space: nowrap;
-    transition: color 150ms ease, font-size 150ms ease;
+    transform-origin: center;
+    transition: color 150ms ease, transform 150ms ease;
 }
 
 #name-mosaic li:not(:last-child)::after {
@@ -175,8 +177,9 @@ body.is-dragging {
 }
 
 .archive-mosaic-stage.is-interactive #name-mosaic li:hover {
+    z-index: 1;
     color: #4da3ff;
-    font-size: 1.08em;
+    transform: scale(1.08);
 }
 
 .archive-end {
