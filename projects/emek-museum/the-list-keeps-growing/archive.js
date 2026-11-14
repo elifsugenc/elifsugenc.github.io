@@ -723,6 +723,8 @@ Recep Çolakoğlu`.trim().split('\n'),
 
     const readingDetail = document.getElementById('reading-detail');
     const wallDetail = document.getElementById('wall-detail');
+    const wallDetailClose = wallDetail?.querySelector('.wall-detail-close');
+    let wallDetailPinned = false;
 
     function showRecord(index, panel) {
         const record = ARCHIVE_RECORDS[index];
@@ -748,8 +750,45 @@ Recep Çolakoğlu`.trim().split('\n'),
     }
 
     mosaic?.addEventListener('pointerover', recordFromEvent);
+    mosaic?.addEventListener('pointerout', (event) => {
+        const leavingName = event.target.closest('[data-record-index]');
+        const enteringName = event.relatedTarget?.closest?.('[data-record-index]');
+        const enteringPanel = event.relatedTarget?.closest?.('#wall-detail');
+        if (leavingName && !enteringName && !enteringPanel && !wallDetailPinned) {
+            mosaicStage?.classList.remove('has-selection');
+            wallDetail?.setAttribute('aria-hidden', 'true');
+        }
+    });
     mosaic?.addEventListener('focusin', recordFromEvent);
-    mosaic?.addEventListener('click', recordFromEvent);
+    mosaic?.addEventListener('focusout', (event) => {
+        if (!event.relatedTarget?.closest?.('[data-record-index]') && !wallDetailPinned) {
+            mosaicStage?.classList.remove('has-selection');
+            wallDetail?.setAttribute('aria-hidden', 'true');
+        }
+    });
+    mosaic?.addEventListener('click', (event) => {
+        const item = event.target.closest('[data-record-index]');
+        if (!item) return;
+        showRecord(Number(item.dataset.recordIndex), wallDetail);
+        wallDetailPinned = true;
+        mosaicStage?.classList.add('wall-detail-pinned');
+    });
+    wallDetailClose?.addEventListener('click', () => {
+        wallDetailPinned = false;
+        mosaicStage?.classList.remove('has-selection', 'wall-detail-pinned');
+        wallDetail?.setAttribute('aria-hidden', 'true');
+    });
+    wallDetail?.addEventListener('pointerleave', () => {
+        if (wallDetailPinned) return;
+        mosaicStage?.classList.remove('has-selection');
+        wallDetail.setAttribute('aria-hidden', 'true');
+    });
+    wallDetail?.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || !wallDetailPinned) return;
+        wallDetailPinned = false;
+        mosaicStage?.classList.remove('has-selection', 'wall-detail-pinned');
+        wallDetail.setAttribute('aria-hidden', 'true');
+    });
     mosaic?.addEventListener('keydown', (event) => {
         const current = event.target.closest('[data-record-index]');
         if (!current) return;
@@ -817,6 +856,8 @@ Recep Çolakoğlu`.trim().split('\n'),
         mosaic?.setAttribute('aria-hidden', isInteractive ? 'false' : 'true');
         if (!isInteractive) {
             mosaicStage.classList.remove('has-selection');
+            mosaicStage.classList.remove('wall-detail-pinned');
+            wallDetailPinned = false;
             wallDetail?.setAttribute('aria-hidden', 'true');
         }
     }

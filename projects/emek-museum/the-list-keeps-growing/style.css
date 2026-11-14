@@ -164,14 +164,10 @@ main {
 .archive-mosaic-stage {
     position: sticky;
     top: 0;
-    display: grid;
+    display: block;
     width: 100%;
     height: 100svh;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 25vw);
-    align-items: center;
-    gap: clamp(18px, 3vw, 48px);
     padding: clamp(32px, 5vh, 56px) clamp(12px, 1.3vw, 24px);
-    place-items: center;
     overflow: hidden;
 }
 
@@ -221,6 +217,45 @@ main {
     visibility: visible;
     opacity: 1;
     transform: translateX(0);
+}
+
+#wall-detail {
+    position: absolute;
+    top: 50%;
+    right: clamp(16px, 3vw, 42px);
+    width: min(320px, 27vw);
+    padding: 24px 24px 22px;
+    border: 1px solid rgba(245, 245, 242, 0.2);
+    border-radius: 14px;
+    background: rgba(15, 15, 15, 0.97);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(14px);
+    transform: translate(12px, -50%);
+}
+
+.archive-mosaic-stage.has-selection #wall-detail {
+    transform: translate(0, -50%);
+}
+
+.wall-detail-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(245, 245, 242, 0.7);
+    font: 300 1.65rem/1 Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.wall-detail-close:hover,
+.wall-detail-close:focus-visible {
+    color: #fff;
 }
 
 .detail-kicker,
@@ -402,6 +437,18 @@ main {
         background: rgba(15, 15, 15, 0.97);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
         backdrop-filter: blur(14px);
+    }
+
+    #wall-detail {
+        top: auto;
+        right: 14px;
+        left: 14px;
+        width: auto;
+        transform: translateY(12px);
+    }
+
+    .archive-mosaic-stage.has-selection #wall-detail {
+        transform: translateY(0);
     }
 
     .memorial-detail dl {
