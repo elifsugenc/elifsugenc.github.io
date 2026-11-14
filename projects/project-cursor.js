@@ -414,10 +414,10 @@
                 modal.appendChild(cap);
             }
         }
-        // Put the viewer at the document root so transformed project sections cannot
+        // Ensure lightbox is in document.body so transformed project sections cannot
         // constrain its fixed viewport positioning or clip its backdrop.
-        if (modal.parentElement !== document.documentElement) {
-            document.documentElement.appendChild(modal);
+        if (modal.parentElement !== document.body && document.body) {
+            document.body.appendChild(modal);
         }
         return modal;
     }
@@ -467,40 +467,11 @@
         return closed;
     }
 
-    // Protect window.openLightbox and window.closeLightbox against recursive overwrite
-    try {
-        Object.defineProperty(window, 'openLightbox', {
-            get() { return realOpenLightbox; },
-            set(fn) { /* prevent recursive inline function from overwriting master */ },
-            configurable: true
-        });
-        Object.defineProperty(window, 'closeLightbox', {
-            get() { return closeAnyActiveLightbox; },
-            set(fn) { /* protect */ },
-            configurable: true
-        });
-    } catch (_) {
-        window.openLightbox = realOpenLightbox;
-        window.closeLightbox = closeAnyActiveLightbox;
-    }
+    // Expose helpers globally
+    window.openLightbox = realOpenLightbox;
+    window.closeLightbox = closeAnyActiveLightbox;
     window.openUniversalFullscreenImage = realOpenLightbox;
     window.closeLightboxDirect = closeAnyActiveLightbox;
-
-    // Close from the earliest pointer event so clicks always dismiss the viewer,
-    // even when a project page has another click handler that stops propagation.
-    window.addEventListener('pointerdown', function(e) {
-        if (!document.documentElement.classList.contains('project-image-viewer-open')) return;
-        e.preventDefault();
-        e.stopPropagation();
-        closeAnyActiveLightbox(e);
-    }, true);
-
-    window.addEventListener('click', function(e) {
-        if (!document.documentElement.classList.contains('project-image-viewer-open')) return;
-        e.preventDefault();
-        e.stopPropagation();
-        closeAnyActiveLightbox(e);
-    }, true);
 
     // Capture-phase click:
     // 1. If lightbox is currently open: clicking close button or anywhere on screen (image, wrapper, backdrop) closes it
@@ -511,13 +482,8 @@
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
-            // Immediate close on close button
-            if (e.target.closest('.lightbox-close-btn, #lightbox-close-btn')) {
-                e.preventDefault();
-                e.stopPropagation();
-                closeAnyActiveLightbox(e);
-                return;
-            }
+            // Respect opening debounce so the click that opened the viewer doesn't instantly close it
+            if (Date.now() - lastLightboxOpenedTime < 180) return;
             e.preventDefault();
             e.stopPropagation();
             closeAnyActiveLightbox(e);
@@ -577,7 +543,7 @@
             if (targetSrc) {
                 e.preventDefault();
                 e.stopPropagation();
-                window.openLightbox(targetSrc, targetCaption);
+                realOpenLightbox(targetSrc, targetCaption);
             }
         }
     }, true);

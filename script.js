@@ -3158,25 +3158,15 @@ document.addEventListener('DOMContentLoaded', () => {
         window.__lastLightboxOpenedTime = lastLightboxOpenedTime;
     };
 
-    // Close immediately on pointer down so clicks on the image and backdrop both dismiss the viewer.
-    window.addEventListener('pointerdown', function(e) {
-        const activeModal = document.querySelector(
-            '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
-        );
-        if (!activeModal) return;
-        e.preventDefault();
-        e.stopPropagation();
-        closeAnyActiveLightbox();
-    }, true);
-
     // Capture-phase click delegator:
-    // 1. If lightbox is open: clicking ANYWHERE closes it!
+    // 1. If lightbox is open: clicking ANYWHERE (backdrop, image itself, close button) closes it!
     // 2. If lightbox is closed: clicking ANY content image opens it full screen!
     document.addEventListener('click', function(e) {
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
         );
         if (activeModal) {
+            if (Date.now() - lastLightboxOpenedTime < 180) return;
             e.preventDefault();
             e.stopPropagation();
             closeAnyActiveLightbox();

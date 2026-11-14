@@ -1082,40 +1082,15 @@
             if (index < 0 || index >= millieuSheets.length) return;
             activeSheetIndex = index;
             const item = millieuSheets[index];
-            if (window.openLightbox) {
+            if (window.openUniversalFullscreenImage) {
+                window.openUniversalFullscreenImage(item.src, item.caption || item.title);
+            } else if (window.openLightbox) {
                 window.openLightbox(item.src, item.caption || item.title);
             }
         }
 
-        function openLightbox(src, caption) {
-            activeSheetIndex = -1;
-            if (window.openLightbox) {
-                window.openLightbox(src, caption);
-            }
-        }
-
-        function closeLightbox(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            activeSheetIndex = -1;
-            if (window.closeLightbox) {
-                window.closeLightbox();
-            }
-        }
 
 
-
-        document.addEventListener('keydown', (e) => {
-
-            if (!lightbox || !lightbox.classList.contains('active')) return;
-
-            if (e.key === 'Escape') {
-
-                closeLightbox();
-
-            }
-
-        });
-
-    </script>
+        </script>
 
     <script src=../../assets/traces-tracker.js?v=20261113-v2

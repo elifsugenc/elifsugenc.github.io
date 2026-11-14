@@ -534,28 +534,12 @@
             if (index < 0 || index >= straySheets.length) return;
             activeSheetIndex = index;
             const item = straySheets[index];
-            if (window.openLightbox) {
+            if (window.openUniversalFullscreenImage) {
+                window.openUniversalFullscreenImage(item.src, item.caption || item.title);
+            } else if (window.openLightbox) {
                 window.openLightbox(item.src, item.caption || item.title);
             }
         }
-
-        function openLightbox(src, caption) {
-            activeSheetIndex = -1;
-            if (window.openLightbox) {
-                window.openLightbox(src, caption);
-            }
-        }
-
-        function closeLightbox(e) {
-            if (e && e.preventDefault) e.preventDefault();
-            activeSheetIndex = -1;
-            if (window.closeLightbox) {
-                window.closeLightbox();
-            }
-        }
-        window.closeLightboxDirect = closeLightbox;
-    </script>
-        });
 
         // Quicklinks active observer on scroll
         const sections = document.querySelectorAll('section[id]');
