@@ -729,7 +729,6 @@ Recep Çolakoğlu`.trim().split('\n'),
         if (!record || !panel) return;
 
         const deathDate = new Date(`${record.deathDate}T12:00:00`);
-        panel.querySelector('[data-detail-field="name"]').textContent = displayName(record.name);
         panel.querySelector('[data-detail-field="event"]').textContent = record.eventName;
         panel.querySelector('[data-detail-field="date"]').textContent = new Intl.DateTimeFormat('en', {
             day: 'numeric', month: 'long', year: 'numeric',
