@@ -744,9 +744,30 @@ Recep Çolakoğlu`.trim().split('\n'),
         panel.closest('.archive-reading, .archive-mosaic-stage')?.classList.add('has-selection');
     }
 
+    function positionWallDetail(item) {
+        if (!item || !wallDetail || !mosaicStage) return;
+        const itemBounds = item.getBoundingClientRect();
+        const stageBounds = mosaicStage.getBoundingClientRect();
+        const onRight = itemBounds.left + itemBounds.width / 2 > window.innerWidth / 2;
+        wallDetail.classList.toggle('opens-left', onRight);
+
+        if (window.innerWidth <= 600) {
+            wallDetail.classList.toggle('opens-top', itemBounds.top + itemBounds.height / 2 > window.innerHeight / 2);
+            return;
+        }
+
+        const halfPanel = wallDetail.offsetHeight / 2;
+        const y = itemBounds.top + itemBounds.height / 2 - stageBounds.top;
+        const safeY = Math.max(halfPanel + 12, Math.min(stageBounds.height - halfPanel - 12, y));
+        wallDetail.style.setProperty('--wall-detail-top', `${safeY}px`);
+    }
+
     function recordFromEvent(event) {
         const item = event.target.closest('[data-record-index]');
-        if (item) showRecord(Number(item.dataset.recordIndex), wallDetail);
+        if (item) {
+            showRecord(Number(item.dataset.recordIndex), wallDetail);
+            positionWallDetail(item);
+        }
     }
 
     mosaic?.addEventListener('pointerover', recordFromEvent);
@@ -770,6 +791,7 @@ Recep Çolakoğlu`.trim().split('\n'),
         const item = event.target.closest('[data-record-index]');
         if (!item) return;
         showRecord(Number(item.dataset.recordIndex), wallDetail);
+        positionWallDetail(item);
         wallDetailPinned = true;
         mosaicStage?.classList.add('wall-detail-pinned');
     });

@@ -221,7 +221,7 @@ main {
 
 #wall-detail {
     position: absolute;
-    top: 50%;
+    top: var(--wall-detail-top, 50%);
     right: clamp(16px, 3vw, 42px);
     width: min(320px, 27vw);
     padding: 24px 24px 22px;
@@ -231,6 +231,11 @@ main {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(14px);
     transform: translate(12px, -50%);
+}
+
+#wall-detail.opens-left {
+    right: auto;
+    left: clamp(16px, 3vw, 42px);
 }
 
 .archive-mosaic-stage.has-selection #wall-detail {
@@ -445,6 +450,16 @@ main {
         left: 14px;
         width: auto;
         transform: translateY(12px);
+    }
+
+    #wall-detail.opens-top {
+        top: 14px;
+        bottom: auto;
+    }
+
+    #wall-detail.opens-left {
+        right: 14px;
+        left: 14px;
     }
 
     .archive-mosaic-stage.has-selection #wall-detail {
