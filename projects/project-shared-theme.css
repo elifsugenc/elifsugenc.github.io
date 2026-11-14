@@ -2814,7 +2814,7 @@ img,
 }
 
 html.project-image-viewer-open #cursor-wrapper {
-    display: none !important;
+    display: block !important;
 }
 
 .scroll-to-all-pill.is-complete .scroll-to-all-arrow {
