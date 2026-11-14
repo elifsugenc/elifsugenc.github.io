@@ -479,8 +479,6 @@
     // 1. If lightbox is currently open: clicking close button or anywhere on screen (image, wrapper, backdrop) closes it
     // 2. If lightbox is closed: clicking ANY image or drawing card across the project zooms it to fullscreen!
     document.addEventListener('click', function(e) {
-        const openedAt = Math.max(lastLightboxOpenedTime, window.__lastLightboxOpenedTime || 0);
-
         // CASE 1: Close active lightbox on any click (backdrop, image itself, wrapper, or close button)
         const activeModal = document.querySelector(
             '.lightbox-overlay.active, .image-lightbox.active, .lightbox-modal.active, #image-lightbox.active, #lightbox.active, #lightbox-modal.active, #universal-lightbox.active'
@@ -491,10 +489,6 @@
                 e.preventDefault();
                 e.stopPropagation();
                 closeAnyActiveLightbox(e);
-                return;
-            }
-            // Debounce accidental immediate dismissal from the opening click
-            if (Date.now() - openedAt < 120) {
                 return;
             }
             e.preventDefault();

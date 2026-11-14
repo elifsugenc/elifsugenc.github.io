@@ -2746,3 +2746,34 @@ img,
     border-bottom: none !important;
     border-top: 1px solid var(--border-light, #e2e8f0) !important;
 }
+
+/* Project image viewer: keep only the enlarged image visible. */
+.image-lightbox,
+.lightbox-overlay,
+.lightbox-modal,
+#universal-lightbox {
+    background: rgba(112, 112, 112, 0.58) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.lightbox-close-btn,
+.lightbox-caption,
+.lightbox-caption-text,
+#lightbox-caption {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.lightbox-content-box img,
+.lightbox-dialog img,
+.lightbox-stage img,
+.lightbox-img-wrapper img,
+#lightbox-img,
+.lightbox-img {
+    max-width: 92vw !important;
+    max-height: 92vh !important;
+    object-fit: contain !important;
+}
