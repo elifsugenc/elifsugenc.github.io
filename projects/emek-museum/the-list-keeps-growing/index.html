@@ -3,192 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE LIST KEEPS GROWING. | Emek Museum Memorial Archive | Elifsu Genç</title>
-    <link rel="icon" type="image/png" href="../../../assets/favicon.png?v=blue">
-    <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg?v=blue">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css?v=20261113-v2">
+    <meta name="theme-color" content="#050505">
+    <title>Emek Museum — Name Archive</title>
+    <link rel="stylesheet" href="./style.css?v=20261114-dark-19">
 </head>
-<body class="memorial-body">
-    <!-- Accessibility: Skip Link -->
-    <a href="#main-content" class="skip-to-content">Skip to archive content</a>
-
-    <!-- Sticky Architectural Navigation Bar -->
-    <header class="memorial-nav" role="banner">
-        <div class="memorial-nav-inner">
-            <a href="../" class="back-link" aria-label="Back to Emek Museum project overview">
-                <span class="nav-arrow" aria-hidden="true">&larr;</span>
-                <span class="nav-label">Back to Emek Museum</span>
-            </a>
-            <div class="archive-sys-meta" aria-hidden="true">
-                <span class="sys-dot"></span>
-                <span class="sys-code">ARCHIVE REF // EMEK-TLKG-01</span>
-                <span class="sys-tag">DIGITAL MEMORIAL</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Memorial Dossier Container -->
-    <main id="main-content" class="memorial-container" role="main">
-
-        <!-- Header Section -->
-        <header class="memorial-header">
-            <div class="memorial-badge-row">
-                <span class="memorial-badge">AN ONGOING MEMORIAL ARCHIVE</span>
-                <span class="memorial-case-num">DOSSIER // PUBLIC CIVIC REPOSITORY</span>
-            </div>
-
-            <h1 class="memorial-main-title">THE LIST KEEPS GROWING.</h1>
-
-            <div class="memorial-intro-block">
-                <p class="memorial-intro-lead">A growing archive of lives lost in mining disasters.</p>
-                <p class="memorial-intro-support">Every name represents a life. Every life leaves someone behind.</p>
-            </div>
-
-            <div class="memorial-meta-bar" aria-label="Archive parameters">
-                <div class="meta-cell">
-                    <span class="m-label">CLASSIFICATION</span>
-                    <span class="m-val">Civic Memorial Archive</span>
+<body>
+    <a class="archive-back" href="../" aria-label="Return to Emek Museum">
+        <span class="archive-back-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M18 12H6m0 0 6-6m-6 6 6 6" /></svg>
+        </span>
+        <span class="archive-back-copy"><span>RETURN TO</span><strong>EMEK MUSEUM</strong></span>
+    </a>
+    <main aria-label="Name archive">
+        <section id="archive-reading" class="archive-reading" aria-label="Memorial names, one at a time">
+            <div id="archive-opening" class="archive-opening">The Never-Finished Archive</div>
+            <ul id="name-list" aria-label="Memorial names"></ul>
+            <aside id="reading-detail" class="memorial-detail" aria-live="polite" aria-atomic="true" aria-hidden="true">
+                <p class="detail-kicker">MEMORIAL RECORD</p>
+                <h2 data-detail-field="name"></h2>
+                <dl>
+                    <div><dt>EVENT</dt><dd data-detail-field="event"></dd></div>
+                    <div><dt>DATE OF DEATH</dt><dd data-detail-field="date"></dd></div>
+                    <div><dt>AGE</dt><dd data-detail-field="age"></dd></div>
+                    <div data-detail-row="hometown" hidden><dt>HOMETOWN</dt><dd data-detail-field="hometown"></dd></div>
+                    <div data-detail-row="regno" hidden><dt>RECORD ID</dt><dd data-detail-field="regno"></dd></div>
+                    <div><dt>TIME</dt><dd data-detail-field="time"></dd></div>
+                </dl>
+                <div class="detail-sources">
+                    <a data-detail-source="names" target="_blank" rel="noopener noreferrer">NAME SOURCE ↗</a>
+                    <a data-detail-source="age" target="_blank" rel="noopener noreferrer" hidden>AGE SOURCE ↗</a>
+                    <a data-detail-source="time" target="_blank" rel="noopener noreferrer">EVENT TIME ↗</a>
                 </div>
-                <div class="meta-cell">
-                    <span class="m-label">DOCUMENTATION PROTOCOL</span>
-                    <span class="m-val">Independent Spatial Counter-Monument</span>
-                </div>
-                <div class="meta-cell">
-                    <span class="m-label">ARCHIVE INTEGRITY</span>
-                    <span class="m-val">Conceptual Interaction Preview</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- =========================================================================
-             SECTION 01: CONTINUOUS MEMORIAL NAME STREAM (SELF-SCROLLING ARCHIVE PANEL)
-             ========================================================================= -->
-        <section class="name-stream-section" aria-labelledby="stream-heading">
-            <div class="section-label-bar">
-                <span class="sec-prefix" aria-hidden="true">&sect; 01</span>
-                <h2 id="stream-heading" class="sec-title">CONTINUOUS MEMORIAL STREAM // NAMES OF THE DEPARTED</h2>
-                <span class="sec-note">AUTOMATIC SLOW-SCROLL PANEL</span>
-            </div>
-
-            <!-- Controls & Live Accessibility Status Bar -->
-            <div class="stream-control-bar">
-                <div class="stream-control-left">
-                    <button type="button" 
-                            class="stream-toggle-btn" 
-                            id="stream-toggle-btn" 
-                            aria-pressed="false" 
-                            aria-label="Pause automatic name scroll">
-                        <span class="stream-btn-icon" aria-hidden="true">&#9646;&#9646;</span>
-                        <span class="stream-btn-text">Pause names</span>
-                    </button>
-                    
-                    <div class="stream-status-tag" id="stream-status-tag" role="status" aria-live="polite">
-                        <span class="stream-status-dot" aria-hidden="true"></span>
-                        <span class="stream-status-text">Stream: Active (Slow Scroll)</span>
+            </aside>
+        </section>
+        <footer id="archive-end" class="archive-end" aria-live="polite"></footer>
+        <section id="archive-mosaic" class="archive-mosaic" aria-label="Names arranged as a full-screen archive wall">
+            <div id="archive-mosaic-stage" class="archive-mosaic-stage">
+                <ul id="name-mosaic" aria-label="Memorial names wall" aria-hidden="true"></ul>
+                <aside id="wall-detail" class="memorial-detail wall-detail" role="dialog" aria-label="Memorial record" aria-live="polite" aria-atomic="true" aria-hidden="true">
+                    <button class="wall-detail-close" type="button" aria-label="Close memorial record">×</button>
+                    <p class="detail-kicker">MEMORIAL RECORD</p>
+                    <h2 data-detail-field="name"></h2>
+                    <dl>
+                        <div><dt>EVENT</dt><dd data-detail-field="event"></dd></div>
+                        <div><dt>DATE OF DEATH</dt><dd data-detail-field="date"></dd></div>
+                        <div><dt>AGE</dt><dd data-detail-field="age"></dd></div>
+                        <div data-detail-row="hometown" hidden><dt>HOMETOWN</dt><dd data-detail-field="hometown"></dd></div>
+                        <div data-detail-row="regno" hidden><dt>RECORD ID</dt><dd data-detail-field="regno"></dd></div>
+                        <div><dt>TIME</dt><dd data-detail-field="time"></dd></div>
+                    </dl>
+                    <div class="detail-sources">
+                        <a data-detail-source="names" target="_blank" rel="noopener noreferrer">NAME SOURCE ↗</a>
+                        <a data-detail-source="age" target="_blank" rel="noopener noreferrer" hidden>AGE SOURCE ↗</a>
+                        <a data-detail-source="time" target="_blank" rel="noopener noreferrer">EVENT TIME ↗</a>
                     </div>
-                </div>
-
-                <div class="stream-hint-text">
-                    Hover, touch, or focus to pause &bull; Select a row to inspect record dossier
-                </div>
-            </div>
-
-            <!-- Bounded Scrollable Stream Viewport Container -->
-            <div class="stream-viewport-wrapper">
-                <div class="stream-viewport" 
-                     id="stream-viewport" 
-                     tabindex="0" 
-                     role="region" 
-                     aria-label="Continuous list of memorial records. Scroll manually or use keyboard arrows."
-                     aria-describedby="stream-heading">
-                    
-                    <div class="stream-inner" id="stream-inner">
-                        <!-- Canonical List for Screen Readers & Keyboard Access -->
-                        <ul class="stream-list" id="stream-list" role="list">
-                            <!-- Populated dynamically via archive.js with accessible buttons -->
-                        </ul>
-
-                        <!-- Seamless Looping Clone List (Strictly aria-hidden to protect accessibility tree) -->
-                        <ul class="stream-list stream-list-clone" id="stream-list-clone" role="presentation" aria-hidden="true">
-                            <!-- Populated dynamically via archive.js as aria-hidden visual mirror -->
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Top & Bottom Gradient Masks for Architectural Atmosphere -->
-                <div class="stream-fade-top" aria-hidden="true"></div>
-                <div class="stream-fade-bottom" aria-hidden="true"></div>
-            </div>
-            
-            <div class="stream-footer-meta">
-                <span class="sf-item">ENTRY CAPACITY // INFINITE EXPANDING SEQUENCE</span>
-                <span class="sf-item sf-divider">&bull;</span>
-                <span class="sf-item">SPEED: 0.45 PX/FRAME (READABLE DRIFT)</span>
-                <span class="sf-item sf-divider">&bull;</span>
-                <span class="sf-item">INTERACTION RECOVERY: 1.8S AFTER INACTIVITY</span>
+                </aside>
             </div>
         </section>
-
-        <!-- =========================================================================
-             SECTION 02: TIMELINE / GROWING ARCHIVE PERIOD NAVIGATION
-             ========================================================================= -->
-        <section class="timeline-section" aria-labelledby="timeline-heading">
-            <div class="section-label-bar">
-                <span class="sec-prefix" aria-hidden="true">&sect; 02</span>
-                <h2 id="timeline-heading" class="sec-title">ACCUMULATION TIMELINE &amp; INQUIRY PHASES</h2>
-                <span class="sec-note">TEMPORAL STRIP CONTROLS</span>
-            </div>
-
-            <p class="timeline-context-note">
-                Memorial records accumulate over successive inquiry periods. Select an archive period below to inspect registered holdings:
-            </p>
-
-            <div id="timeline-strip" class="timeline-strip" role="tablist" aria-label="Archive periods">
-                <!-- Dynamically rendered and accessible via archive.js -->
-            </div>
-        </section>
-
-        <!-- =========================================================================
-             SECTION 03: RECORDS HOLDING CONTAINER & DOSSIER DISCLOSURE
-             ========================================================================= -->
-        <section class="archive-holding-section" id="archive-holding-section" aria-labelledby="holding-heading">
-            <div class="section-label-bar">
-                <span class="sec-prefix" aria-hidden="true">&sect; 03</span>
-                <h2 id="holding-heading" class="sec-title">ARCHIVAL RECORD HOLDINGS</h2>
-                <span id="holding-count" class="sec-note">1 RECORD IN CURRENT PHASE</span>
-            </div>
-
-            <div id="records-container" class="records-container" role="region" aria-live="polite">
-                <!-- Record cards or verified records placeholders rendered via archive.js -->
-            </div>
-        </section>
-
-        <!-- Protocol & Ethical Disclaimer Footer -->
-        <footer class="memorial-footer" role="contentinfo">
-            <div class="disclaimer-card">
-                <div class="disclaimer-header">
-                    <span class="disclaimer-icon" aria-hidden="true">&#9632;</span>
-                    <span class="disclaimer-title">ARCHIVAL PROTOCOL &amp; VERIFICATION ETHICS</span>
-                </div>
-                <p class="disclaimer-text">Historical records will be added only when verified.</p>
-                <p class="disclaimer-subtext">
-                    This memorial archive operates as an independent architectural counter-monument. In respect to the dignity of victims and their families, zero speculative, simulated, or artificially generated names and casualty statistics are deployed. Records will be inducted exclusively through verified industrial health audits, court findings, and corroborated testimonies.
-                </p>
-            </div>
-
-            <div class="footer-return-bar">
-                <a href="../" class="return-button">
-                    <span aria-hidden="true">&larr;</span>
-                    <span>Back to Emek Museum</span>
-                </a>
-            </div>
-        </footer>
-
     </main>
-
-    <script src="./archive.js?v=20261113-v2"></script>
+    <script src="./archive.js?v=20261114-names-21" defer></script>
 </body>
 </html>
