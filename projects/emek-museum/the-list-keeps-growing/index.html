@@ -20,10 +20,13 @@
             <ul id="name-list" aria-label="Memorial names"></ul>
             <aside id="reading-detail" class="memorial-detail" aria-live="polite" aria-atomic="true" aria-hidden="true">
                 <p class="detail-kicker">MEMORIAL RECORD</p>
+                <h2 data-detail-field="name"></h2>
                 <dl>
                     <div><dt>EVENT</dt><dd data-detail-field="event"></dd></div>
                     <div><dt>DATE OF DEATH</dt><dd data-detail-field="date"></dd></div>
                     <div><dt>AGE</dt><dd data-detail-field="age"></dd></div>
+                    <div data-detail-row="hometown" hidden><dt>HOMETOWN</dt><dd data-detail-field="hometown"></dd></div>
+                    <div data-detail-row="regno" hidden><dt>RECORD ID</dt><dd data-detail-field="regno"></dd></div>
                     <div><dt>TIME</dt><dd data-detail-field="time"></dd></div>
                 </dl>
                 <div class="detail-sources">
@@ -40,10 +43,13 @@
                 <aside id="wall-detail" class="memorial-detail wall-detail" role="dialog" aria-label="Memorial record" aria-live="polite" aria-atomic="true" aria-hidden="true">
                     <button class="wall-detail-close" type="button" aria-label="Close memorial record">×</button>
                     <p class="detail-kicker">MEMORIAL RECORD</p>
+                    <h2 data-detail-field="name"></h2>
                     <dl>
                         <div><dt>EVENT</dt><dd data-detail-field="event"></dd></div>
                         <div><dt>DATE OF DEATH</dt><dd data-detail-field="date"></dd></div>
                         <div><dt>AGE</dt><dd data-detail-field="age"></dd></div>
+                        <div data-detail-row="hometown" hidden><dt>HOMETOWN</dt><dd data-detail-field="hometown"></dd></div>
+                        <div data-detail-row="regno" hidden><dt>RECORD ID</dt><dd data-detail-field="regno"></dd></div>
                         <div><dt>TIME</dt><dd data-detail-field="time"></dd></div>
                     </dl>
                     <div class="detail-sources">
