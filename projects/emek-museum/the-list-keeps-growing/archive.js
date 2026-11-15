@@ -1100,7 +1100,7 @@ Recep Çolakoğlu`.trim().split('\n'),
         const regnoRow = panel.querySelector('[data-detail-row="regno"]');
         if (regnoRow) regnoRow.hidden = true;
 
-        panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
+        panel.querySelector('[data-detail-field="time"]').textContent = record.incidentTime || '—';
         panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
         const ageSource = panel.querySelector('[data-detail-source="age"]');
         const ageSourceHref = record.ageSource || record.ageContextSource;
