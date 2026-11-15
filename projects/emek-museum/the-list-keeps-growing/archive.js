@@ -1054,10 +1054,7 @@ Recep Çolakoğlu`.trim().split('\n'),
 
     list.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
         const name = displayName(record.name);
-        const ageMeta = record.age != null
-            ? `<span class="stream-age">AGE ${record.age}</span>`
-            : '';
-        return `<li data-list-index="${index}"><span class="stream-name">${name}</span>${ageMeta}</li>`;
+        return `<li data-list-index="${index}"><span class="stream-name">${name}</span></li>`;
     }).join('');
     const mosaic = document.getElementById('name-mosaic');
     if (mosaic) {
