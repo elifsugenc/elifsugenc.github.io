@@ -1055,7 +1055,7 @@ Recep Çolakoğlu`.trim().split('\n'),
     list.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
         const name = displayName(record.name);
         const ageMeta = record.age != null
-            ? `<span class="stream-age">AGE ${record.age}${record.hometown ? ` · ${record.hometown.toLocaleUpperCase('tr-TR')}` : ''}</span>`
+            ? `<span class="stream-age">AGE ${record.age}</span>`
             : '';
         return `<li data-list-index="${index}"><span class="stream-name">${name}</span>${ageMeta}</li>`;
     }).join('');
@@ -1063,7 +1063,10 @@ Recep Çolakoğlu`.trim().split('\n'),
     if (mosaic) {
         mosaic.innerHTML = ARCHIVE_RECORDS.map((record, index) => {
             const name = displayName(record.name);
-            return `<li tabindex="${index === 0 ? '0' : '-1'}" data-record-index="${index}" style="--name-index:${index}" aria-label="${record.age != null ? `${name}, age ${record.age}${record.hometown ? `, from ${record.hometown}` : ''}` : name}; memorial record">${name}</li>`;
+            const label = record.age != null
+                ? `${name}, age ${record.age}; memorial record`
+                : `${name}; memorial record`;
+            return `<li tabindex="${index === 0 ? '0' : '-1'}" data-record-index="${index}" style="--name-index:${index}" aria-label="${label}">${name}</li>`;
         }).join(' ');
     }
 
@@ -1096,26 +1099,9 @@ Recep Çolakoğlu`.trim().split('\n'),
         }
 
         const hometownRow = panel.querySelector('[data-detail-row="hometown"]');
-        const hometownField = panel.querySelector('[data-detail-field="hometown"]');
-        if (hometownRow && hometownField) {
-            if (record.hometown) {
-                hometownField.textContent = record.hometown;
-                hometownRow.hidden = false;
-            } else {
-                hometownRow.hidden = true;
-            }
-        }
-
+        if (hometownRow) hometownRow.hidden = true;
         const regnoRow = panel.querySelector('[data-detail-row="regno"]');
-        const regnoField = panel.querySelector('[data-detail-field="regno"]');
-        if (regnoRow && regnoField) {
-            if (record.regId) {
-                regnoField.textContent = record.regId;
-                regnoRow.hidden = false;
-            } else {
-                regnoRow.hidden = true;
-            }
-        }
+        if (regnoRow) regnoRow.hidden = true;
 
         panel.querySelector('[data-detail-field="time"]').textContent = `Individual time not recorded · incident approx. ${record.incidentTime}`;
         panel.querySelector('[data-detail-source="names"]').href = record.namesSource;
