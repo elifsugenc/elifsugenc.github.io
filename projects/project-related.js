@@ -89,7 +89,7 @@
             question: 'How can rigid timber learn to bend like cloth?',
             img: '../../assets/wood-weave-cover.png',
             url: '../wood-weave/',
-            isCluster: true
+            isCluster: false
         },
         'ara-sira': {
             id: 'ara-sira',
@@ -99,7 +99,7 @@
             question: 'How can schoolyard furniture transform childhood play and pause?',
             img: '../../assets/ara-sira-cover.jpg?v=20261104-hq',
             url: '../ara-sira/',
-            isCluster: true
+            isCluster: false
         },
         'the-earthen': {
             id: 'the-earthen',

@@ -242,15 +242,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 starName: 'Asterope',
                 bayer: '21 Tauri',
                 mag: '5.76 mag',
-                targetId: 'fire-escape-simulation',
-                projNum: '12',
-                title: 'FIRE ESCAPE SIMULATION',
+                targetId: 'bajo-la-fresca',
+                projNum: '07',
+                title: 'BAJO LA FRESCA',
                 type: 'project',
                 clusterX: 525,
                 clusterY: 215,
-                triangleX: 230,
-                triangleY: 600,
-                description: 'Spatial panic, egress dynamics & agent-based evacuation simulation.'
+                triangleX: 410,
+                triangleY: 595,
+                description: 'Spatial installation & material study questioning how we highlight beauty without stealing its spotlight.'
             },
             {
                 starId: 'taygeta',
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "EMEK MUSEUM",
         "BIO-DECAY",
         "STRAY",
-        "FIRE ESCAPE SIMULATION"
+        "BAJO LA FRESCA"
     ]);
 
     const SELECTED_PROJECT_IDS = new Set([
@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'stray',
         'the-earthen',
         'bio-decay',
-        'fire-escape-simulation'
+        'bajo-la-fresca'
     ]);
 
     let hasEgIntroPulsed = false;
@@ -3202,8 +3202,8 @@ document.addEventListener('DOMContentLoaded', () => {
             question: 'How do you highlight beauty without stealing its spotlight?',
             img: './assets/bajo-la-fresca-hero.jpg',
             url: './projects/bajo-la-fresca/',
-            isCluster: false,
-            star: null,
+            isCluster: true,
+            star: 'Unseen Star',
             disciplines: ['Spatial Design', 'Exhibition Design', 'Bio-Material & Ecological']
         },
         'wood-weave': {
@@ -3262,8 +3262,8 @@ document.addEventListener('DOMContentLoaded', () => {
             question: 'Can you escape the fire?',
             img: './assets/fire-escape-wip.svg',
             url: './projects/fire-escape-simulation/',
-            isCluster: true,
-            star: 'Unseen Star',
+            isCluster: false,
+            star: null,
             disciplines: ['Interactive & Simulation', 'Architectural Design']
         }
     };
@@ -3274,7 +3274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: 'alcyone' },                             // (0, 0)
         { type: 'project', id: 'emek-museum' },          // (1, 0) #1 newest
         { type: 'project', id: 'the-earthen' },          // (2, 0) #6
-        { type: 'project', id: 'fire-escape-simulation' }, // (3, 0) #2
+        { type: 'project', id: 'bajo-la-fresca' },        // (3, 0)
 
         { type: 'diagram' },                         // (0, 1) Vector Unseen Stars Plate
         { type: 'project', id: 'stray' },                 // (1, 1) #9
@@ -3283,12 +3283,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const CLUSTER_RELATIONS = [
-        { a: 'emek-museum', b: 'fire-escape-simulation', label: 'DISASTER IS NEVER NATURAL', ambient: true },
         { a: 'emek-museum', b: 'stray', label: 'INVISIBLE URBAN RHYTHMS', ambient: true },
         { a: 'stray', b: 'the-earthen', label: 'CARE · PAUSE · NONHUMAN AGENCY', ambient: true },
         { a: 'the-earthen', b: 'bio-decay', label: 'EARTH CYCLES · MATERIAL DECAY', ambient: true },
-        { a: 'the-earthen', b: 'fire-escape-simulation', label: 'BODILY THRESHOLDS', ambient: true },
-        { a: 'fire-escape-simulation', b: 'bio-decay', label: 'TEMPORAL URGENCY', ambient: true }
+        { a: 'the-earthen', b: 'bajo-la-fresca', label: 'TACTILE CRAFT · SPATIAL PRESENCE', ambient: true },
+        { a: 'bajo-la-fresca', b: 'bio-decay', label: 'CLIMATIC COMFORT · ECOLOGIES', ambient: true }
     ];
     // 4x5 Spatial Grid on See All Projects
     // Strictly ordered according to Elif's exact creation chronology:
