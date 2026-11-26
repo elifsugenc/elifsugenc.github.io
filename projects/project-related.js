@@ -232,7 +232,7 @@
     // Render Related Project tile (with thematic relation phrase above)
     function renderRelatedProjectTile(p, phrase) {
         const starMeta = p.isCluster
-            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag">&#x2726; ${p.year}</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
@@ -259,7 +259,7 @@
     // Render More Projects tile (All Projects spatial square grid style)
     function renderMoreProjectTile(p, isAnimated = false) {
         const starMeta = p.isCluster
-            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag">&#x2726; ${p.year}</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `

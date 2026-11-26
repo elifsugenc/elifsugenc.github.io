@@ -2778,3 +2778,442 @@ img,
 .scroll-to-all-pill.is-complete .scroll-to-all-arrow {
     display: none !important;
 }
+
+/* ==========================================================================
+   ARCHITECTURAL FOLIO MONOGRAPH THEME — PROJECT DETAIL PAGES
+   Matches homepage crisp white gallery canvas (#ffffff), Newsreader serif,
+   DM Sans body, IBM Plex Mono metadata, Prussian indigo (#1e3a5f),
+   and muted Merope copper (#b4654a).
+   ========================================================================== */
+:root {
+    --folio-paper: #ffffff;
+    --folio-wash: #f7f7f5;
+    --folio-ink: #191d23;
+    --folio-ink-soft: #4e4d47;
+    --folio-muted: #847f75;
+    --folio-indigo: #1e3a5f;
+    --folio-indigo-deep: #142843;
+    --folio-indigo-soft: rgba(30, 58, 95, 0.07);
+    --folio-terracotta: #b4654a;
+    --folio-rule: #e6e5e0;
+    --folio-rule-strong: #cfcdc6;
+
+    --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --font-heading: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --proj-color: #1e3a5f;
+    --proj-rgb: 30, 58, 95;
+}
+
+html,
+body,
+body.project-detail-body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: var(--folio-ink) !important;
+    font-family: var(--font-sans) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Preserve original cursor font */
+#custom-cursor,
+#custom-cursor::after {
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+}
+
+/* 1. Sticky Architectural Top Navigation */
+.project-nav {
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.back-link,
+.back-btn {
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+    color: var(--folio-ink) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+}
+
+.back-link:hover,
+.back-btn:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: #ffffff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.back-link .nav-arrow {
+    color: var(--folio-indigo) !important;
+}
+
+.back-link:hover .nav-arrow {
+    color: #ffffff !important;
+}
+
+.project-crumb .crumb-title {
+    font-family: var(--font-serif) !important;
+    font-size: 1.04rem !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+}
+
+.project-crumb .crumb-tag {
+    background: var(--folio-wash) !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-indigo) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.62rem !important;
+}
+
+.section-quicklinks {
+    gap: 14px !important;
+}
+
+.section-quicklinks a {
+    font-family: var(--font-mono) !important;
+    font-size: 0.64rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.1em !important;
+    color: var(--folio-muted) !important;
+    padding: 4px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.section-quicklinks a:hover,
+.section-quicklinks a.active {
+    color: var(--folio-indigo) !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    border-bottom: 1.5px solid var(--folio-indigo) !important;
+}
+
+/* 2. Editorial Monograph Hero & Metadata */
+.project-editorial-header {
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.editorial-project-title,
+.hero-title,
+.project-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: clamp(2.35rem, 4.5vw, 3.45rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--folio-ink) !important;
+}
+
+.editorial-col-label,
+.contribution-label,
+.editorial-meta-col .meta-label,
+.spec-label {
+    font-family: var(--font-mono) !important;
+    font-size: 0.63rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: var(--folio-indigo) !important;
+}
+
+.editorial-meta-col .meta-label,
+.spec-label {
+    color: var(--folio-muted) !important;
+}
+
+.editorial-col-text,
+.editorial-meta-col .meta-value,
+.spec-val,
+.section-lead-text,
+.caption-desc,
+.doc-desc,
+.statement-card p {
+    font-family: var(--font-sans) !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.editorial-meta-col .meta-value,
+.spec-val {
+    color: var(--folio-ink) !important;
+}
+
+.editorial-quote,
+.hero-core-question {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    color: var(--folio-ink) !important;
+    line-height: 1.42 !important;
+}
+
+.editorial-quote {
+    font-size: clamp(1.18rem, 1.8vw, 1.38rem) !important;
+    border-left: 2px solid var(--folio-indigo) !important;
+    padding-left: 14px !important;
+}
+
+.editorial-divider {
+    background: var(--folio-rule) !important;
+}
+
+.editorial-contribution-box {
+    border-top-color: var(--folio-rule) !important;
+}
+
+.badge-accent,
+.badge-ongoing,
+.hero-meta-top .meta-item {
+    border-radius: 0 !important;
+    border-color: var(--folio-rule-strong) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.64rem !important;
+    letter-spacing: 0.1em !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.badge-award {
+    border-radius: 0 !important;
+    background: var(--folio-wash) !important;
+    border-color: var(--folio-terracotta) !important;
+    color: var(--folio-terracotta) !important;
+    font-family: var(--font-mono) !important;
+}
+
+/* 3. Section Headers & Typographic Hierarchy */
+.section-badge-header {
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.sec-index {
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.14em !important;
+    color: var(--folio-terracotta) !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.sec-title {
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    color: var(--folio-indigo) !important;
+}
+
+/* 4. Visual Plates, Captions & Architectural Cards */
+.visual-feature-plate,
+.visual-plate,
+.content-card,
+.board-compact-card,
+.diag-card,
+.model-card,
+.render-gal-card,
+.statement-card,
+.document-dl-banner {
+    background: #ffffff !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.visual-feature-img,
+.visual-plate-img,
+.content-card-img-wrap img,
+.board-compact-thumb-wrap img {
+    border-radius: 0 !important;
+}
+
+.caption-tag,
+.diag-tag,
+.board-badge,
+.card-tag,
+.spec-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.63rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    color: var(--folio-indigo) !important;
+    background: transparent !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+}
+
+.caption-title,
+.doc-title,
+.content-card-title,
+.board-compact-title,
+.diag-title,
+.perspective-title,
+.statement-card h3,
+.statement-card h4 {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+}
+
+.doc-title {
+    font-size: 1.24rem !important;
+    line-height: 1.32 !important;
+}
+
+/* Buttons & Action Links */
+.doc-action-btn,
+.board-btn,
+.board-btn-primary,
+.project-cta-btn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.67rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--folio-indigo) !important;
+    background: transparent !important;
+    color: var(--folio-indigo) !important;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.doc-action-btn:hover,
+.board-btn:hover,
+.board-btn-primary:hover,
+.project-cta-btn:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: #ffffff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 5. Bottom Related Projects & More Projects Grids (Exact Match with Homepage) */
+.bottom-nav-separator .sep-line {
+    background: var(--folio-rule) !important;
+}
+
+.bottom-nav-separator .sep-badge,
+.section-sub-label {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-muted) !important;
+    letter-spacing: 0.12em !important;
+}
+
+.section-sub-label {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 0.96rem !important;
+    letter-spacing: 0 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.sq-relation-phrase {
+    font-family: var(--font-mono) !important;
+    font-size: 0.61rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+    color: var(--folio-indigo) !important;
+    background: #ffffff !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 0 !important;
+}
+
+.related-projects-square-grid .sq-img-box,
+.more-projects-square-grid .sq-img-box {
+    border-radius: 0 !important;
+    background: var(--folio-wash) !important;
+    border: 1px solid rgba(25, 29, 35, 0.09) !important;
+}
+
+.related-projects-square-grid .sq-project-tile:hover .sq-img-box,
+.more-projects-square-grid .sq-project-tile:hover .sq-img-box {
+    border-color: var(--folio-indigo) !important;
+}
+
+.related-projects-square-grid .sq-question,
+.more-projects-square-grid .sq-question {
+    font-family: var(--font-serif) !important;
+    font-size: 1.0rem !important;
+    font-weight: 400 !important;
+    line-height: 1.34 !important;
+    color: var(--folio-ink) !important;
+}
+
+.related-projects-square-grid .sq-title-bar,
+.more-projects-square-grid .sq-title-bar {
+    padding-top: 0.4rem !important;
+    border-top: 1px solid var(--folio-rule) !important;
+}
+
+.related-projects-square-grid .sq-title,
+.more-projects-square-grid .sq-title {
+    font-family: var(--font-mono) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.09em !important;
+    color: var(--folio-muted) !important;
+}
+
+.related-projects-square-grid .sq-project-tile:hover .sq-title,
+.more-projects-square-grid .sq-project-tile:hover .sq-title {
+    color: var(--folio-indigo) !important;
+}
+
+.related-projects-square-grid .sq-star-tag,
+.more-projects-square-grid .sq-star-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.61rem !important;
+    font-weight: 500 !important;
+    color: var(--folio-indigo) !important;
+}
+
+.related-projects-square-grid .sq-year-tag,
+.more-projects-square-grid .sq-year-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.61rem !important;
+    color: var(--folio-muted) !important;
+}
+
+.scroll-to-all-pill {
+    border-radius: 0 !important;
+    border: 1px solid var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+    background: transparent !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.12em !important;
+}
+
+.scroll-to-all-pill:hover,
+.scroll-to-all-pill.is-triggering {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: #ffffff !important;
+}
+
+.scroll-cue-progress-bar {
+    background: var(--folio-indigo) !important;
+}
+
+/* Hide leftover zoom hint captions since image click zoom is disabled */
+.caption-hint {
+    display: none !important;
+}
+
