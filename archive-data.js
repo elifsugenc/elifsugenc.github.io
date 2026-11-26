@@ -26,6 +26,15 @@ window.ARCHIVE_QUESTIONS = [
         relatedProject: null
     },
     {
+        id: "q-2026-11-09-01",
+        date: "9 November 2026",
+        time: "",
+        question: "Once something is \"seen,\" we commodify and stratify it. But what if there is far more beyond those boundaries?",
+        reflection: "",
+        tags: ["daily-life"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-11-02-01",
         date: "2 November 2026",
         time: "",
