@@ -1,0 +1,1292 @@
+/* ==========================================================================
+   ELIFSU GENÇ PORTFOLIO — CELESTIAL ATLAS & ARCHITECTURAL FOLIO THEME
+   "Gökyüzü Atlası & Mimarlık Foliosu"
+   Loaded exclusively on the homepage (index.html) so project detail pages
+   remain completely isolated.
+   - Warm cotton archival paper (#faf8f4) & ivory folio plates (#fffefa)
+   - Prussian star-atlas indigo (#1e3a5f) + muted Merope copper (#b4654a)
+   - Typographic triad: Newsreader (editorial serif) + DM Sans + IBM Plex Mono
+   - Zero SaaS pills, zero neon glows, pure quiet architectural restraint
+   ========================================================================== */
+
+:root {
+    --folio-paper: #faf8f4;
+    --folio-ivory: #fffefa;
+    --folio-wash: #f2eee6;
+    --folio-ink: #191d23;
+    --folio-ink-soft: #4e4d47;
+    --folio-muted: #847f75;
+    --folio-indigo: #1e3a5f;
+    --folio-indigo-deep: #142843;
+    --folio-indigo-soft: rgba(30, 58, 95, 0.08);
+    --folio-terracotta: #b4654a;
+    --folio-rule: #e4ded3;
+    --folio-rule-strong: #cdc4b5;
+
+    --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* Align base tokens on homepage */
+    --bg-color: #faf8f4;
+    --folder-bg: #faf8f4;
+    --folder-border: 1px solid #e4ded3;
+    --text-color: #191d23;
+    --text-muted: #4e4d47;
+    --accent-color: #1e3a5f;
+    --accent-glow: rgba(30, 58, 95, 0.12);
+    --font-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   1. WARM COTTON PAPER CANVAS & REFINED CUSTOM CURSOR
+   -------------------------------------------------------------------------- */
+html,
+body,
+.folder-container,
+.ulker-portfolio-shell,
+.folder-body,
+.tab-content,
+.page-centered-tab,
+#tab-main,
+#tab-projects,
+#tab-design-approach,
+#tab-archive,
+#tab-about {
+    background: var(--folio-paper) !important;
+    background-color: var(--folio-paper) !important;
+    color: var(--folio-ink) !important;
+    font-family: var(--font-sans) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Matte Prussian ink cursor — removes AI neon blue glow */
+#custom-cursor {
+    width: 11px !important;
+    height: 11px !important;
+    background-color: var(--folio-indigo) !important;
+    box-shadow: none !important;
+    font-family: var(--font-serif) !important;
+}
+
+#custom-cursor.cursor-image-dot {
+    background-color: var(--folio-indigo) !important;
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.14) !important;
+}
+
+#cursor-label {
+    font-family: var(--font-mono) !important;
+    font-size: 9px !important;
+    letter-spacing: 0.12em !important;
+    background: var(--folio-ivory) !important;
+    color: var(--folio-indigo) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 8px rgba(25, 29, 35, 0.06) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. EDITORIAL FOLIO NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.ulker-topnav.folder-tabs {
+    height: 64px !important;
+    max-height: 64px !important;
+    padding: 0 4vw !important;
+    background: rgba(250, 248, 244, 0.94) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.ulker-brand {
+    gap: 0.65rem !important;
+    color: var(--folio-ink) !important;
+}
+
+.ulker-brand-name {
+    font-family: var(--font-serif) !important;
+    font-size: 1.24rem !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.015em !important;
+    color: var(--folio-ink) !important;
+}
+
+.ulker-dot,
+.ulker-nav-star {
+    color: var(--folio-indigo) !important;
+}
+
+.ulker-nav-star {
+    font-size: 0.76em !important;
+    margin-right: 0.42em !important;
+    opacity: 0.9;
+}
+
+.ulker-nav-pills.nav-tabs-group {
+    gap: 1.9rem !important;
+}
+
+.ulker-nav-pills.nav-tabs-group .tab-button {
+    font-family: var(--font-sans) !important;
+    font-size: 0.71rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+    color: var(--folio-muted) !important;
+    padding: 0.48rem 0 !important;
+    border-bottom: 1px solid transparent !important;
+    transition: color 0.18s ease, border-color 0.18s ease !important;
+}
+
+.ulker-nav-pills.nav-tabs-group .tab-button:hover:not(.active),
+.ulker-nav-pills.nav-tabs-group .tab-button:focus-visible {
+    color: var(--folio-indigo) !important;
+    border-bottom-color: var(--folio-rule-strong) !important;
+}
+
+.ulker-nav-pills.nav-tabs-group .tab-button.active,
+.ulker-nav-pills.nav-tabs-group .tab-button:active {
+    color: var(--folio-indigo) !important;
+    border-bottom: 1.5px solid var(--folio-indigo) !important;
+}
+
+.ulker-nav-right {
+    gap: 1.15rem !important;
+}
+
+/* Strip boxed SaaS badge look — quiet editorial link */
+.nav-demo-badge {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 3px 0 !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.09em !important;
+    color: var(--folio-ink-soft) !important;
+    gap: 6px !important;
+    transition: color 0.18s ease, border-color 0.18s ease !important;
+}
+
+.nav-demo-badge:hover,
+.nav-demo-badge:focus-visible {
+    background: transparent !important;
+    color: var(--folio-indigo) !important;
+    border-bottom-color: var(--folio-indigo) !important;
+}
+
+.ndb-dot {
+    width: 4px !important;
+    height: 4px !important;
+    border-radius: 50% !important;
+    background: var(--folio-indigo) !important;
+    opacity: 0.85;
+}
+
+/* Strip heavy solid black rectangle — crisp hairline archival button */
+.nav-cv-quickbtn {
+    background: transparent !important;
+    color: var(--folio-ink) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
+}
+
+.nav-cv-quickbtn:hover,
+.nav-cv-quickbtn:focus-visible {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. ÜLKER CLUSTER & ALL PROJECTS SPATIAL FOLIO STAGE
+   -------------------------------------------------------------------------- */
+#tab-main,
+#tab-projects {
+    min-height: calc(100vh - 64px) !important;
+}
+
+.matrix-stage-wrap {
+    background: var(--folio-paper) !important;
+    min-height: calc(100vh - 64px) !important;
+    padding: 2.3rem 4vw 5.5rem !important;
+}
+
+.matrix-inner {
+    max-width: 1240px !important;
+    gap: 2.75rem !important;
+}
+
+.matrix-topbar {
+    padding-bottom: 1.05rem !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+    align-items: center !important;
+}
+
+.matrix-topbar.sp-matrix-header {
+    align-items: stretch !important;
+    gap: 0.95rem !important;
+}
+
+.sp-header-top {
+    width: 100% !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+}
+
+.matrix-kicker {
+    font-family: var(--font-mono) !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    color: var(--folio-indigo) !important;
+}
+
+.matrix-subtitle {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 1.04rem !important;
+    font-weight: 400 !important;
+    color: var(--folio-ink-soft) !important;
+    line-height: 1.48 !important;
+    margin-top: 0.15rem !important;
+}
+
+.matrix-topbar-right {
+    gap: 1.35rem !important;
+}
+
+/* "Why Ülker?" / "← Selected Cluster" — italic editorial serif link */
+.matrix-ghost-btn {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    padding: 0.28rem 0.05rem !important;
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 0.96rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em !important;
+    color: var(--folio-ink) !important;
+    transition: color 0.18s ease, border-color 0.18s ease !important;
+}
+
+.matrix-ghost-btn:hover {
+    background: transparent !important;
+    color: var(--folio-indigo) !important;
+    border-bottom-color: var(--folio-indigo) !important;
+}
+
+/* "SEE ALL 12 UNSEEN STARS →" — refined hairline folio button (no solid black box) */
+.matrix-primary-btn {
+    background: transparent !important;
+    color: var(--folio-indigo) !important;
+    border: 1px solid var(--folio-indigo) !important;
+    border-radius: 0 !important;
+    padding: 0.48rem 1.05rem !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    gap: 0.55rem !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.matrix-primary-btn:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* All Projects Discipline Filter — Frameless Exhibition Index Tabs */
+.sp-filter-bar {
+    gap: 0.45rem 1.45rem !important;
+    padding-top: 0.35rem !important;
+}
+
+.sp-filter-pill {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1.5px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 0.32rem 0 !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.79rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.015em !important;
+    color: var(--folio-muted) !important;
+    transition: color 0.16s ease, border-color 0.16s ease !important;
+}
+
+.sp-filter-pill:hover {
+    background: transparent !important;
+    color: var(--folio-ink) !important;
+    border-bottom-color: var(--folio-rule-strong) !important;
+}
+
+.sp-filter-pill.sp-pill-cluster {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--folio-indigo) !important;
+    font-weight: 500 !important;
+}
+
+.sp-filter-pill.active {
+    background: transparent !important;
+    border-color: transparent !important;
+    border-bottom: 1.5px solid var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+    font-weight: 600 !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. SPATIAL GRID, PROJECT FOLIO PLATES & ALCYONE OPENING CELL
+   -------------------------------------------------------------------------- */
+.spatial-square-grid {
+    gap: 3rem 2.6rem !important;
+    margin-top: 0.85rem !important;
+}
+
+.sq-tile-link {
+    gap: 0.85rem !important;
+}
+
+.sq-img-box {
+    background: var(--folio-wash) !important;
+    border: 1px solid rgba(25, 29, 35, 0.09) !important;
+    border-radius: 0 !important;
+    transition: border-color 0.25s ease !important;
+}
+
+.sq-tile-img {
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.sq-project-tile:hover .sq-tile-img {
+    transform: scale(1.022) !important;
+}
+
+.sq-caption {
+    gap: 0.42rem !important;
+    padding: 0 !important;
+}
+
+/* Poetic project questions in editorial Newsreader serif */
+.sq-question {
+    font-family: var(--font-serif) !important;
+    font-size: 1.03rem !important;
+    font-weight: 400 !important;
+    line-height: 1.33 !important;
+    letter-spacing: -0.005em !important;
+    color: var(--folio-ink) !important;
+}
+
+.sq-title-bar {
+    padding-top: 0.42rem !important;
+    border-top: 1px solid var(--folio-rule) !important;
+    gap: 0.6rem !important;
+}
+
+.sq-title {
+    font-family: var(--font-mono) !important;
+    font-size: 0.63rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.09em !important;
+    color: var(--folio-muted) !important;
+}
+
+.sq-project-tile:hover .sq-title {
+    color: var(--folio-indigo) !important;
+}
+
+.sq-star-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.07em !important;
+    color: var(--folio-indigo) !important;
+}
+
+.sq-year-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.62rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.06em !important;
+    color: var(--folio-muted) !important;
+}
+
+/* Calm architectural hover & partner emphasis */
+.sq-project-tile.is-matrix-focus .sq-img-box {
+    border-color: var(--folio-indigo) !important;
+    box-shadow: 0 0 0 1px var(--folio-indigo) !important;
+}
+
+.sq-project-tile.is-matrix-partner .sq-img-box {
+    border-color: rgba(30, 58, 95, 0.55) !important;
+    box-shadow: none !important;
+}
+
+.sq-project-tile.is-matrix-dim .sq-tile-link {
+    opacity: 0.3 !important;
+    filter: saturate(0.4) !important;
+}
+
+.sq-project-tile.is-filter-match .sq-img-box {
+    border-color: rgba(30, 58, 95, 0.3) !important;
+}
+
+/* Alcyone Opening Statement Cell (Top-Left of Ülker Cluster) */
+.sq-alcyone-cell {
+    padding: 0.35rem 0.65rem 0.35rem 0 !important;
+}
+
+.sq-alcyone-inner {
+    gap: 0.85rem !important;
+}
+
+.sq-alcyone-star {
+    font-family: var(--font-mono) !important;
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    color: var(--folio-indigo) !important;
+}
+
+.sq-alcyone-title {
+    font-family: var(--font-serif) !important;
+    font-size: 1.52rem !important;
+    font-weight: 400 !important;
+    line-height: 1.24 !important;
+    letter-spacing: -0.015em !important;
+    color: var(--folio-ink) !important;
+}
+
+.sq-alcyone-desc {
+    font-family: var(--font-sans) !important;
+    font-size: 0.83rem !important;
+    line-height: 1.64 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+/* Hide redundant second "SEE ALL 12 UNSEEN STARS" button so Alcyone breathes purely as editorial prose */
+.sq-alcyone-cta {
+    display: none !important;
+}
+
+/* Celestial Star Cells (Atlas & Pleione, Maia, Electra, etc.) */
+.sq-celestial-inner {
+    gap: 0.65rem !important;
+    opacity: 0.78 !important;
+}
+
+.sq-celestial-star-name {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 0.92rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.sq-celestial-star-spec {
+    font-family: var(--font-mono) !important;
+    font-size: 0.56rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.11em !important;
+    color: var(--folio-muted) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. ARCHIVAL SVG GRID, STAR PLATE & CONNECTION ANNOTATION SLIPS
+   -------------------------------------------------------------------------- */
+.matrix-arch-grid-line {
+    stroke: rgba(25, 29, 35, 0.055) !important;
+    stroke-width: 1px !important;
+}
+
+.matrix-arch-crosshair {
+    stroke: rgba(30, 58, 95, 0.18) !important;
+}
+
+.matrix-arch-dot {
+    fill: rgba(30, 58, 95, 0.28);
+}
+
+.matrix-arch-blueprint-text {
+    font-family: var(--font-mono) !important;
+    font-size: 7.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.16em !important;
+    fill: rgba(30, 58, 95, 0.48) !important;
+}
+
+.matrix-svg-line {
+    stroke: rgba(30, 58, 95, 0.14) !important;
+    stroke-width: 0.9 !important;
+    stroke-dasharray: 3 5 !important;
+}
+
+.matrix-svg-line-glow {
+    stroke: rgba(250, 248, 244, 0.92) !important;
+    stroke-width: 3.8 !important;
+}
+
+.matrix-svg-line.is-highlighted {
+    stroke: var(--folio-indigo) !important;
+    stroke-width: 1.25 !important;
+    stroke-dasharray: none !important;
+}
+
+.matrix-svg-anchor-dot {
+    fill: var(--folio-paper) !important;
+    stroke: var(--folio-indigo) !important;
+    stroke-width: 1.4 !important;
+}
+
+/* Archival paper slip label instead of harsh black SaaS pill */
+.matrix-svg-pill {
+    fill: var(--folio-ivory) !important;
+    stroke: var(--folio-rule-strong) !important;
+    stroke-width: 1 !important;
+    filter: drop-shadow(0 2px 6px rgba(25, 29, 35, 0.08)) !important;
+}
+
+.matrix-svg-text {
+    fill: var(--folio-indigo) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 8.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. STICKY SUB-TAB TOPBARS (METHODOLOGY, ARCHIVE, ABOUT)
+   -------------------------------------------------------------------------- */
+.page-topbar {
+    background: rgba(250, 248, 244, 0.94) !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.section-label {
+    font-family: var(--font-mono) !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    color: var(--folio-muted) !important;
+}
+
+.back-to-index-btn,
+.cv-download-topbar-btn {
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--folio-ink) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.68rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease !important;
+}
+
+.back-to-index-btn:hover,
+.cv-download-topbar-btn:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. METHODOLOGY TAB (#tab-design-approach)
+   -------------------------------------------------------------------------- */
+.approach-name {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: clamp(2rem, 3.4vw, 2.75rem) !important;
+    letter-spacing: -0.02em !important;
+    color: var(--folio-ink) !important;
+    text-transform: none !important;
+}
+
+.approach-lead-quote {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 1.18rem !important;
+    line-height: 1.62 !important;
+    color: var(--folio-ink-soft) !important;
+    border-left: 2px solid var(--folio-indigo) !important;
+    background: transparent !important;
+}
+
+.approach-block-title {
+    font-family: var(--font-mono) !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.15em !important;
+    color: var(--folio-indigo) !important;
+}
+
+.approach-block-line {
+    background: var(--folio-rule) !important;
+}
+
+.arch-research-framework,
+.arch-main-diagram-wrap {
+    background: transparent !important;
+}
+
+.arch-main-diagram-svg > rect {
+    fill: var(--folio-ivory) !important;
+    stroke: var(--folio-rule) !important;
+    rx: 4 !important;
+}
+
+.arch-main-diagram-svg .arch-step-card,
+.arch-main-diagram-svg .arch-step-card-final {
+    fill: var(--folio-paper) !important;
+    stroke: var(--folio-rule) !important;
+    rx: 2 !important;
+}
+
+.arch-diag-node:hover .arch-step-card,
+.arch-diag-node:focus .arch-step-card,
+.arch-diag-synthesis:hover .arch-step-card-final,
+.arch-diag-synthesis:focus .arch-step-card-final {
+    fill: var(--folio-ivory) !important;
+    stroke: var(--folio-indigo) !important;
+}
+
+.arch-step-index {
+    font-family: var(--font-mono) !important;
+    fill: var(--folio-terracotta) !important;
+}
+
+.arch-step-kicker {
+    font-family: var(--font-mono) !important;
+    fill: var(--folio-muted) !important;
+}
+
+.arch-step-title {
+    font-family: var(--font-serif) !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    fill: var(--folio-ink) !important;
+}
+
+.arch-step-copy {
+    font-family: var(--font-sans) !important;
+    fill: var(--folio-ink-soft) !important;
+}
+
+.arch-step-link {
+    font-family: var(--font-mono) !important;
+    fill: var(--folio-indigo) !important;
+}
+
+.arch-step-drawing {
+    stroke: var(--folio-ink) !important;
+}
+
+.arch-step-accent-line {
+    stroke: var(--folio-indigo) !important;
+}
+
+.arch-step-accent-fill {
+    fill: var(--folio-indigo-soft) !important;
+    stroke: var(--folio-indigo) !important;
+}
+
+.approach-nav-banner {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.nav-banner-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: 1.25rem !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+}
+
+.approach-action-btn {
+    border-radius: 0 !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.11em !important;
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    color: var(--folio-ink) !important;
+}
+
+.approach-action-btn.approach-btn-primary {
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.approach-action-btn:hover,
+.approach-action-btn.approach-btn-primary:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. MEROPE STORY PANEL (#merope-story-modal)
+   -------------------------------------------------------------------------- */
+.merope-modal-backdrop {
+    background: rgba(25, 29, 35, 0.42) !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+.merope-modal-card {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 3px !important;
+    box-shadow: 0 24px 64px rgba(25, 29, 35, 0.16) !important;
+    color: var(--folio-ink) !important;
+}
+
+.merope-modal-header,
+.merope-modal-footer {
+    border-color: var(--folio-rule) !important;
+}
+
+.merope-tag,
+.merope-coords,
+.merope-foot-meta,
+.merope-sub,
+.merope-sec-num {
+    font-family: var(--font-mono) !important;
+}
+
+.merope-tag {
+    color: var(--folio-indigo) !important;
+}
+
+.merope-sub,
+.merope-sec-num {
+    color: var(--folio-terracotta) !important;
+}
+
+.merope-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--folio-ink) !important;
+}
+
+.merope-lead-quote {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 1.06rem !important;
+    border-left-color: var(--folio-terracotta) !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.merope-section {
+    background: var(--folio-paper) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 2px !important;
+}
+
+.merope-section.full-span {
+    background: var(--folio-wash) !important;
+}
+
+.merope-sec-title {
+    font-family: var(--font-sans) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    color: var(--folio-ink) !important;
+}
+
+.merope-sec-text {
+    color: var(--folio-ink-soft) !important;
+}
+
+.merope-pill-item {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 2px !important;
+}
+
+.mpi-tag {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.mpi-text {
+    color: var(--folio-ink-soft) !important;
+}
+
+.merope-close-btn,
+.merope-foot-cta {
+    border-radius: 0 !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    background: transparent !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.1em !important;
+    color: var(--folio-ink) !important;
+}
+
+.merope-close-btn:hover,
+.merope-foot-cta:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. ARCHIVE TAB (#tab-archive) — BOOK OF QUESTIONS FEEL
+   -------------------------------------------------------------------------- */
+.archive-counter-badge {
+    font-family: var(--font-mono) !important;
+    background: var(--folio-ivory) !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-muted) !important;
+}
+
+.archive-intro-card {
+    background: transparent !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.archive-intro-kicker {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.archive-intro-heading {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: 2.15rem !important;
+    letter-spacing: -0.015em !important;
+    color: var(--folio-ink) !important;
+}
+
+.archive-intro-desc {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    font-size: 1.04rem !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.archive-intro-stats {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 0 !important;
+}
+
+.archive-stat-num {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.archive-stat-lbl {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-muted) !important;
+}
+
+.archive-search-input {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    font-family: var(--font-sans) !important;
+    color: var(--folio-ink) !important;
+}
+
+.archive-search-input:focus {
+    border-color: var(--folio-indigo) !important;
+}
+
+.archive-filter-row-projects,
+.archive-questions-feed,
+.archive-entry-card {
+    border-color: var(--folio-rule) !important;
+}
+
+.archive-filter-heading {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+    border-right-color: var(--folio-rule-strong) !important;
+}
+
+.filter-heading-sq {
+    background: var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.archive-tag-btn,
+.archive-project-btn {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-muted) !important;
+}
+
+.archive-tag-btn.active,
+.archive-project-btn.active,
+.archive-tag-btn:hover,
+.archive-project-btn:hover {
+    color: var(--folio-indigo) !important;
+}
+
+.archive-tag-btn.active .tag-sq,
+.archive-project-btn.active .tag-sq {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+}
+
+.archive-entry-card {
+    background: transparent !important;
+    padding: 22px 4px !important;
+}
+
+.archive-entry-timestamp {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.a-tag,
+.a-project-pill {
+    font-family: var(--font-mono) !important;
+    background: var(--folio-ivory) !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.a-project-pill {
+    color: var(--folio-indigo) !important;
+}
+
+.a-project-pill:hover,
+.a-project-pill.active,
+.a-tag.active {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+.archive-entry-question,
+.archive-entry-question.is-linked,
+.archive-entry-question.is-linked:hover,
+.archive-entry-question.is-linked:focus,
+.archive-entry-question.is-linked:active {
+    font-family: var(--font-serif) !important;
+    font-size: 1.18rem !important;
+    font-weight: 400 !important;
+    line-height: 1.44 !important;
+    color: var(--folio-ink) !important;
+}
+
+.archive-entry-reflection {
+    font-family: var(--font-sans) !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. ABOUT / CV TAB (#tab-about)
+   -------------------------------------------------------------------------- */
+.about-header {
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.about-meta-strip {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-muted) !important;
+}
+
+.about-meta-strip .meta-dot {
+    color: var(--folio-indigo) !important;
+}
+
+.about-name {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--folio-ink) !important;
+}
+
+.role-badge {
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.09em !important;
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.role-badge.role-badge-accent {
+    background: var(--folio-indigo-soft) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.contact-chip {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-radius: 0 !important;
+}
+
+.contact-chip:hover {
+    border-color: var(--folio-indigo) !important;
+    background: var(--folio-ivory) !important;
+}
+
+.contact-chip .chip-label {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-muted) !important;
+}
+
+.contact-chip .chip-val {
+    color: var(--folio-ink) !important;
+}
+
+.cv-block-num {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-terracotta) !important;
+}
+
+.cv-block-title {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+    letter-spacing: 0.14em !important;
+}
+
+.cv-block-line {
+    background: var(--folio-rule) !important;
+}
+
+.manifesto-lead-quote {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    color: var(--folio-ink) !important;
+}
+
+.manifesto-text {
+    color: var(--folio-ink-soft) !important;
+}
+
+.manifesto-text em {
+    font-family: var(--font-serif) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.about-quote-box {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule) !important;
+    border-left: 2px solid var(--folio-indigo) !important;
+}
+
+.quote-text {
+    font-family: var(--font-serif) !important;
+    font-style: italic !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.cv-entry {
+    border-bottom: 1px solid var(--folio-rule) !important;
+}
+
+.date-badge {
+    font-family: var(--font-mono) !important;
+    background: var(--folio-ivory) !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-muted) !important;
+}
+
+.date-badge.ongoing {
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+    background: var(--folio-indigo-soft) !important;
+}
+
+.entry-title,
+.entry-title a {
+    font-family: var(--font-serif) !important;
+    font-weight: 500 !important;
+    color: var(--folio-ink) !important;
+}
+
+.entry-title a:hover {
+    color: var(--folio-indigo) !important;
+}
+
+.entry-inst {
+    color: var(--folio-muted) !important;
+}
+
+.entry-desc {
+    color: var(--folio-ink-soft) !important;
+}
+
+.entry-tag,
+.award-badge {
+    font-family: var(--font-mono) !important;
+    background: var(--folio-ivory) !important;
+    border-color: var(--folio-rule) !important;
+    border-radius: 0 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.skill-group-title {
+    font-family: var(--font-mono) !important;
+    color: var(--folio-indigo) !important;
+}
+
+.skill-item {
+    color: var(--folio-ink-soft) !important;
+}
+
+.cv-header-action-btn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.1em !important;
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--folio-indigo) !important;
+}
+
+.cv-header-action-btn:hover {
+    background: var(--folio-indigo) !important;
+    border-color: var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+/* --------------------------------------------------------------------------
+   10B. "YOU WERE HERE." LIVE RESEARCH PROMPT — ARCHIVAL FOLIO HARMONY
+   -------------------------------------------------------------------------- */
+#wwh-consent-popup,
+.wwh-consent-popup {
+    background: var(--folio-ivory) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 2px !important;
+    box-shadow: 0 20px 56px rgba(25, 29, 35, 0.14) !important;
+    color: var(--folio-ink) !important;
+}
+
+.wwh-consent-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.61rem !important;
+    color: var(--folio-indigo) !important;
+    letter-spacing: 0.08em !important;
+    padding-right: 24px !important;
+}
+
+.wwh-consent-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: 1.32rem !important;
+    line-height: 1.28 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+}
+
+.wwh-consent-desc {
+    font-family: var(--font-sans) !important;
+    color: var(--folio-ink-soft) !important;
+    line-height: 1.6 !important;
+}
+
+.wwh-consent-actions {
+    border-top-color: var(--folio-rule) !important;
+}
+
+.wwh-btn-learn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.1em !important;
+    background: var(--folio-paper) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--folio-indigo) !important;
+}
+
+.wwh-btn-learn:hover {
+    background: var(--folio-wash) !important;
+    border-color: var(--folio-indigo) !important;
+}
+
+.wwh-btn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.12em !important;
+    border-radius: 0 !important;
+}
+
+.wwh-btn-yes {
+    background: var(--folio-indigo) !important;
+    border: 1px solid var(--folio-indigo) !important;
+    color: var(--folio-ivory) !important;
+}
+
+.wwh-btn-yes:hover {
+    background: var(--folio-indigo-deep) !important;
+    border-color: var(--folio-indigo-deep) !important;
+}
+
+.wwh-btn-no {
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+.wwh-btn-no:hover {
+    border-color: var(--folio-ink) !important;
+    color: var(--folio-ink) !important;
+    background: var(--folio-wash) !important;
+}
+
+.wwh-popup-close-btn {
+    color: var(--folio-muted) !important;
+}
+
+.wwh-popup-close-btn:hover {
+    color: var(--folio-indigo) !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVE REFINEMENTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .spatial-square-grid {
+        gap: 2.2rem 1.8rem !important;
+    }
+}
+
+@media (max-width: 680px) {
+    .ulker-topnav.folder-tabs {
+        height: 58px !important;
+        max-height: 58px !important;
+    }
+    .matrix-stage-wrap {
+        padding: 1.5rem 4vw 4rem !important;
+    }
+    .spatial-square-grid {
+        gap: 1.8rem 1.25rem !important;
+    }
+    .sq-question {
+        font-size: 0.94rem !important;
+    }
+    .sq-alcyone-title {
+        font-size: 1.28rem !important;
+    }
+}
