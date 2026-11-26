@@ -22,7 +22,7 @@ window.ARCHIVE_QUESTIONS = [
         time: "10:00",
         question: "Is \"standard\" an imposition?",
         reflection: "",
-        tags: ["body", "space", "daily-life"],
+        tags: ["daily-life"],
         relatedProject: null
     },
     {
