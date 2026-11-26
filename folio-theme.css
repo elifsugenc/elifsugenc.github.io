@@ -3,34 +3,34 @@
    "Gökyüzü Atlası & Mimarlık Foliosu"
    Loaded exclusively on the homepage (index.html) so project detail pages
    remain completely isolated.
-   - Warm cotton archival paper (#faf8f4) & ivory folio plates (#fffefa)
+   - Crisp gallery white canvas (#ffffff) & fine architectural hairlines
    - Prussian star-atlas indigo (#1e3a5f) + muted Merope copper (#b4654a)
    - Typographic triad: Newsreader (editorial serif) + DM Sans + IBM Plex Mono
    - Zero SaaS pills, zero neon glows, pure quiet architectural restraint
    ========================================================================== */
 
 :root {
-    --folio-paper: #faf8f4;
-    --folio-ivory: #fffefa;
-    --folio-wash: #f2eee6;
+    --folio-paper: #ffffff;
+    --folio-ivory: #ffffff;
+    --folio-wash: #f7f7f5;
     --folio-ink: #191d23;
     --folio-ink-soft: #4e4d47;
     --folio-muted: #847f75;
     --folio-indigo: #1e3a5f;
     --folio-indigo-deep: #142843;
-    --folio-indigo-soft: rgba(30, 58, 95, 0.08);
+    --folio-indigo-soft: rgba(30, 58, 95, 0.07);
     --folio-terracotta: #b4654a;
-    --folio-rule: #e4ded3;
-    --folio-rule-strong: #cdc4b5;
+    --folio-rule: #e6e5e0;
+    --folio-rule-strong: #cfcdc6;
 
     --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
     --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
     /* Align base tokens on homepage */
-    --bg-color: #faf8f4;
-    --folder-bg: #faf8f4;
-    --folder-border: 1px solid #e4ded3;
+    --bg-color: #ffffff;
+    --folder-bg: #ffffff;
+    --folder-border: 1px solid #e6e5e0;
     --text-color: #191d23;
     --text-muted: #4e4d47;
     --accent-color: #1e3a5f;
@@ -78,7 +78,7 @@ body,
     height: 64px !important;
     max-height: 64px !important;
     padding: 0 4vw !important;
-    background: rgba(250, 248, 244, 0.94) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     border-bottom: 1px solid var(--folio-rule) !important;
@@ -522,7 +522,7 @@ body,
 }
 
 .matrix-svg-line-glow {
-    stroke: rgba(250, 248, 244, 0.92) !important;
+    stroke: rgba(255, 255, 255, 0.94) !important;
     stroke-width: 3.8 !important;
 }
 
@@ -558,7 +558,7 @@ body,
    6. STICKY SUB-TAB TOPBARS (METHODOLOGY, ARCHIVE, ABOUT)
    -------------------------------------------------------------------------- */
 .page-topbar {
-    background: rgba(250, 248, 244, 0.94) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     border-bottom: 1px solid var(--folio-rule) !important;
     backdrop-filter: blur(8px) !important;
 }
