@@ -38,7 +38,7 @@ window.ARCHIVE_QUESTIONS = [
         id: "q-2026-10-24-01",
         date: "24 October 2026",
         time: "21:07",
-        question: "Ölüm sınıfsal mı? (spoiler alert: evet) (Is death class-based? (spoiler alert: yes))",
+        question: "Ölüm sınıfsal mı? (Is death class-based?)",
         reflection: "",
         tags: ["body", "decay", "daily-life"],
         relatedProject: null
