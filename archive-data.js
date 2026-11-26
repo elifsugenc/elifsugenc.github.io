@@ -26,6 +26,15 @@ window.ARCHIVE_QUESTIONS = [
         relatedProject: null
     },
     {
+        id: "q-2026-11-02-01",
+        date: "2 November 2026",
+        time: "",
+        question: "Sosyal medya. Sosyal olmayan bir medya var mı ki sosyal medya diyoruz? (Social media. Is there an unsocial media that we call it social media?)",
+        reflection: "",
+        tags: ["daily-life"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-10-24-02",
         date: "24 October 2026",
         time: "21:09",
