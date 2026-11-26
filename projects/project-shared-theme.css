@@ -3248,4 +3248,116 @@ body.project-detail-body {
     text-transform: uppercase !important;
 }
 
+/* ==========================================================================
+   "YOU WERE HERE." LIVE RESEARCH PROMPT — IDENTICAL TO HOMEPAGE FOLIO POPUP
+   ========================================================================== */
+#wwh-consent-popup,
+.wwh-consent-popup {
+    background: #ffffff !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 2px !important;
+    box-shadow: 0 20px 56px rgba(25, 29, 35, 0.14) !important;
+    color: var(--folio-ink) !important;
+}
+
+#wwh-consent-popup .wwh-consent-tag,
+.wwh-consent-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 0.61rem !important;
+    color: var(--folio-indigo) !important;
+    letter-spacing: 0.08em !important;
+    padding-right: 24px !important;
+}
+
+#wwh-consent-popup .wwh-consent-title,
+.wwh-consent-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: 1.32rem !important;
+    line-height: 1.28 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+}
+
+#wwh-consent-popup .wwh-consent-desc,
+.wwh-consent-desc {
+    font-family: var(--font-sans) !important;
+    color: var(--folio-ink-soft) !important;
+    line-height: 1.6 !important;
+}
+
+#wwh-consent-popup .wwh-consent-actions,
+.wwh-consent-actions {
+    border-top-color: var(--folio-rule) !important;
+}
+
+#wwh-consent-popup .wwh-btn-learn,
+.wwh-btn-learn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.1em !important;
+    background: var(--folio-paper) !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--folio-indigo) !important;
+}
+
+#wwh-consent-popup .wwh-btn-learn:hover,
+.wwh-btn-learn:hover {
+    background: var(--folio-wash) !important;
+    border-color: var(--folio-indigo) !important;
+}
+
+#wwh-consent-popup .wwh-learn-icon,
+.wwh-learn-icon {
+    color: var(--folio-indigo) !important;
+}
+
+#wwh-consent-popup .wwh-btn,
+.wwh-btn {
+    font-family: var(--font-mono) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.12em !important;
+    border-radius: 0 !important;
+}
+
+#wwh-consent-popup .wwh-btn-yes,
+.wwh-btn-yes {
+    background: var(--folio-indigo) !important;
+    border: 1px solid var(--folio-indigo) !important;
+    border-radius: 0 !important;
+    color: #ffffff !important;
+}
+
+#wwh-consent-popup .wwh-btn-yes:hover,
+.wwh-btn-yes:hover {
+    background: var(--folio-indigo-deep) !important;
+    border-color: var(--folio-indigo-deep) !important;
+}
+
+#wwh-consent-popup .wwh-btn-no,
+.wwh-btn-no {
+    background: transparent !important;
+    border: 1px solid var(--folio-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--folio-ink-soft) !important;
+}
+
+#wwh-consent-popup .wwh-btn-no:hover,
+.wwh-btn-no:hover {
+    border-color: var(--folio-ink) !important;
+    color: var(--folio-ink) !important;
+    background: var(--folio-wash) !important;
+}
+
+#wwh-consent-popup .wwh-popup-close-btn,
+.wwh-popup-close-btn {
+    color: var(--folio-muted) !important;
+}
+
+#wwh-consent-popup .wwh-popup-close-btn:hover,
+.wwh-popup-close-btn:hover {
+    color: var(--folio-indigo) !important;
+}
+
 
