@@ -3351,7 +3351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function renderSquareTile(p, originTab) {
         const starMeta = (originTab === 'main' && p.isCluster)
-            ? `<span class="sq-star-tag">UNSEEN STAR</span>`
+            ? `<span class="sq-star-tag" title="Ülker Selected Cluster">&#x2726; ${p.year}</span>`
             : `<span class="sq-year-tag">${p.year}</span>`;
 
         return `
@@ -3377,66 +3377,68 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <svg viewBox="0 0 360 360" class="unseen-diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <!-- 0. ASTRONOMICAL SURVEY PLATE HEADER -->
-                <text x="180" y="30" text-anchor="middle"
-                      font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                      font-size="9" font-weight="600" letter-spacing="0.16em" fill="#111111">
-                    M45 // &Uuml;LKER CONSTELLATION
+                <text x="180" y="28" text-anchor="middle"
+                      font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
+                      font-size="8.5" font-weight="500" letter-spacing="0.18em" fill="#1e3a5f">
+                    M45 &middot; &Uuml;LKER ATLAS
                 </text>
 
-                <!-- Faint Celestial Astrolabe Ring & Coordinate Axes -->
-                <circle cx="182" cy="182" r="118" fill="none" stroke="rgba(17, 17, 17, 0.08)" stroke-width="0.7" stroke-dasharray="2 3" />
-                <circle cx="182" cy="182" r="64" fill="none" stroke="rgba(17, 17, 17, 0.07)" stroke-width="0.6" />
-                <line x1="54" y1="182" x2="310" y2="182" stroke="rgba(17, 17, 17, 0.06)" stroke-width="0.6" />
-                <line x1="182" y1="54" x2="182" y2="310" stroke="rgba(17, 17, 17, 0.06)" stroke-width="0.6" />
+                <!-- Faint Celestial Astrolabe Rings & Cardinal Meridians -->
+                <circle cx="182" cy="182" r="120" fill="none" stroke="rgba(30, 58, 95, 0.14)" stroke-width="0.7" stroke-dasharray="1.5 4" />
+                <circle cx="182" cy="182" r="68" fill="none" stroke="rgba(30, 58, 95, 0.09)" stroke-width="0.6" />
+                <line x1="50" y1="182" x2="314" y2="182" stroke="rgba(25, 29, 35, 0.06)" stroke-width="0.6" />
+                <line x1="182" y1="50" x2="182" y2="314" stroke="rgba(25, 29, 35, 0.06)" stroke-width="0.6" />
 
                 <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde ince çizgisel 7 bilinen yıldız) -->
                 <g class="diag-visible-core">
                     <polyline points="120,135 145,115 165,138 135,175 170,210 190,175 165,138"
-                              stroke="#a1a1aa" stroke-width="0.9" stroke-linecap="square" stroke-linejoin="miter" fill="none" />
-                    <line x1="190" y1="175" x2="235" y2="168" stroke="#a1a1aa" stroke-width="0.9" />
-                    <line x1="235" y1="168" x2="238" y2="152" stroke="#a1a1aa" stroke-width="0.9" />
+                              stroke="#b5aea2" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                    <line x1="190" y1="175" x2="235" y2="168" stroke="#b5aea2" stroke-width="0.85" />
+                    <line x1="235" y1="168" x2="238" y2="152" stroke="#b5aea2" stroke-width="0.85" />
 
-                    <circle cx="190" cy="175" r="2.2" fill="#a1a1aa" />
-                    <circle cx="170" cy="210" r="2" fill="#a1a1aa" />
-                    <circle cx="135" cy="175" r="2" fill="#a1a1aa" />
-                    <circle cx="165" cy="138" r="2" fill="#a1a1aa" />
-                    <circle cx="145" cy="115" r="1.8" fill="#a1a1aa" />
-                    <circle cx="120" cy="135" r="1.8" fill="#a1a1aa" />
-                    <circle cx="235" cy="168" r="2" fill="#a1a1aa" />
-                    <circle cx="238" cy="152" r="1.8" fill="#a1a1aa" />
+                    <circle cx="190" cy="175" r="2.2" fill="#9c9487" />
+                    <circle cx="170" cy="210" r="2" fill="#9c9487" />
+                    <circle cx="135" cy="175" r="2" fill="#9c9487" />
+                    <!-- Merope subtle terracotta accent -->
+                    <circle cx="165" cy="138" r="5" fill="rgba(180, 101, 74, 0.12)" stroke="#b4654a" stroke-width="0.7" />
+                    <circle cx="165" cy="138" r="2" fill="#b4654a" />
+                    <circle cx="145" cy="115" r="1.8" fill="#9c9487" />
+                    <circle cx="120" cy="135" r="1.8" fill="#9c9487" />
+                    <circle cx="235" cy="168" r="2" fill="#9c9487" />
+                    <circle cx="238" cy="152" r="1.8" fill="#9c9487" />
                 </g>
 
-                <!-- 2. PROJELER (12 Görünmeyen Yıldız - keskin mürekkep odak noktaları ve nişangah halkaları) -->
+                <!-- 2. PROJELER (12 Görünmeyen Yıldız - Prusya mürekkebi astronomik odak halkaları) -->
                 <g class="diag-unseen-projects">
-                    <circle cx="216" cy="85" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="216" cy="85" r="2.4" fill="#111111" />
-                    <circle cx="255" cy="130" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="255" cy="130" r="2.4" fill="#111111" />
-                    <circle cx="305" cy="175" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="305" cy="175" r="2.4" fill="#111111" />
-                    <circle cx="300" cy="245" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="300" cy="245" r="2.4" fill="#111111" />
-                    <circle cx="205" cy="168" r="5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="205" cy="168" r="2.2" fill="#1a365d" />
-                    <circle cx="230" cy="215" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="230" cy="215" r="2.4" fill="#111111" />
-                    <circle cx="180" cy="275" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="180" cy="275" r="2.5" fill="#1a365d" />
-                    <circle cx="122" cy="295" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="122" cy="295" r="2.4" fill="#111111" />
-                    <circle cx="130" cy="215" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="130" cy="215" r="2.4" fill="#111111" />
-                    <circle cx="75" cy="175" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="75" cy="175" r="2.4" fill="#111111" />
-                    <circle cx="140" cy="95" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="140" cy="95" r="2.4" fill="#111111" />
-                    <circle cx="75" cy="110" r="5.5" fill="none" stroke="rgba(26,54,93,0.35)" stroke-width="0.7" /><circle cx="75" cy="110" r="2.4" fill="#111111" />
+                    <circle cx="216" cy="85" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="216" cy="85" r="2" fill="#1e3a5f" />
+                    <circle cx="255" cy="130" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="255" cy="130" r="2" fill="#1e3a5f" />
+                    <circle cx="305" cy="175" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="305" cy="175" r="2" fill="#1e3a5f" />
+                    <circle cx="300" cy="245" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="300" cy="245" r="2" fill="#1e3a5f" />
+                    <circle cx="205" cy="168" r="4.8" fill="none" stroke="rgba(30, 58, 95, 0.42)" stroke-width="0.7" /><circle cx="205" cy="168" r="2" fill="#1e3a5f" />
+                    <circle cx="230" cy="215" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="230" cy="215" r="2" fill="#1e3a5f" />
+                    <circle cx="180" cy="275" r="5" fill="none" stroke="rgba(30, 58, 95, 0.42)" stroke-width="0.7" /><circle cx="180" cy="275" r="2.2" fill="#1e3a5f" />
+                    <circle cx="122" cy="295" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="122" cy="295" r="2" fill="#1e3a5f" />
+                    <circle cx="130" cy="215" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="130" cy="215" r="2" fill="#1e3a5f" />
+                    <circle cx="75" cy="175" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="75" cy="175" r="2" fill="#1e3a5f" />
+                    <circle cx="140" cy="95" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="140" cy="95" r="2" fill="#1e3a5f" />
+                    <circle cx="75" cy="110" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="75" cy="110" r="2" fill="#1e3a5f" />
                 </g>
 
                 <!-- 3. YALIN ARŞİV LEJANTI -->
                 <g class="diag-legend">
-                    <line x1="54" y1="334" x2="72" y2="334" stroke="#a1a1aa" stroke-width="1" />
-                    <circle cx="63" cy="334" r="2" fill="#a1a1aa" />
-                    <text x="78" y="337"
-                          font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                          font-size="8" font-weight="600" letter-spacing="0.09em" fill="#71717a">
+                    <line x1="48" y1="336" x2="66" y2="336" stroke="#b5aea2" stroke-width="0.9" />
+                    <circle cx="57" cy="336" r="1.8" fill="#9c9487" />
+                    <text x="72" y="339"
+                          font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
+                          font-size="7.5" font-weight="400" letter-spacing="0.09em" fill="#847f75">
                         &Uuml;LKER (MAIN CLUSTER)
                     </text>
 
-                    <circle cx="218" cy="334" r="4.5" fill="none" stroke="#1a365d" stroke-width="0.8" />
-                    <circle cx="218" cy="334" r="2" fill="#111111" />
-                    <text x="228" y="337"
-                          font-family="var(--font-primary, 'Space Grotesk', sans-serif)"
-                          font-size="8" font-weight="600" letter-spacing="0.09em" fill="#111111">
+                    <circle cx="218" cy="336" r="4.2" fill="none" stroke="#1e3a5f" stroke-width="0.75" />
+                    <circle cx="218" cy="336" r="1.8" fill="#1e3a5f" />
+                    <text x="228" y="339"
+                          font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
+                          font-size="7.5" font-weight="500" letter-spacing="0.09em" fill="#1e3a5f">
                         12 UNSEEN STARS
                     </text>
                 </g>
@@ -3476,13 +3478,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="sq-cell sq-void-cell sq-celestial-cell" aria-hidden="true">
                     <div class="sq-celestial-inner">
                         <svg viewBox="0 0 80 80" class="sq-celestial-svg" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Precision Astronomical Vernier Reticle -->
-                            <line x1="40" y1="14" x2="40" y2="31" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
-                            <line x1="40" y1="49" x2="40" y2="66" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
-                            <line x1="14" y1="40" x2="31" y2="40" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
-                            <line x1="49" y1="40" x2="66" y2="40" stroke="rgba(17, 17, 17, 0.25)" stroke-width="0.8" />
-                            <circle cx="40" cy="40" r="12" fill="none" stroke="rgba(26, 54, 93, 0.35)" stroke-width="0.8" stroke-dasharray="2 2" />
-                            <circle cx="40" cy="40" r="2" fill="#1a365d" />
+                            <!-- Engraved Celestial Star Atlas Mark -->
+                            <circle cx="40" cy="40" r="16" fill="none" stroke="rgba(30, 58, 95, 0.16)" stroke-width="0.7" stroke-dasharray="1.5 3.5" />
+                            <path d="M40 16 L41.6 38.4 L64 40 L41.6 41.6 L40 64 L38.4 41.6 L16 40 L38.4 38.4 Z" fill="rgba(30, 58, 95, 0.24)" />
+                            <circle cx="40" cy="40" r="2.2" fill="#1e3a5f" />
                         </svg>
                         <div class="sq-celestial-meta">
                             <span class="sq-celestial-star-name">${slot.name}</span>
@@ -3639,18 +3638,15 @@ document.addEventListener('DOMContentLoaded', () => {
             svgMarkup += `<line x1="${(minX - overshoot).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(maxX + overshoot).toFixed(1)}" y2="${y.toFixed(1)}" class="matrix-arch-grid-line" />`;
         });
 
-        // Precision Crosshairs at every intersection
+        // Quiet celestial registration dots at every intersection
         vLines.forEach(x => {
             hLines.forEach(y => {
-                svgMarkup += `
-                    <line x1="${(x - 5).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x + 5).toFixed(1)}" y2="${y.toFixed(1)}" class="matrix-arch-crosshair" />
-                    <line x1="${x.toFixed(1)}" y1="${(y - 5).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y + 5).toFixed(1)}" class="matrix-arch-crosshair" />
-                `;
+                svgMarkup += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.35" class="matrix-arch-dot" />`;
             });
         });
 
         svgMarkup += `
-            <text x="${(minX + 8).toFixed(1)}" y="${(minY - 14).toFixed(1)}" class="matrix-arch-blueprint-text">M45 // &Uuml;LKER CLUSTER CELESTIAL PROJECTION &bull; OPEN SPATIAL SURFACE</text>
+            <text x="${(minX + 6).toFixed(1)}" y="${(minY - 14).toFixed(1)}" class="matrix-arch-blueprint-text">M45 &middot; &Uuml;LKER CLUSTER &middot; 03h 47m +24&deg; 07&prime;</text>
         `;
         svgMarkup += '</g>';
         return svgMarkup;
@@ -3778,19 +3774,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <line x1="${startPt.x.toFixed(1)}" y1="${startPt.y.toFixed(1)}"
                           x2="${endPt.x.toFixed(1)}" y2="${endPt.y.toFixed(1)}"
                           class="matrix-svg-line is-highlighted" />
-                    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="4.5" class="matrix-svg-anchor-dot" />
-                    <circle cx="${endPt.x.toFixed(1)}" cy="${endPt.y.toFixed(1)}" r="4.5" class="matrix-svg-anchor-dot" />
+                    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="3.2" class="matrix-svg-anchor-dot" />
+                    <circle cx="${endPt.x.toFixed(1)}" cy="${endPt.y.toFixed(1)}" r="3.2" class="matrix-svg-anchor-dot" />
                 `;
 
                 if (rel.label) {
-                    // Position connection badge directly ON the connected partner project
+                    // Position connection slip cleanly ON the connected partner project
                     const partner = (rel.a === hoveredId) ? cB : cA;
                     activeLabels.push({
                         x: partner.imgCx,
-                        y: partner.imgTop + 18,
+                        y: partner.imgTop + 20,
                         text: rel.label,
-                        w: Math.max(126, rel.label.length * 6.6 + 22),
-                        h: 24
+                        w: Math.max(122, rel.label.length * 6.4 + 26),
+                        h: 22
                     });
                 }
             }
@@ -3812,8 +3808,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const halfW = (lbl.w / 2).toFixed(1);
             fgBadgesHtml += `
                 <g transform="translate(${lbl.x.toFixed(1)}, ${lbl.y.toFixed(1)})" class="matrix-svg-label-group">
-                    <rect x="-${halfW}" y="-11" width="${lbl.w.toFixed(1)}" height="22" rx="1" class="matrix-svg-pill" />
-                    <text x="0" y="3.5" text-anchor="middle" class="matrix-svg-text">${lbl.text}</text>
+                    <rect x="-${halfW}" y="-11" width="${lbl.w.toFixed(1)}" height="22" rx="0" class="matrix-svg-pill" />
+                    <text x="0" y="3" text-anchor="middle" class="matrix-svg-text">${lbl.text}</text>
                 </g>
             `;
         });
