@@ -17,6 +17,15 @@
 window.ARCHIVE_QUESTIONS = [
     // --- 2026: CONTEMPORARY PRACTICE & EVERYDAY INQUIRIES ---
     {
+        id: "q-2026-11-23-01",
+        date: "23 November 2026",
+        time: "10:00",
+        question: "Is \"standard\" an imposition?",
+        reflection: "",
+        tags: ["body", "space", "daily-life"],
+        relatedProject: null
+    },
+    {
         id: "q-2026-10-24-02",
         date: "24 October 2026",
         time: "21:09",
