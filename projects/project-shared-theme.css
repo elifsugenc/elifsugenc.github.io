@@ -3217,3 +3217,35 @@ body.project-detail-body {
     display: none !important;
 }
 
+/* ==========================================================================
+   PROJECT AUTHORSHIP / NO-AI DISCLOSURE NOTICE (TOP OF EVERY PROJECT PAGE)
+   ========================================================================== */
+.project-authorship-notice {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 0 28px 0 !important;
+    padding: 0 0 12px 0 !important;
+    border-bottom: 1px solid var(--folio-rule, #e4e4e0) !important;
+    background: transparent !important;
+}
+
+.project-authorship-notice .authorship-dot {
+    width: 5px !important;
+    height: 5px !important;
+    background: var(--folio-indigo, #1e3a5f) !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+}
+
+.project-authorship-notice .authorship-text {
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+    font-size: 0.66rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.11em !important;
+    line-height: 1.5 !important;
+    color: #52525b !important;
+    text-transform: uppercase !important;
+}
+
+

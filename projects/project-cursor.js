@@ -360,14 +360,28 @@
         }
     }, true);
 
+    function injectAuthorshipNotice() {
+        if (document.querySelector('.project-authorship-notice')) return;
+        const container = document.querySelector('.project-page-container');
+        if (!container) return;
+        const notice = document.createElement('div');
+        notice.className = 'project-authorship-notice';
+        notice.setAttribute('role', 'note');
+        notice.setAttribute('aria-label', 'Authorship Disclosure');
+        notice.innerHTML = '<span class="authorship-dot" aria-hidden="true"></span><span class="authorship-text">NO AI HAS BEEN USED IN THIS PROJECT UNLESS STATED.</span>';
+        container.insertBefore(notice, container.firstChild);
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initProjectCursor();
             syncProjectReturnLinks();
+            injectAuthorshipNotice();
         });
     } else {
         initProjectCursor();
         syncProjectReturnLinks();
+        injectAuthorshipNotice();
     }
 })();
 
