@@ -3386,6 +3386,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     function getConceptDiagramSvgMarkup() {
+        const unseenStarPoints = [
+            [216, 86], [256, 130], [302, 176], [292, 242],
+            [206, 168], [232, 218], [180, 274], [124, 290],
+            [128, 216], [78, 176], [140, 96], [82, 114]
+        ].slice(0, activeProjectCount);
+
+        const unseenStarsMarkup = unseenStarPoints
+            .map(([cx, cy]) => `<circle cx="${cx}" cy="${cy}" r="2.7" fill="#1e3a5f" />`)
+            .join('\n                    ');
+
         return `
             <svg viewBox="0 0 360 360" class="unseen-diagram-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <!-- 0. ASTRONOMICAL SURVEY PLATE HEADER -->
@@ -3395,60 +3405,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     M45 &middot; &Uuml;LKER ATLAS
                 </text>
 
-                <!-- Faint Celestial Astrolabe Rings & Cardinal Meridians -->
-                <circle cx="182" cy="182" r="120" fill="none" stroke="rgba(30, 58, 95, 0.14)" stroke-width="0.7" stroke-dasharray="1.5 4" />
-                <circle cx="182" cy="182" r="68" fill="none" stroke="rgba(30, 58, 95, 0.09)" stroke-width="0.6" />
-                <line x1="50" y1="182" x2="314" y2="182" stroke="rgba(25, 29, 35, 0.06)" stroke-width="0.6" />
-                <line x1="182" y1="50" x2="182" y2="314" stroke="rgba(25, 29, 35, 0.06)" stroke-width="0.6" />
+                <!-- Single Whisper-Faint Celestial Horizon Ring -->
+                <circle cx="182" cy="182" r="118" fill="none" stroke="rgba(30, 58, 95, 0.12)" stroke-width="0.7" stroke-dasharray="1.5 4.5" />
 
-                <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde ince çizgisel 7 bilinen yıldız) -->
+                <!-- 1. GÖRÜNEN ÜLKER KÜMESİ (Merkezde yalın çizgisel yıldızlar) -->
                 <g class="diag-visible-core">
                     <polyline points="120,135 145,115 165,138 135,175 170,210 190,175 165,138"
-                              stroke="#b5aea2" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                    <line x1="190" y1="175" x2="235" y2="168" stroke="#b5aea2" stroke-width="0.85" />
-                    <line x1="235" y1="168" x2="238" y2="152" stroke="#b5aea2" stroke-width="0.85" />
+                              stroke="#bfb8ac" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                    <line x1="190" y1="175" x2="235" y2="168" stroke="#bfb8ac" stroke-width="0.85" />
+                    <line x1="235" y1="168" x2="238" y2="152" stroke="#bfb8ac" stroke-width="0.85" />
 
-                    <circle cx="190" cy="175" r="2.2" fill="#9c9487" />
-                    <circle cx="170" cy="210" r="2" fill="#9c9487" />
-                    <circle cx="135" cy="175" r="2" fill="#9c9487" />
-                    <!-- Merope subtle terracotta accent -->
-                    <circle cx="165" cy="138" r="5" fill="rgba(180, 101, 74, 0.12)" stroke="#b4654a" stroke-width="0.7" />
-                    <circle cx="165" cy="138" r="2" fill="#b4654a" />
-                    <circle cx="145" cy="115" r="1.8" fill="#9c9487" />
-                    <circle cx="120" cy="135" r="1.8" fill="#9c9487" />
-                    <circle cx="235" cy="168" r="2" fill="#9c9487" />
-                    <circle cx="238" cy="152" r="1.8" fill="#9c9487" />
+                    <circle cx="190" cy="175" r="2.1" fill="#a0988b" />
+                    <circle cx="170" cy="210" r="2" fill="#a0988b" />
+                    <circle cx="135" cy="175" r="2" fill="#a0988b" />
+                    <circle cx="165" cy="138" r="2.4" fill="#b4654a" />
+                    <circle cx="145" cy="115" r="1.8" fill="#a0988b" />
+                    <circle cx="120" cy="135" r="1.8" fill="#a0988b" />
+                    <circle cx="235" cy="168" r="2" fill="#a0988b" />
+                    <circle cx="238" cy="152" r="1.8" fill="#a0988b" />
                 </g>
 
-                <!-- 2. PROJELER (12 Görünmeyen Yıldız - Prusya mürekkebi astronomik odak halkaları) -->
+                <!-- 2. PROJELER (Tekil Prusya mürekkebi yıldız noktaları) -->
                 <g class="diag-unseen-projects">
-                    <circle cx="216" cy="85" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="216" cy="85" r="2" fill="#1e3a5f" />
-                    <circle cx="255" cy="130" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="255" cy="130" r="2" fill="#1e3a5f" />
-                    <circle cx="305" cy="175" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="305" cy="175" r="2" fill="#1e3a5f" />
-                    <circle cx="300" cy="245" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="300" cy="245" r="2" fill="#1e3a5f" />
-                    <circle cx="205" cy="168" r="4.8" fill="none" stroke="rgba(30, 58, 95, 0.42)" stroke-width="0.7" /><circle cx="205" cy="168" r="2" fill="#1e3a5f" />
-                    <circle cx="230" cy="215" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="230" cy="215" r="2" fill="#1e3a5f" />
-                    <circle cx="180" cy="275" r="5" fill="none" stroke="rgba(30, 58, 95, 0.42)" stroke-width="0.7" /><circle cx="180" cy="275" r="2.2" fill="#1e3a5f" />
-                    <circle cx="122" cy="295" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="122" cy="295" r="2" fill="#1e3a5f" />
-                    <circle cx="130" cy="215" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="130" cy="215" r="2" fill="#1e3a5f" />
-                    <circle cx="75" cy="175" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="75" cy="175" r="2" fill="#1e3a5f" />
-                    <circle cx="140" cy="95" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="140" cy="95" r="2" fill="#1e3a5f" />
-                    <circle cx="75" cy="110" r="5" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.7" /><circle cx="75" cy="110" r="2" fill="#1e3a5f" />
+                    ${unseenStarsMarkup}
                 </g>
 
                 <!-- 3. YALIN ARŞİV LEJANTI -->
                 <g class="diag-legend">
-                    <line x1="48" y1="336" x2="66" y2="336" stroke="#b5aea2" stroke-width="0.9" />
-                    <circle cx="57" cy="336" r="1.8" fill="#9c9487" />
+                    <line x1="48" y1="336" x2="66" y2="336" stroke="#bfb8ac" stroke-width="0.9" />
+                    <circle cx="57" cy="336" r="1.9" fill="#a0988b" />
                     <text x="72" y="339"
                           font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
                           font-size="7.5" font-weight="400" letter-spacing="0.09em" fill="#847f75">
                         &Uuml;LKER (MAIN CLUSTER)
                     </text>
 
-                    <circle cx="218" cy="336" r="4.2" fill="none" stroke="#1e3a5f" stroke-width="0.75" />
-                    <circle cx="218" cy="336" r="1.8" fill="#1e3a5f" />
-                    <text x="228" y="339"
+                    <circle cx="220" cy="336" r="2.7" fill="#1e3a5f" />
+                    <text x="230" y="339"
                           font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
                           font-size="7.5" font-weight="500" letter-spacing="0.09em" fill="#1e3a5f">
                         ${activeProjectCount} UNSEEN STARS
