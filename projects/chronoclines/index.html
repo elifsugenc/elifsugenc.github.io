@@ -11,6 +11,74 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..500;1,6..72,400..500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../project-shared-theme.css?v=20261126-folio-v1">
+    <style>
+        .chrono-sheets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        @media (max-width: 720px) {
+            .chrono-sheets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .chrono-sheet-card {
+            background: #ffffff;
+            border: 1px solid #e4e4e0;
+            padding: 0;
+            cursor: pointer;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+        .chrono-sheet-card:hover {
+            border-color: #1e3a5f;
+        }
+        .chrono-sheet-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0 !important;
+        }
+        .chrono-sheet-backdrop {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 999980 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            opacity: 0;
+            transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        }
+        .chrono-sheet-backdrop.is-open {
+            opacity: 1 !important;
+        }
+        .chrono-sheet-flying {
+            position: fixed !important;
+            z-index: 999981 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 1px solid #d4d4ce !important;
+            background: #ffffff !important;
+            box-shadow: 0 24px 64px rgba(15, 23, 42, 0.14) !important;
+            overflow: hidden !important;
+            will-change: left, top, width, height;
+            transition: left 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                        top 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                        width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                        height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        }
+        .chrono-sheet-flying.is-closing {
+            box-shadow: 0 0 0 rgba(15, 23, 42, 0) !important;
+        }
+        .chrono-sheet-flying img {
+            width: 100% !important;
+            height: 100% !important;
+            display: block !important;
+            object-fit: contain !important;
+            border-radius: 0 !important;
+        }
+    </style>
     <!-- Immediate Return Handler to preserve originating tab (Constellation, About, etc.) -->
     <script>
         window.handleProjectReturn = function(e) {
@@ -120,7 +188,7 @@
             </div>
 
             <!-- Hero Showcase Image -->
-            <div class="hero-visual-card zoomable-image-container" style="margin-top: 28px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(15, 23, 42, 0.1); cursor: pointer;" onclick="openLightbox('./assets/chronoclines-hero-render.jpg')">
+            <div class="hero-visual-card" style="margin-top: 28px; overflow: hidden;">
                 <img src="./assets/chronoclines-hero-render.jpg" alt="Chronoclines Museum Exterior Render over Historic Balat Walls" class="hero-visual-img" style="width: 100%; height: auto; display: block;" loading="eager" decoding="async">
             </div>
         </section>
@@ -144,20 +212,12 @@
                 <span class="sec-index">02</span>
                 <span class="sec-title">MASTER PRESENTATION SHEETS // COMPLETE ARCHIVE</span>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 20px;">
-                <div class="detail-card zoomable-image-container" style="padding: 14px; cursor: pointer;" onclick="openLightbox('./assets/chronoclines-sheet-01.jpg')">
-                    <img src="./assets/chronoclines-sheet-01.jpg" alt="Chronoclines Sheet 01 — Balat Site Analysis, Temporal Ramp &amp; Isometric Diagrams" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy" decoding="async">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: #475569;">
-                        <span>SHEET 01 // BALAT SITE ANALYSIS &amp; TEMPORAL INCLINE</span>
-                        <span>[ BÜYÜT &nearr; ]</span>
-                    </div>
+            <div class="chrono-sheets-grid">
+                <div class="chrono-sheet-card" data-chrono-sheet>
+                    <img src="./assets/chronoclines-sheet-01.jpg" alt="Chronoclines Sheet 01 — Balat Site Analysis, Temporal Ramp &amp; Isometric Diagrams" loading="lazy" decoding="async">
                 </div>
-                <div class="detail-card zoomable-image-container" style="padding: 14px; cursor: pointer;" onclick="openLightbox('./assets/chronoclines-sheet-02.jpg')">
-                    <img src="./assets/chronoclines-sheet-02.jpg" alt="Chronoclines Sheet 02 — Floor Plans, Public Bazaar Plaza &amp; Interior Ramp Perspectives" style="width: 100%; height: auto; border-radius: 8px; display: block;" loading="lazy" decoding="async">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.82rem; font-weight: 600; color: #475569;">
-                        <span>SHEET 02 // FLOOR PLANS, PUBLIC PLAZA &amp; SPATIAL RENDERS</span>
-                        <span>[ BÜYÜT &nearr; ]</span>
-                    </div>
+                <div class="chrono-sheet-card" data-chrono-sheet>
+                    <img src="./assets/chronoclines-sheet-02.jpg" alt="Chronoclines Sheet 02 — Floor Plans, Public Bazaar Plaza &amp; Interior Ramp Perspectives" loading="lazy" decoding="async">
                 </div>
             </div>
         </section>
@@ -165,14 +225,141 @@
         
     </main>
 
-    <!-- Fullscreen Lightbox Modal -->
-    <div id="image-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
-        <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Close image">&times;</button>
-        <div class="lightbox-img-wrapper" onclick="event.stopPropagation()">
-            <img id="lightbox-img" src="" alt="Enlarged view" onclick="closeLightbox(event)" decoding="async">
-            <p id="lightbox-caption" class="lightbox-caption"></p>
-        </div>
-    </div>
+    <script>
+        (function() {
+            var activeState = null;
+
+            function getTargetRect(img) {
+                var vw = window.innerWidth;
+                var vh = window.innerHeight;
+                var maxW = vw * 0.90;
+                var maxH = vh * 0.92;
+                var ratio = (img.naturalWidth && img.naturalHeight)
+                    ? (img.naturalWidth / img.naturalHeight)
+                    : (img.getBoundingClientRect().width / Math.max(1, img.getBoundingClientRect().height));
+                var targetH = Math.min(maxH, maxW / ratio);
+                var targetW = targetH * ratio;
+                return {
+                    left: (vw - targetW) / 2,
+                    top: (vh - targetH) / 2,
+                    width: targetW,
+                    height: targetH
+                };
+            }
+
+            function closeSheet() {
+                if (!activeState || activeState.closing) return;
+                activeState.closing = true;
+                var state = activeState;
+                var rect = state.sourceImg.getBoundingClientRect();
+
+                state.backdrop.classList.remove('is-open');
+                state.flying.classList.add('is-closing');
+                state.flying.style.left = rect.left + 'px';
+                state.flying.style.top = rect.top + 'px';
+                state.flying.style.width = rect.width + 'px';
+                state.flying.style.height = rect.height + 'px';
+
+                var cleaned = false;
+                function finish() {
+                    if (cleaned) return;
+                    cleaned = true;
+                    state.sourceImg.style.visibility = '';
+                    if (state.flying.parentNode) state.flying.parentNode.removeChild(state.flying);
+                    if (state.backdrop.parentNode) state.backdrop.parentNode.removeChild(state.backdrop);
+                    if (window.unlockBodyScroll) {
+                        window.unlockBodyScroll();
+                    } else {
+                        document.documentElement.style.overflow = '';
+                        document.body.style.overflow = '';
+                    }
+                    activeState = null;
+                }
+                state.flying.addEventListener('transitionend', finish, { once: true });
+                setTimeout(finish, 440);
+            }
+
+            function openSheet(sourceImg) {
+                if (activeState) {
+                    closeSheet();
+                    return;
+                }
+                var rect = sourceImg.getBoundingClientRect();
+                var target = getTargetRect(sourceImg);
+
+                var backdrop = document.createElement('div');
+                backdrop.className = 'chrono-sheet-backdrop';
+                backdrop.addEventListener('click', closeSheet);
+
+                var flying = document.createElement('div');
+                flying.className = 'chrono-sheet-flying';
+                flying.style.left = rect.left + 'px';
+                flying.style.top = rect.top + 'px';
+                flying.style.width = rect.width + 'px';
+                flying.style.height = rect.height + 'px';
+                flying.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                var flyingImg = document.createElement('img');
+                flyingImg.src = sourceImg.currentSrc || sourceImg.src;
+                flyingImg.alt = sourceImg.alt || '';
+                flying.appendChild(flyingImg);
+
+                document.body.appendChild(backdrop);
+                document.body.appendChild(flying);
+                sourceImg.style.visibility = 'hidden';
+
+                if (window.lockBodyScroll) {
+                    window.lockBodyScroll();
+                } else {
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.style.overflow = 'hidden';
+                }
+
+                activeState = {
+                    sourceImg: sourceImg,
+                    backdrop: backdrop,
+                    flying: flying,
+                    closing: false
+                };
+
+                // Force layout flush then animate smoothly to screen center
+                flying.getBoundingClientRect();
+                requestAnimationFrame(function() {
+                    backdrop.classList.add('is-open');
+                    flying.style.left = target.left + 'px';
+                    flying.style.top = target.top + 'px';
+                    flying.style.width = target.width + 'px';
+                    flying.style.height = target.height + 'px';
+                });
+            }
+
+            document.querySelectorAll('[data-chrono-sheet]').forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var img = card.querySelector('img');
+                    if (img) openSheet(img);
+                });
+            });
+
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && activeState) {
+                    closeSheet();
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (!activeState || activeState.closing) return;
+                var target = getTargetRect(activeState.sourceImg);
+                activeState.flying.style.left = target.left + 'px';
+                activeState.flying.style.top = target.top + 'px';
+                activeState.flying.style.width = target.width + 'px';
+                activeState.flying.style.height = target.height + 'px';
+            });
+        })();
+    </script>
 
     <script src="../project-cursor.js?v=20261114-image-only-v4"></script>
     <script src="../project-related.js?v=20261126-folio-v1" defer></script>
