@@ -62,18 +62,43 @@ body,
     font-feature-settings: "kern" 1, "liga" 1;
 }
 
-/* Matte Prussian ink cursor — removes AI neon blue glow */
+/* Matte Prussian ink cursor — preserves full hover enlargement & ? interaction */
 #custom-cursor {
-    width: 11px !important;
-    height: 11px !important;
-    background-color: var(--folio-indigo) !important;
-    box-shadow: none !important;
-    font-family: var(--font-serif) !important;
+    width: 12px;
+    height: 12px;
+    background-color: var(--folio-indigo);
+    box-shadow: none;
+    font-family: var(--font-serif);
 }
 
-#custom-cursor.cursor-image-dot {
+#custom-cursor.cursor-hover,
+#custom-cursor.cursor-project,
+#custom-cursor.cursor-question,
+#cursor-wrapper.cursor-spatial #custom-cursor {
+    width: 48px;
+    height: 48px;
+    background-color: var(--folio-indigo);
+    border: 1.5px solid var(--folio-ivory);
+    box-shadow: 0 6px 18px rgba(30, 58, 95, 0.24);
+}
+
+#custom-cursor.cursor-hover::after,
+#custom-cursor.cursor-project::after,
+#custom-cursor.cursor-question::after,
+#cursor-wrapper.cursor-spatial #custom-cursor::after {
+    font-family: var(--font-serif) !important;
+    font-size: 28px !important;
+    font-weight: 500 !important;
+    color: var(--folio-ivory) !important;
+    text-shadow: none !important;
+    transform: translateY(-1px);
+}
+
+#custom-cursor.cursor-img-hover {
+    width: 22px !important;
+    height: 22px !important;
     background-color: var(--folio-indigo) !important;
-    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.14) !important;
+    box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.14) !important;
 }
 
 #cursor-label {
