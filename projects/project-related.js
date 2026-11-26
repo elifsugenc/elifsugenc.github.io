@@ -10,6 +10,26 @@
     if (window.__portfolioRelatedProjectsInitialized) return;
     window.__portfolioRelatedProjectsInitialized = true;
 
+    // Temporarily archived projects — all files & data remain intact.
+    // Remove an ID from this Set to restore it immediately across Related & More Projects.
+    const ARCHIVED_PROJECT_IDS = new Set(['sprouting-garden', 'wood-weave']);
+
+    const ARCHIVED_RELATION_FALLBACKS = {
+        'bajo-la-fresca': [
+            { id: 'the-earthen', phrase: 'TACTILE CRAFT · SPATIAL PRESENCE' },
+            { id: 'bio-decay', phrase: 'CLIMATIC COMFORT · ECOLOGIES' }
+        ],
+        'bio-decay': [
+            { id: 'bajo-la-fresca', phrase: 'CLIMATIC COMFORT · ECOLOGIES' }
+        ],
+        'millieu': [
+            { id: 'the-earthen', phrase: 'TACTILE MATERIAL INTERIOR' }
+        ],
+        'ara-sira': [
+            { id: 'stray', phrase: 'PLAY, PAUSE & PUBLIC SPACE' }
+        ]
+    };
+
     const ALL_PROJECTS_DATA = {
         'emek-museum': {
             id: 'emek-museum',
@@ -270,13 +290,23 @@
         const mainContainer = document.querySelector('.project-page-container') || document.querySelector('main');
         if (!mainContainer) return;
 
-        // 1. Curated Related Projects (exactly 3)
-        const curatedRelations = PROJECT_RELATIONS_MAP[currentSlug] || [];
-        const relatedSet = new Set(curatedRelations.map(r => r.id));
+        // 1. Curated Related Projects (excluding temporarily archived projects, backfilling to 3 cleanly)
+        const baseRelations = (PROJECT_RELATIONS_MAP[currentSlug] || [])
+            .filter(r => !ARCHIVED_PROJECT_IDS.has(r.id));
+        const relatedSet = new Set(baseRelations.map(r => r.id));
+        const curatedRelations = [...baseRelations];
+        if (curatedRelations.length < 3 && ARCHIVED_RELATION_FALLBACKS[currentSlug]) {
+            ARCHIVED_RELATION_FALLBACKS[currentSlug].forEach(fb => {
+                if (curatedRelations.length < 3 && !ARCHIVED_PROJECT_IDS.has(fb.id) && !relatedSet.has(fb.id) && fb.id !== currentSlug) {
+                    curatedRelations.push(fb);
+                    relatedSet.add(fb.id);
+                }
+            });
+        }
 
-        // 2. Remaining 8 projects for MORE PROJECTS (canonical sequence)
+        // 2. Remaining active projects for MORE PROJECTS (canonical sequence)
         const moreProjects = CANONICAL_SLUG_ORDER
-            .filter(s => s !== currentSlug && !relatedSet.has(s))
+            .filter(s => s !== currentSlug && !ARCHIVED_PROJECT_IDS.has(s) && !relatedSet.has(s))
             .map(s => ALL_PROJECTS_DATA[s])
             .filter(Boolean);
 

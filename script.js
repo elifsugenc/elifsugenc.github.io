@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Temporarily archived projects — all files, images, and data remain preserved on disk.
+    // Remove an ID from this Set to restore the project everywhere across the portfolio instantly.
+    const ARCHIVED_PROJECT_IDS = new Set(['sprouting-garden', 'wood-weave']);
+    window.ARCHIVED_PROJECT_IDS = ARCHIVED_PROJECT_IDS;
+
     // Strip trailing /index.html from URL bar so the URL is always clean (e.g. https://elifsugenc.github.io/ or /#constellation)
     try {
         if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('index.html')) {
@@ -2730,11 +2735,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Update project buttons state
+            // Update project buttons state & hide temporarily archived projects
             const projectButtons = document.querySelectorAll('#archive-filter-projects .archive-project-btn');
             const isAllProjects = (activeProjects.size === 0);
             projectButtons.forEach(btn => {
                 const p = btn.getAttribute('data-project-filter');
+                if (p && ARCHIVED_PROJECT_IDS.has(p)) {
+                    btn.style.display = 'none';
+                    btn.setAttribute('aria-hidden', 'true');
+                    return;
+                }
                 if (p === 'all') {
                     btn.classList.toggle('active', isAllProjects);
                 } else {
@@ -2743,7 +2753,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const query = searchQuery.trim().toLowerCase();
-            let list = window.ARCHIVE_QUESTIONS;
+            let list = window.ARCHIVE_QUESTIONS.filter(item =>
+                !(item.relatedProject && ARCHIVED_PROJECT_IDS.has(item.relatedProject.id))
+            );
 
             // 1. Tag filter logic
             if (activeFilters.size === 1) {
@@ -3439,11 +3451,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     <text x="228" y="339"
                           font-family="var(--font-mono, 'IBM Plex Mono', monospace)"
                           font-size="7.5" font-weight="500" letter-spacing="0.09em" fill="#1e3a5f">
-                        12 UNSEEN STARS
+                        ${activeProjectCount} UNSEEN STARS
                     </text>
                 </g>
             </svg>
         `;
+    }
+
+    const activeProjectCount = Object.keys(PROJECTS).filter(id => !ARCHIVED_PROJECT_IDS.has(id)).length;
+    const seeAllTopLabel = document.querySelector('#ulker-see-all-top-btn span:first-child');
+    if (seeAllTopLabel) seeAllTopLabel.textContent = `SEE ALL ${activeProjectCount} UNSEEN STARS`;
+    const allProjectsKicker = document.querySelector('#tab-projects .matrix-kicker');
+    if (allProjectsKicker) allProjectsKicker.textContent = `ALL PROJECTS \u2014 ${activeProjectCount} UNSEEN STARS`;
+    const allProjectsSubtitle = document.querySelector('#tab-projects .matrix-subtitle');
+    if (allProjectsSubtitle) {
+        allProjectsSubtitle.textContent = `${activeProjectCount} unseen stars across open architectural space \u2014 exploring spatial, material, and structural inquiries.`;
     }
 
     function renderConceptDiagramCell() {
@@ -3467,7 +3489,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             Beyond the few prominent stars of &Uuml;lker, each project is an unseen star &mdash; tracing hidden spatial layers and silent inquiries across open space.
                         </p>
                         <button type="button" class="sq-alcyone-cta" onclick="goToPage('projects');" data-cursor="dot">
-                            SEE ALL 12 UNSEEN STARS &rarr;
+                            SEE ALL ${activeProjectCount} UNSEEN STARS &rarr;
                         </button>
                     </div>
                 </div>
@@ -3496,7 +3518,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (clusterGridEl) {
         clusterGridEl.innerHTML = CLUSTER_MATRIX_SLOTS.map(slot => {
-            if (slot.type === 'project') return renderSquareTile(PROJECTS[slot.id], 'main');
+            if (slot.type === 'project') {
+                if (ARCHIVED_PROJECT_IDS.has(slot.id)) return renderVoidCell({ type: 'void' });
+                return renderSquareTile(PROJECTS[slot.id], 'main');
+            }
             if (slot.type === 'diagram') return renderConceptDiagramCell();
             return renderVoidCell(slot);
         }).join('');
@@ -3504,7 +3529,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (allGridEl) {
         allGridEl.innerHTML = ALL_PROJECTS_MATRIX_SLOTS.map(slot => {
-            if (slot.type === 'project') return renderSquareTile(PROJECTS[slot.id], 'projects');
+            if (slot.type === 'project') {
+                if (ARCHIVED_PROJECT_IDS.has(slot.id)) return renderVoidCell({ type: 'void' });
+                return renderSquareTile(PROJECTS[slot.id], 'projects');
+            }
             return renderVoidCell(slot);
         }).join('');
     }
@@ -3889,6 +3917,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeDiscipline === 'all') return null;
         const matched = new Set();
         Object.values(PROJECTS).forEach(p => {
+            if (ARCHIVED_PROJECT_IDS.has(p.id)) return;
             if (activeDiscipline === 'ulker-cluster') {
                 if (p.isCluster) matched.add(p.id);
             } else if (p.disciplines && p.disciplines.includes(activeDiscipline)) {
