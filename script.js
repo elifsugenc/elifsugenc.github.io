@@ -3180,7 +3180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/chronoclines/',
             isCluster: false,
             star: null,
-            disciplines: ['Architectural Design', 'Exhibition Design']
+            disciplines: ['Spatial Design', 'Exhibition Design']
         },
         'millieu': {
             id: 'millieu',
@@ -3276,7 +3276,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/fire-escape-simulation/',
             isCluster: false,
             star: null,
-            disciplines: ['Interactive & Simulation', 'Architectural Design']
+            disciplines: ['Interactive & Simulation', 'Spatial Design']
         }
     };
 
