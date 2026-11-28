@@ -976,12 +976,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             <polygon points="12,1.5 15.2,8.5 22.8,9.5 17.2,14.8 18.8,22.5 12,18.6 5.2,22.5 6.8,14.8 1.2,9.5 8.8,8.5"/>
                         </svg>
                         <span class="node-star-num">${p.num}</span>
-                   </span><span class="node-num-dash">&mdash;</span>`
-                : `<span class="node-num">${p.num} &mdash;</span>`;
+                   </span><span class="node-num-dash"></span>`
+                : `<span class="node-num">${p.num}</span>`;
 
             const cardTitleHtml = isSelected
-                ? `<span class="card-star-badge">★</span> ${p.num} &mdash; ${p.title}`
-                : `${p.num} &mdash; ${p.title}`;
+                ? `<span class="card-star-badge">★</span> ${p.num} &middot; ${p.title}`
+                : `${p.num} &middot; ${p.title}`;
 
             // Cluster star visual markup (if part of Pleiades M45)
             // Cluster star visual markup (if part of Pleiades M45)
@@ -995,7 +995,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="cs-symbol">+</span>
                         </div>
                         <div class="cs-caption-block">
-                            <span class="cs-project-name">${p.num} &mdash; ${p.title}</span>
+                            <span class="cs-project-name">${p.num} &middot; ${p.title}</span>
                             <span class="cs-star-astronomy">${pleiadesStar.starName} &bull; ${pleiadesStar.bayer}</span>
                         </div>
                         <div class="cluster-star-pill">
@@ -1162,7 +1162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    data-cluster-y="${alcyoneConfig.clusterY}"
                    data-triangle-x="${alcyoneConfig.triangleX}"
                    data-triangle-y="${alcyoneConfig.triangleY}"
-                   aria-label="About Elifsu Genç — Alcyone &bull; &eta; Tauri"
+                   aria-label="About Elifsu Genç: Alcyone &bull; &eta; Tauri"
                    style="left: ${egLeftPct}%; top: ${egTopPct}%;">
                     <div class="brand-cluster-circle">
                         <div class="center-ring ring-outer"></div>
@@ -2148,7 +2148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inquiryDisplay.innerHTML = defaultInquiry;
         }
         if (matrixDisplay) {
-            matrixDisplay.innerText = '&mdash; &mdash; &mdash;';
+            matrixDisplay.innerText = '- - -';
         }
     }
 
@@ -2218,7 +2218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 matrixDisplay.innerText = q ? `"${q}"` : t;
             });
             hit.addEventListener('mouseleave', () => {
-                matrixDisplay.innerText = '— — —';
+                matrixDisplay.innerText = '- - -';
             });
         });
     }
@@ -2313,7 +2313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             badge: 'AXIS 01 // INQUIRY &times; CONTEXT',
             title: 'SPATIAL JUSTICE &times; POLITICAL ECOLOGY OF SURVIVAL',
             quote: '“Disaster is never natural: how do built thresholds and labor conditions construct catastrophe?”',
-            desc: 'Connecting workplace fatality memorials with high-rise fire evacuation simulations—interrogating how spatial design and institutional neglect construct disaster.',
+            desc: 'Connecting workplace fatality memorials with high-rise fire evacuation simulations, interrogating how spatial design and institutional neglect construct disaster.',
             flow: ['LABOUR AUDIT', '⇄', 'EGRESS DYNAMICS'],
             footerLabel: 'BRIDGE WORKS:',
             projects: [
@@ -2471,12 +2471,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const PROJECT_PREVIEW_STATEMENTS = {
             'emek-museum': {
                 en: `
-                    <p>Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself—their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p>
+                    <p>Work-related accidents remain a persistent reality, particularly in Türkiye. Yet when workers lose their lives, the public narrative often ends with the accident itself; their labour, the time they gave, and the lives shaped through their work gradually disappear from view.</p>
                     <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum asks: how can we make this labour visible again?</p>
                     <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Spatial research &amp; counter-monument initiative in progress.</p>
                 `,
                 tr: `
-                    <p>İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor—onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.</p>
+                    <p>İş cinayetleri ve iş kazaları, özellikle Türkiye'de süregelen yakıcı bir gerçeklik olmaya devam ediyor. Ancak emekçiler yaşamlarını yitirdiğinde, kamusal anlatı çoğunlukla kazanın kendisiyle son buluyor; onların emeği, verdikleri zaman ve emekleriyle biçimlenen yaşamlar ise zamanla görünmezleşiyor.</p>
                     <p style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 10px 0; border-left: 3px solid var(--proj-color, #2563eb); padding-left: 14px;">Emek Museum soruyor: bu emeği yeniden nasıl görünür kılabiliriz?</p>
                     <p style="font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--proj-color, #2563eb); letter-spacing: 0.05em;">Mekânsal araştırma ve karşı-anıt inisiyatifi geliştirilme aşamasındadır.</p>
                 `
@@ -2484,7 +2484,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'stray': {
                 en: `
                     <p><strong>STRAY</strong> investigates the boundaries between purposelessness and presence in contemporary urban life. Grounded in 19th-century theories of the <em>Flâneur</em>, Situationist <em>dérive</em> (psychogeography), and the <em>Slow City</em> philosophy, the project questions the utilitarian tyranny of efficiency: <em>“Is doing nothing doing something?”</em> and <em>“Is it laziness to do (nothing)?”</em></p>
-                    <p>Situated along the coastal tree canopy of Moda, Kadıköy, the building acts as an open urban interior where pedestrians naturally drift inward from the seaside promenade. A continuous multi-level ramp weaves through a series of transformative zones—from semi-outdoor frontyards framed by magenta mesh lattices, to active mark-making surfaces where visitors leave tangible traces of their thoughts, to flexible moveable-wall workshops, culminating in the contemplative sensory silence of <em>The Dark Room</em>.</p>
+                    <p>Situated along the coastal tree canopy of Moda, Kadıköy, the building acts as an open urban interior where pedestrians naturally drift inward from the seaside promenade. A continuous multi-level ramp weaves through a series of transformative zones: from semi-outdoor frontyards framed by magenta mesh lattices, to active mark-making surfaces where visitors leave tangible traces of their thoughts, to flexible moveable-wall workshops, culminating in the contemplative sensory silence of <em>The Dark Room</em>.</p>
                 `,
                 tr: `
                     <p><strong>STRAY</strong>, çağdaş kent yaşamında amaçsızlık ile varoluş arasındaki sınırları araştıran bir mekânsal sorgulamadır. 19. yüzyılın <em>Flâneur</em> kavramından, Sitüasyonist <em>dérive</em> (psikocoğrafya) pratiklerinden ve <em>Sakin Şehir (Slow City)</em> felsefesinden beslenen proje, faydacı üretkenlik baskısını tersyüz eder: <em>“Hiçbir şey yapmamak bir şey yapmak mıdır?”</em> ve <em>“Aylaklık tembellik midir?”</em></p>
@@ -2517,7 +2517,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'millieu': {
                 en: `
-                    <p><strong>Millieu</strong> (/mɪl'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in Kadıköy’s historic Yeldeğirmeni district. Defined as <em>a person’s social environment or atmosphere</em>, the project reinterprets the historical heritage of Yeldeğirmeni—where coastal winds once powered windmills transforming grain into flour—into a contemporary social hub centered around the craft of quiche.</p>
+                    <p><strong>Millieu</strong> (/mɪl'ju:/) explores the intersection of culinary ritual, neighborhood memory, and interior architecture in Kadıköy’s historic Yeldeğirmeni district. Defined as <em>a person’s social environment or atmosphere</em>, the project reinterprets the historical heritage of Yeldeğirmeni, where coastal winds once powered windmills transforming grain into flour, into a contemporary social hub centered around the craft of quiche.</p>
                     <p>Quiche functions as a circular architectural diagram of communal sharing. The geometric dialogue between windmill blades, the sliced pastry wedge, and the letterform <em>M</em> generates the entire spatial language: from custom triangular table bases and arched lighting brackets to an expansive stepped amphitheater framed by burgundy tubular steel pergolas.</p>
                 `,
                 tr: `
@@ -2569,7 +2569,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'the-earthen': {
                 en: `
-                    <p><strong>The Earthen</strong> is a healing sanctuary designed to cultivate physical and spiritual wellbeing through tactile connection with soil and clay. Likening the regenerative cycles of the earth—resting, decomposing, and blooming—to the natural rhythms of human life, it offers urbanites a restorative grounding space.</p>
+                    <p><strong>The Earthen</strong> is a healing sanctuary designed to cultivate physical and spiritual wellbeing through tactile connection with soil and clay. Likening the regenerative cycles of the earth (resting, decomposing, and blooming) to the natural rhythms of human life, it offers urbanites a restorative grounding space.</p>
                     <p>The architecture unfolds along a vertical wellbeing journey: subterranean mineral mud-bathing pools for physical release, radial clay-shaping workshops in the Material Creator Lab, and a rooftop living terrace garden. Curved conduits weave through the structure, circulating living water, slurry, and seeds across all levels.</p>
                 `,
                 tr: `
@@ -3375,7 +3375,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="sq-caption">
                         <p class="sq-question">${p.question}</p>
                         <div class="sq-title-bar">
-                            <span class="sq-title">${p.num} &mdash; ${p.title}</span>
+                            <span class="sq-title">${p.num} &middot; ${p.title}</span>
                             ${starMeta}
                         </div>
                     </div>
@@ -3479,7 +3479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="sq-alcyone-star">M45 &bull; THE UNSEEN CLUSTER</span>
                         <h2 class="sq-alcyone-title">Not the stars already visible, but the ones I saw in the dark.</h2>
                         <p class="sq-alcyone-desc">
-                            Beyond the few prominent stars of &Uuml;lker, each project is an unseen star &mdash; tracing hidden spatial layers and silent inquiries across open space.
+                            Beyond the few prominent stars of &Uuml;lker, each project is an unseen star, tracing hidden spatial layers and silent inquiries across open space.
                         </p>
                         <button type="button" class="sq-alcyone-cta" onclick="goToPage('projects');" data-cursor="dot">
                             SEE ALL ${activeProjectCount} UNSEEN STARS &rarr;

@@ -872,7 +872,7 @@
 
         circle.className = 'wwh-reopen-circle';
 
-        circle.setAttribute('aria-label', 'YOU WERE HERE. — Reopen Attention Economy research demo prompt');
+        circle.setAttribute('aria-label', 'YOU WERE HERE.: Reopen Attention Economy research demo prompt');
 
         circle.setAttribute('title', 'YOU WERE HERE. // Live Attention Economy Research Demo');
 
@@ -1765,7 +1765,7 @@
 
         ctx.font = '11px monospace';
 
-        ctx.fillText(`DATE: ${traceData.date || '—'}  TIME: ${traceData.time || '—'}  POINTS: ${pts.length}`, 28, height - 20);
+        ctx.fillText(`DATE: ${traceData.date || '-'}  TIME: ${traceData.time || '-'}  POINTS: ${pts.length}`, 28, height - 20);
 
 
 
@@ -2528,9 +2528,9 @@
 
                     savedTraceNumber: data.traceNumber || null,
 
-                    date: dateStr || '—',
+                    date: dateStr || '-',
 
-                    time: timeStr || '—',
+                    time: timeStr || '-',
 
                     started: startedTs,
 
@@ -2572,9 +2572,9 @@
 
                             savedTraceNumber: completedTrace.traceNumber || null,
 
-                            date: completedTrace.date || '—',
+                            date: completedTrace.date || '-',
 
-                            time: completedTrace.time || '—',
+                            time: completedTrace.time || '-',
 
                             started: completedTrace.started || Date.now(),
 
@@ -2636,9 +2636,9 @@
 
                     savedTraceNumber: currentActive.traceNumber || null,
 
-                    date: currentActive.date || '—',
+                    date: currentActive.date || '-',
 
-                    time: currentActive.time || '—',
+                    time: currentActive.time || '-',
 
                     started: currentActive.started || Date.now(),
 

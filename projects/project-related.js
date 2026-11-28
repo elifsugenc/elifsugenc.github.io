@@ -247,7 +247,7 @@
                     <div class="sq-caption">
                         <p class="sq-question">${p.question}</p>
                         <div class="sq-title-bar">
-                            <span class="sq-title">${p.num} &mdash; ${p.title}</span>
+                            <span class="sq-title">${p.num} &middot; ${p.title}</span>
                             ${starMeta}
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                     <div class="sq-caption">
                         <p class="sq-question">${p.question}</p>
                         <div class="sq-title-bar">
-                            <span class="sq-title">${p.num} &mdash; ${p.title}</span>
+                            <span class="sq-title">${p.num} &middot; ${p.title}</span>
                             ${starMeta}
                         </div>
                     </div>
@@ -349,7 +349,7 @@
                     <span class="sec-index">ARC.</span>
                     <span class="sec-title">MORE PROJECTS</span>
                 </div>
-                <p class="section-sub-label">Further stars across the spatial archive &mdash; scroll down to reveal more</p>
+                <p class="section-sub-label">Further stars across the spatial archive &middot; scroll down to reveal more</p>
 
                 <!-- More Projects Grid: Initial 3 loaded, remaining loaded on scroll -->
                 <div class="spatial-square-grid more-projects-square-grid" id="moreProjectsGrid">
