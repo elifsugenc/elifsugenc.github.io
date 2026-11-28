@@ -3156,7 +3156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: './projects/stray/',
             isCluster: true,
             star: 'Unseen Star',
-            disciplines: ['Architectural Design', 'Spatial Design', 'Interactive & Simulation']
+            disciplines: ['Spatial Design']
         },
         'you-were-here': {
             id: 'you-were-here',
