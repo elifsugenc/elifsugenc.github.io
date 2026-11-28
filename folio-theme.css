@@ -691,6 +691,109 @@ body,
     stroke: var(--folio-indigo) !important;
 }
 
+/* Ülker Constellation Methodology Plate (Zero boxes, zero arrows) */
+.ulker-method-wrap {
+    width: 100% !important;
+    background: #ffffff !important;
+    border-top: 1px solid var(--folio-rule) !important;
+    border-bottom: 1px solid var(--folio-rule) !important;
+    padding: 12px 0 !important;
+    overflow: visible !important;
+}
+
+.ulker-method-svg {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    background: #ffffff !important;
+}
+
+.um-plate-meta {
+    font-family: var(--font-mono) !important;
+    font-size: 9.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    fill: var(--folio-muted) !important;
+}
+
+.um-legend-text {
+    font-family: var(--font-mono) !important;
+    font-size: 8.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    fill: var(--folio-muted) !important;
+}
+
+.um-leader {
+    stroke: rgba(30, 58, 95, 0.32) !important;
+    stroke-width: 0.9 !important;
+}
+
+.um-leader-merope {
+    stroke: rgba(180, 101, 74, 0.45) !important;
+}
+
+.um-star {
+    fill: var(--folio-indigo) !important;
+    transition: r 0.22s ease, fill 0.22s ease;
+}
+
+.um-star-merope {
+    fill: var(--folio-terracotta) !important;
+}
+
+.um-stage-node {
+    transition: opacity 0.22s ease;
+}
+
+.um-stage-merope {
+    cursor: pointer;
+}
+
+.um-stage-kicker {
+    font-family: var(--font-mono) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.14em !important;
+    fill: var(--folio-indigo) !important;
+}
+
+.um-kicker-merope {
+    fill: var(--folio-terracotta) !important;
+}
+
+.um-stage-title {
+    font-family: var(--font-serif) !important;
+    font-size: 21px !important;
+    font-weight: 400 !important;
+    fill: var(--folio-ink) !important;
+}
+
+.um-stage-copy {
+    font-family: var(--font-sans) !important;
+    font-size: 13px !important;
+    fill: var(--folio-ink-soft) !important;
+}
+
+.um-stage-link {
+    font-family: var(--font-mono) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    fill: var(--folio-indigo) !important;
+    transition: fill 0.18s ease;
+}
+
+.um-stage-merope:hover .um-stage-link,
+.um-stage-merope:focus .um-stage-link {
+    fill: var(--folio-terracotta) !important;
+}
+
+.um-stage-merope:hover .um-stage-title,
+.um-stage-merope:focus .um-stage-title {
+    fill: var(--folio-indigo) !important;
+}
+
 .approach-nav-banner {
     background: var(--folio-ivory) !important;
     border: 1px solid var(--folio-rule) !important;
