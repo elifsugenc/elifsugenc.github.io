@@ -691,107 +691,228 @@ body,
     stroke: var(--folio-indigo) !important;
 }
 
-/* Ülker Constellation Methodology Plate (Zero boxes, zero arrows) */
-.ulker-method-wrap {
-    width: 100% !important;
-    background: #ffffff !important;
+/* Ülker Cluster Interactive Methodology Field (Cluster intact at center, 4 stages around it) */
+.ulker-method-field {
+    display: grid !important;
+    grid-template-columns: minmax(210px, 1fr) minmax(300px, 420px) minmax(210px, 1fr) !important;
+    align-items: center !important;
+    gap: clamp(20px, 3vw, 44px) !important;
+    padding: 28px 0 !important;
     border-top: 1px solid var(--folio-rule) !important;
     border-bottom: 1px solid var(--folio-rule) !important;
-    padding: 12px 0 !important;
-    overflow: visible !important;
-}
-
-.ulker-method-svg {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important;
     background: #ffffff !important;
 }
 
-.um-plate-meta {
-    font-family: var(--font-mono) !important;
-    font-size: 9.5px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.16em !important;
-    fill: var(--folio-muted) !important;
+.um-col {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 56px !important;
 }
 
-.um-legend-text {
-    font-family: var(--font-mono) !important;
-    font-size: 8.5px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.12em !important;
-    fill: var(--folio-muted) !important;
+.um-col-left {
+    text-align: right !important;
+    align-items: flex-end !important;
 }
 
-.um-leader {
-    stroke: rgba(30, 58, 95, 0.32) !important;
-    stroke-width: 0.9 !important;
+.um-col-right {
+    text-align: left !important;
+    align-items: flex-start !important;
 }
 
-.um-leader-merope {
-    stroke: rgba(180, 101, 74, 0.45) !important;
+.um-stage-item {
+    max-width: 260px !important;
+    padding: 6px 0 !important;
+    transition: opacity 0.28s ease, transform 0.28s ease !important;
+    cursor: default !important;
+    outline: none !important;
 }
 
-.um-star {
-    fill: var(--folio-indigo) !important;
-    transition: r 0.22s ease, fill 0.22s ease;
+.um-stage-item.um-stage-merope {
+    cursor: pointer !important;
 }
 
-.um-star-merope {
-    fill: var(--folio-terracotta) !important;
-}
-
-.um-stage-node {
-    transition: opacity 0.22s ease;
-}
-
-.um-stage-merope {
-    cursor: pointer;
+.ulker-method-field[data-stage="01"] .um-stage-item:not([data-stage="01"]),
+.ulker-method-field[data-stage="02"] .um-stage-item:not([data-stage="02"]),
+.ulker-method-field[data-stage="03"] .um-stage-item:not([data-stage="03"]),
+.ulker-method-field[data-stage="04"] .um-stage-item:not([data-stage="04"]) {
+    opacity: 0.34 !important;
 }
 
 .um-stage-kicker {
+    display: block !important;
     font-family: var(--font-mono) !important;
-    font-size: 10px !important;
+    font-size: 0.65rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.14em !important;
-    fill: var(--folio-indigo) !important;
+    color: var(--folio-indigo) !important;
+    margin-bottom: 6px !important;
 }
 
 .um-kicker-merope {
-    fill: var(--folio-terracotta) !important;
+    color: var(--folio-terracotta) !important;
 }
 
 .um-stage-title {
     font-family: var(--font-serif) !important;
-    font-size: 21px !important;
+    font-size: 1.42rem !important;
     font-weight: 400 !important;
-    fill: var(--folio-ink) !important;
+    line-height: 1.24 !important;
+    text-transform: none !important;
+    letter-spacing: -0.01em !important;
+    color: var(--folio-ink) !important;
+    margin: 0 0 8px 0 !important;
+    transition: color 0.22s ease !important;
 }
 
-.um-stage-copy {
-    font-family: var(--font-sans) !important;
-    font-size: 13px !important;
-    fill: var(--folio-ink-soft) !important;
-}
-
-.um-stage-link {
-    font-family: var(--font-mono) !important;
-    font-size: 10px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.12em !important;
-    fill: var(--folio-indigo) !important;
-    transition: fill 0.18s ease;
-}
-
-.um-stage-merope:hover .um-stage-link,
-.um-stage-merope:focus .um-stage-link {
-    fill: var(--folio-terracotta) !important;
+.um-stage-item:hover .um-stage-title,
+.um-stage-item:focus .um-stage-title {
+    color: var(--folio-indigo) !important;
 }
 
 .um-stage-merope:hover .um-stage-title,
 .um-stage-merope:focus .um-stage-title {
+    color: var(--folio-terracotta) !important;
+}
+
+.um-stage-copy {
+    font-family: var(--font-sans) !important;
+    font-size: 0.88rem !important;
+    line-height: 1.58 !important;
+    color: var(--folio-ink-soft) !important;
+    margin: 0 !important;
+}
+
+.um-stage-link {
+    display: inline-block !important;
+    margin-top: 10px !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.64rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    color: var(--folio-indigo) !important;
+    transition: color 0.18s ease !important;
+}
+
+.um-stage-merope:hover .um-stage-link,
+.um-stage-merope:focus .um-stage-link {
+    color: var(--folio-terracotta) !important;
+}
+
+/* Central Interactive Ülker SVG */
+.um-cluster-center {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+}
+
+.um-cluster-svg {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+.um-atlas-label {
+    font-family: var(--font-mono) !important;
+    font-size: 8.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.18em !important;
     fill: var(--folio-indigo) !important;
+}
+
+.um-hover-cue {
+    font-family: var(--font-mono) !important;
+    font-size: 7.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.14em !important;
+    fill: var(--folio-muted) !important;
+    transition: opacity 0.25s ease !important;
+}
+
+.ulker-method-field[data-stage="01"] .um-hover-cue,
+.ulker-method-field[data-stage="02"] .um-hover-cue,
+.ulker-method-field[data-stage="03"] .um-hover-cue,
+.ulker-method-field[data-stage="04"] .um-hover-cue {
+    opacity: 0.2 !important;
+}
+
+/* Hover-reactive SVG layers inside the Ülker cluster */
+.um-layer-question,
+.um-layer-listen,
+.um-layer-diverge {
+    opacity: 0 !important;
+    transition: opacity 0.35s ease !important;
+}
+
+.um-unseen-stars {
+    fill: var(--folio-indigo) !important;
+    opacity: 0.42 !important;
+    transition: opacity 0.35s ease !important;
+}
+
+.um-ulker-core {
+    transition: opacity 0.35s ease !important;
+}
+
+.um-ulker-core polyline,
+.um-ulker-core line {
+    transition: stroke 0.35s ease, stroke-width 0.35s ease !important;
+}
+
+/* Stage 01 (QUESTION): Highlight the 7 visible Ülker stars, quiet the unseen field */
+.ulker-method-field[data-stage="01"] .um-layer-question {
+    opacity: 1 !important;
+}
+.ulker-method-field[data-stage="01"] .um-ulker-core polyline,
+.ulker-method-field[data-stage="01"] .um-ulker-core line {
+    stroke: var(--folio-indigo) !important;
+    stroke-width: 1.3 !important;
+}
+.ulker-method-field[data-stage="01"] .um-unseen-stars {
+    opacity: 0.12 !important;
+}
+
+/* Stage 02 (LISTEN): Illuminate the spatial field & survey axes around the cluster */
+.ulker-method-field[data-stage="02"] .um-layer-listen {
+    opacity: 1 !important;
+}
+.ulker-method-field[data-stage="02"] .um-unseen-stars {
+    opacity: 0.35 !important;
+}
+
+/* Stage 03 (DIVERGE): Trace speculative trajectories branching outward */
+.ulker-method-field[data-stage="03"] .um-layer-diverge {
+    opacity: 1 !important;
+}
+.ulker-method-field[data-stage="03"] .um-unseen-stars {
+    opacity: 0.72 !important;
+}
+
+/* Stage 04 (REVEAL): Illuminate all unseen stars + Merope */
+.ulker-method-field[data-stage="04"] .um-unseen-stars {
+    opacity: 1 !important;
+}
+.ulker-method-field[data-stage="04"] .um-ulker-core {
+    opacity: 0.55 !important;
+}
+.ulker-method-field[data-stage="04"] .um-merope-star {
+    opacity: 1 !important;
+}
+
+@media (max-width: 860px) {
+    .ulker-method-field {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+    .um-col-left,
+    .um-col-right {
+        text-align: left !important;
+        align-items: flex-start !important;
+        gap: 24px !important;
+    }
+    .um-stage-item {
+        max-width: 100% !important;
+    }
 }
 
 .approach-nav-banner {
