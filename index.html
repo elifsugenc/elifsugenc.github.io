@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" href="./style.css?v=20261113-v2">
 
-    <link rel="stylesheet" href="./folio-theme.css?v=20261128-method-v1">
+    <link rel="stylesheet" href="./folio-theme.css?v=20261128-method-v2">
 
 </head>
 
@@ -613,102 +613,119 @@
                             <!-- CONTAINER: UNIFIED ARCHITECTURAL METHODOLOGY PLATE (TEK GÖRSEL) -->
 
                             <div class="arch-research-framework">
-                                <div class="arch-main-diagram-wrap ulker-method-wrap">
-                                    <svg class="ulker-method-svg" viewBox="0 0 1120 460" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="group" aria-labelledby="method-diagram-title method-diagram-desc">
-                                        <title id="method-diagram-title">Methodology through the M45 Ülker Cluster</title>
-                                        <desc id="method-diagram-desc">Four spatial inquiry stages mapped along the constellation geometry of the Ülker (Pleiades) star cluster: Question the brief, Read the site, Imagine otherwise, and Reveal the unseen.</desc>
+                                <div class="ulker-method-field" id="ulker-method-field" data-stage="">
+                                    <!-- Left Column: Stages 01 & 02 -->
+                                    <div class="um-col um-col-left">
+                                        <div class="um-stage-item" data-stage="01" tabindex="0">
+                                            <span class="um-stage-kicker">01 &middot; QUESTION</span>
+                                            <h3 class="um-stage-title">Question the brief</h3>
+                                            <p class="um-stage-copy">Who is centered? What has been left out?</p>
+                                        </div>
+                                        <div class="um-stage-item" data-stage="02" tabindex="0">
+                                            <span class="um-stage-kicker">02 &middot; LISTEN</span>
+                                            <h3 class="um-stage-title">Read the site</h3>
+                                            <p class="um-stage-copy">Trace memory, labor and living systems.</p>
+                                        </div>
+                                    </div>
 
-                                        <!-- Plate Header & Subtle Legend -->
-                                        <text class="um-plate-meta" x="28" y="34">M45 &middot; &Uuml;LKER CONSTELLATION METHODOLOGY</text>
-                                        <g class="um-legend" transform="translate(810, 30)">
-                                            <circle cx="0" cy="-3" r="3" fill="#1e3a5f" />
-                                            <text class="um-legend-text" x="10" y="0">INQUIRY STAGES</text>
-                                            <circle cx="132" cy="-3" r="2.4" fill="#b0a99d" />
-                                            <text class="um-legend-text" x="142" y="0">&Uuml;LKER</text>
-                                            <circle cx="204" cy="-3" r="3" fill="#b4654a" />
-                                            <text class="um-legend-text" x="214" y="0">MEROPE</text>
-                                        </g>
+                                    <!-- Center: Intact M45 Ülker Cluster (Reactive to Hover) -->
+                                    <div class="um-cluster-center" aria-hidden="true">
+                                        <svg class="um-cluster-svg" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+                                            <text class="um-atlas-label" x="210" y="28" text-anchor="middle">M45 &middot; &Uuml;LKER CLUSTER</text>
 
-                                        <!-- Whisper Celestial Horizon & Reticle -->
-                                        <circle cx="530" cy="232" r="202" fill="none" stroke="rgba(30, 58, 95, 0.09)" stroke-width="0.9" stroke-dasharray="2 5" />
-                                        <line x1="530" y1="20" x2="530" y2="34" stroke="rgba(30, 58, 95, 0.16)" stroke-width="0.9" />
-                                        <line x1="530" y1="430" x2="530" y2="444" stroke="rgba(30, 58, 95, 0.16)" stroke-width="0.9" />
-                                        <line x1="316" y1="232" x2="330" y2="232" stroke="rgba(30, 58, 95, 0.14)" stroke-width="0.9" />
-                                        <line x1="730" y1="232" x2="744" y2="232" stroke="rgba(30, 58, 95, 0.14)" stroke-width="0.9" />
+                                            <!-- Base Celestial Horizon Ring -->
+                                            <circle class="um-horizon-ring" cx="210" cy="212" r="152" fill="none" stroke="rgba(30, 58, 95, 0.11)" stroke-width="0.8" stroke-dasharray="2 5" />
 
-                                        <!-- Subtle Unseen Field Stars -->
-                                        <g class="um-field-stars" fill="rgba(30, 58, 95, 0.22)">
-                                            <circle cx="352" cy="76" r="1.7" />
-                                            <circle cx="462" cy="58" r="1.7" />
-                                            <circle cx="672" cy="76" r="1.7" />
-                                            <circle cx="710" cy="348" r="1.7" />
-                                            <circle cx="364" cy="378" r="1.7" />
-                                            <circle cx="288" cy="296" r="1.7" />
-                                        </g>
+                                            <!-- Layer 02 (LISTEN): Subtle Site Survey Field & Coordinate Axes -->
+                                            <g class="um-layer-listen">
+                                                <circle cx="210" cy="212" r="102" fill="none" stroke="rgba(30, 58, 95, 0.22)" stroke-width="0.7" stroke-dasharray="2 4" />
+                                                <circle cx="210" cy="212" r="56" fill="none" stroke="rgba(30, 58, 95, 0.16)" stroke-width="0.7" stroke-dasharray="2 4" />
+                                                <line x1="58" y1="212" x2="362" y2="212" stroke="rgba(30, 58, 95, 0.15)" stroke-width="0.7" />
+                                                <line x1="210" y1="60" x2="210" y2="364" stroke="rgba(30, 58, 95, 0.15)" stroke-width="0.7" />
+                                            </g>
 
-                                        <!-- Authentic M45 Ülker Constellation Lines (Bowl + Handle) -->
-                                        <g class="um-constellation-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <!-- Full Ülker Asterism -->
-                                            <polyline points="270,159 380,108 468,167 336,261 490,350 578,261 468,167"
-                                                      stroke="#c5bfb4" stroke-width="1.15" />
-                                            <polyline points="578,261 776,243 789,202"
-                                                      stroke="#c5bfb4" stroke-width="1.15" />
+                                            <!-- Layer 03 (DIVERGE): Speculative Paths Reaching Outward -->
+                                            <g class="um-layer-diverge" fill="none" stroke="rgba(30, 58, 95, 0.36)" stroke-width="0.9" stroke-dasharray="3 4">
+                                                <path d="M 142,164 Q 108,136 92,118" />
+                                                <path d="M 171,141 Q 198,104 232,84" />
+                                                <path d="M 222,210 Q 272,172 328,154" />
+                                                <path d="M 200,250 Q 248,284 314,296" />
+                                                <path d="M 159,210 Q 112,248 90,272" />
+                                                <path d="M 274,202 Q 318,218 350,214" />
+                                            </g>
 
-                                            <!-- Subtle Inquiry Trace across the 4 Primary Stars -->
-                                            <polyline points="270,159 336,261 490,350 578,261 776,243 789,202"
-                                                      stroke="rgba(30, 58, 95, 0.28)" stroke-width="1.35" />
-                                        </g>
+                                            <!-- Layer 01 (QUESTION): Subtle Focus Halo around the 7 Visible Stars -->
+                                            <g class="um-layer-question">
+                                                <circle cx="204" cy="198" r="88" fill="rgba(30, 58, 95, 0.035)" stroke="rgba(30, 58, 95, 0.32)" stroke-width="0.9" stroke-dasharray="3 3" />
+                                            </g>
 
-                                        <!-- Companion Ülker Stars (Taygeta, Maia, Celaeno, Atlas) -->
-                                        <g class="um-companion-stars" fill="#b0a99d">
-                                            <circle cx="380" cy="108" r="2.8" />
-                                            <circle cx="468" cy="167" r="3.0" />
-                                            <circle cx="336" cy="261" r="2.8" />
-                                            <circle cx="776" cy="243" r="3.0" />
-                                        </g>
+                                            <!-- Authentic M45 Ülker Visible Core (7 Stars + Handle) -->
+                                            <g class="um-ulker-core">
+                                                <polyline points="142,164 171,141 194,167 159,210 200,250 222,210 194,167"
+                                                          stroke="#bfb8ac" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                                <line x1="222" y1="210" x2="274" y2="202" stroke="#bfb8ac" stroke-width="1.0" />
+                                                <line x1="274" y1="202" x2="278" y2="183" stroke="#bfb8ac" stroke-width="1.0" />
 
-                                        <!-- STAGE 01: QUESTION (Electra) -->
-                                        <g class="um-stage-node" data-target-pillar="01">
-                                            <line class="um-leader" x1="258" y1="159" x2="244" y2="159" />
-                                            <circle class="um-star" cx="270" cy="159" r="5.5" />
-                                            <text class="um-stage-kicker" x="234" y="146" text-anchor="end">01 &middot; QUESTION</text>
-                                            <text class="um-stage-title" x="234" y="170" text-anchor="end">Question the brief</text>
-                                            <text class="um-stage-copy" x="234" y="192" text-anchor="end">Who is centered?</text>
-                                            <text class="um-stage-copy" x="234" y="210" text-anchor="end">What has been left out?</text>
-                                        </g>
+                                                <circle class="um-core-star" cx="222" cy="210" r="2.6" fill="#9c9487" />
+                                                <circle class="um-core-star" cx="200" cy="250" r="2.4" fill="#9c9487" />
+                                                <circle class="um-core-star" cx="159" cy="210" r="2.4" fill="#9c9487" />
+                                                <circle class="um-core-star um-merope-star" cx="194" cy="167" r="3.1" fill="#b4654a" />
+                                                <circle class="um-core-star" cx="171" cy="141" r="2.2" fill="#9c9487" />
+                                                <circle class="um-core-star" cx="142" cy="164" r="2.2" fill="#9c9487" />
+                                                <circle class="um-core-star" cx="274" cy="202" r="2.4" fill="#9c9487" />
+                                                <circle class="um-core-star" cx="278" cy="183" r="2.1" fill="#9c9487" />
+                                            </g>
 
-                                        <!-- STAGE 02: LISTEN (Merope Bowl) -->
-                                        <g class="um-stage-node" data-target-pillar="02">
-                                            <line class="um-leader" x1="502" y1="350" x2="516" y2="350" />
-                                            <circle class="um-star" cx="490" cy="350" r="5.5" />
-                                            <text class="um-stage-kicker" x="526" y="338" text-anchor="start">02 &middot; LISTEN</text>
-                                            <text class="um-stage-title" x="526" y="362" text-anchor="start">Read the site</text>
-                                            <text class="um-stage-copy" x="526" y="384" text-anchor="start">Trace memory, labor</text>
-                                            <text class="um-stage-copy" x="526" y="402" text-anchor="start">and living systems.</text>
-                                        </g>
+                                            <!-- Layer 04 (REVEAL): Unseen Stars across the Open Field -->
+                                            <g class="um-unseen-stars">
+                                                <circle cx="92" cy="118" r="2.8" />
+                                                <circle cx="232" cy="84" r="2.8" />
+                                                <circle cx="328" cy="154" r="2.8" />
+                                                <circle cx="350" cy="214" r="2.8" />
+                                                <circle cx="314" cy="296" r="2.8" />
+                                                <circle cx="246" cy="336" r="2.8" />
+                                                <circle cx="156" cy="332" r="2.8" />
+                                                <circle cx="90" cy="272" r="2.8" />
+                                                <circle cx="76" cy="196" r="2.8" />
+                                                <circle cx="152" cy="92" r="2.8" />
+                                                <circle cx="294" cy="108" r="2.2" />
+                                                <circle cx="268" cy="264" r="2.2" />
+                                            </g>
 
-                                        <!-- STAGE 03: DIVERGE (Alcyone Center) -->
-                                        <g class="um-stage-node" data-target-pillar="03">
-                                            <line class="um-leader" x1="578" y1="248" x2="578" y2="180" />
-                                            <circle class="um-star" cx="578" cy="261" r="5.8" />
-                                            <text class="um-stage-kicker" x="578" y="96" text-anchor="start">03 &middot; DIVERGE</text>
-                                            <text class="um-stage-title" x="578" y="120" text-anchor="start">Imagine otherwise</text>
-                                            <text class="um-stage-copy" x="578" y="142" text-anchor="start">Let evidence open</text>
-                                            <text class="um-stage-copy" x="578" y="160" text-anchor="start">unexpected futures.</text>
-                                        </g>
+                                            <text class="um-hover-cue" x="210" y="398" text-anchor="middle">HOVER A STAGE TO READ THE CLUSTER</text>
+                                        </svg>
+                                    </div>
 
-                                        <!-- STAGE 04: REVEAL (Handle Tip / Merope Nexus) -->
-                                        <g class="um-stage-node um-stage-merope" data-target-pillar="all" onclick="openMeropeStoryModal();" role="button" tabindex="0" focusable="true" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();openMeropeStoryModal();}" aria-label="Explore Merope: reveal the unseen">
-                                            <line class="um-leader um-leader-merope" x1="802" y1="202" x2="818" y2="202" />
-                                            <circle class="um-star um-star-merope" cx="789" cy="202" r="6.2" />
-                                            <text class="um-stage-kicker um-kicker-merope" x="828" y="186" text-anchor="start">04 &middot; REVEAL</text>
-                                            <text class="um-stage-title" x="828" y="210" text-anchor="start">Reveal the unseen</text>
-                                            <text class="um-stage-copy" x="828" y="232" text-anchor="start">Make hidden relations visible</text>
-                                            <text class="um-stage-copy" x="828" y="250" text-anchor="start">and invite reflection.</text>
-                                            <text class="um-stage-link" x="828" y="276" text-anchor="start">EXPLORE MEROPE &nearr;</text>
-                                        </g>
-                                    </svg>
+                                    <!-- Right Column: Stages 03 & 04 -->
+                                    <div class="um-col um-col-right">
+                                        <div class="um-stage-item" data-stage="03" tabindex="0">
+                                            <span class="um-stage-kicker">03 &middot; DIVERGE</span>
+                                            <h3 class="um-stage-title">Imagine otherwise</h3>
+                                            <p class="um-stage-copy">Let evidence open unexpected futures.</p>
+                                        </div>
+                                        <div class="um-stage-item um-stage-merope" data-stage="04" onclick="openMeropeStoryModal();" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openMeropeStoryModal();}" aria-label="Explore Merope: reveal the unseen">
+                                            <span class="um-stage-kicker um-kicker-merope">04 &middot; REVEAL</span>
+                                            <h3 class="um-stage-title">Reveal the unseen</h3>
+                                            <p class="um-stage-copy">Make hidden relations visible and invite reflection.</p>
+                                            <span class="um-stage-link">EXPLORE MEROPE &nearr;</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <script>
+                                    (function() {
+                                        var field = document.getElementById('ulker-method-field');
+                                        if (!field || field.dataset.bound) return;
+                                        field.dataset.bound = '1';
+                                        var items = field.querySelectorAll('.um-stage-item');
+                                        items.forEach(function(item) {
+                                            var stage = item.getAttribute('data-stage');
+                                            item.addEventListener('mouseenter', function() { field.setAttribute('data-stage', stage); });
+                                            item.addEventListener('mouseleave', function() { field.setAttribute('data-stage', ''); });
+                                            item.addEventListener('focus', function() { field.setAttribute('data-stage', stage); });
+                                            item.addEventListener('blur', function() { field.setAttribute('data-stage', ''); });
+                                        });
+                                    })();
+                                </script>
                             </div>
 
                         </section>
