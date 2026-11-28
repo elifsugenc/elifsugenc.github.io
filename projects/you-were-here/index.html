@@ -501,8 +501,8 @@
                         </div>
                     </div>
                     <div class="trace-card-meta">
-                        <span>DATE: ${trace.date || '—'}</span>
-                        <span>TIME: ${trace.time || '—'}</span>
+                        <span>DATE: ${trace.date || '-'}</span>
+                        <span>TIME: ${trace.time || '-'}</span>
                     </div>
                     <div class="trace-card-foot">
                         <button class="btn-trace-action btn-inspect">[ INSPECT ]</button>
@@ -580,7 +580,7 @@
                     const modalMeta = document.getElementById('modal-trace-meta');
                     const modalCanvas = document.getElementById('modal-trace-canvas');
                     if (modalMeta) {
-                        modalMeta.textContent = `DATE: ${active.date || '—'}  •  TIME: ${active.time || '—'}  •  POINTS: ${active.points.length.toLocaleString()} (LIVE)`;
+                        modalMeta.textContent = `DATE: ${active.date || '-'}  •  TIME: ${active.time || '-'}  •  POINTS: ${active.points.length.toLocaleString()} (LIVE)`;
                     }
                     if (modalCanvas) {
                         const temp = tracker.renderToCanvas(active, 700, 700);
@@ -860,7 +860,7 @@
                 selectedModalTrace = trace;
                 modalTitle.textContent = trace.traceNumber || 'TRACE';
                 const ptsCount = trace.pointCount || (trace.points ? trace.points.length : 0);
-                modalMeta.textContent = `DATE: ${trace.date || '—'}  •  TIME: ${trace.time || '—'}  •  POINTS: ${ptsCount.toLocaleString()}`;
+                modalMeta.textContent = `DATE: ${trace.date || '-'}  •  TIME: ${trace.time || '-'}  •  POINTS: ${ptsCount.toLocaleString()}`;
 
                 const tracker = window.YouWereHereTracker || window.WeWereHereTracker;
                 if (tracker) {
